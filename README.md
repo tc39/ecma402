@@ -5,11 +5,11 @@ ECMAScript Internationalization API Specification
 ## Current Proposals
 ES Intl Proposals follow [this process document](https://docs.google.com/document/d/1QbEE0BsO4lvl7NFTn5WXWeiEIBfaVUF7Dk0hpPpPDzU).
 
-|🚀| Proposal | Champion       | Stage | Notes
-|---|----------|-------------- | ------|------
-|   |          |               |       |    
+|🚀| Proposal                                | Champion      | Stage | Notes
+|---|---------------------------------------|-------------- | ------|------
+|   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier |     0 |    
 
-
+[Update 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
 
