@@ -9,7 +9,7 @@ ES Intl Proposals follow [this process document](https://docs.google.com/documen
 |---|---------------------------------------|-------------- | ------|------
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier |     0 |    
 
-[Update 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
+[Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
 
