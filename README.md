@@ -8,8 +8,10 @@ ES Intl Proposals follow [this process document](https://docs.google.com/documen
 |🚀| Proposal                                | Champion      | Stage | Notes
 |---|---------------------------------------|-------------- | ------|------
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier |     0 |    
+|   | [Intl.NumberFormat round option][]    | Rafael Xavier |     0 |
 
 [Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
+[Intl.NumberFormat round option]: https://github.com/rxaviers/ecma402-number-format-round-option
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
 
