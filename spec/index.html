@@ -487,7 +487,7 @@
       <h1><span class="secnum">6.2.4</span>DefaultLocale ()</h1>
 
       <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<a href="#sec-isstructurallyvalidlanguagetag">6.2.2</a>) and canonicalized (<a href="#sec-canonicalizelanguagetag">6.2.3</a>) BCP 47 language tag for the host environment’s current locale.
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"><a href="#sec-isstructurallyvalidlanguagetag">5.2.2</a></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"><a href="#sec-canonicalizelanguagetag">5.2.3</a></emu-xref>) BCP 47 language tag for the host environment’s current locale.
       </p>
     </emu-clause>
 
@@ -512,7 +512,8 @@
       </p>
 
       <emu-alg aoid="iswellformedcurrencycode-alg" id="ao-iswellformedcurrencycode-alg"><ol>
-  <li>Let <var>normalized</var> be the result of mapping currency to upper case as described in <a href="#sec-case-sensitivity-and-case-mapping">6.1</a>.</li>
+  <li>Let <var>normalized</var> be the result of mapping currency to upper case as described in
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>.</li>
   <li>If the string length of <var>normalized</var> is not 3, then
     <ol>
       <li>return <code>false</code>.</li>
@@ -547,7 +548,7 @@
         The IsValidTimeZoneName abstract operation verifies that the <var>timeZone</var> argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.
       </p>
       <p>
-        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in <a href="#sec-case-sensitivity-and-case-mapping">6.1</a>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <a href="#sec-case-sensitivity-and-case-mapping">6.1</a>. It returns false otherwise.
+        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>. It returns false otherwise.
       </p>
     </emu-clause>
 
@@ -559,7 +560,9 @@
       </p>
 
       <emu-alg aoid="canonicalizetimezonename-alg" id="ao-canonicalizetimezonename-alg"><ol>
-  <li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to upper case as described in <a href="#sec-case-sensitivity-and-case-mapping">6.1</a>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in <a href="#sec-case-sensitivity-and-case-mapping">6.1</a>.</li>
+  <li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to upper case as described in
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>.</li>
   <li>If <var>ianaTimeZone</var> is a Link name, then
     <ol>
       <li>let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the <code>"backward"</code> file of the IANA Time Zone Database.</li>
@@ -582,7 +585,7 @@
       <h1><span class="secnum">6.4.3</span>DefaultTimeZone ()</h1>
 
       <p>
-        The DefaultTimeZone abstract operation returns a String value representing the valid (<a href="#sec-isvalidtimezonename">6.4.1</a>) and canonicalized (<a href="#sec-canonicalizetimezonename">6.4.2</a>) time zone name for the host environment’s current time zone.
+        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"><a href="#sec-isvalidtimezonename">5.4.1</a></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"><a href="#sec-canonicalizetimezonename">5.4.2</a></emu-xref>) time zone name for the host environment’s current time zone.
       </p>
     </emu-clause>
 
