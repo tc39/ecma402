@@ -425,11 +425,11 @@
     <h1><span class="secnum">6.1</span>Case Sensitivity and Case Mapping</h1>
 
     <p>
-      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters <emu-val>"A"</emu-val> to <emu-val>"Z"</emu-val> (<code>U+0041</code> to <code>U+005A</code>) as equivalent to the corresponding Basic Latin characters <emu-val>"a"</emu-val> to <emu-val>"z"</emu-val> (<code>U+0061</code> to <code>U+007A</code>). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range <emu-val>"a"</emu-val> to <emu-val>"z"</emu-val> (<code>U+0061</code> to <code>U+007A</code>) to the corresponding characters in the range <emu-val>"A"</emu-val> to <emu-val>"Z"</emu-val> (<code>U+0041</code> to <code>U+005A</code>) and maps no other characters to the latter range.
+      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters "A" to "Z" (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters "a" to "z" (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range "a" to "z" (U+0061 to U+007A) to the corresponding characters in the range "A" to "Z" (U+0041 to U+005A) and maps no other characters to the latter range.
     </p>
 
     <p>
-      EXAMPLES <emu-val>"ß"</emu-val> (<code>U+00DF</code>) must not match or be mapped to "SS" (<code>U+0053</code>, <code>U+0053</code>). <emu-val>"ı"</emu-val> (<code>U+0131</code>) must not match or be mapped to <emu-val>"I"</emu-val> (<code>U+0049</code>).
+      EXAMPLES "ß" (U+00DF) must not match or be mapped to "SS" (U+0053, U+0053). "ı" (U+0131) must not match or be mapped to "I" (U+0049).
     </p>
   </emu-clause>
 
@@ -449,7 +449,7 @@
       <h1><span class="secnum">6.2.1</span>Unicode Locale Extension Sequences</h1>
 
       <p>
-        This standard uses the term "Unicode locale extension sequence" for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator <emu-val>"-"</emu-val> and the singleton <emu-val>"u"</emu-val>, and includes the maximum sequence of following non-singleton subtags and their preceding <emu-val>"-"</emu-val> separators.
+        This standard uses the term "Unicode locale extension sequence" for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator "-" and the singleton "u", and includes the maximum sequence of following non-singleton subtags and their preceding "-" separators.
       </p>
     </emu-clause>
 
@@ -512,19 +512,11 @@
       </p>
 
       <emu-alg aoid="iswellformedcurrencycode-alg" id="ao-iswellformedcurrencycode-alg"><ol>
-  <li>Let <var>normalized</var> be the result of mapping currency to upper case as described in
+  <li>Let <var>normalized</var> be the result of mapping <var>currency</var> to upper case as described in
     <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>.</li>
-  <li>If the string length of <var>normalized</var> is not 3, then
-    <ol>
-      <li>return <code>false</code>.</li>
-    </ol>
-  </li>
-  <li>If <var>normalized</var> contains any character that is not in the range <emu-val>"A"</emu-val> to <emu-val>"Z"</emu-val> (<code>U+0041</code> to <code>U+005A</code>), then
-    <ol>
-      <li>return <code>false</code>.</li>
-    </ol>
-  </li>
-  <li>Return <code>true</code>.</li>
+  <li>If the string length of <var>normalized</var> is not 3, return <emu-val>false</emu-val>.</li>
+  <li>If <var>normalized</var> contains any character that is not in the range <code>"A"</code> to <code>"Z"</code> (U+0041 to U+005A), return <emu-val>false</emu-val>.</li>
+  <li>Return <emu-val>true</emu-val>.</li>
 </ol></emu-alg>
     </emu-clause>
 
@@ -563,16 +555,8 @@
   <li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to upper case as described in
     <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in
     <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">5.1</a></emu-xref>.</li>
-  <li>If <var>ianaTimeZone</var> is a Link name, then
-    <ol>
-      <li>let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the <code>"backward"</code> file of the IANA Time Zone Database.</li>
-    </ol>
-  </li>
-  <li>If <var>ianaTimeZone</var> is <emu-val>"Etc/UTC"</emu-val> or <emu-val>"Etc/GMT"</emu-val>, then
-    <ol>
-      <li>return <emu-val>"UTC"</emu-val>.</li>
-    </ol>
-  </li>
+  <li>If <var>ianaTimeZone</var> is a Link name, then let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the <code>"backward"</code> file of the IANA Time Zone Database.</li>
+  <li>If <var>ianaTimeZone</var> is <emu-val>"Etc/UTC"</emu-val> or <emu-val>"Etc/GMT"</emu-val>, then return <emu-val>"UTC"</emu-val>.</li>
   <li>Return <var>ianaTimeZone</var>.</li>
 </ol></emu-alg>
 
