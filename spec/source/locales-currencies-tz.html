@@ -1,0 +1,159 @@
+<emu-clause id="locales-currencies-tz">
+  <h1>Identification of Locales, Currencies, and Time Zones</h1>
+
+  <p>
+    This clause describes the String values used in the ECMAScript 2015 Internationalization API Specification to identify locales, currencies, and time zones.
+  </p>
+
+  <emu-clause id="sec-case-sensitivity-and-case-mapping">
+    <h1>Case Sensitivity and Case Mapping</h1>
+
+    <p>
+      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters "A" to "Z" (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters "a" to "z" (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range "a" to "z" (U+0061 to U+007A) to the corresponding characters in the range "A" to "Z" (U+0041 to U+005A) and maps no other characters to the latter range.
+    </p>
+
+    <p>
+      EXAMPLES "ß" (U+00DF) must not match or be mapped to "SS" (U+0053, U+0053). "ı" (U+0131) must not match or be mapped to "I" (U+0049).
+    </p>
+  </emu-clause>
+
+  <emu-clause id="sec-language-tags">
+    <h1>Language Tags</h1>
+
+    <p>
+      The ECMAScript 2015 Internationalization API Specification identifies locales using language tags as defined by IETF BCP 47 (RFCs 5646 and 4647 or their successors), which may include extensions such as those registered through RFC 6067. Their canonical form is specified in RFC 5646 section 4.5 or its successor.
+    </p>
+
+    <p>
+      BCP 47 language tags that meet those validity criteria of RFC 5646 section 2.2.9 that can be verified without reference to the IANA Language Subtag Registry are considered structurally valid. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, and DateTimeFormat map the language tags used in requests to locales supported by their respective implementations.
+    </p>
+
+
+    <emu-clause id="sec-unicode-locale-extension-sequences">
+      <h1>Unicode Locale Extension Sequences</h1>
+
+      <p>
+        This standard uses the term "Unicode locale extension sequence" for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator "-" and the singleton "u", and includes the maximum sequence of following non-singleton subtags and their preceding "-" separators.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-isstructurallyvalidlanguagetag">
+      <h1>IsStructurallyValidLanguageTag (locale)</h1>
+
+      <p>
+        The IsStructurallyValidLanguageTag abstract operation verifies that the _locale_ argument (which must be a String value)
+      </p>
+
+      <ul>
+        <li>represents a well-formed BCP 47 language tag as specified in RFC 5646 section 2.1, or successor,</li>
+        <li>does not include duplicate variant subtags, and</li>
+        <li>does not include duplicate singleton subtags.</li>
+      </ul>
+
+      <p>
+        The abstract operation returns true if _locale_ can be generated from the ABNF grammar in section 2.1 of the RFC, starting with Language-Tag, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-canonicalizelanguagetag">
+      <h1>CanonicalizeLanguageTag (locale)</h1>
+
+      <p>
+        The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid BCP 47 language tag as verified by the IsStructurallyValidLanguageTag abstract operation). It takes the steps specified in RFC 5646 section 4.5, or successor, to bring the language tag into canonical form, and to regularize the case of the subtags, but does not take the steps to bring a language tag into "extlang form" and to reorder variant subtags.
+      </p>
+
+      <p>
+        The specifications for extensions to BCP 47 language tags, such as RFC 6067, may include canonicalization rules for the extension subtag sequences they define that go beyond the canonicalization rules of RFC 5646 section 4.5. Implementations are allowed, but not required, to apply these additional rules.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-defaultlocale">
+      <h1>DefaultLocale ()</h1>
+
+      <p>
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and  canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tag for the host environment’s current locale.
+      </p>
+    </emu-clause>
+
+  </emu-clause>
+
+  <emu-clause id="sec-currency-codes">
+    <h1>Currency Codes</h1>
+
+    <p>
+      The ECMAScript 2015 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is upper case.
+    </p>
+
+    <p>
+      All well-formed 3-letter ISO 4217 currency codes are allowed. However, the set of combinations of currency code and language tag for which localized currency symbols are available is implementation dependent. Where a localized currency symbol is not available, the ISO 4217 currency code is used for formatting.
+    </p>
+
+    <emu-clause id="sec-iswellformedcurrencycode">
+      <h1>IsWellFormedCurrencyCode (currency)</h1>
+
+      <p>
+        The IsWellFormedCurrencyCode abstract operation verifies that the _currency_ argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
+      </p>
+
+      <emu-alg aoid="iswellformedcurrencycode-alg">
+        1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        2. If the string length of _normalized_ is not 3, return *false*.
+        3. If _normalized_ contains any character that is not in the range "A" to "Z" (U+0041 to U+005A), return *false*.
+        4. Return *true*.
+      </emu-alg>
+    </emu-clause>
+
+  </emu-clause>
+
+  <emu-clause id="sec-time-zone-names">
+    <h1>Time Zone Names</h1>
+
+    <p>
+      The ECMAScript 2015 Internationalization API Specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database.
+    </p>
+
+    <p>
+      All registered Zone and Link names are allowed. Implementations must recognize all such names, and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations. However, the set of combinations of time zone name and language tag for which localized time zone names are available is implementation dependent.
+    </p>
+
+    <emu-clause id="sec-isvalidtimezonename">
+      <h1>IsValidTimeZoneName (timeZone)</h1>
+
+      <p>
+        The IsValidTimeZoneName abstract operation verifies that the _timeZone_ argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.
+      </p>
+      <p>
+        The abstract operation returns true if _timeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>. It returns false otherwise.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-canonicalizetimezonename">
+      <h1>CanonicalizeTimeZoneName</h1>
+
+      <p>
+        The CanonicalizeTimeZoneName abstract operation returns the canonical and case-regularized form of the _timeZone_ argument (which must be a String value that is a valid time zone name as verified by the IsValidTimeZoneName abstract operation). The following steps are taken:
+      </p>
+
+      <emu-alg aoid="canonicalizetimezonename-alg">
+        1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        2. If _ianaTimeZone_ is a Link name, then let _ianaTimeZone_ be the corresponding Zone name as specified in the "backward" file of the IANA Time Zone Database.
+        3. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, then return *"UTC"*.
+        4. Return _ianaTimeZone_.
+      </emu-alg>
+
+      <p>
+        The Intl.DateTimeFormat constructor allows this time zone name; if the time zone is not specified, the host environment’s current time zone is used. Implementations shall support UTC and the host environment’s current time zone (if different from UTC) in formatting.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-defaulttimezone">
+      <h1>DefaultTimeZone ()</h1>
+
+      <p>
+        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment’s current time zone.
+      </p>
+    </emu-clause>
+
+  </emu-clause>
+
+</emu-clause>

@@ -1,0 +1,107 @@
+<emu-clause id="conventions">
+  <h1>Notational Conventions</h1>
+
+  <p>
+    This standard uses a subset of the notational conventions of the ECMAScript 2015 Language Specification (ECMA-262 6th Edition), as ES2015:
+  </p>
+
+  <ul>
+    <li>Object Internal Methods and Internal Slots, as described in ES2015, 6.1.7.2.</li>
+    <li>Algorithm conventions, including the use of abstract operations, as described in ES2015, 7.1, 7.2, 7.3.</li>
+    <li>Internal Slots, as described in ES2015, 9.1.</li>
+    <li>The List and Record Specification Type, as described in ES2015, 6.2.1.</li>
+  </ul>
+
+  <emu-note>
+    <p>
+      As described in the ECMAScript Language Specification, algorithms are used to precisely specify the required semantics of ECMAScript constructs, but are not intended to imply the use of any specific implementation technique. Internal slots are used to define the semantics of object values, but are not part of the API. They are defined purely for expository purposes. An implementation of the API must behave as if it produced and operated upon internal slots in the manner described here.
+    </p>
+  </emu-note>
+
+  <p>
+    As an extension to the Record Specification Type, the notation "[[&lt;_name_&gt;]]" denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the field [[&lt;_a_&gt;]].
+  </p>
+
+  <p>
+    For ECMAScript objects, this standard may use variable-named internal slots: The notation "[[&lt;_name_&gt;]]" denotes an internal slot whose name is given by the variable name, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the [[&lt;_a_&gt;]] internal slot.
+  </p>
+
+  <emu-clause id="sec-well-known-intrinsic-objects">
+    <h1>Well-Known Intrinsic Objects</h1>
+
+    <p>
+      The following table extends the Well-Known Intrinsic Objects table defined in ES2015, 6.1.7.4.
+    </p>
+
+    <h2 id="table-7">Table 7 — Well-known Intrinsic Objects (Extensions)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Intrinsic Name</th>
+          <th>Global Name</th>
+          <th>ECMAScript Language Association</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>%Date_now%</td>
+        <td>"Date.now"</td>
+        <td>The initial value of the *"now"* data property of the intrinsic %Date% (ES2015, 20.3.3.1)</td>
+      </tr>
+      <tr>
+        <td>%Intl%</td>
+        <td>"Intl"</td>
+        <td>The Intl object (8).</td>
+      </tr>
+      <tr>
+        <td>%Collator%</td>
+        <td>"Intl.Collator"</td>
+        <td>The Intl.Collator constructor (10.1)</td>
+      </tr>
+      <tr>
+        <td>%CollatorPrototype%</td>
+        <td>"Intl.Collator.prototype"</td>
+        <td>The initial value of the *"prototype"* data property of the intrinsic %Collator% (10.2.1).</td>
+      </tr>
+      <tr>
+        <td>%NumberFormat%</td>
+        <td>"Intl.NumberFormat"</td>
+        <td>The Intl.NumberFormat constructor (11.1)</td>
+      </tr>
+      <tr>
+        <td>%NumberFormatPrototype%</td>
+        <td>"Intl.NumberFormat.prototype"</td>
+        <td>The initial value of the *"prototype"* data property of the intrinsic %NumberFormat% (11.2.1).</td>
+      </tr>
+      <tr>
+        <td>%DateTimeFormat%</td>
+        <td>"Intl.DateTimeFormat"</td>
+        <td>The Intl.DateTimeFormat constructor (12.1).</td>
+      </tr>
+      <tr>
+        <td>%DateTimeFormatPrototype%</td>
+        <td>"Intl.DateTimeFormat.prototype"</td>
+        <td>The initial value of the *"prototype"* data property of the intrinsic %DateTimeFormat% (11.2.1).</td>
+      </tr>
+      <tr>
+        <td>%StringProto_split%</td>
+        <td>"String.prototype.split"</td>
+        <td>The initial value of the *"split"* data property of the intrinsic %StringPrototype% (ES2015, 21.1.3.17)</td>
+      </tr>
+      <tr>
+        <td>%StringProto_indexOf%</td>
+        <td>"String.prototype.indexOf"</td>
+        <td>The initial value of the *"indexOf"* data property of the intrinsic %StringPrototype% (ES2015, 21.1.3.8)</td>
+      </tr>
+      <tr>
+        <td>%StringProto_includes%</td>
+        <td>"String.prototype.includes"</td>
+        <td>The initial value of the *"includes"* data property of the intrinsic %StringPrototype% (ES2015, 21.1.3.7)</td>
+      </tr>
+      <tr>
+        <td>%ArrayProto_indexOf%</td>
+        <td>"Array.prototype.indexOf"</td>
+        <td>The initial value of the *"indexOf"* data property of the intrinsic %StringPrototype% (ES2015, 22.1.3.11)</td>
+      </tr>
+    </table>
+  </emu-clause>
+</emu-clause>
