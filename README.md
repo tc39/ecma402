@@ -1,6 +1,9 @@
 ECMAScript Internationalization API Specification (Ecma-402)
 ====
 
+[Specification](http://tc39.github.io/ecma402/)
+
+
 ## Bug Reports 
 
 We love bug reports, but this repo is for tracking proposals for new features. Please file bugs for the current specification or any future specification draft [here](https://bugs.ecmascript.org/enter_bug.cgi?product=Internationalization%20-%20ECMA-402). I know that seems silly, but the Bugzilla site predates this Github account and that's where the entire bug report history of Ecma-402 already resides.
