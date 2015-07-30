@@ -487,7 +487,7 @@
       <h1><span class="secnum">6.2.4</span>DefaultLocale ()</h1>
 
       <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"><a href="#sec-isstructurallyvalidlanguagetag">6.2.2</a></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"><a href="#sec-canonicalizelanguagetag">6.2.3</a></emu-xref>) BCP 47 language tag for the host environment’s current locale.
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tag for the host environment’s current locale.
       </p>
     </emu-clause>
 
@@ -513,7 +513,7 @@
 
       <emu-alg aoid="iswellformedcurrencycode-alg" id="ao-iswellformedcurrencycode-alg"><ol>
   <li>Let <var>normalized</var> be the result of mapping <var>currency</var> to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>.</li>
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.</li>
   <li>If the string length of <var>normalized</var> is not 3, return <emu-val>false</emu-val>.</li>
   <li>If <var>normalized</var> contains any character that is not in the range <code>"A"</code> to <code>"Z"</code> (U+0041 to U+005A), return <emu-val>false</emu-val>.</li>
   <li>Return <emu-val>true</emu-val>.</li>
@@ -540,7 +540,7 @@
         The IsValidTimeZoneName abstract operation verifies that the <var>timeZone</var> argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.
       </p>
       <p>
-        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>. It returns false otherwise.
+        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>. It returns false otherwise.
       </p>
     </emu-clause>
 
@@ -553,8 +553,8 @@
 
       <emu-alg aoid="canonicalizetimezonename-alg" id="ao-canonicalizetimezonename-alg"><ol>
   <li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>.</li>
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in
+    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.</li>
   <li>If <var>ianaTimeZone</var> is a Link name, then let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the <code>"backward"</code> file of the IANA Time Zone Database.</li>
   <li>If <var>ianaTimeZone</var> is <emu-val>"Etc/UTC"</emu-val> or <emu-val>"Etc/GMT"</emu-val>, then return <emu-val>"UTC"</emu-val>.</li>
   <li>Return <var>ianaTimeZone</var>.</li>
@@ -569,7 +569,7 @@
       <h1><span class="secnum">6.4.3</span>DefaultTimeZone ()</h1>
 
       <p>
-        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"><a href="#sec-isvalidtimezonename">6.4.1</a></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"><a href="#sec-canonicalizetimezonename">6.4.2</a></emu-xref>) time zone name for the host environment’s current time zone.
+        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment’s current time zone.
       </p>
     </emu-clause>
 
@@ -650,20 +650,20 @@
   <li>If collator has an [[initializedIntlObject]] internal slot with value <emu-val>true</emu-val>, throw a <emu-val>TypeError</emu-val> exception.</li>
   <li>Set collator.[[initializedIntlObject]] to <emu-val>true</emu-val>.</li>
   <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
   <li>If <var>options</var> is <emu-val>undefined</emu-val>, then
     <ol>
-      <li>Let <var>options</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-objectcreate">ObjectCreate</a>(<emu-val>%ObjectPrototype%</emu-val>).</li>
+      <li>Let <var>options</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-objectcreate">ObjectCreate</a>(<emu-val>%ObjectPrototype%</emu-val>).</li>
     </ol>
   </li>
   <li>Else
     <ol>
-      <li>Let <var>options</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-toobject">ToObject</a>(<var>options</var>).</li>
-      <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
+      <li>Let <var>options</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject">ToObject</a>(<var>options</var>).</li>
+      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
     </ol>
   </li>
   <li>Let <var>u</var> be GetOption(<var>options</var>, <emu-val>"usage"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"sort"</emu-val>, <emu-val>"search"</emu-val>», <emu-val>"sort"</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>u</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>u</var>).</li>
   <li>Set <var>collator</var>.[[usage]] to <var>u</var>.</li>
   <li>If <var>u</var> is <emu-val>"sort"</emu-val>, then
     <ol>
@@ -677,21 +677,21 @@
   </li>
   <li>Let <var>opt</var> be a new Record.</li>
   <li>Let <var>matcher</var> be GetOption(<var>options</var>, <emu-val>"localeMatcher"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"lookup"</emu-val>, *<code>"best fit"</code>*», *<code>"best fit"</code>*).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>matcher</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>matcher</var>).</li>
   <li>Set <var>opt</var>.[[localeMatcher]] to <var>matcher</var>.</li>
   <li>For each row in
-    <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref>, except the header row, do:
+    <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
     <ol>
       <li>Let <var>key</var> be the name given in the Key column of the row.</li>
       <li>Let <var>prop</var> be the name given in the Property column of the row.</li>
       <li>Let <var>type</var> be the string given in the Type column of the row.</li>
       <li>Let <var>list</var> be a List containing the Strings given in the Values column of the row, or <emu-val>undefined</emu-val> if no strings are given.</li>
       <li>Let <var>value</var> be GetOption(<var>options</var>, <var>prop</var>, <var>type</var>, <var>list</var>, <emu-val>undefined</emu-val>).</li>
-      <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
+      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
       <li>If the string given in the Type column of the row is <emu-val>"boolean"</emu-val> and value is not <emu-val>undefined</emu-val>, then
         <ol>
-          <li>Let <var>value</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>value</var>).</li>
-          <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
+          <li>Let <var>value</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>value</var>).</li>
+          <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
         </ol>
       </li>
       <li>Set <var>opt_.[[_&lt;key&gt;</var>]] to <var>value</var>.</li>
@@ -701,13 +701,13 @@
   <li>Let <var>r</var> be ResolveLocale(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>opt</var>, <var>relevantExtensionKeys</var>, <var>localeData</var>).</li>
   <li>Set <var>collator</var>.[[locale]] to the value of <var>r</var>.[[locale]].</li>
   <li>Let <var>k</var> be 0.</li>
-  <li>Let <var>lenValue</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <emu-val>"length"</emu-val>).</li>
-  <li>Let <var>len</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tolength">ToLength</a>(<var>lenValue</var>).</li>
+  <li>Let <var>lenValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <emu-val>"length"</emu-val>).</li>
+  <li>Let <var>len</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength">ToLength</a>(<var>lenValue</var>).</li>
   <li>Repeat while <var>k</var> &lt; <var>len</var>:
     <ol>
-      <li>Let <var>Pk</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>k</var>).</li>
-      <li>Let <var>key</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <var>Pk</var>).</li>
-      <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>key</var>).</li>
+      <li>Let <var>Pk</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>k</var>).</li>
+      <li>Let <var>key</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <var>Pk</var>).</li>
+      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>key</var>).</li>
       <li>If <var>key</var> is <emu-val>"co"</emu-val>, then
         <ol>
           <li>Let <var>property</var> be <emu-val>"collation"</emu-val>.</li>
@@ -716,7 +716,7 @@
         </ol>
       </li>
       <li>Else use the row of
-        <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> that contains the value of <var>key</var> in the Key column:
+        <emu-xref href="#table-1">Table 1</emu-xref> that contains the value of <var>key</var> in the Key column:
         <ol>
           <li>Let <var>property</var> be the name given in the Property column of the row.</li>
           <li>Let <var>value</var> be the value of <var>r_.[[_&lt;key&gt;</var>]].</li>
@@ -728,22 +728,22 @@
     </ol>
   </li>
   <li>Let <var>s</var> be GetOption(<var>options</var>, <emu-val>"sensitivity"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"base"</emu-val>, <emu-val>"accent"</emu-val>, <emu-val>"case"</emu-val>, <emu-val>"variant"</emu-val>», <emu-val>undefined</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>s</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>s</var>).</li>
   <li>If <var>s</var> is <emu-val>undefined</emu-val>, then
     <ol>
       <li>If <var>u</var> is <emu-val>"sort"</emu-val>, then let <var>s</var> be <emu-val>"variant"</emu-val>.</li>
       <li>Else
         <ol>
           <li>Let <var>dataLocale</var> be the value of <var>r</var>.[[dataLocale]].</li>
-          <li>Let <var>dataLocaleData</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>localeData</var>, <var>dataLocale</var>).</li>
-          <li>Let <var>s</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>dataLocaleData</var>, <emu-val>"sensitivity"</emu-val>).</li>
+          <li>Let <var>dataLocaleData</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>localeData</var>, <var>dataLocale</var>).</li>
+          <li>Let <var>s</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>dataLocaleData</var>, <emu-val>"sensitivity"</emu-val>).</li>
         </ol>
       </li>
     </ol>
   </li>
   <li>Set <var>collator</var>.[[sensitivity]] to <var>s</var>.</li>
   <li>Let <var>ip</var> be GetOption(<var>options</var>, <emu-val>"ignorePunctuation"</emu-val>, <emu-val>"boolean"</emu-val>, <emu-val>undefined</emu-val>, <emu-val>false</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>ip</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>ip</var>).</li>
   <li>Set <var>collator</var>.[[ignorePunctuation]] to <var>ip</var>.</li>
   <li>Set <var>collator</var>.[[boundCompare]] to <emu-val>undefined</emu-val>.</li>
   <li>Set <var>collator</var>.[[initializedCollator]] to <emu-val>true</emu-val>.</li>
@@ -761,8 +761,8 @@
 
       <emu-alg aoid="alg-Intl.Collator" id="ao-alg-Intl.Collator"><ol>
   <li>If <var>NewTarget</var> is <emu-val>undefined</emu-val>, let <var>newTarget</var> be the active function object, else let <var>newTarget</var> be <var>NewTarget</var>.</li>
-  <li>Let <var>collator</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ordinarycreatefromconstructor">OrdinaryCreateFromConstructor</a>(<var>newTarget</var>, <emu-val>%CollatorPrototype%</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
+  <li>Let <var>collator</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ordinarycreatefromconstructor">OrdinaryCreateFromConstructor</a>(<var>newTarget</var>, <emu-val>%CollatorPrototype%</emu-val>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
   <li>Return InitializeCollator(<var>collator</var>, <var>locales</var>, <var>options</var>).</li>
 </ol></emu-alg>
     </emu-clause>
@@ -796,7 +796,7 @@
 
       <emu-alg aoid="alg-" id="ao-alg-"><ol>
   <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
   <li>Return SupportedLocales(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>options</var>).</li>
 </ol></emu-alg>
 
@@ -835,7 +835,7 @@
     <h1><span class="secnum">10.3</span>Properties of the Intl.Collator Prototype Object</h1>
 
     <p>
-      The Intl.Collator prototype object is itself an Intl.Collator instance as specified in <emu-xref href="#sec-properties-of-intl-collator-instances"><a href="#sec-properties-of-intl-collator-instances">10.3.6</a></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(<emu-val>%Collator%</emu-val>)
+      The Intl.Collator prototype object is itself an Intl.Collator instance as specified in <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(<emu-val>%Collator%</emu-val>)
     </p>
 
     <p>
@@ -878,7 +878,7 @@
     <ol>
       <li>Let <var>F</var> be a new built-in function object as defined in 11.3.4.</li>
       <li>The value of <var>F</var>'s length property is 2.</li>
-      <li>Let <var>bc</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-boundfunctioncreate">BoundFunctionCreate</a>(<var>F</var>, «<emu-val>this</emu-val> value»).</li>
+      <li>Let <var>bc</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-boundfunctioncreate">BoundFunctionCreate</a>(<var>F</var>, «<emu-val>this</emu-val> value»).</li>
       <li>Set <var>collator</var>.[[boundCompare]] to <var>bc</var>.</li>
     </ol>
   </li>
@@ -904,13 +904,13 @@
 
       <emu-alg aoid="alg-collator-compare-functions" id="ao-alg-collator-compare-functions"><ol>
   <li>Let <var>collator</var> be the <emu-val>this</emu-val> value.</li>
-  <li>Assert: <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-data-types-and-values">Type</a>(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is <emu-val>true</emu-val>.</li>
+  <li>Assert: <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is <emu-val>true</emu-val>.</li>
   <li>If <var>x</var> is not provided, let <var>x</var> be undefined.</li>
   <li>If <var>y</var> is not provided, let <var>y</var> be undefined.</li>
-  <li>Let <var>X</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>x</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>X</var>).</li>
-  <li>Let <var>Y</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>y</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>Y</var>).</li>
+  <li>Let <var>X</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>x</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>X</var>).</li>
+  <li>Let <var>Y</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>y</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>Y</var>).</li>
   <li>Return CompareStrings(<var>collator</var>, <var>X</var>, <var>Y</var>).</li>
 </ol></emu-alg>
 
@@ -966,7 +966,7 @@
         This function provides access to the locale and collation options computed during initialization of the object.
       </p>
       <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"><a href="#sec-properties-of-intl-collator-instances">10.3.6</a></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> whose keys are included in the <emu-val>%Collator%</emu-val>[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-1">Table 1</emu-xref> whose keys are included in the <emu-val>%Collator%</emu-val>[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
       </p>
     </emu-clause>
 
@@ -994,16 +994,16 @@
       </ul>
 
       <p>
-        Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
+        Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-1">Table 1</emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
       </p>
 
       <ul>
         <li>[[numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-        <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref>.</li>
+        <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-1">Table 1</emu-xref>.</li>
       </ul>
 
       <p>
-        Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype-toStringTag"><a href="#sec-Intl.Collator.prototype-toStringTag">10.3.2</a></emu-xref>).
+        Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype-toStringTag"></emu-xref>).
       </p>
 
     </emu-clause>
@@ -1050,13 +1050,13 @@
       </p>
 
       <emu-alg aoid="alg-String.prototype.localeCompare" id="ao-alg-String.prototype.localeCompare"><ol>
-  <li>Let <var>O</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
-  <li>Let <var>S</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>O</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
-  <li>Let <var>That</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>that</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>That</var>).</li>
-  <li>Let <var>collator</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%Collator%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
+  <li>Let <var>O</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
+  <li>Let <var>S</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>O</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
+  <li>Let <var>That</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>that</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>That</var>).</li>
+  <li>Let <var>collator</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%Collator%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
   <li>Return CompareStrings(<var>collator</var>, <var>S</var>, <var>That</var>)</li>
 </ol></emu-alg>
 
@@ -1090,11 +1090,11 @@
       </p>
 
       <emu-alg aoid="alg-String.prototype.toLocaleLowerCase" id="ao-alg-String.prototype.toLocaleLowerCase"><ol>
-  <li>Let <var>O</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
-  <li>Let <var>S</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>O</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
+  <li>Let <var>O</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
+  <li>Let <var>S</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>O</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
   <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
   <li>Let <var>len</var> be the number of elements in <var>requestedLocales</var>.</li>
   <li>If <var>len</var> &gt; 0, then
     <ol>
@@ -1191,9 +1191,9 @@
 
       <emu-alg aoid="alg-Number.prototype.toLocaleString" id="ao-alg-Number.prototype.toLocaleString"><ol>
   <li>Let <var>x</var> be thisNumberValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
-  <li>Let <var>numberFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%NumberFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>numberFormat</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
+  <li>Let <var>numberFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%NumberFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>numberFormat</var>).</li>
   <li>Return FormatNumber(<var>numberFormat</var>, <var>x</var>).</li>
 </ol></emu-alg>
 
@@ -1224,12 +1224,12 @@
 
       <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol>
   <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
   <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
   <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"any"</emu-val>, <emu-val>"all"</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>dateFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
+  <li>Let <var>dateFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
   <li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li>
 </ol></emu-alg>
 
@@ -1252,12 +1252,12 @@
 
       <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol>
   <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
   <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
   <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"date"</emu-val>, <emu-val>"date"</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>dateFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
+  <li>Let <var>dateFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
   <li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li>
 </ol></emu-alg>
 
@@ -1280,12 +1280,12 @@
 
       <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol>
   <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
   <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
   <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"time"</emu-val>, <emu-val>"time"</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>timeFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>timeFormat</var>),</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
+  <li>Let <var>timeFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>timeFormat</var>),</li>
   <li>Return FormatDateTime(<var>timeFormat</var>, <var>x</var>).</li>
 </ol></emu-alg>
 
@@ -1311,14 +1311,14 @@
       </p>
 
       <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol>
-  <li>Let <var>A</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-toobject">ToObject</a>(<emu-val>this</emu-val> value).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>A</var>).</li>
-  <li>Let <var>len</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tolength">ToLength</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"length"</emu-val>)).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>len</var>).</li>
+  <li>Let <var>A</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject">ToObject</a>(<emu-val>this</emu-val> value).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>A</var>).</li>
+  <li>Let <var>len</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength">ToLength</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"length"</emu-val>)).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>len</var>).</li>
   <li>Let <var>separator</var> be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).</li>
   <li>If <var>len</var> is zero, return the empty String.</li>
-  <li>Let <var>firstElement</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"0"</emu-val>).</li>
-  <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>firstElement</var>).</li>
+  <li>Let <var>firstElement</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"0"</emu-val>).</li>
+  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>firstElement</var>).</li>
   <li>If <var>firstElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then
     <ol>
       <li>Let <var>R</var> be an empty String.</li>
@@ -1326,16 +1326,16 @@
   </li>
   <li>Else
     <ol>
-      <li>Let <var>R</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-invoke">Invoke</a>(<var>firstElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
-      <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
+      <li>Let <var>R</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-invoke">Invoke</a>(<var>firstElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
+      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
     </ol>
   </li>
   <li>Let <var>k</var> be 1.</li>
   <li>Repeat, while <var>k</var> &lt; <var>len</var>
     <ol>
       <li>Let <var>S</var> be a String value produced by concatenating <var>R</var> and <var>separator</var>.</li>
-      <li>Let <var>nextElement</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>k</var>)).</li>
-      <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>nextElement</var>).</li>
+      <li>Let <var>nextElement</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>k</var>)).</li>
+      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>nextElement</var>).</li>
       <li>If <var>nextElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then
         <ol>
           <li>Let <var>R</var> be the empty String.</li>
@@ -1343,8 +1343,8 @@
       </li>
       <li>Else
         <ol>
-          <li>Let <var>R</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-invoke">Invoke</a>(<var>nextElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
-          <li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
+          <li>Let <var>R</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-invoke">Invoke</a>(<var>nextElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
+          <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
         </ol>
       </li>
       <li>Let <var>R</var> be a String value produced by concatenating <var>S</var> and <var>R</var>.</li>
