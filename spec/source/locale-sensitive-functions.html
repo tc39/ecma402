@@ -1,0 +1,326 @@
+<emu-clause id="locale-sensitive-functions">
+  <h1>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
+
+  <p>
+    The ECMAScript Language Specification, edition 6 or successor, describes several locale sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
+  </p>
+
+  <emu-note>
+    <p>
+      The Collator, NumberFormat, or DateTimeFormat objects created in the algorithms in this clause are only used within these algorithms. They are never directly accessed by ECMAScript code and need not actually exist within an implementation.
+    </p>
+  </emu-note>
+
+  <emu-clause id="sec-properties-of-the-string-prototype-object">
+    <h1>Properties of the String Prototype Object</h1>
+
+    <emu-clause id="sec-String.prototype.localeCompare">
+      <h1>String.prototype.localeCompare (that [, locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 21.1.3.10.
+      </p>
+
+      <p>
+        When the *localeCompare* method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-String.prototype.localeCompare">
+        1. Let _O_ be RequireObjectCoercible(*this* value).
+        2. Let _S_ be ToString(_O_).
+        3. ReturnIfAbrupt(_S_).
+        4. Let _That_ be ToString(_that_).
+        5. ReturnIfAbrupt(_That_).
+        6. Let _collator_ be Construct(*%Collator%*, «*locales*, *options*»).
+        7. ReturnIfAbrupt(_collator_).
+        8. Return CompareStrings(_collator_, _S_, _That_)
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *localeCompare* method is 1.
+      </p>
+
+      <emu-note>
+        <p>
+          The *localeCompare* method itself is not directly suitable as an argument to *Array.prototype.sort* because the latter requires a function of two arguments.
+        </p>
+      </emu-note>
+
+      <emu-note>
+        <p>
+          The *localeCompare* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        </p>
+      </emu-note>
+
+    </emu-clause>
+
+    <emu-clause id="sec-String.prototype.toLocaleLowerCase">
+      <h1>String.prototype.toLocaleLowerCase ([locales])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 21.1.3.20.
+      </p>
+
+      <p>
+        This function interprets a string value as a sequence of code points, as described in ES2015, 6.1.4. The following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-String.prototype.toLocaleLowerCase">
+        1. Let _O_ be RequireObjectCoercible(*this* value).
+        2. Let _S_ be ToString(_O_).
+        3. ReturnIfAbrupt(_S_).
+        4. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        5. ReturnIfAbrupt(_requestedLocales_).
+        6. Let _len_ be the number of elements in _requestedLocales_.
+        7. If _len_ > 0, then
+          1. Let _requestedLocale_ be the first element of _requestedLocales_.
+        8. Else
+          1. Let _requestedLocale_ be DefaultLocale().
+        9. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (6.2.1) removed.
+        10. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
+        11. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+        12. If _locale_ is *undefined*, let _locale_ be *"und"*.
+        13. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2015, 6.1.4, starting at the first element of _S_.
+        14. For each code point _c_ in _cpList_, if the Unicode Character Database provides a lower case equivalent of _c_ that is either language insensitive or for the language _locale_, then replace _c_ in _cpList_ with that/those equivalent code point(s).
+        15. Let _cuList_ be a new List.
+        16. For each code point _c_ in _cpList_, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2015, 6.1.4) of _c_.
+        17. Let _L_ be a String whose elements are, in order, the elements of _cuList_.
+        18. Return _L_.
+      </emu-alg>
+
+      <p>
+        The result must be derived according to the case mappings in the Unicode character database (this explicitly includes not only the UnicodeData.txt file, but also the SpecialCasings.txt file that accompanies it).
+      </p>
+
+      <p>
+        The value of the *length* property of the *toLocaleLowerCase* method is 0.
+      </p>
+
+      <emu-note>
+        <p>
+          As of Unicode 5.1, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
+        </p>
+      </emu-note>
+
+      <emu-note>
+        <p>
+          The case mapping of some code points may produce multiple code points. In this case the result String may not be the same length as the source String. Because both *toLocaleUpperCase* and *toLocaleLowerCase* have context-sensitive behaviour, the functions are not symmetrical. In other words, *s.toLocaleUpperCase().toLocaleLowerCase()* is not necessarily equal to *s.toLocaleLowerCase()*.
+        </p>
+      </emu-note>
+
+      <emu-note>
+        <p>
+          The *toLocaleLowerCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        </p>
+      </emu-note>
+
+    </emu-clause>
+
+    <emu-clause id="sec-String.prototype.toLocaleUpperCase">
+      <h1>String.prototype.toLocaleUpperCase ([locales])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 21.1.3.21.
+      </p>
+
+      <p>
+        This function interprets a string value as a sequence of code points, as described in ES2015, 6.1.4. This function behaves in exactly the same way as *String.prototype.toLocaleLowerCase*, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
+      </p>
+
+      <p>
+        The value of the *length* property of the *toLocaleUpperCase* method is 0.
+      </p>
+
+      <emu-note>
+        <p>
+          The *toLocaleUpperCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        </p>
+      </emu-note>
+
+    </emu-clause>
+  </emu-clause>
+
+
+  <emu-clause id="sec-properties-of-the-number-prototype-object">
+    <h1>Properties of the Number Prototype Object</h1>
+
+    <p>
+      The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2015, 20.1.3.
+    </p>
+
+    <emu-clause id="sec-Number.prototype.toLocaleString">
+      <h1>Number.prototype.toLocaleString ([locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 20.1.3.4.
+      </p>
+
+      <p>
+        When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Number.prototype.toLocaleString">
+        1. Let _x_ be thisNumberValue(*this* value).
+        2. ReturnIfAbrupt(_x_).
+        3. Let _numberFormat_ be Construct(*%NumberFormat%*, «*locales*, *options*»).
+        4. ReturnIfAbrupt(_numberFormat_).
+        5. Return FormatNumber(_numberFormat_, _x_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *toLocaleString* method is 0.
+      </p>
+
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-the-date-prototype-object">
+    <h1>Properties of the Date Prototype Object</h1>
+
+    <p>
+      The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2015, 20.3.4.
+    </p>
+
+    <emu-clause id="sec-Date.prototype.toLocaleString">
+      <h1>Date.prototype.toLocaleString ([locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 20.3.4.39.
+      </p>
+
+      <p>
+        When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Date.prototype.toLocaleString">
+        1. Let _x_ be thisTimeValue(*this* value).
+        2. ReturnIfAbrupt(_x_).
+        3. If _x_ is *NaN*, return *"Invalid Date"*.
+        4. Let _options_ be ToDateTimeOptions(_options_, *"any"*, *"all"*).
+        5. ReturnIfAbrupt(_options_).
+        6. Let _dateFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        7. ReturnIfAbrupt(_dateFormat_).
+        8. Return FormatDateTime(_dateFormat_, _x_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *toLocaleString* method is 0.
+      </p>
+
+    </emu-clause>
+
+    <emu-clause id="sec-Date.prototype.toLocaleDateString">
+      <h1>Date.prototype.toLocaleDateString ([locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 20.3.4.38.
+      </p>
+
+      <p>
+        When the *toLocaleDateString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Date.prototype.toLocaleDateString">
+        1. Let _x_ be thisTimeValue(*this* value).
+        2. ReturnIfAbrupt(_x_).
+        3. If _x_ is *NaN*, return *"Invalid Date"*.
+        4. Let _options_ be ToDateTimeOptions(_options_, *"date"*, *"date"*).
+        5. ReturnIfAbrupt(_options_).
+        6. Let _dateFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        7. ReturnIfAbrupt(_dateFormat_).
+        8. Return FormatDateTime(_dateFormat_, _x_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *toLocaleDateString* method is 0.
+      </p>
+
+    </emu-clause>
+
+    <emu-clause id="sec-Date.prototype.toLocaleTimeString">
+      <h1>Date.prototype.toLocaleTimeString ([locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 20.3.4.40.
+      </p>
+
+      <p>
+        When the *toLocaleTimeString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Date.prototype.toLocaleDateString">
+        1. Let _x_ be thisTimeValue(*this* value).
+        2. ReturnIfAbrupt(_x_).
+        3. If _x_ is *NaN*, return *"Invalid Date"*.
+        4. Let _options_ be ToDateTimeOptions(_options_, *"time"*, *"time"*).
+        5. ReturnIfAbrupt(_options_).
+        6. Let _timeFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        7. ReturnIfAbrupt(_timeFormat_),
+        8. Return FormatDateTime(_timeFormat_, _x_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *toLocaleTimeString* method is 0.
+      </p>
+
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-the-array-prototype-object">
+    <h1>Properties of the Array Prototype Object</h1>
+
+    <emu-clause id="sec-Date.prototype.toLocaleString">
+      <h1>Array.prototype.toLocaleString([locales [, options ]])</h1>
+
+      <p>
+        This definition supersedes the definition provided in ES2015, 22.1.3.26.
+      </p>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Date.prototype.toLocaleString">
+        1. Let _A_ be ToObject(*this* value).
+        2. ReturnIfAbrupt(_A_).
+        3. Let _len_ be ToLength(Get(_A_, *"length"*)).
+        4. ReturnIfAbrupt(_len_).
+        5. Let _separator_ be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).
+        6. If _len_ is zero, return the empty String.
+        7. Let _firstElement_ be Get(_A_, *"0"*).
+        8. ReturnIfAbrupt(_firstElement_).
+        9. If _firstElement_ is *undefined* or *null*, then
+          1. Let _R_ be an empty String.
+        10. Else
+          1. Let _R_ be ToString(Invoke(_firstElement_, *"toLocaleString"*, «*locales*, *options*»)).
+          1. ReturnIfAbrupt(_R_).
+        11. Let _k_ be 1.
+        12. Repeat, while _k_ < _len_
+          1. Let _S_ be a String value produced by concatenating _R_ and _separator_.
+          1. Let _nextElement_ be Get(_A_, ToString(_k_)).
+          1. ReturnIfAbrupt(_nextElement_).
+          1. If _nextElement_ is *undefined* or *null*, then
+            1. Let _R_ be the empty String.
+          1. Else
+            1. Let _R_ be ToString(Invoke(_nextElement_, *"toLocaleString"*, «*locales*, *options*»)).
+            1. ReturnIfAbrupt(_R_).
+          1. Let _R_ be a String value produced by concatenating _S_ and _R_.
+          1. Increase _k_ by 1.
+        13. Return _R_.
+      </emu-alg>
+
+      <emu-note>
+        <p>
+          The elements of the array are converted to Strings using their *toLocaleString* methods, and these Strings are then concatenated, separated by occurrences of a separator String that has been derived in an implementationdefined locale-specific way. The result of calling this function is intended to be analogous to the result of *toString*, except that the result of this function is intended to be locale-specific.
+        </p>
+      </emu-note>
+
+      <emu-note>
+        <p>
+          The *toLocaleString* function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+        </p>
+      </emu-note>
+
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
