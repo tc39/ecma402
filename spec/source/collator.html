@@ -1,0 +1,374 @@
+<emu-clause id="collator-objects">
+  <h1>Collator Objects</h1>
+
+  <emu-clause id="sec-the-intl-collator-constructor">
+    <h1>The Intl.Collator Constructor</h1>
+    <p>
+      The Intl.Collator constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in 9.1.
+    </p>
+
+    <emu-clause id="sec-InitializeCollator">
+      <h1>InitializeCollator (collator, locales, options)</h1>
+
+      <p>
+        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a *Collator* object.
+      </p>
+
+      <p>
+        Several steps in the algorithm use values from the following table, which associates Unicode locale extension keys, property names, types, and allowable values:
+      </p>
+
+      <h2 id="table-1">Table 1 — Collator options settable through both extension keys and options properties</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Values</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>kn</td>
+          <td>numeric</td>
+          <td>"boolean"</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>kf</td>
+          <td>caseFirst</td>
+          <td>"string"</td>
+          <td>"upper", "lower", "false"</td>
+        </tr>
+      </table>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-InitializeCollator">
+        1. If collator has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
+        2. Set collator.[[initializedIntlObject]] to *true*.
+        3. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        4. ReturnIfAbrupt(_requestedLocales_).
+        5. If _options_ is *undefined*, then
+          1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
+        6. Else
+          1. Let _options_ be ToObject(_options_).
+          1. ReturnIfAbrupt(_options_).
+        7. Let _u_ be GetOption(_options_, *"usage"*, *"string"*, «*"sort"*, *"search"*», *"sort"*).
+        8. ReturnIfAbrupt(_u_).
+        9. Set _collator_.[[usage]] to _u_.
+        10. If _u_ is *"sort"*, then
+          1. Let _localeData_ be the value of *%Collator%*.[[sortLocaleData]];
+        11. Else
+          1. Let _localeData_ be the value of *%Collator%*.[[searchLocaleData]].
+        12. Let _opt_ be a new Record.
+        13. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        14. ReturnIfAbrupt(_matcher_).
+        15. Set _opt_.[[localeMatcher]] to _matcher_.
+        16. For each row in <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
+          1. Let _key_ be the name given in the Key column of the row.
+          1. Let _prop_ be the name given in the Property column of the row.
+          1. Let _type_ be the string given in the Type column of the row.
+          1. Let _list_ be a List containing the Strings given in the Values column of the row, or *undefined* if no strings are given.
+          1. Let _value_ be GetOption(_options_, _prop_, _type_, _list_, *undefined*).
+          1. ReturnIfAbrupt(_value_).
+          1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
+            1. Let _value_ be ToString(_value_).
+            1. ReturnIfAbrupt(_value_).
+          1. Set _opt_.[[_&lt;key&gt;_]] to _value_.
+        17. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
+        18. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
+        19. Set _collator_.[[locale]] to the value of _r_.[[locale]].
+        20. Let _k_ be 0.
+        21. Let _lenValue_ be Get(_relevantExtensionKeys_, *"length"*).
+        22. Let _len_ be ToLength(_lenValue_).
+        23. Repeat while _k_ < _len_:
+          1. Let _Pk_ be ToString(_k_).
+          1. Let _key_ be Get(_relevantExtensionKeys_, _Pk_).
+          1. ReturnIfAbrupt(_key_).
+          1. If _key_ is *"co"*, then
+            1. Let _property_ be *"collation"*.
+            1. Let _value_ be the value of _r_.[[co]].
+            1. If _value_ is *null*, let _value_ be *"default"*.
+          1. Else use the row of <emu-xref href="#table-1">Table 1</emu-xref> that contains the value of _key_ in the Key column:
+            1. Let _property_ be the name given in the Property column of the row.
+            1. Let _value_ be the value of _r_.[[_&lt;key&gt;_]].
+            1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
+          1. Set _collator_.[[_&lt;property&gt;_]] to _value_.
+          1. Increase _k_ by 1.
+        24. Let _s_ be GetOption(_options_, *"sensitivity"*, *"string"*, «*"base"*, *"accent"*, *"case"*, *"variant"*», *undefined*).
+        25. ReturnIfAbrupt(_s_).
+        26. If _s_ is *undefined*, then
+          1. If _u_ is *"sort"*, then let _s_ be *"variant"*.
+          1. Else
+            1. Let _dataLocale_ be the value of _r_.[[dataLocale]].
+            1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
+            1. Let _s_ be Get(_dataLocaleData_, *"sensitivity"*).
+        27. Set _collator_.[[sensitivity]] to _s_.
+        28. Let _ip_ be GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
+        29. ReturnIfAbrupt(_ip_).
+        30. Set _collator_.[[ignorePunctuation]] to _ip_.
+        31. Set _collator_.[[boundCompare]] to *undefined*.
+        32. Set _collator_.[[initializedCollator]] to *true*.
+        33. Return _collator_.
+      </emu-alg>
+
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Collator">
+      <h1>Intl.Collator([ locales [, options]])</h1>
+
+      <p>
+        When the *Intl.Collator* function is called with optional arguments locales and options the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-Intl.Collator">
+        1. If _NewTarget_ is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be _NewTarget_.
+        2. Let _collator_ be OrdinaryCreateFromConstructor(_newTarget_, *%CollatorPrototype%*).
+        3. ReturnIfAbrupt(_collator_).
+        4. Return InitializeCollator(_collator_, _locales_, _options_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-the-intl-collator-constructor">
+    <h1>Properties of the Intl.Collator Constructor</h1>
+
+    <p>
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.Collator constructor has the following properties:
+    </p>
+
+    <emu-clause>
+      <h1 id="sec-Intl.Collator.prototype">Intl.Collator.prototype</h1>
+
+      <p>
+        The value of *Intl.Collator.prototype* is *%CollatorPrototype%*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Collator.supportedLocalesOf">
+      <h1>Intl.Collator.supportedLocalesOf (locales [, options ])</h1>
+
+      <p>
+        When the *supportedLocalesOf* method of Intl.Collator is called, the following steps are taken:
+      </p>
+
+      <emu-alg aoid="alg-">
+        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        2. ReturnIfAbrupt(_requestedLocales_).
+        3. Return SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-internal-slots">
+      <h1>Internal Slots</h1>
+
+      <p>
+        The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in 9.1. The value of the [[relevantExtensionKeys]] internal slot is an array that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
+      </p>
+
+      <emu-note>
+        <p>
+          Unicode Technical Standard 35 describes ten locale extension keys that are relevant to collation: "co" for collator usage and specializations, "ka" for alternate handling, "kb" for backward second level weight, "kc" for case level, "kn" for numeric, "kh" for hiragana quaternary, "kk" for normalization, "kf" for case first, "kr" for reordering, "ks" for collation strength, and "vt" for variable top. Collator, however, requires that the usage is specified through the usage property of the options object, alternate handling through the ignorePunctuation property of the options object, and case level and the strength through the sensitivity property of the options object. The "co" key in the language tag is supported only for collator specializations, and the keys "kb", "kh", "kk", "kr", and "vt" are not allowed in this version of the Internationalization API. Support for the remaining keys is implementation dependent.
+        </p>
+      </emu-note>
+
+      <p>
+        The values of the [[sortLocaleData]] and [[searchLocaleData]] internal slots are implementation defined within the constraints described in 9.1 and the following additional constraints:
+      </p>
+
+      <ul>
+        <li>The first element of [[sortLocaleData]][locale].co and [[searchLocaleData]][locale].co must be null for all locale values.</li>
+        <li>The values *"standard"* and *"search"* must not be used as elements in any [[sortLocaleData]][locale].co and [[searchLocaleData]][locale].co array.</li>
+        <li>[[searchLocaleData]][locale] must have a sensitivity property with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"* for all locale values.</li>
+      </ul>
+
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-the-intl-collator-prototype-object">
+    <h1>Properties of the Intl.Collator Prototype Object</h1>
+
+    <p>
+      The Intl.Collator prototype object is itself an Intl.Collator instance as specified in <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%Collator%*)
+    </p>
+
+    <p>
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%CollatorPrototype%*, the phrase "this Collator object" refers to the object that is the *this* value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedCollator]] internal slot with value *true*.
+    </p>
+
+    <emu-clause id="sec-Intl.Collator.prototype.constructor">
+      <h1>Intl.Collator.prototype.constructor</h1>
+
+      <p>
+        The value of *Intl.Collator.prototype.constructor* is *%Collator%*.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Collator.prototype-toStringTag">
+      <h1>Intl.Collator.prototype[@@toStringTag]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Object"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Collator.prototype.compare">
+      <h1>Intl.Collator.prototype.compare</h1>
+
+      <p>
+        This named accessor property returns a function that compares two strings according to the sort order of this Collator object.
+      </p>
+      <p>
+        The value of the [[Get]] attribute is a function that takes the following steps:
+      </p>
+
+      <emu-alg aoid="alg-Intl.Collator.prototype.compare">
+        1. Let _collator_ be this Collator object.
+        2. If _collator_.[[boundCompare]] is *undefined*, then
+          1. Let _F_ be a new built-in function object as defined in 11.3.4.
+          1. The value of _F_'s length property is 2.
+          1. Let _bc_ be BoundFunctionCreate(_F_, «*this* value»).
+          1. Set _collator_.[[boundCompare]] to _bc_.
+        3. Return _collator_.[[boundCompare]].
+      </emu-alg>
+
+      <emu-note>
+        The function returned by [[Get]] is bound to this Collator object so that it can be passed directly to Array.prototype.sort or other functions.
+      </emu-note>
+
+      <p>
+        The value of the [[Set]] attribute is *undefined*.
+      </p>
+
+    </emu-clause>
+
+    <emu-clause id="sec-collator-compare-functions">
+      <h1>Collator Compare Functions</h1>
+
+      <p>
+        A Collator compare function is an anonymous function that takes two arguments, _x_ and _y_, and performs the following steps:
+      </p>
+
+      <emu-alg aoid="alg-collator-compare-functions">
+        1. Let _collator_ be the *this* value.
+        2. Assert: Type(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is *true*.
+        3. If _x_ is not provided, let _x_ be undefined.
+        4. If _y_ is not provided, let _y_ be undefined.
+        5. Let _X_ be ToString(_x_).
+        6. ReturnIfAbrupt(_X_).
+        7. Let _Y_ be ToString(_y_).
+        8. ReturnIfAbrupt(_Y_).
+        9. Return CompareStrings(_collator_, _X_, _Y_).
+      </emu-alg>
+
+      <p>
+        When the CompareStrings abstract operation is called with arguments _collator_ (which must be an object initialized as a Collator), _x_ and _y_ (which must be String values), it returns a Number other than *NaN* that represents the result of a locale-sensitive String comparison of _x_ with _y_. The two Strings are compared in an implementation-defined fashion. The result is intended to order String values in the sort order specified by the effective locale and collation options computed during construction of _collator_, and will be negative, zero, or positive, depending on whether _x_ comes before _y_ in the sort order, the Strings are equal under the sort order, or _x_ comes after _y_ in the sort order, respectively. String values must be interpreted as UTF-16 code unit sequences, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
+      </p>
+
+      <p>
+        The sensitivity of _collator_ is interpreted as follows:
+      </p>
+
+      <ul>
+        <li>base: Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A.</li>
+        <li>accent: Only strings that differ in base letters or accents and other diacritic marks compare as unequal. Examples: a ≠ b, a ≠ á, a = A.</li>
+        <li>case: Only strings that differ in base letters or case compare as unequal. Examples: a ≠ b, a = á, a ≠ A.</li>
+        <li>variant: Strings that differ in base letters, accents and other diacritic marks, or case compare as unequal. Other differences may also be taken into consideration. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
+      </ul>
+
+      <emu-note>
+      In some languages, certain letters with diacritic marks are considered base letters. For example, in Swedish, “ö” is a base letter that’s different from “o”.
+      </emu-note>
+
+      <p>
+        If the collator is set to ignore punctuation, then strings that differ only in punctuation compare as equal.
+      </p>
+
+      <p>
+        For the interpretation of options settable through extension keys, see Unicode Technical Standard 35.
+      </p>
+
+      <p>
+        The CompareStrings abstract operation with any given _collator_ argument, if considered as a function of the remaining two arguments _x_ and _y_, must be a consistent comparison function (as defined in ES2015, 22.1.3.24) on the set of all Strings.
+      </p>
+
+      <p>
+        The actual return values are implementation-defined to permit implementers to encode additional information in the value. The method is required to return 0 when comparing Strings that are considered canonically equivalent by the Unicode standard.
+      </p>
+
+      <emu-note>
+        It is recommended that the CompareStrings abstract operation be implemented following Unicode Technical Standard 10, Unicode Collation Algorithm (available at <a href="http://unicode.org/reports/tr10/">http://unicode.org/reports/tr10/</a>), using tailorings for the effective locale and collation options of _collator_. It is recommended that implementations use the tailorings provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+      </emu-note>
+
+      <emu-note>
+        Applications should not assume that the behaviour of the CompareStrings abstract operation for Collator instances with the same resolved options will remain the same for different versions of the same implementation.
+      </emu-note>
+
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Collator.prototype.resolvedOptions">
+      <h1>Intl.Collator.prototype.resolvedOptions ()</h1>
+
+      <p>
+        This function provides access to the locale and collation options computed during initialization of the object.
+      </p>
+      <p>
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-1">Table 1</emu-xref> whose keys are included in the *%Collator%*[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-properties-of-intl-collator-instances">
+      <h1>Properties of Intl.Collator Instances</h1>
+
+      <p>
+        Intl.Collator instances are ordinary objects that inherit properties from *%CollatorPrototype%*.
+      </p>
+
+      <p>
+        Intl.Collator instances and other objects that have been successfully initialized as a Collator have [[initializedIntlObject]] and [[initializedCollator]] internal slots whose values are *true*.
+      </p>
+
+      <p>
+        Objects that have been successfully initialized as a Collator also have several internal slots that are computed by the constructor:
+      </p>
+
+      <ul>
+        <li>[[locale]] is a String value with the language tag of the locale whose localization is used for collation.</li>
+        <li>[[usage]] is one of the String values *"sort"* or *"search"*, identifying the collator usage.</li>
+        <li>[[sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator’s sensitivity.</li>
+        <li>[[ignorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
+        <li>[[collation]] is a String value with the "type" given in Unicode Technical Standard 35 for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
+      </ul>
+
+      <p>
+        Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-1">Table 1</emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
+      </p>
+
+      <ul>
+        <li>[[numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
+        <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-1">Table 1</emu-xref>.</li>
+      </ul>
+
+      <p>
+        Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype-toStringTag"></emu-xref>).
+      </p>
+
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
