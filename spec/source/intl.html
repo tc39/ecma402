@@ -1,5 +1,23 @@
 <emu-clause id="intl-object">
   <h1>The Intl Object</h1>
+  <p>
+    The Intl object is a single ordinary object.
+  </p>
 
-  <p>To Be Ported.</p>
+  <p>
+    The value of the [[Prototype]] internal slot of the Intl object is the intrinsic object *%ObjectPrototype%*.
+  </p>
+
+  <p>
+    The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the *new* operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.
+  </p>
+
+  <emu-clause id="sec-properties-of-the-intl-object">
+    <h1>Properties of the Intl Object</h1>
+
+    <p>
+      The value of each of the standard built-in properties of the Intl object is a constructor. The behaviour of these constructors is specified in the following clauses: Collator (<emu-xref href="#collator-objects"></emu-xref>), NumberFormat (<emu-xref href="#numberformat-objects"></emu-xref>), and DateTimeFormat (<emu-xref href="#datetimeformat-objects"></emu-xref>).
+    </p>
+  </emu-clause>
+
 </emu-clause>

@@ -33,10 +33,10 @@
 <h3 class="orange">3<sup>rd</sup> Edition DRAFT</h3>
 
 
-<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#introduction"><span class="secnum"></span> Introduction</a></li><li><a href="#scope"><span class="secnum">1</span> Scope</a></li><li><a href="#conformance"><span class="secnum">2</span> Conformance</a></li><li><a href="#normative-references"><span class="secnum">3</span> Normative References</a></li><li><a href="#overview"><span class="secnum">4</span> Overview</a><ol class="toc"><li><a href="#sec-internationalization-localization-globalization"><span class="secnum">4.1</span> Internationalization, Localization, and Globalization</a></li><li><a href="#sec-api-overview"><span class="secnum">4.2</span> API Overview</a></li><li><a href="#sec-implementation-dependencies"><span class="secnum">4.3</span> Implementation Dependencies</a></li></ol></li><li><a href="#conventions"><span class="secnum">5</span> Notational Conventions</a><ol class="toc"><li><a href="#sec-well-known-intrinsic-objects"><span class="secnum">5.1</span> Well-Known Intrinsic Objects</a></li></ol></li><li><a href="#locales-currencies-tz"><span class="secnum">6</span> Identification of Locales, Currencies, and Time Zones</a><ol class="toc"><li><a href="#sec-case-sensitivity-and-case-mapping"><span class="secnum">6.1</span> Case Sensitivity and Case Mapping</a></li><li><a href="#sec-language-tags"><span class="secnum">6.2</span> Language Tags</a><ol class="toc"><li><a href="#sec-unicode-locale-extension-sequences"><span class="secnum">6.2.1</span> Unicode Locale Extension Sequences</a></li><li><a href="#sec-isstructurallyvalidlanguagetag"><span class="secnum">6.2.2</span> IsStructurallyValidLanguageTag (locale)</a></li><li><a href="#sec-canonicalizelanguagetag"><span class="secnum">6.2.3</span> CanonicalizeLanguageTag (locale)</a></li><li><a href="#sec-defaultlocale"><span class="secnum">6.2.4</span> DefaultLocale ()</a></li></ol></li><li><a href="#sec-currency-codes"><span class="secnum">6.3</span> Currency Codes</a><ol class="toc"><li><a href="#sec-iswellformedcurrencycode"><span class="secnum">6.3.1</span> IsWellFormedCurrencyCode (currency)</a></li></ol></li><li><a href="#sec-time-zone-names"><span class="secnum">6.4</span> Time Zone Names</a><ol class="toc"><li><a href="#sec-isvalidtimezonename"><span class="secnum">6.4.1</span> IsValidTimeZoneName (timeZone)</a></li><li><a href="#sec-canonicalizetimezonename"><span class="secnum">6.4.2</span> CanonicalizeTimeZoneName</a></li><li><a href="#sec-defaulttimezone"><span class="secnum">6.4.3</span> DefaultTimeZone ()</a></li></ol></li></ol></li><li><a href="#requirements"><span class="secnum">7</span> Requirements for Standard Built-in ECMAScript Objects</a></li><li><a href="#intl-object"><span class="secnum">8</span> The Intl Object</a></li><li><a href="#locale-and-parameter-negotiation"><span class="secnum">9</span> Locale and Parameter Negotiation</a></li><li><a href="#collator-objects"><span class="secnum">10</span> Collator Objects</a><ol class="toc"><li><a href="#sec-the-intl-collator-constructor"><span class="secnum">10.1</span> The Intl.Collator Constructor</a><ol class="toc"><li><a href="#sec-InitializeCollator"><span class="secnum">10.1.1</span> InitializeCollator (collator, locales, options)</a></li><li><a href="#sec-Intl.Collator"><span class="secnum">10.1.2</span> Intl.Collator([ locales [, options]])</a></li></ol></li><li><a href="#sec-properties-of-the-intl-collator-constructor"><span class="secnum">10.2</span> Properties of the Intl.Collator Constructor</a><ol class="toc"><li><a href="#"><span class="secnum">10.2.1</span> Intl.Collator.prototype</a></li><li><a href="#sec-Intl.Collator.supportedLocalesOf"><span class="secnum">10.2.2</span> Intl.Collator.supportedLocalesOf (locales [, options ])</a></li><li><a href="#sec-internal-slots"><span class="secnum">10.2.3</span> Internal Slots</a></li></ol></li><li><a href="#sec-properties-of-the-intl-collator-prototype-object"><span class="secnum">10.3</span> Properties of the Intl.Collator Prototype Object</a><ol class="toc"><li><a href="#sec-Intl.Collator.prototype.constructor"><span class="secnum">10.3.1</span> Intl.Collator.prototype.constructor</a></li><li><a href="#sec-Intl.Collator.prototype-toStringTag"><span class="secnum">10.3.2</span> Intl.Collator.prototype[@@toStringTag]</a></li><li><a href="#sec-Intl.Collator.prototype.compare"><span class="secnum">10.3.3</span> Intl.Collator.prototype.compare</a></li><li><a href="#sec-collator-compare-functions"><span class="secnum">10.3.4</span> Collator Compare Functions</a></li><li><a href="#sec-Intl.Collator.prototype.resolvedOptions"><span class="secnum">10.3.5</span> Intl.Collator.prototype.resolvedOptions ()</a></li><li><a href="#sec-properties-of-intl-collator-instances"><span class="secnum">10.3.6</span> Properties of Intl.Collator Instances</a></li></ol></li></ol></li><li><a href="#numberformat-objects"><span class="secnum">11</span> NumberFormat Objects</a></li><li><a href="#datetimeformat-objects"><span class="secnum">12</span> DateTimeFormat Objects</a></li><li><a href="#locale-sensitive-functions"><span class="secnum">13</span> Locale Sensitive Functions of the ECMAScript Language Specification</a><ol class="toc"><li><a href="#sec-properties-of-the-string-prototype-object"><span class="secnum">13.1</span> Properties of the String Prototype Object</a><ol class="toc"><li><a href="#sec-String.prototype.localeCompare"><span class="secnum">13.1.1</span> String.prototype.localeCompare (that [, locales [, options ]])</a></li><li><a href="#sec-String.prototype.toLocaleLowerCase"><span class="secnum">13.1.2</span> String.prototype.toLocaleLowerCase ([locales])</a></li><li><a href="#sec-String.prototype.toLocaleUpperCase"><span class="secnum">13.1.3</span> String.prototype.toLocaleUpperCase ([locales])</a></li></ol></li><li><a href="#sec-properties-of-the-number-prototype-object"><span class="secnum">13.2</span> Properties of the Number Prototype Object</a><ol class="toc"><li><a href="#sec-Number.prototype.toLocaleString"><span class="secnum">13.2.1</span> Number.prototype.toLocaleString ([locales [, options ]])</a></li></ol></li><li><a href="#sec-properties-of-the-date-prototype-object"><span class="secnum">13.3</span> Properties of the Date Prototype Object</a><ol class="toc"><li><a href="#sec-Date.prototype.toLocaleString"><span class="secnum">13.3.1</span> Date.prototype.toLocaleString ([locales [, options ]])</a></li><li><a href="#sec-Date.prototype.toLocaleDateString"><span class="secnum">13.3.2</span> Date.prototype.toLocaleDateString ([locales [, options ]])</a></li><li><a href="#sec-Date.prototype.toLocaleTimeString"><span class="secnum">13.3.3</span> Date.prototype.toLocaleTimeString ([locales [, options ]])</a></li></ol></li><li><a href="#sec-properties-of-the-array-prototype-object"><span class="secnum">13.4</span> Properties of the Array Prototype Object</a><ol class="toc"><li><a href="#sec-Date.prototype.toLocaleString"><span class="secnum">13.4.1</span> Array.prototype.toLocaleString([locales [, options ]])</a></li></ol></li></ol></li><li><a href="#annex-implementation-dependent-behaviour"><span class="secnum">A</span> Implementation Dependent Behaviour</a></li><li><a href="#annex-incompatibilities"><span class="secnum">B</span> Additions and Changes That Introduce Incompatibilities with Prior Editions</a></li></ol></div><emu-intro id="introduction">
-  <h1><span class="secnum"></span>Introduction</h1>
+<div><h2>Table of Contents</h2><ol class="toc"><li><a href="#introduction"><span class="secnum"></span> Introduction</a></li><li><a href="#scope"><span class="secnum">1</span> Scope</a></li><li><a href="#conformance"><span class="secnum">2</span> Conformance</a></li><li><a href="#normative-references"><span class="secnum">3</span> Normative References</a></li><li><a href="#overview"><span class="secnum">4</span> Overview</a><ol class="toc"><li><a href="#sec-internationalization-localization-globalization"><span class="secnum">4.1</span> Internationalization, Localization, and Globalization</a></li><li><a href="#sec-api-overview"><span class="secnum">4.2</span> API Overview</a></li><li><a href="#sec-implementation-dependencies"><span class="secnum">4.3</span> Implementation Dependencies</a></li></ol></li><li><a href="#conventions"><span class="secnum">5</span> Notational Conventions</a><ol class="toc"><li><a href="#sec-well-known-intrinsic-objects"><span class="secnum">5.1</span> Well-Known Intrinsic Objects</a></li></ol></li><li><a href="#locales-currencies-tz"><span class="secnum">6</span> Identification of Locales, Currencies, and Time Zones</a><ol class="toc"><li><a href="#sec-case-sensitivity-and-case-mapping"><span class="secnum">6.1</span> Case Sensitivity and Case Mapping</a></li><li><a href="#sec-language-tags"><span class="secnum">6.2</span> Language Tags</a><ol class="toc"><li><a href="#sec-unicode-locale-extension-sequences"><span class="secnum">6.2.1</span> Unicode Locale Extension Sequences</a></li><li><a href="#sec-isstructurallyvalidlanguagetag"><span class="secnum">6.2.2</span> IsStructurallyValidLanguageTag (locale)</a></li><li><a href="#sec-canonicalizelanguagetag"><span class="secnum">6.2.3</span> CanonicalizeLanguageTag (locale)</a></li><li><a href="#sec-defaultlocale"><span class="secnum">6.2.4</span> DefaultLocale ()</a></li></ol></li><li><a href="#sec-currency-codes"><span class="secnum">6.3</span> Currency Codes</a><ol class="toc"><li><a href="#sec-iswellformedcurrencycode"><span class="secnum">6.3.1</span> IsWellFormedCurrencyCode (currency)</a></li></ol></li><li><a href="#sec-time-zone-names"><span class="secnum">6.4</span> Time Zone Names</a><ol class="toc"><li><a href="#sec-isvalidtimezonename"><span class="secnum">6.4.1</span> IsValidTimeZoneName (timeZone)</a></li><li><a href="#sec-canonicalizetimezonename"><span class="secnum">6.4.2</span> CanonicalizeTimeZoneName</a></li><li><a href="#sec-defaulttimezone"><span class="secnum">6.4.3</span> DefaultTimeZone ()</a></li></ol></li></ol></li><li><a href="#requirements"><span class="secnum">7</span> Requirements for Standard Built-in ECMAScript Objects</a></li><li><a href="#intl-object"><span class="secnum">8</span> The Intl Object</a><ol class="toc"><li><a href="#sec-properties-of-the-intl-object"><span class="secnum">8.1</span> Properties of the Intl Object</a></li></ol></li><li><a href="#locale-and-parameter-negotiation"><span class="secnum">9</span> Locale and Parameter Negotiation</a></li><li><a href="#collator-objects"><span class="secnum">10</span> Collator Objects</a><ol class="toc"><li><a href="#sec-the-intl-collator-constructor"><span class="secnum">10.1</span> The Intl.Collator Constructor</a><ol class="toc"><li><a href="#sec-InitializeCollator"><span class="secnum">10.1.1</span> InitializeCollator (collator, locales, options)</a></li><li><a href="#sec-Intl.Collator"><span class="secnum">10.1.2</span> Intl.Collator([ locales [, options]])</a></li></ol></li><li><a href="#sec-properties-of-the-intl-collator-constructor"><span class="secnum">10.2</span> Properties of the Intl.Collator Constructor</a><ol class="toc"><li><a href="#"><span class="secnum">10.2.1</span> Intl.Collator.prototype</a></li><li><a href="#sec-Intl.Collator.supportedLocalesOf"><span class="secnum">10.2.2</span> Intl.Collator.supportedLocalesOf (locales [, options ])</a></li><li><a href="#sec-internal-slots"><span class="secnum">10.2.3</span> Internal Slots</a></li></ol></li><li><a href="#sec-properties-of-the-intl-collator-prototype-object"><span class="secnum">10.3</span> Properties of the Intl.Collator Prototype Object</a><ol class="toc"><li><a href="#sec-Intl.Collator.prototype.constructor"><span class="secnum">10.3.1</span> Intl.Collator.prototype.constructor</a></li><li><a href="#sec-Intl.Collator.prototype-toStringTag"><span class="secnum">10.3.2</span> Intl.Collator.prototype[@@toStringTag]</a></li><li><a href="#sec-Intl.Collator.prototype.compare"><span class="secnum">10.3.3</span> Intl.Collator.prototype.compare</a></li><li><a href="#sec-collator-compare-functions"><span class="secnum">10.3.4</span> Collator Compare Functions</a></li><li><a href="#sec-Intl.Collator.prototype.resolvedOptions"><span class="secnum">10.3.5</span> Intl.Collator.prototype.resolvedOptions ()</a></li><li><a href="#sec-properties-of-intl-collator-instances"><span class="secnum">10.3.6</span> Properties of Intl.Collator Instances</a></li></ol></li></ol></li><li><a href="#numberformat-objects"><span class="secnum">11</span> NumberFormat Objects</a></li><li><a href="#datetimeformat-objects"><span class="secnum">12</span> DateTimeFormat Objects</a></li><li><a href="#locale-sensitive-functions"><span class="secnum">13</span> Locale Sensitive Functions of the ECMAScript Language Specification</a><ol class="toc"><li><a href="#sec-properties-of-the-string-prototype-object"><span class="secnum">13.1</span> Properties of the String Prototype Object</a><ol class="toc"><li><a href="#sec-String.prototype.localeCompare"><span class="secnum">13.1.1</span> String.prototype.localeCompare (that [, locales [, options ]])</a></li><li><a href="#sec-String.prototype.toLocaleLowerCase"><span class="secnum">13.1.2</span> String.prototype.toLocaleLowerCase ([locales])</a></li><li><a href="#sec-String.prototype.toLocaleUpperCase"><span class="secnum">13.1.3</span> String.prototype.toLocaleUpperCase ([locales])</a></li></ol></li><li><a href="#sec-properties-of-the-number-prototype-object"><span class="secnum">13.2</span> Properties of the Number Prototype Object</a><ol class="toc"><li><a href="#sec-Number.prototype.toLocaleString"><span class="secnum">13.2.1</span> Number.prototype.toLocaleString ([locales [, options ]])</a></li></ol></li><li><a href="#sec-properties-of-the-date-prototype-object"><span class="secnum">13.3</span> Properties of the Date Prototype Object</a><ol class="toc"><li><a href="#sec-Date.prototype.toLocaleString"><span class="secnum">13.3.1</span> Date.prototype.toLocaleString ([locales [, options ]])</a></li><li><a href="#sec-Date.prototype.toLocaleDateString"><span class="secnum">13.3.2</span> Date.prototype.toLocaleDateString ([locales [, options ]])</a></li><li><a href="#sec-Date.prototype.toLocaleTimeString"><span class="secnum">13.3.3</span> Date.prototype.toLocaleTimeString ([locales [, options ]])</a></li></ol></li><li><a href="#sec-properties-of-the-array-prototype-object"><span class="secnum">13.4</span> Properties of the Array Prototype Object</a><ol class="toc"><li><a href="#sec-Date.prototype.toLocaleString"><span class="secnum">13.4.1</span> Array.prototype.toLocaleString([locales [, options ]])</a></li></ol></li></ol></li><li><a href="#annex-implementation-dependent-behaviour"><span class="secnum">A</span> Implementation Dependent Behaviour</a></li><li><a href="#annex-incompatibilities"><span class="secnum">B</span> Additions and Changes That Introduce Incompatibilities with Prior Editions</a></li></ol></div><emu-intro id="introduction">
+  <h1><span class="secnum"></span>Introduction<span class="utils"><span class="anchor"><a href="#introduction">#</a></span></span></h1>
   <p>
-    This specification's source can be found at <a href="https://github.com/tc39/ecma402">https://github.com/tc39/ecma402</a>.
+    This specification's source can be found at  <a href="https://github.com/tc39/ecma402">https://github.com/tc39/ecma402</a>.
   </p>
   <p>
     The ECMAScript 2016 Internationalization API Specification (ECMA-402 3<sup>rd</sup> Edition) provides key language-sensitive functionality as a complement to the ECMAScript 2016 Language Specification (ECMA-262 7<sup>th</sup> Edition or successor). Its functionality has been selected from that of well-established internationalization APIs such as those of the Internationalization Components for Unicode (ICU) library, of the .NET framework, or of the Java platform.
@@ -146,7 +146,7 @@
 </emu-intro>
 
 <emu-clause id="scope">
-  <h1><span class="secnum">1</span>Scope</h1>
+  <h1><span class="secnum">1</span>Scope<span class="utils"><span class="anchor"><a href="#scope">#</a></span></span></h1>
   <p>
     This Standard defines the application programming interface for ECMAScript objects that support programs that need to adapt to the linguistic and cultural conventions used by different human languages and countries.
   </p>
@@ -154,7 +154,7 @@
 </emu-clause>
 
 <emu-clause id="conformance">
-  <h1><span class="secnum">2</span>Conformance</h1>
+  <h1><span class="secnum">2</span>Conformance<span class="utils"><span class="anchor"><a href="#conformance">#</a></span></span></h1>
   <p>
     A conforming implementation of the ECMAScript 2016 Internationalization API Specification must conform to the ECMAScript 2016 Language Specification (ECMA-262 6th Edition, or successor), and must provide and support all the objects, properties, functions, and program semantics described in this specification.
   </p>
@@ -162,7 +162,7 @@
     A conforming implementation of the ECMAScript 2016 Internationalization API Specification is permitted to provide additional objects, properties, and functions beyond those described in this specification. In particular, a conforming implementation of the ECMAScript 2016 Internationalization API Specification is permitted to provide properties not described in this specification, and values for those properties, for objects that are described in this specification. A conforming implementation is not permitted to add optional arguments to the functions defined in this specification.
   </p>
   <p>
-    A conforming implementation is permitted to accept additional values, and then have implementation-defined behaviour instead of throwing a RangeError, for the following properties of <var>options</var> arguments:
+    A conforming implementation is permitted to accept additional values, and then have implementation-defined behaviour instead of throwing a RangeError, for the following properties of <var>options</var>  arguments:
   </p>
   <p>
     </p><ul>
@@ -177,7 +177,7 @@
 </emu-clause>
 
 <emu-clause id="normative-references">
-  <h1><span class="secnum">3</span>Normative References</h1>
+  <h1><span class="secnum">3</span>Normative References<span class="utils"><span class="anchor"><a href="#normative-references">#</a></span></span></h1>
   <p>
     The following referenced documents are required for the application of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.
   </p>
@@ -223,12 +223,12 @@
     <li>
       <a href="http://www.unicode.org/versions/latest">The Unicode Standard, Version 5.1, or successor</a>
 
-      TODO: Update to latest version.
+      
     </li>
     <li>
       <a href="http://unicode.org/reports/tr35/">Unicode Technical Standard 35, Unicode Locale Data Markup Language, version 21.0.1 or successor</a>
 
-      TODO: Update to latest version.
+      
     </li>
   </ul>
 
@@ -239,14 +239,14 @@
 </emu-clause>
 
 <emu-clause id="overview">
-  <h1><span class="secnum">4</span>Overview</h1>
+  <h1><span class="secnum">4</span>Overview<span class="utils"><span class="anchor"><a href="#overview">#</a></span></span></h1>
 
   <p>
     This section contains a non-normative overview of the ECMAScript 2016 Internationalization API Specification.
   </p>
 
   <emu-clause id="sec-internationalization-localization-globalization">
-    <h1><span class="secnum">4.1</span>Internationalization, Localization, and Globalization</h1>
+    <h1><span class="secnum">4.1</span>Internationalization, Localization, and Globalization<span class="utils"><span class="anchor"><a href="#sec-internationalization-localization-globalization">#</a></span></span></h1>
 
     <p>
       Internationalization of software means designing it such that it supports or can be easily adapted to support the needs of users speaking different languages and having different cultural expectations, and enables worldwide communication between them. Localization then is the actual adaptation to a specific language and culture. Globalization of software is commonly understood to be the combination of internationalization and localization. Globalization starts at the lowest level by using a text representation that supports all languages in the world, and using standard identifiers to identify languages, countries, time zones, and other relevant parameters. It continues with using a user interface language and data presentation that the user understands, and finally often requires product-specific adaptations to the user’s language, culture, and environment.
@@ -258,7 +258,7 @@
 
 
   <emu-clause id="sec-api-overview">
-    <h1><span class="secnum">4.2</span>API Overview</h1>
+    <h1><span class="secnum">4.2</span>API Overview<span class="utils"><span class="anchor"><a href="#sec-api-overview">#</a></span></span></h1>
 
     <p>
       The ECMAScript 2016 Internationalization API Specification is designed to complement the ECMAScript 2016 Language Specification by providing key language-sensitive functionality. The API can be added to an implementation of the ECMAScript 2016 Language Specification (ECMA-262 7<sup>th</sup> Edition, or successor).
@@ -286,7 +286,7 @@
   </emu-clause>
 
   <emu-clause id="sec-implementation-dependencies">
-    <h1><span class="secnum">4.3</span>Implementation Dependencies</h1>
+    <h1><span class="secnum">4.3</span>Implementation Dependencies<span class="utils"><span class="anchor"><a href="#sec-implementation-dependencies">#</a></span></span></h1>
 
     <p>
       Due to the nature of internationalization, the API specification has to leave several details implementation dependent:
@@ -307,7 +307,7 @@
 </emu-clause>
 
 <emu-clause id="conventions">
-  <h1><span class="secnum">5</span>Notational Conventions</h1>
+  <h1><span class="secnum">5</span>Notational Conventions<span class="utils"><span class="anchor"><a href="#conventions">#</a></span></span></h1>
 
   <p>
     This standard uses a subset of the notational conventions of the ECMAScript 2015 Language Specification (ECMA-262 6th Edition), as ES2015:
@@ -335,7 +335,7 @@
   </p>
 
   <emu-clause id="sec-well-known-intrinsic-objects">
-    <h1><span class="secnum">5.1</span>Well-Known Intrinsic Objects</h1>
+    <h1><span class="secnum">5.1</span>Well-Known Intrinsic Objects<span class="utils"><span class="anchor"><a href="#sec-well-known-intrinsic-objects">#</a></span></span></h1>
 
     <p>
       The following table extends the Well-Known Intrinsic Objects table defined in ES2015, 6.1.7.4.
@@ -415,14 +415,14 @@
 </emu-clause>
 
 <emu-clause id="locales-currencies-tz">
-  <h1><span class="secnum">6</span>Identification of Locales, Currencies, and Time Zones</h1>
+  <h1><span class="secnum">6</span>Identification of Locales, Currencies, and Time Zones<span class="utils"><span class="anchor"><a href="#locales-currencies-tz">#</a></span></span></h1>
 
   <p>
     This clause describes the String values used in the ECMAScript 2015 Internationalization API Specification to identify locales, currencies, and time zones.
   </p>
 
   <emu-clause id="sec-case-sensitivity-and-case-mapping">
-    <h1><span class="secnum">6.1</span>Case Sensitivity and Case Mapping</h1>
+    <h1><span class="secnum">6.1</span>Case Sensitivity and Case Mapping<span class="utils"><span class="anchor"><a href="#sec-case-sensitivity-and-case-mapping">#</a></span></span></h1>
 
     <p>
       The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters "A" to "Z" (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters "a" to "z" (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range "a" to "z" (U+0061 to U+007A) to the corresponding characters in the range "A" to "Z" (U+0041 to U+005A) and maps no other characters to the latter range.
@@ -434,7 +434,7 @@
   </emu-clause>
 
   <emu-clause id="sec-language-tags">
-    <h1><span class="secnum">6.2</span>Language Tags</h1>
+    <h1><span class="secnum">6.2</span>Language Tags<span class="utils"><span class="anchor"><a href="#sec-language-tags">#</a></span></span></h1>
 
     <p>
       The ECMAScript 2015 Internationalization API Specification identifies locales using language tags as defined by IETF BCP 47 (RFCs 5646 and 4647 or their successors), which may include extensions such as those registered through RFC 6067. Their canonical form is specified in RFC 5646 section 4.5 or its successor.
@@ -446,7 +446,7 @@
 
 
     <emu-clause id="sec-unicode-locale-extension-sequences">
-      <h1><span class="secnum">6.2.1</span>Unicode Locale Extension Sequences</h1>
+      <h1><span class="secnum">6.2.1</span>Unicode Locale Extension Sequences<span class="utils"><span class="anchor"><a href="#sec-unicode-locale-extension-sequences">#</a></span></span></h1>
 
       <p>
         This standard uses the term "Unicode locale extension sequence" for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator "-" and the singleton "u", and includes the maximum sequence of following non-singleton subtags and their preceding "-" separators.
@@ -454,7 +454,7 @@
     </emu-clause>
 
     <emu-clause id="sec-isstructurallyvalidlanguagetag">
-      <h1><span class="secnum">6.2.2</span>IsStructurallyValidLanguageTag (locale)</h1>
+      <h1><span class="secnum">6.2.2</span>IsStructurallyValidLanguageTag (locale)<span class="utils"><span class="anchor"><a href="#sec-isstructurallyvalidlanguagetag">#</a></span></span></h1>
 
       <p>
         The IsStructurallyValidLanguageTag abstract operation verifies that the <var>locale</var> argument (which must be a String value)
@@ -472,7 +472,7 @@
     </emu-clause>
 
     <emu-clause id="sec-canonicalizelanguagetag">
-      <h1><span class="secnum">6.2.3</span>CanonicalizeLanguageTag (locale)</h1>
+      <h1><span class="secnum">6.2.3</span>CanonicalizeLanguageTag (locale)<span class="utils"><span class="anchor"><a href="#sec-canonicalizelanguagetag">#</a></span></span></h1>
 
       <p>
         The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the <var>locale</var> argument (which must be a String value that is a structurally valid BCP 47 language tag as verified by the IsStructurallyValidLanguageTag abstract operation). It takes the steps specified in RFC 5646 section 4.5, or successor, to bring the language tag into canonical form, and to regularize the case of the subtags, but does not take the steps to bring a language tag into "extlang form" and to reorder variant subtags.
@@ -484,17 +484,17 @@
     </emu-clause>
 
     <emu-clause id="sec-defaultlocale">
-      <h1><span class="secnum">6.2.4</span>DefaultLocale ()</h1>
+      <h1><span class="secnum">6.2.4</span>DefaultLocale ()<span class="utils"><span class="anchor"><a href="#sec-defaultlocale">#</a></span></span></h1>
 
       <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tag for the host environment’s current locale.
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"><a href="#sec-isstructurallyvalidlanguagetag">6.2.2</a></emu-xref>) and  canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"><a href="#sec-canonicalizelanguagetag">6.2.3</a></emu-xref>) BCP 47 language tag for the host environment’s current locale.
       </p>
     </emu-clause>
 
   </emu-clause>
 
   <emu-clause id="sec-currency-codes">
-    <h1><span class="secnum">6.3</span>Currency Codes</h1>
+    <h1><span class="secnum">6.3</span>Currency Codes<span class="utils"><span class="anchor"><a href="#sec-currency-codes">#</a></span></span></h1>
 
     <p>
       The ECMAScript 2015 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is upper case.
@@ -505,25 +505,19 @@
     </p>
 
     <emu-clause id="sec-iswellformedcurrencycode">
-      <h1><span class="secnum">6.3.1</span>IsWellFormedCurrencyCode (currency)</h1>
+      <h1><span class="secnum">6.3.1</span>IsWellFormedCurrencyCode (currency)<span class="utils"><span class="anchor"><a href="#sec-iswellformedcurrencycode">#</a></span></span></h1>
 
       <p>
         The IsWellFormedCurrencyCode abstract operation verifies that the <var>currency</var> argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
       </p>
 
-      <emu-alg aoid="iswellformedcurrencycode-alg" id="ao-iswellformedcurrencycode-alg"><ol>
-  <li>Let <var>normalized</var> be the result of mapping <var>currency</var> to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.</li>
-  <li>If the string length of <var>normalized</var> is not 3, return <emu-val>false</emu-val>.</li>
-  <li>If <var>normalized</var> contains any character that is not in the range <code>"A"</code> to <code>"Z"</code> (U+0041 to U+005A), return <emu-val>false</emu-val>.</li>
-  <li>Return <emu-val>true</emu-val>.</li>
-</ol></emu-alg>
+      <emu-alg aoid="iswellformedcurrencycode-alg" id="ao-iswellformedcurrencycode-alg"><ol><li>Let <var>normalized</var> be the result of mapping <var>currency</var> to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>.</li><li>If the string length of <var>normalized</var> is not 3, return <emu-val>false</emu-val>.</li><li>If <var>normalized</var> contains any character that is not in the range "A" to "Z" (U+0041 to U+005A), return <emu-val>false</emu-val>.</li><li>Return <emu-val>true</emu-val>.</li></ol></emu-alg>
     </emu-clause>
 
   </emu-clause>
 
   <emu-clause id="sec-time-zone-names">
-    <h1><span class="secnum">6.4</span>Time Zone Names</h1>
+    <h1><span class="secnum">6.4</span>Time Zone Names<span class="utils"><span class="anchor"><a href="#sec-time-zone-names">#</a></span></span></h1>
 
     <p>
       The ECMAScript 2015 Internationalization API Specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database.
@@ -534,31 +528,24 @@
     </p>
 
     <emu-clause id="sec-isvalidtimezonename">
-      <h1><span class="secnum">6.4.1</span>IsValidTimeZoneName (timeZone)</h1>
+      <h1><span class="secnum">6.4.1</span>IsValidTimeZoneName (timeZone)<span class="utils"><span class="anchor"><a href="#sec-isvalidtimezonename">#</a></span></span></h1>
 
       <p>
         The IsValidTimeZoneName abstract operation verifies that the <var>timeZone</var> argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.
       </p>
       <p>
-        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>. It returns false otherwise.
+        The abstract operation returns true if <var>timeZone</var>, converted to upper case as described in  <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in  <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>. It returns false otherwise.
       </p>
     </emu-clause>
 
     <emu-clause id="sec-canonicalizetimezonename">
-      <h1><span class="secnum">6.4.2</span>CanonicalizeTimeZoneName</h1>
+      <h1><span class="secnum">6.4.2</span>CanonicalizeTimeZoneName<span class="utils"><span class="anchor"><a href="#sec-canonicalizetimezonename">#</a></span></span></h1>
 
       <p>
         The CanonicalizeTimeZoneName abstract operation returns the canonical and case-regularized form of the <var>timeZone</var> argument (which must be a String value that is a valid time zone name as verified by the IsValidTimeZoneName abstract operation). The following steps are taken:
       </p>
 
-      <emu-alg aoid="canonicalizetimezonename-alg" id="ao-canonicalizetimezonename-alg"><ol>
-  <li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in
-    <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.</li>
-  <li>If <var>ianaTimeZone</var> is a Link name, then let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the <code>"backward"</code> file of the IANA Time Zone Database.</li>
-  <li>If <var>ianaTimeZone</var> is <emu-val>"Etc/UTC"</emu-val> or <emu-val>"Etc/GMT"</emu-val>, then return <emu-val>"UTC"</emu-val>.</li>
-  <li>Return <var>ianaTimeZone</var>.</li>
-</ol></emu-alg>
+      <emu-alg aoid="canonicalizetimezonename-alg" id="ao-canonicalizetimezonename-alg"><ol><li>Let <var>ianaTimeZone</var> be the Zone or Link name of the IANA Time Zone Database such that <var>timeZone</var>, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>, is equal to <var>ianaTimeZone</var>, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"><a href="#sec-case-sensitivity-and-case-mapping">6.1</a></emu-xref>.</li><li>If <var>ianaTimeZone</var> is a Link name, then let <var>ianaTimeZone</var> be the corresponding Zone name as specified in the "backward" file of the IANA Time Zone Database.</li><li>If <var>ianaTimeZone</var> is <emu-val>"Etc/UTC"</emu-val> or <emu-val>"Etc/GMT"</emu-val>, then return <emu-val>"UTC"</emu-val>.</li><li>Return <var>ianaTimeZone</var>.</li></ol></emu-alg>
 
       <p>
         The Intl.DateTimeFormat constructor allows this time zone name; if the time zone is not specified, the host environment’s current time zone is used. Implementations shall support UTC and the host environment’s current time zone (if different from UTC) in formatting.
@@ -566,10 +553,10 @@
     </emu-clause>
 
     <emu-clause id="sec-defaulttimezone">
-      <h1><span class="secnum">6.4.3</span>DefaultTimeZone ()</h1>
+      <h1><span class="secnum">6.4.3</span>DefaultTimeZone ()<span class="utils"><span class="anchor"><a href="#sec-defaulttimezone">#</a></span></span></h1>
 
       <p>
-        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment’s current time zone.
+        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"><a href="#sec-isvalidtimezonename">6.4.1</a></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"><a href="#sec-canonicalizetimezonename">6.4.2</a></emu-xref>) time zone name for the host environment’s current time zone.
       </p>
     </emu-clause>
 
@@ -578,7 +565,7 @@
 </emu-clause>
 
 <emu-clause id="requirements">
-  <h1><span class="secnum">7</span>Requirements for Standard Built-in ECMAScript Objects</h1>
+  <h1><span class="secnum">7</span>Requirements for Standard Built-in ECMAScript Objects<span class="utils"><span class="anchor"><a href="#requirements">#</a></span></span></h1>
 
   <p>
     Unless specified otherwise in this document, the objects, functions, and constructors described in this standard are subject to the generic requirements and restrictions specified for standard built-in ECMAScript objects in the ECMAScript 2015 Language Specification, 6th edition, clause 17, or successor.
@@ -586,28 +573,46 @@
 </emu-clause>
 
 <emu-clause id="intl-object">
-  <h1><span class="secnum">8</span>The Intl Object</h1>
+  <h1><span class="secnum">8</span>The Intl Object<span class="utils"><span class="anchor"><a href="#intl-object">#</a></span></span></h1>
+  <p>
+    The Intl object is a single ordinary object.
+  </p>
 
-  <p>To Be Ported.</p>
+  <p>
+    The value of the [[Prototype]] internal slot of the Intl object is the intrinsic object <emu-val>%ObjectPrototype%</emu-val>.
+  </p>
+
+  <p>
+    The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the <emu-val>new</emu-val> operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.
+  </p>
+
+  <emu-clause id="sec-properties-of-the-intl-object">
+    <h1><span class="secnum">8.1</span>Properties of the Intl Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-intl-object">#</a></span></span></h1>
+
+    <p>
+      The value of each of the standard built-in properties of the Intl object is a constructor. The behaviour of these constructors is specified in the following clauses: Collator (<emu-xref href="#collator-objects"><a href="#collator-objects">10</a></emu-xref>), NumberFormat (<emu-xref href="#numberformat-objects"><a href="#numberformat-objects">11</a></emu-xref>), and DateTimeFormat (<emu-xref href="#datetimeformat-objects"><a href="#datetimeformat-objects">12</a></emu-xref>).
+    </p>
+  </emu-clause>
+
 </emu-clause>
 
 <emu-clause id="locale-and-parameter-negotiation">
-  <h1><span class="secnum">9</span>Locale and Parameter Negotiation</h1>
+  <h1><span class="secnum">9</span>Locale and Parameter Negotiation<span class="utils"><span class="anchor"><a href="#locale-and-parameter-negotiation">#</a></span></span></h1>
 
   <p>To Be Ported.</p>
 </emu-clause>
 
 <emu-clause id="collator-objects">
-  <h1><span class="secnum">10</span>Collator Objects</h1>
+  <h1><span class="secnum">10</span>Collator Objects<span class="utils"><span class="anchor"><a href="#collator-objects">#</a></span></span></h1>
 
   <emu-clause id="sec-the-intl-collator-constructor">
-    <h1><span class="secnum">10.1</span>The Intl.Collator Constructor</h1>
+    <h1><span class="secnum">10.1</span>The Intl.Collator Constructor<span class="utils"><span class="anchor"><a href="#sec-the-intl-collator-constructor">#</a></span></span></h1>
     <p>
       The Intl.Collator constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in 9.1.
     </p>
 
     <emu-clause id="sec-InitializeCollator">
-      <h1><span class="secnum">10.1.1</span>InitializeCollator (collator, locales, options)</h1>
+      <h1><span class="secnum">10.1.1</span>InitializeCollator (collator, locales, options)<span class="utils"><span class="anchor"><a href="#sec-InitializeCollator">#</a></span></span></h1>
 
       <p>
         The abstract operation InitializeCollator accepts the arguments <var>collator</var> (which must be an object), <var>locales</var>, and <var>options</var>. It initializes <var>collator</var> as a <emu-val>Collator</emu-val> object.
@@ -646,137 +651,30 @@
         The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-InitializeCollator" id="ao-alg-InitializeCollator"><ol>
-  <li>If collator has an [[initializedIntlObject]] internal slot with value <emu-val>true</emu-val>, throw a <emu-val>TypeError</emu-val> exception.</li>
-  <li>Set collator.[[initializedIntlObject]] to <emu-val>true</emu-val>.</li>
-  <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
-  <li>If <var>options</var> is <emu-val>undefined</emu-val>, then
-    <ol>
-      <li>Let <var>options</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-objectcreate">ObjectCreate</a>(<emu-val>%ObjectPrototype%</emu-val>).</li>
-    </ol>
-  </li>
-  <li>Else
-    <ol>
-      <li>Let <var>options</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject">ToObject</a>(<var>options</var>).</li>
-      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-    </ol>
-  </li>
-  <li>Let <var>u</var> be GetOption(<var>options</var>, <emu-val>"usage"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"sort"</emu-val>, <emu-val>"search"</emu-val>», <emu-val>"sort"</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>u</var>).</li>
-  <li>Set <var>collator</var>.[[usage]] to <var>u</var>.</li>
-  <li>If <var>u</var> is <emu-val>"sort"</emu-val>, then
-    <ol>
-      <li>Let <var>localeData</var> be the value of <emu-val>%Collator%</emu-val>.[[sortLocaleData]];</li>
-    </ol>
-  </li>
-  <li>Else
-    <ol>
-      <li>Let <var>localeData</var> be the value of <emu-val>%Collator%</emu-val>.[[searchLocaleData]].</li>
-    </ol>
-  </li>
-  <li>Let <var>opt</var> be a new Record.</li>
-  <li>Let <var>matcher</var> be GetOption(<var>options</var>, <emu-val>"localeMatcher"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"lookup"</emu-val>, *<code>"best fit"</code>*», *<code>"best fit"</code>*).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>matcher</var>).</li>
-  <li>Set <var>opt</var>.[[localeMatcher]] to <var>matcher</var>.</li>
-  <li>For each row in
-    <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
-    <ol>
-      <li>Let <var>key</var> be the name given in the Key column of the row.</li>
-      <li>Let <var>prop</var> be the name given in the Property column of the row.</li>
-      <li>Let <var>type</var> be the string given in the Type column of the row.</li>
-      <li>Let <var>list</var> be a List containing the Strings given in the Values column of the row, or <emu-val>undefined</emu-val> if no strings are given.</li>
-      <li>Let <var>value</var> be GetOption(<var>options</var>, <var>prop</var>, <var>type</var>, <var>list</var>, <emu-val>undefined</emu-val>).</li>
-      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
-      <li>If the string given in the Type column of the row is <emu-val>"boolean"</emu-val> and value is not <emu-val>undefined</emu-val>, then
-        <ol>
-          <li>Let <var>value</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>value</var>).</li>
-          <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li>
-        </ol>
-      </li>
-      <li>Set <var>opt_.[[_&lt;key&gt;</var>]] to <var>value</var>.</li>
-    </ol>
-  </li>
-  <li>Let <var>relevantExtensionKeys</var> be the value of <emu-val>%Collator%</emu-val>.[[relevantExtensionKeys]].</li>
-  <li>Let <var>r</var> be ResolveLocale(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>opt</var>, <var>relevantExtensionKeys</var>, <var>localeData</var>).</li>
-  <li>Set <var>collator</var>.[[locale]] to the value of <var>r</var>.[[locale]].</li>
-  <li>Let <var>k</var> be 0.</li>
-  <li>Let <var>lenValue</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <emu-val>"length"</emu-val>).</li>
-  <li>Let <var>len</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength">ToLength</a>(<var>lenValue</var>).</li>
-  <li>Repeat while <var>k</var> &lt; <var>len</var>:
-    <ol>
-      <li>Let <var>Pk</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>k</var>).</li>
-      <li>Let <var>key</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <var>Pk</var>).</li>
-      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>key</var>).</li>
-      <li>If <var>key</var> is <emu-val>"co"</emu-val>, then
-        <ol>
-          <li>Let <var>property</var> be <emu-val>"collation"</emu-val>.</li>
-          <li>Let <var>value</var> be the value of <var>r</var>.[[co]].</li>
-          <li>If <var>value</var> is <emu-val>null</emu-val>, let <var>value</var> be <emu-val>"default"</emu-val>.</li>
-        </ol>
-      </li>
-      <li>Else use the row of
-        <emu-xref href="#table-1">Table 1</emu-xref> that contains the value of <var>key</var> in the Key column:
-        <ol>
-          <li>Let <var>property</var> be the name given in the Property column of the row.</li>
-          <li>Let <var>value</var> be the value of <var>r_.[[_&lt;key&gt;</var>]].</li>
-          <li>If the name given in the Type column of the row is <emu-val>"boolean"</emu-val>, let <var>value</var> be the result of comparing value with <emu-val>"true"</emu-val>.</li>
-        </ol>
-      </li>
-      <li>Set <var>collator_.[[_&lt;property&gt;</var>]] to <var>value</var>.</li>
-      <li>Increase <var>k</var> by 1.</li>
-    </ol>
-  </li>
-  <li>Let <var>s</var> be GetOption(<var>options</var>, <emu-val>"sensitivity"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"base"</emu-val>, <emu-val>"accent"</emu-val>, <emu-val>"case"</emu-val>, <emu-val>"variant"</emu-val>», <emu-val>undefined</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>s</var>).</li>
-  <li>If <var>s</var> is <emu-val>undefined</emu-val>, then
-    <ol>
-      <li>If <var>u</var> is <emu-val>"sort"</emu-val>, then let <var>s</var> be <emu-val>"variant"</emu-val>.</li>
-      <li>Else
-        <ol>
-          <li>Let <var>dataLocale</var> be the value of <var>r</var>.[[dataLocale]].</li>
-          <li>Let <var>dataLocaleData</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>localeData</var>, <var>dataLocale</var>).</li>
-          <li>Let <var>s</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>dataLocaleData</var>, <emu-val>"sensitivity"</emu-val>).</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>Set <var>collator</var>.[[sensitivity]] to <var>s</var>.</li>
-  <li>Let <var>ip</var> be GetOption(<var>options</var>, <emu-val>"ignorePunctuation"</emu-val>, <emu-val>"boolean"</emu-val>, <emu-val>undefined</emu-val>, <emu-val>false</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>ip</var>).</li>
-  <li>Set <var>collator</var>.[[ignorePunctuation]] to <var>ip</var>.</li>
-  <li>Set <var>collator</var>.[[boundCompare]] to <emu-val>undefined</emu-val>.</li>
-  <li>Set <var>collator</var>.[[initializedCollator]] to <emu-val>true</emu-val>.</li>
-  <li>Return <var>collator</var>.</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-InitializeCollator" id="ao-alg-InitializeCollator"><ol><li>If collator has an [[initializedIntlObject]] internal slot with value <emu-val>true</emu-val>, throw a <emu-val>TypeError</emu-val> exception.</li><li>Set collator.[[initializedIntlObject]] to <emu-val>true</emu-val>.</li><li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li><li>If <var>options</var> is <emu-val>undefined</emu-val>, then<ol><li>Let <var>options</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-objectcreate">ObjectCreate</a>(<emu-val>%ObjectPrototype%</emu-val>).</li></ol></li><li>Else<ol><li>Let <var>options</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-toobject">ToObject</a>(<var>options</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li></ol></li><li>Let <var>u</var> be GetOption(<var>options</var>, <emu-val>"usage"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"sort"</emu-val>, <emu-val>"search"</emu-val>», <emu-val>"sort"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>u</var>).</li><li>Set <var>collator</var>.[[usage]] to <var>u</var>.</li><li>If <var>u</var> is <emu-val>"sort"</emu-val>, then<ol><li>Let <var>localeData</var> be the value of <emu-val>%Collator%</emu-val>.[[sortLocaleData]];</li></ol></li><li>Else<ol><li>Let <var>localeData</var> be the value of <emu-val>%Collator%</emu-val>.[[searchLocaleData]].</li></ol></li><li>Let <var>opt</var> be a new Record.</li><li>Let <var>matcher</var> be GetOption(<var>options</var>, <emu-val>"localeMatcher"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"lookup"</emu-val>, <emu-val>"best fit"</emu-val>», <emu-val>"best fit"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>matcher</var>).</li><li>Set <var>opt</var>.[[localeMatcher]] to <var>matcher</var>.</li><li>For each row in <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref>, except the header row, do:<ol><li>Let <var>key</var> be the name given in the Key column of the row.</li><li>Let <var>prop</var> be the name given in the Property column of the row.</li><li>Let <var>type</var> be the string given in the Type column of the row.</li><li>Let <var>list</var> be a List containing the Strings given in the Values column of the row, or <emu-val>undefined</emu-val> if no strings are given.</li><li>Let <var>value</var> be GetOption(<var>options</var>, <var>prop</var>, <var>type</var>, <var>list</var>, <emu-val>undefined</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li><li>If the string given in the Type column of the row is <emu-val>"boolean"</emu-val> and value is not <emu-val>undefined</emu-val>, then<ol><li>Let <var>value</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>value</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>value</var>).</li></ol></li><li>Set <var>opt</var>.[[<var>&lt;key&gt;</var>]] to <var>value</var>.</li></ol></li><li>Let <var>relevantExtensionKeys</var> be the value of <emu-val>%Collator%</emu-val>.[[relevantExtensionKeys]].</li><li>Let <var>r</var> be ResolveLocale(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>opt</var>, <var>relevantExtensionKeys</var>, <var>localeData</var>).</li><li>Set <var>collator</var>.[[locale]] to the value of <var>r</var>.[[locale]].</li><li>Let <var>k</var> be 0.</li><li>Let <var>lenValue</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <emu-val>"length"</emu-val>).</li><li>Let <var>len</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tolength">ToLength</a>(<var>lenValue</var>).</li><li>Repeat while <var>k</var> &lt; <var>len</var>:<ol><li>Let <var>Pk</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>k</var>).</li><li>Let <var>key</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>relevantExtensionKeys</var>, <var>Pk</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>key</var>).</li><li>If <var>key</var> is <emu-val>"co"</emu-val>, then<ol><li>Let <var>property</var> be <emu-val>"collation"</emu-val>.</li><li>Let <var>value</var> be the value of <var>r</var>.[[co]].</li><li>If <var>value</var> is <emu-val>null</emu-val>, let <var>value</var> be <emu-val>"default"</emu-val>.</li></ol></li><li>Else use the row of <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> that contains the value of <var>key</var> in the Key column:<ol><li>Let <var>property</var> be the name given in the Property column of the row.</li><li>Let <var>value</var> be the value of <var>r</var>.[[<var>&lt;key&gt;</var>]].</li><li>If the name given in the Type column of the row is <emu-val>"boolean"</emu-val>, let <var>value</var> be the result of comparing value with <emu-val>"true"</emu-val>.</li></ol></li><li>Set <var>collator</var>.[[<var>&lt;property&gt;</var>]] to <var>value</var>.</li><li>Increase <var>k</var> by 1.</li></ol></li><li>Let <var>s</var> be GetOption(<var>options</var>, <emu-val>"sensitivity"</emu-val>, <emu-val>"string"</emu-val>, «<emu-val>"base"</emu-val>, <emu-val>"accent"</emu-val>, <emu-val>"case"</emu-val>, <emu-val>"variant"</emu-val>», <emu-val>undefined</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>s</var>).</li><li>If <var>s</var> is <emu-val>undefined</emu-val>, then<ol><li>If <var>u</var> is <emu-val>"sort"</emu-val>, then let <var>s</var> be <emu-val>"variant"</emu-val>.</li><li>Else<ol><li>Let <var>dataLocale</var> be the value of <var>r</var>.[[dataLocale]].</li><li>Let <var>dataLocaleData</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>localeData</var>, <var>dataLocale</var>).</li><li>Let <var>s</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>dataLocaleData</var>, <emu-val>"sensitivity"</emu-val>).</li></ol></li></ol></li><li>Set <var>collator</var>.[[sensitivity]] to <var>s</var>.</li><li>Let <var>ip</var> be GetOption(<var>options</var>, <emu-val>"ignorePunctuation"</emu-val>, <emu-val>"boolean"</emu-val>, <emu-val>undefined</emu-val>, <emu-val>false</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>ip</var>).</li><li>Set <var>collator</var>.[[ignorePunctuation]] to <var>ip</var>.</li><li>Set <var>collator</var>.[[boundCompare]] to <emu-val>undefined</emu-val>.</li><li>Set <var>collator</var>.[[initializedCollator]] to <emu-val>true</emu-val>.</li><li>Return <var>collator</var>.</li></ol></emu-alg>
 
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator">
-      <h1><span class="secnum">10.1.2</span>Intl.Collator([ locales [, options]])</h1>
+      <h1><span class="secnum">10.1.2</span>Intl.Collator([ locales [, options]])<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator">#</a></span></span></h1>
 
       <p>
         When the <emu-val>Intl.Collator</emu-val> function is called with optional arguments locales and options the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Intl.Collator" id="ao-alg-Intl.Collator"><ol>
-  <li>If <var>NewTarget</var> is <emu-val>undefined</emu-val>, let <var>newTarget</var> be the active function object, else let <var>newTarget</var> be <var>NewTarget</var>.</li>
-  <li>Let <var>collator</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ordinarycreatefromconstructor">OrdinaryCreateFromConstructor</a>(<var>newTarget</var>, <emu-val>%CollatorPrototype%</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
-  <li>Return InitializeCollator(<var>collator</var>, <var>locales</var>, <var>options</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Intl.Collator" id="ao-alg-Intl.Collator"><ol><li>If <var>NewTarget</var> is <emu-val>undefined</emu-val>, let <var>newTarget</var> be the active function object, else let <var>newTarget</var> be <var>NewTarget</var>.</li><li>Let <var>collator</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ordinarycreatefromconstructor">OrdinaryCreateFromConstructor</a>(<var>newTarget</var>, <emu-val>%CollatorPrototype%</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li><li>Return InitializeCollator(<var>collator</var>, <var>locales</var>, <var>options</var>).</li></ol></emu-alg>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-intl-collator-constructor">
-    <h1><span class="secnum">10.2</span>Properties of the Intl.Collator Constructor</h1>
+    <h1><span class="secnum">10.2</span>Properties of the Intl.Collator Constructor<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-intl-collator-constructor">#</a></span></span></h1>
 
     <p>
       Besides the internal slots and the <emu-val>length</emu-val> property (whose value is 0), the Intl.Collator constructor has the following properties:
     </p>
 
     <emu-clause>
-      <h1 id="sec-Intl.Collator.prototype"><span class="secnum">10.2.1</span>Intl.Collator.prototype</h1>
+      <h1 id="sec-Intl.Collator.prototype"><span class="secnum">10.2.1</span>Intl.Collator.prototype<span class="utils"><span class="anchor"><a href="#">#</a></span></span></h1>
 
       <p>
         The value of <emu-val>Intl.Collator.prototype</emu-val> is <emu-val>%CollatorPrototype%</emu-val>.
@@ -788,17 +686,13 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.supportedLocalesOf">
-      <h1><span class="secnum">10.2.2</span>Intl.Collator.supportedLocalesOf (locales [, options ])</h1>
+      <h1><span class="secnum">10.2.2</span>Intl.Collator.supportedLocalesOf (locales [, options ])<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator.supportedLocalesOf">#</a></span></span></h1>
 
       <p>
         When the <emu-val>supportedLocalesOf</emu-val> method of Intl.Collator is called, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-" id="ao-alg-"><ol>
-  <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
-  <li>Return SupportedLocales(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>options</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-" id="ao-alg-"><ol><li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li><li>Return SupportedLocales(<emu-val>%Collator%</emu-val>.[[availableLocales]], <var>requestedLocales</var>, <var>options</var>).</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>supportedLocalesOf</emu-val> method is 1.
@@ -806,7 +700,7 @@
     </emu-clause>
 
     <emu-clause id="sec-internal-slots">
-      <h1><span class="secnum">10.2.3</span>Internal Slots</h1>
+      <h1><span class="secnum">10.2.3</span>Internal Slots<span class="utils"><span class="anchor"><a href="#sec-internal-slots">#</a></span></span></h1>
 
       <p>
         The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in 9.1. The value of the [[relevantExtensionKeys]] internal slot is an array that must include the element <emu-val>"co"</emu-val>, may include any or all of the elements <emu-val>"kn"</emu-val> and <emu-val>"kf"</emu-val>, and must not include any other elements.
@@ -832,10 +726,10 @@
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-intl-collator-prototype-object">
-    <h1><span class="secnum">10.3</span>Properties of the Intl.Collator Prototype Object</h1>
+    <h1><span class="secnum">10.3</span>Properties of the Intl.Collator Prototype Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-intl-collator-prototype-object">#</a></span></span></h1>
 
     <p>
-      The Intl.Collator prototype object is itself an Intl.Collator instance as specified in <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(<emu-val>%Collator%</emu-val>)
+      The Intl.Collator prototype object is itself an Intl.Collator instance as specified in  <emu-xref href="#sec-properties-of-intl-collator-instances"><a href="#sec-properties-of-intl-collator-instances">10.3.6</a></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(<emu-val>%Collator%</emu-val>)
     </p>
 
     <p>
@@ -843,7 +737,7 @@
     </p>
 
     <emu-clause id="sec-Intl.Collator.prototype.constructor">
-      <h1><span class="secnum">10.3.1</span>Intl.Collator.prototype.constructor</h1>
+      <h1><span class="secnum">10.3.1</span>Intl.Collator.prototype.constructor<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator.prototype.constructor">#</a></span></span></h1>
 
       <p>
         The value of <emu-val>Intl.Collator.prototype.constructor</emu-val> is <emu-val>%Collator%</emu-val>.
@@ -851,7 +745,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.prototype-toStringTag">
-      <h1><span class="secnum">10.3.2</span>Intl.Collator.prototype[@@toStringTag]</h1>
+      <h1><span class="secnum">10.3.2</span>Intl.Collator.prototype[@@toStringTag]<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator.prototype-toStringTag">#</a></span></span></h1>
 
       <p>
         The initial value of the @@toStringTag property is the string value <emu-val>"Object"</emu-val>.
@@ -863,7 +757,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.prototype.compare">
-      <h1><span class="secnum">10.3.3</span>Intl.Collator.prototype.compare</h1>
+      <h1><span class="secnum">10.3.3</span>Intl.Collator.prototype.compare<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator.prototype.compare">#</a></span></span></h1>
 
       <p>
         This named accessor property returns a function that compares two strings according to the sort order of this Collator object.
@@ -872,18 +766,7 @@
         The value of the [[Get]] attribute is a function that takes the following steps:
       </p>
 
-      <emu-alg aoid="alg-Intl.Collator.prototype.compare" id="ao-alg-Intl.Collator.prototype.compare"><ol>
-  <li>Let <var>collator</var> be this Collator object.</li>
-  <li>If <var>collator</var>.[[boundCompare]] is <emu-val>undefined</emu-val>, then
-    <ol>
-      <li>Let <var>F</var> be a new built-in function object as defined in 11.3.4.</li>
-      <li>The value of <var>F</var>'s length property is 2.</li>
-      <li>Let <var>bc</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-boundfunctioncreate">BoundFunctionCreate</a>(<var>F</var>, «<emu-val>this</emu-val> value»).</li>
-      <li>Set <var>collator</var>.[[boundCompare]] to <var>bc</var>.</li>
-    </ol>
-  </li>
-  <li>Return <var>collator</var>.[[boundCompare]].</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Intl.Collator.prototype.compare" id="ao-alg-Intl.Collator.prototype.compare"><ol><li>Let <var>collator</var> be this Collator object.</li><li>If <var>collator</var>.[[boundCompare]] is <emu-val>undefined</emu-val>, then<ol><li>Let <var>F</var> be a new built-in function object as defined in 11.3.4.</li><li>The value of <var>F</var>'s length property is 2.</li><li>Let <var>bc</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-boundfunctioncreate">BoundFunctionCreate</a>(<var>F</var>, «<emu-val>this</emu-val> value»).</li><li>Set <var>collator</var>.[[boundCompare]] to <var>bc</var>.</li></ol></li><li>Return <var>collator</var>.[[boundCompare]].</li></ol></emu-alg>
 
       <emu-note><span class="note">Note</span>
         The function returned by [[Get]] is bound to this Collator object so that it can be passed directly to Array.prototype.sort or other functions.
@@ -896,23 +779,13 @@
     </emu-clause>
 
     <emu-clause id="sec-collator-compare-functions">
-      <h1><span class="secnum">10.3.4</span>Collator Compare Functions</h1>
+      <h1><span class="secnum">10.3.4</span>Collator Compare Functions<span class="utils"><span class="anchor"><a href="#sec-collator-compare-functions">#</a></span></span></h1>
 
       <p>
         A Collator compare function is an anonymous function that takes two arguments, <var>x</var> and <var>y</var>, and performs the following steps:
       </p>
 
-      <emu-alg aoid="alg-collator-compare-functions" id="ao-alg-collator-compare-functions"><ol>
-  <li>Let <var>collator</var> be the <emu-val>this</emu-val> value.</li>
-  <li>Assert: <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ecmascript-data-types-and-values">Type</a>(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is <emu-val>true</emu-val>.</li>
-  <li>If <var>x</var> is not provided, let <var>x</var> be undefined.</li>
-  <li>If <var>y</var> is not provided, let <var>y</var> be undefined.</li>
-  <li>Let <var>X</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>x</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>X</var>).</li>
-  <li>Let <var>Y</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>y</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>Y</var>).</li>
-  <li>Return CompareStrings(<var>collator</var>, <var>X</var>, <var>Y</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-collator-compare-functions" id="ao-alg-collator-compare-functions"><ol><li>Let <var>collator</var> be the <emu-val>this</emu-val> value.</li><li>Assert: <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ecmascript-data-types-and-values">Type</a>(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is <emu-val>true</emu-val>.</li><li>If <var>x</var> is not provided, let <var>x</var> be undefined.</li><li>If <var>y</var> is not provided, let <var>y</var> be undefined.</li><li>Let <var>X</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>x</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>X</var>).</li><li>Let <var>Y</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>y</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>Y</var>).</li><li>Return CompareStrings(<var>collator</var>, <var>X</var>, <var>Y</var>).</li></ol></emu-alg>
 
       <p>
         When the CompareStrings abstract operation is called with arguments <var>collator</var> (which must be an object initialized as a Collator), <var>x</var> and <var>y</var> (which must be String values), it returns a Number other than <emu-val>NaN</emu-val> that represents the result of a locale-sensitive String comparison of <var>x</var> with <var>y</var>. The two Strings are compared in an implementation-defined fashion. The result is intended to order String values in the sort order specified by the effective locale and collation options computed during construction of <var>collator</var>, and will be negative, zero, or positive, depending on whether <var>x</var> comes before <var>y</var> in the sort order, the Strings are equal under the sort order, or <var>x</var> comes after <var>y</var> in the sort order, respectively. String values must be interpreted as UTF-16 code unit sequences, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
@@ -950,7 +823,7 @@
       </p>
 
       <emu-note><span class="note">Note 2</span>
-        It is recommended that the CompareStrings abstract operation be implemented following Unicode Technical Standard 10, Unicode Collation Algorithm (available at <a href="http://unicode.org/reports/tr10/">http://unicode.org/reports/tr10/</a>), using tailorings for the effective locale and collation options of <var>collator</var>. It is recommended that implementations use the tailorings provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+        It is recommended that the CompareStrings abstract operation be implemented following Unicode Technical Standard 10, Unicode Collation Algorithm (available at  <a href="http://unicode.org/reports/tr10/">http://unicode.org/reports/tr10/</a>), using tailorings for the effective locale and collation options of <var>collator</var>. It is recommended that implementations use the tailorings provided by the Common Locale Data Repository (available at  <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
       </emu-note>
 
       <emu-note><span class="note">Note 3</span>
@@ -960,18 +833,18 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.prototype.resolvedOptions">
-      <h1><span class="secnum">10.3.5</span>Intl.Collator.prototype.resolvedOptions ()</h1>
+      <h1><span class="secnum">10.3.5</span>Intl.Collator.prototype.resolvedOptions ()<span class="utils"><span class="anchor"><a href="#sec-Intl.Collator.prototype.resolvedOptions">#</a></span></span></h1>
 
       <p>
         This function provides access to the locale and collation options computed during initialization of the object.
       </p>
       <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-1">Table 1</emu-xref> whose keys are included in the <emu-val>%Collator%</emu-val>[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see  <emu-xref href="#sec-properties-of-intl-collator-instances"><a href="#sec-properties-of-intl-collator-instances">10.3.6</a></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in  <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> whose keys are included in the <emu-val>%Collator%</emu-val>[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
       </p>
     </emu-clause>
 
     <emu-clause id="sec-properties-of-intl-collator-instances">
-      <h1><span class="secnum">10.3.6</span>Properties of Intl.Collator Instances</h1>
+      <h1><span class="secnum">10.3.6</span>Properties of Intl.Collator Instances<span class="utils"><span class="anchor"><a href="#sec-properties-of-intl-collator-instances">#</a></span></span></h1>
 
       <p>
         Intl.Collator instances are ordinary objects that inherit properties from <emu-val>%CollatorPrototype%</emu-val>.
@@ -994,16 +867,16 @@
       </ul>
 
       <p>
-        Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-1">Table 1</emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
+        Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in  <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
       </p>
 
       <ul>
         <li>[[numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-        <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-1">Table 1</emu-xref>.</li>
+        <li>[[caseFirst]] is a String value; allowed values are specified in  <emu-xref href="#table-1"><a href="#table-1">Table 1</a></emu-xref>.</li>
       </ul>
 
       <p>
-        Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype-toStringTag"></emu-xref>).
+        Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype-toStringTag"><a href="#sec-Intl.Collator.prototype-toStringTag">10.3.2</a></emu-xref>).
       </p>
 
     </emu-clause>
@@ -1011,19 +884,19 @@
 </emu-clause>
 
 <emu-clause id="numberformat-objects">
-  <h1><span class="secnum">11</span>NumberFormat Objects</h1>
+  <h1><span class="secnum">11</span>NumberFormat Objects<span class="utils"><span class="anchor"><a href="#numberformat-objects">#</a></span></span></h1>
 
   <p>To Be Ported.</p>
 </emu-clause>
 
 <emu-clause id="datetimeformat-objects">
-  <h1><span class="secnum">12</span>DateTimeFormat Objects</h1>
+  <h1><span class="secnum">12</span>DateTimeFormat Objects<span class="utils"><span class="anchor"><a href="#datetimeformat-objects">#</a></span></span></h1>
 
   <p>To Be Ported.</p>
 </emu-clause>
 
 <emu-clause id="locale-sensitive-functions">
-  <h1><span class="secnum">13</span>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
+  <h1><span class="secnum">13</span>Locale Sensitive Functions of the ECMAScript Language Specification<span class="utils"><span class="anchor"><a href="#locale-sensitive-functions">#</a></span></span></h1>
 
   <p>
     The ECMAScript Language Specification, edition 6 or successor, describes several locale sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
@@ -1036,10 +909,10 @@
   </emu-note>
 
   <emu-clause id="sec-properties-of-the-string-prototype-object">
-    <h1><span class="secnum">13.1</span>Properties of the String Prototype Object</h1>
+    <h1><span class="secnum">13.1</span>Properties of the String Prototype Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-string-prototype-object">#</a></span></span></h1>
 
     <emu-clause id="sec-String.prototype.localeCompare">
-      <h1><span class="secnum">13.1.1</span>String.prototype.localeCompare (that [, locales [, options ]])</h1>
+      <h1><span class="secnum">13.1.1</span>String.prototype.localeCompare (that [, locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-String.prototype.localeCompare">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 21.1.3.10.
@@ -1049,16 +922,7 @@
         When the <emu-val>localeCompare</emu-val> method is called with argument <var>that</var> and optional arguments <var>locales</var>, and <var>options</var>, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-String.prototype.localeCompare" id="ao-alg-String.prototype.localeCompare"><ol>
-  <li>Let <var>O</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
-  <li>Let <var>S</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>O</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
-  <li>Let <var>That</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>that</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>That</var>).</li>
-  <li>Let <var>collator</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%Collator%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li>
-  <li>Return CompareStrings(<var>collator</var>, <var>S</var>, <var>That</var>)</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-String.prototype.localeCompare" id="ao-alg-String.prototype.localeCompare"><ol><li>Let <var>O</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li><li>Let <var>S</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>O</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li><li>Let <var>That</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>that</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>That</var>).</li><li>Let <var>collator</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%Collator%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>collator</var>).</li><li>Return CompareStrings(<var>collator</var>, <var>S</var>, <var>That</var>)</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>localeCompare</emu-val> method is 1.
@@ -1079,7 +943,7 @@
     </emu-clause>
 
     <emu-clause id="sec-String.prototype.toLocaleLowerCase">
-      <h1><span class="secnum">13.1.2</span>String.prototype.toLocaleLowerCase ([locales])</h1>
+      <h1><span class="secnum">13.1.2</span>String.prototype.toLocaleLowerCase ([locales])<span class="utils"><span class="anchor"><a href="#sec-String.prototype.toLocaleLowerCase">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 21.1.3.20.
@@ -1089,34 +953,7 @@
         This function interprets a string value as a sequence of code points, as described in ES2015, 6.1.4. The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-String.prototype.toLocaleLowerCase" id="ao-alg-String.prototype.toLocaleLowerCase"><ol>
-  <li>Let <var>O</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li>
-  <li>Let <var>S</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>O</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li>
-  <li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li>
-  <li>Let <var>len</var> be the number of elements in <var>requestedLocales</var>.</li>
-  <li>If <var>len</var> &gt; 0, then
-    <ol>
-      <li>Let <var>requestedLocale</var> be the first element of <var>requestedLocales</var>.</li>
-    </ol>
-  </li>
-  <li>Else
-    <ol>
-      <li>Let <var>requestedLocale</var> be DefaultLocale().</li>
-    </ol>
-  </li>
-  <li>Let <var>noExtensionsLocale</var> be the String value that is <var>requestedLocale</var> with all Unicode locale extension sequences (6.2.1) removed.</li>
-  <li>Let <var>availableLocales</var> be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.</li>
-  <li>Let <var>locale</var> be BestAvailableLocale(<var>availableLocales</var>, <var>noExtensionsLocale</var>).</li>
-  <li>If <var>locale</var> is <emu-val>undefined</emu-val>, let <var>locale</var> be <emu-val>"und"</emu-val>.</li>
-  <li>Let <var>cpList</var> be a List containing in order the code points of <var>S</var> as defined in ES2015, 6.1.4, starting at the first element of <var>S</var>.</li>
-  <li>For each code point <var>c</var> in <var>cpList</var>, if the Unicode Character Database provides a lower case equivalent of <var>c</var> that is either language insensitive or for the language <var>locale</var>, then replace <var>c</var> in <var>cpList</var> with that/those equivalent code point(s).</li>
-  <li>Let <var>cuList</var> be a new List.</li>
-  <li>For each code point <var>c</var> in <var>cpList</var>, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2015, 6.1.4) of <var>c</var>.</li>
-  <li>Let <var>L</var> be a String whose elements are, in order, the elements of <var>cuList</var>.</li>
-  <li>Return <var>L</var>.</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-String.prototype.toLocaleLowerCase" id="ao-alg-String.prototype.toLocaleLowerCase"><ol><li>Let <var>O</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-requireobjectcoercible">RequireObjectCoercible</a>(<emu-val>this</emu-val> value).</li><li>Let <var>S</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>O</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>S</var>).</li><li>Let <var>requestedLocales</var> be CanonicalizeLocaleList(<var>locales</var>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>requestedLocales</var>).</li><li>Let <var>len</var> be the number of elements in <var>requestedLocales</var>.</li><li>If <var>len</var> &gt; 0, then<ol><li>Let <var>requestedLocale</var> be the first element of <var>requestedLocales</var>.</li></ol></li><li>Else<ol><li>Let <var>requestedLocale</var> be DefaultLocale().</li></ol></li><li>Let <var>noExtensionsLocale</var> be the String value that is <var>requestedLocale</var> with all Unicode locale extension sequences (6.2.1) removed.</li><li>Let <var>availableLocales</var> be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.</li><li>Let <var>locale</var> be BestAvailableLocale(<var>availableLocales</var>, <var>noExtensionsLocale</var>).</li><li>If <var>locale</var> is <emu-val>undefined</emu-val>, let <var>locale</var> be <emu-val>"und"</emu-val>.</li><li>Let <var>cpList</var> be a List containing in order the code points of <var>S</var> as defined in ES2015, 6.1.4, starting at the first element of <var>S</var>.</li><li>For each code point <var>c</var> in <var>cpList</var>, if the Unicode Character Database provides a lower case equivalent of <var>c</var> that is either language insensitive or for the language <var>locale</var>, then replace <var>c</var> in <var>cpList</var> with that/those equivalent code point(s).</li><li>Let <var>cuList</var> be a new List.</li><li>For each code point <var>c</var> in <var>cpList</var>, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2015, 6.1.4) of <var>c</var>.</li><li>Let <var>L</var> be a String whose elements are, in order, the elements of <var>cuList</var>.</li><li>Return <var>L</var>.</li></ol></emu-alg>
 
       <p>
         The result must be derived according to the case mappings in the Unicode character database (this explicitly includes not only the UnicodeData.txt file, but also the SpecialCasings.txt file that accompanies it).
@@ -1147,7 +984,7 @@
     </emu-clause>
 
     <emu-clause id="sec-String.prototype.toLocaleUpperCase">
-      <h1><span class="secnum">13.1.3</span>String.prototype.toLocaleUpperCase ([locales])</h1>
+      <h1><span class="secnum">13.1.3</span>String.prototype.toLocaleUpperCase ([locales])<span class="utils"><span class="anchor"><a href="#sec-String.prototype.toLocaleUpperCase">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 21.1.3.21.
@@ -1172,14 +1009,14 @@
 
 
   <emu-clause id="sec-properties-of-the-number-prototype-object">
-    <h1><span class="secnum">13.2</span>Properties of the Number Prototype Object</h1>
+    <h1><span class="secnum">13.2</span>Properties of the Number Prototype Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-number-prototype-object">#</a></span></span></h1>
 
     <p>
       The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2015, 20.1.3.
     </p>
 
     <emu-clause id="sec-Number.prototype.toLocaleString">
-      <h1><span class="secnum">13.2.1</span>Number.prototype.toLocaleString ([locales [, options ]])</h1>
+      <h1><span class="secnum">13.2.1</span>Number.prototype.toLocaleString ([locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-Number.prototype.toLocaleString">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.1.3.4.
@@ -1189,13 +1026,7 @@
         When the <emu-val>toLocaleString</emu-val> method is called with optional arguments <var>locales</var> and <var>options</var>, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Number.prototype.toLocaleString" id="ao-alg-Number.prototype.toLocaleString"><ol>
-  <li>Let <var>x</var> be thisNumberValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
-  <li>Let <var>numberFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%NumberFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>numberFormat</var>).</li>
-  <li>Return FormatNumber(<var>numberFormat</var>, <var>x</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Number.prototype.toLocaleString" id="ao-alg-Number.prototype.toLocaleString"><ol><li>Let <var>x</var> be thisNumberValue(<emu-val>this</emu-val> value).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li><li>Let <var>numberFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%NumberFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>numberFormat</var>).</li><li>Return FormatNumber(<var>numberFormat</var>, <var>x</var>).</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>toLocaleString</emu-val> method is 0.
@@ -1205,14 +1036,14 @@
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-date-prototype-object">
-    <h1><span class="secnum">13.3</span>Properties of the Date Prototype Object</h1>
+    <h1><span class="secnum">13.3</span>Properties of the Date Prototype Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-date-prototype-object">#</a></span></span></h1>
 
     <p>
       The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2015, 20.3.4.
     </p>
 
     <emu-clause id="sec-Date.prototype.toLocaleString">
-      <h1><span class="secnum">13.3.1</span>Date.prototype.toLocaleString ([locales [, options ]])</h1>
+      <h1><span class="secnum">13.3.1</span>Date.prototype.toLocaleString ([locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-Date.prototype.toLocaleString">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.39.
@@ -1222,16 +1053,7 @@
         When the <emu-val>toLocaleString</emu-val> method is called with optional arguments <var>locales</var> and <var>options</var>, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol>
-  <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
-  <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
-  <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"any"</emu-val>, <emu-val>"all"</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>dateFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
-  <li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol><li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li><li>If <var>x</var> is <emu-val>NaN</emu-val>, return <emu-val>"Invalid Date"</emu-val>.</li><li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"any"</emu-val>, <emu-val>"all"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li><li>Let <var>dateFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li><li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>toLocaleString</emu-val> method is 0.
@@ -1240,7 +1062,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Date.prototype.toLocaleDateString">
-      <h1><span class="secnum">13.3.2</span>Date.prototype.toLocaleDateString ([locales [, options ]])</h1>
+      <h1><span class="secnum">13.3.2</span>Date.prototype.toLocaleDateString ([locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-Date.prototype.toLocaleDateString">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.38.
@@ -1250,16 +1072,7 @@
         When the <emu-val>toLocaleDateString</emu-val> method is called with optional arguments <var>locales</var> and <var>options</var>, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol>
-  <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
-  <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
-  <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"date"</emu-val>, <emu-val>"date"</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>dateFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li>
-  <li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol><li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li><li>If <var>x</var> is <emu-val>NaN</emu-val>, return <emu-val>"Invalid Date"</emu-val>.</li><li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"date"</emu-val>, <emu-val>"date"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li><li>Let <var>dateFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>dateFormat</var>).</li><li>Return FormatDateTime(<var>dateFormat</var>, <var>x</var>).</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>toLocaleDateString</emu-val> method is 0.
@@ -1268,7 +1081,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Date.prototype.toLocaleTimeString">
-      <h1><span class="secnum">13.3.3</span>Date.prototype.toLocaleTimeString ([locales [, options ]])</h1>
+      <h1><span class="secnum">13.3.3</span>Date.prototype.toLocaleTimeString ([locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-Date.prototype.toLocaleTimeString">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.40.
@@ -1278,16 +1091,7 @@
         When the <emu-val>toLocaleTimeString</emu-val> method is called with optional arguments <var>locales</var> and <var>options</var>, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol>
-  <li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li>
-  <li>If <var>x</var> is <emu-val>NaN</emu-val>, return *<code>"Invalid Date"</code>*.</li>
-  <li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"time"</emu-val>, <emu-val>"time"</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li>
-  <li>Let <var>timeFormat</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>timeFormat</var>),</li>
-  <li>Return FormatDateTime(<var>timeFormat</var>, <var>x</var>).</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Date.prototype.toLocaleDateString" id="ao-alg-Date.prototype.toLocaleDateString"><ol><li>Let <var>x</var> be thisTimeValue(<emu-val>this</emu-val> value).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>x</var>).</li><li>If <var>x</var> is <emu-val>NaN</emu-val>, return <emu-val>"Invalid Date"</emu-val>.</li><li>Let <var>options</var> be ToDateTimeOptions(<var>options</var>, <emu-val>"time"</emu-val>, <emu-val>"time"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>options</var>).</li><li>Let <var>timeFormat</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-construct-f-argumentslist">Construct</a>(<emu-val>%DateTimeFormat%</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>timeFormat</var>),</li><li>Return FormatDateTime(<var>timeFormat</var>, <var>x</var>).</li></ol></emu-alg>
 
       <p>
         The value of the <emu-val>length</emu-val> property of the <emu-val>toLocaleTimeString</emu-val> method is 0.
@@ -1297,10 +1101,10 @@
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-array-prototype-object">
-    <h1><span class="secnum">13.4</span>Properties of the Array Prototype Object</h1>
+    <h1><span class="secnum">13.4</span>Properties of the Array Prototype Object<span class="utils"><span class="anchor"><a href="#sec-properties-of-the-array-prototype-object">#</a></span></span></h1>
 
     <emu-clause id="sec-Date.prototype.toLocaleString">
-      <h1><span class="secnum">13.4.1</span>Array.prototype.toLocaleString([locales [, options ]])</h1>
+      <h1><span class="secnum">13.4.1</span>Array.prototype.toLocaleString([locales [, options ]])<span class="utils"><span class="anchor"><a href="#sec-Date.prototype.toLocaleString">#</a></span></span></h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 22.1.3.26.
@@ -1310,49 +1114,7 @@
         The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol>
-  <li>Let <var>A</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject">ToObject</a>(<emu-val>this</emu-val> value).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>A</var>).</li>
-  <li>Let <var>len</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength">ToLength</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"length"</emu-val>)).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>len</var>).</li>
-  <li>Let <var>separator</var> be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).</li>
-  <li>If <var>len</var> is zero, return the empty String.</li>
-  <li>Let <var>firstElement</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"0"</emu-val>).</li>
-  <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>firstElement</var>).</li>
-  <li>If <var>firstElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then
-    <ol>
-      <li>Let <var>R</var> be an empty String.</li>
-    </ol>
-  </li>
-  <li>Else
-    <ol>
-      <li>Let <var>R</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-invoke">Invoke</a>(<var>firstElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
-      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
-    </ol>
-  </li>
-  <li>Let <var>k</var> be 1.</li>
-  <li>Repeat, while <var>k</var> &lt; <var>len</var>
-    <ol>
-      <li>Let <var>S</var> be a String value produced by concatenating <var>R</var> and <var>separator</var>.</li>
-      <li>Let <var>nextElement</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-get-o-p">Get</a>(<var>A</var>, <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<var>k</var>)).</li>
-      <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>nextElement</var>).</li>
-      <li>If <var>nextElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then
-        <ol>
-          <li>Let <var>R</var> be the empty String.</li>
-        </ol>
-      </li>
-      <li>Else
-        <ol>
-          <li>Let <var>R</var> be <a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring">ToString</a>(<a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-invoke">Invoke</a>(<var>nextElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li>
-          <li><a href="https://people.mozilla.org/~jorendorff/es6-draft.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li>
-        </ol>
-      </li>
-      <li>Let <var>R</var> be a String value produced by concatenating <var>S</var> and <var>R</var>.</li>
-      <li>Increase <var>k</var> by 1.</li>
-    </ol>
-  </li>
-  <li>Return <var>R</var>.</li>
-</ol></emu-alg>
+      <emu-alg aoid="alg-Date.prototype.toLocaleString" id="ao-alg-Date.prototype.toLocaleString"><ol><li>Let <var>A</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-toobject">ToObject</a>(<emu-val>this</emu-val> value).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>A</var>).</li><li>Let <var>len</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tolength">ToLength</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"length"</emu-val>)).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>len</var>).</li><li>Let <var>separator</var> be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).</li><li>If <var>len</var> is zero, return the empty String.</li><li>Let <var>firstElement</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <emu-val>"0"</emu-val>).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>firstElement</var>).</li><li>If <var>firstElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then<ol><li>Let <var>R</var> be an empty String.</li></ol></li><li>Else<ol><li>Let <var>R</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-invoke">Invoke</a>(<var>firstElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li></ol></li><li>Let <var>k</var> be 1.</li><li>Repeat, while <var>k</var> &lt; <var>len</var><ol><li>Let <var>S</var> be a String value produced by concatenating <var>R</var> and <var>separator</var>.</li><li>Let <var>nextElement</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-get-o-p">Get</a>(<var>A</var>, <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<var>k</var>)).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>nextElement</var>).</li><li>If <var>nextElement</var> is <emu-val>undefined</emu-val> or <emu-val>null</emu-val>, then<ol><li>Let <var>R</var> be the empty String.</li></ol></li><li>Else<ol><li>Let <var>R</var> be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-tostring">ToString</a>(<a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-invoke">Invoke</a>(<var>nextElement</var>, <emu-val>"toLocaleString"</emu-val>, «<emu-val>locales</emu-val>, <emu-val>options</emu-val>»)).</li><li><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-returnifabrupt">ReturnIfAbrupt</a>(<var>R</var>).</li></ol></li><li>Let <var>R</var> be a String value produced by concatenating <var>S</var> and <var>R</var>.</li><li>Increase <var>k</var> by 1.</li></ol></li><li>Return <var>R</var>.</li></ol></emu-alg>
 
       <emu-note><span class="note">Note 1</span>
         <p>
@@ -1371,13 +1133,13 @@
 </emu-clause>
 
 <emu-annex id="annex-implementation-dependent-behaviour">
-  <h1><span class="secnum">A</span>Implementation Dependent Behaviour</h1>
+  <h1><span class="secnum">A</span>Implementation Dependent Behaviour<span class="utils"><span class="anchor"><a href="#annex-implementation-dependent-behaviour">#</a></span></span></h1>
 
   <p>To Be Ported.</p>
 </emu-annex>
 
 <emu-annex id="annex-incompatibilities">
-  <h1><span class="secnum">B</span>Additions and Changes That Introduce Incompatibilities with Prior Editions</h1>
+  <h1><span class="secnum">B</span>Additions and Changes That Introduce Incompatibilities with Prior Editions<span class="utils"><span class="anchor"><a href="#annex-incompatibilities">#</a></span></span></h1>
 
   <p>To Be Ported.</p>
 </emu-annex>
