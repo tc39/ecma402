@@ -1,5 +1,321 @@
 <emu-clause id="locale-and-parameter-negotiation">
   <h1>Locale and Parameter Negotiation</h1>
 
-  <p>To Be Ported.</p>
+  <p>
+    The constructors for the objects providing locale sensitive services, Collator, NumberFormat, and DateTimeFormat, use a common pattern to negotiate the requests represented by the locales and options arguments against the actual capabilities of their implementations. The common behaviour is described here in terms of internal slots describing the capabilities and of abstract operations using these internal slots.
+  </p>
+
+  <emu-clause id="sec-internal-slots">
+    <h1>Internal slots of Service Constructors</h1>
+
+    <p>
+      The constructors Intl.Collator, Intl.NumberFormat, and Intl.DateTimeFormat have the following internal slots:
+    </p>
+
+    <ul>
+      <li>[[availableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tags identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[availableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-ResolveLocale"></emu-xref>). For example, implementations that provide a "de-DE" locale must include a "de" locale that can serve as a fallback for requests such as "de-AT" and "de-CH". For locales that in current usage would include a script subtag (such as Chinese locales), old-style language tags without script subtags must be included such that, for example, requests for "zh-TW" and "zh-HK" lead to output in traditional Chinese rather than the default simplified Chinese. The ordering of the locales within [[availableLocales]] is irrelevant.</li>
+      <li>[[relevantExtensionKeys]] is an array of keys of the language tag extensions defined in Unicode Technical Standard 35 that are relevant for the functionality of the constructed objects.</li>
+      <li>[[sortLocaleData]] and [[searchLocaleData]] (for Intl.Collator) and [[localeData]] (for Intl.NumberFormat and Intl.DateTimeFormat) are objects that have properties for each locale contained in [[availableLocales]]. The value of each of these properties must be an object that has properties for each key contained in [[relevantExtensionKeys]]. The value of each of these properties must be a non-empty array of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
+    </ul>
+
+    <p>
+      EXAMPLE     An implementation of DateTimeFormat might include the language tag "th" in its [[availableLocales]] internal slot, and must (according to 12.2.3) include the key "ca" in its [[relevantExtensionKeys]] internal slot. For Thai, the "buddhist" calendar is usually the default, but an implementation might also support the calendars "gregory", "chinese", and "islamicc" for the locale "th". The [[localeData]] internal slot would therefore at least include {"th": {ca: ["buddhist", "gregory", "chinese", "islamicc"]}}.
+    </p>
+  </emu-clause>
+
+  <emu-clause id="sec-abstract-operations">
+    <h1>Abstract Operations</h1>
+
+    <p>
+      Where the following abstract operations take an _availableLocales_ argument, it must be an [[availableLocales]] List as specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-CanonicalizeLocaleList" aoid="CanonicalizeLocaleList">
+      <h1>CanonicalizeLocaleList (locales)</h1>
+
+      <p>
+        The abstract operation CanonicalizeLocaleList takes the following steps:
+      </p>
+
+      <emu-alg>
+        1. If _locales_ is *undefined*, then
+          1. Return a new empty List.
+        1. Let _seen_ be an empty List.
+        1. If Type(_locales_) is String, then
+          1. Let _aLocales_ be CreateArrayFromList(«_locales_»).
+        1. Let _O_ be ToObject(_aLocales_).
+        1. ReturnIfAbrupt(_O_).
+        1. Let _len_ be ToLength(Get(_O_, *"length"*)).
+        1. Let _k_ be 0.
+        1. Repeat, while _k_ < _len_
+          1. Let _Pk_ be ToString(_k_).
+          1. Let _kPresent_ be HasProperty(_O_, _Pk_).
+          1. ReturnIfAbrupt(_kPresent_).
+          1. If _kPresent_ is true, then
+            1. Let _kValue_ be Get(_O_, _Pk_).
+            1. ReturnIfAbrupt(_kValue_).
+            1. If Type(_kValue_) is not String or Object, throw a *TypeError* exception.
+            1. Let _tag_ be ToString(_kValue_).
+            1. ReturnIfAbrupt(_tag_).
+            1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+            1. Let _canonicalizedTag_ be CanonicalizeLanguageTag(_tag_).
+            1. If _canonicalizedTag_ is not an element of _seen_, append _canonicalizedTag_ as the last element of _seen_.
+          1. Increase _k_ by 1.
+        1. Return _seen_.
+      </emu-alg>
+
+      <emu-note>
+        Non-normative summary: The abstract operation interprets the _locales_ argument as an array and copies its elements into a List, validating the elements as structurally valid language tags and canonicalizing them, and omitting duplicates.
+      </emu-note>
+
+      <emu-note>
+        Requiring _kValue_ to be a String or Object means that the Number value *NaN* will not be interpreted as the language tag *"nan"*, which stands for Min Nan Chinese.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-BestAvailableLocale" aoid="BestAvailableLocale">
+      <h1>BestAvailableLocale (availableLocales, locale)</h1>
+
+      <p>
+        The BestAvailableLocale abstract operation compares the provided argument _locale_, which must be a String value with a structurally valid and canonicalized BCP 47 language tag, against the locales in _availableLocales_ and returns either the longest non-empty prefix of _locale_ that is an element of _availableLocales_, or *undefined* if there is no such element. It uses the fallback mechanism of RFC 4647, section 3.4. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _candidate_ be locale.
+        1. Repeat
+          1. If _availableLocales_ contains an element equal to _candidate_, then return _candidate_.
+          1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
+          1. If _pos_ ≥ 2 and the character *"-"* occurs at index _pos_-2 of candidate, then decrease _pos_ by 2.
+          1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-LookupMatcher" aoid="LookupMatcher">
+      <h1>LookupMatcher (availableLocales, requestedLocales)</h1>
+
+      <p>
+        The LookupMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _k_ be 0.
+        1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
+        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _availableLocale_ be *undefined*.
+        1. Repeat while _k_ < _len_ and _availableLocale_ is *undefined*:
+          1. Let _Pk_ be ToString(_k_).
+          1. Let _locale_ be Get(_rLocales_, _Pk_) .
+          1. ReturnIfAbrupt(_locale_)
+          1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
+          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. Increase _k_ by 1.
+        1. Let _result_ be a new Record.
+        1. If _availableLocale_ is not *undefined*, then
+          1. Set _result_.[[locale]] to _availableLocale_.
+          1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
+            1. Let _extension_ be the String value consisting of the first substring of _locale_ that is a Unicode locale extension sequence.
+            1. Let _extensionIndex_ be the character position of the initial "-" of the first Unicode locale
+            extension sequence within _locale_.
+            1. Set _result_.[[extension]] to _extension_.
+            1. Set _result_.[[extensionIndex]] to _extensionIndex_.
+        1. Else
+          1. Let _defLocale_ be DefaultLocale().
+          1. Set _result_.[[locale]] to _defLocale_.
+        1. Return _result_.
+      </emu-alg>
+
+      <emu-note>
+        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the first Unicode locale extension sequence, and an [[extensionIndex]] field whose value is the index of the first Unicode locale extension sequence within the request locale language tag.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-BestFitMatcher" aoid="BestFitMatcher">
+      <h1>BestFitMatcher (availableLocales, requestedLocales)</h1>
+
+      <p>
+        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the first Unicode locale extension sequence, and an [[extensionIndex]] field whose value is the index of the first Unicode locale extension sequence within the request locale language tag.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-ResolveLocale" aoid="ResolveLocale">
+      <h1>ResolveLocale (availableLocales, requestedLocales, options, relevantExtensionKeys, localeData)</h1>
+
+      <p>
+        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_ and _requestedLocales_ must be provided as List values, _options_ as a Record.
+      </p>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _matcher_ be the value of _options_.[[localeMatcher]].
+        1. If _matcher_ is *"lookup"*, then
+          1. Let _MatcherOperation_ be the abstract operation LookupMatcher.
+        1. Else
+          1. Let _MatcherOperation_ be the abstract operation BestFitMatcher.
+        1. Let _r_ be MatcherOperation(_availableLocales_, _requestedLocales_).
+        1. Let _foundLocale_ be the value of _r_.[[locale]].
+        1. If _r_ has an [[extension]] field, then
+          1. Let _extension_ be the value of _r_.[[extension]].
+          1. Let _extensionIndex_ be the value of _r_.[[extensionIndex]].
+          1. Let _extensionSubtags_ be Call(*%StringProto_split%*, extension, «*"-"*») .
+          1. Let _extensionSubtagsLength_ be Get(CreateArrayFromList(_extensionSubtags_), *"length"*).
+        1. Let _result_ be a new Record.
+        1. Set _result_.[[dataLocale]] to _foundLocale_.
+        1. Let _supportedExtension_ be *"-u"*.
+        1. Let _k_ be 0.
+        1. Let _rExtensionKeys_ be ToObject(CreateArrayFromList(_relevantExtensionKeys_)).
+        1. ReturnIfAbrupt(_rExtensionKeys_).
+        1. Let _len_ be ToLength(Get(_rExtensionKeys_, *"length"*)).
+        1. Repeat while _k_ < _len_
+          1. Let _key_ be Get(_rExtensionKeys_ , ToString(_k_)).
+          1. ReturnIfAbrupt(_key_).
+          1. Let _foundLocaleData_ be Get(_localeData_, _foundLocale_).
+          1. ReturnIfAbrupt(_foundLocaleData_).
+          1. Let _keyLocaleData_ be ToObject(Get(_foundLocaleData_, _key_)).
+          1. ReturnIfAbrupt(_keyLocaleData_).
+          1. Let _value_ be ToString(Get(_keyLocaleData_, *"0"*)).
+          1. ReturnIfAbrupt(_value_).
+          1. Let _supportedExtensionAddition_ be *""*.
+          1. If _extensionSubtags_ is not *undefined*, then
+            1. Let _keyPos_ be Call(*%ArrayProto_indexOf%*, _extensionSubtags_, «_key_») .
+            1. If _keyPos_ ≠ -1, then
+              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the length of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
+                1. Let _requestedValue_ be Get(_extensionSubtags_, ToString(_keyPos_ +1)).
+                1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, «_requestedValue_») is *true*, then
+                  1. Let _value_ be _requestedValue_.
+                  1. Let _supportedExtensionAddition_ be the concatenation of *"-"*, _key_, *"-"*, and _value_.
+              1. Else, if the result of Call(*%StringProto_includes%*, _keyLocaleData_, «*"true"*») is *true*, then
+                1. Let _value_ be *"true"*.
+          1. If _options_ has a field [[<_key_>]], then
+            1. Let _optionsValue_ be the value of ToString(_options_.[[<_key_>]]).
+            1. ReturnIfAbrupt(_optionsValue_).
+            1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, «_optionsValue_») is *true*, then
+              1. If _optionsValue_ is not equal to _value_, then
+                1. Let _value_ be _optionsValue_.
+                1. Let _supportedExtensionAddition_ be *""*.
+          1. Set _result_.[[<_key_>]] to _value_.
+          1. Append _supportedExtensionAddition_ to _supportedExtension_.
+          1. Increase _k_ by 1.
+        1. If the number of elements in _supportedExtension_ is greater than 2, then
+          1. Let _preExtension_ be the substring of _foundLocale_ from position 0, inclusive, to position _extensionIndex_, exclusive.
+          1. Let _postExtension_ be the substring of _foundLocale_ from position _extensionIndex_ to the end of the string.
+          1. Let _foundLocale_ be the concatenation of _preExtension_, _supportedExtension_, and _postExtension_.
+        1. Set _result_.[[locale]] to _foundLocale_.
+        1. Return _result_.
+      </emu-alg>
+
+      <emu-note>
+        Non-normative summary: Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Independent of the locale matching algorithm, options specified through Unicode locale extension sequences are negotiated separately, taking the caller’s relevant extension keys and locale data as well as client-provided options into consideration. The abstract operation returns a record with a [[locale]] field whose value is the language tag of the selected locale, and fields for each key in _relevantExtensionKeys_ providing the selected value for that key.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-LookupSupportedLocales" aoid="LookupSupportedLocales">
+      <h1>LookupSupportedLocales (availableLocales, requestedLocales)</h1>
+
+      <p>
+        The LookupSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
+        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _subset_ be an empty List.
+        1. Let _k_ be 0.
+        1. Repeat while _k_ < _len_
+          1. Let _Pk_ be ToString(_k_).
+          1. Let _locale_ be Get(_rLocales_, _Pk_).
+          1. ReturnIfAbrupt(_locale_).
+          1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
+          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. If _availableLocale_ is not *undefined*, then append _locale_ to the end of subset.
+          1. Increment _k_ by 1.
+        1. Return _subset_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-BestFitSupportedLocales" aoid="BestFitSupportedLocales">
+      <h1>BestFitSupportedLocales (availableLocales, requestedLocales)</h1>
+
+      <p>
+        The BestFitSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the Best Fit Matcher algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The steps taken are implementation dependent.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-SupportedLocales" aoid="SupportedLocales">
+      <h1>SupportedLocales (availableLocales, requestedLocales, options)</h1>
+
+      <p>
+        The SupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale. Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _options_ is not *undefined*, then
+          1. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
+          1. ReturnIfAbrupt(_matcher_).
+        1. Else, let _matcher_ be *"best fit"*.
+        1. If _matcher_ is *"best fit"*,
+          1. Let _MatcherOperation_ be the abstract operation BestFitSupportedLocales.
+        1. Else
+          1. Let _MatcherOperation_ be the abstract operation LookupSupportedLocales.
+        1. Let _supportedLocales_ be MatcherOperation(_availableLocales_, _requestedLocales_).
+        1. Let _subset_ be CreateArrayFromList(_supportedLocales_).
+        1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
+        1. Repeat for each element _P_ of _keys_ in List order,
+          1. Let _desc_ be PropertyDescriptor { [[Configurable]]: *false*, [[Writable]]: *false* }.
+          1. Let _status_ be DefinePropertyOrThrow(_subset_, _P_, _desc_).
+          1. Assert: _status_ is not abrupt completion.
+        1. Return _subset_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-GetOption" aoid="GetOption">
+      <h1>GetOption (options, property, type, values, fallback)</h1>
+
+      <p>
+        The abstract operation GetOption extracts the value of the property named _property_ from the provided _options_ object, converts it to the required _type_, checks whether it is one of a List of allowed _values_, and fills in a _fallback_ value if necessary.
+      </p>
+
+      <emu-alg>
+        1. Let _opts_ be ToObject(_options_).
+        1. ReturnIfAbrupt(_opts_).
+        1. Let _value_ be Get(_opts_, _property_).
+        1. ReturnIfAbrupt(_value_).
+        1. If _value_ is not *undefined*, then
+          1. Assert: _type_ is *"boolean"* or *"string"*.
+          1. If _type_ is *"boolean"*, then
+            1. Let _value_ be ToBoolean(_value_).
+          1. If _type_ is *"string"*, then
+            1. Let _value_ be ToString(_value_).
+            1. ReturnIfAbrupt(_value_).
+          1. If _values_ is not *undefined*, then
+            1. If _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
+          1. Return _value_.
+        1. Else return _fallback_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-GetNumberOption" aoid="GetNumberOption">
+      <h1>GetNumberOption (options, property, minimum, maximum, fallback)</h1>
+
+      <p>
+        The abstract operation GetNumberOption extracts a property value from the provided options object, converts it to a Number value, checks whether it is in the allowed range, and fills in a fallback value if necessary.
+      </p>
+
+      <emu-alg>
+        1. Let _opts_ be ToObject(_options_).
+        1. ReturnIfAbrupt(_opts_).
+        1. Let _value_ be Get(_opts_, _property_).
+        1. ReturnIfAbrupt(_value_).
+        1. If _value_ is not *undefined*, then
+          1. Let _value_ be ToNumber(_value_).
+          1. ReturnIfAbrupt(_value_).
+        1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
+          1. Return floor(_value_).
+        1. Else return _fallback_.
+      </emu-alg>
+    </emu-clause>
+
+  </emu-clause>
 </emu-clause>
