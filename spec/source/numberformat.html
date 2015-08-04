@@ -1,5 +1,519 @@
 <emu-clause id="numberformat-objects">
   <h1>NumberFormat Objects</h1>
 
-  <p>To Be Ported.</p>
+  <emu-clause id="sec-intl-numberformat-constructor">
+    <h1>The Intl.NumberFormat Constructor</h1>
+
+    <p>
+      The NumberFormat constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-InitializeNumberFormat">
+      <h1>InitializeNumberFormat (numberFormat, locales, options)</h1>
+
+      <p>
+        The abstract operation InitializeNumberFormat accepts the arguments _numberFormat_ (which must be an object), _locales_, and _options_. It initializes _numberFormat_ as a NumberFormat object.
+      </p>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _numberFormat_ has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
+        1. Set _numberFormat_.[[initializedIntlObject]] to *true*.
+        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        1. ReturnIfAbrupt(_requestedLocales_).
+        1. If _options_ is *undefined*, then
+          1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
+        1. Else
+          1. Let _options_ be ToObject(_options_).
+          1. ReturnIfAbrupt(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. ReturnIfAbrupt(_matcher_).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _localeData_ be *%NumberFormat%*.[[localeData]].
+        1. Let _r_ be ResolveLocale(*%NumberFormat%*.[[availableLocales]], _requestedLocales_, _opt_, *%NumberFormat%*.[[relevantExtensionKeys]], _localeData_).
+        1. Set _numberFormat_.[[locale]] to the value of _r_.[[locale]].
+        1. Set _numberFormat_.[[numberingSystem]] to the value of _r_.[[nu]].
+        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _s_ be GetOption(_options_, *"style"*, *"string"*, «*"decimal"*, *"percent"*, *"currency"*», *"decimal"*).
+        1. ReturnIfAbrupt(_s_).
+        1. Set _numberFormat_.[[style]] to _s_.
+        1. Let _c_ be GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
+        1. ReturnIfAbrupt(_c_).
+        1. If _c_ is not *undefined*, then
+          1. If the result of IsWellFormedCurrencyCode(_c_), is *false*, then throw a *RangeError* exception.
+        1. If _s_ is *"currency"* and _c_ is *undefined*, throw a *TypeError* exception.
+        1. If _s_ is *"currency"*, then
+          1. Let _c_ be converting _c_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Set _numberFormat_.[[currency]] to _c_.
+          1. Let _cDigits_ be CurrencyDigits(_c_)
+        1. Let _cd_ be GetOption(_options_, *"currencyDisplay"*, *"string"*, «*"code"*, *"symbol"*, *"name"*», *"symbol"*).
+        1. ReturnIfAbrupt(_cd_).
+        1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
+        1. Let _mnid_ be GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
+        1. ReturnIfAbrupt(_mnid_).
+        1. Set _numberFormat_.[[minimumIntegerDigits]] to _mnid_.
+        1. If _s_ is *"currency"*, let _mnfdDefault_ be _cDigits_; else let _mnfdDefault_ be 0.
+        1. Let _mnfd_ be GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20, _mnfdDefault_).
+        1. ReturnIfAbrupt(_mnfd_).
+        1. Set _numberFormat_.[[minimumFractionDigits]] to _mnfd_.
+        1. If _s_ is *"currency"*, let _mxfdDefault_ be max(_mnfd_, _cDigits_); else if _s_ is *"percent"*, let _mxfdDefault_ be max(_mnfd_, 0); else let _mxfdDefault_ be max(_mnfd_, 3).
+        1. Let _mxfd_ be GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20, _mxfdDefault_).
+        1. ReturnIfAbrupt(_mxfd_).
+        1. Set _numberFormat_.[[maximumFractionDigits]] to _mxfd_.
+        1. Let _mnsd_ be Get(_options_, *"minimumSignificantDigits"*).
+        1. ReturnIfAbrupt(_mnsd_).
+        1. Let _mxsd_ be Get(_options_, *"maximumSignificantDigits"*).
+        1. ReturnIfAbrupt(_mxsd_).
+        1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
+          1. Let _mnsd_ be GetNumberOption(_options_, *"minimumSignificantDigits"*, 1, 21, 1).
+          1. ReturnIfAbrupt(_mnsd_).
+          1. Let _mxsd_ be GetNumberOption(_options_, *"maximumSignificantDigits"*, _mnsd_, 21, 21).
+          1. ReturnIfAbrupt(_mxsd_).
+          1. Set _numberFormat_.[[minimumSignificantDigits]] to _mnsd_.
+          1. Set _numberFormat_.[[maximumSignificantDigits]] to _mxsd_.
+        1. Let _g_ be GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
+        1. ReturnIfAbrupt(_g_).
+        1. Set _numberFormat_.[[useGrouping]] to _g_.
+        1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
+        1. Let _patterns_ be Get(_dataLocaleData_, *"patterns"*).
+        1. Assert: _patterns_ is an object (see <emu-xref href="#sec-Intl.NumberFormat-internal-slots"></emu-xref>).
+        1. Let _stylePatterns_ be Get(_patterns_, s).
+        1. Set _numberFormat_.[[positivePattern]] to Get(_stylePatterns_, *"positivePattern"*).
+        1. Set _numberFormat_.[[negativePattern]] to Get(_stylePatterns_, *"negativePattern"*).
+        1. Set _numberFormat_.[[boundFormat]] to *undefined*.
+        1. Set _numberFormat_.[[initializedNumberFormat]] to *true*.
+        1. Return _numberFormat_.
+      </emu-alg>
+
+      <p>
+        When the abstract operation CurrencyDigits is called with an argument _currency_ (which must be an upper case String value), the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, then return the minor unit value corresponding to the _currency_ from the list; else return 2.
+      </emu-alg>
+
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat">
+      <h1>Intl.NumberFormat([ locales [, options]])</h1>
+
+      <p>
+        When the *Intl.NumberFormat* function is called with optional arguments the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
+        1. Let _numberFormat_ be OrdinaryCreateFromConstructor(_newTarget_, *%NumberFormatPrototype%*).
+        1. ReturnIfAbrupt(_numberFormat_).
+        1. Return InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-numberformat-constructor">
+    <h1>Properties of the Intl.NumberFormat Constructor</h1>
+
+    <p>
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.NumberFormat constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-Intl.NumberFormat.prototype">
+      <h1>Intl.NumberFormat.prototype</h1>
+
+      <p>
+        The value of *Intl.NumberFormat.prototype* is *%NumberFormatPrototype%*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat.supportedLocalesOf">
+      <h1>Intl.NumberFormat.supportedLocalesOf (locales [, options ])</h1>
+
+      <p>
+        When the *supportedLocalesOf* method of *%NumberFormat%* is called, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be *%NumberFormat%*.[[availableLocales]].
+        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        1. Return SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[relevantExtensionKeys]] internal slot is *["nu"]*.
+      </p>
+
+      <emu-note>
+        Unicode Technical Standard 35 describes two locale extension keys that are relevant to number formatting, "nu" for numbering system and "cu" for currency. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects.
+      </emu-note>
+
+      <p>
+        The value of the [[localeData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
+      </p>
+
+      <ul>
+        <li>The array that is the value of the "nu" property of any locale property of [[localeData]] must not include the values "native", "traditio", or "finance".</li>
+        <li>[[localeData]][locale] must have a patterns property for all locale values. The value of this property must be an object, which must have properties with the names of the three number format styles: *"decimal"*, *"percent"*, and *"currency"*. Each of these properties in turn must be an object with the properties positivePattern and negativePattern. The value of these properties must be string values that contain a substring *"{number}"*; the values within the currency property must also contain a substring *"{currency}"*. The pattern strings must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.</li>
+      </ul>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-numberformat-prototype-object">
+    <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
+
+    <p>
+      The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%NumberFormat%*).
+    </p>
+    <p>
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase “this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
+    </p>
+
+    <emu-clause id="sec-Intl.NumberFormat.prototype.constructor">
+      <h1>Intl.NumberFormat.prototype.constructor</h1>
+
+      <p>
+        The initial value of *Intl.NumberFormat.prototype.constructor* is *%NumberFormat%*.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat.prototype-toStringTag">
+      <h1>Intl.NumberFormat.prototype[@@toStringTag]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Object"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat.prototype.format">
+      <h1>Intl.NumberFormat.prototype.format</h1>
+
+      <p>
+        This named accessor property returns a function that formats a number according to the effective locale and the formatting options of this NumberFormat object.
+      </p>
+      <p>
+        The value of the [[Get]] attribute is a function that takes the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be this NumberFormat object.
+        1. If _nf_.[[boundFormat]] is *undefined*, then
+          1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-number-format-functions"></emu-xref>.
+          1. The value of _F_’s *length* property is 1.
+          1. Let _bf_ be BoundFunctionCreate(_F_, «*this* value»).
+          1. Set _nf_.[[boundFormat]] to _bf_.
+        1. Return _nf_.[[boundFormat]].
+      </emu-alg>
+
+      <emu-note>
+        The function returned by [[Get]] is bound to this NumberFormat object so that it can be passed directly to Array.prototype.map or other functions.
+      </emu-note>
+
+      <p>
+        The value of the [[Set]] attribute is *undefined*.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-number-format-functions">
+      <h1>Number Format Functions</h1>
+
+      <p>
+        A NumberFormat format function is an anonymous function that takes one argument value, and performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. Assert: Type(_nf_) is Object and _nf_ has an [[initializedNumberFormat]] internal slot whose value is *true*.
+        1. If _value_ is not provided, let _value_ be *undefined*.
+        1. Let _x_ be ToNumber(_value_).
+        1. ReturnIfAbrupt(_x_).
+        1. Return FormatNumber(_nf_, _x_).
+      </emu-alg>
+
+      <p>
+        When the FormatNumber abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ according to the effective locale and the formatting options of _numberFormat_.
+      </p>
+
+      <p>
+        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ (“ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ (“ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.
+      </p>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+      </emu-note>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _negative_ be *false*.
+        1. If the _result_ of isFinite(_x_) is *false*, then
+          1. If _x_ is *NaN*,
+            1. Let _n_ be an ILD String value indicating the *NaN* value.
+          1. Else
+            1. Let n be an ILD String value indicating infinity.
+            1. If _x_ < 0, then let _negative_ be *true*.
+        1. Else
+          1. If _x_ < 0, then
+            1. Let _negative_ be *true*.
+            1. Let _x_ be -_x_.
+          1. If the value of _numberFormat_.[[style]] is *"percent"*, let _x_ be 100 × _x_.
+          1. If the _numberFormat_.[[minimumSignificantDigits]] and _numberFormat_.[[maximumSignificantDigits]] are present, then
+            1. Let _n_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
+          1. Else
+            1. Let _n_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
+          1. If the value of the _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-2">Table 2</emu-xref> below, then
+            1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-2">Table 2</emu-xref>.
+            1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
+          1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
+          1. If _n_ contains the character *"."*, then replace it with an ILND String representing the decimal separator.
+          1. If the value of the _numberFormat_.[[useGrouping]] is *true*, then insert an ILND String representing a grouping separator into an ILND set of locations within the integer part of _n_.
+        1. If _negative_ is *true*, then
+          1. Let _result_ be the value of _numberFormat_.[[negativePattern]].
+        1. Else,
+          1. Let _result_ be the value of _numberFormat_.[[positivePattern]].
+        1. Replace the substring *"{number}"* within _result_ with n.
+        1. If the value of the _numberFormat_.[[style]] is *"currency"*, then
+          1. Let _currency_ be the value of _numberFormat_.[[currency]].
+          1. If _numberFormat_.[[currencyDisplay]] is *"code"*, then
+            1. Let _cd_ be _currency_.
+          1. Else, if _numberFormat_.[[currencyDisplay]] is *"symbol"*, then
+            1. Let _cd_ be an ILD string representing _currency_ in short form. If the implementation does not have such a representation of _currency_, then use _currency_ itself.
+          1. Else, if _numberFormat_.[[currencyDisplay]] is *"name"*, then
+            1. Let _cd_ be an ILD string representing _currency_ in long form. If the implementation does not have such a representation of _currency_, then use _currency_ itself.
+          1. Replace the substring *"{currency}"* within _result_ with _cd_.
+        1. Return _result_.
+      </emu-alg>
+
+      <p>
+        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minPrecision_, and _maxPrecision_ (both must be integers between 1 and 21) the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _p_ be _maxPrecision_.
+        1. If _x_ = 0, then
+          1. Let _m_ be the String consisting of _p_ occurrences of the character *"0"*.
+          1. Let _e_ be 0.
+        1. Else
+          1. Let _e_ and _n_ be integers such that 10<sup>_p_–1</sup> ≤ _n_ < 10<sup>_p_</sup> and for which the exact mathematical value of _n_ × 10<sup>_e_–_p_+1</sup> – _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ × 10<sup>_e_–_p_+1</sup> is larger.
+          1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
+        1. If _e_ ≥ _p_, then
+          1. Return the concatenation of _m_ and _e_-_p_+1 occurrences of the character *"0"*.
+        1. If _e_ = _p_-1, then
+          1. Return _m_.
+        1. If _e_ ≥ 0, then
+          1. Let _m_ be the concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_–(_e_+1) characters of _m_.
+        1. If _e_ < 0, then
+          1. Let _m_ be the concatenation of the String *"0."*, –(_e_+1) occurrences of the character *"0"*, and the string _m_.
+        1. If _m_ contains the character *"."*, and _maxPrecision_ > _minPrecision_, then
+          1. Let _cut_ be _maxPrecision_ – _minPrecision_.
+          1. Repeat while _cut_ > 0 and the last character of _m_ is *"0"*:
+            1. Remove the last character from _m_.
+            1. Decrease _cut_ by 1.
+          1. If the last character of _m_ is *"."*, then
+            1. Remove the last character from _m_.
+        1. Return _m_.
+      </emu-alg>
+
+      <p>
+        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minInteger_ (which must be an integer between 1 and 21), _minFraction_, and _maxFraction_ (which must be integers between 0 and 20) the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _f_ be _maxFraction_.
+        1. Let _n_ be an integer for which the exact mathematical value of _n_ ÷ 10<sup>_f_</sup> – _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
+        1. If _n_ = 0, let _m_ be the String *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
+        1. If _f_ ≠ 0, then
+          1. Let _k_ be the number of characters in _m_.
+          1. If _k_ ≤ _f_, then
+            1. Let _z_ be the String consisting of _f_+1–_k_ occurrences of the character *"0"*.
+            1. Let _m_ be the concatenation of Strings _z_ and _m_.
+            1. Let _k_=_f_+1.
+          1. Let _a_ be the first _k_–_f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
+          1. Let _m_ be the concatenation of the three Strings _a_, *"."*, and _b_.
+          1. Let _int_ be the number of characters in _a_.
+        1. Else let _int_ be the number of characters in _m_.
+        1. Let _cut_ be _maxFraction_ – _minFraction_.
+        1. Repeat while _cut_ > 0 and the last character of _m_ is *"0"*:
+          1. Remove the last character from _m_.
+          1. Decrease _cut_ by 1.
+        1. If the last character of _m_ is ".", then
+          1. Remove the last character from _m_.
+        1. If _int_ < _minInteger_, then
+          1. Let _z_ be the String consisting of _minInteger_–_int_ occurrences of the character *"0"*.
+          1. Let _m_ be the concatenation of Strings _z_ and _m_.
+        1. Return _m_.
+      </emu-alg>
+
+      <figure>
+        <figcaption><span id="table-2">Table 2</span>&nbsp;&mdash; Numbering systems with simple digit mappings</figcaption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Numbering System</th>
+              <th>Digits</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>arab</td>
+            <td>U+0660 to U+0669</td>
+          </tr>
+          <tr>
+            <td>arabext</td>
+            <td>U+06F0 to U+06F9</td>
+          </tr>
+          <tr>
+            <td>bali</td>
+            <td>U+1B50 to U+1B59</td>
+          </tr>
+          <tr>
+            <td>beng</td>
+            <td>U+09E6 to U+09EF</td>
+          </tr>
+          <tr>
+            <td>deva</td>
+            <td>U+0966 to U+096F</td>
+          </tr>
+          <tr>
+            <td>fullwide</td>
+            <td>U+FF10 to U+FF19</td>
+          </tr>
+          <tr>
+            <td>gujr</td>
+            <td>U+0AE6 to U+0AEF</td>
+          </tr>
+          <tr>
+            <td>guru</td>
+            <td>U+0A66 to U+0A6F</td>
+          </tr>
+          <tr>
+            <td>hanidec</td>
+            <td>U+3007, U+4E00, U+4E8C, U+4E09, U+56DB, U+4E94, U+516D, U+4E03, U+516B, U+4E5D</td>
+          </tr>
+          <tr>
+            <td>khmr</td>
+            <td>U+17E0 to U+17E9</td>
+          </tr>
+          <tr>
+            <td>knda</td>
+            <td>U+0CE6 to U+0CEF</td>
+          </tr>
+          <tr>
+            <td>laoo</td>
+            <td>U+0ED0 to U+0ED9</td>
+          </tr>
+          <tr>
+            <td>latn</td>
+            <td>U+0030 to U+0039</td>
+          </tr>
+          <tr>
+            <td>limb</td>
+            <td>U+1946 to U+194F</td>
+          </tr>
+          <tr>
+            <td>mlym</td>
+            <td>U+0D66 to U+0D6F</td>
+          </tr>
+          <tr>
+            <td>mong</td>
+            <td>U+1810 to U+1819</td>
+          </tr>
+          <tr>
+            <td>mymr</td>
+            <td>U+1040 to U+1049</td>
+          </tr>
+          <tr>
+            <td>orya</td>
+            <td>U+0B66 to U+0B6F</td>
+          </tr>
+          <tr>
+            <td>tamldec</td>
+            <td>U+0BE6 to U+0BEF</td>
+          </tr>
+          <tr>
+            <td>telu</td>
+            <td>U+0C66 to U+0C6F</td>
+          </tr>
+          <tr>
+            <td>thai</td>
+            <td>U+0E50 to U+0E59</td>
+          </tr>
+          <tr>
+            <td>tibt</td>
+            <td>U+0F20 to U+0F29</td>
+          </tr>
+        </table>
+      </figure>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.NumberFormat.prototype.resolvedOptions">
+      <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
+
+      <p>
+        This function provides access to the locale and formatting options computed during initialization of the object.
+      </p>
+      <p>
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots are not present are not assigned.
+      </p>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-numberformat-instances">
+    <h1>Properties of Intl.NumberFormat Instances</h1>
+
+    <p>
+      Intl.NumberFormat instances inherit properties from *%NumberFormatPrototype%*.
+    </p>
+
+    <p>
+      Intl.NumberFormat instances and other objects that have been successfully initialized as a NumberFormat have [[initializedIntlObject]] and [[initializedNumberFormat]] internal slots whose values are *true*.
+    </p>
+
+    <p>
+      Objects that have been successfully initialized as a NumberFormat object also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[numberingSystem]] is a String value with the “type” given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
+      <li>[[style]] is one of the String values *"decimal"*, *"currency"*, or *"percent"*, identifying the number format style used.</li>
+      <li>[[currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* style. It is only present when [[style]] has the value *"currency"*.</li>
+      <li>[[currencyDisplay]] is one of the String values *"code"*, *"symbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only present when [[style]] has the value *"currency"*.</li>
+      <li>[[minimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
+      <li>[[minimumFractionDigits]] and [[maximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[minimumSignificantDigits]] and [[maximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits – the formatter uses however many integer and fraction digits are required to display the specified number of significant digits.</li>
+      <li>[[useGrouping]] is a Boolean value indicating whether a grouping separator should be used.</li>
+      <li>[[positivePattern]] and [[negativePattern]] are String values as described in <emu-xref href="#sec-Intl.NumberFormat.prototype-toStringTag"></emu-xref>.</li>
+    </ul>
+
+    <p>
+      Finally, objects that have been successfully initialized as a NumberFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.NumberFormat.prototype-toStringTag"></emu-xref>).
+    </p>
+  </emu-clause>
 </emu-clause>
