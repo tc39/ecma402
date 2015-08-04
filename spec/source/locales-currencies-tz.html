@@ -37,7 +37,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-isstructurallyvalidlanguagetag">
+    <emu-clause id="sec-isstructurallyvalidlanguagetag" aoid="IsStructurallyValidLanguageTag">
       <h1>IsStructurallyValidLanguageTag (locale)</h1>
 
       <p>
@@ -55,7 +55,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-canonicalizelanguagetag">
+    <emu-clause id="sec-canonicalizelanguagetag" aoid="CanonicalizeLanguageTag">
       <h1>CanonicalizeLanguageTag (locale)</h1>
 
       <p>
@@ -67,7 +67,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-defaultlocale">
+    <emu-clause id="sec-defaultlocale" aoid="DefaultLocale">
       <h1>DefaultLocale ()</h1>
 
       <p>
@@ -88,14 +88,14 @@
       All well-formed 3-letter ISO 4217 currency codes are allowed. However, the set of combinations of currency code and language tag for which localized currency symbols are available is implementation dependent. Where a localized currency symbol is not available, the ISO 4217 currency code is used for formatting.
     </p>
 
-    <emu-clause id="sec-iswellformedcurrencycode">
+    <emu-clause id="sec-iswellformedcurrencycode" aoid="IsWellFormedCurrencyCode">
       <h1>IsWellFormedCurrencyCode (currency)</h1>
 
       <p>
         The IsWellFormedCurrencyCode abstract operation verifies that the _currency_ argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
       </p>
 
-      <emu-alg aoid="iswellformedcurrencycode-alg">
+      <emu-alg>
         1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
         2. If the string length of _normalized_ is not 3, return *false*.
         3. If _normalized_ contains any character that is not in the range "A" to "Z" (U+0041 to U+005A), return *false*.
@@ -116,7 +116,7 @@
       All registered Zone and Link names are allowed. Implementations must recognize all such names, and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations. However, the set of combinations of time zone name and language tag for which localized time zone names are available is implementation dependent.
     </p>
 
-    <emu-clause id="sec-isvalidtimezonename">
+    <emu-clause id="sec-isvalidtimezonename" aoid="IsValidTimeZoneName">
       <h1>IsValidTimeZoneName (timeZone)</h1>
 
       <p>
@@ -127,14 +127,14 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-canonicalizetimezonename">
+    <emu-clause id="sec-canonicalizetimezonename" aoid="CanonicalizeTimeZoneName">
       <h1>CanonicalizeTimeZoneName</h1>
 
       <p>
         The CanonicalizeTimeZoneName abstract operation returns the canonical and case-regularized form of the _timeZone_ argument (which must be a String value that is a valid time zone name as verified by the IsValidTimeZoneName abstract operation). The following steps are taken:
       </p>
 
-      <emu-alg aoid="canonicalizetimezonename-alg">
+      <emu-alg>
         1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
         2. If _ianaTimeZone_ is a Link name, then let _ianaTimeZone_ be the corresponding Zone name as specified in the "backward" file of the IANA Time Zone Database.
         3. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, then return *"UTC"*.
@@ -146,7 +146,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-defaulttimezone">
+    <emu-clause id="sec-defaulttimezone" aoid="DefaultTimeZone">
       <h1>DefaultTimeZone ()</h1>
 
       <p>

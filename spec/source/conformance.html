@@ -1,13 +1,13 @@
 <emu-clause id="conformance">
   <h1>Conformance</h1>
   <p>
-    A conforming implementation of the ECMAScript 2016 Internationalization API Specification must conform to the ECMAScript 2016 Language Specification (ECMA-262 6th Edition, or successor), and must provide and support all the objects, properties, functions, and program semantics described in this specification.
+    A conforming implementation of the ECMAScript 2015 Internationalization API Specification must conform to the ECMAScript 2015 Language Specification (ECMA-262 6<sup>th</sup> Edition, or successor), and must provide and support all the objects, properties, functions, and program semantics described in this specification.
   </p>
   <p>
-    A conforming implementation of the ECMAScript 2016 Internationalization API Specification is permitted to provide additional objects, properties, and functions beyond those described in this specification. In particular, a conforming implementation of the ECMAScript 2016 Internationalization API Specification is permitted to provide properties not described in this specification, and values for those properties, for objects that are described in this specification. A conforming implementation is not permitted to add optional arguments to the functions defined in this specification.
+    A conforming implementation of the ECMAScript 2015 Internationalization API Specification is permitted to provide additional objects, properties, and functions beyond those described in this specification. In particular, a conforming implementation of the ECMAScript 2015 Internationalization API Specification is permitted to provide properties not described in this specification, and values for those properties, for objects that are described in this specification. A conforming implementation is not permitted to add optional arguments to the functions defined in this specification.
   </p>
   <p>
-    A conforming implementation is permitted to accept additional values, and then have implementation-defined behaviour instead of throwing a RangeError, for the following properties of _options_  arguments:
+    A conforming implementation is permitted to accept additional values, and then have implementation-defined behaviour instead of throwing a *RangeError*, for the following properties of _options_  arguments:
   </p>
   <p>
     <ul>
@@ -15,7 +15,7 @@
       <li>The _options_ properties usage and sensitivity in the Collator constructor.</li>
       <li>The _options_ properties style and currencyDisplay in the NumberFormat constructor.</li>
       <li>The _options_ properties minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, and maximumSignificantDigits in the NumberFormat constructor, provided that the additional values are interpreted as integer values higher than the specified limits.</li>
-      <li>The _options_ properties listed in table 3 in the DateTimeFormat constructor.</li>
+      <li>The _options_ properties listed in <emu-xref href="#table-3">Table 3</emu-xref> in the DateTimeFormat constructor.</li>
       <li>The _options_ property formatMatcher in the DateTimeFormat constructor.</li>
     </ul>
   </p>

@@ -14,7 +14,7 @@
   <emu-clause id="sec-properties-of-the-string-prototype-object">
     <h1>Properties of the String Prototype Object</h1>
 
-    <emu-clause id="sec-String.prototype.localeCompare">
+    <emu-clause id="sec-String.prototype.localeCompare" aoid="String.prototype.localeCompare">
       <h1>String.prototype.localeCompare (that [, locales [, options ]])</h1>
 
       <p>
@@ -25,7 +25,7 @@
         When the *localeCompare* method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-String.prototype.localeCompare">
+      <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
         2. Let _S_ be ToString(_O_).
         3. ReturnIfAbrupt(_S_).
@@ -54,7 +54,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-String.prototype.toLocaleLowerCase">
+    <emu-clause id="sec-String.prototype.toLocaleLowerCase" aoid="String.prototype.toLocaleLowerCase">
       <h1>String.prototype.toLocaleLowerCase ([locales])</h1>
 
       <p>
@@ -65,7 +65,7 @@
         This function interprets a string value as a sequence of code points, as described in ES2015, 6.1.4. The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-String.prototype.toLocaleLowerCase">
+      <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
         2. Let _S_ be ToString(_O_).
         3. ReturnIfAbrupt(_S_).
@@ -148,7 +148,7 @@
       The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2015, 20.1.3.
     </p>
 
-    <emu-clause id="sec-Number.prototype.toLocaleString">
+    <emu-clause id="sec-Number.prototype.toLocaleString" aoid="Number.prototype.toLocaleString">
       <h1>Number.prototype.toLocaleString ([locales [, options ]])</h1>
 
       <p>
@@ -159,7 +159,7 @@
         When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Number.prototype.toLocaleString">
+      <emu-alg>
         1. Let _x_ be thisNumberValue(*this* value).
         2. ReturnIfAbrupt(_x_).
         3. Let _numberFormat_ be Construct(*%NumberFormat%*, «*locales*, *options*»).
@@ -181,7 +181,7 @@
       The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2015, 20.3.4.
     </p>
 
-    <emu-clause id="sec-Date.prototype.toLocaleString">
+    <emu-clause id="sec-Date.prototype.toLocaleString" aoid="Date.prototype.toLocaleString">
       <h1>Date.prototype.toLocaleString ([locales [, options ]])</h1>
 
       <p>
@@ -192,7 +192,7 @@
         When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleString">
+      <emu-alg>
         1. Let _x_ be thisTimeValue(*this* value).
         2. ReturnIfAbrupt(_x_).
         3. If _x_ is *NaN*, return *"Invalid Date"*.
@@ -209,7 +209,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Date.prototype.toLocaleDateString">
+    <emu-clause id="sec-Date.prototype.toLocaleDateString" aoid="Date.prototype.toLocaleDateString">
       <h1>Date.prototype.toLocaleDateString ([locales [, options ]])</h1>
 
       <p>
@@ -220,7 +220,7 @@
         When the *toLocaleDateString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleDateString">
+      <emu-alg>
         1. Let _x_ be thisTimeValue(*this* value).
         2. ReturnIfAbrupt(_x_).
         3. If _x_ is *NaN*, return *"Invalid Date"*.
@@ -237,7 +237,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Date.prototype.toLocaleTimeString">
+    <emu-clause id="sec-Date.prototype.toLocaleTimeString" aoid="Date.prototype.toLocaleDateString">
       <h1>Date.prototype.toLocaleTimeString ([locales [, options ]])</h1>
 
       <p>
@@ -248,7 +248,7 @@
         When the *toLocaleTimeString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleDateString">
+      <emu-alg>
         1. Let _x_ be thisTimeValue(*this* value).
         2. ReturnIfAbrupt(_x_).
         3. If _x_ is *NaN*, return *"Invalid Date"*.
@@ -269,7 +269,7 @@
   <emu-clause id="sec-properties-of-the-array-prototype-object">
     <h1>Properties of the Array Prototype Object</h1>
 
-    <emu-clause id="sec-Date.prototype.toLocaleString">
+    <emu-clause id="sec-Date.prototype.toLocaleString" aoid="Date.prototype.toLocaleString">
       <h1>Array.prototype.toLocaleString([locales [, options ]])</h1>
 
       <p>
@@ -280,7 +280,7 @@
         The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Date.prototype.toLocaleString">
+      <emu-alg>
         1. Let _A_ be ToObject(*this* value).
         2. ReturnIfAbrupt(_A_).
         3. Let _len_ be ToLength(Get(_A_, *"length"*)).

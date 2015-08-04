@@ -7,7 +7,7 @@
       The Intl.Collator constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in 9.1.
     </p>
 
-    <emu-clause id="sec-InitializeCollator">
+    <emu-clause id="sec-InitializeCollator" aoid="InitializeCollator">
       <h1>InitializeCollator (collator, locales, options)</h1>
 
       <p>
@@ -18,36 +18,37 @@
         Several steps in the algorithm use values from the following table, which associates Unicode locale extension keys, property names, types, and allowable values:
       </p>
 
-      <h2 id="table-1">Table 1 — Collator options settable through both extension keys and options properties</h2>
-
-      <table>
-        <thead>
+      <figure>
+        <figcaption><span id="table-1">Table 1</span>&nbsp;&mdash; Collator options settable through both extension keys and options properties</figcaption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Values</th>
+            </tr>
+          </thead>
           <tr>
-            <th>Key</th>
-            <th>Property</th>
-            <th>Type</th>
-            <th>Values</th>
+            <td>kn</td>
+            <td>numeric</td>
+            <td>"boolean"</td>
+            <td></td>
           </tr>
-        </thead>
-        <tr>
-          <td>kn</td>
-          <td>numeric</td>
-          <td>"boolean"</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>kf</td>
-          <td>caseFirst</td>
-          <td>"string"</td>
-          <td>"upper", "lower", "false"</td>
-        </tr>
-      </table>
+          <tr>
+            <td>kf</td>
+            <td>caseFirst</td>
+            <td>"string"</td>
+            <td>"upper", "lower", "false"</td>
+          </tr>
+        </table>
+      </figure>
 
       <p>
         The following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-InitializeCollator">
+      <emu-alg>
         1. If collator has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
         2. Set collator.[[initializedIntlObject]] to *true*.
         3. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
@@ -78,7 +79,7 @@
           1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
             1. Let _value_ be ToString(_value_).
             1. ReturnIfAbrupt(_value_).
-          1. Set _opt_.[[_&lt;key&gt;_]] to _value_.
+          1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
         17. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
         18. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         19. Set _collator_.[[locale]] to the value of _r_.[[locale]].
@@ -95,9 +96,9 @@
             1. If _value_ is *null*, let _value_ be *"default"*.
           1. Else use the row of <emu-xref href="#table-1">Table 1</emu-xref> that contains the value of _key_ in the Key column:
             1. Let _property_ be the name given in the Property column of the row.
-            1. Let _value_ be the value of _r_.[[_&lt;key&gt;_]].
+            1. Let _value_ be the value of _r_.[[&lt;_key_&gt;]].
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
-          1. Set _collator_.[[_&lt;property&gt;_]] to _value_.
+          1. Set _collator_.[[&lt;_property_&gt;]] to _value_.
           1. Increase _k_ by 1.
         24. Let _s_ be GetOption(_options_, *"sensitivity"*, *"string"*, «*"base"*, *"accent"*, *"case"*, *"variant"*», *undefined*).
         25. ReturnIfAbrupt(_s_).
@@ -118,14 +119,14 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator">
+    <emu-clause id="sec-Intl.Collator" aoid="Intl.Collator">
       <h1>Intl.Collator([ locales [, options]])</h1>
 
       <p>
         When the *Intl.Collator* function is called with optional arguments locales and options the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-Intl.Collator">
+      <emu-alg>
         1. If _NewTarget_ is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be _NewTarget_.
         2. Let _collator_ be OrdinaryCreateFromConstructor(_newTarget_, *%CollatorPrototype%*).
         3. ReturnIfAbrupt(_collator_).
@@ -141,8 +142,8 @@
       Besides the internal slots and the *length* property (whose value is 0), the Intl.Collator constructor has the following properties:
     </p>
 
-    <emu-clause>
-      <h1 id="sec-Intl.Collator.prototype">Intl.Collator.prototype</h1>
+    <emu-clause id="sec-Intl.Collator.prototype">
+      <h1>Intl.Collator.prototype</h1>
 
       <p>
         The value of *Intl.Collator.prototype* is *%CollatorPrototype%*.
@@ -153,14 +154,14 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.supportedLocalesOf">
+    <emu-clause id="sec-Intl.Collator.supportedLocalesOf" aoid="Intl.Collator.supportedLocalesOf">
       <h1>Intl.Collator.supportedLocalesOf (locales [, options ])</h1>
 
       <p>
         When the *supportedLocalesOf* method of Intl.Collator is called, the following steps are taken:
       </p>
 
-      <emu-alg aoid="alg-">
+      <emu-alg>
         1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
         2. ReturnIfAbrupt(_requestedLocales_).
         3. Return SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
@@ -171,7 +172,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-internal-slots">
+    <emu-clause id="sec-intl-collator-internal-slots">
       <h1>Internal Slots</h1>
 
       <p>
@@ -228,7 +229,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.prototype.compare">
+    <emu-clause id="sec-Intl.Collator.prototype.compare" aoid="Intl.Collator.prototype.compare">
       <h1>Intl.Collator.prototype.compare</h1>
 
       <p>
@@ -238,7 +239,7 @@
         The value of the [[Get]] attribute is a function that takes the following steps:
       </p>
 
-      <emu-alg aoid="alg-Intl.Collator.prototype.compare">
+      <emu-alg>
         1. Let _collator_ be this Collator object.
         2. If _collator_.[[boundCompare]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in 11.3.4.
@@ -258,14 +259,14 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-collator-compare-functions">
+    <emu-clause id="sec-collator-compare-functions" aoid="collator-compare-functions">
       <h1>Collator Compare Functions</h1>
 
       <p>
         A Collator compare function is an anonymous function that takes two arguments, _x_ and _y_, and performs the following steps:
       </p>
 
-      <emu-alg aoid="alg-collator-compare-functions">
+      <emu-alg>
         1. Let _collator_ be the *this* value.
         2. Assert: Type(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is *true*.
         3. If _x_ is not provided, let _x_ be undefined.
