@@ -1,5 +1,508 @@
 <emu-clause id="datetimeformat-objects">
   <h1>DateTimeFormat Objects</h1>
 
-  <p>To Be Ported.</p>
+  <emu-clause id="sec-intl-datetimeformat-constructor">
+    <h1>The Intl.DateTimeFormat Constructor</h1>
+
+    <p>
+      The Intl.DateTimeFormat constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-InitializeDateTimeFormat">
+      <h1>InitializeDateTimeFormat (dateTimeFormat, locales, options)</h1>
+
+      <p>
+        The abstract operation InitializeDateTimeFormat accepts the arguments _dateTimeFormat_ (which must be an object), _locales_, and _options_. It initializes _dateTimeFormat_ as a DateTimeFormat object.
+      </p>
+
+      <p>
+        Several DateTimeFormat algorithms use values from the following table, which provides property names and allowable values for the components of date and time formats:
+      </p>
+
+      <figure>
+        <figcaption><span id="table-3">Table 3</span>&nbsp;&mdash; Components of date and time formats</figcaption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Values</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>weekday</td>
+            <td>"narrow", "short", "long"</td>
+          </tr>
+          <tr>
+            <td>era</td>
+            <td>"narrow", "short", "long"</td>
+          </tr>
+          <tr>
+            <td>year</td>
+            <td>"2-digit", "numeric"</td>
+          </tr>
+          <tr>
+            <td>month</td>
+            <td>"2-digit", "numeric", "narrow", "short", "long"</td>
+          </tr>
+          <tr>
+            <td>day</td>
+            <td>"2-digit", "numeric"</td>
+          </tr>
+          <tr>
+            <td>hour</td>
+            <td>"2-digit", "numeric"</td>
+          </tr>
+          <tr>
+            <td>minute</td>
+            <td>"2-digit", "numeric"</td>
+          </tr>
+          <tr>
+            <td>second</td>
+            <td>"2-digit", "numeric"</td>
+          </tr>
+          <tr>
+            <td>timeZoneName</td>
+            <td>"short", "long"</td>
+          </tr>
+        </table>
+      </figure>
+
+      <p>
+        The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _dateTimeFormat_.[[initializedIntlObject]] is *true*, throw a *TypeError* exception.
+        1. Set _dateTimeFormat_.[[initializedIntlObject]] to *true*.
+        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        1. ReturnIfAbrupt(_requestedLocales_),
+        1. Let _options_ be ToDateTimeOptions(_options_, *"any"*, *"date"*).
+        1. ReturnIfAbrupt(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. ReturnIfAbrupt(_matcher_).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _localeData_ be the value of *%DateTimeFormat%*.[[localeData]].
+        1. Let _r_ be ResolveLocale( *%DateTimeFormat%*.[[availableLocales]], _requestedLocales_, opt, *%DateTimeFormat%*.[[relevantExtensionKeys]], _localeData_).
+        1. Set _dateTimeFormat_.[[locale]] to the value of _r_.[[locale]].
+        1. Set _dateTimeFormat_.[[calendar]] to the value of _r_.[[ca]].
+        1. Set _dateTimeFormat_.[[numberingSystem]] to the value of _r_.[[nu]].
+        1. Let _dataLocale_ be the value of _r_.[[dataLocale]].
+        1. Let _tz_ be Get(_options_, *"timeZone"*).
+        1. ReturnIfAbrupt(_tz_).
+        1. If _tz_ is not *undefined*, then
+          1. Let _tz_ be ToString(_tz_).
+          1. ReturnIfAbrupt(_tz_).
+          1. If the result of IsValidTimeZoneName(_tz_) is *false*, then
+            1. Throw a *RangeError* exception.
+          1. Let _tz_ be CanonicalizeTimeZoneName(_tz_).
+        1. Else,
+          1. Let _tz_ be DefaultTimeZone().
+        1. Set _dateTimeFormat_.[[timeZone]] to _tz_.
+        1. Let _opt_ be a new Record.
+        1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
+          1. Let _prop_ be the name given in the Property column of the row.
+          1. Let _value_ be GetOption(_options_, _prop_, *"string"*, «the strings given in the Values column of the row», *undefined*).
+          1. ReturnIfAbrupt(_value_).
+          1. Set _opt_.[[<_prop_>]] to _value_.
+        1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
+        1. Let _formats_ be Get(_dataLocaleData_, *"formats"*).
+        1. Let _matcher_ be GetOption(_options_, *"formatMatcher"*, *"string"*, «*"basic"*, *"best fit"*», *"best fit"*).
+        1. ReturnIfAbrupt(_matcher_).
+        1. If _matcher_ is *"basic"*, then
+          1. Let _FormatMatcher_ be the abstract operation BasicFormatMatcher.
+        1. Else
+          1. Let _FormatMatcher_ be the abstract operation BestFitFormatMatcher.
+        1. Let _bestFormat_ be _FormatMatcher_(_opt_, _formats_).
+        1. For each row in <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do
+          1. Let _prop_ be the name given in the Property column of the row.
+          1. Let _p_ be Get(_bestFormat_, _prop_).
+          1. If _p_ not *undefined*, then
+            1. Set _dateTimeFormat_.[[<_prop_>]] to _p_.
+        1. Let _hr12_ be GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
+        1. ReturnIfAbrupt(_hr12_).
+        1. If _dateTimeFormat_ has an internal slot [[hour]], then
+          1. If _hr12_ is *undefined*, then
+            1. Let _hr12_ be Get(_dataLocaleData_, *"hour12"*).
+          1. Set _dateTimeFormat_.[[hour12]] to _hr12_.
+          1. If _hr12_ is *true*, then
+            1. Let _hourNo0_ be Get(_dataLocaleData_, *"hourNo0"*).
+            1. Set _dateTimeFormat_.[[hourNo0]] to _hourNo0_.
+            1. Let _pattern_ be Get(_bestFormat_, *"pattern12"*).
+          1. Else
+            1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
+        1. Else
+          1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
+        1. Set _dateTimeFormat_.[[pattern]] to _pattern_.
+        1. Set _dateTimeFormat_.[[boundFormat]] to *undefined*.
+        1. Set _dateTimeFormat_.[[initializedDateTimeFormat]] to *true*.
+        1. Return _dateTimeFormat_.
+      </emu-alg>
+
+      <p>
+        When the ToDateTimeOptions abstract operation is called with arguments _options_, _required_, and _defaults_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _options_ is *undefined*, then let _options_ be *null*, else let _options_ be ToObject(_options_).
+        1. ReturnIfAbrupt(_options_).
+        1. Let _options_ be ObjectCreate(_options_).
+        1. Let _needDefaults_ be *true*.
+        1. If _required_ is *"date"* or *"any"*,
+          1. For each of the property names *"weekday"*, *"year"*, *"month"*, *"day"*:
+            1. Let _prop_ be the property name.
+            1. Let _value_ be Get(_options_, _prop_).
+            1. ReturnIfAbrupt(_value_).
+            1. If _value_ is not *undefined*, then let _needDefaults_ be *false*.
+        1. If _required_ is *"time"* or *"any"*,
+          1. For each of the property names *"hour"*, *"minute"*, *"second"*:
+            1. Let _prop_ be the property name.
+            1. Let _value_ be Get(_options_, _prop_).
+            1. ReturnIfAbrupt(_value_).
+            1. If _value_ is not *undefined*, then let _needDefaults_ be *false*.
+        1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
+          1. For each of the property names *"year"*, *"month"*, *"day"*:
+            1. Let _status_ be CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
+            1. ReturnIfAbrupt(_status_).
+        1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
+          1. For each of the property names *"hour"*, *"minute"*, *"second"*:
+            1. Let _status_ be CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
+            1. ReturnIfAbrupt(_status_).
+        1. Return _options_.
+      </emu-alg>
+
+      <p>
+        When the BasicFormatMatcher abstract operation is called with two arguments _options_ and _formats_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _removalPenalty_ be 120.
+        1. Let _additionPenalty_ be 20.
+        1. Let _longLessPenalty_ be 8.
+        1. Let _longMorePenalty_ be 6.
+        1. Let _shortLessPenalty_ be 6.
+        1. Let _shortMorePenalty_ be 3.
+        1. Let _bestScore_ be -*Infinity*.
+        1. Let _bestFormat_ be *undefined*.
+        1. Let _k_ be 0.
+        1. Assert: _formats_ is an Array object.
+        1. Let _len_ be Get(_formats_, *"length"*).
+        1. Repeat while _k_ < _len_:
+          1. Let _format_ be Get(_formats_, ToString(_k_)).
+          1. Let _score_ be 0.
+          1. For each _property_ shown in <emu-xref href="#table-3">Table 3</emu-xref>:
+            1. Let _optionsProp_ be _options_.[[<_property_>]].
+            1. Let _formatProp_ be Get(_format_, _property_).
+            1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
+            1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then decrease _score_ by _removalPenalty_.
+            1. Else if _optionsProp_ ≠ _formatProp_,
+              1. Let _values_ be the array [*"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"*].
+              1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
+              1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
+              1. Let _delta_ be max(min(_formatPropIndex_ - _optionsPropIndex_, 2), -2).
+              1. If _delta_ = 2, decrease _score_ by _longMorePenalty_.
+              1. Else if _delta_ = 1, decrease _score_ by _shortMorePenalty_.
+              1. Else if _delta_ = -1, decrease _score_ by _shortLessPenalty_.
+              1. Else if _delta_ = -2, decrease _score_ by _longLessPenalty_.
+          1. If _score_ > _bestScore_,
+            1. Let _bestScore_ be _score_.
+            1. Let _bestFormat_ be _format_.
+          1. Increase _k_ by 1.
+        1. Return _bestFormat_.
+      </emu-alg>
+
+      <p>
+        When the BestFitFormatMatcher abstract operation is called with two arguments _options_ and _formats_, it performs implementation dependent steps, which should return a set of component representations that a typical user of the selected locale would perceive as at least as good as the one returned by BasicFormatMatcher.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat">
+      <h1>Intl.DateTimeFormat([ locales [, options ]])</h1>
+
+      <p>
+        When the *Intl.DateTimeFormat* function is called with optional arguments _locales_ and _options_ the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
+        1. Let _dateTimeFormat_ be OrdinaryCreateFromConstructor(_newTarget_, *%DateTimeFormatPrototype%*).
+        1. ReturnIfAbrupt(_dateTimeFormat_).
+        1. Return InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-datetimeformat-constructor">
+    <h1>Properties of the Intl.DateTimeFormat Constructor</h1>
+
+    <p>
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.DateTimeFormat constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype">
+      <h1>Intl.DateTimeFormat.prototype</h1>
+
+      <p>
+        The value of *Intl.DateTimeFormat.prototype* is *%DateTimeFormatPrototype%*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.supportedLocalesOf">
+      <h1>Intl.DateTimeFormat.supportedLocalesOf (locales [, options ])</h1>
+
+      <p>
+        When the *supportedLocalesOf* method of Intl.DateTimeFormat is called, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be the value of *%DateTimeFormat%*.[[availableLocales]].
+        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
+        1. ReturnIfAbrupt(_requestedLocales_).
+        1. Return _supportedLocales_ be SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+
+      <p>
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[relevantExtensionKeys]] internal slot is [*"ca"*, *"nu"*].
+      </p>
+
+      <emu-note>
+        Unicode Technical Standard 35 describes three locale extension keys that are relevant to date and time formatting, "ca" for calendar, "tz" for time zone, and implicitly "nu" for the numbering system of the number format used for numbers within the date format. DateTimeFormat, however, requires that the time zone is specified through the timeZone property in the options objects.
+      </emu-note>
+
+      <p>
+        The value of the [[localeData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
+      </p>
+
+      <ul>
+        <li>
+          The array that is the value of the "nu" property of any locale property of [[localeData]] must not include the values "native", "traditio", or "finance".
+        </li>
+        <li>
+          [[localeData]][locale] must have hour12 and hourNo0 properties with Boolean values for all locale values.
+        </li>
+        <li>
+          [[localeData]][locale] must have a formats property for all locale values. The value of this property must be an array of objects, each of which has a subset of the properties shown in <emu-xref href="#table-3">Table 3</emu-xref>, where each property must have one of the values specified for the property in <emu-xref href="#table-3">Table 3</emu-xref>. Multiple objects in an array may use the same subset of the properties as long as they have different values for the properties. The following subsets must be available for each locale:
+          <ul>
+            <li>weekday, year, month, day, hour, minute, second</li>
+            <li>weekday, year, month, day</li>
+            <li>year, month, day</li>
+            <li>year, month</li>
+            <li>month, day</li>
+            <li>hour, minute, second</li>
+            <li>hour, minute</li>
+          </ul>
+          Each of the objects must also have a pattern property, whose value is a String value that contains for each of the date and time format component properties of the object a substring starting with "{", followed by the name of the property, followed by "}". If the object has an hour property, it must also have a pattern12 property, whose value is a String value that, in addition to the substrings of the pattern property, contains a substring "{ampm}".
+        </li>
+      </ul>
+
+      <p>
+        EXAMPLE     An implementation might include the following object as part of its English locale data: {hour: "numeric", minute: "2-digit", second: "2-digit", pattern: "{hour}:{minute}:{second}", pattern12: "{hour}:{minute}:{second} {ampm}"}.
+      </p>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-datetimeformat-prototype-object">
+    <h1>Properties of the Intl.DateTimeFormat Prototype Object</h1>
+
+    <p>
+      The Intl.DateTimeFormat prototype object is itself an *%DateTimeFormat%* instance, whose internal slots are set as if it had been constructed by the expression Construct(*%DateTimeFormat%*).
+    </p>
+
+    <p>
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of the Intl.DateTimeFormat prototype object, the phrase "this DateTimeFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedDateTimeFormat]] internal slot with value *true*.
+    </p>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype.constructor">
+      <h1>Intl.DateTimeFormat.prototype.constructor</h1>
+
+      <p>
+        The initial value of *Intl.DateTimeFormat.prototype.constructor* is *%DateTimeFormat%*.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype-toStringTag">
+      <h1>Intl.DateTimeFormat.prototype[@@toStringTag]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Object"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype.format">
+      <h1>Intl.DateTimeFormat.prototype.format</h1>
+
+      <p>
+        This named accessor property returns a function that formats a date according to the effective locale and the formatting options of this DateTimeFormat object.
+      </p>
+
+      <p>
+        The value of the [[Get]] attribute is a function that takes the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be this DateTimeFormat object.
+        1. ReturnIfAbrupt(_dtf_).
+        1. If the [[boundFormat]] internal slot of this DateTimeFormat object is *undefined*, then
+          1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-datetime-format-functions"></emu-xref>.
+          1. The value of _F_’s *length* property is 1.
+          1. Let _bf_ be BoundFunctionCreate(F, «*this* value»).
+          1. Set _dtf_.[[boundFormat]] to _bf_.
+        1. Return _dtf_.[[boundFormat]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-datetime-format-functions">
+      <h1>DateTime Format Functions</h1>
+
+      <p>
+        A DateTime format function is an anonymous function that optionally takes an argument _date_. It performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be the *this* value.
+        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[initializedDateTimeFormat]] internal slot whose value is *true*.
+        1. If _date_ is not provided or is *undefined*, then
+          1. Let _x_ be *%Date_now%*().
+        1. Else
+          1. Let _x_ be ToNumber(_date_).
+          1. ReturnIfAbrupt(_x_).
+        1. Return FormatDateTime(_dtf_, _x_).
+      </emu-alg>
+
+      <emu-note>
+        The function returned by [[Get]] is bound to this DateTimeFormat object so that it can be passed directly to Array.prototype.map or other functions.
+      </emu-note>
+
+      <p>
+        The value of the [[Set]] attribute is *undefined*.
+      </p>
+
+      <p>
+        When the FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ (interpreted as a time value as specified in ES2015, 20.3.1.1) according to the effective locale and the formatting options of _dateTimeFormat_.
+      </p>
+
+      <emu-alg>
+        1. If _x_ is not a finite Number, then throw a *RangeError* exception.
+        1. Let _locale_ be the value of _dateTimeFormat_.[[locale]].
+        1. Let _nf_ be Construct(%NumberFormat%, «[locale], {useGrouping: *false*}»).
+        1. ReturnIfAbrupt(_nf_).
+        1. Let _nf2_ be Construct(%NumberFormat%, «[locale], {minimumIntegerDigits: 2, useGrouping: *false*}»).
+        1. ReturnIfAbrupt(_nf2_).
+        1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[calendar]], _dateTimeFormat_.[[timeZone]]).
+        1. Let _result_ be the value of the _dateTimeFormat_.[[pattern]].
+        1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
+          1. If _dateTimeFormat_ has an internal slot with the name given in the Property column of the row, then
+            1. Let _p_ be the name given in the Property column of the row.
+            1. Let _f_ be the value of the [[<_p_>]] internal slot of _dateTimeFormat_.
+            1. Let _v_ be the value of _tm_.[[<_p_>]].
+            1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
+            1. If _p_ is *"month"*, increase _v_ by 1.
+            1. If _p_ is *"hour"* and the value of _dateTimeFormat_.[[hour12]] is *true*, then
+              1. Let _v_ be _v_ modulo 12.
+              1. If _v_ is equal to the value of _tm_.[[<_p_>]], let _pm_ be *false*; else let _pm_ be *true*.
+              1. If _v_ is 0 and the value of _dateTimeFormat_.[[hourNo0]] is *true*, let _v_ be 12.
+            1. If _f_ is *"numeric"*, then
+              1. Let _fv_ be FormatNumber(_nf_, _v_).
+            1. Else if f is *"2-digit"*, then
+              1. Let _fv_ be FormatNumber(_nf2_, _v_).
+              1. If the length of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
+            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_, and if the implementation does not have a localized representation of _f_, then use _f_ itself.
+            1. Replace the substring of _result_ that consists of *"{"*, p, and *"}"*, with _fv_.
+        1. If _dateTimeFormat_.[[hour12]] is *true*, then
+          1. If _pm_ is *true*, then
+            1. Let _fv_ be an implementation and locale dependent String value representing "post meridiem";
+          1. Else
+            1. Let _fv_ be an implementation and locale dependent String value representing "ante meridiem".
+          1. Replace the substring of _result_ that consists of *"{ampm}"*, with _fv_.
+        1. Return _result_.
+      </emu-alg>
+
+      <emu-note>
+        It is recommended that implementations use the locale and calendar dependent strings provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>), and use CLDR "abbreviated" strings for DateTimeFormat "short" strings, and CLDR "wide" strings for DateTimeFormat "long" strings.
+      </emu-note>
+
+      <p>
+        When the ToLocalTime abstract operation is called with arguments _date_, _calendar_, and _timeZone_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2015, 20.3.1.
+        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
+      </emu-alg>
+
+      <emu-note>
+        It is recommended that implementations use the time zone information of the IANA Time Zone Database.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype.resolvedOptions">
+      <h1>Intl.DateTimeFormat.prototype.resolvedOptions ()</h1>
+
+      <p>
+        This function provides access to the locale and formatting options computed during initialization of the object.
+      </p>
+
+      <p>
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this DateTimeFormat object (see <emu-xref href="#sec-properties-of-intl-datetimeformat-instances"></emu-xref>): locale, calendar, numberingSystem, timeZone, hour12, weekday, era, year, month, day, hour, minute, second, and timeZoneName. Properties whose corresponding internal slots are not present are not assigned.
+      </p>
+
+      <emu-note>
+        In this version of the ECMAScript 2015 Internationalization API, the timeZone property will be the name of the default time zone if no timeZone property was provided in the options object provided to the Intl.DateTimeFormat constructor. The previous version left the timeZone property *undefined* in this case.
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-datetimeformat-instances">
+    <h1>Properties of Intl.DateTimeFormat Instances</h1>
+
+    <p>
+      Intl.DateTimeFormat instances inherit properties from *%DateTimeFormatPrototype%*.
+    </p>
+
+    <p>
+      Intl.DateTimeFormat instances and other objects that have been successfully initialized as a DateTimeFormat object have [[initializedIntlObject]] and [[initializedDateTimeFormat]] internal slots whose values are *true*.
+    </p>
+
+    <p>
+      Objects that have been successfully initialized as a DateTimeFormat also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[calendar]] is a String value with the "type" given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
+      <li>[[numberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
+      <li>[[timeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
+      <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either absent, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only present when [[hour]] is also present.</li>
+      <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only present when [[hour12]] is also present and has the value *true*.</li>
+      <li>[[pattern]] is a String value as described in <emu-xref href="#sec-Intl.DateTimeFormat.prototype-toStringTag"></emu-xref>.</li>
+    </ul>
+
+    <p>
+      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.DateTimeFormat.prototype-toStringTag"></emu-xref>).
+    </p>
+  </emu-clause>
 </emu-clause>
