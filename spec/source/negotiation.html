@@ -154,7 +154,7 @@
           1. Let _MatcherOperation_ be the abstract operation LookupMatcher.
         1. Else
           1. Let _MatcherOperation_ be the abstract operation BestFitMatcher.
-        1. Let _r_ be MatcherOperation(_availableLocales_, _requestedLocales_).
+        1. Let _r_ be _MatcherOperation_(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be the value of _r_.[[locale]].
         1. If _r_ has an [[extension]] field, then
           1. Let _extension_ be the value of _r_.[[extension]].

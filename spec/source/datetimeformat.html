@@ -8,7 +8,7 @@
       The Intl.DateTimeFormat constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-InitializeDateTimeFormat">
+    <emu-clause id="sec-InitializeDateTimeFormat" aoid="InitializeDateTimeFormat">
       <h1>InitializeDateTimeFormat (dateTimeFormat, locales, options)</h1>
 
       <p>
@@ -143,7 +143,7 @@
         When the ToDateTimeOptions abstract operation is called with arguments _options_, _required_, and _defaults_, the following steps are taken:
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="ToDateTimeOptions">
         1. If _options_ is *undefined*, then let _options_ be *null*, else let _options_ be ToObject(_options_).
         1. ReturnIfAbrupt(_options_).
         1. Let _options_ be ObjectCreate(_options_).
@@ -175,7 +175,7 @@
         When the BasicFormatMatcher abstract operation is called with two arguments _options_ and _formats_, the following steps are taken:
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="BasicFormatMatcher">
         1. Let _removalPenalty_ be 120.
         1. Let _additionPenalty_ be 20.
         1. Let _longLessPenalty_ be 8.
@@ -404,7 +404,7 @@
         When the FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ (interpreted as a time value as specified in ES2015, 20.3.1.1) according to the effective locale and the formatting options of _dateTimeFormat_.
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="FormatDateTime">
         1. If _x_ is not a finite Number, then throw a *RangeError* exception.
         1. Let _locale_ be the value of _dateTimeFormat_.[[locale]].
         1. Let _nf_ be Construct(%NumberFormat%, «[locale], {useGrouping: *false*}»).
@@ -448,7 +448,7 @@
         When the ToLocalTime abstract operation is called with arguments _date_, _calendar_, and _timeZone_, the following steps are taken:
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="ToLocalTime">
         1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2015, 20.3.1.
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>

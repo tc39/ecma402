@@ -6,15 +6,13 @@
   </p>
 
   <emu-note>
-    <p>
-      The Collator, NumberFormat, or DateTimeFormat objects created in the algorithms in this clause are only used within these algorithms. They are never directly accessed by ECMAScript code and need not actually exist within an implementation.
-    </p>
+    The Collator, NumberFormat, or DateTimeFormat objects created in the algorithms in this clause are only used within these algorithms. They are never directly accessed by ECMAScript code and need not actually exist within an implementation.
   </emu-note>
 
   <emu-clause id="sec-properties-of-the-string-prototype-object">
     <h1>Properties of the String Prototype Object</h1>
 
-    <emu-clause id="sec-String.prototype.localeCompare" aoid="String.prototype.localeCompare">
+    <emu-clause id="sec-String.prototype.localeCompare">
       <h1>String.prototype.localeCompare (that [, locales [, options ]])</h1>
 
       <p>
@@ -41,20 +39,16 @@
       </p>
 
       <emu-note>
-        <p>
-          The *localeCompare* method itself is not directly suitable as an argument to *Array.prototype.sort* because the latter requires a function of two arguments.
-        </p>
+        The *localeCompare* method itself is not directly suitable as an argument to *Array.prototype.sort* because the latter requires a function of two arguments.
       </emu-note>
 
       <emu-note>
-        <p>
-          The *localeCompare* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
-        </p>
+        The *localeCompare* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
 
-    <emu-clause id="sec-String.prototype.toLocaleLowerCase" aoid="String.prototype.toLocaleLowerCase">
+    <emu-clause id="sec-String.prototype.toLocaleLowerCase">
       <h1>String.prototype.toLocaleLowerCase ([locales])</h1>
 
       <p>
@@ -97,21 +91,15 @@
       </p>
 
       <emu-note>
-        <p>
-          As of Unicode 5.1, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
-        </p>
+        As of Unicode 5.1, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
       </emu-note>
 
       <emu-note>
-        <p>
-          The case mapping of some code points may produce multiple code points. In this case the result String may not be the same length as the source String. Because both *toLocaleUpperCase* and *toLocaleLowerCase* have context-sensitive behaviour, the functions are not symmetrical. In other words, *s.toLocaleUpperCase().toLocaleLowerCase()* is not necessarily equal to *s.toLocaleLowerCase()*.
-        </p>
+        The case mapping of some code points may produce multiple code points. In this case the result String may not be the same length as the source String. Because both *toLocaleUpperCase* and *toLocaleLowerCase* have context-sensitive behaviour, the functions are not symmetrical. In other words, *s.toLocaleUpperCase().toLocaleLowerCase()* is not necessarily equal to *s.toLocaleLowerCase()*.
       </emu-note>
 
       <emu-note>
-        <p>
-          The *toLocaleLowerCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
-        </p>
+        The *toLocaleLowerCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
@@ -132,9 +120,7 @@
       </p>
 
       <emu-note>
-        <p>
-          The *toLocaleUpperCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
-        </p>
+        The *toLocaleUpperCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
@@ -148,7 +134,7 @@
       The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2015, 20.1.3.
     </p>
 
-    <emu-clause id="sec-Number.prototype.toLocaleString" aoid="Number.prototype.toLocaleString">
+    <emu-clause id="sec-Number.prototype.toLocaleString">
       <h1>Number.prototype.toLocaleString ([locales [, options ]])</h1>
 
       <p>
@@ -181,7 +167,7 @@
       The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2015, 20.3.4.
     </p>
 
-    <emu-clause id="sec-Date.prototype.toLocaleString" aoid="Date.prototype.toLocaleString">
+    <emu-clause id="sec-Date.prototype.toLocaleString">
       <h1>Date.prototype.toLocaleString ([locales [, options ]])</h1>
 
       <p>
@@ -209,7 +195,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Date.prototype.toLocaleDateString" aoid="Date.prototype.toLocaleDateString">
+    <emu-clause id="sec-Date.prototype.toLocaleDateString">
       <h1>Date.prototype.toLocaleDateString ([locales [, options ]])</h1>
 
       <p>
@@ -237,7 +223,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Date.prototype.toLocaleTimeString" aoid="Date.prototype.toLocaleDateString">
+    <emu-clause id="sec-Date.prototype.toLocaleTimeString">
       <h1>Date.prototype.toLocaleTimeString ([locales [, options ]])</h1>
 
       <p>
@@ -269,7 +255,7 @@
   <emu-clause id="sec-properties-of-the-array-prototype-object">
     <h1>Properties of the Array Prototype Object</h1>
 
-    <emu-clause id="sec-Date.prototype.toLocaleString" aoid="Date.prototype.toLocaleString">
+    <emu-clause id="sec-Date.prototype.toLocaleString">
       <h1>Array.prototype.toLocaleString([locales [, options ]])</h1>
 
       <p>
@@ -310,15 +296,11 @@
       </emu-alg>
 
       <emu-note>
-        <p>
-          The elements of the array are converted to Strings using their *toLocaleString* methods, and these Strings are then concatenated, separated by occurrences of a separator String that has been derived in an implementationdefined locale-specific way. The result of calling this function is intended to be analogous to the result of *toString*, except that the result of this function is intended to be locale-specific.
-        </p>
+        The elements of the array are converted to Strings using their *toLocaleString* methods, and these Strings are then concatenated, separated by occurrences of a separator String that has been derived in an implementationdefined locale-specific way. The result of calling this function is intended to be analogous to the result of *toString*, except that the result of this function is intended to be locale-specific.
       </emu-note>
 
       <emu-note>
-        <p>
-          The *toLocaleString* function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
-        </p>
+        The *toLocaleString* function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>

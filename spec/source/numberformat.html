@@ -8,7 +8,7 @@
       The NumberFormat constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-InitializeNumberFormat">
+    <emu-clause id="sec-InitializeNumberFormat" aoid="InitializeNumberFormat">
       <h1>InitializeNumberFormat (numberFormat, locales, options)</h1>
 
       <p>
@@ -93,7 +93,7 @@
         When the abstract operation CurrencyDigits is called with an argument _currency_ (which must be an upper case String value), the following steps are taken:
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="CurrencyDigits">
         1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, then return the minor unit value corresponding to the _currency_ from the list; else return 2.
       </emu-alg>
 
@@ -271,7 +271,7 @@
         The following steps are taken:
       </p>
 
-      <emu-alg>
+      <emu-alg aoid="FormatNumber">
         1. Let _negative_ be *false*.
         1. If the _result_ of isFinite(_x_) is *false*, then
           1. If _x_ is *NaN*,
