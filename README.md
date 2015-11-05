@@ -10,11 +10,15 @@ ES Intl Proposals follow [this process document](https://docs.google.com/documen
 |---|---------------------------------------|--------------  | ------|------
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
-|   | [Intl.ListFormat][]                   | Zibi Braniecki |     0 |
+|   | [Intl.ListFormat][]                   | Zibi Braniecki |     - |
+|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     - |
+|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     - |
 
 [Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
 [Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 [Intl.NumberFormat round option]: https://github.com/rxaviers/ecma402-number-format-round-option
+[Intl.RelativeTimeFormat]: https://github.com/caridy/intl-relative-time-spec
+[Intl.PluralRules]: https://github.com/caridy/intl-plural-rules-spec
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
 
