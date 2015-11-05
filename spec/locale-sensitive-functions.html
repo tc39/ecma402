@@ -25,17 +25,14 @@
 
       <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
-        2. Let _S_ be ToString(_O_).
-        3. ReturnIfAbrupt(_S_).
-        4. Let _That_ be ToString(_that_).
-        5. ReturnIfAbrupt(_That_).
-        6. Let _collator_ be Construct(*%Collator%*, «*locales*, *options*»).
-        7. ReturnIfAbrupt(_collator_).
-        8. Return CompareStrings(_collator_, _S_, _That_)
+        1. Let _S_ be ? ToString(_O_).
+        1. Let _That_ be ? ToString(_that_).
+        1. Let _collator_ be ? Construct(*%Collator%*, «*locales*, *options*»).
+        1. Return CompareStrings(_collator_, _S_, _That_)
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *localeCompare* method is 1.
+        The value of the `length` property of the *localeCompare* method is 1.
       </p>
 
       <emu-note>
@@ -61,25 +58,23 @@
 
       <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
-        2. Let _S_ be ToString(_O_).
-        3. ReturnIfAbrupt(_S_).
-        4. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
-        5. ReturnIfAbrupt(_requestedLocales_).
-        6. Let _len_ be the number of elements in _requestedLocales_.
-        7. If _len_ > 0, then
+        1. Let _S_ be ? ToString(_O_).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Let _len_ be the number of elements in _requestedLocales_.
+        1. If _len_ > 0, then
           1. Let _requestedLocale_ be the first element of _requestedLocales_.
-        8. Else
+        1. Else
           1. Let _requestedLocale_ be DefaultLocale().
-        9. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (6.2.1) removed.
-        10. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
-        11. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-        12. If _locale_ is *undefined*, let _locale_ be *"und"*.
-        13. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2015, 6.1.4, starting at the first element of _S_.
-        14. For each code point _c_ in _cpList_, if the Unicode Character Database provides a lower case equivalent of _c_ that is either language insensitive or for the language _locale_, then replace _c_ in _cpList_ with that/those equivalent code point(s).
-        15. Let _cuList_ be a new List.
-        16. For each code point _c_ in _cpList_, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2015, 6.1.4) of _c_.
-        17. Let _L_ be a String whose elements are, in order, the elements of _cuList_.
-        18. Return _L_.
+        1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (6.2.1) removed.
+        1. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
+        1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+        1. If _locale_ is *undefined*, let _locale_ be *"und"*.
+        1. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2015, 6.1.4, starting at the first element of _S_.
+        1. For each code point _c_ in _cpList_, if the Unicode Character Database provides a lower case equivalent of _c_ that is either language insensitive or for the language _locale_, replace _c_ in _cpList_ with that/those equivalent code point(s).
+        1. Let _cuList_ be a new List.
+        1. For each code point _c_ in _cpList_, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2015, 6.1.4) of _c_.
+        1. Let _L_ be a String whose elements are, in order, the elements of _cuList_.
+        1. Return _L_.
       </emu-alg>
 
       <p>
@@ -87,7 +82,7 @@
       </p>
 
       <p>
-        The value of the *length* property of the *toLocaleLowerCase* method is 0.
+        The value of the `length` property of the *toLocaleLowerCase* method is 0.
       </p>
 
       <emu-note>
@@ -116,7 +111,7 @@
       </p>
 
       <p>
-        The value of the *length* property of the *toLocaleUpperCase* method is 0.
+        The value of the `length` property of the *toLocaleUpperCase* method is 0.
       </p>
 
       <emu-note>
@@ -146,15 +141,13 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be thisNumberValue(*this* value).
-        2. ReturnIfAbrupt(_x_).
-        3. Let _numberFormat_ be Construct(*%NumberFormat%*, «*locales*, *options*»).
-        4. ReturnIfAbrupt(_numberFormat_).
-        5. Return FormatNumber(_numberFormat_, _x_).
+        1. Let _x_ be ? thisNumberValue(*this* value).
+        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, «*locales*, *options*»).
+        1. Return FormatNumber(_numberFormat_, _x_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *toLocaleString* method is 0.
+        The value of the `length` property of the *toLocaleString* method is 0.
       </p>
 
     </emu-clause>
@@ -179,18 +172,15 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be thisTimeValue(*this* value).
-        2. ReturnIfAbrupt(_x_).
-        3. If _x_ is *NaN*, return *"Invalid Date"*.
-        4. Let _options_ be ToDateTimeOptions(_options_, *"any"*, *"all"*).
-        5. ReturnIfAbrupt(_options_).
-        6. Let _dateFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
-        7. ReturnIfAbrupt(_dateFormat_).
-        8. Return FormatDateTime(_dateFormat_, _x_).
+        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. If _x_ is *NaN*, return *"Invalid Date"*.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *toLocaleString* method is 0.
+        The value of the `length` property of the *toLocaleString* method is 0.
       </p>
 
     </emu-clause>
@@ -207,18 +197,15 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be thisTimeValue(*this* value).
-        2. ReturnIfAbrupt(_x_).
-        3. If _x_ is *NaN*, return *"Invalid Date"*.
-        4. Let _options_ be ToDateTimeOptions(_options_, *"date"*, *"date"*).
-        5. ReturnIfAbrupt(_options_).
-        6. Let _dateFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
-        7. ReturnIfAbrupt(_dateFormat_).
-        8. Return FormatDateTime(_dateFormat_, _x_).
+        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. If _x_ is *NaN*, return *"Invalid Date"*.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *toLocaleDateString* method is 0.
+        The value of the `length` property of the *toLocaleDateString* method is 0.
       </p>
 
     </emu-clause>
@@ -235,18 +222,15 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be thisTimeValue(*this* value).
-        2. ReturnIfAbrupt(_x_).
-        3. If _x_ is *NaN*, return *"Invalid Date"*.
-        4. Let _options_ be ToDateTimeOptions(_options_, *"time"*, *"time"*).
-        5. ReturnIfAbrupt(_options_).
-        6. Let _timeFormat_ be Construct(*%DateTimeFormat%*, «*locales*, *options*»).
-        7. ReturnIfAbrupt(_timeFormat_),
-        8. Return FormatDateTime(_timeFormat_, _x_).
+        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. If _x_ is *NaN*, return *"Invalid Date"*.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
+        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *toLocaleTimeString* method is 0.
+        The value of the `length` property of the *toLocaleTimeString* method is 0.
       </p>
 
     </emu-clause>
@@ -267,32 +251,26 @@
       </p>
 
       <emu-alg>
-        1. Let _A_ be ToObject(*this* value).
-        2. ReturnIfAbrupt(_A_).
-        3. Let _len_ be ToLength(Get(_A_, *"length"*)).
-        4. ReturnIfAbrupt(_len_).
-        5. Let _separator_ be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).
-        6. If _len_ is zero, return the empty String.
-        7. Let _firstElement_ be Get(_A_, *"0"*).
-        8. ReturnIfAbrupt(_firstElement_).
-        9. If _firstElement_ is *undefined* or *null*, then
+        1. Let _A_ be ? ToObject(*this* value).
+        1. Let _len_ be ? ToLength(Get(_A_, `"length"`)).
+        1. Let _separator_ be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).
+        1. If _len_ is zero, return the empty String.
+        1. Let _firstElement_ be ? Get(_A_, *"0"*).
+        1. If _firstElement_ is *undefined* or *null*, then
           1. Let _R_ be an empty String.
-        10. Else
-          1. Let _R_ be ToString(Invoke(_firstElement_, *"toLocaleString"*, «*locales*, *options*»)).
-          1. ReturnIfAbrupt(_R_).
-        11. Let _k_ be 1.
-        12. Repeat, while _k_ < _len_
+        1. Else
+          1. Let _R_ be ? ToString(Invoke(_firstElement_, *"toLocaleString"*, «*locales*, *options*»)).
+        1. Let _k_ be 1.
+        1. Repeat, while _k_ < _len_
           1. Let _S_ be a String value produced by concatenating _R_ and _separator_.
-          1. Let _nextElement_ be Get(_A_, ToString(_k_)).
-          1. ReturnIfAbrupt(_nextElement_).
+          1. Let _nextElement_ be ? Get(_A_, ToString(_k_)).
           1. If _nextElement_ is *undefined* or *null*, then
             1. Let _R_ be the empty String.
-          1. Else
-            1. Let _R_ be ToString(Invoke(_nextElement_, *"toLocaleString"*, «*locales*, *options*»)).
-            1. ReturnIfAbrupt(_R_).
+          1. Else,
+            1. Let _R_ be ? ToString(Invoke(_nextElement_, *"toLocaleString"*, «*locales*, *options*»)).
           1. Let _R_ be a String value produced by concatenating _S_ and _R_.
           1. Increase _k_ by 1.
-        13. Return _R_.
+        1. Return _R_.
       </emu-alg>
 
       <emu-note>

@@ -19,7 +19,7 @@
     </ul>
 
     <p>
-      EXAMPLE     An implementation of DateTimeFormat might include the language tag "th" in its [[availableLocales]] internal slot, and must (according to 12.2.3) include the key "ca" in its [[relevantExtensionKeys]] internal slot. For Thai, the "buddhist" calendar is usually the default, but an implementation might also support the calendars "gregory", "chinese", and "islamicc" for the locale "th". The [[localeData]] internal slot would therefore at least include {"th": {ca: ["buddhist", "gregory", "chinese", "islamicc"]}}.
+      EXAMPLE     An implementation of DateTimeFormat might include the language tag "th" in its [[availableLocales]] internal slot, and must (according to <emu-xref href="#sec-Intl.DateTimeFormat-internal-slots"></emu-xref>) include the key "ca" in its [[relevantExtensionKeys]] internal slot. For Thai, the "buddhist" calendar is usually the default, but an implementation might also support the calendars "gregory", "chinese", and "islamicc" for the locale "th". The [[localeData]] internal slot would therefore at least include {"th": {ca: ["buddhist", "gregory", "chinese", "islamicc"]}}.
     </p>
   </emu-clause>
 
@@ -43,20 +43,16 @@
         1. Let _seen_ be an empty List.
         1. If Type(_locales_) is String, then
           1. Let _aLocales_ be CreateArrayFromList(«_locales_»).
-        1. Let _O_ be ToObject(_aLocales_).
-        1. ReturnIfAbrupt(_O_).
-        1. Let _len_ be ToLength(Get(_O_, *"length"*)).
+        1. Let _O_ be ? ToObject(_aLocales_).
+        1. Let _len_ be ToLength(Get(_O_, `"length"`)).
         1. Let _k_ be 0.
         1. Repeat, while _k_ < _len_
           1. Let _Pk_ be ToString(_k_).
-          1. Let _kPresent_ be HasProperty(_O_, _Pk_).
-          1. ReturnIfAbrupt(_kPresent_).
-          1. If _kPresent_ is true, then
-            1. Let _kValue_ be Get(_O_, _Pk_).
-            1. ReturnIfAbrupt(_kValue_).
+          1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
+          1. If _kPresent_ is *true*, then
+            1. Let _kValue_ be ? Get(_O_, _Pk_).
             1. If Type(_kValue_) is not String or Object, throw a *TypeError* exception.
-            1. Let _tag_ be ToString(_kValue_).
-            1. ReturnIfAbrupt(_tag_).
+            1. Let _tag_ be ? ToString(_kValue_).
             1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
             1. Let _canonicalizedTag_ be CanonicalizeLanguageTag(_tag_).
             1. If _canonicalizedTag_ is not an element of _seen_, append _canonicalizedTag_ as the last element of _seen_.
@@ -83,9 +79,9 @@
       <emu-alg>
         1. Let _candidate_ be locale.
         1. Repeat
-          1. If _availableLocales_ contains an element equal to _candidate_, then return _candidate_.
+          1. If _availableLocales_ contains an element equal to _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
-          1. If _pos_ ≥ 2 and the character *"-"* occurs at index _pos_-2 of candidate, then decrease _pos_ by 2.
+          1. If _pos_ ≥ 2 and the character *"-"* occurs at index _pos_-2 of candidate, decrease _pos_ by 2.
           1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
     </emu-clause>
@@ -100,12 +96,11 @@
       <emu-alg>
         1. Let _k_ be 0.
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _len_ be ToLength(Get(_rLocales_, `"length"`)).
         1. Let _availableLocale_ be *undefined*.
         1. Repeat while _k_ < _len_ and _availableLocale_ is *undefined*:
           1. Let _Pk_ be ToString(_k_).
-          1. Let _locale_ be Get(_rLocales_, _Pk_) .
-          1. ReturnIfAbrupt(_locale_)
+          1. Let _locale_ be ? Get(_rLocales_, _Pk_) .
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. Increase _k_ by 1.
@@ -118,7 +113,7 @@
             extension sequence within _locale_.
             1. Set _result_.[[extension]] to _extension_.
             1. Set _result_.[[extensionIndex]] to _extensionIndex_.
-        1. Else
+        1. Else,
           1. Let _defLocale_ be DefaultLocale().
           1. Set _result_.[[locale]] to _defLocale_.
         1. Return _result_.
@@ -152,7 +147,7 @@
         1. Let _matcher_ be the value of _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
           1. Let _MatcherOperation_ be the abstract operation LookupMatcher.
-        1. Else
+        1. Else,
           1. Let _MatcherOperation_ be the abstract operation BestFitMatcher.
         1. Let _r_ be _MatcherOperation_(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be the value of _r_.[[locale]].
@@ -160,37 +155,31 @@
           1. Let _extension_ be the value of _r_.[[extension]].
           1. Let _extensionIndex_ be the value of _r_.[[extensionIndex]].
           1. Let _extensionSubtags_ be Call(*%StringProto_split%*, extension, «*"-"*») .
-          1. Let _extensionSubtagsLength_ be Get(CreateArrayFromList(_extensionSubtags_), *"length"*).
+          1. Let _extensionSubtagsLength_ be Get(CreateArrayFromList(_extensionSubtags_), `"length"`).
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be *"-u"*.
         1. Let _k_ be 0.
-        1. Let _rExtensionKeys_ be ToObject(CreateArrayFromList(_relevantExtensionKeys_)).
-        1. ReturnIfAbrupt(_rExtensionKeys_).
-        1. Let _len_ be ToLength(Get(_rExtensionKeys_, *"length"*)).
+        1. Let _rExtensionKeys_ be ? ToObject(CreateArrayFromList(_relevantExtensionKeys_)).
+        1. Let _len_ be ToLength(Get(_rExtensionKeys_, `"length"`)).
         1. Repeat while _k_ < _len_
-          1. Let _key_ be Get(_rExtensionKeys_ , ToString(_k_)).
-          1. ReturnIfAbrupt(_key_).
-          1. Let _foundLocaleData_ be Get(_localeData_, _foundLocale_).
-          1. ReturnIfAbrupt(_foundLocaleData_).
-          1. Let _keyLocaleData_ be ToObject(Get(_foundLocaleData_, _key_)).
-          1. ReturnIfAbrupt(_keyLocaleData_).
-          1. Let _value_ be ToString(Get(_keyLocaleData_, *"0"*)).
-          1. ReturnIfAbrupt(_value_).
+          1. Let _key_ be ? Get(_rExtensionKeys_ , ToString(_k_)).
+          1. Let _foundLocaleData_ be ? Get(_localeData_, _foundLocale_).
+          1. Let _keyLocaleData_ be ? ToObject(Get(_foundLocaleData_, _key_)).
+          1. Let _value_ be ? ToString(Get(_keyLocaleData_, *"0"*)).
           1. Let _supportedExtensionAddition_ be *""*.
           1. If _extensionSubtags_ is not *undefined*, then
             1. Let _keyPos_ be Call(*%ArrayProto_indexOf%*, _extensionSubtags_, «_key_») .
             1. If _keyPos_ ≠ -1, then
-              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the length of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
+              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the `length` property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
                 1. Let _requestedValue_ be Get(_extensionSubtags_, ToString(_keyPos_ +1)).
                 1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, «_requestedValue_») is *true*, then
                   1. Let _value_ be _requestedValue_.
                   1. Let _supportedExtensionAddition_ be the concatenation of *"-"*, _key_, *"-"*, and _value_.
-              1. Else, if the result of Call(*%StringProto_includes%*, _keyLocaleData_, «*"true"*») is *true*, then
+              1. Else if the result of Call(*%StringProto_includes%*, _keyLocaleData_, «*"true"*») is *true*, then
                 1. Let _value_ be *"true"*.
           1. If _options_ has a field [[<_key_>]], then
-            1. Let _optionsValue_ be the value of ToString(_options_.[[<_key_>]]).
-            1. ReturnIfAbrupt(_optionsValue_).
+            1. Let _optionsValue_ be ? ToString(_options_.[[<_key_>]]).
             1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, «_optionsValue_») is *true*, then
               1. If _optionsValue_ is not equal to _value_, then
                 1. Let _value_ be _optionsValue_.
@@ -220,16 +209,15 @@
 
       <emu-alg>
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _len_ be ToLength(Get(_rLocales_, `"length"`)).
         1. Let _subset_ be an empty List.
         1. Let _k_ be 0.
         1. Repeat while _k_ < _len_
           1. Let _Pk_ be ToString(_k_).
-          1. Let _locale_ be Get(_rLocales_, _Pk_).
-          1. ReturnIfAbrupt(_locale_).
+          1. Let _locale_ be ? Get(_rLocales_, _Pk_).
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-          1. If _availableLocale_ is not *undefined*, then append _locale_ to the end of subset.
+          1. If _availableLocale_ is not *undefined*, append _locale_ to the end of subset.
           1. Increment _k_ by 1.
         1. Return _subset_.
       </emu-alg>
@@ -252,12 +240,11 @@
 
       <emu-alg>
         1. If _options_ is not *undefined*, then
-          1. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
-          1. ReturnIfAbrupt(_matcher_).
+          1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Else, let _matcher_ be *"best fit"*.
         1. If _matcher_ is *"best fit"*,
           1. Let _MatcherOperation_ be the abstract operation BestFitSupportedLocales.
-        1. Else
+        1. Else,
           1. Let _MatcherOperation_ be the abstract operation LookupSupportedLocales.
         1. Let _supportedLocales_ be MatcherOperation(_availableLocales_, _requestedLocales_).
         1. Let _subset_ be CreateArrayFromList(_supportedLocales_).
@@ -278,21 +265,18 @@
       </p>
 
       <emu-alg>
-        1. Let _opts_ be ToObject(_options_).
-        1. ReturnIfAbrupt(_opts_).
-        1. Let _value_ be Get(_opts_, _property_).
-        1. ReturnIfAbrupt(_value_).
+        1. Let _opts_ be ? ToObject(_options_).
+        1. Let _value_ be ? Get(_opts_, _property_).
         1. If _value_ is not *undefined*, then
           1. Assert: _type_ is *"boolean"* or *"string"*.
           1. If _type_ is *"boolean"*, then
             1. Let _value_ be ToBoolean(_value_).
           1. If _type_ is *"string"*, then
-            1. Let _value_ be ToString(_value_).
-            1. ReturnIfAbrupt(_value_).
+            1. Let _value_ be ? ToString(_value_).
           1. If _values_ is not *undefined*, then
             1. If _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
           1. Return _value_.
-        1. Else return _fallback_.
+        1. Else, return _fallback_.
       </emu-alg>
     </emu-clause>
 
@@ -304,16 +288,13 @@
       </p>
 
       <emu-alg>
-        1. Let _opts_ be ToObject(_options_).
-        1. ReturnIfAbrupt(_opts_).
-        1. Let _value_ be Get(_opts_, _property_).
-        1. ReturnIfAbrupt(_value_).
+        1. Let _opts_ be ? ToObject(_options_).
+        1. Let _value_ be ? Get(_opts_, _property_).
         1. If _value_ is not *undefined*, then
-          1. Let _value_ be ToNumber(_value_).
-          1. ReturnIfAbrupt(_value_).
+          1. Let _value_ be ? ToNumber(_value_).
         1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
           1. Return floor(_value_).
-        1. Else return _fallback_.
+        1. Else, return _fallback_.
       </emu-alg>
     </emu-clause>
 

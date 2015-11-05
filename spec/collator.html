@@ -49,46 +49,39 @@
 
       <emu-alg>
         1. If collator has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
-        2. Set collator.[[initializedIntlObject]] to *true*.
-        3. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
-        4. ReturnIfAbrupt(_requestedLocales_).
-        5. If _options_ is *undefined*, then
+        1. Set collator.[[initializedIntlObject]] to *true*.
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
-        6. Else
-          1. Let _options_ be ToObject(_options_).
-          1. ReturnIfAbrupt(_options_).
-        7. Let _u_ be GetOption(_options_, *"usage"*, *"string"*, «*"sort"*, *"search"*», *"sort"*).
-        8. ReturnIfAbrupt(_u_).
-        9. Set _collator_.[[usage]] to _u_.
-        10. If _u_ is *"sort"*, then
-          1. Let _localeData_ be the value of *%Collator%*.[[sortLocaleData]];
-        11. Else
+        1. Else
+          1. Let _options_ be ? ToObject(_options_).
+        1. Let _u_ be ? GetOption(_options_, *"usage"*, *"string"*, «*"sort"*, *"search"*», *"sort"*).
+        1. Set _collator_.[[usage]] to _u_.
+        1. If _u_ is *"sort"*, then
+          1. Let _localeData_ be the value of *%Collator%*.[[sortLocaleData]].
+        1. Else,
           1. Let _localeData_ be the value of *%Collator%*.[[searchLocaleData]].
-        12. Let _opt_ be a new Record.
-        13. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
-        14. ReturnIfAbrupt(_matcher_).
-        15. Set _opt_.[[localeMatcher]] to _matcher_.
-        16. For each row in <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. For each row in <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
           1. Let _key_ be the name given in the Key column of the row.
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _type_ be the string given in the Type column of the row.
           1. Let _list_ be a List containing the Strings given in the Values column of the row, or *undefined* if no strings are given.
-          1. Let _value_ be GetOption(_options_, _prop_, _type_, _list_, *undefined*).
-          1. ReturnIfAbrupt(_value_).
+          1. Let _value_ be ? GetOption(_options_, _prop_, _type_, _list_, *undefined*).
           1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
-            1. Let _value_ be ToString(_value_).
-            1. ReturnIfAbrupt(_value_).
+            1. Let _value_ be ? ToString(_value_).
           1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
-        17. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
-        18. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
-        19. Set _collator_.[[locale]] to the value of _r_.[[locale]].
-        20. Let _k_ be 0.
-        21. Let _lenValue_ be Get(_relevantExtensionKeys_, *"length"*).
-        22. Let _len_ be ToLength(_lenValue_).
-        23. Repeat while _k_ < _len_:
+        1. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
+        1. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
+        1. Set _collator_.[[locale]] to the value of _r_.[[locale]].
+        1. Let _k_ be 0.
+        1. Let _lenValue_ be Get(_relevantExtensionKeys_, `"length"`).
+        1. Let _len_ be ToLength(_lenValue_).
+        1. Repeat while _k_ < _len_:
           1. Let _Pk_ be ToString(_k_).
-          1. Let _key_ be Get(_relevantExtensionKeys_, _Pk_).
-          1. ReturnIfAbrupt(_key_).
+          1. Let _key_ be ? Get(_relevantExtensionKeys_, _Pk_).
           1. If _key_ is *"co"*, then
             1. Let _property_ be *"collation"*.
             1. Let _value_ be the value of _r_.[[co]].
@@ -99,21 +92,20 @@
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
           1. Set _collator_.[[&lt;_property_&gt;]] to _value_.
           1. Increase _k_ by 1.
-        24. Let _s_ be GetOption(_options_, *"sensitivity"*, *"string"*, «*"base"*, *"accent"*, *"case"*, *"variant"*», *undefined*).
-        25. ReturnIfAbrupt(_s_).
-        26. If _s_ is *undefined*, then
-          1. If _u_ is *"sort"*, then let _s_ be *"variant"*.
-          1. Else
+        1. Let _s_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, «*"base"*, *"accent"*, *"case"*, *"variant"*», *undefined*).
+        1. If _s_ is *undefined*, then
+          1. If _u_ is *"sort"*, then
+            1. Let _s_ be *"variant"*.
+          1. Else,
             1. Let _dataLocale_ be the value of _r_.[[dataLocale]].
             1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
             1. Let _s_ be Get(_dataLocaleData_, *"sensitivity"*).
-        27. Set _collator_.[[sensitivity]] to _s_.
-        28. Let _ip_ be GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
-        29. ReturnIfAbrupt(_ip_).
-        30. Set _collator_.[[ignorePunctuation]] to _ip_.
-        31. Set _collator_.[[boundCompare]] to *undefined*.
-        32. Set _collator_.[[initializedCollator]] to *true*.
-        33. Return _collator_.
+        1. Set _collator_.[[sensitivity]] to _s_.
+        1. Let _ip_ be ? GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
+        1. Set _collator_.[[ignorePunctuation]] to _ip_.
+        1. Set _collator_.[[boundCompare]] to *undefined*.
+        1. Set _collator_.[[initializedCollator]] to *true*.
+        1. Return _collator_.
       </emu-alg>
 
     </emu-clause>
@@ -127,9 +119,8 @@
 
       <emu-alg>
         1. If _NewTarget_ is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be _NewTarget_.
-        2. Let _collator_ be OrdinaryCreateFromConstructor(_newTarget_, *%CollatorPrototype%*).
-        3. ReturnIfAbrupt(_collator_).
-        4. Return InitializeCollator(_collator_, _locales_, _options_).
+        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *%CollatorPrototype%*).
+        1. Return InitializeCollator(_collator_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -138,7 +129,7 @@
     <h1>Properties of the Intl.Collator Constructor</h1>
 
     <p>
-      Besides the internal slots and the *length* property (whose value is 0), the Intl.Collator constructor has the following properties:
+      Besides the internal slots and the `length` property (whose value is 0), the Intl.Collator constructor has the following properties:
     </p>
 
     <emu-clause id="sec-Intl.Collator.prototype">
@@ -161,13 +152,12 @@
       </p>
 
       <emu-alg>
-        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
-        2. ReturnIfAbrupt(_requestedLocales_).
-        3. Return SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Return SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *supportedLocalesOf* method is 1.
+        The value of the `length` property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -187,7 +177,7 @@
       </p>
 
       <ul>
-        <li>The first element of [[sortLocaleData]][locale].co and [[searchLocaleData]][locale].co must be null for all locale values.</li>
+        <li>The first element of [[sortLocaleData]][locale].co and [[searchLocaleData]][locale].co must be *null* for all locale values.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[sortLocaleData]][locale].co and [[searchLocaleData]][locale].co array.</li>
         <li>[[searchLocaleData]][locale] must have a sensitivity property with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"* for all locale values.</li>
       </ul>
@@ -237,13 +227,15 @@
       </p>
 
       <emu-alg>
-        1. Let _collator_ be this Collator object.
-        2. If _collator_.[[boundCompare]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in 11.3.4.
-          1. The value of _F_'s length property is 2.
-          1. Let _bc_ be BoundFunctionCreate(_F_, «*this* value»).
+        1. Let _collator_ be *this* value.
+        1. If Type(_collator_) is not Object, throw a *TypeError* exception.
+        1. If _collator_ does not have a [[boundCompare]] internal slot, throw a *TypeError* exception.
+        1. If _collator_.[[boundCompare]] is *undefined*, then
+          1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
+          1. The value of _F_'s `length` property is 2.
+          1. Let _bc_ be BoundFunctionCreate(_F_, _collator_).
           1. Set _collator_.[[boundCompare]] to _bc_.
-        3. Return _collator_.[[boundCompare]].
+        1. Return _collator_.[[boundCompare]].
       </emu-alg>
 
       <emu-note>
@@ -265,14 +257,12 @@
 
       <emu-alg>
         1. Let _collator_ be the *this* value.
-        2. Assert: Type(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is *true*.
-        3. If _x_ is not provided, let _x_ be undefined.
-        4. If _y_ is not provided, let _y_ be undefined.
-        5. Let _X_ be ToString(_x_).
-        6. ReturnIfAbrupt(_X_).
-        7. Let _Y_ be ToString(_y_).
-        8. ReturnIfAbrupt(_Y_).
-        9. Return CompareStrings(_collator_, _X_, _Y_).
+        1. Assert: Type(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is *true*.
+        1. If _x_ is not provided, let _x_ be undefined.
+        1. If _y_ is not provided, let _y_ be undefined.
+        1. Let _X_ be ? ToString(_x_).
+        1. Let _Y_ be ? ToString(_y_).
+        1. Return CompareStrings(_collator_, _X_, _Y_).
       </emu-alg>
 
       <p>

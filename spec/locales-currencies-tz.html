@@ -97,9 +97,9 @@
 
       <emu-alg>
         1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        2. If the string length of _normalized_ is not 3, return *false*.
-        3. If _normalized_ contains any character that is not in the range "A" to "Z" (U+0041 to U+005A), return *false*.
-        4. Return *true*.
+        1. If the string length of _normalized_ is not 3, return *false*.
+        1. If _normalized_ contains any character that is not in the range "A" to "Z" (U+0041 to U+005A), return *false*.
+        1. Return *true*.
       </emu-alg>
     </emu-clause>
 
@@ -136,9 +136,9 @@
 
       <emu-alg>
         1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        2. If _ianaTimeZone_ is a Link name, then let _ianaTimeZone_ be the corresponding Zone name as specified in the "backward" file of the IANA Time Zone Database.
-        3. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, then return *"UTC"*.
-        4. Return _ianaTimeZone_.
+        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the corresponding Zone name as specified in the "backward" file of the IANA Time Zone Database.
+        1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
+        1. Return _ianaTimeZone_.
       </emu-alg>
 
       <p>
