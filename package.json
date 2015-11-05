@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ecma402",
-  "version": "3.0.0",
+  "version": "2.0.0",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
     "clean": "rm -rf out",
