@@ -188,7 +188,7 @@
       The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%NumberFormat%*).
     </p>
     <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase “this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
     </p>
 
     <emu-clause id="sec-Intl.NumberFormat.prototype.constructor">
@@ -277,7 +277,7 @@
           1. If _x_ is *NaN*,
             1. Let _n_ be an ILD String value indicating the *NaN* value.
           1. Else
-            1. Let n be an ILD String value indicating infinity.
+            1. Let _n_ be an ILD String value indicating infinity.
             1. If _x_ < 0, then let _negative_ be *true*.
         1. Else
           1. If _x_ < 0, then
