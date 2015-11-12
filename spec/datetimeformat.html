@@ -151,12 +151,10 @@
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
           1. For each of the property names *"year"*, *"month"*, *"day"*:
-            1. Let _status_ be the result of calling CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
-            1. ReturnIfAbrupt(_status_).
+            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
           1. For each of the property names *"hour"*, *"minute"*, *"second"*:
-            1. Let _status_ be the result of calling CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
-            1. ReturnIfAbrupt(_status_).
+            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
       </emu-alg>
 
@@ -175,7 +173,7 @@
         1. Let _bestFormat_ be *undefined*.
         1. Let _k_ be 0.
         1. Assert: _formats_ is an Array object.
-        1. Let _len_ be Get(_formats_, `"length"`).
+        1. Let _len_ be Get(_formats_, *"length"*).
         1. Repeat while _k_ < _len_:
           1. Let _format_ be Get(_formats_, ToString(_k_)).
           1. Let _score_ be 0.
@@ -224,7 +222,7 @@
     <h1>Properties of the Intl.DateTimeFormat Constructor</h1>
 
     <p>
-      Besides the internal slots and the `length` property (whose value is 0), the Intl.DateTimeFormat constructor has the following properties:
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.DateTimeFormat constructor has the following properties:
     </p>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype">
@@ -252,7 +250,7 @@
       </emu-alg>
 
       <p>
-        The value of the `length` property of the *supportedLocalesOf* method is 1.
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -355,7 +353,7 @@
         1. If _dtf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
         1. If the [[boundFormat]] internal slot of _dtf_ is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-datetime-format-functions"></emu-xref>.
-          1. The value of _F_’s `length` property is 1.
+          1. The value of _F_’s *length* property is 1.
           1. Let _bf_ be BoundFunctionCreate(F, _dft_).
           1. Set _dtf_.[[boundFormat]] to _bf_.
         1. Return _dtf_.[[boundFormat]].
@@ -413,7 +411,7 @@
               1. Let _fv_ be FormatNumber(_nf_, _v_).
             1. Else if f is *"2-digit"*, then
               1. Let _fv_ be FormatNumber(_nf2_, _v_).
-              1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
+              1. If the *length* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_, and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Replace the substring of _result_ that consists of *"{"*, p, and *"}"*, with _fv_.
         1. If _dateTimeFormat_.[[hour12]] is *true*, then

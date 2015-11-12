@@ -77,7 +77,7 @@
         1. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[locale]] to the value of _r_.[[locale]].
         1. Let _k_ be 0.
-        1. Let _lenValue_ be Get(_relevantExtensionKeys_, `"length"`).
+        1. Let _lenValue_ be Get(_relevantExtensionKeys_, *"length"*).
         1. Let _len_ be ToLength(_lenValue_).
         1. Repeat while _k_ < _len_:
           1. Let _Pk_ be ToString(_k_).
@@ -129,7 +129,7 @@
     <h1>Properties of the Intl.Collator Constructor</h1>
 
     <p>
-      Besides the internal slots and the `length` property (whose value is 0), the Intl.Collator constructor has the following properties:
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.Collator constructor has the following properties:
     </p>
 
     <emu-clause id="sec-Intl.Collator.prototype">
@@ -157,7 +157,7 @@
       </emu-alg>
 
       <p>
-        The value of the `length` property of the *supportedLocalesOf* method is 1.
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -232,7 +232,7 @@
         1. If _collator_ does not have a [[boundCompare]] internal slot, throw a *TypeError* exception.
         1. If _collator_.[[boundCompare]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
-          1. The value of _F_'s `length` property is 2.
+          1. The value of _F_'s *length* property is 2.
           1. Let _bc_ be BoundFunctionCreate(_F_, _collator_).
           1. Set _collator_.[[boundCompare]] to _bc_.
         1. Return _collator_.[[boundCompare]].

@@ -104,7 +104,7 @@
     <h1>Properties of the Intl.NumberFormat Constructor</h1>
 
     <p>
-      Besides the internal slots and the `length` property (whose value is 0), the Intl.NumberFormat constructor has the following properties:
+      Besides the internal slots and the *length* property (whose value is 0), the Intl.NumberFormat constructor has the following properties:
     </p>
 
     <emu-clause id="sec-Intl.NumberFormat.prototype">
@@ -132,7 +132,7 @@
       </emu-alg>
 
       <p>
-        The value of the `length` property of the *supportedLocalesOf* method is 1.
+        The value of the *length* property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -211,7 +211,7 @@
         1. If _nf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
         1. If _nf_.[[boundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-number-format-functions"></emu-xref>.
-          1. The value of _F_’s `length` property is 1.
+          1. The value of _F_’s *length* property is 1.
           1. Let _bf_ be BoundFunctionCreate(_F_, _nf_).
           1. Set _nf_.[[boundFormat]] to _bf_.
         1. Return _nf_.[[boundFormat]].

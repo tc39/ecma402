@@ -44,7 +44,7 @@
         1. If Type(_locales_) is String, then
           1. Let _aLocales_ be CreateArrayFromList(«_locales_»).
         1. Let _O_ be ? ToObject(_aLocales_).
-        1. Let _len_ be ToLength(Get(_O_, `"length"`)).
+        1. Let _len_ be ToLength(Get(_O_, *"length"*)).
         1. Let _k_ be 0.
         1. Repeat, while _k_ < _len_
           1. Let _Pk_ be ToString(_k_).
@@ -96,7 +96,7 @@
       <emu-alg>
         1. Let _k_ be 0.
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, `"length"`)).
+        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
         1. Let _availableLocale_ be *undefined*.
         1. Repeat while _k_ < _len_ and _availableLocale_ is *undefined*:
           1. Let _Pk_ be ToString(_k_).
@@ -155,13 +155,13 @@
           1. Let _extension_ be the value of _r_.[[extension]].
           1. Let _extensionIndex_ be the value of _r_.[[extensionIndex]].
           1. Let _extensionSubtags_ be Call(*%StringProto_split%*, extension, «*"-"*») .
-          1. Let _extensionSubtagsLength_ be Get(CreateArrayFromList(_extensionSubtags_), `"length"`).
+          1. Let _extensionSubtagsLength_ be Get(CreateArrayFromList(_extensionSubtags_), *"length"*).
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be *"-u"*.
         1. Let _k_ be 0.
         1. Let _rExtensionKeys_ be ? ToObject(CreateArrayFromList(_relevantExtensionKeys_)).
-        1. Let _len_ be ToLength(Get(_rExtensionKeys_, `"length"`)).
+        1. Let _len_ be ToLength(Get(_rExtensionKeys_, *"length"*)).
         1. Repeat while _k_ < _len_
           1. Let _key_ be ? Get(_rExtensionKeys_ , ToString(_k_)).
           1. Let _foundLocaleData_ be ? Get(_localeData_, _foundLocale_).
@@ -171,7 +171,7 @@
           1. If _extensionSubtags_ is not *undefined*, then
             1. Let _keyPos_ be Call(*%ArrayProto_indexOf%*, _extensionSubtags_, «_key_») .
             1. If _keyPos_ ≠ -1, then
-              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the `length` property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
+              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the *length* property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
                 1. Let _requestedValue_ be Get(_extensionSubtags_, ToString(_keyPos_ +1)).
                 1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, «_requestedValue_») is *true*, then
                   1. Let _value_ be _requestedValue_.
@@ -209,7 +209,7 @@
 
       <emu-alg>
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, `"length"`)).
+        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
         1. Let _subset_ be an empty List.
         1. Let _k_ be 0.
         1. Repeat while _k_ < _len_
