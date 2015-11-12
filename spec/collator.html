@@ -126,7 +126,7 @@
       </p>
 
       <emu-alg>
-        1. If _NewTarget_ is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be _NewTarget_.
+        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         2. Let _collator_ be OrdinaryCreateFromConstructor(_newTarget_, *%CollatorPrototype%*).
         3. ReturnIfAbrupt(_collator_).
         4. Return InitializeCollator(_collator_, _locales_, _options_).
