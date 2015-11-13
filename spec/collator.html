@@ -48,12 +48,12 @@
       </p>
 
       <emu-alg>
-        1. If collator has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
-        1. Set collator.[[initializedIntlObject]] to *true*.
+        1. If _collator_ has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
+        1. Set _collator_.[[initializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
-        1. Else
+        1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _u_ be ? GetOption(_options_, *"usage"*, *"string"*, «*"sort"*, *"search"*», *"sort"*).
         1. Set _collator_.[[usage]] to _u_.
@@ -257,7 +257,7 @@
 
       <emu-alg>
         1. Let _collator_ be the *this* value.
-        1. Assert: Type(collator) is Object and collator has an [[initializedCollator]] internal slot whose value is *true*.
+        1. Assert: Type(_collator_) is Object and _collator_ has an [[initializedCollator]] internal slot whose value is *true*.
         1. If _x_ is not provided, let _x_ be undefined.
         1. If _y_ is not provided, let _y_ be undefined.
         1. Let _X_ be ? ToString(_x_).

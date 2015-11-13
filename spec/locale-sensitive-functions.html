@@ -63,7 +63,7 @@
         1. Let _len_ be the number of elements in _requestedLocales_.
         1. If _len_ > 0, then
           1. Let _requestedLocale_ be the first element of _requestedLocales_.
-        1. Else
+        1. Else,
           1. Let _requestedLocale_ be DefaultLocale().
         1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (6.2.1) removed.
         1. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
@@ -258,7 +258,7 @@
         1. Let _firstElement_ be ? Get(_A_, *"0"*).
         1. If _firstElement_ is *undefined* or *null*, then
           1. Let _R_ be an empty String.
-        1. Else
+        1. Else,
           1. Let _R_ be ? ToString(Invoke(_firstElement_, *"toLocaleString"*, «*locales*, *options*»)).
         1. Let _k_ be 1.
         1. Repeat, while _k_ < _len_
