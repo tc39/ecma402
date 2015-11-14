@@ -74,13 +74,10 @@
       <emu-alg>
         1. If _dateTimeFormat_.[[initializedIntlObject]] is *true*, throw a *TypeError* exception.
         1. Set _dateTimeFormat_.[[initializedIntlObject]] to *true*.
-        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
-        1. ReturnIfAbrupt(_requestedLocales_),
-        1. Let _options_ be ToDateTimeOptions(_options_, *"any"*, *"date"*).
-        1. ReturnIfAbrupt(_options_).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
-        1. ReturnIfAbrupt(_matcher_).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _localeData_ be the value of *%DateTimeFormat%*.[[localeData]].
         1. Let _r_ be ResolveLocale( *%DateTimeFormat%*.[[availableLocales]], _requestedLocales_, opt, *%DateTimeFormat%*.[[relevantExtensionKeys]], _localeData_).
@@ -88,11 +85,9 @@
         1. Set _dateTimeFormat_.[[calendar]] to the value of _r_.[[ca]].
         1. Set _dateTimeFormat_.[[numberingSystem]] to the value of _r_.[[nu]].
         1. Let _dataLocale_ be the value of _r_.[[dataLocale]].
-        1. Let _tz_ be Get(_options_, *"timeZone"*).
-        1. ReturnIfAbrupt(_tz_).
+        1. Let _tz_ be ? Get(_options_, *"timeZone"*).
         1. If _tz_ is not *undefined*, then
-          1. Let _tz_ be ToString(_tz_).
-          1. ReturnIfAbrupt(_tz_).
+          1. Let _tz_ be ? ToString(_tz_).
           1. If the result of IsValidTimeZoneName(_tz_) is *false*, then
             1. Throw a *RangeError* exception.
           1. Let _tz_ be CanonicalizeTimeZoneName(_tz_).
@@ -102,16 +97,14 @@
         1. Let _opt_ be a new Record.
         1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
           1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _value_ be GetOption(_options_, _prop_, *"string"*, «the strings given in the Values column of the row», *undefined*).
-          1. ReturnIfAbrupt(_value_).
+          1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, «the strings given in the Values column of the row», *undefined*).
           1. Set _opt_.[[<_prop_>]] to _value_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
         1. Let _formats_ be Get(_dataLocaleData_, *"formats"*).
-        1. Let _matcher_ be GetOption(_options_, *"formatMatcher"*, *"string"*, «*"basic"*, *"best fit"*», *"best fit"*).
-        1. ReturnIfAbrupt(_matcher_).
+        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, «*"basic"*, *"best fit"*», *"best fit"*).
         1. If _matcher_ is *"basic"*, then
           1. Let _FormatMatcher_ be the abstract operation BasicFormatMatcher.
-        1. Else
+        1. Else,
           1. Let _FormatMatcher_ be the abstract operation BestFitFormatMatcher.
         1. Let _bestFormat_ be _FormatMatcher_(_opt_, _formats_).
         1. For each row in <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do
@@ -119,8 +112,7 @@
           1. Let _p_ be Get(_bestFormat_, _prop_).
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_.[[<_prop_>]] to _p_.
-        1. Let _hr12_ be GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
-        1. ReturnIfAbrupt(_hr12_).
+        1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
         1. If _dateTimeFormat_ has an internal slot [[hour]], then
           1. If _hr12_ is *undefined*, then
             1. Let _hr12_ be Get(_dataLocaleData_, *"hour12"*).
@@ -129,9 +121,9 @@
             1. Let _hourNo0_ be Get(_dataLocaleData_, *"hourNo0"*).
             1. Set _dateTimeFormat_.[[hourNo0]] to _hourNo0_.
             1. Let _pattern_ be Get(_bestFormat_, *"pattern12"*).
-          1. Else
+          1. Else,
             1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
-        1. Else
+        1. Else,
           1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
         1. Set _dateTimeFormat_.[[pattern]] to _pattern_.
         1. Set _dateTimeFormat_.[[boundFormat]] to *undefined*.
@@ -144,30 +136,25 @@
       </p>
 
       <emu-alg aoid="ToDateTimeOptions">
-        1. If _options_ is *undefined*, then let _options_ be *null*, else let _options_ be ToObject(_options_).
-        1. ReturnIfAbrupt(_options_).
+        1. If _options_ is *undefined*, let _options_ be *null*; otherwise let _options_ be ? ToObject(_options_).
         1. Let _options_ be ObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
         1. If _required_ is *"date"* or *"any"*,
           1. For each of the property names *"weekday"*, *"year"*, *"month"*, *"day"*:
             1. Let _prop_ be the property name.
-            1. Let _value_ be Get(_options_, _prop_).
-            1. ReturnIfAbrupt(_value_).
-            1. If _value_ is not *undefined*, then let _needDefaults_ be *false*.
+            1. Let _value_ be ? Get(_options_, _prop_).
+            1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is *"time"* or *"any"*,
           1. For each of the property names *"hour"*, *"minute"*, *"second"*:
             1. Let _prop_ be the property name.
-            1. Let _value_ be Get(_options_, _prop_).
-            1. ReturnIfAbrupt(_value_).
-            1. If _value_ is not *undefined*, then let _needDefaults_ be *false*.
+            1. Let _value_ be ? Get(_options_, _prop_).
+            1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
           1. For each of the property names *"year"*, *"month"*, *"day"*:
-            1. Let _status_ be CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
-            1. ReturnIfAbrupt(_status_).
+            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
           1. For each of the property names *"hour"*, *"minute"*, *"second"*:
-            1. Let _status_ be CreateDatePropertyOrThrow(_options_, _prop_, *"numeric"*).
-            1. ReturnIfAbrupt(_status_).
+            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
       </emu-alg>
 
@@ -225,8 +212,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be OrdinaryCreateFromConstructor(_newTarget_, *%DateTimeFormatPrototype%*).
-        1. ReturnIfAbrupt(_dateTimeFormat_).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *%DateTimeFormatPrototype%*).
         1. Return InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -259,8 +245,7 @@
 
       <emu-alg>
         1. Let _availableLocales_ be the value of *%DateTimeFormat%*.[[availableLocales]].
-        1. Let _requestedLocales_ be CanonicalizeLocaleList(_locales_).
-        1. ReturnIfAbrupt(_requestedLocales_).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return _supportedLocales_ be SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
 
@@ -363,12 +348,13 @@
       </p>
 
       <emu-alg>
-        1. Let _dtf_ be this DateTimeFormat object.
-        1. ReturnIfAbrupt(_dtf_).
-        1. If the [[boundFormat]] internal slot of this DateTimeFormat object is *undefined*, then
+        1. Let _dtf_ be *this* value.
+        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
+        1. If _dtf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
+        1. If the [[boundFormat]] internal slot of _dtf_ is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-datetime-format-functions"></emu-xref>.
           1. The value of _F_’s *length* property is 1.
-          1. Let _bf_ be BoundFunctionCreate(F, «*this* value»).
+          1. Let _bf_ be BoundFunctionCreate(F, _dft_).
           1. Set _dtf_.[[boundFormat]] to _bf_.
         1. Return _dtf_.[[boundFormat]].
       </emu-alg>
@@ -386,9 +372,8 @@
         1. Assert: Type(_dtf_) is Object and _dtf_ has an [[initializedDateTimeFormat]] internal slot whose value is *true*.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be *%Date_now%*().
-        1. Else
-          1. Let _x_ be ToNumber(_date_).
-          1. ReturnIfAbrupt(_x_).
+        1. Else,
+          1. Let _x_ be ? ToNumber(_date_).
         1. Return FormatDateTime(_dtf_, _x_).
       </emu-alg>
 
@@ -405,12 +390,10 @@
       </p>
 
       <emu-alg aoid="FormatDateTime">
-        1. If _x_ is not a finite Number, then throw a *RangeError* exception.
+        1. If _x_ is not a finite Number, throw a *RangeError* exception.
         1. Let _locale_ be the value of _dateTimeFormat_.[[locale]].
-        1. Let _nf_ be Construct(%NumberFormat%, «[locale], {useGrouping: *false*}»).
-        1. ReturnIfAbrupt(_nf_).
-        1. Let _nf2_ be Construct(%NumberFormat%, «[locale], {minimumIntegerDigits: 2, useGrouping: *false*}»).
-        1. ReturnIfAbrupt(_nf2_).
+        1. Let _nf_ be ? Construct(%NumberFormat%, «[locale], {useGrouping: *false*}»).
+        1. Let _nf2_ be ? Construct(%NumberFormat%, «[locale], {minimumIntegerDigits: 2, useGrouping: *false*}»).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[calendar]], _dateTimeFormat_.[[timeZone]]).
         1. Let _result_ be the value of the _dateTimeFormat_.[[pattern]].
         1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
@@ -428,13 +411,13 @@
               1. Let _fv_ be FormatNumber(_nf_, _v_).
             1. Else if f is *"2-digit"*, then
               1. Let _fv_ be FormatNumber(_nf2_, _v_).
-              1. If the length of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
+              1. If the *length* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_, and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Replace the substring of _result_ that consists of *"{"*, p, and *"}"*, with _fv_.
         1. If _dateTimeFormat_.[[hour12]] is *true*, then
           1. If _pm_ is *true*, then
             1. Let _fv_ be an implementation and locale dependent String value representing "post meridiem";
-          1. Else
+          1. Else,
             1. Let _fv_ be an implementation and locale dependent String value representing "ante meridiem".
           1. Replace the substring of _result_ that consists of *"{ampm}"*, with _fv_.
         1. Return _result_.
