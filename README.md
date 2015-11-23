@@ -14,7 +14,7 @@ ES Intl Proposals follow [this process document](https://docs.google.com/documen
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     0 |
-|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     0 |
+| 🚀  | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     0 |
 
 
 [Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
