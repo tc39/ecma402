@@ -80,7 +80,7 @@
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _localeData_ be the value of *%DateTimeFormat%*.[[localeData]].
-        1. Let _r_ be ResolveLocale( *%DateTimeFormat%*.[[availableLocales]], _requestedLocales_, opt, *%DateTimeFormat%*.[[relevantExtensionKeys]], _localeData_).
+        1. Let _r_ be ResolveLocale( *%DateTimeFormat%*.[[availableLocales]], _requestedLocales_, _opt_, *%DateTimeFormat%*.[[relevantExtensionKeys]], _localeData_).
         1. Set _dateTimeFormat_.[[locale]] to the value of _r_.[[locale]].
         1. Set _dateTimeFormat_.[[calendar]] to the value of _r_.[[ca]].
         1. Set _dateTimeFormat_.[[numberingSystem]] to the value of _r_.[[nu]].
@@ -151,10 +151,10 @@
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
           1. For each of the property names *"year"*, *"month"*, *"day"*:
-            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
+            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
           1. For each of the property names *"hour"*, *"minute"*, *"second"*:
-            1. Let _status_ be ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
+            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
       </emu-alg>
 

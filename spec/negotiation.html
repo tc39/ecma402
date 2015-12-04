@@ -251,8 +251,7 @@
         1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
         1. Repeat for each element _P_ of _keys_ in List order,
           1. Let _desc_ be PropertyDescriptor { [[Configurable]]: *false*, [[Writable]]: *false* }.
-          1. Let _status_ be DefinePropertyOrThrow(_subset_, _P_, _desc_).
-          1. Assert: _status_ is not abrupt completion.
+          1. Perform ? DefinePropertyOrThrow(_subset_, _P_, _desc_).
         1. Return _subset_.
       </emu-alg>
     </emu-clause>
