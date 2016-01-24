@@ -55,14 +55,14 @@
           1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
-        1. Let _u_ be ? GetOption(_options_, *"usage"*, *"string"*, «*"sort"*, *"search"*», *"sort"*).
+        1. Let _u_ be ? GetOption(_options_, *"usage"*, *"string"*, « *"sort"*, *"search"* », *"sort"*).
         1. Set _collator_.[[usage]] to _u_.
         1. If _u_ is *"sort"*, then
           1. Let _localeData_ be the value of *%Collator%*.[[sortLocaleData]].
         1. Else,
           1. Let _localeData_ be the value of *%Collator%*.[[searchLocaleData]].
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. For each row in <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
           1. Let _key_ be the name given in the Key column of the row.
@@ -92,7 +92,7 @@
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
           1. Set _collator_.[[&lt;_property_&gt;]] to _value_.
           1. Increase _k_ by 1.
-        1. Let _s_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, «*"base"*, *"accent"*, *"case"*, *"variant"*», *undefined*).
+        1. Let _s_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, « *"base"*, *"accent"*, *"case"*, *"variant"* », *undefined*).
         1. If _s_ is *undefined*, then
           1. If _u_ is *"sort"*, then
             1. Let _s_ be *"variant"*.
@@ -111,7 +111,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator">
-      <h1>Intl.Collator([ locales [, options]])</h1>
+      <h1>Intl.Collator ([ locales [ , options ]])</h1>
 
       <p>
         When the *Intl.Collator* function is called with optional arguments locales and options the following steps are taken:
@@ -145,7 +145,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.supportedLocalesOf">
-      <h1>Intl.Collator.supportedLocalesOf (locales [, options ])</h1>
+      <h1>Intl.Collator.supportedLocalesOf (locales [ , options ])</h1>
 
       <p>
         When the *supportedLocalesOf* method of Intl.Collator is called, the following steps are taken:
@@ -205,7 +205,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Collator.prototype-toStringTag">
-      <h1>Intl.Collator.prototype[@@toStringTag]</h1>
+      <h1>Intl.Collator.prototype [ @@toStringTag ]</h1>
 
       <p>
         The initial value of the @@toStringTag property is the string value *"Object"*.
