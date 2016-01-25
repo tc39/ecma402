@@ -13,7 +13,7 @@
     <h1>Properties of the String Prototype Object</h1>
 
     <emu-clause id="sec-String.prototype.localeCompare">
-      <h1>String.prototype.localeCompare (that [, locales [, options ]])</h1>
+      <h1>String.prototype.localeCompare (that [ , locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 21.1.3.10.
@@ -27,7 +27,7 @@
         1. Let _O_ be RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Let _That_ be ? ToString(_that_).
-        1. Let _collator_ be ? Construct(*%Collator%*, «*locales*, *options*»).
+        1. Let _collator_ be ? Construct(*%Collator%*, « *locales*, *options* »).
         1. Return CompareStrings(_collator_, _S_, _That_)
       </emu-alg>
 
@@ -130,7 +130,7 @@
     </p>
 
     <emu-clause id="sec-Number.prototype.toLocaleString">
-      <h1>Number.prototype.toLocaleString ([locales [, options ]])</h1>
+      <h1>Number.prototype.toLocaleString ([ locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.1.3.4.
@@ -142,7 +142,7 @@
 
       <emu-alg>
         1. Let _x_ be ? thisNumberValue(*this* value).
-        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, «*locales*, *options*»).
+        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, « *locales*, *options* »).
         1. Return FormatNumber(_numberFormat_, _x_).
       </emu-alg>
 
@@ -161,7 +161,7 @@
     </p>
 
     <emu-clause id="sec-Date.prototype.toLocaleString">
-      <h1>Date.prototype.toLocaleString ([locales [, options ]])</h1>
+      <h1>Date.prototype.toLocaleString ([ locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.39.
@@ -175,7 +175,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
@@ -186,7 +186,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Date.prototype.toLocaleDateString">
-      <h1>Date.prototype.toLocaleDateString ([locales [, options ]])</h1>
+      <h1>Date.prototype.toLocaleDateString ([ locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.38.
@@ -200,7 +200,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
@@ -211,7 +211,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Date.prototype.toLocaleTimeString">
-      <h1>Date.prototype.toLocaleTimeString ([locales [, options ]])</h1>
+      <h1>Date.prototype.toLocaleTimeString ([ locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 20.3.4.40.
@@ -225,7 +225,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
-        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, «*locales*, *options*»).
+        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
         1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
 
@@ -240,7 +240,7 @@
     <h1>Properties of the Array Prototype Object</h1>
 
     <emu-clause id="sec-Array.prototype.toLocaleString">
-      <h1>Array.prototype.toLocaleString([locales [, options ]])</h1>
+      <h1>Array.prototype.toLocaleString ([ locales [ , options ]])</h1>
 
       <p>
         This definition supersedes the definition provided in ES2015, 22.1.3.26.
@@ -259,7 +259,7 @@
         1. If _firstElement_ is *undefined* or *null*, then
           1. Let _R_ be an empty String.
         1. Else,
-          1. Let _R_ be ? ToString(Invoke(_firstElement_, *"toLocaleString"*, «*locales*, *options*»)).
+          1. Let _R_ be ? ToString(Invoke(_firstElement_, *"toLocaleString"*, « *locales*, *options* »)).
         1. Let _k_ be 1.
         1. Repeat, while _k_ < _len_
           1. Let _S_ be a String value produced by concatenating _R_ and _separator_.
@@ -267,7 +267,7 @@
           1. If _nextElement_ is *undefined* or *null*, then
             1. Let _R_ be the empty String.
           1. Else,
-            1. Let _R_ be ? ToString(Invoke(_nextElement_, *"toLocaleString"*, «*locales*, *options*»)).
+            1. Let _R_ be ? ToString(Invoke(_nextElement_, *"toLocaleString"*, « *locales*, *options* »)).
           1. Let _R_ be a String value produced by concatenating _S_ and _R_.
           1. Increase _k_ by 1.
         1. Return _R_.

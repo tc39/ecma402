@@ -28,14 +28,14 @@
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _localeData_ be *%NumberFormat%*.[[localeData]].
         1. Let _r_ be ResolveLocale(*%NumberFormat%*.[[availableLocales]], _requestedLocales_, _opt_, *%NumberFormat%*.[[relevantExtensionKeys]], _localeData_).
         1. Set _numberFormat_.[[locale]] to the value of _r_.[[locale]].
         1. Set _numberFormat_.[[numberingSystem]] to the value of _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, «*"decimal"*, *"percent"*, *"currency"*», *"decimal"*).
+        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, « *"decimal"*, *"percent"*, *"currency"* », *"decimal"*).
         1. Set _numberFormat_.[[style]] to _s_.
         1. Let _c_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
         1. If _c_ is not *undefined*, then
@@ -45,7 +45,7 @@
           1. Let _c_ be converting _c_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Set _numberFormat_.[[currency]] to _c_.
           1. Let _cDigits_ be CurrencyDigits(_c_)
-        1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, «*"code"*, *"symbol"*, *"name"*», *"symbol"*).
+        1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, « *"code"*, *"symbol"*, *"name"* », *"symbol"*).
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
         1. Set _numberFormat_.[[minimumIntegerDigits]] to _mnid_.
@@ -86,7 +86,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.NumberFormat">
-      <h1>Intl.NumberFormat([ locales [, options]])</h1>
+      <h1>Intl.NumberFormat ([ locales [ , options ]])</h1>
 
       <p>
         When the *Intl.NumberFormat* function is called with optional arguments the following steps are taken:
@@ -104,7 +104,7 @@
     <h1>Properties of the Intl.NumberFormat Constructor</h1>
 
     <p>
-      Besides the internal slots and the *length* property (whose value is 0), the Intl.NumberFormat constructor has the following properties:
+      The Intl.NumberFormat constructor has the following properties:
     </p>
 
     <emu-clause id="sec-Intl.NumberFormat.prototype">
@@ -119,7 +119,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.NumberFormat.supportedLocalesOf">
-      <h1>Intl.NumberFormat.supportedLocalesOf (locales [, options ])</h1>
+      <h1>Intl.NumberFormat.supportedLocalesOf (locales [ , options ])</h1>
 
       <p>
         When the *supportedLocalesOf* method of *%NumberFormat%* is called, the following steps are taken:
@@ -185,7 +185,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.NumberFormat.prototype-toStringTag">
-      <h1>Intl.NumberFormat.prototype[@@toStringTag]</h1>
+      <h1>Intl.NumberFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
         The initial value of the @@toStringTag property is the string value *"Object"*.
