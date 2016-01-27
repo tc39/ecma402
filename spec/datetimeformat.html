@@ -211,16 +211,12 @@
       <h1>DateTime Format Functions</h1>
 
       <p>
-        A DateTime format function is an anonymous built-in function that has [[dateTimeFormat]] internal slot.
-      <p>
-
-      <p>
-        When a DateTime format function _F_ is called with optional argument _date_, the following steps are taken:
+        When a DateTime format function is called with optional argument _date_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Assert: _F_ has an [[dateTimeFormat]] internal slot whose value is an Object.
-        1. Let _dtf_ be the value of _F_'s [[dateTimeFormat]] internal slot.
+        1. Let _dtf_ be the *this* value.
+        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[initializedDateTimeFormat]] internal slot whose value is *true*.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be *%Date_now%*().
         1. Else,
@@ -450,8 +446,8 @@
         1. If _dtf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
         1. If the [[boundFormat]] internal slot of _dtf_ is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Set the [[dateTimeFormat]] internal slot of _F_ to _dtf_.
-          1. Set _dtf_.[[boundFormat]] to _F_.
+          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_).
+          1. Set _dtf_.[[boundFormat]] to _bf_.
         1. Return _dtf_.[[boundFormat]].
       </emu-alg>
     </emu-clause>

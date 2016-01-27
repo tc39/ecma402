@@ -88,16 +88,12 @@
       <h1>Number Format Functions</h1>
 
       <p>
-        A Number format function is an anonymous built-in function that has [[numberFormat]] internal slot.
-      <p>
-
-      <p>
-        When a Number format function _F_ is called with optional argument _value_, the following steps are taken:
+        When a Number format function is called with optional argument _value_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Assert: _F_ has an [[numberFormat]] internal slot whose value is an Object.
-        1. Let _nf_ be the value of _F_'s [[numberFormat]] internal slot.
+        1. Let _nf_ be the *this* value.
+        1. Assert: Type(_nf_) is Object and _nf_ has an [[initializedNumberFormat]] internal slot whose value is *true*.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumber(_value_).
         1. Return FormatNumber(_nf_, _x_).
@@ -464,8 +460,8 @@
         1. If _nf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
         1. If _nf_.[[boundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
-          1. Set the [[numberFormat]] internal slot of _F_ to _nf_.
-          1. Set _nf_.[[boundFormat]] to _F_.
+          1. Let _bf_ be BoundFunctionCreate(_F_, _nf_).
+          1. Set _nf_.[[boundFormat]] to bf.
         1. Return _nf_.[[boundFormat]].
       </emu-alg>
     </emu-clause>
