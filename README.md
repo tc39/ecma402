@@ -8,19 +8,23 @@ ES Intl Proposals follow [this process document](https://docs.google.com/documen
 
 |🚀| Proposal                                | Champion      | Stage | Notes
 |---|---------------------------------------|--------------  | ------|------
-|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     1 |
-|   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     1 |
-|   | [formatToParts][]                     | Zibi Braniecki |     1 |
+|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     2 |
+|   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
+|   | [formatToParts][]                     | Zibi Braniecki |     2 |
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     0 |
-| 🚀  | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     0 |
+|   | [Intl.DurationFormat][]               | Zibi Braniecki |     0 |
+|   | [Intl.UnitFormat][]                   | Zibi Braniecki |     0 |
+|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     0 |
 
 
 [Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
 [Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 [Intl.NumberFormat round option]: https://github.com/rxaviers/ecma402-number-format-round-option
 [Intl.RelativeTimeFormat]: https://github.com/caridy/intl-relative-time-spec
+[Intl.DurationFormat]: https://github.com/tc39/ecma402/issues/47
+[Intl.UnitFormat]: https://github.com/tc39/ecma402/issues/32
 [Intl.PluralRules]: https://github.com/caridy/intl-plural-rules-spec
 [formatToParts]: https://github.com/tc39/ecma402/issues/30
 [Exposing Abstract Operations & Locale Info]: https://github.com/tc39/ecma402/issues/46
