@@ -27,7 +27,7 @@
         1. Let _O_ be RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Let _That_ be ? ToString(_that_).
-        1. Let _collator_ be ? Construct(*%Collator%*, « *locales*, *options* »).
+        1. Let _collator_ be ? Construct(*%Collator%*, « _locales_, _options_ »).
         1. Return CompareStrings(_collator_, _S_, _That_)
       </emu-alg>
 
@@ -142,7 +142,7 @@
 
       <emu-alg>
         1. Let _x_ be ? thisNumberValue(*this* value).
-        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, « *locales*, *options* »).
+        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, « _locales_, _options_ »).
         1. Return FormatNumber(_numberFormat_, _x_).
       </emu-alg>
 
@@ -175,7 +175,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
@@ -200,7 +200,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
+        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
@@ -225,7 +225,7 @@
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
-        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, « *locales*, *options* »).
+        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
         1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
 
