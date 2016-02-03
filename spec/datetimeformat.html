@@ -218,7 +218,7 @@
         1. Let _dtf_ be the *this* value.
         1. Assert: Type(_dtf_) is Object and _dtf_ has an [[initializedDateTimeFormat]] internal slot whose value is *true*.
         1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be *%Date_now%*().
+          1. Let _x_ be Call(*%Date_now%*, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return FormatDateTime(_dtf_, _x_).
@@ -239,8 +239,14 @@
       <emu-alg>
         1. If _x_ is not a finite Number, throw a *RangeError* exception.
         1. Let _locale_ be the value of _dateTimeFormat_.[[locale]].
-        1. Let _nf_ be ? Construct(%NumberFormat%, « [locale], {useGrouping: *false*} »).
-        1. Let _nf2_ be ? Construct(%NumberFormat%, « [locale], {minimumIntegerDigits: 2, useGrouping: *false*} »).
+        1. Let _nfLocale_ be CreateArrayFromList(« locale »).
+        1. Let _nfOptions_ be ObjectCreate(%ObjectPrototype%).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, `"useGrouping"`, *false*).
+        1. Let _nf_ be ? Construct(%NumberFormat%, « _nfLocale_, _nfOptions_ »).
+        1. Let _nf2Options_ be ObjectCreate(%ObjectPrototype%).
+        1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"minimumIntegerDigits"`, 2).
+        1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"useGrouping"`, *false*).
+        1. Let _nf2_ be ? Construct(%NumberFormat%, « _nfLocale_, _nf2Options_ »).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[calendar]], _dateTimeFormat_.[[timeZone]]).
         1. Let _result_ be the value of the _dateTimeFormat_.[[pattern]].
         1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
