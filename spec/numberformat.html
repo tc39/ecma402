@@ -346,8 +346,8 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *%NumberFormatPrototype%*).
-        1. Return InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, « [[initializedIntlObject]], [[initializedNumberFormat]], [[locale]], [[numberingSystem]], [[style]], [[currency]], [[currencyDisplay]], [[minimumIntegerDigits]], [[minimumFractionDigits]], [[maximumFractionDigits]], [[minimumSignificantDigits]], [[maximumSignificantDigits]], [[useGrouping]], [[positivePattern]], [[negativePattern]], [[boundFormat]] »).
+        1. Return ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -498,8 +498,8 @@
       <li>[[locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
       <li>[[numberingSystem]] is a String value with the “type” given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[style]] is one of the String values *"decimal"*, *"currency"*, or *"percent"*, identifying the number format style used.</li>
-      <li>[[currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* style. It is only present when [[style]] has the value *"currency"*.</li>
-      <li>[[currencyDisplay]] is one of the String values *"code"*, *"symbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only present when [[style]] has the value *"currency"*.</li>
+      <li>[[currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* style. It is only used when [[style]] has the value *"currency"*.</li>
+      <li>[[currencyDisplay]] is one of the String values *"code"*, *"symbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only used when [[style]] has the value *"currency"*.</li>
       <li>[[minimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
       <li>[[minimumFractionDigits]] and [[maximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[minimumSignificantDigits]] and [[maximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits – the formatter uses however many integer and fraction digits are required to display the specified number of significant digits.</li>

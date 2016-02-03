@@ -309,8 +309,8 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *%DateTimeFormatPrototype%*).
-        1. Return InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, « [[initializedIntlObject]], [[initializedDateTimeFormat]], [[locale]], [[calendar]], [[numberingSystem]], [[timeZone]], [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]], [[hour12]], [[hourNo0]], [[pattern]], [[boundFormat]] »).
+        1. Return ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -490,9 +490,9 @@
       <li>[[calendar]] is a String value with the "type" given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
       <li>[[numberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[timeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
-      <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either absent, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only present when [[hour]] is also present.</li>
-      <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only present when [[hour12]] is also present and has the value *true*.</li>
+      <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only used when [[hour]] is not *undefined*.</li>
+      <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only used when [[hour12]] has the value *true*.</li>
       <li>[[pattern]] is a String value as described in <emu-xref href="#sec-Intl.DateTimeFormat.prototype-toStringTag"></emu-xref>.</li>
     </ul>
 
