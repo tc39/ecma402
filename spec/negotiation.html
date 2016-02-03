@@ -42,9 +42,10 @@
           1. Return a new empty List.
         1. Let _seen_ be an empty List.
         1. If Type(_locales_) is String, then
-          1. Let _aLocales_ be CreateArrayFromList(« _locales_ »).
-        1. Let _O_ be ? ToObject(_aLocales_).
-        1. Let _len_ be ToLength(Get(_O_, *"length"*)).
+          1. Let _O_ be CreateArrayFromList(« _locales_ »).
+        1. Else,
+          1. Let _O_ be ? ToObject(_locales_).
+        1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
         1. Let _k_ be 0.
         1. Repeat, while _k_ < _len_
           1. Let _Pk_ be ToString(_k_).
