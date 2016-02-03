@@ -334,7 +334,7 @@
     <h1>The Intl.NumberFormat Constructor</h1>
 
     <p>
-      The NumberFormat constructor is a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The NumberFormat constructor is the <dfn>%NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-Intl.NumberFormat">
@@ -422,7 +422,7 @@
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
     <p>
-      The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%NumberFormat%*).
+      The Intl.NumberFormat prototype object is the intrinsic object <dfn>%NumberFormatPrototype%</dfn>. The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%NumberFormat%*, « », *%Object%*).
     </p>
     <p>
       In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
