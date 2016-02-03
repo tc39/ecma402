@@ -97,11 +97,10 @@
       <emu-alg>
         1. Let _k_ be 0.
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _len_ be ! ToLength(! Get(_rLocales_, *"length"*)).
         1. Let _availableLocale_ be *undefined*.
         1. Repeat while _k_ < _len_ and _availableLocale_ is *undefined*:
-          1. Let _Pk_ be ToString(_k_).
-          1. Let _locale_ be ? Get(_rLocales_, _Pk_) .
+          1. Let _locale_ be ! Get(_rLocales_, ! ToString(_k_)) .
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. Increase _k_ by 1.
@@ -252,12 +251,11 @@
 
       <emu-alg>
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
-        1. Let _len_ be ToLength(Get(_rLocales_, *"length"*)).
+        1. Let _len_ be ! ToLength(! Get(_rLocales_, *"length"*)).
         1. Let _subset_ be an empty List.
         1. Let _k_ be 0.
         1. Repeat while _k_ < _len_
-          1. Let _Pk_ be ToString(_k_).
-          1. Let _locale_ be ? Get(_rLocales_, _Pk_).
+          1. Let _locale_ be ! Get(_rLocales_, ! ToString(_k_)).
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, append _locale_ to the end of subset.
@@ -294,7 +292,7 @@
         1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
         1. Repeat for each element _P_ of _keys_ in List order,
           1. Let _desc_ be PropertyDescriptor { [[Configurable]]: *false*, [[Writable]]: *false* }.
-          1. Perform ? DefinePropertyOrThrow(_subset_, _P_, _desc_).
+          1. Perform ! DefinePropertyOrThrow(_subset_, _P_, _desc_).
         1. Return _subset_.
       </emu-alg>
     </emu-clause>

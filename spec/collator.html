@@ -71,7 +71,7 @@
           1. Let _list_ be a List containing the Strings given in the Values column of the row, or *undefined* if no strings are given.
           1. Let _value_ be ? GetOption(_options_, _prop_, _type_, _list_, *undefined*).
           1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
-            1. Let _value_ be ? ToString(_value_).
+            1. Let _value_ be ! ToString(_value_).
           1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
         1. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
@@ -157,7 +157,7 @@
 
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Return SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
+        1. Return ? SupportedLocales(*%Collator%*.[[availableLocales]], _requestedLocales_, _options_).
       </emu-alg>
 
       <p>
