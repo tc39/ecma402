@@ -228,17 +228,17 @@
       <emu-alg>
         1. Let _collator_ be *this* value.
         1. If Type(_collator_) is not Object, throw a *TypeError* exception.
-        1. If _collator_ does not have a [[boundCompare]] internal slot, throw a *TypeError* exception.
+        1. If _collator_ does not have an [[initializedCollator]] internal slot, throw a *TypeError* exception.
         1. If _collator_.[[boundCompare]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
-          1. The value of _F_'s *length* property is 2.
-          1. Let _bc_ be BoundFunctionCreate(_F_, _collator_).
+          1. Let _bc_ be BoundFunctionCreate(_F_, _collator_, « »).
+          1. Perform ! DefinePropertyOrThrow(_bc_, `"length"`, PropertyDescriptor {[[Value]]: 2, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
           1. Set _collator_.[[boundCompare]] to _bc_.
         1. Return _collator_.[[boundCompare]].
       </emu-alg>
 
       <emu-note>
-        The function returned by [[Get]] is bound to this Collator object so that it can be passed directly to Array.prototype.sort or other functions.
+        The function returned by [[Get]] is bound to this Collator object so that it can be passed directly to `Array.prototype.sort` or other functions.
       </emu-note>
 
       <p>

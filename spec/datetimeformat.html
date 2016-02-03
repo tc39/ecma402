@@ -443,10 +443,11 @@
       <emu-alg>
         1. Let _dtf_ be *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
-        1. If _dtf_ does not have a [[boundFormat]] internal slot, throw a *TypeError* exception.
+        1. If _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
         1. If the [[boundFormat]] internal slot of _dtf_ is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_).
+          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_, « »).
+          1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
           1. Set _dtf_.[[boundFormat]] to _bf_.
         1. Return _dtf_.[[boundFormat]].
       </emu-alg>
