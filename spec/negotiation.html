@@ -14,7 +14,7 @@
 
     <ul>
       <li>[[availableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tags identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[availableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-ResolveLocale"></emu-xref>). For example, implementations that provide a "de-DE" locale must include a "de" locale that can serve as a fallback for requests such as "de-AT" and "de-CH". For locales that in current usage would include a script subtag (such as Chinese locales), old-style language tags without script subtags must be included such that, for example, requests for "zh-TW" and "zh-HK" lead to output in traditional Chinese rather than the default simplified Chinese. The ordering of the locales within [[availableLocales]] is irrelevant.</li>
-      <li>[[relevantExtensionKeys]] is an array of keys of the language tag extensions defined in Unicode Technical Standard 35 that are relevant for the functionality of the constructed objects.</li>
+      <li>[[relevantExtensionKeys]] is a List of keys of the language tag extensions defined in Unicode Technical Standard 35 that are relevant for the functionality of the constructed objects.</li>
       <li>[[sortLocaleData]] and [[searchLocaleData]] (for Intl.Collator) and [[localeData]] (for Intl.NumberFormat and Intl.DateTimeFormat) are objects that have properties for each locale contained in [[availableLocales]]. The value of each of these properties must be an object that has properties for each key contained in [[relevantExtensionKeys]]. The value of each of these properties must be a non-empty array of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
     </ul>
 
@@ -136,7 +136,7 @@
       <h1>ResolveLocale (availableLocales, requestedLocales, options, relevantExtensionKeys, localeData)</h1>
 
       <p>
-        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_ and _requestedLocales_ must be provided as List values, _options_ as a Record.
+        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_, _requestedLocales_, and _relevantExtensionKeys_ must be provided as List values, _options_ as a Record.
       </p>
 
       <p>
@@ -160,10 +160,10 @@
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be *"-u"*.
         1. Let _k_ be 0.
-        1. Let _rExtensionKeys_ be ? ToObject(CreateArrayFromList(_relevantExtensionKeys_)).
-        1. Let _len_ be ToLength(Get(_rExtensionKeys_, *"length"*)).
+        1. Let _rExtensionKeys_ be CreateArrayFromList(_relevantExtensionKeys_).
+        1. Let _len_ be ! ToLength(! Get(_rExtensionKeys_, *"length"*)).
         1. Repeat while _k_ < _len_
-          1. Let _key_ be ? Get(_rExtensionKeys_ , ToString(_k_)).
+          1. Let _key_ be ! Get(_rExtensionKeys_ , ! ToString(_k_)).
           1. Let _foundLocaleData_ be ? Get(_localeData_, _foundLocale_).
           1. Let _keyLocaleData_ be ? ToObject(Get(_foundLocaleData_, _key_)).
           1. Let _value_ be ? ToString(Get(_keyLocaleData_, *"0"*)).

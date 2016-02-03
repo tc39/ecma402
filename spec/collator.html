@@ -77,11 +77,10 @@
         1. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[locale]] to the value of _r_.[[locale]].
         1. Let _k_ be 0.
-        1. Let _lenValue_ be Get(_relevantExtensionKeys_, *"length"*).
-        1. Let _len_ be ToLength(_lenValue_).
+        1. Let _rExtensionKeys_ be CreateArrayFromList(_relevantExtensionKeys_).
+        1. Let _len_ be ! ToLength(! Get(_rExtensionKeys_, *"length"*)).
         1. Repeat while _k_ < _len_:
-          1. Let _Pk_ be ToString(_k_).
-          1. Let _key_ be ? Get(_relevantExtensionKeys_, _Pk_).
+          1. Let _key_ be ! Get(_rExtensionKeys_, ! ToString(_k_)).
           1. If _key_ is *"co"*, then
             1. Let _property_ be *"collation"*.
             1. Let _value_ be the value of _r_.[[co]].
@@ -165,7 +164,7 @@
       <h1>Internal Slots</h1>
 
       <p>
-        The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in 9.1. The value of the [[relevantExtensionKeys]] internal slot is an array that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
+        The value of the [[availableLocales]] internal slot is implementation defined within the constraints described in 9.1. The value of the [[relevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
       </p>
 
       <emu-note>
