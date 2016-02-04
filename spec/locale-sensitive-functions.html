@@ -65,7 +65,7 @@
           1. Let _requestedLocale_ be the first element of _requestedLocales_.
         1. Else,
           1. Let _requestedLocale_ be DefaultLocale().
-        1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (6.2.1) removed.
+        1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences">6.2.1</emu-xref>) removed.
         1. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
         1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
         1. If _locale_ is *undefined*, let _locale_ be *"und"*.
