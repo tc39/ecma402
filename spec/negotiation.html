@@ -332,7 +332,7 @@
         1. Let _value_ be ? Get(_opts_, _property_).
         1. If _value_ is not *undefined*, then
           1. Let _value_ be ? ToNumber(_value_).
-        1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
+          1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
           1. Return floor(_value_).
         1. Else, return _fallback_.
       </emu-alg>
