@@ -499,11 +499,11 @@
       <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only used when [[hour]] is not *undefined*.</li>
       <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only used when [[hour12]] has the value *true*.</li>
-      <li>[[pattern]] is a String value as described in <emu-xref href="#sec-Intl.DateTimeFormat.prototype-toStringTag"></emu-xref>.</li>
+      <li>[[pattern]] is a String value as described in <emu-xref href="#sec-Intl.DateTimeFormat-internal-slots"></emu-xref>.</li>
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.DateTimeFormat.prototype-toStringTag"></emu-xref>).
+      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.DateTimeFormat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>
