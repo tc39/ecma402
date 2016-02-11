@@ -138,7 +138,7 @@
           1. Let _result_ be the value of _numberFormat_.[[negativePattern]].
         1. Else,
           1. Let _result_ be the value of _numberFormat_.[[positivePattern]].
-        1. Replace the substring *"{number}"* within _result_ with n.
+        1. Replace the substring *"{number}"* within _result_ with _n_.
         1. If the value of the _numberFormat_.[[style]] is *"currency"*, then
           1. Let _currency_ be the value of _numberFormat_.[[currency]].
           1. If _numberFormat_.[[currencyDisplay]] is *"code"*, then
@@ -311,7 +311,7 @@
           1. If _k_ ≤ _f_, then
             1. Let _z_ be the String consisting of _f_+1–_k_ occurrences of the character *"0"*.
             1. Let _m_ be the concatenation of Strings _z_ and _m_.
-            1. Let _k_=_f_+1.
+            1. Let _k_ be _f_+1.
           1. Let _a_ be the first _k_–_f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
           1. Let _m_ be the concatenation of the three Strings _a_, *"."*, and _b_.
           1. Let _int_ be the number of characters in _a_.
@@ -474,7 +474,7 @@
         This function provides access to the locale and formatting options computed during initialization of the object.
       </p>
       <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots are not present are not assigned.
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots have the value *undefined* are not assigned.
       </p>
     </emu-clause>
   </emu-clause>
@@ -504,11 +504,11 @@
       <li>[[minimumFractionDigits]] and [[maximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[minimumSignificantDigits]] and [[maximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits – the formatter uses however many integer and fraction digits are required to display the specified number of significant digits.</li>
       <li>[[useGrouping]] is a Boolean value indicating whether a grouping separator should be used.</li>
-      <li>[[positivePattern]] and [[negativePattern]] are String values as described in <emu-xref href="#sec-Intl.NumberFormat.prototype-toStringTag"></emu-xref>.</li>
+      <li>[[positivePattern]] and [[negativePattern]] are String values as described in <emu-xref href="#sec-Intl.NumberFormat-internal-slots"></emu-xref>.</li>
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a NumberFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.NumberFormat.prototype-toStringTag"></emu-xref>).
+      Finally, objects that have been successfully initialized as a NumberFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.NumberFormat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>
