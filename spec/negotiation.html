@@ -78,7 +78,7 @@
       </p>
 
       <emu-alg>
-        1. Let _candidate_ be locale.
+        1. Let _candidate_ be _locale_.
         1. Repeat
           1. If _availableLocales_ contains an element equal to _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
@@ -258,7 +258,7 @@
           1. Let _locale_ be ! Get(_rLocales_, ! ToString(_k_)).
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-          1. If _availableLocale_ is not *undefined*, append _locale_ to the end of subset.
+          1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
           1. Increment _k_ by 1.
         1. Return _subset_.
       </emu-alg>
@@ -324,7 +324,7 @@
       <h1>GetNumberOption (options, property, minimum, maximum, fallback)</h1>
 
       <p>
-        The abstract operation GetNumberOption extracts a property value from the provided options object, converts it to a Number value, checks whether it is in the allowed range, and fills in a fallback value if necessary.
+        The abstract operation GetNumberOption extracts the value of the property named _property_ from the provided _options_ object, converts it to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.
       </p>
 
       <emu-alg>
