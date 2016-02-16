@@ -188,10 +188,9 @@
       <emu-alg>
         1. Let _matcher_ be the value of _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
-          1. Let _MatcherOperation_ be the abstract operation LookupMatcher.
+          1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _MatcherOperation_ be the abstract operation BestFitMatcher.
-        1. Let _r_ be _MatcherOperation_(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be the value of _r_.[[locale]].
         1. If _r_ has an [[extension]] field, then
           1. Let _extension_ be the value of _r_.[[extension]].
@@ -284,10 +283,9 @@
           1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Else let _matcher_ be *"best fit"*.
         1. If _matcher_ is *"best fit"*,
-          1. Let _MatcherOperation_ be the abstract operation BestFitSupportedLocales.
+          1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _MatcherOperation_ be the abstract operation LookupSupportedLocales.
-        1. Let _supportedLocales_ be MatcherOperation(_availableLocales_, _requestedLocales_).
+          1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Let _subset_ be CreateArrayFromList(_supportedLocales_).
         1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
         1. Repeat for each element _P_ of _keys_ in List order,
