@@ -108,7 +108,7 @@
       <h1>FormatNumberToParts(numberFormat, x)</h1>
 
       <p>
-        The FormatNumberToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), and performs the following steps:
+        The *FormatNumberToParts* abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), interprete _x_ as a numeric value, and create the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -188,7 +188,6 @@
           1. Add new part record { [[type]]: "separator", [[value]]: _separatorValue_ } as a new element of the list _result_.
         1. Return _result_.
       </emu-alg>
-
 
       <emu-table id="table-2">
         <emu-caption>Numbering systems with simple digit mappings</emu-caption>
@@ -294,13 +293,10 @@
         The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ (“ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ (“ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.
       </emu-note>
 
-      <p>
-        When the CreateNumberParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ according to the effective locale and the formatting options of _numberFormat_. This abstract operation functions as follows:
-      </p>
-
       <emu-note>
-        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+        It is recommended that implementations use the locale provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
       </emu-note>
+
     </emu-clause>
 
     <emu-clause id="sec-formatnumber" aoid="FormatNumber">
