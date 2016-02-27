@@ -56,7 +56,7 @@
       </table>
     </emu-table>
 
-    <emu-clause id="sec-InitializeDateTimeFormat" aoid="InitializeDateTimeFormat">
+    <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
       <h1>InitializeDateTimeFormat (dateTimeFormat, locales, options)</h1>
 
       <p>
@@ -233,7 +233,7 @@
       <h1>FormatDateTime (dateTimeFormat, x)</h1>
 
       <p>
-        When the FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ (interpreted as a time value as specified in ES2016, 20.3.1.1) according to the effective locale and the formatting options of _dateTimeFormat_. This abstract operation functions as follows:
+        When the FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), it returns a String value representing _x_ (interpreted as a time value as specified in ES2016, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>) according to the effective locale and the formatting options of _dateTimeFormat_. This abstract operation functions as follows:
       </p>
 
       <emu-alg>
@@ -289,7 +289,7 @@
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2016, 20.3.1.
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2016, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
@@ -306,7 +306,7 @@
       The Intl.DateTimeFormat constructor is the <dfn>%DateTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-Intl.DateTimeFormat">
+    <emu-clause id="sec-intl.datetimeformat">
       <h1>Intl.DateTimeFormat ([ locales [ , options ]])</h1>
 
       <p>
@@ -328,7 +328,7 @@
       The Intl.DateTimeFormat constructor has the following properties:
     </p>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype">
+    <emu-clause id="sec-intl.datetimeformat.prototype">
       <h1>Intl.DateTimeFormat.prototype</h1>
 
       <p>
@@ -339,7 +339,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.supportedLocalesOf">
+    <emu-clause id="sec-intl.datetimeformat.supportedlocalesof">
       <h1>Intl.DateTimeFormat.supportedLocalesOf (locales [ , options ])</h1>
 
       <p>
@@ -357,7 +357,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DateTimeFormat-internal-slots">
+    <emu-clause id="sec-intl.datetimeformat-internal-slots">
       <h1>Internal slots</h1>
 
       <p>
@@ -419,7 +419,7 @@
       In the following descriptions of functions that are properties or [[Get]] attributes of properties of the Intl.DateTimeFormat prototype object, the phrase "this DateTimeFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedDateTimeFormat]] internal slot with value *true*.
     </p>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype.constructor">
+    <emu-clause id="sec-intl.datetimeformat.prototype.constructor">
       <h1>Intl.DateTimeFormat.prototype.constructor</h1>
 
       <p>
@@ -427,7 +427,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype-toStringTag">
+    <emu-clause id="sec-intl.datetimeformat.prototype-@@tostringtag">
       <h1>Intl.DateTimeFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
@@ -439,7 +439,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype.format">
+    <emu-clause id="sec-intl.datetimeformat.prototype.format">
       <h1>get Intl.DateTimeFormat.prototype.format</h1>
 
       <p>
@@ -459,7 +459,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype.resolvedOptions">
+    <emu-clause id="sec-intl.datetimeformat.prototype.resolvedoptions">
       <h1>Intl.DateTimeFormat.prototype.resolvedOptions ()</h1>
 
       <p>
@@ -499,11 +499,11 @@
       <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only used when [[hour]] is not *undefined*.</li>
       <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only used when [[hour12]] has the value *true*.</li>
-      <li>[[pattern]] is a String value as described in <emu-xref href="#sec-Intl.DateTimeFormat-internal-slots"></emu-xref>.</li>
+      <li>[[pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.DateTimeFormat.prototype.format"></emu-xref>).
+      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.datetimeformat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>
