@@ -4,8 +4,9 @@
   "version": "3.0.0-draft",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
-    "clean": "rm -rf out",
     "build": "npm run clean && mkdir out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "clean": "rm -rf out",
+    "test": "exit 0",
     "watch": "npm run clean && mkdir out && ecmarkup --watch --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
     "update-pages": "ecmarkup spec/index.html _index.html --css _ecmarkup.css --js _ecmarkup.js --verbose && git checkout gh-pages && rm -f index.html ecmarkup.css ecmarkup.js && mv _index.html index.html && mv _ecmarkup.css ecmarkup.css && mv _ecmarkup.js ecmarkup.js && git add index.html ecmarkup.js ecmarkup.css && git commit -m \"update pages\" && git checkout master"
   },
@@ -14,6 +15,6 @@
   "license": "SEE LICENSE IN https://tc39.github.io/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.github.io/ecma402/",
   "dependencies": {
-    "ecmarkup": "^3.0.0"
+    "ecmarkup": "^3.1.1"
   }
 }

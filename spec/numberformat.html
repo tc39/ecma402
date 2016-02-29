@@ -4,7 +4,7 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
-    <emu-clause id="sec-InitializeNumberFormat" aoid="InitializeNumberFormat">
+    <emu-clause id="sec-initializenumberformat" aoid="InitializeNumberFormat">
       <h1>InitializeNumberFormat (numberFormat, locales, options)</h1>
 
       <p>
@@ -62,7 +62,7 @@
         1. Set _numberFormat_.[[useGrouping]] to _g_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
         1. Let _patterns_ be Get(_dataLocaleData_, *"patterns"*).
-        1. Assert: _patterns_ is an object (see <emu-xref href="#sec-Intl.NumberFormat-internal-slots"></emu-xref>).
+        1. Assert: _patterns_ is an object (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _stylePatterns_ be Get(_patterns_, s).
         1. Set _numberFormat_.[[positivePattern]] to Get(_stylePatterns_, *"positivePattern"*).
         1. Set _numberFormat_.[[negativePattern]] to Get(_stylePatterns_, *"negativePattern"*).
@@ -337,7 +337,7 @@
       The NumberFormat constructor is the <dfn>%NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-Intl.NumberFormat">
+    <emu-clause id="sec-intl.numberformat">
       <h1>Intl.NumberFormat ([ locales [ , options ]])</h1>
 
       <p>
@@ -359,7 +359,7 @@
       The Intl.NumberFormat constructor has the following properties:
     </p>
 
-    <emu-clause id="sec-Intl.NumberFormat.prototype">
+    <emu-clause id="sec-intl.numberformat.prototype">
       <h1>Intl.NumberFormat.prototype</h1>
 
       <p>
@@ -370,7 +370,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.NumberFormat.supportedLocalesOf">
+    <emu-clause id="sec-intl.numberformat.supportedlocalesof">
       <h1>Intl.NumberFormat.supportedLocalesOf (locales [ , options ])</h1>
 
       <p>
@@ -388,7 +388,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.NumberFormat-internal-slots">
+    <emu-clause id="sec-intl.numberformat-internal-slots">
       <h1>Internal slots</h1>
 
       <p>
@@ -428,7 +428,7 @@
       In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
     </p>
 
-    <emu-clause id="sec-Intl.NumberFormat.prototype.constructor">
+    <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
 
       <p>
@@ -436,7 +436,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.NumberFormat.prototype-toStringTag">
+    <emu-clause id="sec-intl.numberformat.prototype-@@tostringtag">
       <h1>Intl.NumberFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
@@ -447,7 +447,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.NumberFormat.prototype.format">
+    <emu-clause id="sec-intl.numberformat.prototype.format">
       <h1>get Intl.NumberFormat.prototype.format</h1>
 
       <p>
@@ -467,7 +467,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.NumberFormat.prototype.resolvedOptions">
+    <emu-clause id="sec-intl.numberformat.prototype.resolvedoptions">
       <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
 
       <p>
@@ -504,11 +504,11 @@
       <li>[[minimumFractionDigits]] and [[maximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[minimumSignificantDigits]] and [[maximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits – the formatter uses however many integer and fraction digits are required to display the specified number of significant digits.</li>
       <li>[[useGrouping]] is a Boolean value indicating whether a grouping separator should be used.</li>
-      <li>[[positivePattern]] and [[negativePattern]] are String values as described in <emu-xref href="#sec-Intl.NumberFormat-internal-slots"></emu-xref>.</li>
+      <li>[[positivePattern]] and [[negativePattern]] are String values as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.</li>
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a NumberFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-Intl.NumberFormat.prototype.format"></emu-xref>).
+      Finally, objects that have been successfully initialized as a NumberFormat have a [[boundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>

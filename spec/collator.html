@@ -7,7 +7,7 @@
       The Intl.Collator constructor is the <dfn>%Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in 9.1.
     </p>
 
-    <emu-clause id="sec-InitializeCollator" aoid="InitializeCollator">
+    <emu-clause id="sec-initializecollator" aoid="InitializeCollator">
       <h1>InitializeCollator (collator, locales, options)</h1>
 
       <p>
@@ -109,7 +109,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator">
+    <emu-clause id="sec-intl.collator">
       <h1>Intl.Collator ([ locales [ , options ]])</h1>
 
       <p>
@@ -136,7 +136,7 @@
       The Intl.Collator constructor has the following properties:
     </p>
 
-    <emu-clause id="sec-Intl.Collator.prototype">
+    <emu-clause id="sec-intl.collator.prototype">
       <h1>Intl.Collator.prototype</h1>
 
       <p>
@@ -148,7 +148,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.supportedLocalesOf">
+    <emu-clause id="sec-intl.collator.supportedlocalesof">
       <h1>Intl.Collator.supportedLocalesOf (locales [ , options ])</h1>
 
       <p>
@@ -200,7 +200,7 @@
       In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%CollatorPrototype%*, the phrase "this Collator object" refers to the object that is the *this* value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedCollator]] internal slot with value *true*.
     </p>
 
-    <emu-clause id="sec-Intl.Collator.prototype.constructor">
+    <emu-clause id="sec-intl.collator.prototype.constructor">
       <h1>Intl.Collator.prototype.constructor</h1>
 
       <p>
@@ -208,7 +208,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.prototype-toStringTag">
+    <emu-clause id="sec-intl.collator.prototype-@@tostringtag">
       <h1>Intl.Collator.prototype [ @@toStringTag ]</h1>
 
       <p>
@@ -220,7 +220,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.prototype.compare">
+    <emu-clause id="sec-intl.collator.prototype.compare">
       <h1>get Intl.Collator.prototype.compare</h1>
 
       <p>
@@ -297,7 +297,7 @@
       </p>
 
       <p>
-        The CompareStrings abstract operation with any given _collator_ argument, if considered as a function of the remaining two arguments _x_ and _y_, must be a consistent comparison function (as defined in ES2016, 22.1.3.25) on the set of all Strings.
+        The CompareStrings abstract operation with any given _collator_ argument, if considered as a function of the remaining two arguments _x_ and _y_, must be a consistent comparison function (as defined in ES2016, <emu-xref href="#sec-array.prototype.sort"></emu-xref>) on the set of all Strings.
       </p>
 
       <p>
@@ -314,7 +314,7 @@
 
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Collator.prototype.resolvedOptions">
+    <emu-clause id="sec-intl.collator.prototype.resolvedoptions">
       <h1>Intl.Collator.prototype.resolvedOptions ()</h1>
 
       <p>
@@ -359,7 +359,7 @@
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-Intl.Collator.prototype.compare"></emu-xref>).
+      Finally, objects that have been successfully initialized as a Collator have a [[boundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-intl.collator.prototype.compare"></emu-xref>).
     </p>
 
   </emu-clause>
