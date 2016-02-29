@@ -40,7 +40,7 @@
       <emu-alg>
         1. If _locales_ is *undefined*, then
           1. Return a new empty List.
-        1. Let _seen_ be an empty List.
+        1. Let _seen_ be a new empty List.
         1. If Type(_locales_) is String, then
           1. Let _O_ be CreateArrayFromList(« _locales_ »).
         1. Else,
@@ -254,7 +254,7 @@
       <emu-alg>
         1. Let _rLocales_ be CreateArrayFromList(_requestedLocales_).
         1. Let _len_ be ! ToLength(! Get(_rLocales_, *"length"*)).
-        1. Let _subset_ be an empty List.
+        1. Let _subset_ be a new empty List.
         1. Let _k_ be 0.
         1. Repeat while _k_ < _len_
           1. Let _locale_ be ! Get(_rLocales_, ! ToString(_k_)).
