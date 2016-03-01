@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ecma402",
-  "version": "3.0.0-draft",
+  "version": "3.0.0-rc-1",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
     "build": "npm run clean && mkdir out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
