@@ -4,7 +4,8 @@
   "version": "3.0.0-rc-1",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
-    "build": "npm run clean && mkdir out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "build-master": "mkdir out && cp -R img out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "build": "npm run clean && npm run build-master",
     "clean": "rm -rf out",
     "test": "exit 0",
     "watch": "npm run clean && mkdir out && ecmarkup --watch --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
