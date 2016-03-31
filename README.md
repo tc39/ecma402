@@ -9,15 +9,15 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 
 |🚀 | Proposal                              | Champion       | Stage | Notes
 |---|---------------------------------------|--------------  | ------|------
+|   | [formatToParts][]                     | Zibi Braniecki |     3 |
 |   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     2 |
 |   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
-|🚀 | [formatToParts][]                     | Zibi Braniecki |     2 |
+|   | [Intl.ListFormat][]                   | Zibi Braniecki |     1 |
+|   | [Intl.DurationFormat][]               | Zibi Braniecki |     1 |
+|   | [Intl.UnitFormat][]                   | Zibi Braniecki |     1 |
+|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     1 |
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
-|🚀 | [Intl.ListFormat][]                   | Zibi Braniecki |     0 |
-|🚀 | [Intl.DurationFormat][]               | Zibi Braniecki |     0 |
-|🚀 | [Intl.UnitFormat][]                   | Zibi Braniecki |     0 |
-|🚀 | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     0 |
 
 
 [Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
