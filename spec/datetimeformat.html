@@ -8,7 +8,7 @@
       Several DateTimeFormat algorithms use values from the following table, which provides property names and allowable values for the components of date and time formats:
     </p>
 
-    <emu-table id="table-3">
+    <emu-table id="table-datetimeformat-components">
       <emu-caption>Components of date and time formats</emu-caption>
       <table class="real-table">
         <thead>
@@ -87,7 +87,7 @@
           1. Let _tz_ be DefaultTimeZone().
         1. Set _dateTimeFormat_.[[timeZone]] to _tz_.
         1. Let _opt_ be a new Record.
-        1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, « the strings given in the Values column of the row », *undefined*).
           1. Set _opt_.[[<_prop_>]] to _value_.
@@ -98,7 +98,7 @@
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
         1. Else,
           1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
-        1. For each row in <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do
+        1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _p_ be Get(_bestFormat_, _prop_).
           1. If _p_ not *undefined*, then
@@ -176,7 +176,7 @@
         1. Repeat while _k_ < _len_:
           1. Let _format_ be Get(_formats_, ToString(_k_)).
           1. Let _score_ be 0.
-          1. For each _property_ shown in <emu-xref href="#table-3">Table 3</emu-xref>:
+          1. For each _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>:
             1. Let _optionsProp_ be _options_.[[<_property_>]].
             1. Let _formatProp_ be Get(_format_, _property_).
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
@@ -248,7 +248,7 @@
         1. Let _nf2_ be ? Construct(%NumberFormat%, « _nfLocale_, _nf2Options_ »).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[calendar]], _dateTimeFormat_.[[timeZone]]).
         1. Let _result_ be the value of the _dateTimeFormat_.[[pattern]].
-        1. For each row of <emu-xref href="#table-3">Table 3</emu-xref>, except the header row, do:
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
           1. If _dateTimeFormat_ has an internal slot with the name given in the Property column of the row, then
             1. Let _p_ be the name given in the Property column of the row.
             1. Let _f_ be the value of the [[<_p_>]] internal slot of _dateTimeFormat_.
@@ -383,7 +383,7 @@
           [[localeData]][locale] must have hour12 and hourNo0 properties with Boolean values for all locale values.
         </li>
         <li>
-          [[localeData]][locale] must have a formats property for all locale values. The value of this property must be an array of objects, each of which has a subset of the properties shown in <emu-xref href="#table-3">Table 3</emu-xref>, where each property must have one of the values specified for the property in <emu-xref href="#table-3">Table 3</emu-xref>. Multiple objects in an array may use the same subset of the properties as long as they have different values for the properties. The following subsets must be available for each locale:
+          [[localeData]][locale] must have a formats property for all locale values. The value of this property must be an array of objects, each of which has a subset of the properties shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each property must have one of the values specified for the property in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple objects in an array may use the same subset of the properties as long as they have different values for the properties. The following subsets must be available for each locale:
           <ul>
             <li>weekday, year, month, day, hour, minute, second</li>
             <li>weekday, year, month, day</li>
@@ -495,7 +495,7 @@
       <li>[[calendar]] is a String value with the "type" given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
       <li>[[numberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[timeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
-      <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-3">Table 3</emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[hour12]] is a Boolean value indicating whether 12-hour format (*true*) or 24-hour format (*false*) should be used. It is only used when [[hour]] is not *undefined*.</li>
       <li>[[hourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only used when [[hour12]] has the value *true*.</li>
       <li>[[pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>

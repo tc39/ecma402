@@ -128,8 +128,8 @@
             1. Let _n_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
           1. Else,
             1. Let _n_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
-          1. If the value of the _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-2">Table 2</emu-xref> below, then
-            1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-2">Table 2</emu-xref>.
+          1. If the value of the _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
+            1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
             1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
           1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
           1. If _n_ contains the character *"."*, replace it with an ILND String representing the decimal separator.
@@ -152,7 +152,7 @@
       </emu-alg>
 
 
-      <emu-table id="table-2">
+      <emu-table id="table-numbering-system-digits">
         <emu-caption>Numbering systems with simple digit mappings</emu-caption>
         <table class="real-table">
           <thead>

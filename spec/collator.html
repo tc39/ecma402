@@ -18,7 +18,7 @@
         Several steps in the algorithm use values from the following table, which associates Unicode locale extension keys, property names, types, and allowable values:
       </p>
 
-      <emu-table id="table-1">
+      <emu-table id="table-collator-options">
         <emu-caption>Collator options settable through both extension keys and options properties</emu-caption>
         <table class="real-table">
           <thead>
@@ -64,7 +64,7 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. For each row in <emu-xref href="#table-1">Table 1</emu-xref>, except the header row, do:
+        1. For each row in <emu-xref href="#table-collator-options"></emu-xref>, except the header row, do:
           1. Let _key_ be the name given in the Key column of the row.
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _type_ be the string given in the Type column of the row.
@@ -85,7 +85,7 @@
             1. Let _property_ be *"collation"*.
             1. Let _value_ be the value of _r_.[[co]].
             1. If _value_ is *null*, let _value_ be *"default"*.
-          1. Else use the row of <emu-xref href="#table-1">Table 1</emu-xref> that contains the value of _key_ in the Key column:
+          1. Else use the row of <emu-xref href="#table-collator-options"></emu-xref> that contains the value of _key_ in the Key column:
             1. Let _property_ be the name given in the Property column of the row.
             1. Let _value_ be the value of _r_.[[&lt;_key_&gt;]].
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
@@ -321,7 +321,7 @@
         This function provides access to the locale and collation options computed during initialization of the object.
       </p>
       <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-1">Table 1</emu-xref> whose keys are included in the *%Collator%*[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
+        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-collator-options"></emu-xref> whose keys are included in the *%Collator%*[[relevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
       </p>
     </emu-clause>
   </emu-clause>
@@ -350,12 +350,12 @@
     </ul>
 
     <p>
-      Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-1">Table 1</emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
+      Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-options"></emu-xref> is included in the [[relevantExtensionKeys]] internal slot of Intl.Collator:
     </p>
 
     <ul>
       <li>[[numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-      <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-1">Table 1</emu-xref>.</li>
+      <li>[[caseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-collator-options"></emu-xref>.</li>
     </ul>
 
     <p>
