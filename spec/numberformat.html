@@ -16,7 +16,7 @@
       </p>
 
       <emu-alg>
-        1. If _numberFormat_ has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
+        1. If _numberFormat_.[[initializedIntlObject]] is *true*, throw a *TypeError* exception.
         1. Set _numberFormat_.[[initializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
@@ -93,7 +93,7 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. Assert: Type(_nf_) is Object and _nf_ has an [[initializedNumberFormat]] internal slot whose value is *true*.
+        1. Assert: Type(_nf_) is Object and _nf_.[[initializedNumberFormat]] is *true*.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumber(_value_).
         1. Return FormatNumber(_nf_, _x_).

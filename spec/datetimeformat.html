@@ -215,7 +215,7 @@
 
       <emu-alg>
         1. Let _dtf_ be the *this* value.
-        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[initializedDateTimeFormat]] internal slot whose value is *true*.
+        1. Assert: Type(_dtf_) is Object and _dtf_.[[initializedDateTimeFormat]] is *true*.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be Call(*%Date_now%*, *undefined*).
         1. Else,
@@ -251,8 +251,8 @@
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
           1. If _dateTimeFormat_ has an internal slot with the name given in the Property column of the row, then
             1. Let _p_ be the name given in the Property column of the row.
-            1. Let _f_ be the value of the [[<_p_>]] internal slot of _dateTimeFormat_.
-            1. Let _v_ be the value of _tm_.[[<_p_>]].
+            1. Let _f_ be _dateTimeFormat_.[[<_p_>]].
+            1. Let _v_ be _tm_.[[<_p_>]].
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
             1. If _p_ is *"hour"* and the value of _dateTimeFormat_.[[hour12]] is *true*, then
@@ -449,7 +449,7 @@
         1. Let _dtf_ be *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. If _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
-        1. If the [[boundFormat]] internal slot of _dtf_ is *undefined*, then
+        1. If _dtf_.[[boundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
           1. Let _bf_ be BoundFunctionCreate(_F_, _dft_, « »).
           1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
