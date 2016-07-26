@@ -81,10 +81,6 @@
         The result must be derived according to the case mappings in the Unicode character database (this explicitly includes not only the UnicodeData.txt file, but also the SpecialCasings.txt file that accompanies it).
       </p>
 
-      <p>
-        The value of the *length* property of the *toLocaleLowerCase* method is 0.
-      </p>
-
       <emu-note>
         As of Unicode 5.1, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
       </emu-note>
@@ -108,10 +104,6 @@
 
       <p>
         This function interprets a string value as a sequence of code points, as described in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as *String.prototype.toLocaleLowerCase*, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
-      </p>
-
-      <p>
-        The value of the *length* property of the *toLocaleUpperCase* method is 0.
       </p>
 
       <emu-note>
@@ -146,10 +138,6 @@
         1. Return FormatNumber(_numberFormat_, _x_).
       </emu-alg>
 
-      <p>
-        The value of the *length* property of the *toLocaleString* method is 0.
-      </p>
-
     </emu-clause>
   </emu-clause>
 
@@ -179,10 +167,6 @@
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
-      <p>
-        The value of the *length* property of the *toLocaleString* method is 0.
-      </p>
-
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaledatestring">
@@ -204,10 +188,6 @@
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
-      <p>
-        The value of the *length* property of the *toLocaleDateString* method is 0.
-      </p>
-
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaletimestring">
@@ -228,10 +208,6 @@
         1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
         1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
-
-      <p>
-        The value of the *length* property of the *toLocaleTimeString* method is 0.
-      </p>
 
     </emu-clause>
   </emu-clause>
