@@ -183,14 +183,14 @@
       </p>
 
       <emu-alg>
-        1. Let _matcher_ be the value of _options_.[[localeMatcher]].
+        1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
           1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
-        1. Let _foundLocale_ be the value of _r_.[[locale]].
+        1. Let _foundLocale_ be _r_.[[locale]].
         1. If _r_ has an [[extension]] field, then
-          1. Let _extension_ be the value of _r_.[[extension]].
+          1. Let _extension_ be _r_.[[extension]].
           1. Let _extensionSubtags_ be CreateArrayFromList(UnicodeExtensionSubtags(_extension_)).
           1. Let _extensionSubtagsLength_ be Get(_extensionSubtags_, *"length"*).
         1. Let _result_ be a new Record.

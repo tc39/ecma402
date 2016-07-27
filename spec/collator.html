@@ -48,7 +48,7 @@
       </p>
 
       <emu-alg>
-        1. If _collator_ has an [[initializedIntlObject]] internal slot with value *true*, throw a *TypeError* exception.
+        1. If _collator_.[[initializedIntlObject]] is *true*, throw a *TypeError* exception.
         1. Set _collator_.[[initializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
@@ -58,9 +58,9 @@
         1. Let _u_ be ? GetOption(_options_, *"usage"*, *"string"*, « *"sort"*, *"search"* », *"sort"*).
         1. Set _collator_.[[usage]] to _u_.
         1. If _u_ is *"sort"*, then
-          1. Let _localeData_ be the value of *%Collator%*.[[sortLocaleData]].
+          1. Let _localeData_ be *%Collator%*.[[sortLocaleData]].
         1. Else,
-          1. Let _localeData_ be the value of *%Collator%*.[[searchLocaleData]].
+          1. Let _localeData_ be *%Collator%*.[[searchLocaleData]].
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
@@ -73,9 +73,9 @@
           1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
             1. Let _value_ be ! ToString(_value_).
           1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
-        1. Let _relevantExtensionKeys_ be the value of *%Collator%*.[[relevantExtensionKeys]].
+        1. Let _relevantExtensionKeys_ be *%Collator%*.[[relevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(*%Collator%*.[[availableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
-        1. Set _collator_.[[locale]] to the value of _r_.[[locale]].
+        1. Set _collator_.[[locale]] to _r_.[[locale]].
         1. Let _k_ be 0.
         1. Let _rExtensionKeys_ be CreateArrayFromList(_relevantExtensionKeys_).
         1. Let _len_ be ! ToLength(! Get(_rExtensionKeys_, *"length"*)).
@@ -83,11 +83,11 @@
           1. Let _key_ be ! Get(_rExtensionKeys_, ! ToString(_k_)).
           1. If _key_ is *"co"*, then
             1. Let _property_ be *"collation"*.
-            1. Let _value_ be the value of _r_.[[co]].
+            1. Let _value_ be _r_.[[co]].
             1. If _value_ is *null*, let _value_ be *"default"*.
-          1. Else use the row of <emu-xref href="#table-collator-options"></emu-xref> that contains the value of _key_ in the Key column:
+          1. Else use the row of <emu-xref href="#table-collator-options"></emu-xref> that contains _key_ in the Key column:
             1. Let _property_ be the name given in the Property column of the row.
-            1. Let _value_ be the value of _r_.[[&lt;_key_&gt;]].
+            1. Let _value_ be _r_.[[&lt;_key_&gt;]].
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
           1. Set _collator_.[[&lt;_property_&gt;]] to _value_.
           1. Increase _k_ by 1.
@@ -96,7 +96,7 @@
           1. If _u_ is *"sort"*, then
             1. Let _s_ be *"variant"*.
           1. Else,
-            1. Let _dataLocale_ be the value of _r_.[[dataLocale]].
+            1. Let _dataLocale_ be _r_.[[dataLocale]].
             1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
             1. Let _s_ be Get(_dataLocaleData_, *"sensitivity"*).
         1. Set _collator_.[[sensitivity]] to _s_.
@@ -261,7 +261,7 @@
 
       <emu-alg>
         1. Let _collator_ be the *this* value.
-        1. Assert: Type(_collator_) is Object and _collator_ has an [[initializedCollator]] internal slot whose value is *true*.
+        1. Assert: Type(_collator_) is Object and _collator_ .[[initializedCollator]] is *true*.
         1. If _x_ is not provided, let _x_ be *undefined*.
         1. If _y_ is not provided, let _y_ be *undefined*.
         1. Let _X_ be ? ToString(_x_).
