@@ -9,8 +9,8 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 
 |🚀 | Proposal                              | Champion       | Stage | Notes
 |---|---------------------------------------|--------------  | ------|------
-|   | [formatToParts][]                     | Zibi Braniecki |     3 |
-|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     2 |
+|   | [formatToParts][]                     | Zibi Braniecki |     4 |
+|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     3 |
 |   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     1 |
 |   | [Intl.DurationFormat][]               | Zibi Braniecki |     1 |
