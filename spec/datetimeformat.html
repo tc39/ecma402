@@ -265,7 +265,6 @@
             1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then:
-
             1. Let _f_ be _dateTimeFormat_.[[<_p_>]].
             1. Let _v_ be _tm_.[[<_p_>]].
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
@@ -281,7 +280,7 @@
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[type]]: _p_, [[value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal "ampm", then:
-            1. Let _v_ be the value of _tm_.[[hour]].
+            1. Let _v_ be _tm_.[[hour]].
             1. If _v_ is greater than 11, then:
               1. Let _fv_ be an implementation and locale dependent String value representing "post meridiem";
             1. Else,
