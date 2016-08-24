@@ -57,7 +57,7 @@
     </emu-table>
 
     <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
-      <h1>InitializeDateTimeFormat (dateTimeFormat, locales, options)</h1>
+      <h1>InitializeDateTimeFormat ( _dateTimeFormat_, _locales_, _options_ )</h1>
 
       <p>
         The abstract operation InitializeDateTimeFormat accepts the arguments _dateTimeFormat_ (which must be an object), _locales_, and _options_. It initializes _dateTimeFormat_ as a DateTimeFormat object. This abstract operation functions as follows:
@@ -69,10 +69,10 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be *%DateTimeFormat%*.[[localeData]].
-        1. Let _r_ be ResolveLocale( *%DateTimeFormat%*.[[availableLocales]], _requestedLocales_, _opt_, *%DateTimeFormat%*.[[relevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %DateTimeFormat%.[[localeData]].
+        1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[availableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[relevantExtensionKeys]], _localeData_).
         1. Set _dateTimeFormat_.[[locale]] to _r_.[[locale]].
         1. Set _dateTimeFormat_.[[calendar]] to _r_.[[ca]].
         1. Set _dateTimeFormat_.[[numberingSystem]] to _r_.[[nu]].
@@ -89,11 +89,11 @@
         1. Let _opt_ be a new Record.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
           1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, « the strings given in the Values column of the row », *undefined*).
+          1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[<_prop_>]] to _value_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
         1. Let _formats_ be Get(_dataLocaleData_, *"formats"*).
-        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, « *"basic"*, *"best fit"* », *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
         1. If _matcher_ is *"basic"*, then
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
         1. Else,
@@ -124,7 +124,7 @@
     </emu-clause>
 
     <emu-clause id="sec-todatetimeoptions" aoid="ToDateTimeOptions">
-      <h1>ToDateTimeOptions (options, required, defaults)</h1>
+      <h1>ToDateTimeOptions ( _options_, _required_, _defaults_ )</h1>
 
       <p>
         When the ToDateTimeOptions abstract operation is called with arguments _options_, _required_, and _defaults_, the following steps are taken:
@@ -155,7 +155,7 @@
     </emu-clause>
 
     <emu-clause id="sec-basicformatmatcher" aoid="BasicFormatMatcher">
-      <h1>BasicFormatMatcher (options, formats)</h1>
+      <h1>BasicFormatMatcher ( _options_, _formats_ )</h1>
 
       <p>
         When the BasicFormatMatcher abstract operation is called with two arguments _options_ and _formats_, the following steps are taken:
@@ -199,7 +199,7 @@
     </emu-clause>
 
     <emu-clause id="sec-bestfitformatmatcher" aoid="BestFitFormatMatcher">
-      <h1>BestFitFormatMatcher (options, formats)</h1>
+      <h1>BestFitFormatMatcher ( _options_, _formats_ )</h1>
 
       <p>
         When the BestFitFormatMatcher abstract operation is called with two arguments _options_ and _formats_, it performs implementation dependent steps, which should return a set of component representations that a typical user of the selected locale would perceive as at least as good as the one returned by BasicFormatMatcher.
@@ -209,15 +209,14 @@
     <emu-clause id="sec-datetime-format-functions">
       <h1>DateTime Format Functions</h1>
 
-      <p>
-        When a DateTime format function is called with optional argument _date_, the following steps are taken:
-      </p>
+      <p>A DateTime format function is an anonymous built-in function.</p>
+      <p>When a DateTime format function is called with optional argument _date_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _dtf_ be the *this* value.
         1. Assert: Type(_dtf_) is Object and _dtf_.[[initializedDateTimeFormat]] is *true*.
         1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be Call(*%Date_now%*, *undefined*).
+          1. Let _x_ be Call(%Date_now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return FormatDateTime(_dtf_, _x_).
@@ -228,37 +227,37 @@
       </emu-note>
 
       <p>
-        The *length* property of a DateTime format function is 1.
+        The `length` property of a DateTime format function is 1.
       </p>
     </emu-clause>
 
     <emu-clause id="sec-partitiondatetimepattern" aoid="PartitionDateTimePattern">
-      <h1>PartitionDateTimePattern (dateTimeFormat, x)</h1>
+      <h1>PartitionDateTimePattern ( _dateTimeFormat_, _x_ )</h1>
 
       <p>
-        The *PartitionDateTimePattern* abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), interprets _x_ as a time value as specified in ES2015, 20.3.1.1, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
+        The PartitionDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), interprets _x_ as a time value as specified in ES2015, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
       </p>
 
       <emu-alg>
         1. If _x_ is not a finite Number, throw a *RangeError* exception.
         1. Let _locale_ be _dateTimeFormat_.[[locale]].
-        1. Let _nfLocale_ be CreateArrayFromList(« _locale_ »).
+        1. Let _nfLocale_ be CreateArrayFromList(&laquo; _locale_ &raquo;).
         1. Let _nfOptions_ be ObjectCreate(%ObjectPrototype%).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, `"useGrouping"`, *false*).
-        1. Let _nf_ be ? Construct(%NumberFormat%, « _nfLocale_, _nfOptions_ »).
+        1. Let _nf_ be ? Construct(%NumberFormat%, &laquo; _nfLocale_, _nfOptions_ &raquo;).
         1. Let _nf2Options_ be ObjectCreate(%ObjectPrototype%).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"minimumIntegerDigits"`, 2).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"useGrouping"`, *false*).
-        1. Let _nf2_ be ? Construct(%NumberFormat%, « _nfLocale_, _nf2Options_ »).
+        1. Let _nf2_ be ? Construct(%NumberFormat%, &laquo; _nfLocale_, _nf2Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[calendar]], _dateTimeFormat_.[[timeZone]]).
         1. Let _pattern_ be _dateTimeFormat_.[[pattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(*%StringProto_indexOf%*, _pattern_, "{", *0*).
+        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, "{", *0*).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
         1. Repeat while _beginIndex_ is an integer index into _pattern_:
-          1. Set _endIndex_ to Call(*%StringProto_indexOf%*, _pattern_, "}", _beginIndex_)
+          1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, "}", _beginIndex_)
           1. If _endIndex_ = -1, throw new Error exception.
           1. If _beginIndex_ is greater than _nextIndex_, then:
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
@@ -276,7 +275,7 @@
               1. Let _fv_ be FormatNumber(_nf_, _v_).
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumber(_nf2_, _v_).
-              1. If the *length* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
+              1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[type]]: _p_, [[value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal "ampm", then:
@@ -289,7 +288,7 @@
             1. Let _literal_ be the substring of _pattern_ from position _beginIndex_, inclusive, to position _endIndex_, inclusive.
             1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to Call(*%StringProto_indexOf%*, _pattern_, "}", _nextIndex_)
+          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, "}", _nextIndex_)
         1. If _nextIndex_ is less than _length_, then:
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
           1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
@@ -307,7 +306,7 @@
     </emu-clause>
 
     <emu-clause id="sec-formatdatetime" aoid="FormatDateTime">
-      <h1>FormatDateTime(dateTimeFormat, x)</h1>
+      <h1>FormatDateTime( _dateTimeFormat_, _x_ )</h1>
 
       <p>
         The FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), and performs the following steps:
@@ -324,7 +323,7 @@
     </emu-clause>
 
     <emu-clause id="sec-formatdatetimetoparts" aoid="FormatDateTimeToparts">
-      <h1>FormatDateTimeToParts(dateTimeFormat, x)</h1>
+      <h1>FormatDateTimeToParts ( _dateTimeFormat_, _x_ )</h1>
 
       <p>
         The FormatDateTimeToParts abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), and performs the following steps:
@@ -346,7 +345,7 @@
     </emu-clause>
 
     <emu-clause id="sec-tolocaltime" aoid="ToLocalTime">
-      <h1>ToLocalTime (date, calendar, timeZone)</h1>
+      <h1>ToLocalTime ( _date_, _calendar_, _timeZone_ )</h1>
 
       <p>
         When the ToLocalTime abstract operation is called with arguments _date_, _calendar_, and _timeZone_, the following steps are taken:
@@ -371,15 +370,15 @@
     </p>
 
     <emu-clause id="sec-intl.datetimeformat">
-      <h1>Intl.DateTimeFormat ([ locales [ , options ]])</h1>
+      <h1>Intl.DateTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        When the *Intl.DateTimeFormat* function is called with optional arguments _locales_ and _options_, the following steps are taken:
+        When the `Intl.DateTimeFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, « [[initializedIntlObject]], [[initializedDateTimeFormat]], [[locale]], [[calendar]], [[numberingSystem]], [[timeZone]], [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]], [[hour12]], [[hourNo0]], [[pattern]], [[boundFormat]] »).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[initializedIntlObject]], [[initializedDateTimeFormat]], [[locale]], [[calendar]], [[numberingSystem]], [[timeZone]], [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], [[timeZoneName]], [[hour12]], [[hourNo0]], [[pattern]], [[boundFormat]] &raquo;).
         1. Return ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -396,7 +395,7 @@
       <h1>Intl.DateTimeFormat.prototype</h1>
 
       <p>
-        The value of *Intl.DateTimeFormat.prototype* is *%DateTimeFormatPrototype%*.
+        The value of `Intl.DateTimeFormat.prototype` is %DateTimeFormatPrototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -404,20 +403,20 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.datetimeformat.supportedlocalesof">
-      <h1>Intl.DateTimeFormat.supportedLocalesOf (locales [ , options ])</h1>
+      <h1>Intl.DateTimeFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
-        When the *supportedLocalesOf* method of Intl.DateTimeFormat is called, the following steps are taken:
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be *%DateTimeFormat%*.[[availableLocales]].
+        1. Let _availableLocales_ be %DateTimeFormat%.[[availableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *supportedLocalesOf* method is 1.
+        The value of the `length` property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -429,7 +428,7 @@
       </p>
 
       <p>
-        The value of the [[relevantExtensionKeys]] internal slot is «`"ca"`, `"nu"`».
+        The value of the [[relevantExtensionKeys]] internal slot is &laquo; `"ca"`, `"nu"` &raquo;.
       </p>
 
       <emu-note>
@@ -476,7 +475,7 @@
     <h1>Properties of the Intl.DateTimeFormat Prototype Object</h1>
 
     <p>
-      The Intl.DateTimeFormat prototype object is the intrinsic object <dfn>%DateTimeFormatPrototype%</dfn>. The Intl.DateTimeFormat prototype object is itself an *%DateTimeFormat%* instance, whose internal slots are set as if it had been constructed by the expression Construct(*%DateTimeFormat%*, « », *%Object%*).
+      The Intl.DateTimeFormat prototype object is the intrinsic object <dfn>%DateTimeFormatPrototype%</dfn>. The Intl.DateTimeFormat prototype object is itself an %DateTimeFormat% instance, whose internal slots are set as if it had been constructed by the expression Construct(%DateTimeFormat%, &laquo; &raquo;, %Object%).
     </p>
 
     <p>
@@ -487,7 +486,7 @@
       <h1>Intl.DateTimeFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of *Intl.DateTimeFormat.prototype.constructor* is *%DateTimeFormat%*.
+        The initial value of `Intl.DateTimeFormat.prototype.constructor` is the intrinsic object %DateTimeFormat%.
       </p>
     </emu-clause>
 
@@ -495,7 +494,7 @@
       <h1>Intl.DateTimeFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Object"*.
+        The initial value of the @@toStringTag property is the string value `"Object"`.
       </p>
 
       <p>
@@ -516,7 +515,7 @@
         1. If _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
         1. If _dtf_.[[boundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_, « »).
+          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_, &laquo; &raquo;).
           1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
           1. Set _dtf_.[[boundFormat]] to _bf_.
         1. Return _dtf_.[[boundFormat]].
@@ -524,10 +523,10 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
-      <h1>Intl.DateTimeFormat.prototype.formatToParts ([ date ])</h1>
+      <h1>Intl.DateTimeFormat.prototype.formatToParts ( [ _date_ ] )</h1>
 
       <p>
-        When the *Intl.DateTimeFormat.prototype.formatToParts* is called with an optional argument _date_, the following steps are taken:
+        When the `formatToParts` method is called with an optional argument _date_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -535,7 +534,7 @@
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. If _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
         1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be *%Date_now%*().
+          1. Let _x_ be %Date_now%().
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTimeToParts(_dtf_, _x_).
@@ -563,7 +562,7 @@
     <h1>Properties of Intl.DateTimeFormat Instances</h1>
 
     <p>
-      Intl.DateTimeFormat instances inherit properties from *%DateTimeFormatPrototype%*.
+      Intl.DateTimeFormat instances inherit properties from %DateTimeFormatPrototype%.
     </p>
 
     <p>

@@ -13,40 +13,40 @@
     <h1>Properties of the String Prototype Object</h1>
 
     <emu-clause id="sup-String.prototype.localeCompare">
-      <h1>String.prototype.localeCompare (that [ , locales [ , options ]])</h1>
+      <h1>String.prototype.localeCompare ( _that_ [ , _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
       </p>
 
       <p>
-        When the *localeCompare* method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:
+        When the `localeCompare` method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
-        1. Let _That_ be ? ToString(_that_).
-        1. Let _collator_ be ? Construct(*%Collator%*, « _locales_, _options_ »).
-        1. Return CompareStrings(_collator_, _S_, _That_).
+        1. Let _thatValue_ be ? ToString(_that_).
+        1. Let _collator_ be ? Construct(%Collator%, &laquo; _locales_, _options_ &raquo;).
+        1. Return CompareStrings(_collator_, _S_, _thatValue_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *localeCompare* method is 1.
+        The value of the `length` property of the *localeCompare* method is 1.
       </p>
 
       <emu-note>
-        The *localeCompare* method itself is not directly suitable as an argument to *Array.prototype.sort* because the latter requires a function of two arguments.
+        The `localeCompare` method itself is not directly suitable as an argument to *Array.prototype.sort* because the latter requires a function of two arguments.
       </emu-note>
 
       <emu-note>
-        The *localeCompare* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        The `localeCompare` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
 
     <emu-clause id="sup-string.prototype.tolocalelowercase">
-      <h1>String.prototype.toLocaleLowerCase ([ locales ])</h1>
+      <h1>String.prototype.toLocaleLowerCase ( [ _locales_ ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
@@ -90,24 +90,24 @@
       </emu-note>
 
       <emu-note>
-        The *toLocaleLowerCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        The `toLocaleLowerCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
 
     <emu-clause id="sup-string.prototype.tolocaleuppercase">
-      <h1>String.prototype.toLocaleUpperCase ([ locales ])</h1>
+      <h1>String.prototype.toLocaleUpperCase ( [ _locales_ ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
       </p>
 
       <p>
-        This function interprets a string value as a sequence of code points, as described in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as *String.prototype.toLocaleLowerCase*, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
+        This function interprets a string value as a sequence of code points, as described in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as `String.prototype.toLocaleLowerCase`, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
       </p>
 
       <emu-note>
-        The *toLocaleUpperCase* function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
+        The `toLocaleUpperCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>
@@ -122,19 +122,19 @@
     </p>
 
     <emu-clause id="sup-number.prototype.tolocalestring">
-      <h1>Number.prototype.toLocaleString ([ locales [ , options ]])</h1>
+      <h1>Number.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
-        When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _x_ be ? thisNumberValue(*this* value).
-        1. Let _numberFormat_ be ? Construct(*%NumberFormat%*, « _locales_, _options_ »).
+        1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatNumber(_numberFormat_, _x_).
       </emu-alg>
 
@@ -149,63 +149,63 @@
     </p>
 
     <emu-clause id="sup-date.prototype.tolocalestring">
-      <h1>Date.prototype.toLocaleString ([ locales [ , options ]])</h1>
+      <h1>Date.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
-        When the *toLocaleString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
+        1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaledatestring">
-      <h1>Date.prototype.toLocaleDateString ([ locales [ , options ]])</h1>
+      <h1>Date.prototype.toLocaleDateString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
       </p>
 
       <p>
-        When the *toLocaleDateString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+        When the `toLocaleDateString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
-        1. Let _dateFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
+        1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
 
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaletimestring">
-      <h1>Date.prototype.toLocaleTimeString ([ locales [ , options ]])</h1>
+      <h1>Date.prototype.toLocaleTimeString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
       </p>
 
       <p>
-        When the *toLocaleTimeString* method is called with optional arguments _locales_ and _options_, the following steps are taken:
+        When the `toLocaleTimeString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
-        1. Let _timeFormat_ be ? Construct(*%DateTimeFormat%*, « _locales_, _options_ »).
+        1. Let _timeFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
 
@@ -216,14 +216,14 @@
     <h1>Properties of the Array Prototype Object</h1>
 
     <emu-clause id="sup-array.prototype.tolocalestring">
-      <h1>Array.prototype.toLocaleString ([ locales [ , options ]])</h1>
+      <h1>Array.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
-        The following steps are taken:
+        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -235,7 +235,7 @@
         1. If _firstElement_ is *undefined* or *null*, then
           1. Let _R_ be an empty String.
         1. Else,
-          1. Let _R_ be ? ToString(? Invoke(_firstElement_, *"toLocaleString"*, « _locales_, _options_ »)).
+          1. Let _R_ be ? ToString(? Invoke(_firstElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
         1. Let _k_ be 1.
         1. Repeat, while _k_ < _len_
           1. Let _S_ be a String value produced by concatenating _R_ and _separator_.
@@ -243,7 +243,7 @@
           1. If _nextElement_ is *undefined* or *null*, then
             1. Let _R_ be the empty String.
           1. Else,
-            1. Let _R_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, « _locales_, _options_ »)).
+            1. Let _R_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
           1. Let _R_ be a String value produced by concatenating _S_ and _R_.
           1. Increase _k_ by 1.
         1. Return _R_.
@@ -254,7 +254,7 @@
       </emu-note>
 
       <emu-note>
-        The *toLocaleString* function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+        The `toLocaleString` function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
       </emu-note>
 
     </emu-clause>

@@ -38,7 +38,7 @@
     </emu-clause>
 
     <emu-clause id="sec-isstructurallyvalidlanguagetag" aoid="IsStructurallyValidLanguageTag">
-      <h1>IsStructurallyValidLanguageTag (locale)</h1>
+      <h1>IsStructurallyValidLanguageTag ( _locale_ )</h1>
 
       <p>
         The IsStructurallyValidLanguageTag abstract operation verifies that the _locale_ argument (which must be a String value)
@@ -56,7 +56,7 @@
     </emu-clause>
 
     <emu-clause id="sec-canonicalizelanguagetag" aoid="CanonicalizeLanguageTag">
-      <h1>CanonicalizeLanguageTag (locale)</h1>
+      <h1>CanonicalizeLanguageTag ( _locale_ )</h1>
 
       <p>
         The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid BCP 47 language tag as verified by the IsStructurallyValidLanguageTag abstract operation). It takes the steps specified in RFC 5646 section 4.5, or successor, to bring the language tag into canonical form, and to regularize the case of the subtags, but does not take the steps to bring a language tag into "extlang form" and to reorder variant subtags.
@@ -89,7 +89,7 @@
     </p>
 
     <emu-clause id="sec-iswellformedcurrencycode" aoid="IsWellFormedCurrencyCode">
-      <h1>IsWellFormedCurrencyCode (currency)</h1>
+      <h1>IsWellFormedCurrencyCode ( _currency_ )</h1>
 
       <p>
         The IsWellFormedCurrencyCode abstract operation verifies that the _currency_ argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
@@ -117,7 +117,7 @@
     </p>
 
     <emu-clause id="sec-isvalidtimezonename" aoid="IsValidTimeZoneName">
-      <h1>IsValidTimeZoneName (timeZone)</h1>
+      <h1>IsValidTimeZoneName ( _timeZone_ )</h1>
 
       <p>
         The IsValidTimeZoneName abstract operation verifies that the _timeZone_ argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.

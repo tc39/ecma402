@@ -5,7 +5,7 @@
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
     <emu-clause id="sec-initializenumberformat" aoid="InitializeNumberFormat">
-      <h1>InitializeNumberFormat (numberFormat, locales, options)</h1>
+      <h1>InitializeNumberFormat ( _numberFormat_, _locales_, _options_ )</h1>
 
       <p>
         The abstract operation InitializeNumberFormat accepts the arguments _numberFormat_ (which must be an object), _locales_, and _options_. It initializes _numberFormat_ as a NumberFormat object.
@@ -20,18 +20,18 @@
         1. Set _numberFormat_.[[initializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
-          1. Let _options_ be ObjectCreate(*%ObjectPrototype%*).
+          1. Let _options_ be ObjectCreate(%ObjectPrototype%).
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, « *"lookup"*, *"best fit"* », *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be *%NumberFormat%*.[[localeData]].
-        1. Let _r_ be ResolveLocale(*%NumberFormat%*.[[availableLocales]], _requestedLocales_, _opt_, *%NumberFormat%*.[[relevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %NumberFormat%.[[localeData]].
+        1. Let _r_ be ResolveLocale(%NumberFormat%.[[availableLocales]], _requestedLocales_, _opt_, %NumberFormat%.[[relevantExtensionKeys]], _localeData_).
         1. Set _numberFormat_.[[locale]] to _r_.[[locale]].
         1. Set _numberFormat_.[[numberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, « *"decimal"*, *"percent"*, *"currency"* », *"decimal"*).
+        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"decimal"*, *"percent"*, *"currency"* &raquo;, *"decimal"*).
         1. Set _numberFormat_.[[style]] to _s_.
         1. Let _c_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
         1. If _c_ is not *undefined*, then
@@ -41,7 +41,7 @@
           1. Let _c_ be converting _c_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Set _numberFormat_.[[currency]] to _c_.
           1. Let _cDigits_ be CurrencyDigits(_c_).
-        1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, « *"code"*, *"symbol"*, *"name"* », *"symbol"*).
+        1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
         1. Set _numberFormat_.[[minimumIntegerDigits]] to _mnid_.
@@ -73,7 +73,7 @@
     </emu-clause>
 
     <emu-clause id="sec-currencydigits" aoid="CurrencyDigits">
-      <h1>CurrencyDigits (currency)</h1>
+      <h1>CurrencyDigits ( _currency_ )</h1>
 
       <p>
         When the abstract operation CurrencyDigits is called with an argument _currency_ (which must be an upper case String value), the following steps are taken:
@@ -87,9 +87,8 @@
     <emu-clause id="sec-number-format-functions">
       <h1>Number Format Functions</h1>
 
-      <p>
-        When a Number format function is called with optional argument _value_, the following steps are taken:
-      </p>
+      <p>A Number format function is an anonymous built-in function.</p>
+      <p>When a Number format function is called with optional argument _value_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -100,15 +99,15 @@
       </emu-alg>
 
       <p>
-        The *length* property of a Number format function is 1.
+        The `length` property of a Number format function is 1.
       </p>
     </emu-clause>
 
     <emu-clause id="sec-partitionnumberpattern" aoid="PartitionNumberPattern">
-      <h1>PartitionNumberPattern(numberFormat, x)</h1>
+      <h1>PartitionNumberPattern ( _numberFormat_, _x_ )</h1>
 
       <p>
-        The *PartitionNumberPattern* abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), interprets _x_ as a numeric value, and creates the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
+        The PartitionNumberPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), interprets _x_ as a numeric value, and creates the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -257,7 +256,7 @@
     </emu-clause>
 
     <emu-clause id="sec-formatnumber" aoid="FormatNumber">
-      <h1>FormatNumber(numberFormat, x)</h1>
+      <h1>FormatNumber( _numberFormat_, _x_ )</h1>
 
       <p>
         The FormatNumber abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), and performs the following steps:
@@ -273,7 +272,7 @@
     </emu-clause>
 
     <emu-clause id="sec-formatnumbertoparts" aoid="FormatNumberToParts">
-      <h1>FormatNumberToParts(numberFormat, x)</h1>
+      <h1>FormatNumberToParts( _numberFormat_, _x_ )</h1>
 
       <p>
         The FormatNumberToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), and performs the following steps:
@@ -294,7 +293,7 @@
     </emu-clause>
 
     <emu-clause id="sec-torawprecision" aoid="ToRawPrecision">
-      <h1>ToRawPrecision(x, minPrecision, maxPrecision)</h1>
+      <h1>ToRawPrecision( _x_, _minPrecision_, _maxPrecision_ )</h1>
 
       <p>
         When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minPrecision_, and _maxPrecision_ (both must be integers between 1 and 21), the following steps are taken:
@@ -328,7 +327,7 @@
     </emu-clause>
 
     <emu-clause id="sec-torawfixed" aoid="ToRawFixed">
-      <h1>ToRawFixed(x, minInteger, minFraction, maxFraction)</h1>
+      <h1>ToRawFixed( _x_, _minInteger_, _minFraction_, _maxFraction_ )</h1>
 
       <p>
         When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minInteger_ (which must be an integer between 1 and 21), _minFraction_, and _maxFraction_ (which must be integers between 0 and 20), the following steps are taken:
@@ -370,15 +369,15 @@
     </p>
 
     <emu-clause id="sec-intl.numberformat">
-      <h1>Intl.NumberFormat ([ locales [ , options ]])</h1>
+      <h1>Intl.NumberFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        When the *Intl.NumberFormat* function is called with optional arguments, the following steps are taken:
+        When the `Intl.NumberFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, « [[initializedIntlObject]], [[initializedNumberFormat]], [[locale]], [[numberingSystem]], [[style]], [[currency]], [[currencyDisplay]], [[minimumIntegerDigits]], [[minimumFractionDigits]], [[maximumFractionDigits]], [[minimumSignificantDigits]], [[maximumSignificantDigits]], [[useGrouping]], [[positivePattern]], [[negativePattern]], [[boundFormat]] »).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, &laquo; [[initializedIntlObject]], [[initializedNumberFormat]], [[locale]], [[numberingSystem]], [[style]], [[currency]], [[currencyDisplay]], [[minimumIntegerDigits]], [[minimumFractionDigits]], [[maximumFractionDigits]], [[minimumSignificantDigits]], [[maximumSignificantDigits]], [[useGrouping]], [[positivePattern]], [[negativePattern]], [[boundFormat]] &raquo;).
         1. Return ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -395,7 +394,7 @@
       <h1>Intl.NumberFormat.prototype</h1>
 
       <p>
-        The value of *Intl.NumberFormat.prototype* is *%NumberFormatPrototype%*.
+        The value of `Intl.NumberFormat.prototype` is %NumberFormatPrototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -403,20 +402,20 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.supportedlocalesof">
-      <h1>Intl.NumberFormat.supportedLocalesOf (locales [ , options ])</h1>
+      <h1>Intl.NumberFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
-        When the *supportedLocalesOf* method of *%NumberFormat%* is called, the following steps are taken:
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be *%NumberFormat%*.[[availableLocales]].
+        1. Let _availableLocales_ be %NumberFormat%.[[availableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
 
       <p>
-        The value of the *length* property of the *supportedLocalesOf* method is 1.
+        The value of the `length` property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -428,7 +427,7 @@
       </p>
 
       <p>
-        The value of the [[relevantExtensionKeys]] internal slot is «`"nu"`».
+        The value of the [[relevantExtensionKeys]] internal slot is &laquo; `"nu"` &raquo;.
       </p>
 
       <emu-note>
@@ -454,17 +453,17 @@
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
     <p>
-      The Intl.NumberFormat prototype object is the intrinsic object <dfn>%NumberFormatPrototype%</dfn>. The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(*%NumberFormat%*, « », *%Object%*).
+      The Intl.NumberFormat prototype object is the intrinsic object <dfn>%NumberFormatPrototype%</dfn>. The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(%NumberFormat%, &laquo; &raquo;, %Object%).
     </p>
     <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of *%NumberFormatPrototype%*, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[initializedNumberFormat]] internal slot with value *true*.
     </p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of *Intl.NumberFormat.prototype.constructor* is *%NumberFormat%*.
+        The initial value of `Intl.NumberFormat.prototype.constructor` is the intrinsic object %NumberFormat%.
       </p>
     </emu-clause>
 
@@ -472,7 +471,7 @@
       <h1>Intl.NumberFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Object"*.
+        The initial value of the @@toStringTag property is the string value `"Object"`.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -492,7 +491,7 @@
         1. If _nf_.[[initializedNumberFormat]] is *true*, throw a *TypeError* exception.
         1. If _nf_.[[boundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, « »).
+          1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, &laquo; &raquo;).
           1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
           1. Set _nf_.[[boundFormat]] to _bf_.
         1. Return _nf_.[[boundFormat]].
@@ -500,7 +499,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
-      <h1>Intl.NumberFormat.prototype.formatToParts ([ value ])</h1>
+      <h1>Intl.NumberFormat.prototype.formatToParts ( [ _value_ ] )</h1>
 
       <p>
         When the *Intl.NumberFormat.prototype.formatToParts* is called with an optional argument _value_, the following steps are taken:
@@ -532,7 +531,7 @@
     <h1>Properties of Intl.NumberFormat Instances</h1>
 
     <p>
-      Intl.NumberFormat instances inherit properties from *%NumberFormatPrototype%*.
+      Intl.NumberFormat instances inherit properties from %NumberFormatPrototype%.
     </p>
 
     <p>

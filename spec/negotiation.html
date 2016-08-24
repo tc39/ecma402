@@ -31,7 +31,7 @@
     </p>
 
     <emu-clause id="sec-canonicalizelocalelist" aoid="CanonicalizeLocaleList">
-      <h1>CanonicalizeLocaleList (locales)</h1>
+      <h1>CanonicalizeLocaleList ( _locales_ )</h1>
 
       <p>
         The abstract operation CanonicalizeLocaleList takes the following steps:
@@ -71,7 +71,7 @@
     </emu-clause>
 
     <emu-clause id="sec-bestavailablelocale" aoid="BestAvailableLocale">
-      <h1>BestAvailableLocale (availableLocales, locale)</h1>
+      <h1>BestAvailableLocale ( _availableLocales_, _locale_ )</h1>
 
       <p>
         The BestAvailableLocale abstract operation compares the provided argument _locale_, which must be a String value with a structurally valid and canonicalized BCP 47 language tag, against the locales in _availableLocales_ and returns either the longest non-empty prefix of _locale_ that is an element of _availableLocales_, or *undefined* if there is no such element. It uses the fallback mechanism of RFC 4647, section 3.4. The following steps are taken:
@@ -88,7 +88,7 @@
     </emu-clause>
 
     <emu-clause id="sec-lookupmatcher" aoid="LookupMatcher">
-      <h1>LookupMatcher (availableLocales, requestedLocales)</h1>
+      <h1>LookupMatcher ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
         The LookupMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The following steps are taken:
@@ -122,7 +122,7 @@
     </emu-clause>
 
     <emu-clause id="sec-bestfitmatcher" aoid="BestFitMatcher">
-      <h1>BestFitMatcher (availableLocales, requestedLocales)</h1>
+      <h1>BestFitMatcher ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
         The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the first Unicode locale extension sequence within the request locale language tag.
@@ -130,7 +130,7 @@
     </emu-clause>
 
     <emu-clause id="sec-unicodeextensionsubtags" aoid="UnicodeExtensionSubtags">
-      <h1>UnicodeExtensionSubtags (extension)</h1>
+      <h1>UnicodeExtensionSubtags ( _extension_ )</h1>
 
       <p>The abstract operation UnicodeExtensionSubtags splits _extension_, which must be a Unicode locale extension sequence, into its subtags. The following steps are taken:</p>
 
@@ -172,7 +172,7 @@
     </emu-clause>
 
     <emu-clause id="sec-resolvelocale" aoid="ResolveLocale">
-      <h1>ResolveLocale (availableLocales, requestedLocales, options, relevantExtensionKeys, localeData)</h1>
+      <h1>ResolveLocale ( _availableLocales_, _requestedLocales_, _options_, _relevantExtensionKeys_, _localeData_ )</h1>
 
       <p>
         The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_, _requestedLocales_, and _relevantExtensionKeys_ must be provided as List values, _options_ as a Record.
@@ -206,18 +206,18 @@
           1. Let _value_ be ? ToString(Get(_keyLocaleData_, *"0"*)).
           1. Let _supportedExtensionAddition_ be *""*.
           1. If _extensionSubtags_ is not *undefined*, then
-            1. Let _keyPos_ be Call(*%ArrayProto_indexOf%*, _extensionSubtags_, « _key_ ») .
+            1. Let _keyPos_ be Call(%ArrayProto_indexOf%, _extensionSubtags_, « _key_ ») .
             1. If _keyPos_ ≠ -1, then
-              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the *length* property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
+              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the `length` property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
                 1. Let _requestedValue_ be Get(_extensionSubtags_, ToString(_keyPos_ +1)).
-                1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, « _requestedValue_ ») is *true*, then
+                1. If the result of Call(%StringProto_includes%, _keyLocaleData_, « _requestedValue_ ») is *true*, then
                   1. Let _value_ be _requestedValue_.
                   1. Let _supportedExtensionAddition_ be the concatenation of *"-"*, _key_, *"-"*, and _value_.
-              1. Else if the result of Call(*%StringProto_includes%*, _keyLocaleData_, « *"true"* ») is *true*, then
+              1. Else if the result of Call(%StringProto_includes%, _keyLocaleData_, « *"true"* ») is *true*, then
                 1. Let _value_ be *"true"*.
           1. If _options_ has a field [[<_key_>]], then
             1. Let _optionsValue_ be ? ToString(_options_.[[<_key_>]]).
-            1. If the result of Call(*%StringProto_includes%*, _keyLocaleData_, « _optionsValue_ ») is *true*, then
+            1. If the result of Call(%StringProto_includes%, _keyLocaleData_, « _optionsValue_ ») is *true*, then
               1. If _optionsValue_ is not equal to _value_, then
                 1. Let _value_ be _optionsValue_.
                 1. Let _supportedExtensionAddition_ be *""*.
@@ -244,7 +244,7 @@
     </emu-clause>
 
     <emu-clause id="sec-lookupsupportedlocales" aoid="LookupSupportedLocales">
-      <h1>LookupSupportedLocales (availableLocales, requestedLocales)</h1>
+      <h1>LookupSupportedLocales ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
         The LookupSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
@@ -266,7 +266,7 @@
     </emu-clause>
 
     <emu-clause id="sec-bestfitsupportedlocales" aoid="BestFitSupportedLocales">
-      <h1>BestFitSupportedLocales (availableLocales, requestedLocales)</h1>
+      <h1>BestFitSupportedLocales ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
         The BestFitSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the Best Fit Matcher algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The steps taken are implementation dependent.
@@ -274,7 +274,7 @@
     </emu-clause>
 
     <emu-clause id="sec-supportedlocales" aoid="SupportedLocales">
-      <h1>SupportedLocales (availableLocales, requestedLocales, options)</h1>
+      <h1>SupportedLocales ( _availableLocales_, _requestedLocales_, _options_ )</h1>
 
       <p>
         The SupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale. Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
@@ -298,7 +298,7 @@
     </emu-clause>
 
     <emu-clause id="sec-getoption" aoid="GetOption">
-      <h1>GetOption (options, property, type, values, fallback)</h1>
+      <h1>GetOption ( _options_, _property_, _type_, _values_, _fallback_ )</h1>
 
       <p>
         The abstract operation GetOption extracts the value of the property named _property_ from the provided _options_ object, converts it to the required _type_, checks whether it is one of a List of allowed _values_, and fills in a _fallback_ value if necessary.
@@ -321,7 +321,7 @@
     </emu-clause>
 
     <emu-clause id="sec-getnumberoption" aoid="GetNumberOption">
-      <h1>GetNumberOption (options, property, minimum, maximum, fallback)</h1>
+      <h1>GetNumberOption ( _options_, _property_, _minimum_, _maximum_, _fallback_ )</h1>
 
       <p>
         The abstract operation GetNumberOption extracts the value of the property named _property_ from the provided _options_ object, converts it to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.
