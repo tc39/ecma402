@@ -498,23 +498,6 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
-      <h1>Intl.NumberFormat.prototype.formatToParts ( [ _value_ ] )</h1>
-
-      <p>
-        When the *Intl.NumberFormat.prototype.formatToParts* is called with an optional argument _value_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _nf_ be *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. If _nf_ does not have an [[initializedNumberFormat]] internal slot, throw a *TypeError* exception.
-        1. If _value_ is not provided, let _value_ be *undefined*.
-        1. Let _x_ be ? ToNumber(_value_).
-        1. Return ? FormatNumberToParts(_nf_, _x_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.numberformat.prototype.resolvedoptions">
       <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
 
