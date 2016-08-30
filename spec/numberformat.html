@@ -115,34 +115,85 @@
           1. Let _x_ be -_x_.
           1. Let _pattern_ be _numberFormat_.[[negativePattern]].
         1. Else,
-          1. If _x_ < 0, then
-            1. Let _negative_ be *true*.
-            1. Let _x_ be -_x_.
-          1. If _numberFormat_.[[style]] is *"percent"*, let _x_ be 100 × _x_.
-          1. If the _numberFormat_.[[minimumSignificantDigits]] and _numberFormat_.[[maximumSignificantDigits]] are present, then
-            1. Let _n_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
+          1. Let _pattern_ be _numberFormat_.[[positivePattern]].
+        1. Let _result_ be a new empty List.
+        1. Let _beginIndex_ be Call(*%StringProto_indexOf%*, _pattern_, *"{"*, *0*).
+        1. Let _endIndex_ be 0.
+        1. Let _nextIndex_ be 0.
+        1. Let _length_ be the number of code units in _pattern_.
+        1. Repeat while _beginIndex_ is an integer index into _pattern_:
+          1. Set _endIndex_ to Call(*%StringProto_indexOf%*, _pattern_, *"}"*, _beginIndex_)
+          1. If _endIndex_ = -1, throw new Error exception.
+          1. If _beginIndex_ is greater than _nextIndex_, then:
+            1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
+            1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
+          1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
+          1. If _p_ is equal *"number"*, then:
+            1. If _x_ is *NaN*,
+              1. Let _n_ be an ILD String value indicating the *NaN* value.
+              1. Add new part record { [[type]]: *"nan"*, [[value]]: _n_ } as a new element of the list _result_.
+            1. Else if isFinite(_x_) is *false*,
+              1. Let _n_ be an ILD String value indicating infinity.
+              1. Add new part record { [[type]]: *"infinity"*, [[value]]: _n_ } as a new element of the list _result_.
+            1. Else,
+              1. If _numberFormat_.[[style]] is *"percent"*, let _x_ be 100 × _x_.
+              1. If the _numberFormat_.[[minimumSignificantDigits]] and _numberFormat_.[[maximumSignificantDigits]] are present, then
+                1. Let _n_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
+              1. Else,
+                1. Let _n_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
+              1. If the _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
+                1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
+                1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
+              1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
+              1. Let _decimalSepIndex_ be Call(*%StringProto_indexOf%*, _n_, *"."*, 0).
+              1. If _decimalSepIndex_ > 0, then:
+                1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
+                1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
+              1. Else:
+                1. Let _integer_ be _n_.
+                1. Let _fraction_ be *undefined*.
+              1. If the _numberFormat_.[[useGrouping]] is *true*,
+                1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
+                1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_.
+                1. Assert: The number of elements in _groups_ List is greater than *0*.
+                1. Repeat, while _groups_ List is not empty:
+                  1. Remove the first element from _groups_ and let _integerGroup_ be the value of that element.
+                  1. Add new part record { [[type]]: *"integer"*, [[value]]: _integerGroup_ } as a new element of the list _result_.
+                  1. If _groups_ List is not empty, then:
+                    1. Add new part record { [[type]]: *"group"*, [[value]]: _groupSepSymbol_ } as a new element of the list _result_.
+              1. Else,
+                1. Add new part record { [[type]]: *"integer"*, [[value]]: _integer_ } as a new element of the list _result_.
+              1. If _fraction_ is not *undefined*, then:
+                1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
+                1. Add new part record { [[type]]: *"decimal"*, [[value]]: _decimalSepSymbol_ } as a new element of the list _result_.
+                1. Add new part record { [[type]]: *"fraction"*, [[value]]: _fraction_ } as a new element of the list _result_.
+          1. Else if _p_ is equal *"plusSign"*, then:
+            1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
+            1. Add new part record { [[type]]: *"plusSign"*, [[value]]: _plusSignSymbol_ } as a new element of the list _result_.
+          1. Else if _p_ is equal *"minusSign"*, then:
+            1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
+            1. Add new part record { [[type]]: *"minusSign"*, [[value]]: _minusSignSymbol_ } as a new element of the list _result_.
+          1. Else if _p_ is equal *"percentSign"* and _numberFormat_.[[style]] is *"percent"*, then:
+            1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
+            1. Add new part record { [[type]]: *"percentSign"*, [[value]]: _percentSignSymbol_ } as a new element of the list _result_.
+          1. Else if _p_ is equal *"currency"* and _numberFormat_.[[style]] is *"currency"*, then:
+            1. Let _currency_ be _numberFormat_.[[currency]].
+            1. Assert: _numberFormat_.[[currencyDisplay]] is *"code"*, *"symbol"* or *"name"*.
+            1. If _numberFormat_.[[currencyDisplay]] is *"code"*, then
+              1. Let _cd_ be _currency_.
+            1. Else if _numberFormat_.[[currencyDisplay]] is *"symbol"*, then
+              1. Let _cd_ be an ILD string representing _currency_ in short form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
+            1. Else if _numberFormat_.[[currencyDisplay]] is *"name"*, then
+              1. Let _cd_ be an ILD string representing _currency_ in long form. If the implementation does not have such a representation of _currency_, then use _currency_ itself.
+            1. Add new part record { [[type]]: *"currency"*, [[value]]: _cd_ } as a new element of the list _result_.
           1. Else,
-            1. Let _n_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
-          1. If _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
-            1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
-            1. Replace each _digit_ in _n_ with _digits_[_digit_].
-          1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
-          1. If _n_ contains the character *"."*, replace it with an ILND String representing the decimal separator.
-          1. If _numberFormat_.[[useGrouping]] is *true*, insert an ILND String representing a grouping separator into an ILND set of locations within the integer part of _n_.
-        1. If _negative_ is *true*, then
-          1. Let _result_ be _numberFormat_.[[negativePattern]].
-        1. Else,
-          1. Let _result_ be _numberFormat_.[[positivePattern]].
-        1. Replace the substring *"{number}"* within _result_ with _n_.
-        1. If _numberFormat_.[[style]] is *"currency"*, then
-          1. Let _currency_ be _numberFormat_.[[currency]].
-          1. If _numberFormat_.[[currencyDisplay]] is *"code"*, then
-            1. Let _cd_ be _currency_.
-          1. Else if _numberFormat_.[[currencyDisplay]] is *"symbol"*, then
-            1. Let _cd_ be an ILD string representing _currency_ in short form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
-          1. Else if _numberFormat_.[[currencyDisplay]] is *"name"*, then
-            1. Let _cd_ be an ILD string representing _currency_ in long form. If the implementation does not have such a representation of _currency_, then use _currency_ itself.
-          1. Replace the substring *"{currency}"* within _result_ with _cd_.
+            1. Let _literal_ be the substring of _pattern_ from position _beginIndex_, inclusive, to position _endIndex_, inclusive.
+            1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
+          1. Set _nextIndex_ to _endIndex_ + 1.
+          1. Set _beginIndex_ to Call(*%StringProto_indexOf%*, _pattern_, "{", _nextIndex_)
+        1. If _nextIndex_ is less than _length_, then:
+          1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
+          1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
         1. Return _result_.
       </emu-alg>
 
