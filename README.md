@@ -9,7 +9,8 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 
 |🚀 | Proposal                              | Champion       | Stage | Notes
 |---|---------------------------------------|--------------  | ------|------
-|   | [formatToParts][]                     | Zibi Braniecki |     4 |
+|   | [Intl.DateTimeFormat.prototype.formatToParts][]                     | Zibi Braniecki |     4 |
+|   | [Intl.NumberFormat.prototype.formatToParts][]                     | Zibi Braniecki |     3 |
 |   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     3 |
 |   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     1 |
@@ -27,7 +28,8 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 [Intl.DurationFormat]: https://github.com/tc39/ecma402/issues/47
 [Intl.UnitFormat]: https://github.com/tc39/ecma402/issues/32
 [Intl.PluralRules]: https://github.com/caridy/intl-plural-rules-spec
-[formatToParts]: https://github.com/tc39/ecma402/issues/30
+[Intl.DateTimeFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
+[Intl.NumberFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
 [Exposing Abstract Operations & Locale Info]: https://github.com/tc39/ecma402/issues/46
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
