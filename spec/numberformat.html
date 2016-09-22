@@ -103,6 +103,23 @@
       </p>
     </emu-clause>
 
+    <emu-clause id="sec-formatnumberstring" aoid="FormatNumberToString">
+      <h1>FormatNumberToString ( _numberFormat_, _x_ )</h1>
+
+      <p>
+        The FormatNumberToString abstract operation is called with arguments _numberFormat_ (which must be an object with fields minimumSignificantDigits, maximumSignificantDigits, minimumIntegerDigits, minimumFractionDigits and maximumFractionDigits), and _x_ (which must be a Number value), and returns _x_ as a string value with digits formatted according to the 5 formatting parameters.
+      </p>
+
+      <emu-alg>
+        1. Assert: _numberFormat_.[[initializedIntlObject]] is true.
+        1. If the _numberFormat_.[[minimumSignificantDigits]] and _numberFormat_.[[maximumSignificantDigits]] are present, then
+          1. Let _result_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
+        1. Else,
+          1. Let _result_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-partitionnumberpattern" aoid="PartitionNumberPattern">
       <h1>PartitionNumberPattern ( _numberFormat_, _x_ )</h1>
 
@@ -137,10 +154,7 @@
               1. Append a new Record { [[type]]: *"infinity"*, [[value]]: _n_ } as the last element of _result_.
             1. Else,
               1. If _numberFormat_.[[style]] is *"percent"*, let _x_ be 100 × _x_.
-              1. If the _numberFormat_.[[minimumSignificantDigits]] and _numberFormat_.[[maximumSignificantDigits]] are present, then
-                1. Let _n_ be ToRawPrecision(_x_, _numberFormat_.[[minimumSignificantDigits]], _numberFormat_.[[maximumSignificantDigits]]).
-              1. Else,
-                1. Let _n_ be ToRawFixed(_x_, _numberFormat_.[[minimumIntegerDigits]], _numberFormat_.[[minimumFractionDigits]], _numberFormat_.[[maximumFractionDigits]]).
+              1. Let _n_ be FormatNumberToString(_numberFormat_, _x_).
               1. If the _numberFormat_.[[numberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
