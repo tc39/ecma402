@@ -5,7 +5,7 @@
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
     <emu-clause id="sec-calculatenfdigitoptions" aoid="CalculateNumberFormatDigitOptions">
-      <h1>CalculateNumberFormatDigitOptions ( _options_, _style_, _cDigits_ )</h1>
+      <h1>GetNumberFormatDigitOptionsRecord ( _options_ )</h1>
 
       <p>
         The abstract operation CalculateNumberFormatDigitOptions calculates the values of
@@ -13,13 +13,8 @@
       </p>
       <emu-alg>
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
-        1. If _style_ equals *"currency"*,
-          1. Set _mnfdDefault_ to _cDigits_.
-        1. Else,
-          1. Set _mnfdDefault_ to *0*.
-        1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20, mnfdDefault).
-        1. If _style_ is *"currency"*, let _mxfdDefault_ be max(_mnfd_, _cDigits_); else if _style_ is *"percent"*, let _mxfdDefault_ be max(_mnfd_, 0); else let _mxfdDefault_ be max(_mnfd_, 3).
-        1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20, _mxfdDefault_).
+        1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20).
+        1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20).
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
@@ -74,10 +69,24 @@
           1. Let _cDigits_ be CurrencyDigits(_c_).
         1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
-        1. Let _digitOpts_ be ? CalculateNumberFormatDigitOptions(_options_, _s_, _cDigits_).
+        1. Let _digitOpts_ be ? GetNumberFormatDigitOptionsRecord(_options_).
         1. Set _numberFormat_.[[minimumIntegerDigits]] to _digitOpts_.[[MinimumIntegerDigits]].
-        1. Set _numberFormat_.[[minimumFractionDigits]] to _digitOpts_.[[MinimumFractionDigits]].
-        1. Set _numberFormat_.[[maximumFractionDigits]] to _digitOpts_.[[MaximumFractionDigits]].
+        1. If _digitOpts_.[[MinimumIntegerDigits]] is *undefined*, then
+          1. If _style_ equals *"currency"*,
+            1. Set _numberFormat_.[[minimumFractionDigits]] to _cDigits_.
+          1. Else,
+            1. Set _numberFormat_.[[minimumFractionDigits]] to *0*.
+        1. Else,
+          1. Set _numberFormat_.[[minimumFractionDigits]] to _digitOpts_.[[MinimumFractionDigits]].
+        1. If _digitOpts_.[[MaximumFractionDigits]] is *undefined*, then
+          1. If _style_ is *"currency"*, then
+            1. Set _numberFormat_[[maximumFractionDigits]] to max(_mnfd_, _cDigits_).
+          1. Else if _style_ is *"percent"*, then
+            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 0).
+          1. Else,
+            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 3).
+        1. Else,
+          1. Set _numberFormat_.[[maximumFractionDigits]] to _digitOpts_.[[MaximumFractionDigits]].
         1. If _digitOpts_.[[MinimumSignificantDigits]] is not *undefined* or _digitOpts_.[[MaximumSignificantDigits]] is not *undefined*, then
           1. Set _numberFormat_.[[minimumSignificantDigits]] to _digitOpts_.[[MinimumSignificantDigits]].
           1. Set _numberFormat_.[[maximumSignificantDigits]] to _digitOpts_.[[MaximumSignificantDigits]].
