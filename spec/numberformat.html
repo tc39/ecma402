@@ -4,14 +4,15 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
-    <emu-clause id="sec-calculatenfdigitoptions" aoid="CalculateNumberFormatDigitOptions">
-      <h1>GetNumberFormatDigitOptionsRecord ( _options_ )</h1>
+    <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
+      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_ )</h1>
 
       <p>
-        The abstract operation CalculateNumberFormatDigitOptions calculates the values of
-        five options that affect digit formatting in NumberFormat.
+        The abstract operation SetNumberFormatDigitOptions applies digit
+        options used for number formatting onto the intl object.
       </p>
       <emu-alg>
+        1. Assert: Type(_intlObj_) is Object and _intlObj_.[[initializedIntlObject]] is *true*.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20).
         1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20).
@@ -20,13 +21,11 @@
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
           1. Let _mnsd_ be ? GetNumberOption(_options_, *"minimumSignificantDigits"*, 1, 21, 1).
           1. Let _mxsd_ be ? GetNumberOption(_options_, *"maximumSignificantDigits"*, _mnsd_, 21, 21).
-        1. Let _result_ be a new Record.
-        1. Set _result_.[[MinimumIntegerDigits]] to mnid.
-        1. Set _result_.[[MinimumFractionDigits]] to mnfd.
-        1. Set _result_.[[MaximumFractionDigits]] to mxfd.
-        1. Set _result_.[[MinimumSignificantDigits]] to mnsd.
-        1. Set _result_.[[MaximumSignificantDigits]] to mxsd.
-        1. Return _result_.
+        1. Set _numberFormat_.[[MinimumIntegerDigits]] to mnid.
+        1. Set _numberFormat_.[[MinimumFractionDigits]] to mnfd.
+        1. Set _numberFormat_.[[MaximumFractionDigits]] to mxfd.
+        1. Set _numberFormat_.[[MinimumSignificantDigits]] to mnsd.
+        1. Set _numberFormat_.[[MaximumSignificantDigits]] to mxsd.
       </emu-alg>
     </emu-clause>
 
@@ -69,27 +68,19 @@
           1. Let _cDigits_ be CurrencyDigits(_c_).
         1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
-        1. Let _digitOpts_ be ? GetNumberFormatDigitOptionsRecord(_options_).
-        1. Set _numberFormat_.[[minimumIntegerDigits]] to _digitOpts_.[[MinimumIntegerDigits]].
-        1. If _digitOpts_.[[MinimumIntegerDigits]] is *undefined*, then
+        1. GetNumberFormatDigitOptions(_numberFormat_, _options_).
+        1. If _numberFormat_.[[MinimumIntegerDigits]] is *undefined*, then
           1. If _style_ equals *"currency"*,
             1. Set _numberFormat_.[[minimumFractionDigits]] to _cDigits_.
           1. Else,
             1. Set _numberFormat_.[[minimumFractionDigits]] to *0*.
-        1. Else,
-          1. Set _numberFormat_.[[minimumFractionDigits]] to _digitOpts_.[[MinimumFractionDigits]].
-        1. If _digitOpts_.[[MaximumFractionDigits]] is *undefined*, then
+        1. If _numberFormat_.[[MaximumFractionDigits]] is *undefined*, then
           1. If _style_ is *"currency"*, then
             1. Set _numberFormat_[[maximumFractionDigits]] to max(_mnfd_, _cDigits_).
           1. Else if _style_ is *"percent"*, then
             1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 0).
           1. Else,
             1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 3).
-        1. Else,
-          1. Set _numberFormat_.[[maximumFractionDigits]] to _digitOpts_.[[MaximumFractionDigits]].
-        1. If _digitOpts_.[[MinimumSignificantDigits]] is not *undefined* or _digitOpts_.[[MaximumSignificantDigits]] is not *undefined*, then
-          1. Set _numberFormat_.[[minimumSignificantDigits]] to _digitOpts_.[[MinimumSignificantDigits]].
-          1. Set _numberFormat_.[[maximumSignificantDigits]] to _digitOpts_.[[MaximumSignificantDigits]].
         1. Let _g_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[useGrouping]] to _g_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
