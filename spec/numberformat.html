@@ -21,11 +21,11 @@
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
           1. Let _mnsd_ be ? GetNumberOption(_options_, *"minimumSignificantDigits"*, 1, 21, 1).
           1. Let _mxsd_ be ? GetNumberOption(_options_, *"maximumSignificantDigits"*, _mnsd_, 21, 21).
-        1. Set _numberFormat_.[[minimumIntegerDigits]] to mnid.
-        1. Set _numberFormat_.[[minimumFractionDigits]] to mnfd.
-        1. Set _numberFormat_.[[maximumFractionDigits]] to mxfd.
-        1. Set _numberFormat_.[[minimumSignificantDigits]] to mnsd.
-        1. Set _numberFormat_.[[maximumSignificantDigits]] to mxsd.
+        1. Set _intlObj_.[[minimumIntegerDigits]] to mnid.
+        1. Set _intlObj_.[[minimumFractionDigits]] to mnfd.
+        1. Set _intlObj_.[[maximumFractionDigits]] to mxfd.
+        1. Set _intlObj_.[[minimumSignificantDigits]] to mnsd.
+        1. Set _intlObj_.[[maximumSignificantDigits]] to mxsd.
       </emu-alg>
     </emu-clause>
 
@@ -70,7 +70,7 @@
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
         1. Call SetNumberFormatDigitOptions(_numberFormat_, _options_).
         1. If _numberFormat_.[[minimumIntegerDigits]] is *undefined*, then
-          1. If _style_ is *"currency"*,
+          1. If _style_ is *"currency"*, then
             1. Set _numberFormat_.[[minimumFractionDigits]] to _cDigits_.
           1. Else,
             1. Set _numberFormat_.[[minimumFractionDigits]] to *0*.
