@@ -68,7 +68,7 @@
           1. Let _cDigits_ be CurrencyDigits(_c_).
         1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
         1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
-        1. Call SetNumberFormatDigitOptions(_numberFormat_, _options_).
+        1. Perform ! SetNumberFormatDigitOptions(_numberFormat_, _options_).
         1. If _numberFormat_.[[minimumIntegerDigits]] is *undefined*, then
           1. If _style_ is *"currency"*, then
             1. Set _numberFormat_.[[minimumFractionDigits]] to _cDigits_.
