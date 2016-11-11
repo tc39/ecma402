@@ -13,6 +13,7 @@
       </p>
       <emu-alg>
         1. Assert: Type(_intlObj_) is Object and _intlObj_.[[initializedIntlObject]] is *true*.
+        1. Assert: Type(_options_) is Object.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20).
         1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20).
