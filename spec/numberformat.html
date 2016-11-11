@@ -76,11 +76,11 @@
             1. Set _numberFormat_.[[minimumFractionDigits]] to *0*.
         1. If _numberFormat_.[[maximumFractionDigits]] is *undefined*, then
           1. If _style_ is *"currency"*, then
-            1. Set _numberFormat_[[maximumFractionDigits]] to max(_mnfd_, _cDigits_).
+            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_numberFormat_.[[minimumFractionDigits]], _cDigits_).
           1. Else if _style_ is *"percent"*, then
-            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 0).
+            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_numberFormat_.[[minimumFractionDigits]], 0).
           1. Else,
-            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_mnfd_, 3).
+            1. Set _numberFormat_.[[maximumFractionDigits]] to max(_numberFromat_.[[minimumFractionDigits]], 3).
         1. Let _g_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[useGrouping]] to _g_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
