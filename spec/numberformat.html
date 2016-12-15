@@ -74,7 +74,7 @@
           1. Let _mnfdDefault_ be _cDigits_.
         1. Else,
           1. Let _mnfdDefault_ be *0*.
-        1. Perform ! SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_).
+        1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_).
         1. If _numberFormat_.[[maximumFractionDigits]] is *undefined*, then
           1. If _style_ is *"currency"*, then
             1. Set _numberFormat_.[[maximumFractionDigits]] to max(_numberFormat_.[[minimumFractionDigits]], _cDigits_).
