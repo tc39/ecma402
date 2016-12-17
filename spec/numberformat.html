@@ -58,18 +58,18 @@
         1. Set _numberFormat_.[[locale]] to _r_.[[locale]].
         1. Set _numberFormat_.[[numberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"decimal"*, *"percent"*, *"currency"* &raquo;, *"decimal"*).
-        1. Set _numberFormat_.[[style]] to _s_.
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"decimal"*, *"percent"*, *"currency"* &raquo;, *"decimal"*).
+        1. Set _numberFormat_.[[style]] to _style_.
         1. Let _c_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
         1. If _c_ is not *undefined*, then
           1. If the result of IsWellFormedCurrencyCode(_c_) is *false*, throw a *RangeError* exception.
-        1. If _s_ is *"currency"* and _c_ is *undefined*, throw a *TypeError* exception.
-        1. If _s_ is *"currency"*, then
+        1. If _style_ is *"currency"* and _c_ is *undefined*, throw a *TypeError* exception.
+        1. If _style_ is *"currency"*, then
           1. Let _c_ be converting _c_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Set _numberFormat_.[[currency]] to _c_.
           1. Let _cDigits_ be CurrencyDigits(_c_).
         1. Let _cd_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
-        1. If _s_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
+        1. If _style_ is *"currency"*, set _numberFormat_.[[currencyDisplay]] to _cd_.
         1. If _style_ is *"currency"*, then
           1. Let _mnfdDefault_ be _cDigits_.
         1. Else,
