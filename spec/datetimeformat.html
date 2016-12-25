@@ -13,43 +13,53 @@
       <table class="real-table">
         <thead>
           <tr>
+            <th>Internal Slot</th>
             <th>Property</th>
             <th>Values</th>
           </tr>
         </thead>
         <tr>
+          <td>[[weekday]]</td>
           <td>weekday</td>
           <td>"narrow", "short", "long"</td>
         </tr>
         <tr>
+          <td>[[era]]</td>
           <td>era</td>
           <td>"narrow", "short", "long"</td>
         </tr>
         <tr>
+          <td>[[year]]</td>
           <td>year</td>
           <td>"2-digit", "numeric"</td>
         </tr>
         <tr>
+          <td>[[month]]</td>
           <td>month</td>
           <td>"2-digit", "numeric", "narrow", "short", "long"</td>
         </tr>
         <tr>
+          <td>[[day]]</td>
           <td>day</td>
           <td>"2-digit", "numeric"</td>
         </tr>
         <tr>
+          <td>[[hour]]</td>
           <td>hour</td>
           <td>"2-digit", "numeric"</td>
         </tr>
         <tr>
+          <td>[[minute]]</td>
           <td>minute</td>
           <td>"2-digit", "numeric"</td>
         </tr>
         <tr>
+          <td>[[second]]</td>
           <td>second</td>
           <td>"2-digit", "numeric"</td>
         </tr>
         <tr>
+          <td>[[timeZoneName]]</td>
           <td>timeZoneName</td>
           <td>"short", "long"</td>
         </tr>
@@ -102,7 +112,7 @@
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _p_ be Get(_bestFormat_, _prop_).
           1. If _p_ not *undefined*, then
-            1. Set _dateTimeFormat_.[[<_prop_>]] to _p_.
+            1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
         1. If _dateTimeFormat_ has an internal slot [[hour]], then
           1. If _hr12_ is *undefined*, then
@@ -264,8 +274,8 @@
             1. Add new part record { [[type]]: *"literal"*, [[value]]: _literal_ } as a new element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then:
-            1. Let _f_ be _dateTimeFormat_.[[<_p_>]].
-            1. Let _v_ be _tm_.[[<_p_>]].
+            1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
+            1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
             1. If _p_ is *"hour"* and _dateTimeFormat_.[[hour12]] is *true*, then
