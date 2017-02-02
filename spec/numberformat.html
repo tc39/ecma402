@@ -448,6 +448,27 @@
         1. Return _m_.
       </emu-alg>
     </emu-clause>
+
+    <emu-clause id="sec-unwrapnumberformat" aoid="UnwrapNumberFormat">
+      <h1>UnwrapNumberFormat( _nf_ )</h1>
+      <p>
+        The UnwrapNumberFormat abstract operation gets the underlying NumberFormat operation
+        for various methods which implement ECMA-402 v1 semantics for supporting initializing
+        existing Intl objects.
+      </p>
+      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-alg>
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%)is equal *true*, then
+          1. Let _obj_ be Get(_nf_, Intl.[[FallbackSymbol]]).
+          1. Let _nf_ be ? RequireObjectCoercible(_obj_).
+      </emu-alg>
+      </div></emu-normative-optional>
+      <emu-alg>
+        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
+          1. Throw a *TypeError* exception.
+        1. Return _nf_.
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-intl-numberformat-constructor">
@@ -467,7 +488,18 @@
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Currency]], [[CurrencyDisplay]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[UseGrouping]], [[PositivePattern]], [[NegativePattern]], [[BoundFormat]] &raquo;).
-        1. Return ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+        1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+      </emu-alg>
+      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-alg>
+        4. Let _this_ be the *this* value.
+        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%),
+          1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Return _this_.
+      </emu-alg>
+      </div></emu-normative-optional>
+      <emu-alg>
+        6. Return _numberFormat_.
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -577,7 +609,7 @@
       <emu-alg>
         1. Let _nf_ be *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. If _nf_.[[InitializedNumberFormat]] is *true*, throw a *TypeError* exception.
+        1. Let _nf_ be ? UnwrapNumberFormat(_nf_);
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
           1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, &laquo; &raquo;).
@@ -591,7 +623,7 @@
       <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object.
+        This function provides access to the locale and formatting options computed during initialization of the object. This function initially invokes the internal algorithm UnwrapNumberFormat to get the %NumberFormat% object on which to operate.
       </p>
       <p>
         The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots have the value *undefined* are not assigned.
