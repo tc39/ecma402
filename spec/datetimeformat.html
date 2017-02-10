@@ -380,13 +380,13 @@
       </p>
       <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
       <emu-alg>
+        2. If Type(_dtf_) is Object and _dtf_ does not have an [[initializedDateTimeFormat]] internal slot and ? InstanceofOperator(dtf, %DateTimeFormat%) is true, then
         1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is equal *true*, then
-          1. Let _obj_ be Get(_dtf_, Intl.[[FallbackSymbol]]).
-          1. Let _dtf_ be ? RequireObjectCoercible(_obj_).
+          1. Let _dtf_ be Get(_dtf_, Intl.[[FallbackSymbol]]).
       </emu-alg>
       </div></emu-normative-optional>
       <emu-alg>
-        2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot,
+        2. If Type(_dtf_) is not Object or _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, then
           1. Throw a *TypeError* exception.
         1. Return _dtf_.
       </emu-alg>
@@ -416,7 +416,7 @@
       <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%),
+        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%), then
           1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
