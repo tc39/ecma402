@@ -456,12 +456,12 @@
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
         existing Intl objects.
       </p>
-      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-normative-optional>
       <emu-alg>
         1. If Type(_nf_) is Object and _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is equal *true*, then
           1. Let _nf_ be Get(_nf_, Intl.[[FallbackSymbol]]).
       </emu-alg>
-      </div></emu-normative-optional>
+      </emu-normative-optional>
       <emu-alg>
         2. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
           1. Throw a *TypeError* exception.
@@ -489,14 +489,14 @@
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Currency]], [[CurrencyDisplay]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[UseGrouping]], [[PositivePattern]], [[NegativePattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
-      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-normative-optional>
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%), then
           1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
-      </div></emu-normative-optional>
+      </emu-normative-optional>
       <emu-alg>
         6. Return _numberFormat_.
       </emu-alg>

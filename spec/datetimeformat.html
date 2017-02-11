@@ -378,13 +378,13 @@
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
         existing Intl objects.
       </p>
-      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-normative-optional>
       <emu-alg>
         1. If Type(_dtf_) is Object and _dtf_ does not have an [[initializedDateTimeFormat]] internal slot and ? InstanceofOperator(dtf, %DateTimeFormat%) is true, then
         1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is equal *true*, then
           1. Let _dtf_ be Get(_dtf_, Intl.[[FallbackSymbol]]).
       </emu-alg>
-      </div></emu-normative-optional>
+      </emu-normative-optional>
       <emu-alg>
         3. If Type(_dtf_) is not Object or _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, then
           1. Throw a *TypeError* exception.
@@ -413,14 +413,14 @@
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[Hour12]], [[HourNo0]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
-      <emu-normative-optional><span class="normative-optional">Normative Optional</span><div class="normative-optional-contents">
+      <emu-normative-optional>
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%), then
           1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
-      </div></emu-normative-optional>
+      </emu-normative-optional>
       <emu-alg>
         6. Return _dateTimeFormat_.
       </emu-alg>
