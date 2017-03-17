@@ -5,7 +5,7 @@
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
     <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
-      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_ )</h1>
+      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_ )</h1>
 
       <p>
         The abstract operation SetNumberFormatDigitOptions applies digit
@@ -15,9 +15,11 @@
         1. Assert: Type(_intlObj_) is Object and _intlObj_.[[InitializedIntlObject]] is *true*.
         1. Assert: Type(_options_) is Object.
         1. Assert: type(_mnfdDefault_) is Number.
+        1. Assert: type(_mxfdDefault_) is Number.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20, _mnfdDefault_).
-        1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20).
+        1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
+        1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20, _mxfdActualDefault_).
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to mnid.
@@ -72,16 +74,14 @@
         1. If _style_ is *"currency"*, set _numberFormat_.[[CurrencyDisplay]] to _cd_.
         1. If _style_ is *"currency"*, then
           1. Let _mnfdDefault_ be _cDigits_.
+          1. Let _mxfdDefault_ be _cDigits_.
         1. Else,
           1. Let _mnfdDefault_ be *0*.
-        1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_).
-        1. If _numberFormat_.[[MaximumFractionDigits]] is *undefined*, then
-          1. If _style_ is *"currency"*, then
-            1. Set _numberFormat_.[[MaximumFractionDigits]] to max(_numberFormat_.[[MinimumFractionDigits]], _cDigits_).
-          1. Else if _style_ is *"percent"*, then
-            1. Set _numberFormat_.[[MaximumFractionDigits]] to max(_numberFormat_.[[MinimumFractionDigits]], 0).
+          1. If _style_ is *"percent"*, then
+            1. Let _mxfdDefault_ be *0*.
           1. Else,
-            1. Set _numberFormat_.[[MaximumFractionDigits]] to max(_numberFromat_.[[MinimumFractionDigits]], 3).
+            1. Let _mxfdDefault_ be *3*.
+        1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
         1. Let _g_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[UseGrouping]] to _g_.
         1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
