@@ -563,6 +563,10 @@
           1. Set _dtf_.[[BoundFormat]] to _bf_.
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
+
+      <p>
+        The `length` property of a DateTime format function is 1.
+      </p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
@@ -582,6 +586,10 @@
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTimeToParts(_dtf_, _x_).
       </emu-alg>
+
+      <p>
+        The `length` property of a DateTime formatToParts function is 1.
+      </p>
     </emu-clause>
 
     <emu-clause id="sec-intl.datetimeformat.prototype.resolvedoptions">
