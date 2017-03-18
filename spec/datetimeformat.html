@@ -566,17 +566,17 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
-      <h1>Intl.DateTimeFormat.prototype.formatToParts ( [ _date_ ] )</h1>
+      <h1>Intl.DateTimeFormat.prototype.formatToParts ( _date_ )</h1>
 
       <p>
-        When the `formatToParts` method is called with an optional argument _date_, the following steps are taken:
+        When the `formatToParts` method is called with an argument _date_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _dtf_ be *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
-        1. If _date_ is not provided or is *undefined*, then
+        1. If _date_ is *undefined*, then
           1. Let _x_ be %Date_now%().
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
