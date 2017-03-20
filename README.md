@@ -13,6 +13,7 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |   | [Intl.NumberFormat.prototype.formatToParts][]                     | Zibi Braniecki |     3 |
 |   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     3 |
 |   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
+|   | [Intl.Segmenter: Unicode segmentation in JavaScript][]| Daniel Ehrenberg  |     2 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     1 |
 |   | [Intl.DurationFormat][]               | Zibi Braniecki |     1 |
 |   | [Intl.UnitFormat][]                   | Zibi Braniecki |     1 |
@@ -20,7 +21,7 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
 
-
+[Intl.Segmenter: Unicode segmentation in JavaScript]: https://github.com/tc39/proposal-intl-segmenter
 [Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
 [Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 [Intl.NumberFormat round option]: https://github.com/rxaviers/ecma402-number-format-round-option
