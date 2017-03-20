@@ -20,14 +20,12 @@
         1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20, _mnfdDefault_).
         1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
         1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20, _mxfdActualDefault_).
-        1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
-        1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
+        1. Let _mnsd_ be ? GetNumberOption(_options_, *"minimumSignificantDigits"*, 1, 21, 1).
+        1. Let _mxsd_ be ? GetNumberOption(_options_, *"maximumSignificantDigits"*, _mnsd_, 21, 21).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to mnid.
         1. Set _intlObj_.[[MinimumFractionDigits]] to mnfd.
         1. Set _intlObj_.[[MaximumFractionDigits]] to mxfd.
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
-          1. Let _mnsd_ be ? GetNumberOption(_options_, *"minimumSignificantDigits"*, 1, 21, 1).
-          1. Let _mxsd_ be ? GetNumberOption(_options_, *"maximumSignificantDigits"*, _mnsd_, 21, 21).
           1. Set _intlObj_.[[MinimumSignificantDigits]] to mnsd.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to mxsd.
       </emu-alg>
