@@ -320,6 +320,22 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-clause id="sec-defaultnumberoption" aoid="DefaultNumberOption">
+      <h1>DefaultNumberOption ( _value_, _minimum_, _maximum_, _fallback_ )</h1>
+
+      <p>
+        The abstract operation DefaultNumberOption converts _value_ to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.
+      </p>
+
+      <emu-alg>
+        1. If _value_ is not *undefined*, then
+          1. Let _value_ be ? ToNumber(_value_).
+          1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
+          1. Return floor(_value_).
+        1. Else, return _fallback_.
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-getnumberoption" aoid="GetNumberOption">
       <h1>GetNumberOption ( _options_, _property_, _minimum_, _maximum_, _fallback_ )</h1>
 
@@ -330,11 +346,7 @@
       <emu-alg>
         1. Let _opts_ be ? ToObject(_options_).
         1. Let _value_ be ? Get(_opts_, _property_).
-        1. If _value_ is not *undefined*, then
-          1. Let _value_ be ? ToNumber(_value_).
-          1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
-          1. Return floor(_value_).
-        1. Else, return _fallback_.
+        1. Return ? DefaultNumberOption(_value_, _minimum_, _maximum_, _fallback_).
       </emu-alg>
     </emu-clause>
 
