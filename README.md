@@ -1,7 +1,11 @@
 ECMAScript Internationalization API Specification (Ecma-402)
 ====
 
-[Current Draft](http://tc39.github.io/ecma402/)
+## This repo
+
+This repository contains the source for the current draft of ECMA-402, the ECMAScript® Internationalization API Specification.
+
+This source is processed to obtain a human-readable version, which you can view [here](http://tc39.github.io/ecma402/).
 
 ## Current Proposals
 
@@ -19,7 +23,7 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |   | [Intl.UnitFormat][]                   | Zibi Braniecki |     1 |
 |   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     1 |
 |   | [DateTimeFormat dateStyle & timeStyle][]           | Zibi Braniecki |     1 |
-|   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |    
+|   | [Fix 9.2.3 LookupMatcher algorithm][] | Rafael Xavier  |     0 |
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
 
 [Intl.Segmenter: Unicode segmentation in JavaScript]: https://github.com/tc39/proposal-intl-segmenter
