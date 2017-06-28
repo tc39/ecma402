@@ -195,7 +195,7 @@
     <h1>Properties of the Intl.Collator Prototype Object</h1>
 
     <p>
-      The Intl.Collator prototype object is the intrinsic object <dfn>%CollatorPrototype%</dfn>. The Intl.Collator prototype object is itself an Intl.Collator instance as specified in <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(%Collator%, &laquo; &raquo;, %Object%).
+      The Intl.Collator prototype object is itself an ordinary object. <dfn>%CollatorPrototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
     </p>
 
     <p>

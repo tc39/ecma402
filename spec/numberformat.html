@@ -573,7 +573,7 @@
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
     <p>
-      The Intl.NumberFormat prototype object is the intrinsic object <dfn>%NumberFormatPrototype%</dfn>. The Intl.NumberFormat prototype object is itself an Intl.NumberFormat instance as specified in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>, whose internal slots are set as if it had been constructed by the expression Construct(%NumberFormat%, &laquo; &raquo;, %Object%).
+      The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormatPrototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
     </p>
     <p>
       In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedNumberFormat]] internal slot with value *true*.
