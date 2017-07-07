@@ -603,6 +603,10 @@
         The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this DateTimeFormat object (see <emu-xref href="#sec-properties-of-intl-datetimeformat-instances"></emu-xref>): locale, calendar, numberingSystem, timeZone, hourCycle, weekday, era, year, month, day, hour, minute, second, and timeZoneName. Properties whose corresponding internal slots have the value *undefined* are not assigned.
       </p>
 
+      <p>
+        For web compatibility reasons, if the property hourCycle is set to values *h12* or *h24*, the corresponding property hour12 should be set as well.
+      </p>
+
       <emu-note>
         In this version of the ECMAScript 2017 Internationalization API, the timeZone property will be the name of the default time zone if no timeZone property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the timeZone property *undefined* in this case.
       </emu-note>
