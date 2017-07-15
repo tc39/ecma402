@@ -283,7 +283,7 @@
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *true*, then
+            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h12"*, then
               1. Let _v_ be _v_ modulo 12.
               1. If _v_ is 0 and _dateTimeFormat_.[[HourNo0]] is *true*, let _v_ be 12.
             1. If _f_ is *"numeric"*, then
