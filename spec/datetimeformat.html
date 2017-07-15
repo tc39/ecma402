@@ -117,20 +117,21 @@
         1. If _dateTimeFormat_ has an internal slot [[Hour]], then
           1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
           1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
+          1. Let _hcDefault_ be Get(_dataLocaleData_, *"hourCycle"*).
           1. If _hr12_ is not *undefined*, then
-            1. Let _hourNo0_ be Get(_dataLocaleData_, *"hourNo0"*).
             1. If _hr12_ is *true*, then
-              1. If _hourNo0_ is *true*, then
+              1. If _hcDefault_ is *"h11"* or *"h23"*, then
                 1. Set _hc_ to *"h11"*.
               1. Else,
                 1. Set _hc_ to *"h12"*.
             1. Else, if _hr12_ is *false*, then
-              1. If _hourNo0_ is *true*, then
+              1. If _hcDefault_ is *"h11"* or *"h23"*, then
                 1. Set _hc_ to *"h23"*.
               1. Else,
                 1. Set _hc_ to *"h24"*.
-          1. If _hc_ is not *undefined*, then
-            1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
+          1. If _hc_ is *undefined*, then
+            1. Set _hc_ to _hcDefault_
+          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
           1. If _dateTimeformat_.[[HourCycle]] is *"h11"* or *"h12"*, then
             1. Let _pattern_ be Get(_bestFormat_, *"pattern12"*).
           1. Else,
@@ -498,9 +499,6 @@
       <ul>
         <li>
           The array that is the value of the "nu" property of any locale property of [[LocaleData]] must not include the values "native", "traditio", or "finance".
-        </li>
-        <li>
-          [[LocaleData]][locale] must have hourNo0 property with Boolean value for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have hourCycle property with String values for all locale values.
