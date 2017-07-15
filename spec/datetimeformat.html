@@ -115,17 +115,23 @@
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_ has an internal slot [[Hour]], then
-          1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h12"*, *"h24"* &raquo;, *undefined*).
+          1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
           1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
-          1. If _hr12_ is *true*, then
-            1. Set _hc_ to *"h12"*.
-          1. Else, if _hr12_ is *false*, then
-            1. Set _hc_ to *"h24"*.
+          1. If _hr12_ is not *undefined*, then
+            1. Let _hourNo0_ be Get(_dataLocaleData_, *"hourNo0"*).
+            1. If _hr12_ is *true*, then
+              1. If _hourNo0_ is *true*, then
+                1. Set _hc_ to *"h11"*.
+              1. Else,
+                1. Set _hc_ to *"h12"*.
+            1. Else, if _hr12_ is *false*, then
+              1. If _hourNo0_ is *true*, then
+                1. Set _hc_ to *"h23"*.
+              1. Else,
+                1. Set _hc_ to *"h24"*.
           1. If _hc_ is not *undefined*, then
             1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
-          1. If _dateTimeformat_.[[HourCycle]] is *"h12"*, then
-            1. Let _hourNo0_ be Get(_dataLocaleData_, *"hourNo0"*).
-            1. Set _dateTimeFormat_.[[HourNo0]] to _hourNo0_.
+          1. If _dateTimeformat_.[[HourCycle]] is *"h11"* or *"h12"*, then
             1. Let _pattern_ be Get(_bestFormat_, *"pattern12"*).
           1. Else,
             1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
@@ -283,9 +289,11 @@
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h12"*, then
+            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
               1. Let _v_ be _v_ modulo 12.
-              1. If _v_ is 0 and _dateTimeFormat_.[[HourNo0]] is *true*, let _v_ be 12.
+              1. If _v_ is 0 and _dateTimeFormat_.[[HourCucle]] is *"h12"*, let _v_ be 12.
+            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h24"*, then
+              1. If _v_ is 0, let _v_ be 24.
             1. If _f_ is *"numeric"*, then
               1. Let _fv_ be FormatNumber(_nf_, _v_).
             1. Else if _f_ is *"2-digit"*, then
@@ -415,7 +423,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[HourNo0]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -604,7 +612,7 @@
       </p>
 
       <p>
-        For web compatibility reasons, if the property hourCycle is set to values *h12* or *h24*, the corresponding property hour12 should be set as well.
+        For web compatibility reasons, if the property hourCycle is set, the corresponding property hour12 should be set as well.
       </p>
 
       <emu-note>
@@ -634,8 +642,7 @@
       <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[HourCycle]] is a String value indicating whether 12-hour format (*"h12"*) or 24-hour format (*"h24"*) should be used. It is only used when [[Hour]] is not *undefined*.</li>
-      <li>[[HourNo0]] is a Boolean value indicating whether hours from 1 to 12 (*true*) or from 0 to 11 (*false*) should be used. It is only used when [[HourCycle]] has the value *"h12"*.</li>
+      <li>[[HourCycle]] is a String value indicating whether 12-hour format (*"h11"*, *"h12"*) or 24-hour format (*"h23"*, *"h24"*) should be used. It is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 
