@@ -10,43 +10,58 @@
   }
 </script>
 <style>
-  h1.orange {
-    font-size: 2em;
-  }
-  .oldtoc {
-    padding: 5em;
-  }
-  .orange {
-    color: #ff6600;
-    margin: 0px;
-  }
-  .list-of-names {
-    list-style-type: none;
-    margin-bottom: 10px;
-    padding-left: 10px;
-  }
-
+h1.orange {
+  font-size: 2em;
+}
+.oldtoc {
+  padding: 5em;
+}
+.orange {
+  color: #ff6600;
+  margin: 0px;
+}
+.list-of-names {
+  list-style-type: none;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
 emu-normative-optional {
-    border-left: 5px solid #ff6600;
-    padding: .5em;
-    display: block;
-    background: #ffeedd;
+  border-left: 5px solid #ff6600;
+  padding: .5em;
+  display: block;
+  background: #ffeedd;
 }
-
 emu-normative-optional:before {
-    display: block;
-    color: #884400;
-    content: "NORMATIVE OPTIONAL";
+  display: block;
+  color: #884400;
+  content: "NORMATIVE OPTIONAL";
 }
-
+#metadata-block {
+  margin: 4em 0;
+  padding: 10px;
+  border: 1px solid #ee8421;
+}
+#metadata-block h1 {
+  font-size: 1.5em;
+  margin-top: 0;
+}
+#metadata-block > ul {
+  list-style-type: none;
+  margin: 0; padding: 0;
+}
+#ecma-logo {
+  width: 500px;
+}
 </style>
-<img src="img/ecma-logo.jpg">
+</style>
 <pre class=metadata>
   title: ECMAScript&reg; 2018 Internationalization API Specification
   shortname: ECMA-402
   status: draft
   location: https://tc39.github.io/ecma402/
 </pre>
+<p><img src="img/ecma-logo.svg" id=ecma-logo></p>
+<emu-import href="./metablock.html"></emu-import>
 <emu-import href="./introduction.html"></emu-import>
 <emu-import href="./scope.html"></emu-import>
 <emu-import href="./conformance.html"></emu-import>
@@ -62,3 +77,4 @@ emu-normative-optional:before {
 <emu-import href="./datetimeformat.html"></emu-import>
 <emu-import href="./locale-sensitive-functions.html"></emu-import>
 <emu-import href="./annexes.html"></emu-import>
+<emu-import href="./colophon.html"></emu-import>
