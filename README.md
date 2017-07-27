@@ -27,13 +27,13 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |   | [Intl.NumberFormat round option][]    | Rafael Xavier  |     0 |
 
 [Intl.Segmenter: Unicode segmentation in JavaScript]: https://github.com/tc39/proposal-intl-segmenter
-[Intl.ListFormat]: https://github.com/zbraniecki/intl-list-format-spec
+[Intl.ListFormat]: https://github.com/zbraniecki/proposal-intl-list-format
 [Fix 9.2.3 LookupMatcher algorithm]: https://github.com/rxaviers/ecma402-fix-lookup-matcher
 [Intl.NumberFormat round option]: https://github.com/rxaviers/ecma402-number-format-round-option
-[Intl.RelativeTimeFormat]: https://github.com/caridy/intl-relative-time-spec
+[Intl.RelativeTimeFormat]: https://github.com/tc39/proposal-intl-relative-time
 [Intl.DurationFormat]: https://github.com/tc39/ecma402/issues/47
 [Intl.UnitFormat]: https://github.com/tc39/ecma402/issues/32
-[Intl.PluralRules]: https://github.com/caridy/intl-plural-rules-spec
+[Intl.PluralRules]: https://github.com/tc39/proposal-intl-plural-rules
 [Intl.DateTimeFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
 [Intl.NumberFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
 [Exposing Abstract Operations & Locale Info]: https://github.com/tc39/ecma402/issues/46
