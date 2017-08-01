@@ -34,8 +34,8 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 [Intl.DurationFormat]: https://github.com/tc39/ecma402/issues/47
 [Intl.UnitFormat]: https://github.com/tc39/ecma402/issues/32
 [Intl.PluralRules]: https://github.com/tc39/proposal-intl-plural-rules
-[Intl.DateTimeFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
-[Intl.NumberFormat.prototype.formatToParts]: https://github.com/tc39/ecma402/issues/30
+[Intl.DateTimeFormat.prototype.formatToParts]: https://github.com/tc39/proposal-intl-formatToParts
+[Intl.NumberFormat.prototype.formatToParts]: https://github.com/tc39/proposal-intl-formatToParts
 [Exposing Abstract Operations & Locale Info]: https://github.com/tc39/ecma402/issues/46
 [DateTimeFormat dateStyle & timeStyle]: https://github.com/zbraniecki/proposal-ecma402-datetime-style
 
