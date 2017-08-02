@@ -123,45 +123,38 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-unicodeextensionsubtags" aoid="UnicodeExtensionSubtags">
-      <h1>UnicodeExtensionSubtags ( _extension_ )</h1>
+    <emu-clause id="sec-unicodeextensionvalue" aoid="UnicodeExtensionValue">
+      <h1>UnicodeExtensionValue (_extension_, _key_)</h1>
 
-      <p>The abstract operation UnicodeExtensionSubtags splits _extension_, which must be a Unicode locale extension sequence, into its subtags. The following steps are taken:</p>
+      <p>The abstract operation UnicodeExtensionValue is called with _extension_, which must be a Unicode locale extension sequence, and String _key_. This operation returns the type subtags for _key_ by performing the following steps:</p>
 
       <emu-alg>
+        1. Assert: The number of elements in _key_ is 2.
         1. Let _size_ be the number of elements in _extension_.
-        1. If _size_ = 0, then
-          1. Return « ».
-        1. Let _extensionSubtags_ be « ».
-        1. Let _attribute_ be *true*.
-        1. Let _q_ be 3.
-        1. Let _p_ be _q_.
-        1. Let _t_ be _q_.
-        1. Repeat, while _q_ &lt; _size_
-          1. Let _c_ be the code unit value of the element at index _q_ in the String _extension_.
-          1. If _c_ is 0x002D (HYPHEN-MINUS), then
-            1. If _q_ - _p_ = 2, then
-              1. If _p_ - _t_ > 1, then
-                1. Let _type_ be a String value equal to the substring of _extension_ consisting of the code units at indices _t_ (inclusive) through _p_ - 1 (exclusive).
-                1. Append _type_ as the last element of _extensionSubtags_.
-              1. Let _key_ be a String value equal to the substring of _extension_ consisting of the code units at indices _p_ (inclusive) through _q_ (exclusive).
-              1. Append _key_ as the last element of _extensionSubtags_.
-              1. Let _t_ be _q_ + 1.
-              1. Let _attribute_ be *false*.
-            1. Else if _attribute_ is *true*, then
-              1. Let _attr_ be a String value equal to the substring of _extension_ consisting of the code units at indices _p_ (inclusive) through _q_ (exclusive).
-              1. Append _attr_ as the last element of _extensionSubtags_.
-              1. Let _t_ be _q_ + 1.
-            1. Let _p_ be _q_ + 1.
-          1. Let _q_ be _q_ + 1.
-        1. If _size_ - _p_ = 2, then
-          1. If _p_ - _t_ > 1, then
-            1. Let _type_ be a String value equal to the substring of _extension_ consisting of the code units at indices _t_ (inclusive) through _p_ - 1 (exclusive).
-            1. Append _type_ as the last element of _extensionSubtags_.
-          1. Let _t_ be _p_.
-        1. Let _tail_ be a String value equal to the substring of _extension_ consisting of the code units at indices _t_ (inclusive) through _size_ (exclusive).
-        1. Append _tail_ as the last element of _extensionSubtags_.
-        1. Return _extensionSubtags_.
+        1. Let _searchValue_ be the concatenation of *"-"*, _key_, and *"-"*.
+        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, « _searchValue_ »).
+        1. If _pos_ ≠ -1, then
+          1. Let _start_ be _pos_ + 4.
+          1. Let _end_ be _start_.
+          1. Let _k_ be _start_.
+          1. Let _done_ be *false*.
+          1. Repeat, while _done_ is *false*
+            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, « *"-"*, _k_ »).
+            1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
+            1. If _len_ = 2, then
+              1. Let _done_ be *true*.
+            1. Else if _e_ = -1, then
+              1. Let _end_ be _size_.
+              1. Let _done_ be *true*.
+            1. Else,
+              1. Let _end_ be _e_.
+              1. Let _k_ be _e_ + 1.
+          1. Return the String value equal to the substring of _extension_ consisting of the code units at indices _start_ (inclusive) through _end_ (exclusive).
+        1. Let _searchValue_ be the concatenation of *"-"* and _key_.
+        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, « _searchValue_ »).
+        1. If _pos_ ≠ -1 and _pos_ + 3 = _size_, then
+          1. Return the empty String.
+        1. Return *undefined*.
       </emu-alg>
     </emu-clause>
 
@@ -169,7 +162,7 @@
       <h1>ResolveLocale ( _availableLocales_, _requestedLocales_, _options_, _relevantExtensionKeys_, _localeData_ )</h1>
 
       <p>
-        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_, _requestedLocales_, and _relevantExtensionKeys_ must be provided as List values, _options_ as a Record.
+        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_, _requestedLocales_, and _relevantExtensionKeys_ must be provided as List values, _options_ as a Record, and _localeData_ as an object.
       </p>
 
       <p>
@@ -183,32 +176,31 @@
         1. Else,
           1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be _r_.[[locale]].
-        1. If _r_ has an [[extension]] field, then
-          1. Let _extension_ be _r_.[[extension]].
-          1. Let _extensionSubtags_ be CreateArrayFromList(UnicodeExtensionSubtags(_extension_)).
-          1. Let _extensionSubtagsLength_ be Get(_extensionSubtags_, *"length"*).
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be *"-u"*.
         1. Repeat for each element _key_ of _relevantExtensionKeys_ in List order,
-          1. Let _foundLocaleData_ be ? Get(_localeData_, _foundLocale_).
-          1. Let _keyLocaleData_ be ? ToObject(Get(_foundLocaleData_, _key_)).
-          1. Let _value_ be ? ToString(Get(_keyLocaleData_, *"0"*)).
+          1. Let _foundLocaleData_ be ! Get(_localeData_, _foundLocale_).
+          1. Assert: Type(_foundLocaleData_) is Object.
+          1. Let _keyLocaleData_ be ! Get(_foundLocaleData_, _key_).
+          1. Assert: _keyLocaleData_ is an Array object.
+          1. Let _value_ be ! Get(_keyLocaleData_, *"0"*).
+          1. Assert: Type(_value_) is either String or Null.
           1. Let _supportedExtensionAddition_ be *""*.
-          1. If _extensionSubtags_ is not *undefined*, then
-            1. Let _keyPos_ be Call(%ArrayProto_indexOf%, _extensionSubtags_, « _key_ ») .
-            1. If _keyPos_ ≠ -1, then
-              1. If _keyPos_ + 1 < _extensionSubtagsLength_ and the `length` property of the result of Get(_extensionSubtags_, ToString(_keyPos_ +1)) is greater than 2, then
-                1. Let _requestedValue_ be Get(_extensionSubtags_, ToString(_keyPos_ +1)).
-                1. If the result of Call(%StringProto_includes%, _keyLocaleData_, « _requestedValue_ ») is *true*, then
+          1. If _r_ has an [[extension]] field, then
+            1. Let _requestedValue_ be UnicodeExtensionValue(_r_.[[extension]], _key_).
+            1. If _requestedValue_ is not *undefined*, then
+              1. If _requestedValue_ is not the empty String, then
+                1. If the result of Call(%ArrayProto_includes%, _keyLocaleData_, « _requestedValue_ ») is *true*, then
                   1. Let _value_ be _requestedValue_.
                   1. Let _supportedExtensionAddition_ be the concatenation of *"-"*, _key_, *"-"*, and _value_.
-              1. Else if the result of Call(%StringProto_includes%, _keyLocaleData_, « *"true"* ») is *true*, then
+              1. Else if the result of Call(%ArrayProto_includes%, _keyLocaleData_, « *"true"* ») is *true*, then
                 1. Let _value_ be *"true"*.
           1. If _options_ has a field [[<_key_>]], then
-            1. Let _optionsValue_ be ? ToString(_options_.[[<_key_>]]).
-            1. If the result of Call(%StringProto_includes%, _keyLocaleData_, « _optionsValue_ ») is *true*, then
-              1. If _optionsValue_ is not equal to _value_, then
+            1. Let _optionsValue_ be _options_.[[<_key_>]].
+            1. Assert: Type(_optionsValue_) is String.
+            1. If the result of Call(%ArrayProto_includes%, _keyLocaleData_, « _optionsValue_ ») is *true*, then
+              1. If SameValue(_optionsValue_, _value_) is *false*, then
                 1. Let _value_ be _optionsValue_.
                 1. Let _supportedExtensionAddition_ be *""*.
           1. Set _result_.[[<_key_>]] to _value_.
