@@ -84,12 +84,12 @@
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
         1. Let _g_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[UseGrouping]] to _g_.
-        1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
-        1. Let _patterns_ be Get(_dataLocaleData_, *"patterns"*).
-        1. Assert: _patterns_ is an object (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
-        1. Let _stylePatterns_ be Get(_patterns_, s).
-        1. Set _numberFormat_.[[PositivePattern]] to Get(_stylePatterns_, *"positivePattern"*).
-        1. Set _numberFormat_.[[NegativePattern]] to Get(_stylePatterns_, *"negativePattern"*).
+        1. Let _dataLocaleData_ be _localeData_.[[<_dataLocale_>]].
+        1. Let _patterns_ be _dataLocaleData_.[[patterns]].
+        1. Assert: _patterns_ is a record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
+        1. Let _stylePatterns_ be _patterns_.[[<_s_>]].
+        1. Set _numberFormat_.[[PositivePattern]] to _stylePatterns_.[[positivePattern]].
+        1. Set _numberFormat_.[[NegativePattern]] to _stylePatterns_.[[negativePattern]].
         1. Set _numberFormat_.[[BoundFormat]] to *undefined*.
         1. Set _numberFormat_.[[InitializedNumberFormat]] to *true*.
         1. Return _numberFormat_.
@@ -180,7 +180,7 @@
               1. If _numberFormat_.[[Style]] is *"percent"*, let _x_ be 100 × _x_.
               1. Let _n_ be FormatNumberToString(_numberFormat_, _x_).
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the "Numbering System" column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
-                1. Let _digits_ be an array whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
+                1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the "Digits" column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be Call(%StringProto_indexOf%, _n_, *"."*, 0).
@@ -559,8 +559,8 @@
       </p>
 
       <ul>
-        <li>The array that is the value of the "nu" property of any locale property of [[LocaleData]] must not include the values "native", "traditio", or "finance".</li>
-        <li>[[LocaleData]][locale] must have a patterns property for all locale values. The value of this property must be an object, which must have properties with the names of the three number format styles: *"decimal"*, *"percent"*, and *"currency"*. Each of these properties in turn must be an object with the properties positivePattern and negativePattern. The value of these properties must be string values that must contain the substring *"{number}"* and may contain the substrings *"{plusSign}"*, and *"{minusSign}"*; the values within the percent property must also contain the substring *"{percentSign}"*; the values within the currency property must also contain the substring *"{currency}"*. The pattern strings must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.</li>
+        <li>The list that is the value of the "nu" field of any locale field of [[LocaleData]] must not include the values "native", "traditio", or "finance".</li>
+        <li>[[LocaleData]][locale] must have a patterns field for all locale values. The value of this field must be a record, which must have fields with the names of the three number format styles: *"decimal"*, *"percent"*, and *"currency"*. Each of these fields in turn must be a record with the fields positivePattern and negativePattern. The value of these fields must be string values that must contain the substring *"{number}"* and may contain the substrings *"{plusSign}"*, and *"{minusSign}"*; the values within the percent field must also contain the substring *"{percentSign}"*; the values within the currency field must also contain the substring *"{currency}"*. The pattern strings must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.</li>
       </ul>
 
       <emu-note>
