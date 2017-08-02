@@ -263,14 +263,13 @@
       <emu-alg>
         1. If _x_ is not a finite Number, throw a *RangeError* exception.
         1. Let _locale_ be _dateTimeFormat_.[[Locale]].
-        1. Let _nfLocale_ be CreateArrayFromList(&laquo; _locale_ &raquo;).
-        1. Let _nfOptions_ be ObjectCreate(%ObjectPrototype%).
+        1. Let _nfOptions_ be ObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, `"useGrouping"`, *false*).
-        1. Let _nf_ be ? Construct(%NumberFormat%, &laquo; _nfLocale_, _nfOptions_ &raquo;).
-        1. Let _nf2Options_ be ObjectCreate(%ObjectPrototype%).
+        1. Let _nf_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nfOptions_ &raquo;).
+        1. Let _nf2Options_ be ObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"minimumIntegerDigits"`, 2).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"useGrouping"`, *false*).
-        1. Let _nf2_ be ? Construct(%NumberFormat%, &laquo; _nfLocale_, _nf2Options_ &raquo;).
+        1. Let _nf2_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
         1. Let _result_ be a new empty List.
