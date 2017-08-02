@@ -73,7 +73,7 @@
           1. Let _type_ be the string given in the Type column of the row.
           1. Let _list_ be a List containing the Strings given in the Values column of the row, or *undefined* if no strings are given.
           1. Let _value_ be ? GetOption(_options_, _prop_, _type_, _list_, *undefined*).
-          1. If the string given in the Type column of the row is *"boolean"* and value is not *undefined*, then
+          1. If the string given in the Type column of the row is *"boolean"* and _value_ is not *undefined*, then
             1. Let _value_ be ! ToString(_value_).
           1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
@@ -86,7 +86,7 @@
             1. Set _collator_.[[Collation]] to _value_.
           1. Else use the row of <emu-xref href="#table-collator-options"></emu-xref> that contains _key_ in the Key column:
             1. Let _value_ be _r_.[[&lt;_key_&gt;]].
-            1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
+            1. If the name given in the Type column of the row is *"boolean"*, let _value_ be SameValue(_value_, *"true"*).
             1. Set _collator_'s internal slot whose name is the Internal Slot column of the row to _value_.
         1. Let _s_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _s_ is *undefined*, then
