@@ -79,11 +79,7 @@
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[Locale]] to _r_.[[locale]].
-        1. Let _k_ be 0.
-        1. Let _rExtensionKeys_ be CreateArrayFromList(_relevantExtensionKeys_).
-        1. Let _len_ be ! ToLength(! Get(_rExtensionKeys_, *"length"*)).
-        1. Repeat while _k_ < _len_:
-          1. Let _key_ be ! Get(_rExtensionKeys_, ! ToString(_k_)).
+        1. Repeat for each element _key_ of _relevantExtensionKeys_ in List order,
           1. If _key_ is *"co"*, then
             1. Let _value_ be _r_.[[co]].
             1. If _value_ is *null*, let _value_ be *"default"*.
@@ -92,15 +88,14 @@
             1. Let _value_ be _r_.[[&lt;_key_&gt;]].
             1. If the name given in the Type column of the row is *"boolean"*, let _value_ be the result of comparing value with *"true"*.
             1. Set _collator_'s internal slot whose name is the Internal Slot column of the row to _value_.
-          1. Increase _k_ by 1.
         1. Let _s_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _s_ is *undefined*, then
           1. If _u_ is *"sort"*, then
             1. Let _s_ be *"variant"*.
           1. Else,
             1. Let _dataLocale_ be _r_.[[dataLocale]].
-            1. Let _dataLocaleData_ be Get(_localeData_, _dataLocale_).
-            1. Let _s_ be Get(_dataLocaleData_, *"sensitivity"*).
+            1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+            1. Let _s_ be _dataLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _s_.
         1. Let _ip_ be ? GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ip_.
@@ -185,8 +180,8 @@
 
       <ul>
         <li>The first element of [[SortLocaleData]][locale].co and [[SearchLocaleData]][locale].co must be *null* for all locale values.</li>
-        <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]][locale].co and [[SearchLocaleData]][locale].co array.</li>
-        <li>[[SearchLocaleData]][locale] must have a sensitivity property with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"* for all locale values.</li>
+        <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]][locale].co and [[SearchLocaleData]][locale].co list.</li>
+        <li>[[SearchLocaleData]][locale] must have a sensitivity field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"* for all locale values.</li>
       </ul>
 
     </emu-clause>
