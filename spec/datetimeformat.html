@@ -81,6 +81,8 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
+        1. Set _opt_.[[hc]] to _hc_.
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
@@ -114,23 +116,24 @@
           1. Let _p_ be Get(_bestFormat_, _prop_).
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
-        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
         1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
         1. If _dateTimeFormat_ has an internal slot [[Hour]], then
           1. Let _hcDefault_ be Get(_dataLocaleData_, *"hourCycle"*).
+          1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
+          1. If _hc_ is *null*, then
+            1. Set _hc_ to _hcDefault_
           1. If _hr12_ is not *undefined*, then
             1. If _hr12_ is *true*, then
               1. If _hcDefault_ is *"h11"* or *"h23"*, then
                 1. Set _hc_ to *"h11"*.
               1. Else,
                 1. Set _hc_ to *"h12"*.
-            1. Else, if _hr12_ is *false*, then
+            1. Else,
+              1. Assert: _hr12_ is *false*.
               1. If _hcDefault_ is *"h11"* or *"h23"*, then
                 1. Set _hc_ to *"h23"*.
               1. Else,
                 1. Set _hc_ to *"h24"*.
-          1. If _hc_ is *undefined*, then
-            1. Set _hc_ to _hcDefault_
           1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
           1. If _dateTimeformat_.[[HourCycle]] is *"h11"* or *"h12"*, then
             1. Let _pattern_ be Get(_bestFormat_, *"pattern12"*).
@@ -500,7 +503,10 @@
           The array that is the value of the "nu" property of any locale property of [[LocaleData]] must not include the values "native", "traditio", or "finance".
         </li>
         <li>
-          [[LocaleData]][locale] must have hourCycle property with String values for all locale values.
+          [[LocaleData]][locale].hc must be the array [*null*, *"h11"*, *"h12"*, *"h23"*, or *"h24"*] for all locale values.
+        </li>
+        <li>
+          [[LocaleData]][locale] must have a hourCycle property with a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"* for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have a formats property for all locale values. The value of this property must be an array of objects, each of which has a subset of the properties shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each property must have one of the values specified for the property in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple objects in an array may use the same subset of the properties as long as they have different values for the properties. The following subsets must be available for each locale:
