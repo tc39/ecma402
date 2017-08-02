@@ -6,10 +6,10 @@
   </p>
 
   <ul>
-    <li>Object Internal Methods and Internal Slots, as described in ES2017, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>Algorithm conventions, including the use of abstract operations, as described in ES2017, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>.</li>
-    <li>Internal Slots, as described in ES2017, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>The List and Record Specification Type, as described in ES2017, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
+    <li>Object Internal Methods and Internal Slots, as described in ES2018, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>Algorithm conventions, including the use of abstract operations, as described in ES2018, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>.</li>
+    <li>Internal Slots, as described in ES2018, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>The List and Record Specification Type, as described in ES2018, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
   </ul>
 
   <emu-note>
@@ -17,11 +17,11 @@
   </emu-note>
 
   <p>
-    As an extension to the Record Specification Type, the notation "[[&lt;_name_&gt;]]" denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the field [[&lt;_a_&gt;]].
+    As an extension to the Record Specification Type, the notation "[[&lt;_name_&gt;]]" denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the field [[a]].
   </p>
 
   <p>
-    For ECMAScript objects, this standard may use variable-named internal slots: The notation "[[&lt;_name_&gt;]]" denotes an internal slot whose name is given by the variable name, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the [[&lt;_a_&gt;]] internal slot.
+    For ECMAScript objects, this standard may use variable-named internal slots: The notation "[[&lt;_name_&gt;]]" denotes an internal slot whose name is given by the variable name, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the [[a]] internal slot.
   </p>
 
   <p>
@@ -32,7 +32,7 @@
     <h1>Well-Known Intrinsic Objects</h1>
 
     <p>
-      The following table extends the Well-Known Intrinsic Objects table defined in ES2017, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
+      The following table extends the Well-Known Intrinsic Objects table defined in ES2018, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
     </p>
 
     <emu-table id="table-402-well-known-intrinsic-objects">
@@ -46,9 +46,9 @@
           </tr>
         </thead>
         <tr>
-          <td>%Date_now%</td>
+          <td><dfn>%Date_now%</dfn></td>
           <td>`Date.now`</td>
-          <td>The initial value of the `now` data property of the intrinsic %Date% (ES2017, <emu-xref href="#sec-date.now"></emu-xref>)</td>
+          <td>The initial value of the `now` data property of the intrinsic %Date% (ES2018, <emu-xref href="#sec-date.now"></emu-xref>)</td>
         </tr>
         <tr>
           <td>%Intl%</td>
@@ -86,19 +86,19 @@
           <td>The initial value of the `prototype` data property of the intrinsic %DateTimeFormat% (<emu-xref href="#sec-intl.datetimeformat.prototype"></emu-xref>).</td>
         </tr>
         <tr>
-          <td>%StringProto_includes%</td>
+          <td><dfn>%StringProto_includes%</dfn></td>
           <td>`String.prototype.includes`</td>
-          <td>The initial value of the `includes` data property of the intrinsic %StringPrototype% (ES2017, <emu-xref href="#sec-string.prototype.includes"></emu-xref>)</td>
+          <td>The initial value of the `includes` data property of the intrinsic %StringPrototype% (ES2018, <emu-xref href="#sec-string.prototype.includes"></emu-xref>)</td>
         </tr>
         <tr>
-          <td>%StringProto_indexOf%</td>
+          <td><dfn>%StringProto_indexOf%</dfn></td>
           <td>`String.prototype.indexOf`</td>
-          <td>The initial value of the `indexOf` data property of the intrinsic %StringPrototype% (ES2017, <emu-xref href="#sec-string.prototype.indexof"></emu-xref>)</td>
+          <td>The initial value of the `indexOf` data property of the intrinsic %StringPrototype% (ES2018, <emu-xref href="#sec-string.prototype.indexof"></emu-xref>)</td>
         </tr>
         <tr>
-          <td>%ArrayProto_indexOf%</td>
+          <td><dfn>%ArrayProto_indexOf%</dfn></td>
           <td>`Array.prototype.indexOf`</td>
-          <td>The initial value of the `indexOf` data property of the intrinsic %ArrayPrototype% (ES2017, <emu-xref href="#sec-array.prototype.indexof"></emu-xref>)</td>
+          <td>The initial value of the `indexOf` data property of the intrinsic %ArrayPrototype% (ES2018, <emu-xref href="#sec-array.prototype.indexof"></emu-xref>)</td>
         </tr>
       </table>
     </emu-table>

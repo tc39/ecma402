@@ -406,7 +406,7 @@
           1. Let _m_ be the concatenation of the String *"0."*, –(_e_+1) occurrences of the character *"0"*, and the string _m_.
         1. If _m_ contains the character *"."*, and _maxPrecision_ > _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ – _minPrecision_.
-          1. Repeat while _cut_ > 0 and the last character of _m_ is *"0"*:
+          1. Repeat, while _cut_ > 0 and the last character of _m_ is *"0"*
             1. Remove the last character from _m_.
             1. Decrease _cut_ by 1.
           1. If the last character of _m_ is *"."*, then
@@ -437,7 +437,7 @@
           1. Let _int_ be the number of characters in _a_.
         1. Else, let _int_ be the number of characters in _m_.
         1. Let _cut_ be _maxFraction_ – _minFraction_.
-        1. Repeat while _cut_ > 0 and the last character of _m_ is *"0"*:
+        1. Repeat, while _cut_ > 0 and the last character of _m_ is *"0"*
           1. Remove the last character from _m_.
           1. Decrease _cut_ by 1.
         1. If the last character of _m_ is ".", then

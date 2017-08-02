@@ -2,7 +2,7 @@
   <h1>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
 
   <p>
-    The ECMAScript Language Specification, edition 6 or successor, describes several locale sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
+    The ECMAScript Language Specification, edition 9 or successor, describes several locale sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
   </p>
 
   <emu-note>
@@ -16,7 +16,7 @@
       <h1>String.prototype.localeCompare ( _that_ [ , _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
       </p>
 
       <p>
@@ -49,11 +49,11 @@
       <h1>String.prototype.toLocaleLowerCase ( [ _locales_ ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
       </p>
 
       <p>
-        This function interprets a string value as a sequence of code points, as described in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
+        This function interprets a string value as a sequence of code points, as described in ES2018, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -69,10 +69,10 @@
         1. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
         1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
         1. If _locale_ is *undefined*, let _locale_ be *"und"*.
-        1. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, starting at the first element of _S_.
+        1. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2018, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, starting at the first element of _S_.
         1. For each code point _c_ in _cpList_, if the Unicode Character Database provides a lower case equivalent of _c_ that is either language insensitive or for the language _locale_, replace _c_ in _cpList_ with that/those equivalent code point(s).
         1. Let _cuList_ be a new empty List.
-        1. For each code point _c_ in _cpList_, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>) of _c_.
+        1. For each code point _c_ in _cpList_, in order, append to cuList the elements of the UTF-16 Encoding (defined in ES2018, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>) of _c_.
         1. Let _L_ be a String whose elements are, in order, the elements of _cuList_.
         1. Return _L_.
       </emu-alg>
@@ -82,7 +82,7 @@
       </p>
 
       <emu-note>
-        As of Unicode 5.1, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
+        As of Unicode 10.0, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
       </emu-note>
 
       <emu-note>
@@ -99,11 +99,11 @@
       <h1>String.prototype.toLocaleUpperCase ( [ _locales_ ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
       </p>
 
       <p>
-        This function interprets a string value as a sequence of code points, as described in ES2017, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as `String.prototype.toLocaleLowerCase`, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
+        This function interprets a string value as a sequence of code points, as described in ES2018, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as `String.prototype.toLocaleLowerCase`, except that characters are mapped to their _uppercase_ equivalents as specified in the Unicode character database.
       </p>
 
       <emu-note>
@@ -118,14 +118,14 @@
     <h1>Properties of the Number Prototype Object</h1>
 
     <p>
-      The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2017, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.
+      The following definition(s) refer to the abstract operation thisNumberValue as defined in ES2018, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.
     </p>
 
     <emu-clause id="sup-number.prototype.tolocalestring">
       <h1>Number.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -145,14 +145,14 @@
     <h1>Properties of the Date Prototype Object</h1>
 
     <p>
-      The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2017, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.
+      The following definition(s) refer to the abstract operation thisTimeValue as defined in ES2018, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.
     </p>
 
     <emu-clause id="sup-date.prototype.tolocalestring">
       <h1>Date.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -173,7 +173,7 @@
       <h1>Date.prototype.toLocaleDateString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
       </p>
 
       <p>
@@ -194,7 +194,7 @@
       <h1>Date.prototype.toLocaleTimeString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
       </p>
 
       <p>
@@ -219,7 +219,7 @@
       <h1>Array.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in ES2017, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in ES2018, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>

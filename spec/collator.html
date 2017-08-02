@@ -4,7 +4,7 @@
   <emu-clause id="sec-the-intl-collator-constructor">
     <h1>The Intl.Collator Constructor</h1>
     <p>
-      The Intl.Collator constructor is the <dfn>%Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in 9.1.
+      The Intl.Collator constructor is the <dfn>%Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-initializecollator" aoid="InitializeCollator">
@@ -171,7 +171,7 @@
       <h1>Internal Slots</h1>
 
       <p>
-        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in 9.1. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
+        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
       </p>
 
       <emu-note>
@@ -179,7 +179,7 @@
       </emu-note>
 
       <p>
-        The values of the [[SortLocaleData]] and [[SearchLocaleData]] internal slots are implementation defined within the constraints described in 9.1 and the following additional constraints:
+        The values of the [[SortLocaleData]] and [[SearchLocaleData]] internal slots are implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
       </p>
 
       <ul>
@@ -298,7 +298,7 @@
       </p>
 
       <p>
-        The CompareStrings abstract operation with any given _collator_ argument, if considered as a function of the remaining two arguments _x_ and _y_, must be a consistent comparison function (as defined in ES2017, <emu-xref href="#sec-array.prototype.sort"></emu-xref>) on the set of all Strings.
+        The CompareStrings abstract operation with any given _collator_ argument, if considered as a function of the remaining two arguments _x_ and _y_, must be a consistent comparison function (as defined in ES2018, <emu-xref href="#sec-array.prototype.sort"></emu-xref>) on the set of all Strings.
       </p>
 
       <p>
