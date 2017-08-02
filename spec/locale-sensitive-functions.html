@@ -60,9 +60,8 @@
         1. Let _O_ be RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Let _len_ be the number of elements in _requestedLocales_.
-        1. If _len_ > 0, then
-          1. Let _requestedLocale_ be the first element of _requestedLocales_.
+        1. If _requestedLocales_ is not an empty List, then
+          1. Let _requestedLocale_ be _requestedLocales_[0].
         1. Else,
           1. Let _requestedLocale_ be DefaultLocale().
         1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.

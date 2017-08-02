@@ -158,8 +158,9 @@
       </p>
 
       <emu-alg>
+        1. Let _availableLocales_ be %Collator%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Return ? SupportedLocales(%Collator%.[[AvailableLocales]], _requestedLocales_, _options_).
+        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
 
       <p>
