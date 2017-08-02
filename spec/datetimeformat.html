@@ -195,7 +195,7 @@
         1. Let _k_ be 0.
         1. Assert: _formats_ is an Array object.
         1. Let _len_ be Get(_formats_, *"length"*).
-        1. Repeat while _k_ < _len_:
+        1. Repeat, while _k_ < _len_
           1. Let _format_ be Get(_formats_, ToString(_k_)).
           1. Let _score_ be 0.
           1. For each _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>:
@@ -376,7 +376,7 @@
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2017, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2018, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
