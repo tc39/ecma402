@@ -84,10 +84,10 @@
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
         1. Let _g_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[UseGrouping]] to _g_.
-        1. Let _dataLocaleData_ be _localeData_.[[<_dataLocale_>]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _patterns_ be _dataLocaleData_.[[patterns]].
         1. Assert: _patterns_ is a record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
-        1. Let _stylePatterns_ be _patterns_.[[<_s_>]].
+        1. Let _stylePatterns_ be _patterns_.[[&lt;_s_&gt;]].
         1. Set _numberFormat_.[[PositivePattern]] to _stylePatterns_.[[positivePattern]].
         1. Set _numberFormat_.[[NegativePattern]] to _stylePatterns_.[[negativePattern]].
         1. Set _numberFormat_.[[BoundFormat]] to *undefined*.

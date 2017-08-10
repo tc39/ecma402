@@ -180,9 +180,9 @@
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be *"-u"*.
         1. Repeat for each element _key_ of _relevantExtensionKeys_ in List order,
-          1. Let _foundLocaleData_ be _localeData_.[[<_foundLocale_>]].
+          1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
           1. Assert: Type(_foundLocaleData_) is Record.
-          1. Let _keyLocaleData_ be _foundLocaleData_.[[<_key_>]].
+          1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_&gt;]].
           1. Assert: Type(_keyLocaleData_) is List.
           1. Let _value_ be _keyLocaleData_[0].
           1. Assert: Type(_value_) is either String or Null.
@@ -196,14 +196,14 @@
                   1. Let _supportedExtensionAddition_ be the concatenation of *"-"*, _key_, *"-"*, and _value_.
               1. Else if _keyLocaleData_ contains *"true"*, then
                 1. Let _value_ be *"true"*.
-          1. If _options_ has a field [[<_key_>]], then
-            1. Let _optionsValue_ be _options_.[[<_key_>]].
+          1. If _options_ has a field [[&lt;_key_&gt;]], then
+            1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is String.
             1. If _keyLocaleData_ contains _optionsValue_, then
               1. If SameValue(_optionsValue_, _value_) is *false*, then
                 1. Let _value_ be _optionsValue_.
                 1. Let _supportedExtensionAddition_ be *""*.
-          1. Set _result_.[[<_key_>]] to _value_.
+          1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Append _supportedExtensionAddition_ to _supportedExtension_.
         1. If the number of elements in _supportedExtension_ is greater than 2, then
           1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, « `"-x-"` »).
