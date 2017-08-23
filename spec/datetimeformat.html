@@ -531,7 +531,7 @@
     <h1>Properties of the Intl.DateTimeFormat Prototype Object</h1>
 
     <p>
-      The Intl.DateTimeFormat prototype object is the intrinsic object <dfn>%DateTimeFormatPrototype%</dfn>. The Intl.DateTimeFormat prototype object is itself an %DateTimeFormat% instance, whose internal slots are set as if it had been constructed by the expression Construct(%DateTimeFormat%, &laquo; &raquo;, %Object%).
+      The Intl.DateTimeFormat prototype object is itself an ordinary object. <dfn>%DateTimeFormatPrototype%</dfn> is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.
     </p>
 
     <p>
