@@ -202,7 +202,7 @@
                 1. Let _value_ be *"true"*.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
-            1. Assert: Type(_optionsValue_) is String.
+            1. Assert: Type(_optionsValue_) is either String or Undefined.
             1. If _keyLocaleData_ contains _optionsValue_, then
               1. If SameValue(_optionsValue_, _value_) is *false*, then
                 1. Let _value_ be _optionsValue_.
