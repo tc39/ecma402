@@ -203,7 +203,7 @@
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_,
-              1. Let _values_ be the array [*"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"*].
+              1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
               1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
               1. Let _delta_ be max(min(_formatPropIndex_ - _optionsPropIndex_, 2), -2).
@@ -497,7 +497,7 @@
           The list that is the value of the "nu" field of any locale field of [[LocaleData]] must not include the values "native", "traditio", or "finance".
         </li>
         <li>
-          [[LocaleData]][locale].hc must be the array [*null*, *"h11"*, *"h12"*, *"h23"*, *"h24"*] for all locale values.
+          [[LocaleData]][locale].hc must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo; for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have a hourCycle field with a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"* for all locale values.
