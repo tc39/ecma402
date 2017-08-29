@@ -124,7 +124,7 @@
     </emu-clause>
 
     <emu-clause id="sec-unicodeextensionvalue" aoid="UnicodeExtensionValue">
-      <h1>UnicodeExtensionValue (_extension_, _key_)</h1>
+      <h1>UnicodeExtensionValue ( _extension_, _key_ )</h1>
 
       <p>The abstract operation UnicodeExtensionValue is called with _extension_, which must be a Unicode locale extension sequence, and String _key_. This operation returns the type subtags for _key_ by performing the following steps:</p>
 
@@ -156,6 +156,10 @@
           1. Return the empty String.
         1. Return *undefined*.
       </emu-alg>
+
+      <emu-note>
+        Non-normative summary: UnicodeExtensionValue returns the type subtags of the first keyword for a given key. For example, UnicodeExtensionValue(*"u-ca-ethiopic-amete-alem-ca-ethioaa"*, *"ca"*) returns *"ethiopic-amete-alem"*. If the keyword for _key_ has no type subtags, UnicodeExtensionValue returns the empty String. If _extension_ contains no keyword for _key_, *undefined* is returned.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-resolvelocale" aoid="ResolveLocale">
@@ -198,7 +202,7 @@
                 1. Let _value_ be *"true"*.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
-            1. Assert: Type(_optionsValue_) is String.
+            1. Assert: Type(_optionsValue_) is either String or Undefined.
             1. If _keyLocaleData_ contains _optionsValue_, then
               1. If SameValue(_optionsValue_, _value_) is *false*, then
                 1. Let _value_ be _optionsValue_.

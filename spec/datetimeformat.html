@@ -116,10 +116,12 @@
           1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
-        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
         1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
         1. If _dateTimeFormat_.[[Hour]] is not *undefined*, then
           1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
+          1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
+          1. If _hc_ is *null*, then
+            1. Set _hc_ to _hcDefault_.
           1. If _hr12_ is not *undefined*, then
             1. If _hr12_ is *true*, then
               1. If _hcDefault_ is *"h11"* or *"h23"*, then
@@ -203,7 +205,7 @@
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_,
-              1. Let _values_ be the array [*"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"*].
+              1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
               1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
               1. Let _delta_ be max(min(_formatPropIndex_ - _optionsPropIndex_, 2), -2).
@@ -497,7 +499,7 @@
           The list that is the value of the "nu" field of any locale field of [[LocaleData]] must not include the values "native", "traditio", or "finance".
         </li>
         <li>
-          [[LocaleData]][locale].hc must be the array [*null*, *"h11"*, *"h12"*, *"h23"*, *"h24"*] for all locale values.
+          [[LocaleData]][locale].hc must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo; for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have a hourCycle field with a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"* for all locale values.
@@ -590,7 +592,7 @@
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
         1. If _date_ is *undefined*, then
-          1. Let _x_ be %Date_now%().
+          1. Let _x_ be Call(%Date_now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTimeToParts(_dtf_, _x_).
