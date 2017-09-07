@@ -67,7 +67,7 @@
         1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with all Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.
         1. Let _availableLocales_ be a List with the language tags of the languages for which the Unicode character database contains language sensitive case mappings.
         1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-        1. If _locale_ is *undefined*, let _locale_ be *"und"*.
+        1. If _locale_ is *undefined*, let _locale_ be `"und"`.
         1. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2018, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, starting at the first element of _S_.
         1. For each code point _c_ in _cpList_, if the Unicode Character Database provides a lower case equivalent of _c_ that is either language insensitive or for the language _locale_, replace _c_ in _cpList_ with that/those equivalent code point(s).
         1. Let _cuList_ be a new empty List.
@@ -81,7 +81,7 @@
       </p>
 
       <emu-note>
-        As of Unicode 10.0, the _availableLocales_ list contains the elements *"az"*, *"lt"*, and *"tr"*.
+        As of Unicode 10.0, the _availableLocales_ list contains the elements `"az"`, `"lt"`, and `"tr"`.
       </emu-note>
 
       <emu-note>
@@ -160,8 +160,8 @@
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
-        1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
+        1. If _x_ is *NaN*, return `"Invalid Date"`.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, `"any"`, `"all"`).
         1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
@@ -181,8 +181,8 @@
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
-        1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
+        1. If _x_ is *NaN*, return `"Invalid Date"`.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, `"date"`, `"date"`).
         1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
@@ -202,8 +202,8 @@
 
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
-        1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
+        1. If _x_ is *NaN*, return `"Invalid Date"`.
+        1. Let _options_ be ? ToDateTimeOptions(_options_, `"time"`, `"time"`).
         1. Let _timeFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
@@ -227,14 +227,14 @@
 
       <emu-alg>
         1. Let _A_ be ? ToObject(*this* value).
-        1. Let _len_ be ? ToLength(? Get(_A_, *"length"*)).
+        1. Let _len_ be ? ToLength(? Get(_A_, `"length"`)).
         1. Let _separator_ be the String value for the list-separator String appropriate for the host environment’s current locale (this is derived in an implementation-defined way).
         1. If _len_ is zero, return the empty String.
-        1. Let _firstElement_ be ? Get(_A_, *"0"*).
+        1. Let _firstElement_ be ? Get(_A_, `"0"`).
         1. If _firstElement_ is *undefined* or *null*, then
           1. Let _R_ be the empty String.
         1. Else,
-          1. Let _R_ be ? ToString(? Invoke(_firstElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
+          1. Let _R_ be ? ToString(? Invoke(_firstElement_, `"toLocaleString"`, &laquo; _locales_, _options_ &raquo;)).
         1. Let _k_ be 1.
         1. Repeat, while _k_ < _len_
           1. Let _S_ be a String value produced by concatenating _R_ and _separator_.
@@ -242,7 +242,7 @@
           1. If _nextElement_ is *undefined* or *null*, then
             1. Let _R_ be the empty String.
           1. Else,
-            1. Let _R_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
+            1. Let _R_ be ? ToString(? Invoke(_nextElement_, `"toLocaleString"`, &laquo; _locales_, _options_ &raquo;)).
           1. Let _R_ be a String value produced by concatenating _S_ and _R_.
           1. Increase _k_ by 1.
         1. Return _R_.
