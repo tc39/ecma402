@@ -51,8 +51,6 @@
       </p>
 
       <emu-alg>
-        1. If _collator_.[[InitializedIntlObject]] is *true*, throw a *TypeError* exception.
-        1. Set _collator_.[[InitializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(%ObjectPrototype%).
@@ -115,7 +113,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _internalSlotsList_ be &laquo; [[InitializedIntlObject]], [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
+        1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
         1. If %Collator%.[[RelevantExtensionKeys]] contains `"kn"`, then
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
         1. If %Collator%.[[RelevantExtensionKeys]] contains `"kf"`, then
@@ -331,7 +329,7 @@
     </p>
 
     <p>
-      Intl.Collator instances and other objects that have been successfully initialized as a Collator have [[InitializedIntlObject]] and [[InitializedCollator]] internal slots whose values are *true*.
+      Intl.Collator instances and other objects that have been successfully initialized as a Collator each have an [[InitializedCollator]] internal slot whose values is *true*.
     </p>
 
     <p>

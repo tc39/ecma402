@@ -12,7 +12,7 @@
         options used for number formatting onto the intl object.
       </p>
       <emu-alg>
-        1. Assert: Type(_intlObj_) is Object and _intlObj_.[[InitializedIntlObject]] is *true*.
+        1. Assert: Type(_intlObj_) is Object.
         1. Assert: Type(_options_) is Object.
         1. Assert: type(_mnfdDefault_) is Number.
         1. Assert: type(_mxfdDefault_) is Number.
@@ -45,8 +45,6 @@
       </p>
 
       <emu-alg>
-        1. If _numberFormat_.[[InitializedIntlObject]] is *true*, throw a *TypeError* exception.
-        1. Set _numberFormat_.[[InitializedIntlObject]] to *true*.
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(%ObjectPrototype%).
@@ -135,7 +133,7 @@
       </p>
 
       <emu-alg>
-        1. Assert: _numberFormat_.[[InitializedIntlObject]] is true.
+        1. Assert: _numberFormat_.[[InitializedNumberFormat]] is true.
         1. If the _numberFormat_.[[MinimumSignificantDigits]] and _numberFormat_.[[MaximumSignificantDigits]] are present, then
           1. Let _result_ be ToRawPrecision(_x_, _numberFormat_.[[MinimumSignificantDigits]], _numberFormat_.[[MaximumSignificantDigits]]).
         1. Else,
@@ -486,7 +484,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, &laquo; [[InitializedIntlObject]], [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Currency]], [[CurrencyDisplay]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[UseGrouping]], [[PositivePattern]], [[NegativePattern]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%NumberFormatPrototype%"`, &laquo; [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Currency]], [[CurrencyDisplay]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[UseGrouping]], [[PositivePattern]], [[NegativePattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -638,7 +636,7 @@
     </p>
 
     <p>
-      Intl.NumberFormat instances and other objects that have been successfully initialized as a NumberFormat have [[InitializedIntlObject]] and [[InitializedNumberFormat]] internal slots whose values are *true*.
+      Intl.NumberFormat instances and other objects that have been successfully initialized as a NumberFormat each have an [[InitializedNumberFormat]] internal slot whose values is *true*.
     </p>
 
     <p>
