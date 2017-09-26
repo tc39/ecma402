@@ -14,12 +14,13 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |🚀 | Proposal                              | Champion       | Stage | Notes
 |---|---------------------------------------|--------------  | ------|------
 |   | [Intl.DateTimeFormat.prototype.formatToParts][]                     | Zibi Braniecki |     4 |
-|   | [Intl.NumberFormat.prototype.formatToParts][]                     | Zibi Braniecki |     3 |
-|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     3 |
-|   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
-|   | [Intl.Segmenter: Unicode segmentation in JavaScript][]| Daniel Ehrenberg  |     2 |
+|   | [Intl.NumberFormat.prototype.formatToParts][]                     | Zibi Braniecki |     4 |
+|   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     4 |
+|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     3 |
+|   | [Intl.Segmenter: Unicode segmentation in JavaScript][]                    | Daniel Ehrenberg  |     3 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     2 |
-|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     2 |
+|   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
+|   | [Intl.Locale][]                       | Zibi Braniecki, Daniel Ehrenberg |     1 |
 |   | [Intl.DurationFormat][]               | Zibi Braniecki |     1 |
 |   | [Intl.UnitFormat][]                   | Zibi Braniecki |     1 |
 |   | [DateTimeFormat dateStyle & timeStyle][]           | Zibi Braniecki |     1 |
@@ -38,6 +39,7 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 [Intl.NumberFormat.prototype.formatToParts]: https://github.com/tc39/proposal-intl-formatToParts
 [Exposing Abstract Operations & Locale Info]: https://github.com/tc39/ecma402/issues/46
 [DateTimeFormat dateStyle & timeStyle]: https://github.com/zbraniecki/proposal-ecma402-datetime-style
+[Intl.Locale]: https://github.com/zbraniecki/proposal-intl-locale
 
 🚀 means the champion thinks it's ready to advance but has not yet presented to the committee.
 
