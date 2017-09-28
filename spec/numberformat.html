@@ -628,7 +628,7 @@
       <emu-alg>
         1. Let _nf_ be *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. If _nf_ does not have an [[initializedNumberFormat]] internal slot, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
         1. Let _x_ be ? ToNumber(_value_).
         1. Return ? FormatNumberToParts(_nf_, _x_).
       </emu-alg>
