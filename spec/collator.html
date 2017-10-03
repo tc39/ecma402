@@ -315,9 +315,66 @@
       <p>
         This function provides access to the locale and collation options computed during initialization of the object.
       </p>
-      <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this Collator object (see <emu-xref href="#sec-properties-of-intl-collator-instances"></emu-xref>): locale, usage, sensitivity, ignorePunctuation, collation, as well as those properties shown in <emu-xref href="#table-collator-options"></emu-xref> whose keys are included in the %Collator%.[[RelevantExtensionKeys]] internal slot of the standard built-in object that is the initial value of Intl.Collator.
-      </p>
+
+      <emu-alg>
+        1. Let _collator_ be *this* value.
+        1. If Type(_collator_) is not Object, throw a *TypeError* exception.
+        1. If _collator_ does not have an [[InitializedCollator]] internal slot, throw a *TypeError* exception.
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+          1. Let _p_ be the Property value of the current row.
+          1. If <emu-xref href="#table-collator-options"></emu-xref> has a row that contains _p_ in the Property column, then
+            1. Let _extensionKey_ be the Key value of the row in <emu-xref href="#table-collator-options"></emu-xref>.
+            1. If %Collator%.[[RelevantExtensionKeys]] contains _extensionKey_, then
+              1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
+            1. Else,
+              1. Let _v_ be *undefined*.
+          1. Else,
+            1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-collator-resolvedoptions-properties">
+        <emu-caption>Resolved Options of Collator Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>"locale"</td>
+          </tr>
+          <tr>
+            <td>[[Usage]]</td>
+            <td>"usage"</td>
+          </tr>
+          <tr>
+            <td>[[Sensitivity]]</td>
+            <td>"sensitivity"</td>
+          </tr>
+          <tr>
+            <td>[[IgnorePunctuation]]</td>
+            <td>"ignorePunctuation"</td>
+          </tr>
+          <tr>
+            <td>[[Collation]]</td>
+            <td>"collation"</td>
+          </tr>
+          <tr>
+            <td>[[Numeric]]</td>
+            <td>"numeric"</td>
+          </tr>
+          <tr>
+            <td>[[CaseFirst]]</td>
+            <td>"caseFirst"</td>
+          </tr>
+        </table>
+      </emu-table>
     </emu-clause>
   </emu-clause>
 

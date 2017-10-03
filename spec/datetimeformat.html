@@ -603,16 +603,99 @@
       <h1>Intl.DateTimeFormat.prototype.resolvedOptions ()</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object. This function initially invokes the internal algorithm UnwrapDateTimeFormat to get the %DateTimeFormat% object on which to operate.
+        This function provides access to the locale and formatting options computed during initialization of the object.
       </p>
 
-      <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this DateTimeFormat object (see <emu-xref href="#sec-properties-of-intl-datetimeformat-instances"></emu-xref>): locale, calendar, numberingSystem, timeZone, hourCycle, weekday, era, year, month, day, hour, minute, second, and timeZoneName. Properties whose corresponding internal slots have the value *undefined* are not assigned.
-      </p>
+      <emu-alg>
+        1. Let _dtf_ be *this* value.
+        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
+        1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+          1. Let _p_ be the Property value of the current row.
+          1. If _p_ is `"hour12"`, then
+            1. Let _hc_ be _dtf_.[[HourCycle]].
+            1. If _hc_ is `"h11"` or `"h12"`, let _v_ be *true*.
+            1. Else if, _hc_ is `"h23"` or `"h24"`, let _v_ be *false*.
+            1. Else, let _v_ be *undefined*.
+          1. Else,
+            1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
 
-      <p>
-        For web compatibility reasons, if the property hourCycle is set, the hour12 property should be set to *true* when hourCycle is *"h11"* or *"h12"*, or to *false* when hourCycle is *"h23"* or *"h24"*.
-      </p>
+      <emu-table id="table-datetimeformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of DateTimeFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>"locale"</td>
+          </tr>
+          <tr>
+            <td>[[Calendar]]</td>
+            <td>"calendar"</td>
+          </tr>
+          <tr>
+            <td>[[NumberingSystem]]</td>
+            <td>"numberingSystem"</td>
+          </tr>
+          <tr>
+            <td>[[TimeZone]]</td>
+            <td>"timeZone"</td>
+          </tr>
+          <tr>
+            <td>[[HourCycle]]</td>
+            <td>"hourCycle"</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>"hour12"</td>
+          </tr>
+          <tr>
+            <td>[[Weekday]]</td>
+            <td>"weekday"</td>
+          </tr>
+          <tr>
+            <td>[[Era]]</td>
+            <td>"era"</td>
+          </tr>
+          <tr>
+            <td>[[Year]]</td>
+            <td>"year"</td>
+          </tr>
+          <tr>
+            <td>[[Month]]</td>
+            <td>"month"</td>
+          </tr>
+          <tr>
+            <td>[[Day]]</td>
+            <td>"day"</td>
+          </tr>
+          <tr>
+            <td>[[Hour]]</td>
+            <td>"hour"</td>
+          </tr>
+          <tr>
+            <td>[[Minute]]</td>
+            <td>"minute"</td>
+          </tr>
+          <tr>
+            <td>[[Second]]</td>
+            <td>"second"</td>
+          </tr>
+          <tr>
+            <td>[[TimeZoneName]]</td>
+            <td>"timeZoneName"</td>
+          </tr>
+        </table>
+      </emu-table>
 
       <emu-note>
         In this version of the ECMAScript 2018 Internationalization API, the timeZone property will be the name of the default time zone if no timeZone property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the timeZone property *undefined* in this case.
