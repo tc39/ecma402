@@ -124,18 +124,17 @@
     </emu-clause>
 
     <emu-clause id="sec-formatnumberstring" aoid="FormatNumberToString">
-      <h1>FormatNumberToString ( _numberFormat_, _x_ )</h1>
+      <h1>FormatNumberToString ( _intlObject_, _x_ )</h1>
 
       <p>
-        The FormatNumberToString abstract operation is called with arguments _numberFormat_ (which must be an object with fields minimumSignificantDigits, maximumSignificantDigits, minimumIntegerDigits, minimumFractionDigits and maximumFractionDigits), and _x_ (which must be a Number value), and returns _x_ as a string value with digits formatted according to the 5 formatting parameters.
+        The FormatNumberToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number value), and returns _x_ as a string value with digits formatted according to the five formatting parameters.
       </p>
 
       <emu-alg>
-        1. Assert: _numberFormat_ has an [[InitializedNumberFormat]] internal slot.
-        1. If the _numberFormat_.[[MinimumSignificantDigits]] and _numberFormat_.[[MaximumSignificantDigits]] are present, then
-          1. Let _result_ be ToRawPrecision(_x_, _numberFormat_.[[MinimumSignificantDigits]], _numberFormat_.[[MaximumSignificantDigits]]).
+        1. If _intlObject_.[[MinimumSignificantDigits]] and _intlObject_.[[MaximumSignificantDigits]] are both not *undefined*, then
+          1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]]).
         1. Else,
-          1. Let _result_ be ToRawFixed(_x_, _numberFormat_.[[MinimumIntegerDigits]], _numberFormat_.[[MinimumFractionDigits]], _numberFormat_.[[MaximumFractionDigits]]).
+          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumIntegerDigits]], _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]]).
         1. Return _result_.
       </emu-alg>
     </emu-clause>
