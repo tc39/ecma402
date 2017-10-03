@@ -97,8 +97,6 @@
         1. Set _collator_.[[Sensitivity]] to _s_.
         1. Let _ip_ be ? GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ip_.
-        1. Set _collator_.[[BoundCompare]] to *undefined*.
-        1. Set _collator_.[[InitializedCollator]] to *true*.
         1. Return _collator_.
       </emu-alg>
 
@@ -193,7 +191,7 @@
     </p>
 
     <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %CollatorPrototype%, the phrase "this Collator object" refers to the object that is the *this* value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedCollator]] internal slot with value *true*.
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %CollatorPrototype%, the phrase "this Collator object" refers to the object that is the *this* value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedCollator]] internal slot.
     </p>
 
     <emu-clause id="sec-intl.collator.prototype.constructor">
@@ -256,7 +254,7 @@
 
       <emu-alg>
         1. Let _collator_ be the *this* value.
-        1. Assert: Type(_collator_) is Object and _collator_ .[[InitializedCollator]] is *true*.
+        1. Assert: Type(_collator_) is Object and _collator_ has an [[InitializedCollator]] internal slot.
         1. If _x_ is not provided, let _x_ be *undefined*.
         1. If _y_ is not provided, let _y_ be *undefined*.
         1. Let _X_ be ? ToString(_x_).
@@ -329,11 +327,11 @@
     </p>
 
     <p>
-      Intl.Collator instances and other objects that have been successfully initialized as a Collator each have an [[InitializedCollator]] internal slot whose values is *true*.
+      Intl.Collator instances have an [[InitializedCollator]] internal slot.
     </p>
 
     <p>
-      Objects that have been successfully initialized as a Collator also have several internal slots that are computed by the constructor:
+      Intl.Collator instances also have several internal slots that are computed by the constructor:
     </p>
 
     <ul>
@@ -345,7 +343,7 @@
     </ul>
 
     <p>
-      Objects that have been successfully initialized as a Collator also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-options"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:
+      Intl.Collator instances also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-options"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:
     </p>
 
     <ul>
@@ -354,7 +352,7 @@
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a Collator have a [[BoundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-intl.collator.prototype.compare"></emu-xref>).
+      Finally, Intl.Collator instances have a [[BoundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-intl.collator.prototype.compare"></emu-xref>).
     </p>
 
   </emu-clause>

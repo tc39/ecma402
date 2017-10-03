@@ -88,8 +88,6 @@
         1. Let _stylePatterns_ be _patterns_.[[&lt;_s_&gt;]].
         1. Set _numberFormat_.[[PositivePattern]] to _stylePatterns_.[[positivePattern]].
         1. Set _numberFormat_.[[NegativePattern]] to _stylePatterns_.[[negativePattern]].
-        1. Set _numberFormat_.[[BoundFormat]] to *undefined*.
-        1. Set _numberFormat_.[[InitializedNumberFormat]] to *true*.
         1. Return _numberFormat_.
       </emu-alg>
     </emu-clause>
@@ -114,7 +112,7 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. Assert: Type(_nf_) is Object and _nf_.[[InitializedNumberFormat]] is *true*.
+        1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumber(_value_).
         1. Return FormatNumber(_nf_, _x_).
@@ -133,7 +131,7 @@
       </p>
 
       <emu-alg>
-        1. Assert: _numberFormat_.[[InitializedNumberFormat]] is true.
+        1. Assert: _numberFormat_ has an [[InitializedNumberFormat]] internal slot.
         1. If the _numberFormat_.[[MinimumSignificantDigits]] and _numberFormat_.[[MaximumSignificantDigits]] are present, then
           1. Let _result_ be ToRawPrecision(_x_, _numberFormat_.[[MinimumSignificantDigits]], _numberFormat_.[[MaximumSignificantDigits]]).
         1. Else,
@@ -456,8 +454,8 @@
       </p>
       <emu-normative-optional>
       <emu-alg>
-        1. If Type(_nf_) is Object and _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is equal *true*, then
-          1. Let _nf_ be Get(_nf_, Intl.[[FallbackSymbol]]).
+        1. If Type(_nf_) is Object and _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
+          1. Let _nf_ be ? Get(_nf_, Intl.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
@@ -491,7 +489,7 @@
       <emu-normative-optional>
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%), then
+        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%) is *true*, then
           1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
@@ -576,7 +574,7 @@
       The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormatPrototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
     </p>
     <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedNumberFormat]] internal slot with value *true*.
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedNumberFormat]] internal slot.
     </p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
@@ -608,7 +606,7 @@
       <emu-alg>
         1. Let _nf_ be *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. Let _nf_ be ? UnwrapNumberFormat(_nf_);
+        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
           1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, &laquo; &raquo;).
@@ -654,11 +652,11 @@
     </p>
 
     <p>
-      Intl.NumberFormat instances and other objects that have been successfully initialized as a NumberFormat each have an [[InitializedNumberFormat]] internal slot whose values is *true*.
+      Intl.NumberFormat instances have an [[InitializedNumberFormat]] internal slot.
     </p>
 
     <p>
-      Objects that have been successfully initialized as a NumberFormat object also have several internal slots that are computed by the constructor:
+      Intl.NumberFormat instances also have several internal slots that are computed by the constructor:
     </p>
 
     <ul>
@@ -675,7 +673,7 @@
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a NumberFormat have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).
+      Finally, Intl.NumberFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>
