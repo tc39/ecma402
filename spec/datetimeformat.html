@@ -242,10 +242,6 @@
         1. Return FormatDateTime(_dtf_, _x_).
       </emu-alg>
 
-      <emu-note>
-        The function returned by [[Get]] is bound to this DateTimeFormat object so that it can be passed directly to Array.prototype.map or other functions.
-      </emu-note>
-
       <p>
         The `length` property of a DateTime format function is 1.
       </p>
@@ -574,6 +570,10 @@
           1. Set _dtf_.[[BoundFormat]] to _bf_.
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
+
+      <emu-note>
+        The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">

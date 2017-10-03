@@ -219,7 +219,7 @@
         This named accessor property returns a function that compares two strings according to the sort order of this Collator object.
       </p>
       <p>
-        The value of the [[Get]] attribute is a function that takes the following steps:
+        Intl.Collator.prototype.compare is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:
       </p>
 
       <emu-alg>
@@ -235,13 +235,8 @@
       </emu-alg>
 
       <emu-note>
-        The function returned by [[Get]] is bound to this Collator object so that it can be passed directly to `Array.prototype.sort` or other functions.
+        The returned function is bound to _collator_ so that it can be passed directly to `Array.prototype.sort` or other functions.
       </emu-note>
-
-      <p>
-        The value of the [[Set]] attribute is *undefined*.
-      </p>
-
     </emu-clause>
 
     <emu-clause id="sec-collator-compare-functions">
