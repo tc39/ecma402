@@ -47,7 +47,7 @@
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
-          1. Let _options_ be ObjectCreate(%ObjectPrototype%).
+          1. Let _options_ be ObjectCreate(*null*).
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
