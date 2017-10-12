@@ -141,8 +141,6 @@
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
           1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
         1. Set _dateTimeFormat_.[[Pattern]] to _pattern_.
-        1. Set _dateTimeFormat_.[[BoundFormat]] to *undefined*.
-        1. Set _dateTimeFormat_.[[InitializedDateTimeFormat]] to *true*.
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
@@ -234,7 +232,7 @@
 
       <emu-alg>
         1. Let _dtf_ be the *this* value.
-        1. Assert: Type(_dtf_) is Object and _dtf_.[[InitializedDateTimeFormat]] is *true*.
+        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be Call(%Date_now%, *undefined*).
         1. Else,
@@ -391,13 +389,12 @@
       </p>
       <emu-normative-optional>
       <emu-alg>
-        1. If Type(_dtf_) is Object and _dtf_ does not have an [[initializedDateTimeFormat]] internal slot and ? InstanceofOperator(dtf, %DateTimeFormat%) is true, then
-        1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is equal *true*, then
-          1. Let _dtf_ be Get(_dtf_, Intl.[[FallbackSymbol]]).
+        1. If Type(_dtf_) is Object and _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is *true*, then
+          1. Let _dtf_ be ? Get(_dtf_, Intl.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
-        3. If Type(_dtf_) is not Object or _dtf_ does not have an [[initializedDateTimeFormat]] internal slot, then
+        2. If Type(_dtf_) is not Object or _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot, then
           1. Throw a *TypeError* exception.
         1. Return _dtf_.
       </emu-alg>
@@ -427,7 +424,7 @@
       <emu-normative-optional>
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%), then
+        1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%) is *true*, then
           1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
@@ -537,7 +534,7 @@
     </p>
 
     <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of the Intl.DateTimeFormat prototype object, the phrase "this DateTimeFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedDateTimeFormat]] internal slot with value *true*.
+      In the following descriptions of functions that are properties or [[Get]] attributes of properties of the Intl.DateTimeFormat prototype object, the phrase "this DateTimeFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedDateTimeFormat]] internal slot.
     </p>
 
     <emu-clause id="sec-intl.datetimeformat.prototype.constructor">
@@ -628,11 +625,11 @@
     </p>
 
     <p>
-      Intl.DateTimeFormat instances and other objects that have been successfully initialized as a DateTimeFormat object each have an [[InitializedDateTimeFormat]] internal slot whose values is *true*.
+      Intl.DateTimeFormat instances have an [[InitializedDateTimeFormat]] internal slot.
     </p>
 
     <p>
-      Objects that have been successfully initialized as a DateTimeFormat also have several internal slots that are computed by the constructor:
+      Intl.DateTimeFormat instances also have several internal slots that are computed by the constructor:
     </p>
 
     <ul>
@@ -646,7 +643,7 @@
     </ul>
 
     <p>
-      Finally, objects that have been successfully initialized as a DateTimeFormat have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.datetimeformat.prototype.format"></emu-xref>).
+      Finally, Intl.DateTimeFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.datetimeformat.prototype.format"></emu-xref>).
     </p>
   </emu-clause>
 </emu-clause>
