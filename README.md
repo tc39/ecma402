@@ -16,8 +16,8 @@ Proposals follow [this process document](https://tc39.github.io/process-document
 |   | [Intl.DateTimeFormat.prototype.formatToParts][]                     | Zibi Braniecki |     4 |
 |   | [Intl.NumberFormat.prototype.formatToParts][]                     | Zibi Braniecki |     4 |
 |   | [Intl.PluralRules][]                  | Caridy Patiño, Eric Ferraiuolo |     4 |
-|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     3 |
 |   | [Intl.Segmenter: Unicode segmentation in JavaScript][]                    | Daniel Ehrenberg  |     3 |
+|   | [Intl.RelativeTimeFormat][]           | Caridy Patiño, Eric Ferraiuolo |     2 |
 |   | [Intl.ListFormat][]                   | Zibi Braniecki |     2 |
 |   | [Exposing Abstract Operations & Locale Info][]        | Zibi Braniecki  |     2 |
 |   | [Intl.Locale][]                       | Zibi Braniecki, Daniel Ehrenberg |     1 |
