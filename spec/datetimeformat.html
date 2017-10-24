@@ -257,7 +257,8 @@
       </p>
 
       <emu-alg>
-        1. If _x_ is not a finite Number, throw a *RangeError* exception.
+        1. Let _x_ be TimeClip(_x_).
+        1. If _x_ is *NaN*, throw a *RangeError* exception.
         1. Let _locale_ be _dateTimeFormat_.[[Locale]].
         1. Let _nfOptions_ be ObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, `"useGrouping"`, *false*).
