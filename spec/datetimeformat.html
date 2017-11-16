@@ -20,48 +20,48 @@
         </thead>
         <tr>
           <td>[[Weekday]]</td>
-          <td>"weekday"</td>
-          <td>"narrow", "short", "long"</td>
+          <td>`"weekday"`</td>
+          <td>`"narrow"`, `"short"`, `"long"`</td>
         </tr>
         <tr>
           <td>[[Era]]</td>
-          <td>"era"</td>
-          <td>"narrow", "short", "long"</td>
+          <td>`"era"`</td>
+          <td>`"narrow"`, `"short"`, `"long"`</td>
         </tr>
         <tr>
           <td>[[Year]]</td>
-          <td>"year"</td>
-          <td>"2-digit", "numeric"</td>
+          <td>`"year"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
         </tr>
         <tr>
           <td>[[Month]]</td>
-          <td>"month"</td>
-          <td>"2-digit", "numeric", "narrow", "short", "long"</td>
+          <td>`"month"`</td>
+          <td>`"2-digit"`, `"numeric"`, `"narrow"`, `"short"`, `"long"`</td>
         </tr>
         <tr>
           <td>[[Day]]</td>
-          <td>"day"</td>
-          <td>"2-digit", "numeric"</td>
+          <td>`"day"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
         </tr>
         <tr>
           <td>[[Hour]]</td>
-          <td>"hour"</td>
-          <td>"2-digit", "numeric"</td>
+          <td>`"hour"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
         </tr>
         <tr>
           <td>[[Minute]]</td>
-          <td>"minute"</td>
-          <td>"2-digit", "numeric"</td>
+          <td>`"minute"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
         </tr>
         <tr>
           <td>[[Second]]</td>
-          <td>"second"</td>
-          <td>"2-digit", "numeric"</td>
+          <td>`"second"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
         </tr>
         <tr>
           <td>[[TimeZoneName]]</td>
-          <td>"timeZoneName"</td>
-          <td>"short", "long"</td>
+          <td>`"timeZoneName"`</td>
+          <td>`"short"`, `"long"`</td>
         </tr>
       </table>
     </emu-table>
@@ -75,11 +75,11 @@
 
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
+        1. Let _options_ be ? ToDateTimeOptions(_options_, `"any"`, `"date"`).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, *"string"*, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
+        1. Let _hc_ be ? GetOption(_options_, `"hourCycle"`, `"string"`, &laquo; `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo;, *undefined*).
         1. Set _opt_.[[hc]] to _hc_.
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
@@ -88,7 +88,7 @@
         1. Set _dateTimeFormat_.[[HourCycle]] to _r_.[[hc]].
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _tz_ be ? Get(_options_, *"timeZone"*).
+        1. Let _tz_ be ? Get(_options_, `"timeZone"`).
         1. If _tz_ is not *undefined*, then
           1. Let _tz_ be ? ToString(_tz_).
           1. If the result of IsValidTimeZoneName(_tz_) is *false*, then
@@ -100,12 +100,12 @@
         1. Let _opt_ be a new Record.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
           1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
+          1. Let _value_ be ? GetOption(_options_, _prop_, `"string"`, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _formats_ be _dataLocaleData_.[[formats]].
-        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
-        1. If _matcher_ is *"basic"*, then
+        1. Let _matcher_ be ? GetOption(_options_, `"formatMatcher"`, `"string"`, &laquo; `"basic"`, `"best fit"` &raquo;, `"best fit"`).
+        1. If _matcher_ is `"basic"`, then
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
         1. Else,
           1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
@@ -114,7 +114,7 @@
           1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
-        1. Let _hr12_ be ? GetOption(_options_, *"hour12"*, *"boolean"*, *undefined*, *undefined*).
+        1. Let _hr12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
         1. If _dateTimeFormat_.[[Hour]] is not *undefined*, then
           1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
           1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
@@ -122,24 +122,24 @@
             1. Set _hc_ to _hcDefault_.
           1. If _hr12_ is not *undefined*, then
             1. If _hr12_ is *true*, then
-              1. If _hcDefault_ is *"h11"* or *"h23"*, then
-                1. Set _hc_ to *"h11"*.
+              1. If _hcDefault_ is `"h11"` or `"h23"`, then
+                1. Set _hc_ to `"h11"`.
               1. Else,
-                1. Set _hc_ to *"h12"*.
+                1. Set _hc_ to `"h12"`.
             1. Else,
               1. Assert: _hr12_ is *false*.
-              1. If _hcDefault_ is *"h11"* or *"h23"*, then
-                1. Set _hc_ to *"h23"*.
+              1. If _hcDefault_ is `"h11"` or `"h23"`, then
+                1. Set _hc_ to `"h23"`.
               1. Else,
-                1. Set _hc_ to *"h24"*.
+                1. Set _hc_ to `"h24"`.
           1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
-          1. If _dateTimeformat_.[[HourCycle]] is *"h11"* or *"h12"*, then
+          1. If _dateTimeformat_.[[HourCycle]] is `"h11"` or `"h12"`, then
             1. Let _pattern_ be _bestFormat_.[[pattern12]].
           1. Else,
             1. Let _pattern_ be _bestFormat_.[[pattern]].
         1. Else,
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
-          1. Let _pattern_ be Get(_bestFormat_, *"pattern"*).
+          1. Let _pattern_ be Get(_bestFormat_, `"pattern"`).
         1. Set _dateTimeFormat_.[[Pattern]] to _pattern_.
         1. Return _dateTimeFormat_.
       </emu-alg>
@@ -156,22 +156,22 @@
         1. If _options_ is *undefined*, let _options_ be *null*; otherwise let _options_ be ? ToObject(_options_).
         1. Let _options_ be ObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
-        1. If _required_ is *"date"* or *"any"*,
-          1. For each of the property names *"weekday"*, *"year"*, *"month"*, *"day"*:
+        1. If _required_ is `"date"` or `"any"`,
+          1. For each of the property names `"weekday"`, `"year"`, `"month"`, `"day"`:
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _required_ is *"time"* or *"any"*,
-          1. For each of the property names *"hour"*, *"minute"*, *"second"*:
+        1. If _required_ is `"time"` or `"any"`,
+          1. For each of the property names `"hour"`, `"minute"`, `"second"`:
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
-          1. For each of the property names *"year"*, *"month"*, *"day"*:
-            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
-        1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
-          1. For each of the property names *"hour"*, *"minute"*, *"second"*:
-            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
+        1. If _needDefaults_ is *true* and _defaults_ is either `"date"` or `"all"`, then
+          1. For each of the property names `"year"`, `"month"`, `"day"`:
+            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, `"numeric"`).
+        1. If _needDefaults_ is *true* and _defaults_ is either `"time"` or `"all"`, then
+          1. For each of the property names `"hour"`, `"minute"`, `"second"`:
+            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, `"numeric"`).
         1. Return _options_.
       </emu-alg>
     </emu-clause>
@@ -201,7 +201,7 @@
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_,
-              1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
+              1. Let _values_ be &laquo; `"2-digit"`, `"numeric"`, `"narrow"`, `"short"`, `"long"` &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
               1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
               1. Let _delta_ be max(min(_formatPropIndex_ - _optionsPropIndex_, 2), -2).
@@ -269,53 +269,53 @@
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; "{", *0* &raquo;).
+        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, *0* &raquo;).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
         1. Repeat while _beginIndex_ is an integer index into _pattern_:
-          1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; "}", _beginIndex_ &raquo;).
+          1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"}"`, _beginIndex_ &raquo;).
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then:
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
-            1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
+            1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then:
             1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
-            1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
-            1. If _p_ is *"month"*, increase _v_ by 1.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
+            1. If _p_ is `"year"` and _v_ ≤ 0, let _v_ be 1 - _v_.
+            1. If _p_ is `"month"`, increase _v_ by 1.
+            1. If _p_ is `"hour"` and _dateTimeFormat_.[[HourCycle]] is `"h11"` or `"h12"`, then
               1. Let _v_ be _v_ modulo 12.
-              1. If _v_ is 0 and _dateTimeFormat_.[[HourCycle]] is *"h12"*, let _v_ be 12.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h24"*, then
+              1. If _v_ is 0 and _dateTimeFormat_.[[HourCycle]] is `"h12"`, let _v_ be 12.
+            1. If _p_ is `"hour"` and _dateTimeFormat_.[[HourCycle]] is `"h24"`, then
               1. If _v_ is 0, let _v_ be 24.
-            1. If _f_ is *"numeric"*, then
+            1. If _f_ is `"numeric"`, then
               1. Let _fv_ be FormatNumber(_nf_, _v_).
-            1. Else if _f_ is *"2-digit"*, then
+            1. Else if _f_ is `"2-digit"`, then
               1. Let _fv_ be FormatNumber(_nf2_, _v_).
               1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
-            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
+            1. Else if _f_ is `"narrow"`, `"short"`, or `"long"`, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is `"month"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is `"timeZoneName"`, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is `"era"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[Type]]: _p_, [[Value]]: _fv_ } as a new element of the list _result_.
-          1. Else if _p_ is equal "ampm", then:
+          1. Else if _p_ is equal `"ampm"`, then:
             1. Let _v_ be _tm_.[[hour]].
             1. If _v_ is greater than 11, then:
               1. Let _fv_ be an implementation and locale dependent String value representing "post meridiem";
             1. Else,
-              1. Let _fv_ be an implementation and locale dependent String value representing "ante meridiem".
-            1. Add new part record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } as a new element of the list _result_.
+              1. Let _fv_ be an implementation and locale dependent String value representing `"ante meridiem"`.
+            1. Add new part record { [[Type]]: `"dayPeriod"`, [[Value]]: _fv_ } as a new element of the list _result_.
             1. Let _literal_ be the substring of _pattern_ from position _beginIndex_, inclusive, to position _endIndex_, inclusive.
-            1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
+            1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; "{", _nextIndex_ &raquo;).
+          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
         1. If _nextIndex_ is less than _length_, then:
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
-          1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
+          1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
         1. Return _result_.
       </emu-alg>
 
       <emu-note>
-        It is recommended that implementations use the locale and calendar dependent strings provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>), and use CLDR "abbreviated" strings for DateTimeFormat "short" strings, and CLDR "wide" strings for DateTimeFormat "long" strings.
+        It is recommended that implementations use the locale and calendar dependent strings provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>), and use CLDR `"abbreviated"` strings for DateTimeFormat `"short"` strings, and CLDR `"wide"` strings for DateTimeFormat `"long"` strings.
       </emu-note>
 
       <emu-note>
@@ -354,8 +354,8 @@
         1. Let _n_ be 0.
         1. For each _part_ in _parts_, do:
           1. Let _O_ be ObjectCreate(%ObjectPrototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, "type", _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, "value", _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, `"type"`, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, `"value"`, _part_.[[Value]]).
           1. Perform ! CreateDataProperty(_result_, ! ToString(_n_), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
@@ -371,7 +371,7 @@
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is "gregory", then the calculations must match the algorithms specified in ES2018, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2018, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
@@ -484,7 +484,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes three locale extension keys that are relevant to date and time formatting, "ca" for calendar, "tz" for time zone, "hc" for hour cycle, and implicitly "nu" for the numbering system of the number format used for numbers within the date format. DateTimeFormat, however, requires that the time zone is specified through the timeZone property in the options objects.
+        Unicode Technical Standard 35 describes three locale extension keys that are relevant to date and time formatting, `"ca"` for calendar, `"tz"` for time zone, `"hc"` for hour cycle, and implicitly `"nu"` for the numbering system of the number format used for numbers within the date format. DateTimeFormat, however, requires that the time zone is specified through the timeZone property in the options objects.
       </emu-note>
 
       <p>
@@ -493,13 +493,13 @@
 
       <ul>
         <li>
-          The list that is the value of the "nu" field of any locale field of [[LocaleData]] must not include the values "native", "traditio", or "finance".
+          The list that is the value of the `"nu"` field of any locale field of [[LocaleData]] must not include the values `"native"`, `"traditio"`, or `"finance"`.
         </li>
         <li>
-          [[LocaleData]][locale].hc must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo; for all locale values.
+          [[LocaleData]][locale].hc must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values.
         </li>
         <li>
-          [[LocaleData]][locale] must have a hourCycle field with a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"* for all locale values.
+          [[LocaleData]][locale] must have a hourCycle field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have a formats field for all locale values. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
@@ -512,12 +512,12 @@
             <li>hour, minute, second</li>
             <li>hour, minute</li>
           </ul>
-          Each of the records must also have a pattern field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with "{", followed by the name of the field, followed by "}". If the record has an hour field, it must also have a pattern12 field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring "{ampm}".
+          Each of the records must also have a pattern field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with `"{"`, followed by the name of the field, followed by `"}"`. If the record has an hour field, it must also have a pattern12 field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring `"{ampm}"`.
         </li>
       </ul>
 
       <p>
-        EXAMPLE     An implementation might include the following record as part of its English locale data: {[[hour]]: "numeric", [[minute]]: "2-digit", [[second]]: "2-digit", [[pattern]]: "{hour}:{minute}:{second}", [[pattern12]]: "{hour}:{minute}:{second} {ampm}"}.
+        EXAMPLE     An implementation might include the following record as part of its English locale data: {[[hour]]: `"numeric"`, [[minute]]: `"2-digit"`, [[second]]: `"2-digit"`, [[pattern]]: `"{hour}:{minute}:{second}"`, [[pattern12]]: `"{hour}:{minute}:{second} {ampm}"`}.
       </p>
 
       <emu-note>
@@ -608,7 +608,7 @@
       </p>
 
       <p>
-        For web compatibility reasons, if the property hourCycle is set, the hour12 property should be set to *true* when hourCycle is *"h11"* or *"h12"*, or to *false* when hourCycle is *"h23"* or *"h24"*.
+        For web compatibility reasons, if the property hourCycle is set, the hour12 property should be set to *true* when hourCycle is `"h11"` or `"h12"`, or to *false* when hourCycle is `"h23"` or `"h24"`.
       </p>
 
       <emu-note>
@@ -634,11 +634,11 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[Calendar]] is a String value with the "type" given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
-      <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
+      <li>[[Calendar]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
+      <li>[[NumberingSystem]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour *0* and go up to *11* and *23* respectively. *"h12"* and *"h24"* start with hour *1* and go up to *12* and *24*. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour *0* and go up to *11* and *23* respectively. `"h12"` and `"h24"` start with hour *1* and go up to *12* and *24*. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 
