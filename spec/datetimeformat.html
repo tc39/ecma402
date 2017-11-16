@@ -307,7 +307,7 @@
             1. Let _literal_ be the substring of _pattern_ from position _beginIndex_, inclusive, to position _endIndex_, inclusive.
             1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; "}", _nextIndex_ &raquo;).
+          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; "{", _nextIndex_ &raquo;).
         1. If _nextIndex_ is less than _length_, then:
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
           1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
