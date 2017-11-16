@@ -19,7 +19,7 @@
     </ul>
 
     <p>
-      EXAMPLE     An implementation of DateTimeFormat might include the language tag `"th"` in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key `"ca"` in its [[RelevantExtensionKeys]] internal slot. For Thai, the `"buddhist"` calendar is usually the default, but an implementation might also support the calendars `"gregory"`, `"chinese"`, and `"islamicc"` for the locale `"th"`. The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: «`"buddhist"`, `"gregory"`, `"chinese"`, `"islamicc"`»}}.
+      EXAMPLE     An implementation of DateTimeFormat might include the language tag `"th"` in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key `"ca"` in its [[RelevantExtensionKeys]] internal slot. For Thai, the `"buddhist"` calendar is usually the default, but an implementation might also support the calendars `"gregory"`, `"chinese"`, and `"islamicc"` for the locale `"th"`. The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; `"buddhist"`, `"gregory"`, `"chinese"`, `"islamicc"` &raquo;}}.
     </p>
   </emu-clause>
 
@@ -42,7 +42,7 @@
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
         1. If Type(_locales_) is String, then
-          1. Let _O_ be CreateArrayFromList(« _locales_ »).
+          1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
         1. Let _len_ be ? ToLength(? Get(_O_, `"length"`)).
@@ -132,14 +132,14 @@
         1. Assert: The number of elements in _key_ is 2.
         1. Let _size_ be the number of elements in _extension_.
         1. Let _searchValue_ be the concatenation of `"-"`, _key_, and `"-"`.
-        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, « _searchValue_ »).
+        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1, then
           1. Let _start_ be _pos_ + 4.
           1. Let _end_ be _start_.
           1. Let _k_ be _start_.
           1. Let _done_ be *false*.
           1. Repeat, while _done_ is *false*
-            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, « `"-"`, _k_ »).
+            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, &laquo; `"-"`, _k_ &raquo;).
             1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
             1. If _len_ = 2, then
               1. Let _done_ be *true*.
@@ -151,7 +151,7 @@
               1. Let _k_ be _e_ + 1.
           1. Return the String value equal to the substring of _extension_ consisting of the code units at indices _start_ (inclusive) through _end_ (exclusive).
         1. Let _searchValue_ be the concatenation of `"-"` and _key_.
-        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, « _searchValue_ »).
+        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1 and _pos_ + 3 = _size_, then
           1. Return the empty String.
         1. Return *undefined*.
@@ -210,7 +210,7 @@
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Append _supportedExtensionAddition_ to _supportedExtension_.
         1. If the number of elements in _supportedExtension_ is greater than 2, then
-          1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, « `"-x-"` »).
+          1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, &laquo; `"-x-"` &raquo;).
           1. If _privateIndex_ = -1, then
             1. Let _foundLocale_ be the concatenation of _foundLocale_ and _supportedExtension_.
           1. Else,
@@ -263,7 +263,7 @@
       <emu-alg>
         1. If _options_ is not *undefined*, then
           1. Let _options_ be ? ToObject(_options_).
-          1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, « `"lookup"`, `"best fit"` », `"best fit"`).
+          1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Else, let _matcher_ be `"best fit"`.
         1. If _matcher_ is `"best fit"`,
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
