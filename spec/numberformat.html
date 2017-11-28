@@ -164,7 +164,7 @@
             1. If _x_ is *NaN*,
               1. Let _n_ be an ILD String value indicating the *NaN* value.
               1. Append a new Record { [[Type]]: `"nan"`, [[Value]]: _n_ } as the last element of _result_.
-            1. Else if isFinite(_x_) is *false*,
+            1. Else if _x_ is not a finite Number,
               1. Let _n_ be an ILD String value indicating infinity.
               1. Append a new Record { [[Type]]: `"infinity"`, [[Value]]: _n_ } as the last element of _result_.
             1. Else,
@@ -599,7 +599,7 @@
       </p>
 
       <emu-alg>
-        1. Let _nf_ be *this* value.
+        1. Let _nf_ be the *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
@@ -619,7 +619,7 @@
       </p>
 
       <emu-alg>
-        1. Let _nf_ be *this* value.
+        1. Let _nf_ be the *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
         1. Let _x_ be ? ToNumber(_value_).
