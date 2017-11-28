@@ -8,7 +8,7 @@
       <h1>InitializePluralRules ( _pluralRules_, _locales_, _options_ )</h1>
 
       <p>
-        The abstract operation InitializePluralRules accepts the arguments _pluralRules_ (which must be an object), _locales_, and _options_. It initializes _pluralRules_ as a PluralRules object. The following steps are taken
+        The abstract operation InitializePluralRules accepts the arguments _pluralRules_ (which must be an object), _locales_, and _options_. It initializes _pluralRules_ as a PluralRules object. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -17,14 +17,14 @@
           1. Let _options_ be ObjectCreate(*null*).
         1. Else
           1. Let _options_ be ? ToObject(_options_).
-        1. Let _t_ be ? GetOption(_options_, `"type"`, `"string"`, &laquo; `"cardinal"`, `"ordinal"` &raquo;, `"cardinal"`).
-        1. Set _pluralRules_.[[Type]] to _t_.
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _t_ be ? GetOption(_options_, `"type"`, `"string"`, &laquo; `"cardinal"`, `"ordinal"` &raquo;, `"cardinal"`).
+        1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatOptions(_pluralRules_, _options_, *0*, *3*).
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_).
-        1. Set _pluralRules_.[[Locale]] to the value of _r_.[[Locale]].
+        1. Set _pluralRules_.[[Locale]] to the value of _r_.[[locale]].
         1. Let _pluralCategories_ be a List of Strings representing the possible results of plural selection.
         1. Set _pluralRules_.[[PluralCategories]] to CreateArrayFromList(_pluralCategories_).
         1. Return _pluralRules_.
@@ -35,28 +35,28 @@
     <emu-clause id="sec-getoperands" aoid="GetOperands">
        <h1>GetOperands ( _s_ )</h1>
        <p>
-         When the GetOperands abstract operation is called with argument _s_. It performs the following steps:
+         When the GetOperands abstract operation is called with argument _s_, it performs the following steps:
        </p>
 
        <emu-alg>
          1. Assert: Type(_s_) is String.
-         1. Let _n_ be ? ToNumber(_s_).
+         1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
-         1. Let _dp_ be ? Call(%StringProto_indexOf%, _s_, &laquo; `"."` &raquo;).
+         1. Let _dp_ be ! Call(%StringProto_indexOf%, _s_, &laquo; `"."` &raquo;).
          1. If _dp_ = -1, then
            1. Set _iv_ to _n_.
            1. Let _f_ be 0.
            1. Let _v_ be 0.
          1. Else,
            1. Let _iv_ be the substring of _s_ from position 0, inclusive, to position _dp_, exclusive.
-           1. Let _fv_ be the substring of _s_ from position _dp_, exclusive.
-           1. Let _f_ be ? ToNumber(_fv_).
-           1. Let _v_ be ? ToLength(? Get(_fv_, `"length"`)).
-         1. Let _i_ be ? abs(? ToNumber(_iv_)).
+           1. Let _fv_ be the substring of _s_ from position _dp_, exclusive, to the end of _s_.
+           1. Let _f_ be ! ToNumber(_fv_).
+           1. Let _v_ be the length of _fv_.
+         1. Let _i_ be abs(! ToNumber(_iv_)).
          1. If _f_ ≠ 0, then
            1. Let _ft_ be the value of _fv_ stripped of trailing `"0"`.
-           1. Let _w_ be ? ToLength(? Get(_ft_, `"length"`)).
-           1. Let _t_ be ? ToNumber(_ft_).
+           1. Let _w_ be the length of _ft_.
+           1. Let _t_ be ! ToNumber(_ft_).
          1. Else,
            1. Let _w_ be 0.
            1. Let _t_ be 0.
@@ -113,7 +113,7 @@
       <h1>PluralRuleSelection ( _locale_, _type_, _n_, _operands_ )</h1>
 
       <p>
-        When the PluralRuleSelection abstract operation is called with four arguments, it performs implementation dependent algorithm to map _n_ to the appropriate plural representation of the Operand Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value `"other"`.
+        When the PluralRuleSelection abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value `"other"`.
       </p>
 
     </emu-clause>
@@ -126,13 +126,13 @@
 
       <emu-alg>
         1. Assert: Type(_pluralRules_) is Object.
-        1. Assert: If _pluralRules_ does not have an [[InitializedPluralRules]] internal slot, throw a *TypeError* exception.
+        1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
         1. Assert: Type(_n_) is Number.
-        1. If isFinite(_n_) is *false*, then
+        1. If _n_ is not a finite Number, then
           1. Return `"other"`.
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _s_ be ? FormatNumberToString(_pluralRules_, _n_).
+        1. Let _s_ be ! FormatNumberToString(_pluralRules_, _n_).
         1. Let _operands_ be ? _GetOperands_(_s_).
         1. Return ? PluralRuleSelection(_locale_, _type_, _n_, _operands_).
       </emu-alg>
@@ -152,12 +152,12 @@
       <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        When the `Intl.PluralRules` function is called with optional arguments, the following steps are taken:
+        When the `Intl.PluralRules` function is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, %PluralRulesPrototype%).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, %PluralRulesPrototype%, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[PluralCategories]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -211,7 +211,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes no locale extension keys that are relevant to pluralization process.
+        Unicode Technical Standard 35 describes no locale extension keys that are relevant to the pluralization process.
       </emu-note>
 
       <emu-note>
@@ -226,9 +226,6 @@
 
     <p>
       The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%PluralRulesPrototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
-    </p>
-    <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %PluralRulesPrototype%, the phrase "this PluralRules object" refers to the object that is the this  value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedPluralRules]] internal slot.
     </p>
 
     <emu-clause id="sec-intl.pluralrules.prototype.constructor">
@@ -254,7 +251,7 @@
       <h1>Intl.PluralRules.prototype.select( _value_ )</h1>
 
       <p>
-        When the `select` is called with an argument _value_, the following steps are taken:
+        When the `select` method is called with an argument _value_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -349,7 +346,7 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
-      <li>[[Type]] is one of the String values `"cardinal"`, or `"ordinal"`, identifying the plural rules used.</li>
+      <li>[[Type]] is one of the String values `"cardinal"` or `"ordinal"`, identifying the plural rules used.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
