@@ -64,7 +64,7 @@
        </emu-alg>
 
        <emu-table id="table-plural-operands">
-         <emu-caption>Internal Slots of Plural Rules Operands</emu-caption>
+         <emu-caption>Plural Rules Operands Record Fields</emu-caption>
          <table class="real-table">
            <thead>
              <tr>
@@ -255,7 +255,7 @@
       </p>
 
       <emu-alg>
-        1. Let _pr_ be *this* value.
+        1. Let _pr_ be the *this* value.
         1. If Type(_pr_) is not Object, throw a *TypeError* exception.
         1. If _pr_ does not have an [[InitializedPluralRules]] internal slot, throw a *TypeError* exception.
         1. Let _n_ be ? ToNumber(_value_).
@@ -271,7 +271,7 @@
       </p>
 
       <emu-alg>
-        1. Let _pr_ be *this* value.
+        1. Let _pr_ be the *this* value.
         1. If Type(_pr_) is not Object, throw a *TypeError* exception.
         1. If _pr_ does not have an [[InitializedPluralRules]] internal slot, throw a *TypeError* exception.
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
