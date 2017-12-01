@@ -269,7 +269,7 @@
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, *0* &raquo;).
+        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, 0 &raquo;).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
@@ -638,7 +638,7 @@
       <li>[[NumberingSystem]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour *0* and go up to *11* and *23* respectively. `"h12"` and `"h24"` start with hour *1* and go up to *12* and *24*. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour 0 and go up to 11 and 23 respectively. `"h12"` and `"h24"` start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 
