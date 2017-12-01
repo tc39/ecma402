@@ -70,11 +70,11 @@
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
         1. Else,
-          1. Let _mnfdDefault_ be *0*.
+          1. Let _mnfdDefault_ be 0.
           1. If _style_ is `"percent"`, then
-            1. Let _mxfdDefault_ be *0*.
+            1. Let _mxfdDefault_ be 0.
           1. Else,
-            1. Let _mxfdDefault_ be *3*.
+            1. Let _mxfdDefault_ be 3.
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
         1. Let _g_ be ? GetOption(_options_, `"useGrouping"`, `"boolean"`, *undefined*, *true*).
         1. Set _numberFormat_.[[UseGrouping]] to _g_.
@@ -143,24 +143,24 @@
       </p>
 
       <emu-alg>
-        1. If _x_ is not *NaN* and _x_ < 0, then:
+        1. If _x_ is not *NaN* and _x_ < 0, then
           1. Let _x_ be -_x_.
           1. Let _pattern_ be _numberFormat_.[[NegativePattern]].
         1. Else,
           1. Let _pattern_ be _numberFormat_.[[PositivePattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, *0* &raquo;).
+        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, 0 &raquo;).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
-        1. Repeat while _beginIndex_ is an integer index into _pattern_:
+        1. Repeat, while _beginIndex_ is an integer index into _pattern_
           1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"}"`, _beginIndex_ &raquo;).
           1. Assert: _endIndex_ is greater than _beginIndex_.
-          1. If _beginIndex_ is greater than _nextIndex_, then:
+          1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
             1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
-          1. If _p_ is equal `"number"`, then:
+          1. If _p_ is equal `"number"`, then
             1. If _x_ is *NaN*,
               1. Let _n_ be an ILD String value indicating the *NaN* value.
               1. Append a new Record { [[Type]]: `"nan"`, [[Value]]: _n_ } as the last element of _result_.
@@ -175,37 +175,37 @@
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be Call(%StringProto_indexOf%, _n_, &laquo; `"."`, 0 &raquo;).
-              1. If _decimalSepIndex_ > 0, then:
+              1. If _decimalSepIndex_ > 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
-              1. Else:
+              1. Else,
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
               1. If the _numberFormat_.[[UseGrouping]] is *true*,
                 1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_.
-                1. Assert: The number of elements in _groups_ List is greater than *0*.
-                1. Repeat, while _groups_ List is not empty:
+                1. Assert: The number of elements in _groups_ List is greater than 0.
+                1. Repeat, while _groups_ List is not empty
                   1. Remove the first element from _groups_ and let _integerGroup_ be the value of that element.
                   1. Append a new Record { [[Type]]: `"integer"`, [[Value]]: _integerGroup_ } as the last element of _result_.
-                  1. If _groups_ List is not empty, then:
+                  1. If _groups_ List is not empty, then
                     1. Append a new Record { [[Type]]: `"group"`, [[Value]]: _groupSepSymbol_ } as the last element of _result_.
               1. Else,
                 1. Append a new Record { [[Type]]: `"integer"`, [[Value]]: _integer_ } as the last element of _result_.
-              1. If _fraction_ is not *undefined*, then:
+              1. If _fraction_ is not *undefined*, then
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append a new Record { [[Type]]: `"decimal"`, [[Value]]: _decimalSepSymbol_ } as the last element of _result_.
                 1. Append a new Record { [[Type]]: `"fraction"`, [[Value]]: _fraction_ } as the last element of _result_.
-          1. Else if _p_ is equal `"plusSign"`, then:
+          1. Else if _p_ is equal `"plusSign"`, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
             1. Append a new Record { [[Type]]: `"plusSign"`, [[Value]]: _plusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"minusSign"`, then:
+          1. Else if _p_ is equal `"minusSign"`, then
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
             1. Append a new Record { [[Type]]: `"minusSign"`, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"percentSign"` and _numberFormat_.[[Style]] is `"percent"`, then:
+          1. Else if _p_ is equal `"percentSign"` and _numberFormat_.[[Style]] is `"percent"`, then
             1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
             1. Append a new Record { [[Type]]: `"percentSign"`, [[Value]]: _percentSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"currency"` and _numberFormat_.[[Style]] is `"currency"`, then:
+          1. Else if _p_ is equal `"currency"` and _numberFormat_.[[Style]] is `"currency"`, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Assert: _numberFormat_.[[CurrencyDisplay]] is `"code"`, `"symbol"` or `"name"`.
             1. If _numberFormat_.[[CurrencyDisplay]] is `"code"`, then
@@ -220,7 +220,7 @@
             1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
-        1. If _nextIndex_ is less than _length_, then:
+        1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
           1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
         1. Return _result_.
@@ -345,7 +345,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be the empty String.
-        1. For each _part_ in _parts_, do:
+        1. For each _part_ in _parts_, do
           1. Set _result_ to a String value produced by concatenating _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -362,7 +362,7 @@
         1. Let _parts_ be ? PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do:
+        1. For each _part_ in _parts_, do
           1. Let _O_ be ObjectCreate(%ObjectPrototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, `"type"`, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, `"value"`, _part_.[[Value]]).
@@ -485,7 +485,7 @@
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%) is *true*, then
-          1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Perform ? DefinePropertyOrThrow(_this_, Intl.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
@@ -615,7 +615,7 @@
       <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
 
       <p>
-        When the `formatToParts` is called with an optional argument _value_, the following steps are taken:
+        When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:
       </p>
 
       <emu-alg>

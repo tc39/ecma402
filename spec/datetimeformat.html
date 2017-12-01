@@ -98,7 +98,7 @@
           1. Let _tz_ be DefaultTimeZone().
         1. Set _dateTimeFormat_.[[TimeZone]] to _tz_.
         1. Let _opt_ be a new Record.
-        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do:
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _value_ be ? GetOption(_options_, _prop_, `"string"`, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
@@ -157,20 +157,20 @@
         1. Let _options_ be ObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
         1. If _required_ is `"date"` or `"any"`,
-          1. For each of the property names `"weekday"`, `"year"`, `"month"`, `"day"`:
+          1. For each of the property names `"weekday"`, `"year"`, `"month"`, `"day"`, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is `"time"` or `"any"`,
-          1. For each of the property names `"hour"`, `"minute"`, `"second"`:
+          1. For each of the property names `"hour"`, `"minute"`, `"second"`, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _needDefaults_ is *true* and _defaults_ is either `"date"` or `"all"`, then
-          1. For each of the property names `"year"`, `"month"`, `"day"`:
+          1. For each of the property names `"year"`, `"month"`, `"day"`, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, `"numeric"`).
         1. If _needDefaults_ is *true* and _defaults_ is either `"time"` or `"all"`, then
-          1. For each of the property names `"hour"`, `"minute"`, `"second"`:
+          1. For each of the property names `"hour"`, `"minute"`, `"second"`, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, `"numeric"`).
         1. Return _options_.
       </emu-alg>
@@ -193,9 +193,9 @@
         1. Let _bestScore_ be -*Infinity*.
         1. Let _bestFormat_ be *undefined*.
         1. Assert: Type(_formats_) is List.
-        1. Repeat for each element _format_ of _formats_ in List order,
+        1. For each element _format_ of _formats_ in List order, do
           1. Let _score_ be 0.
-          1. For each _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>:
+          1. For each _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
             1. Let _optionsProp_ be _options_.[[&lt;_property_&gt;]].
             1. Let _formatProp_ be _format_.[[&lt;_property_&gt;]].
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
@@ -269,18 +269,18 @@
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, *0* &raquo;).
+        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, 0 &raquo;).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
-        1. Repeat while _beginIndex_ is an integer index into _pattern_:
+        1. Repeat, while _beginIndex_ is an integer index into _pattern_
           1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"}"`, _beginIndex_ &raquo;).
           1. Assert: _endIndex_ is greater than _beginIndex_.
-          1. If _beginIndex_ is greater than _nextIndex_, then:
+          1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
             1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
-          1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then:
+          1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is `"year"` and _v_ ≤ 0, let _v_ be 1 - _v_.
@@ -297,10 +297,10 @@
               1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is `"narrow"`, `"short"`, or `"long"`, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is `"month"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is `"timeZoneName"`, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is `"era"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[Type]]: _p_, [[Value]]: _fv_ } as a new element of the list _result_.
-          1. Else if _p_ is equal `"ampm"`, then:
+          1. Else if _p_ is equal `"ampm"`, then
             1. Let _v_ be _tm_.[[hour]].
-            1. If _v_ is greater than 11, then:
-              1. Let _fv_ be an implementation and locale dependent String value representing "post meridiem";
+            1. If _v_ is greater than 11, then
+              1. Let _fv_ be an implementation and locale dependent String value representing `"post meridiem"`.
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing `"ante meridiem"`.
             1. Add new part record { [[Type]]: `"dayPeriod"`, [[Value]]: _fv_ } as a new element of the list _result_.
@@ -308,7 +308,7 @@
             1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
-        1. If _nextIndex_ is less than _length_, then:
+        1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
           1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
         1. Return _result_.
@@ -334,14 +334,14 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be the empty String.
-        1. For each _part_ in _parts_, do:
+        1. For each _part_ in _parts_, do
           1. Set _result_ to a String value produced by concatenating _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
 
     </emu-clause>
 
-    <emu-clause id="sec-formatdatetimetoparts" aoid="FormatDateTimeToparts">
+    <emu-clause id="sec-formatdatetimetoparts" aoid="FormatDateTimeToParts">
       <h1>FormatDateTimeToParts ( _dateTimeFormat_, _x_ )</h1>
 
       <p>
@@ -352,7 +352,7 @@
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do:
+        1. For each _part_ in _parts_, do
           1. Let _O_ be ObjectCreate(%ObjectPrototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, `"type"`, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, `"value"`, _part_.[[Value]]).
@@ -425,7 +425,7 @@
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%) is *true*, then
-          1. Perform ? DefineOwnPropertyOrThrow(_this_, Intl.[[FallbackSymbol]], { [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Perform ? DefinePropertyOrThrow(_this_, Intl.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
@@ -638,7 +638,7 @@
       <li>[[NumberingSystem]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour *0* and go up to *11* and *23* respectively. `"h12"` and `"h24"` start with hour *1* and go up to *12* and *24*. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour 0 and go up to 11 and 23 respectively. `"h12"` and `"h24"` start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 

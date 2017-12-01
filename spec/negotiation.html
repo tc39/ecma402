@@ -79,7 +79,7 @@
 
       <emu-alg>
         1. Let _candidate_ be _locale_.
-        1. Repeat
+        1. Repeat,
           1. If _availableLocales_ contains an element equal to _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of `"-"` (U+002D) within _candidate_. If that character does not occur, return *undefined*.
           1. If _pos_ ≥ 2 and the character `"-"` occurs at index _pos_-2 of candidate, decrease _pos_ by 2.
@@ -96,7 +96,7 @@
 
       <emu-alg>
         1. Let _result_ be a new Record.
-        1. Repeat for each element _locale_ of _requestedLocales_ in List order,
+        1. For each element _locale_ of _requestedLocales_ in List order, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, then
@@ -183,7 +183,7 @@
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
         1. Let _supportedExtension_ be `"-u"`.
-        1. Repeat for each element _key_ of _relevantExtensionKeys_ in List order,
+        1. For each element _key_ of _relevantExtensionKeys_ in List order, do
           1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
           1. Assert: Type(_foundLocaleData_) is Record.
           1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_&gt;]].
@@ -237,7 +237,7 @@
 
       <emu-alg>
         1. Let _subset_ be a new empty List.
-        1. Repeat for each element _locale_ of _requestedLocales_ in List order,
+        1. For each element _locale_ of _requestedLocales_ in List order, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
@@ -271,7 +271,7 @@
           1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Let _subset_ be CreateArrayFromList(_supportedLocales_).
         1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
-        1. Repeat for each element _P_ of _keys_ in List order,
+        1. For each element _P_ of _keys_ in List order, do
           1. Let _desc_ be PropertyDescriptor { [[Configurable]]: *false*, [[Writable]]: *false* }.
           1. Perform ! DefinePropertyOrThrow(_subset_, _P_, _desc_).
         1. Return _subset_.
