@@ -568,9 +568,6 @@
     <p>
       The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormatPrototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
     </p>
-    <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedNumberFormat]] internal slot.
-    </p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
@@ -631,11 +628,77 @@
       <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object. This function initially invokes the internal algorithm UnwrapNumberFormat to get the %NumberFormat% object on which to operate.
+        This function provides access to the locale and formatting options computed during initialization of the object.
       </p>
-      <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots have the value *undefined* are not assigned.
-      </p>
+
+      <emu-alg>
+        1. Let _nf_ be *this* value.
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-numberformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of NumberFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>"locale"</td>
+          </tr>
+          <tr>
+            <td>[[NumberingSystem]]</td>
+            <td>"numberingSystem"</td>
+          </tr>
+          <tr>
+            <td>[[Style]]</td>
+            <td>"style"</td>
+          </tr>
+          <tr>
+            <td>[[Currency]]</td>
+            <td>"currency"</td>
+          </tr>
+          <tr>
+            <td>[[CurrencyDisplay]]</td>
+            <td>"currencyDisplay"</td>
+          </tr>
+          <tr>
+            <td>[[MinimumIntegerDigits]]</td>
+            <td>"minimumIntegerDigits"</td>
+          </tr>
+          <tr>
+            <td>[[MinimumFractionDigits]]</td>
+            <td>"minimumFractionDigits"</td>
+          </tr>
+          <tr>
+            <td>[[MaximumFractionDigits]]</td>
+            <td>"maximumFractionDigits"</td>
+          </tr>
+          <tr>
+            <td>[[MinimumSignificantDigits]]</td>
+            <td>"minimumSignificantDigits"</td>
+          </tr>
+          <tr>
+            <td>[[MaximumSignificantDigits]]</td>
+            <td>"maximumSignificantDigits"</td>
+          </tr>
+          <tr>
+            <td>[[UseGrouping]]</td>
+            <td>"useGrouping"</td>
+          </tr>
+        </table>
+      </emu-table>
     </emu-clause>
   </emu-clause>
 
