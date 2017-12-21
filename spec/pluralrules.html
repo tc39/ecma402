@@ -23,7 +23,8 @@
         1. Let _t_ be ? GetOption(_options_, `"type"`, `"string"`, &laquo; `"cardinal"`, `"ordinal"` &raquo;, `"cardinal"`).
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatOptions(_pluralRules_, _options_, *0*, *3*).
-        1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_).
+        1. Let _localeData_ be %PluralRules%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to the value of _r_.[[locale]].
         1. Let _pluralCategories_ be a List of Strings representing the possible results of plural selection.
         1. Set _pluralRules_.[[PluralCategories]] to CreateArrayFromList(_pluralCategories_).
@@ -213,6 +214,10 @@
       <emu-note>
         Unicode Technical Standard 35 describes no locale extension keys that are relevant to the pluralization process.
       </emu-note>
+
+      <p>
+        The value of the [[LocaleData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
 
       <emu-note>
         It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
