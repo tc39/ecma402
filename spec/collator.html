@@ -11,43 +11,7 @@
       <h1>InitializeCollator ( _collator_, _locales_, _options_ )</h1>
 
       <p>
-        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a *Collator* object.
-      </p>
-
-      <p>
-        Several steps in the algorithm use values from the following table, which associates Unicode locale extension keys, internal slots, property names, types, and allowable values:
-      </p>
-
-      <emu-table id="table-collator-options">
-        <emu-caption>Collator options settable through extension keys, internal slots and options properties</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Key</th>
-              <th>Internal Slot</th>
-              <th>Property</th>
-              <th>Type</th>
-              <th>Values</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>kn</td>
-            <td>[[Numeric]]</td>
-            <td>`"numeric"`</td>
-            <td>`"boolean"`</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>kf</td>
-            <td>[[CaseFirst]]</td>
-            <td>`"caseFirst"`</td>
-            <td>`"string"`</td>
-            <td>`"upper"`, `"lower"`, `"false"`</td>
-          </tr>
-        </table>
-      </emu-table>
-      <p>
-        The following steps are taken:
+        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a *Collator* object. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -65,27 +29,22 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. For each row in <emu-xref href="#table-collator-options"></emu-xref>, except the header row, do
-          1. Let _key_ be the name given in the Key column of the row.
-          1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _type_ be the string given in the Type column of the row.
-          1. Let _list_ be a List containing the Strings given in the Values column of the row, or *undefined* if no strings are given.
-          1. Let _value_ be ? GetOption(_options_, _prop_, _type_, _list_, *undefined*).
-          1. If the string given in the Type column of the row is `"boolean"` and _value_ is not *undefined*, then
-            1. Let _value_ be ! ToString(_value_).
-          1. Set _opt_.[[&lt;_key_&gt;]] to _value_.
+        1. Let _numeric_ be ? GetOption(_options_, `"numeric"`, `"boolean"`, *undefined*, *undefined*).
+        1. If _numeric_ is not *undefined*, then
+          1. Let _numeric_ be ! ToString(_numeric_).
+        1. Set _opt_.[[kn]] to _numeric_.
+        1. Let _caseFirst_ be ? GetOption(_options_, `"caseFirst"`, `"string"`, &laquo; `"upper"`, `"lower"`, `"false"` &raquo;, *undefined*).
+        1. Set _opt_.[[kf]] to _caseFirst_.
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[Locale]] to _r_.[[locale]].
-        1. For each element _key_ of _relevantExtensionKeys_ in List order, do
-          1. If _key_ is `"co"`, then
-            1. Let _value_ be _r_.[[co]].
-            1. If _value_ is *null*, let _value_ be `"default"`.
-            1. Set _collator_.[[Collation]] to _value_.
-          1. Else use the row of <emu-xref href="#table-collator-options"></emu-xref> that contains _key_ in the Key column
-            1. Let _value_ be _r_.[[&lt;_key_&gt;]].
-            1. If the name given in the Type column of the row is `"boolean"`, let _value_ be SameValue(_value_, `"true"`).
-            1. Set _collator_'s internal slot whose name is the Internal Slot column of the row to _value_.
+        1. Let _collation_ be _r_.[[co]].
+        1. If _collation_ is *null*, let _collation_ be `"default"`.
+        1. Set _collator_.[[Collation]] to _collation_.
+        1. If _relevantExtensionKeys_ contains `"kn"`, then
+          1. Set _collator_.[[Numeric]] to ! SameValue(_r_.[[kn]], `"true"`).
+        1. If _relevantExtensionKeys_ contains `"kf"`, then
+          1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _sensitivity_ be ? GetOption(_options_, `"sensitivity"`, `"string"`, &laquo; `"base"`, `"accent"`, `"case"`, `"variant"` &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is `"sort"`, then
@@ -312,14 +271,11 @@
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
           1. Let _p_ be the Property value of the current row.
-          1. If <emu-xref href="#table-collator-options"></emu-xref> has a row that contains _p_ in the Property column, then
-            1. Let _extensionKey_ be the Key value of the row in <emu-xref href="#table-collator-options"></emu-xref>.
-            1. If %Collator%.[[RelevantExtensionKeys]] contains _extensionKey_, then
-              1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
-            1. Else,
+          1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If the current row has an Extension Key value, then
+            1. Let _extensionKey_ be the Extension Key value of the current row.
+            1. If %Collator%.[[RelevantExtensionKeys]] does not contain _extensionKey_, then
               1. Let _v_ be *undefined*.
-          1. Else,
-            1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
@@ -332,35 +288,43 @@
             <tr>
               <th>Internal Slot</th>
               <th>Property</th>
+              <th>Extension Key</th>
             </tr>
           </thead>
           <tr>
             <td>[[Locale]]</td>
             <td>`"locale"`</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Usage]]</td>
             <td>`"usage"`</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Sensitivity]]</td>
             <td>`"sensitivity"`</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[IgnorePunctuation]]</td>
             <td>`"ignorePunctuation"`</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Collation]]</td>
             <td>`"collation"`</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Numeric]]</td>
             <td>`"numeric"`</td>
+            <td>kn</td>
           </tr>
           <tr>
             <td>[[CaseFirst]]</td>
             <td>`"caseFirst"`</td>
+            <td>kf</td>
           </tr>
         </table>
       </emu-table>
@@ -391,12 +355,12 @@
     </ul>
 
     <p>
-      Intl.Collator instances also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-options"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:
+      Intl.Collator instances also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:
     </p>
 
     <ul>
       <li>[[Numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-      <li>[[CaseFirst]] is a String value; allowed values are specified in <emu-xref href="#table-collator-options"></emu-xref>.</li>
+      <li>[[CaseFirst]] is one of the String values `"upper"`, `"lower"`, or `"false"`.</li>
     </ul>
 
     <p>
