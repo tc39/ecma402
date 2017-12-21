@@ -447,14 +447,17 @@
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
         existing Intl objects.
       </p>
+      <emu-alg>
+        1. Assert: Type(_nf_) is Object.
+      </emu-alg>
       <emu-normative-optional>
       <emu-alg>
-        1. If Type(_nf_) is Object and _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
-          1. Let _nf_ be ? Get(_nf_, Intl.[[FallbackSymbol]]).
+        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
+          1. Let _nf_ be ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
-        2. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
+        3. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
           1. Throw a *TypeError* exception.
         1. Return _nf_.
       </emu-alg>
@@ -485,7 +488,7 @@
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, Intl.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
