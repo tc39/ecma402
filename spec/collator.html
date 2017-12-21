@@ -56,9 +56,9 @@
           1. Let _options_ be ObjectCreate(*null*).
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
-        1. Let _u_ be ? GetOption(_options_, `"usage"`, `"string"`, &laquo; `"sort"`, `"search"` &raquo;, `"sort"`).
-        1. Set _collator_.[[Usage]] to _u_.
-        1. If _u_ is `"sort"`, then
+        1. Let _usage_ be ? GetOption(_options_, `"usage"`, `"string"`, &laquo; `"sort"`, `"search"` &raquo;, `"sort"`).
+        1. Set _collator_.[[Usage]] to _usage_.
+        1. If _usage_ is `"sort"`, then
           1. Let _localeData_ be %Collator%.[[SortLocaleData]].
         1. Else,
           1. Let _localeData_ be %Collator%.[[SearchLocaleData]].
@@ -86,17 +86,17 @@
             1. Let _value_ be _r_.[[&lt;_key_&gt;]].
             1. If the name given in the Type column of the row is `"boolean"`, let _value_ be SameValue(_value_, `"true"`).
             1. Set _collator_'s internal slot whose name is the Internal Slot column of the row to _value_.
-        1. Let _s_ be ? GetOption(_options_, `"sensitivity"`, `"string"`, &laquo; `"base"`, `"accent"`, `"case"`, `"variant"` &raquo;, *undefined*).
-        1. If _s_ is *undefined*, then
-          1. If _u_ is `"sort"`, then
-            1. Let _s_ be `"variant"`.
+        1. Let _sensitivity_ be ? GetOption(_options_, `"sensitivity"`, `"string"`, &laquo; `"base"`, `"accent"`, `"case"`, `"variant"` &raquo;, *undefined*).
+        1. If _sensitivity_ is *undefined*, then
+          1. If _usage_ is `"sort"`, then
+            1. Let _sensitivity_ be `"variant"`.
           1. Else,
             1. Let _dataLocale_ be _r_.[[dataLocale]].
             1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-            1. Let _s_ be _dataLocaleData_.[[sensitivity]].
-        1. Set _collator_.[[Sensitivity]] to _s_.
-        1. Let _ip_ be ? GetOption(_options_, `"ignorePunctuation"`, `"boolean"`, *undefined*, *false*).
-        1. Set _collator_.[[IgnorePunctuation]] to _ip_.
+            1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
+        1. Set _collator_.[[Sensitivity]] to _sensitivity_.
+        1. Let _ignorePunctuation_ be ? GetOption(_options_, `"ignorePunctuation"`, `"boolean"`, *undefined*, *false*).
+        1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
       </emu-alg>
 
