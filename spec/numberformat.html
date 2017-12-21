@@ -103,11 +103,11 @@
     <emu-clause id="sec-number-format-functions">
       <h1>Number Format Functions</h1>
 
-      <p>A Number format function is an anonymous built-in function.</p>
-      <p>When a Number format function is called with optional argument _value_, the following steps are taken:</p>
+      <p>A Number format function is an anonymous built-in function that has a [[NumberFormat]] internal slot.</p>
+      <p>When a Number format function _F_ is called with optional argument _value_, the following steps are taken:</p>
 
       <emu-alg>
-        1. Let _nf_ be the *this* value.
+        1. Let _nf_ be _F_.[[NumberFormat]].
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumber(_value_).
@@ -601,9 +601,8 @@
         1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, &laquo; &raquo;).
-          1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
-          1. Set _nf_.[[BoundFormat]] to _bf_.
+          1. Set _F_.[[NumberFormat]] to _nf_.
+          1. Set _nf_.[[BoundFormat]] to _F_.
         1. Return _nf_.[[BoundFormat]].
       </emu-alg>
     </emu-clause>
