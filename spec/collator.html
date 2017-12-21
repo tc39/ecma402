@@ -185,9 +185,8 @@
         1. If _collator_ does not have an [[InitializedCollator]] internal slot, throw a *TypeError* exception.
         1. If _collator_.[[BoundCompare]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
-          1. Let _bc_ be BoundFunctionCreate(_F_, _collator_, &laquo; &raquo;).
-          1. Perform ! DefinePropertyOrThrow(_bc_, `"length"`, PropertyDescriptor {[[Value]]: 2, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
-          1. Set _collator_.[[BoundCompare]] to _bc_.
+          1. Set _F_.[[Collator]] to _collator_.
+          1. Set _collator_.[[BoundCompare]] to _F_.
         1. Return _collator_.[[BoundCompare]].
       </emu-alg>
 
@@ -198,11 +197,11 @@
       <emu-clause id="sec-collator-compare-functions">
         <h1>Collator Compare Functions</h1>
 
-        <p>A Collator compare function is an anonymous built-in function.</p>
-        <p>When a Collator compare function is called with arguments _x_ and _y_, the following steps are taken:</p>
+        <p>A Collator compare function is an anonymous built-in function that has a [[Collator]] internal slot.</p>
+        <p>When a Collator compare function _F_ is called with arguments _x_ and _y_, the following steps are taken:</p>
 
         <emu-alg>
-          1. Let _collator_ be the *this* value.
+          1. Let _collator_ be _F_.[[Collator]].
           1. Assert: Type(_collator_) is Object and _collator_ has an [[InitializedCollator]] internal slot.
           1. If _x_ is not provided, let _x_ be *undefined*.
           1. If _y_ is not provided, let _y_ be *undefined*.
@@ -210,6 +209,8 @@
           1. Let _Y_ be ? ToString(_y_).
           1. Return CompareStrings(_collator_, _X_, _Y_).
         </emu-alg>
+
+        <p>The `length` property of a Collator compare function is 2.</p>
       </emu-clause>
 
       <emu-clause id="sec-collator-comparestrings" aoid="CompareStrings">
