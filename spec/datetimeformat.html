@@ -79,7 +79,10 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _hour12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
         1. Let _hourCycle_ be ? GetOption(_options_, `"hourCycle"`, `"string"`, &laquo; `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo;, *undefined*).
+        1. If _hour12_ is not *undefined*, then
+          1. Let _hourCycle_ be *null*.
         1. Set _opt_.[[hc]] to _hourCycle_.
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
@@ -114,7 +117,6 @@
           1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
-        1. Let _hour12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
         1. If _dateTimeFormat_.[[Hour]] is not *undefined*, then
           1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
           1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
