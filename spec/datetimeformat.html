@@ -79,11 +79,11 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _hr12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
-        1. Let _hc_ be ? GetOption(_options_, `"hourCycle"`, `"string"`, &laquo; `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo;, *undefined*).
-        1. If _hr12_ is not *undefined*, then
-          1. Let _hc_ be *null*.
-        1. Set _opt_.[[hc]] to _hc_.
+        1. Let _hour12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
+        1. Let _hourCycle_ be ? GetOption(_options_, `"hourCycle"`, `"string"`, &laquo; `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo;, *undefined*).
+        1. If _hour12_ is not *undefined*, then
+          1. Let _hourCycle_ be *null*.
+        1. Set _opt_.[[hc]] to _hourCycle_.
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
@@ -91,15 +91,15 @@
         1. Set _dateTimeFormat_.[[HourCycle]] to _r_.[[hc]].
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _tz_ be ? Get(_options_, `"timeZone"`).
-        1. If _tz_ is not *undefined*, then
-          1. Let _tz_ be ? ToString(_tz_).
-          1. If the result of IsValidTimeZoneName(_tz_) is *false*, then
+        1. Let _timeZone_ be ? Get(_options_, `"timeZone"`).
+        1. If _timeZone_ is not *undefined*, then
+          1. Let _timeZone_ be ? ToString(_timeZone_).
+          1. If the result of IsValidTimeZoneName(_timeZone_) is *false*, then
             1. Throw a *RangeError* exception.
-          1. Let _tz_ be CanonicalizeTimeZoneName(_tz_).
+          1. Let _timeZone_ be CanonicalizeTimeZoneName(_timeZone_).
         1. Else,
-          1. Let _tz_ be DefaultTimeZone().
-        1. Set _dateTimeFormat_.[[TimeZone]] to _tz_.
+          1. Let _timeZone_ be DefaultTimeZone().
+        1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
         1. Let _opt_ be a new Record.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
           1. Let _prop_ be the name given in the Property column of the row.
@@ -122,14 +122,14 @@
           1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
           1. If _hc_ is *null*, then
             1. Set _hc_ to _hcDefault_.
-          1. If _hr12_ is not *undefined*, then
-            1. If _hr12_ is *true*, then
+          1. If _hour12_ is not *undefined*, then
+            1. If _hour12_ is *true*, then
               1. If _hcDefault_ is `"h11"` or `"h23"`, then
                 1. Set _hc_ to `"h11"`.
               1. Else,
                 1. Set _hc_ to `"h12"`.
             1. Else,
-              1. Assert: _hr12_ is *false*.
+              1. Assert: _hour12_ is *false*.
               1. If _hcDefault_ is `"h11"` or `"h23"`, then
                 1. Set _hc_ to `"h23"`.
               1. Else,
@@ -141,7 +141,7 @@
             1. Let _pattern_ be _bestFormat_.[[pattern]].
         1. Else,
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
-          1. Let _pattern_ be Get(_bestFormat_, `"pattern"`).
+          1. Let _pattern_ be _bestFormat_.[[pattern]].
         1. Set _dateTimeFormat_.[[Pattern]] to _pattern_.
         1. Return _dateTimeFormat_.
       </emu-alg>
@@ -229,11 +229,11 @@
     <emu-clause id="sec-datetime-format-functions">
       <h1>DateTime Format Functions</h1>
 
-      <p>A DateTime format function is an anonymous built-in function.</p>
-      <p>When a DateTime format function is called with optional argument _date_, the following steps are taken:</p>
+      <p>A DateTime format function is an anonymous built-in function that has a [[DateTimeFormat]] internal slot.</p>
+      <p>When a DateTime format function _F_ is called with optional argument _date_, the following steps are taken:</p>
 
       <emu-alg>
-        1. Let _dtf_ be the *this* value.
+        1. Let _dtf_ be _F_.[[DateTimeFormat]].
         1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be Call(%Date_now%, *undefined*).
@@ -241,10 +241,6 @@
           1. Let _x_ be ? ToNumber(_date_).
         1. Return FormatDateTime(_dtf_, _x_).
       </emu-alg>
-
-      <emu-note>
-        The function returned by [[Get]] is bound to this DateTimeFormat object so that it can be passed directly to Array.prototype.map or other functions.
-      </emu-note>
 
       <p>
         The `length` property of a DateTime format function is 1.
@@ -259,7 +255,8 @@
       </p>
 
       <emu-alg>
-        1. If _x_ is not a finite Number, throw a *RangeError* exception.
+        1. Let _x_ be TimeClip(_x_).
+        1. If _x_ is *NaN*, throw a *RangeError* exception.
         1. Let _locale_ be _dateTimeFormat_.[[Locale]].
         1. Let _nfOptions_ be ObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, `"useGrouping"`, *false*).
@@ -389,10 +386,13 @@
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
         existing Intl objects.
       </p>
+      <emu-alg>
+        1. Assert: Type(_dtf_) is Object.
+      </emu-alg>
       <emu-normative-optional>
       <emu-alg>
-        1. If Type(_dtf_) is Object and _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is *true*, then
-          1. Let _dtf_ be ? Get(_dtf_, Intl.[[FallbackSymbol]]).
+        2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is *true*, then
+          1. Let _dtf_ be ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
@@ -427,7 +427,7 @@
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %DateTimeFormat%) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, Intl.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
@@ -535,10 +535,6 @@
       The Intl.DateTimeFormat prototype object is itself an ordinary object. <dfn>%DateTimeFormatPrototype%</dfn> is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.
     </p>
 
-    <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of the Intl.DateTimeFormat prototype object, the phrase "this DateTimeFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedDateTimeFormat]] internal slot.
-    </p>
-
     <emu-clause id="sec-intl.datetimeformat.prototype.constructor">
       <h1>Intl.DateTimeFormat.prototype.constructor</h1>
 
@@ -572,11 +568,14 @@
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _dft_, &laquo; &raquo;).
-          1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
-          1. Set _dtf_.[[BoundFormat]] to _bf_.
+          1. Set _F_.[[DateTimeFormat]] to _dtf_.
+          1. Set _dtf_.[[BoundFormat]] to _F_.
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
+
+      <emu-note>
+        The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
@@ -602,12 +601,99 @@
       <h1>Intl.DateTimeFormat.prototype.resolvedOptions ()</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object. This function initially invokes the internal algorithm UnwrapDateTimeFormat to get the %DateTimeFormat% object on which to operate.
+        This function provides access to the locale and formatting options computed during initialization of the object.
       </p>
 
-      <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this DateTimeFormat object (see <emu-xref href="#sec-properties-of-intl-datetimeformat-instances"></emu-xref>): locale, calendar, numberingSystem, timeZone, hourCycle, weekday, era, year, month, day, hour, minute, second, and timeZoneName. Properties whose corresponding internal slots have the value *undefined* are not assigned.
-      </p>
+      <emu-alg>
+        1. Let _dtf_ be *this* value.
+        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
+        1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+          1. Let _p_ be the Property value of the current row.
+          1. If _p_ is `"hour12"`, then
+            1. Let _hc_ be _dtf_.[[HourCycle]].
+            1. If _hc_ is `"h11"` or `"h12"`, let _v_ be *true*.
+            1. Else if, _hc_ is `"h23"` or `"h24"`, let _v_ be *false*.
+            1. Else, let _v_ be *undefined*.
+          1. Else,
+            1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-datetimeformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of DateTimeFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>`"locale"`</td>
+          </tr>
+          <tr>
+            <td>[[Calendar]]</td>
+            <td>`"calendar"`</td>
+          </tr>
+          <tr>
+            <td>[[NumberingSystem]]</td>
+            <td>`"numberingSystem"`</td>
+          </tr>
+          <tr>
+            <td>[[TimeZone]]</td>
+            <td>`"timeZone"`</td>
+          </tr>
+          <tr>
+            <td>[[HourCycle]]</td>
+            <td>`"hourCycle"`</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>`"hour12"`</td>
+          </tr>
+          <tr>
+            <td>[[Weekday]]</td>
+            <td>`"weekday"`</td>
+          </tr>
+          <tr>
+            <td>[[Era]]</td>
+            <td>`"era"`</td>
+          </tr>
+          <tr>
+            <td>[[Year]]</td>
+            <td>`"year"`</td>
+          </tr>
+          <tr>
+            <td>[[Month]]</td>
+            <td>`"month"`</td>
+          </tr>
+          <tr>
+            <td>[[Day]]</td>
+            <td>`"day"`</td>
+          </tr>
+          <tr>
+            <td>[[Hour]]</td>
+            <td>`"hour"`</td>
+          </tr>
+          <tr>
+            <td>[[Minute]]</td>
+            <td>`"minute"`</td>
+          </tr>
+          <tr>
+            <td>[[Second]]</td>
+            <td>`"second"`</td>
+          </tr>
+          <tr>
+            <td>[[TimeZoneName]]</td>
+            <td>`"timeZoneName"`</td>
+          </tr>
+        </table>
+      </emu-table>
 
       <p>
         For web compatibility reasons, if the property hourCycle is set, the hour12 property should be set to *true* when hourCycle is `"h11"` or `"h12"`, or to *false* when hourCycle is `"h23"` or `"h24"`.
@@ -615,6 +701,10 @@
 
       <emu-note>
         In this version of the ECMAScript 2018 Internationalization API, the timeZone property will be the name of the default time zone if no timeZone property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the timeZone property *undefined* in this case.
+      </emu-note>
+
+      <emu-note>
+        For compatibility with versions prior to the fifth edition, the `"hour12"` property is set in addition to the `"hourCycle"` property.
       </emu-note>
     </emu-clause>
   </emu-clause>

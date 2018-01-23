@@ -56,16 +56,16 @@
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _style_ be ? GetOption(_options_, `"style"`, `"string"`, &laquo; `"decimal"`, `"percent"`, `"currency"` &raquo;, `"decimal"`).
         1. Set _numberFormat_.[[Style]] to _style_.
-        1. Let _c_ be ? GetOption(_options_, `"currency"`, `"string"`, *undefined*, *undefined*).
-        1. If _c_ is not *undefined*, then
-          1. If the result of IsWellFormedCurrencyCode(_c_) is *false*, throw a *RangeError* exception.
-        1. If _style_ is `"currency"` and _c_ is *undefined*, throw a *TypeError* exception.
+        1. Let _currency_ be ? GetOption(_options_, `"currency"`, `"string"`, *undefined*, *undefined*).
+        1. If _currency_ is not *undefined*, then
+          1. If the result of IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
+        1. If _style_ is `"currency"` and _currency_ is *undefined*, throw a *TypeError* exception.
         1. If _style_ is `"currency"`, then
-          1. Let _c_ be the result of converting _c_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Set _numberFormat_.[[Currency]] to _c_.
-          1. Let _cDigits_ be CurrencyDigits(_c_).
-        1. Let _cd_ be ? GetOption(_options_, `"currencyDisplay"`, `"string"`, &laquo; `"code"`, `"symbol"`, `"name"` &raquo;, `"symbol"`).
-        1. If _style_ is `"currency"`, set _numberFormat_.[[CurrencyDisplay]] to _cd_.
+          1. Let _currency_ be the result of converting _currency_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Set _numberFormat_.[[Currency]] to _currency_.
+          1. Let _cDigits_ be CurrencyDigits(_currency_).
+        1. Let _currencyDisplay_ be ? GetOption(_options_, `"currencyDisplay"`, `"string"`, &laquo; `"code"`, `"symbol"`, `"name"` &raquo;, `"symbol"`).
+        1. If _style_ is `"currency"`, set _numberFormat_.[[CurrencyDisplay]] to _currencyDisplay_.
         1. If _style_ is `"currency"`, then
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
@@ -76,12 +76,12 @@
           1. Else,
             1. Let _mxfdDefault_ be 3.
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
-        1. Let _g_ be ? GetOption(_options_, `"useGrouping"`, `"boolean"`, *undefined*, *true*).
-        1. Set _numberFormat_.[[UseGrouping]] to _g_.
+        1. Let _useGrouping_ be ? GetOption(_options_, `"useGrouping"`, `"boolean"`, *undefined*, *true*).
+        1. Set _numberFormat_.[[UseGrouping]] to _useGrouping_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _patterns_ be _dataLocaleData_.[[patterns]].
         1. Assert: _patterns_ is a record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
-        1. Let _stylePatterns_ be _patterns_.[[&lt;_s_&gt;]].
+        1. Let _stylePatterns_ be _patterns_.[[&lt;_style_&gt;]].
         1. Set _numberFormat_.[[PositivePattern]] to _stylePatterns_.[[positivePattern]].
         1. Set _numberFormat_.[[NegativePattern]] to _stylePatterns_.[[negativePattern]].
         1. Return _numberFormat_.
@@ -103,11 +103,11 @@
     <emu-clause id="sec-number-format-functions">
       <h1>Number Format Functions</h1>
 
-      <p>A Number format function is an anonymous built-in function.</p>
-      <p>When a Number format function is called with optional argument _value_, the following steps are taken:</p>
+      <p>A Number format function is an anonymous built-in function that has a [[NumberFormat]] internal slot.</p>
+      <p>When a Number format function _F_ is called with optional argument _value_, the following steps are taken:</p>
 
       <emu-alg>
-        1. Let _nf_ be the *this* value.
+        1. Let _nf_ be _F_.[[NumberFormat]].
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumber(_value_).
@@ -447,14 +447,17 @@
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
         existing Intl objects.
       </p>
+      <emu-alg>
+        1. Assert: Type(_nf_) is Object.
+      </emu-alg>
       <emu-normative-optional>
       <emu-alg>
-        1. If Type(_nf_) is Object and _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
-          1. Let _nf_ be ? Get(_nf_, Intl.[[FallbackSymbol]]).
+        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
+          1. Let _nf_ be ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
-        2. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
+        3. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
           1. Throw a *TypeError* exception.
         1. Return _nf_.
       </emu-alg>
@@ -485,7 +488,7 @@
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and ? InstanceofOperator(_this_, %NumberFormat%) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, Intl.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
@@ -568,9 +571,6 @@
     <p>
       The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormatPrototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
     </p>
-    <p>
-      In the following descriptions of functions that are properties or [[Get]] attributes of properties of %NumberFormatPrototype%, the phrase "this NumberFormat object" refers to the object that is the this value for the invocation of the function; a *TypeError* exception is thrown if the this value is not an object or an object that does not have an [[InitializedNumberFormat]] internal slot.
-    </p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
@@ -604,9 +604,8 @@
         1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
-          1. Let _bf_ be BoundFunctionCreate(_F_, _nf_, &laquo; &raquo;).
-          1. Perform ! DefinePropertyOrThrow(_bf_, `"length"`, PropertyDescriptor {[[Value]]: 1, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true*}).
-          1. Set _nf_.[[BoundFormat]] to _bf_.
+          1. Set _F_.[[NumberFormat]] to _nf_.
+          1. Set _nf_.[[BoundFormat]] to _F_.
         1. Return _nf_.[[BoundFormat]].
       </emu-alg>
     </emu-clause>
@@ -631,11 +630,77 @@
       <h1>Intl.NumberFormat.prototype.resolvedOptions ()</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object. This function initially invokes the internal algorithm UnwrapNumberFormat to get the %NumberFormat% object on which to operate.
+        This function provides access to the locale and formatting options computed during initialization of the object.
       </p>
-      <p>
-        The function returns a new object whose properties and attributes are set as if constructed by an object literal assigning to each of the following properties the value of the corresponding internal slot of this NumberFormat object (see <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>): locale, numberingSystem, style, currency, currencyDisplay, minimumIntegerDigits, minimumFractionDigits, maximumFractionDigits, minimumSignificantDigits, maximumSignificantDigits, and useGrouping. Properties whose corresponding internal slots have the value *undefined* are not assigned.
-      </p>
+
+      <emu-alg>
+        1. Let _nf_ be *this* value.
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-numberformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of NumberFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>`"locale"`</td>
+          </tr>
+          <tr>
+            <td>[[NumberingSystem]]</td>
+            <td>`"numberingSystem"`</td>
+          </tr>
+          <tr>
+            <td>[[Style]]</td>
+            <td>`"style"`</td>
+          </tr>
+          <tr>
+            <td>[[Currency]]</td>
+            <td>`"currency"`</td>
+          </tr>
+          <tr>
+            <td>[[CurrencyDisplay]]</td>
+            <td>`"currencyDisplay"`</td>
+          </tr>
+          <tr>
+            <td>[[MinimumIntegerDigits]]</td>
+            <td>`"minimumIntegerDigits"`</td>
+          </tr>
+          <tr>
+            <td>[[MinimumFractionDigits]]</td>
+            <td>`"minimumFractionDigits"`</td>
+          </tr>
+          <tr>
+            <td>[[MaximumFractionDigits]]</td>
+            <td>`"maximumFractionDigits"`</td>
+          </tr>
+          <tr>
+            <td>[[MinimumSignificantDigits]]</td>
+            <td>`"minimumSignificantDigits"`</td>
+          </tr>
+          <tr>
+            <td>[[MaximumSignificantDigits]]</td>
+            <td>`"maximumSignificantDigits"`</td>
+          </tr>
+          <tr>
+            <td>[[UseGrouping]]</td>
+            <td>`"useGrouping"`</td>
+          </tr>
+        </table>
+      </emu-table>
     </emu-clause>
   </emu-clause>
 
