@@ -327,7 +327,7 @@
       </emu-table>
 
       <emu-note>
-        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ (“ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ (“ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.
+        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ ("ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ ("ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.
       </emu-note>
 
       <emu-note>
@@ -556,7 +556,7 @@
 
       <ul>
         <li>The list that is the value of the `"nu"` field of any locale field of [[LocaleData]] must not include the values `"native"`, `"traditio"`, or `"finance"`.</li>
-        <li>[[LocaleData]][locale] must have a patterns field for all locale values. The value of this field must be a record, which must have fields with the names of the three number format styles: `"decimal"`, `"percent"`, and `"currency"`. Each of these fields in turn must be a record with the fields positivePattern and negativePattern. The value of these fields must be string values that must contain the substring `"{number}"` and may contain the substrings `"{plusSign}"`, and `"{minusSign}"`; the values within the percent field must also contain the substring `"{percentSign}"`; the values within the currency field must also contain the substring `"{currency}"`. The pattern strings must not contain any characters in the General Category “Number, decimal digit" as specified by the Unicode Standard.</li>
+        <li>[[LocaleData]][locale] must have a patterns field for all locale values. The value of this field must be a record, which must have fields with the names of the three number format styles: `"decimal"`, `"percent"`, and `"currency"`. Each of these fields in turn must be a record with the fields positivePattern and negativePattern. The value of these fields must be string values that must contain the substring `"{number}"` and may contain the substrings `"{plusSign}"`, and `"{minusSign}"`; the values within the percent field must also contain the substring `"{percentSign}"`; the values within the currency field must also contain the substring `"{currency}"`. The pattern strings must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.</li>
       </ul>
 
       <emu-note>
@@ -721,7 +721,7 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[NumberingSystem]] is a String value with the “type” given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
+      <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[Style]] is one of the String values `"decimal"`, `"currency"`, or `"percent"`, identifying the number format style used.</li>
       <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the `"currency"` style. It is only used when [[Style]] has the value `"currency"`.</li>
       <li>[[CurrencyDisplay]] is one of the String values `"code"`, `"symbol"`, or `"name"`, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the `"currency"` style. It is only used when [[Style]] has the value `"currency"`.</li>
