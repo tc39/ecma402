@@ -161,7 +161,7 @@
             1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. If _p_ is equal `"number"`, then
-            1. If _x_ is *NaN*,
+            1. If _x_ is *NaN*, then
               1. Let _n_ be an ILD String value indicating the *NaN* value.
               1. Append a new Record { [[Type]]: `"nan"`, [[Value]]: _n_ } as the last element of _result_.
             1. Else if _x_ is not a finite Number,
@@ -181,7 +181,7 @@
               1. Else,
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
-              1. If the _numberFormat_.[[UseGrouping]] is *true*,
+              1. If the _numberFormat_.[[UseGrouping]] is *true*, then
                 1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_.
                 1. Assert: The number of elements in _groups_ List is greater than 0.

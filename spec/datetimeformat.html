@@ -158,12 +158,12 @@
         1. If _options_ is *undefined*, let _options_ be *null*; otherwise let _options_ be ? ToObject(_options_).
         1. Let _options_ be ObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
-        1. If _required_ is `"date"` or `"any"`,
+        1. If _required_ is `"date"` or `"any"`, then
           1. For each of the property names `"weekday"`, `"year"`, `"month"`, `"day"`, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _required_ is `"time"` or `"any"`,
+        1. If _required_ is `"time"` or `"any"`, then
           1. For each of the property names `"hour"`, `"minute"`, `"second"`, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
@@ -211,7 +211,7 @@
               1. Else if _delta_ = 1, decrease _score_ by _shortMorePenalty_.
               1. Else if _delta_ = -1, decrease _score_ by _shortLessPenalty_.
               1. Else if _delta_ = -2, decrease _score_ by _longLessPenalty_.
-          1. If _score_ > _bestScore_,
+          1. If _score_ > _bestScore_, then
             1. Let _bestScore_ be _score_.
             1. Let _bestFormat_ be _format_.
         1. Return _bestFormat_.
