@@ -63,7 +63,14 @@
           <td>`"timeZoneName"`</td>
           <td>`"short"`, `"long"`</td>
         </tr>
+        <tr>
+          <td>[[RelatedYear]]</td>
+          <td>`"relatedYear"`</td>
+          <td>`"2-digit"`, `"numeric"`</td>
+        </tr>
       </table>
+
+      <emu-note>[[RelatedYear]] represents the related Gregorian year for non-Gregorian calendars, for example as used in CLDR with the <a href="https://unicode.org/repos/cldr/trunk/specs/ldml/tr35-dates.html#dfst-year">`r` symbol</a>.</emu-note>
     </emu-table>
 
     <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
@@ -87,7 +94,8 @@
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale( %DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
-        1. Set _dateTimeFormat_.[[Calendar]] to _r_.[[ca]].
+        1. Let _calendar_ be _r_.[[ca]].
+        1. Set _dateTimeFormat_.[[Calendar]] to _calendar_.
         1. Set _dateTimeFormat_.[[HourCycle]] to _r_.[[hc]].
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
@@ -106,7 +114,7 @@
           1. Let _value_ be ? GetOption(_options_, _prop_, `"string"`, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _formats_ be _dataLocaleData_.[[formats]].
+        1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_calendar_&gt;]].
         1. Let _matcher_ be ? GetOption(_options_, `"formatMatcher"`, `"string"`, &laquo; `"basic"`, `"best fit"` &raquo;, `"best fit"`).
         1. If _matcher_ is `"basic"`, then
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
@@ -421,7 +429,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[RelatedYear]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -499,13 +507,13 @@
           The list that is the value of the `"nu"` field of any locale field of [[LocaleData]] must not include the values `"native"`, `"traditio"`, or `"finance"`.
         </li>
         <li>
-          [[LocaleData]][locale].hc must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values _locale_.
         </li>
         <li>
-          [[LocaleData]][locale] must have a hourCycle field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values.
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have an [[hourCycle]] field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values _locale_.
         </li>
         <li>
-          [[LocaleData]][locale] must have a formats field for all locale values. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field for all locale values _locale_. This formats field must have a [[&lt;_calendar_&gt;]] field for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
           <ul>
             <li>weekday, year, month, day, hour, minute, second</li>
             <li>weekday, year, month, day</li>
@@ -694,6 +702,10 @@
             <td>[[TimeZoneName]]</td>
             <td>`"timeZoneName"`</td>
           </tr>
+          <tr>
+            <td>[[RelatedYear]]</td>
+            <td>`"relatedYear"`</td>
+          </tr>
         </table>
       </emu-table>
 
@@ -731,7 +743,7 @@
       <li>[[Calendar]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
       <li>[[NumberingSystem]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
-      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[RelatedYear]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour 0 and go up to 11 and 23 respectively. `"h12"` and `"h24"` start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
