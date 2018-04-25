@@ -143,7 +143,7 @@
       </p>
 
       <emu-alg>
-        1. If _x_ is not *NaN* and _x_ < 0, then
+        1. If _x_ is not *NaN* and _x_ &lt; 0 or _x_ is *-0*, then
           1. Let _x_ be -_x_.
           1. Let _pattern_ be _numberFormat_.[[NegativePattern]].
         1. Else,
