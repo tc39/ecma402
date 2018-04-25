@@ -26,8 +26,6 @@
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to the value of _r_.[[locale]].
-        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pluralRules_.[[Locale]].
-        1. Set _pluralRules_.[[PluralCategories]] to CreateArrayFromList(_pluralCategories_).
         1. Return _pluralRules_.
       </emu-alg>
 
@@ -158,7 +156,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%PluralRulesPrototype%"`, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[PluralCategories]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, "%PluralRulesPrototype%", &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -285,6 +283,8 @@
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique string values, from the the list `"zero"`, `"one"`, `"two"`, `"few"`, `"many"` and `"other"`, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
+        1. Perform ! CreateDataProperty(_options_, `"pluralCategories"`, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
 
@@ -325,10 +325,6 @@
             <td>[[MaximumSignificantDigits]]</td>
             <td>`"maximumSignificantDigits"`</td>
           </tr>
-          <tr>
-            <td>[[PluralCategories]]</td>
-            <td>`"pluralCategories"`</td>
-          </tr>
         </table>
       </emu-table>
     </emu-clause>
@@ -355,7 +351,6 @@
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
-      <li>[[PluralCategories]] is an array of unique string values, from the the list `"zero"`, `"one"`, `"two"`, `"few"`, `"many"` and `"other"`, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.</li>
     </ul>
 
   </emu-clause>
