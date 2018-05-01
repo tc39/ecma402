@@ -158,7 +158,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, %PluralRulesPrototype%, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[PluralCategories]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%PluralRulesPrototype%"`, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[PluralCategories]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
