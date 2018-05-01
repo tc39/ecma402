@@ -110,8 +110,8 @@
         1. Let _nf_ be _F_.[[NumberFormat]].
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
-        1. Let _x_ be ? ToNumber(_value_).
-        1. Return FormatNumber(_nf_, _x_).
+        1. Let _x_ be ? ToNumeric(_value_).
+        1. Return FormatNumeric(_nf_, _x_).
       </emu-alg>
 
       <p>
@@ -119,11 +119,11 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumberstring" aoid="FormatNumberToString">
-      <h1>FormatNumberToString ( _intlObject_, _x_ )</h1>
+    <emu-clause id="sec-formatnumberstring" aoid="FormatNumericToString">
+      <h1>FormatNumericToString ( _intlObject_, _x_ )</h1>
 
       <p>
-        The FormatNumberToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number value), and returns _x_ as a string value with digits formatted according to the five formatting parameters.
+        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns _x_ as a string value with digits formatted according to the five formatting parameters.
       </p>
 
       <emu-alg>
@@ -139,7 +139,7 @@
       <h1>PartitionNumberPattern ( _numberFormat_, _x_ )</h1>
 
       <p>
-        The PartitionNumberPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), interprets _x_ as a numeric value, and creates the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
+        The PartitionNumberPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), interprets _x_ as a numeric value, and creates the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -164,12 +164,12 @@
             1. If _x_ is *NaN*, then
               1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
               1. Append a new Record { [[Type]]: `"nan"`, [[Value]]: _n_ } as the last element of _result_.
-            1. Else if _x_ is not a finite Number,
+            1. Else if _x_ is not a finite Number or BigInt,
               1. Let _n_ be an ILD String value indicating infinity.
               1. Append a new Record { [[Type]]: `"infinity"`, [[Value]]: _n_ } as the last element of _result_.
             1. Else,
               1. If _numberFormat_.[[Style]] is `"percent"`, let _x_ be 100 × _x_.
-              1. Let _n_ be FormatNumberToString(_numberFormat_, _x_).
+              1. Let _n_ be FormatNumericToString(_numberFormat_, _x_).
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the `"Numbering System"` column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the `"Digits"` column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
@@ -335,11 +335,11 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumber" aoid="FormatNumber">
-      <h1>FormatNumber( _numberFormat_, _x_ )</h1>
+    <emu-clause id="sec-formatnumber" aoid="FormatNumeric">
+      <h1>FormatNumeric( _numberFormat_, _x_ )</h1>
 
       <p>
-        The FormatNumber abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), and performs the following steps:
+        The FormatNumeric abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), and performs the following steps:
       </p>
 
       <emu-alg>
@@ -351,11 +351,11 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumbertoparts" aoid="FormatNumberToParts">
-      <h1>FormatNumberToParts( _numberFormat_, _x_ )</h1>
+    <emu-clause id="sec-formatnumbertoparts" aoid="FormatNumericToParts">
+      <h1>FormatNumericToParts( _numberFormat_, _x_ )</h1>
 
       <p>
-        The FormatNumberToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number value), and performs the following steps:
+        The FormatNumericToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), and performs the following steps:
       </p>
 
       <emu-alg>
@@ -376,7 +376,7 @@
       <h1>ToRawPrecision( _x_, _minPrecision_, _maxPrecision_ )</h1>
 
       <p>
-        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minPrecision_, and _maxPrecision_ (both must be integers between 1 and 21), the following steps are taken:
+        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative Number or BigInt), _minPrecision_, and _maxPrecision_ (both must be integers between 1 and 21), the following steps are taken:
       </p>
 
       <emu-alg>
@@ -410,7 +410,7 @@
       <h1>ToRawFixed( _x_, _minInteger_, _minFraction_, _maxFraction_ )</h1>
 
       <p>
-        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative number), _minInteger_ (which must be an integer between 1 and 21), _minFraction_, and _maxFraction_ (which must be integers between 0 and 20), the following steps are taken:
+        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative Number or BigInt), _minInteger_ (which must be an integer between 1 and 21), _minFraction_, and _maxFraction_ (which must be integers between 0 and 20), the following steps are taken:
       </p>
 
       <emu-alg>
@@ -626,8 +626,8 @@
         1. Let _nf_ be the *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumber(_value_).
-        1. Return ? FormatNumberToParts(_nf_, _x_).
+        1. Let _x_ be ? ToNumeric(_value_).
+        1. Return ? FormatNumericToParts(_nf_, _x_).
       </emu-alg>
     </emu-clause>
 
