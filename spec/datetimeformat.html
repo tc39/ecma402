@@ -66,11 +66,11 @@
         <tr>
           <td>[[RelatedYear]]</td>
           <td>`"relatedYear"`</td>
-          <td>`"2-digit"`, `"numeric"`</td>
+          <td>`"numeric"`</td>
         </tr>
       </table>
 
-      <emu-note>[[RelatedYear]] represents the related Gregorian year for non-Gregorian calendars, for example as used in CLDR with the <a href="https://unicode.org/repos/cldr/trunk/specs/ldml/tr35-dates.html#dfst-year">`r` symbol</a>.</emu-note>
+      <emu-note>[[RelatedYear]] represents the related Gregorian year for non-Gregorian calendars, for example as used in CLDR with the <a href="https://unicode.org/reports/tr35/tr35-dates.html#dfst-year">`r` symbol</a>.</emu-note>
     </emu-table>
 
     <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
@@ -311,6 +311,10 @@
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing `"ante meridiem"`.
             1. Add new part record { [[Type]]: `"dayPeriod"`, [[Value]]: _fv_ } as a new element of the list _result_.
+          1. Else if _p_ is equal to `"relativeYear"`, then
+            1. Assert: _tm_ has a [[relativeYear]] field.
+            1. Let _fv_ be FormatNumber(_nf_, _v_.[[relativeYear]]).
+            1. Add new part record { [[Type]]: `"relativeYear"`, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
             1. Append a new Record { [[Type]]: `"unknown"`, [[Value]]: _unknown_ } as the last element of _result_.
@@ -380,7 +384,7 @@
 
       <emu-alg>
         1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
-        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
+        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[relatedYear]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
       <emu-note>
