@@ -160,9 +160,9 @@
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
             1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
-          1. If _p_ is equal `"number"`, then
+          1. If _p_ is equal to `"number"`, then
             1. If _x_ is *NaN*, then
-              1. Let _n_ be an ILD String value indicating the *NaN* value.
+              1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
               1. Append a new Record { [[Type]]: `"nan"`, [[Value]]: _n_ } as the last element of _result_.
             1. Else if _x_ is not a finite Number,
               1. Let _n_ be an ILD String value indicating infinity.
@@ -182,7 +182,7 @@
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
               1. If the _numberFormat_.[[UseGrouping]] is *true*, then
-                1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
+                1. Let _groupSepSymbol_ be the implementation-, locale-, and numbering system-dependent (ILND) String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_.
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty
@@ -196,16 +196,16 @@
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append a new Record { [[Type]]: `"decimal"`, [[Value]]: _decimalSepSymbol_ } as the last element of _result_.
                 1. Append a new Record { [[Type]]: `"fraction"`, [[Value]]: _fraction_ } as the last element of _result_.
-          1. Else if _p_ is equal `"plusSign"`, then
+          1. Else if _p_ is equal to `"plusSign"`, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
             1. Append a new Record { [[Type]]: `"plusSign"`, [[Value]]: _plusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"minusSign"`, then
+          1. Else if _p_ is equal to `"minusSign"`, then
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
             1. Append a new Record { [[Type]]: `"minusSign"`, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"percentSign"` and _numberFormat_.[[Style]] is `"percent"`, then
+          1. Else if _p_ is equal to `"percentSign"` and _numberFormat_.[[Style]] is `"percent"`, then
             1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
             1. Append a new Record { [[Type]]: `"percentSign"`, [[Value]]: _percentSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal `"currency"` and _numberFormat_.[[Style]] is `"currency"`, then
+          1. Else if _p_ is equal to `"currency"` and _numberFormat_.[[Style]] is `"currency"`, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Assert: _numberFormat_.[[CurrencyDisplay]] is `"code"`, `"symbol"` or `"name"`.
             1. If _numberFormat_.[[CurrencyDisplay]] is `"code"`, then
@@ -216,8 +216,8 @@
               1. Let _cd_ be an ILD string representing _currency_ in long form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
             1. Append a new Record { [[Type]]: `"currency"`, [[Value]]: _cd_ } as the last element of _result_.
           1. Else,
-            1. Let _literal_ be the substring of _pattern_ from position _beginIndex_, inclusive, to position _endIndex_, inclusive.
-            1. Append a new Record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as the last element of _result_.
+            1. Let _unknown_ be an ILND String based on _x_ and _p_.
+            1. Append a new Record { [[Type]]: `"unknown"`, [[Value]]: _unknown_ } as the last element of _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
         1. If _nextIndex_ is less than _length_, then
