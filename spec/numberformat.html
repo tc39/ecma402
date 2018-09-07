@@ -608,6 +608,11 @@
           1. Set _nf_.[[BoundFormat]] to _F_.
         1. Return _nf_.[[BoundFormat]].
       </emu-alg>
+
+      <emu-note>
+        The returned function is bound to _nf_ so that it can be passed directly to `Array.prototype.map` or other functions.
+        This is considered a historical artefact, as part of a convention which is no longer followed for new features, but is preserved to maintain compatibility with existing programs.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
