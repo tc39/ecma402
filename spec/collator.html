@@ -274,7 +274,7 @@
         1. If Type(_collator_) is not Object, throw a *TypeError* exception.
         1. If _collator_ does not have an [[InitializedCollator]] internal slot, throw a *TypeError* exception.
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
-        1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+        1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
           1. If the current row has an Extension Key value, then
