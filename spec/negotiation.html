@@ -282,7 +282,7 @@
       <h1>GetOption ( _options_, _property_, _type_, _values_, _fallback_ )</h1>
 
       <p>
-        The abstract operation GetOption extracts the value of the property named _property_ from the provided _options_ object, converts it to the required _type_, checks whether it is one of a List of allowed _values_, and fills in a _fallback_ value if necessary.
+        The abstract operation GetOption extracts the value of the property named _property_ from the provided _options_ object, converts it to the required _type_, checks whether it is one of a List of allowed _values_, and fills in a _fallback_ value if necessary. If _values_ is *undefined*, there is no fixed set of values and any is permitted.
       </p>
 
       <emu-alg>
