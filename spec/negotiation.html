@@ -269,12 +269,7 @@
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
-        1. Let _subset_ be CreateArrayFromList(_supportedLocales_).
-        1. Let _keys_ be _subset_.[[OwnPropertyKeys]]().
-        1. For each element _P_ of _keys_ in List order, do
-          1. Let _desc_ be PropertyDescriptor { [[Configurable]]: *false*, [[Writable]]: *false* }.
-          1. Perform ! DefinePropertyOrThrow(_subset_, _P_, _desc_).
-        1. Return _subset_.
+        1. Return CreateArrayFromList(_supportedLocales_).
       </emu-alg>
     </emu-clause>
 
