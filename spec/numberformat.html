@@ -643,7 +643,7 @@
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
-        1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+        1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then

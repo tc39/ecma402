@@ -101,7 +101,7 @@
           1. Let _timeZone_ be DefaultTimeZone().
         1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
         1. Let _opt_ be a new Record.
-        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _value_ be ? GetOption(_options_, _prop_, `"string"`, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
@@ -112,7 +112,7 @@
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
         1. Else,
           1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
-        1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
+        1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
           1. If _p_ not *undefined*, then
@@ -611,7 +611,7 @@
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
-        1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in any order, do
+        1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. If _p_ is `"hour12"`, then
             1. Let _hc_ be _dtf_.[[HourCycle]].
