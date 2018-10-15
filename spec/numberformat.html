@@ -127,10 +127,16 @@
       </p>
 
       <emu-alg>
+        1. Assert: _x_ is not *NaN*, *+&infin;*, or *-&infin;*.
+        1. Let _isNegative_ be _x_ &lt; *0* or _x_ is *-0*.
+        1. If _isNegative_, then
+          1. Let _x_ be -_x_.
         1. If _intlObject_.[[MinimumSignificantDigits]] and _intlObject_.[[MaximumSignificantDigits]] are both not *undefined*, then
           1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]]).
         1. Else,
           1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumIntegerDigits]], _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]]).
+        1. If _isNegative_, then
+          1. Let _result_.[[RoundedNumber]] be -_result_.[[RoundedNumber]].
         1. Return _result_.
       </emu-alg>
     </emu-clause>
