@@ -21,7 +21,7 @@
     <h1>Language Tags</h1>
 
     <p>
-      The ECMAScript 2019 Internationalization API Specification identifies locales using language tags as defined by IETF BCP 47 (RFCs 5646 and 4647 or their successors), which may include extensions such as those registered through RFC 6067. Their canonical form is specified in RFC 5646 section 4.5 or its successor.
+      The ECMAScript 2019 Internationalization API Specification identifies locales using language tags as defined by IETF BCP 47 (RFCs 5646 and 4647 or their successors), which may include extensions such as those registered through RFC 6067. Their canonical form is that of a Unicode BCP 47 Locale Identifier, as specified in <a href="http://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>.
     </p>
 
     <p>
@@ -60,11 +60,7 @@
 
       <p>
         The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid BCP 47 language tag as verified by the IsStructurallyValidLanguageTag abstract operation).
-        A conforming implementation shall take the steps specified in RFC 5646 section 4.5, or successor, to bring the language tag into canonical form, and to regularize the case of the subtags. Furthermore, a conforming implementation shall not take the steps to bring a language tag into `"extlang form"`, nor shall it reorder variant subtags.
-      </p>
-
-      <p>
-        The specifications for extensions to BCP 47 language tags, such as RFC 6067, may include canonicalization rules for the extension subtag sequences they define that go beyond the canonicalization rules of RFC 5646 section 4.5. Implementations are allowed, but not required, to apply these additional rules.
+        A conforming implementation shall take the steps specified in the &ldquo;BCP 47 Language Tag to Unicode BCP 47 Locale Identifier&rdquo; algorithm, from <a href="http://unicode.org/reports/tr35/#BCP_47_Language_Tag_Conversion">Unicode Technical Standard #35 LDML § 3.3.1 BCP 47 Language Tag Conversion</a>.
       </p>
     </emu-clause>
 
