@@ -200,6 +200,7 @@
                   1. Let _supportedExtensionAddition_ be the concatenation of `"-"`, _key_, `"-"`, and _value_.
               1. Else if _keyLocaleData_ contains `"true"`, then
                 1. Let _value_ be `"true"`.
+                1. Let _supportedExtensionAddition_ be the concatenation of `"-"` and _key_.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
