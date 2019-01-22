@@ -25,7 +25,7 @@
     </p>
 
     <p>
-      BCP 47 language tags that meet those validity criteria of RFC 5646 section 2.2.9 that can be verified without reference to the IANA Language Subtag Registry are considered structurally valid. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
+      Unicode BCP 47 Locale Identifiers that meet those validity criteria of Unicode Technical Standard 35, section 3.2, or successor, that can be verified without reference to the IANA Language Subtag Registry are considered structurally valid. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
     </p>
 
 
@@ -45,7 +45,7 @@
       </p>
 
       <ul>
-        <li>represents a well-formed BCP 47 language tag as specified in RFC 5646 section 2.1, or successor,</li>
+        <li>represents a well-formed Unicode BCP 47 Locale Identifier" as specified in Unicode Technical Standard 35 section 3.2, or successor,</li>
         <li>does not include duplicate variant subtags, and</li>
         <li>does not include duplicate singleton subtags.</li>
       </ul>
@@ -59,7 +59,7 @@
       <h1>CanonicalizeLanguageTag ( _locale_ )</h1>
 
       <p>
-        The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid BCP 47 language tag as verified by the IsStructurallyValidLanguageTag abstract operation).
+        The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 Locale Identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
         A conforming implementation shall take the steps specified in the &ldquo;BCP 47 Language Tag to Unicode BCP 47 Locale Identifier&rdquo; algorithm, from <a href="http://unicode.org/reports/tr35/#BCP_47_Language_Tag_Conversion">Unicode Technical Standard #35 LDML § 3.3.1 BCP 47 Language Tag Conversion</a>.
       </p>
     </emu-clause>
