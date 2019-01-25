@@ -110,7 +110,7 @@
         1. Let _nf_ be _F_.[[NumberFormat]].
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
-        1. Let _x_ be ? ToNumeric(_value_).
+        1. Let _x_ be ? ToNumber(_value_).
         1. Return FormatNumeric(_nf_, _x_).
       </emu-alg>
 
@@ -615,18 +615,50 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
-      <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
+    <emu-clause id="sec-intl.numberformat.prototype.formatbigint">
+      <h1>Intl.NumberFormat.prototype.formatBigInt ( _value_ )</h1>
 
       <p>
-        When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:
+        When the `formatBigInt` method is called with an argument _value_, the following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumeric(_value_).
+        1. Let _x_ be ? ToBigInt(_value_).
+        1. Return FormatNumeric(_nf_, _x_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
+      <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an argument _value_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
+        1. Let _x_ be ? ToNumber(_value_).
+        1. Return ? FormatNumericToParts(_nf_, _x_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
+      <h1>Intl.NumberFormat.prototype.formatBigIntToParts ( _value_ )</h1>
+
+      <p>
+        When the `formatBigIntToParts` method is called with an argument _value_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
+        1. Let _x_ be ? ToBigInt(_value_).
         1. Return ? FormatNumericToParts(_nf_, _x_).
       </emu-alg>
     </emu-clause>
