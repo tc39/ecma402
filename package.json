@@ -6,11 +6,16 @@
   "scripts": {
     "build-es2019": "git remote remove origin && git remote add origin \"git@github.com:$TRAVIS_REPO_SLUG.git\" && git fetch --quiet origin && git checkout --quiet es2019 && mkdir \"out/2019\" && cp -R img \"out/2019\" && ecmarkup --verbose spec/index.html out/2019/index.html --css out/2019/ecmarkup.css --js out/2019/ecmarkup.js",
     "build-master": "mkdir out && cp -R img out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
-    "build": "npm run clean && npm run build-master",
-    "build-travis": "npm run clean && npm run build-master && npm run build-es2019",
+    "prebuild": "npm run clean",
+    "build": "npm run build-master",
+    "prebuild-for-pdf": "npm run clean",
+    "build-for-pdf": "npm run build-master -- --old-toc",
+    "prebuild-travis": "npm run clean",
+    "build-travis": "npm run build-master && npm run build-es2019",
     "clean": "rm -rf out",
     "test": "exit 0",
-    "watch": "npm run clean && mkdir out && cp -R img out && ecmarkup --watch --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js"
+    "prewatch": "npm run clean",
+    "watch": "npm run build-master -- --watch"
   },
   "repository": "tc39/ecma402",
   "author": "ECMA TC39",
