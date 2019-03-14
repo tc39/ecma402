@@ -5,7 +5,7 @@ ECMAScript Internationalization API Specification (Ecma-402)
 
 This repository contains the source for the current draft of ECMA-402, the ECMAScript® Internationalization API Specification.
 
-This source is processed to obtain a human-readable version, which you can view [here](http://tc39.github.io/ecma402/).
+This source is processed to obtain a human-readable version, which you can view [here](https://tc39.github.io/ecma402/).
 
 ## Current Proposals
 
