@@ -118,7 +118,7 @@
           1. If _p_ not *undefined*, then
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_.[[Hour]] is not *undefined*, then
-          1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
+          1. Let _hcDefault_ be _dataLocaleData_.[[HourCycle]].
           1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
           1. If _hc_ is *null*, then
             1. Set _hc_ to _hcDefault_.
@@ -502,7 +502,7 @@
           [[LocaleData]][locale].hc must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values.
         </li>
         <li>
-          [[LocaleData]][locale] must have a hourCycle field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values.
+          [[LocaleData]][locale] must have a HourCycle field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values.
         </li>
         <li>
           [[LocaleData]][locale] must have a formats field for all locale values. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
