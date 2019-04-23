@@ -54,7 +54,8 @@
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _numberingSystem_ be ? GetOption(_options_, `"numberingSystem"`, `"string"`, *undefined*, *undefined*).
-        1. If _numberingSystem_ does not match `type`, throw a *RangeError* exception.
+        1. If _numberingSystem_ is not *undefined*, then
+          1. If _numberingSystem_ does not match the `(3*8alphanum) *("-" (3*8alphanum))` sequence, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
