@@ -63,14 +63,7 @@
           <td>`"timeZoneName"`</td>
           <td>`"short"`, `"long"`</td>
         </tr>
-        <tr>
-          <td>[[RelatedYear]]</td>
-          <td>`"relatedYear"`</td>
-          <td>`"numeric"`</td>
-        </tr>
       </table>
-
-      <emu-note>[[RelatedYear]] represents the related Gregorian year for non-Gregorian calendars, for example as used in CLDR with the <a href="https://unicode.org/reports/tr35/tr35-dates.html#dfst-year">`r` symbol</a>.</emu-note>
     </emu-table>
 
     <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
@@ -311,10 +304,10 @@
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing `"ante meridiem"`.
             1. Add new part record { [[Type]]: `"dayPeriod"`, [[Value]]: _fv_ } as a new element of the list _result_.
-          1. Else if _p_ is equal to `"relativeYear"`, then
-            1. Assert: _tm_ has a [[relativeYear]] field.
-            1. Let _fv_ be FormatNumber(_nf_, _v_.[[relativeYear]]).
-            1. Add new part record { [[Type]]: `"relativeYear"`, [[Value]]: _fv_ } as a new element of the list _result_.
+          1. Else if _p_ is equal to `"relatedYear"`, then
+            1. Assert: _tm_ has a [[relatedYear]] field.
+            1. Let _fv_ be FormatNumber(_nf_, _v_.[[relatedYear]]).
+            1. Add new part record { [[Type]]: `"relatedYear"`, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
             1. Append a new Record { [[Type]]: `"unknown"`, [[Value]]: _unknown_ } as the last element of _result_.
@@ -390,6 +383,11 @@
       <emu-note>
         It is recommended that implementations use the time zone information of the IANA Time Zone Database.
       </emu-note>
+
+      <emu-note>
+        [[relatedYear]] represents the related Gregorian year for non-Gregorian calendars, for example as used in CLDR with the <a href="https://unicode.org/reports/tr35/tr35-dates.html#dfst-year">`r` symbol</a>. [[relatedYear]] is only present in the output of ToLocalTime if it's present in the pattern.
+      </emu-note>
+
     </emu-clause>
 
     <emu-clause id="sec-unwrapdatetimeformat" aoid="UnwrapDateTimeFormat">
@@ -433,7 +431,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[RelatedYear]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%DateTimeFormatPrototype%"`, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -706,10 +704,6 @@
             <td>[[TimeZoneName]]</td>
             <td>`"timeZoneName"`</td>
           </tr>
-          <tr>
-            <td>[[RelatedYear]]</td>
-            <td>`"relatedYear"`</td>
-          </tr>
         </table>
       </emu-table>
 
@@ -747,7 +741,7 @@
       <li>[[Calendar]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
       <li>[[NumberingSystem]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
-      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[RelatedYear]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (`"h11"`, `"h12"`) or the 24-hour format (`"h23"`, `"h24"`) should be used. `"h11"` and `"h23"` start with hour 0 and go up to 11 and 23 respectively. `"h12"` and `"h24"` start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
