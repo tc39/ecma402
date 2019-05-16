@@ -364,14 +364,25 @@
     </emu-clause>
 
     <emu-clause id="sec-tolocaltime" aoid="ToLocalTime">
-      <h1>ToLocalTime ( _date_, _calendar_, _timeZone_ )</h1>
+      <h1>ToLocalTime ( _t_, _calendar_, _timeZone_ )</h1>
 
       <p>
-        When the ToLocalTime abstract operation is called with arguments _date_, _calendar_, and _timeZone_, the following steps are taken:
+        When the ToLocalTime abstract operation is called with arguments _t_, _calendar_, and _timeZone_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
+        1. Assert: Type(_t_) is Number.
+        1. Apply calendrical calculations on _t_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.
+        1. If the _calendar_ is `"gregory"`, then the calculations of weekday, year, month, day, hour, minute and second must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>:
+          <ul>
+            <li>The value for weekday must be the result of `WeekDay(t)` specified in ES2020's <emu-xref href="#sec-week-day">Week Day</emu-xref>.</li>
+            <li>The value for year must be the result of `YearFromTime(t)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref>.</li>
+            <li>The value for month must be the result of `MonthFromTime(t)` specified in ES2020's <emu-xref href="#sec-month-number">Month Number</emu-xref>.</li>
+            <li>The value for date must be the result of `DateFromTime(t)` specified in ES2020's <emu-xref href="#sec-date-number">Date Number</emu-xref>.</li>
+            <li>The value for hour must be the result of `HourFromTime(t)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+            <li>The value for minute must be the result of `MinuteFromTime(t)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+            <li>The value for second must be the result of `SecondFromTime(t)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+          </ul>
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
