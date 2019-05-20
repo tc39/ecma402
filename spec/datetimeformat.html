@@ -169,7 +169,7 @@
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is `"time"` or `"any"`, then
-          1. For each of the property names `"hour"`, `"minute"`, `"second"`, do
+          1. For each of the property names `"dayPeriod"`, `"hour"`, `"minute"`, `"second"`, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
@@ -376,8 +376,8 @@
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
-        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, dayPeriod, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
+        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[dayPeriod]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
       <emu-note>
