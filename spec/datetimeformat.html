@@ -499,10 +499,10 @@
           The list that is the value of the `"nu"` field of any locale field of [[LocaleData]] must not include the values `"native"`, `"traditio"`, or `"finance"`.
         </li>
         <li>
-          [[LocaleData]][locale].hc must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo; for all locale values _locale_.
         </li>
         <li>
-          [[LocaleData]][locale] must have a hourCycle field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values.
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have an [[hourCycle]] field with a String value equal to `"h11"`, `"h12"`, `"h23"`, or `"h24"` for all locale values _locale_.
         </li>
         <li>
           [[LocaleData]][locale] must have a formats field for all locale values. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
