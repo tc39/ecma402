@@ -286,7 +286,10 @@
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
-            1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
+            1. If _p_ is `"quarter"`, then
+              1. Let _v_ be ( _tm_.[[month]] / 3 ) + 1.
+            1. Else,
+              1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is `"year"` and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is `"month"`, increase _v_ by 1.
             1. If _p_ is `"hour"` and _dateTimeFormat_.[[HourCycle]] is `"h11"` or `"h12"`, then
@@ -376,8 +379,8 @@
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, quarter, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
-        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[quarter]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
+        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
+        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
       <emu-note>
