@@ -77,7 +77,8 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Let _options_ be ? ToDateTimeOptions(_options_, `"any"`, `"date"`).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
+        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best-fit"`, `"best fit"` &raquo;, `"best-fit"`).
+        1. If _matcher_ is `"best fit"`, let _matcher_ be `"best-fit"`.
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _hour12_ be ? GetOption(_options_, `"hour12"`, `"boolean"`, *undefined*, *undefined*).
         1. Let _hourCycle_ be ? GetOption(_options_, `"hourCycle"`, `"string"`, &laquo; `"h11"`, `"h12"`, `"h23"`, `"h24"` &raquo;, *undefined*).
@@ -107,7 +108,7 @@
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _formats_ be _dataLocaleData_.[[formats]].
-        1. Let _matcher_ be ? GetOption(_options_, `"formatMatcher"`, `"string"`, &laquo; `"basic"`, `"best fit"` &raquo;, `"best fit"`).
+        1. Let _matcher_ be ? GetOption(_options_, `"formatMatcher"`, `"string"`, &laquo; `"basic"`, `"best-fit"` &raquo;, `"best-fit"`).
         1. If _matcher_ is `"basic"`, then
           1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
         1. Else,
