@@ -131,8 +131,8 @@
           1. Return `"other"`.
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _s_ be ! FormatNumberToString(_pluralRules_, _n_).
-        1. Let _operands_ be ? _GetOperands_(_s_).
+        1. Let _s_ be ! FormatNumericToString(_pluralRules_, _n_).
+        1. Let _operands_ be ? GetOperands(_s_).
         1. Return ? PluralRuleSelect(_locale_, _type_, _n_, _operands_).
       </emu-alg>
 
