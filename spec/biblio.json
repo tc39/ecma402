@@ -1,0 +1,24 @@
+{
+  "https://tc39.es/proposal-bigint/": [
+    {
+      "type": "op",
+      "aoid": "ToNumeric",
+      "id": "sec-tonumeric"
+    },
+    {
+      "type": "op",
+      "aoid": "thisBigIntValue",
+      "id": "sec-properties-of-the-bigint-prototype-object"
+    },
+    {
+      "type": "clause",
+      "number": "Properties of the BigInt Prototype Object",
+      "id": "sec-properties-of-the-bigint-prototype-object"
+    },
+    {
+      "type": "clause",
+      "number": "BigInt.prototype.toLocaleString",
+      "id": "sec-bigint.prototype.tolocalestring"
+    }
+  ]
+}

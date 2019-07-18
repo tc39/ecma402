@@ -290,9 +290,9 @@
             1. If _p_ is `"hour"` and _dateTimeFormat_.[[HourCycle]] is `"h24"`, then
               1. If _v_ is 0, let _v_ be 24.
             1. If _f_ is `"numeric"`, then
-              1. Let _fv_ be FormatNumber(_nf_, _v_).
+              1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Else if _f_ is `"2-digit"`, then
-              1. Let _fv_ be FormatNumber(_nf2_, _v_).
+              1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is `"narrow"`, `"short"`, or `"long"`, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is `"month"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is `"timeZoneName"`, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is `"era"`, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[Type]]: _p_, [[Value]]: _fv_ } as a new element of the list _result_.
