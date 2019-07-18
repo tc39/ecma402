@@ -372,17 +372,19 @@
 
       <emu-alg>
         1. Assert: Type(_t_) is Number.
-        1. Apply calendrical calculations on _t_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.
-        1. If the _calendar_ is `"gregory"`, then the calculations of weekday, year, month, day, hour, minute and second must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>. In these calculations, use the value _tz_, which is the time value _t_ + _timeZoneOffset_. The value _timeZoneOffset_ must be calculated according to <emu-xref href="#sec-local-time-zone-adjustment">LocalTZA(_t_, *true*)</emu-xre> where `local time zone` is replaced with timezone `timeZone`.
-          <ul>
-            <li>The value for weekday must be the result of `WeekDay(tz)` specified in ES2020's <emu-xref href="#sec-week-day">Week Day</emu-xref>.</li>
-            <li>The value for year must be the result of `YearFromTime(tz)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref>.</li>
-            <li>The value for month must be the result of `MonthFromTime(tz)` specified in ES2020's <emu-xref href="#sec-month-number">Month Number</emu-xref>.</li>
-            <li>The value for date must be the result of `DateFromTime(tz)` specified in ES2020's <emu-xref href="#sec-date-number">Date Number</emu-xref>.</li>
-            <li>The value for hour must be the result of `HourFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
-            <li>The value for minute must be the result of `MinuteFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
-            <li>The value for second must be the result of `SecondFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
-          </ul>
+        1. If _calendar_ is `"gregory"`,
+          1. Apply calendrical calculations on _t_ to produce values for weekday, year, month, day, hour, minute and second according to the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>. In these calculations, use the value _tz_, which is the time value _t_ + _timeZoneOffset_. The value _timeZoneOffset_ must be calculated according to <emu-xref href="#sec-local-time-zone-adjustment">LocalTZA(_t_, *true*)</emu-xref> where the local time zone is replaced with timezone _timeZone_.
+            <ul>
+              <li>The value for weekday must be the result of `WeekDay(tz)` specified in ES2020's <emu-xref href="#sec-week-day">Week Day</emu-xref>.</li>
+              <li>The value for year must be the result of `YearFromTime(tz)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref>.</li>
+              <li>The value for month must be the result of `MonthFromTime(tz)` specified in ES2020's <emu-xref href="#sec-month-number">Month Number</emu-xref>.</li>
+              <li>The value for date must be the result of `DateFromTime(tz)` specified in ES2020's <emu-xref href="#sec-date-number">Date Number</emu-xref>.</li>
+              <li>The value for hour must be the result of `HourFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+              <li>The value for minute must be the result of `MinuteFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+              <li>The value for second must be the result of `SecondFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref>.</li>
+            </ul>
+        1. Else,
+          1. Apply calendrical calculations on _t_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.
         1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
       </emu-alg>
 
