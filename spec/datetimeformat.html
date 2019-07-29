@@ -266,19 +266,12 @@
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, `"useGrouping"`, *false*).
         1. Let _nf2_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(_x_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
-        1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, 0 &raquo;).
-        1. Let _endIndex_ be 0.
-        1. Let _nextIndex_ be 0.
-        1. Let _length_ be the number of code units in _pattern_.
-        1. Repeat, while _beginIndex_ is an integer index into _pattern_
-          1. Set _endIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"}"`, _beginIndex_ &raquo;).
-          1. Assert: _endIndex_ is greater than _beginIndex_.
-          1. If _beginIndex_ is greater than _nextIndex_, then
-            1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
-            1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
-          1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
+        1. Let _patternParts_ be PartitionPattern(_dateTimeFormat_.[[Pattern]]).
+        1. For each element _patternPart_ of _patternParts_, in List order, do
+          1. Let _p_ be _patternPart_.[[Type]].
+          1. If _p_ is `"literal"`, then
+            1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _patternPart_.[[Value]] } as a new element of the list _result_.
           1. If _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
@@ -306,11 +299,6 @@
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
             1. Append a new Record { [[Type]]: `"unknown"`, [[Value]]: _unknown_ } as the last element of _result_.
-          1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to Call(%StringProto_indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
-        1. If _nextIndex_ is less than _length_, then
-          1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
-          1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
         1. Return _result_.
       </emu-alg>
 
