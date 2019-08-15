@@ -364,16 +364,69 @@
     </emu-clause>
 
     <emu-clause id="sec-tolocaltime" aoid="ToLocalTime">
-      <h1>ToLocalTime ( _date_, _calendar_, _timeZone_ )</h1>
+      <h1>ToLocalTime ( _t_, _calendar_, _timeZone_ )</h1>
 
       <p>
-        When the ToLocalTime abstract operation is called with arguments _date_, _calendar_, and _timeZone_, the following steps are taken:
+        When the ToLocalTime abstract operation is called with arguments _t_, _calendar_, and _timeZone_, the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Apply calendrical calculations on _date_ for the given _calendar_ and _timeZone_ to produce weekday, era, year, month, day, hour, minute, second, and inDST values. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules. If the _calendar_ is `"gregory"`, then the calculations must match the algorithms specified in ES2020, <emu-xref href="#sec-overview-of-date-objects-and-definitions-of-abstract-operations"></emu-xref>.
-        1. Return a Record with fields [[weekday]], [[era]], [[year]], [[month]], [[day]], [[hour]], [[minute]], [[second]], and [[inDST]], each with the corresponding calculated value.
+        1. Assert: Type(_t_) is Number.
+        1. If _calendar_ is `"gregory"`,
+          1. Let _timeZoneOffset_ be the value calculated according to <emu-xref href="#sec-local-time-zone-adjustment">LocalTZA(_t_, *true*)</emu-xref> where the local time zone is replaced with timezone _timeZone_.
+          1. Let _tz_ be the time value _t_ + _timeZoneOffset_.
+          1. Return a record with fields calculated from _tz_ according to <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref>.
+        1. Else,
+          1. Return a record with the fields of Column 1 of <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref> calculated from _t_ for the given _calendar_ and _timeZone_. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.
       </emu-alg>
+
+      <emu-table id="table-datetimeformat-tolocaltime-record">
+        <emu-caption>Record returned by ToLocalTime</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value Calculation for Gregorian Calendar</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[weekday]]</td>
+            <td>`WeekDay(tz)` specified in ES2020's <emu-xref href="#sec-week-day">Week Day</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[era]]</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[year]]</td>
+            <td>`YearFromTime(tz)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[month]]</td>
+            <td>`MonthFromTime(tz)` specified in ES2020's <emu-xref href="#sec-month-number">Month Number</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[day]]</td>
+            <td>`DateFromTime(tz)` specified in ES2020's <emu-xref href="#sec-date-number">Date Number</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[hour]]</td>
+            <td>`HourFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[minute]]</td>
+            <td>`MinuteFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[second]]</td>
+            <td>`SecondFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+          </tr>
+          <tr>
+            <td>[[inDST]]</td>
+            <td>Calculate *true* or *false* using the best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.</td>
+          </tr>
+        </table>
+      </emu-table>
 
       <emu-note>
         It is recommended that implementations use the time zone information of the IANA Time Zone Database.
