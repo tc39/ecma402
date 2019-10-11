@@ -111,7 +111,7 @@
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToNumeric(_value_).
-        1. Return FormatNumeric(_nf_, _x_).
+        1. Return ? FormatNumeric(_nf_, _x_).
       </emu-alg>
 
       <p>
