@@ -165,12 +165,12 @@ ECMA-402 could allow users to choose between kebab case and camel case for relev
 
 #### Examples
 
-Locale identifiers are defined in [UTS #35 Section 3](https://www.unicode.org/reports/tr35/#Identifiers).  Examples:
+[BCP47](http://www.rfc-editor.org/rfc/bcp/bcp47.txt) identifiers, using registered extensions as described in [UTS#35§3](https://www.unicode.org/reports/tr35/#Identifiers).  Examples:
 
 - `"en-US"`
 - `"ar-EG-u-nu-latn"`
 
-Unit identifiers are defined in [UTS #35 Part 2 Section 6](https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Elements).  Examples:
+Unit identifiers, defined in [UTS #35 Part 2 Section 6](https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Elements).  Examples:
 
 - `"square-kilometer"`
 - `"part-per-million"`
