@@ -131,7 +131,7 @@
       <emu-alg>
         1. Assert: The number of elements in _key_ is 2.
         1. Let _size_ be the number of elements in _extension_.
-        1. Let _searchValue_ be the concatenation of `"-"`, _key_, and `"-"`.
+        1. Let _searchValue_ be the string-concatenation of `"-"`, _key_, and `"-"`.
         1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1, then
           1. Let _start_ be _pos_ + 4.
@@ -150,7 +150,7 @@
               1. Let _end_ be _e_.
               1. Let _k_ be _e_ + 1.
           1. Return the String value equal to the substring of _extension_ consisting of the code units at indices _start_ (inclusive) through _end_ (exclusive).
-        1. Let _searchValue_ be the concatenation of `"-"` and _key_.
+        1. Let _searchValue_ be the string-concatenation of `"-"` and _key_.
         1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1 and _pos_ + 3 = _size_, then
           1. Return the empty String.
@@ -197,10 +197,10 @@
               1. If _requestedValue_ is not the empty String, then
                 1. If _keyLocaleData_ contains _requestedValue_, then
                   1. Let _value_ be _requestedValue_.
-                  1. Let _supportedExtensionAddition_ be the concatenation of `"-"`, _key_, `"-"`, and _value_.
+                  1. Let _supportedExtensionAddition_ be the string-concatenation of `"-"`, _key_, `"-"`, and _value_.
               1. Else if _keyLocaleData_ contains `"true"`, then
                 1. Let _value_ be `"true"`.
-                1. Let _supportedExtensionAddition_ be the concatenation of `"-"` and _key_.
+                1. Let _supportedExtensionAddition_ be the string-concatenation of `"-"` and _key_.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
@@ -213,11 +213,11 @@
         1. If the number of elements in _supportedExtension_ is greater than 2, then
           1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, &laquo; `"-x-"` &raquo;).
           1. If _privateIndex_ = -1, then
-            1. Let _foundLocale_ be the concatenation of _foundLocale_ and _supportedExtension_.
+            1. Let _foundLocale_ be the string-concatenation of _foundLocale_ and _supportedExtension_.
           1. Else,
             1. Let _preExtension_ be the substring of _foundLocale_ from position 0, inclusive, to position _privateIndex_, exclusive.
             1. Let _postExtension_ be the substring of _foundLocale_ from position _privateIndex_ to the end of the string.
-            1. Let _foundLocale_ be the concatenation of _preExtension_, _supportedExtension_, and _postExtension_.
+            1. Let _foundLocale_ be the string-concatenation of _preExtension_, _supportedExtension_, and _postExtension_.
           1. Assert: IsStructurallyValidLanguageTag(_foundLocale_) is *true*.
           1. Let _foundLocale_ be CanonicalizeLanguageTag(_foundLocale_).
         1. Set _result_.[[locale]] to _foundLocale_.
