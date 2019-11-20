@@ -243,7 +243,7 @@
       <h1>Intl.PluralRules.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value `"Object"`.
+        The initial value of the @@toStringTag property is the String value `"Object"`.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -283,7 +283,7 @@
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique string values, from the the list `"zero"`, `"one"`, `"two"`, `"few"`, `"many"` and `"other"`, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
+        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique String values, from the the list `"zero"`, `"one"`, `"two"`, `"few"`, `"many"` and `"other"`, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
         1. Perform ! CreateDataProperty(_options_, `"pluralCategories"`, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>

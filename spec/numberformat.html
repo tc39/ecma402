@@ -123,7 +123,7 @@
       <h1>FormatNumericToString ( _intlObject_, _x_ )</h1>
 
       <p>
-        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns _x_ as a string value with digits formatted according to the five formatting parameters.
+        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns _x_ as a String value with digits formatted according to the five formatting parameters.
       </p>
 
       <emu-alg>
@@ -205,9 +205,9 @@
             1. If _numberFormat_.[[CurrencyDisplay]] is `"code"`, then
               1. Let _cd_ be _currency_.
             1. Else if _numberFormat_.[[CurrencyDisplay]] is `"symbol"`, then
-              1. Let _cd_ be an ILD string representing _currency_ in short form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
+              1. Let _cd_ be an ILD String value representing _currency_ in short form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
             1. Else if _numberFormat_.[[CurrencyDisplay]] is `"name"`, then
-              1. Let _cd_ be an ILD string representing _currency_ in long form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
+              1. Let _cd_ be an ILD String value representing _currency_ in long form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
             1. Append a new Record { [[Type]]: `"currency"`, [[Value]]: _cd_ } as the last element of _result_.
           1. Else,
             1. Let _unknown_ be an ILND String based on _x_ and _p_.
@@ -383,7 +383,7 @@
         1. If _e_ ≥ 0, then
           1. Let _m_ be the concatenation of the first _e_+1 characters of _m_, the character `"."`, and the remaining _p_–(_e_+1) characters of _m_.
         1. If _e_ < 0, then
-          1. Let _m_ be the concatenation of the String `"0."`, –(_e_+1) occurrences of the character `"0"`, and the string _m_.
+          1. Let _m_ be the concatenation of the String value `"0."`, –(_e_+1) occurrences of the character `"0"`, and _m_.
         1. If _m_ contains the character `"."`, and _maxPrecision_ > _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ – _minPrecision_.
           1. Repeat, while _cut_ > 0 and the last character of _m_ is `"0"`
@@ -573,7 +573,7 @@
       <h1>Intl.NumberFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value `"Object"`.
+        The initial value of the @@toStringTag property is the String value `"Object"`.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
