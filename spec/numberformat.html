@@ -613,8 +613,7 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. Let _x_ be ? ToNumeric(_value_).
         1. Return ? FormatNumericToParts(_nf_, _x_).
       </emu-alg>

@@ -630,8 +630,7 @@
 
       <emu-alg>
         1. Let _dtf_ be *this* value.
-        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
-        1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _date_ is *undefined*, then
           1. Let _x_ be Call(%Date_now%, *undefined*).
         1. Else,

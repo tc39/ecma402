@@ -181,8 +181,7 @@
 
       <emu-alg>
         1. Let _collator_ be *this* value.
-        1. If Type(_collator_) is not Object, throw a *TypeError* exception.
-        1. If _collator_ does not have an [[InitializedCollator]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
         1. If _collator_.[[BoundCompare]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
           1. Set _F_.[[Collator]] to _collator_.
@@ -271,8 +270,7 @@
 
       <emu-alg>
         1. Let _collator_ be *this* value.
-        1. If Type(_collator_) is not Object, throw a *TypeError* exception.
-        1. If _collator_ does not have an [[InitializedCollator]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
