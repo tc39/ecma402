@@ -20,41 +20,41 @@
           1. Let _options_ be ObjectCreate(*null*).
         1. Else,
           1. Let _options_ be ? ToObject(_options_).
-        1. Let _usage_ be ? GetOption(_options_, `"usage"`, `"string"`, &laquo; `"sort"`, `"search"` &raquo;, `"sort"`).
+        1. Let _usage_ be ? GetOption(_options_, *"usage"*, *"string"*, &laquo; *"sort"*, *"search"* &raquo;, *"sort"*).
         1. Set _collator_.[[Usage]] to _usage_.
-        1. If _usage_ is `"sort"`, then
+        1. If _usage_ is *"sort"*, then
           1. Let _localeData_ be %Collator%.[[SortLocaleData]].
         1. Else,
           1. Let _localeData_ be %Collator%.[[SearchLocaleData]].
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _numeric_ be ? GetOption(_options_, `"numeric"`, `"boolean"`, *undefined*, *undefined*).
+        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"boolean"*, *undefined*, *undefined*).
         1. If _numeric_ is not *undefined*, then
           1. Let _numeric_ be ! ToString(_numeric_).
         1. Set _opt_.[[kn]] to _numeric_.
-        1. Let _caseFirst_ be ? GetOption(_options_, `"caseFirst"`, `"string"`, &laquo; `"upper"`, `"lower"`, `"false"` &raquo;, *undefined*).
+        1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, *"string"*, &laquo; *"upper"*, *"lower"*, *"false"* &raquo;, *undefined*).
         1. Set _opt_.[[kf]] to _caseFirst_.
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[Locale]] to _r_.[[locale]].
         1. Let _collation_ be _r_.[[co]].
-        1. If _collation_ is *null*, let _collation_ be `"default"`.
+        1. If _collation_ is *null*, let _collation_ be *"default"*.
         1. Set _collator_.[[Collation]] to _collation_.
-        1. If _relevantExtensionKeys_ contains `"kn"`, then
-          1. Set _collator_.[[Numeric]] to ! SameValue(_r_.[[kn]], `"true"`).
-        1. If _relevantExtensionKeys_ contains `"kf"`, then
+        1. If _relevantExtensionKeys_ contains *"kn"*, then
+          1. Set _collator_.[[Numeric]] to ! SameValue(_r_.[[kn]], *"true"*).
+        1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
-        1. Let _sensitivity_ be ? GetOption(_options_, `"sensitivity"`, `"string"`, &laquo; `"base"`, `"accent"`, `"case"`, `"variant"` &raquo;, *undefined*).
+        1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
-          1. If _usage_ is `"sort"`, then
-            1. Let _sensitivity_ be `"variant"`.
+          1. If _usage_ is *"sort"*, then
+            1. Let _sensitivity_ be *"variant"*.
           1. Else,
             1. Let _dataLocale_ be _r_.[[dataLocale]].
             1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
             1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
-        1. Let _ignorePunctuation_ be ? GetOption(_options_, `"ignorePunctuation"`, `"boolean"`, *undefined*, *false*).
+        1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
       </emu-alg>
@@ -71,11 +71,11 @@
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
-        1. If %Collator%.[[RelevantExtensionKeys]] contains `"kn"`, then
+        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
-        1. If %Collator%.[[RelevantExtensionKeys]] contains `"kf"`, then
+        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
           1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
-        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, `"%CollatorPrototype%"`, _internalSlotsList_).
+        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%CollatorPrototype%"*, _internalSlotsList_).
         1. Return ? InitializeCollator(_collator_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -122,11 +122,11 @@
       <h1>Internal Slots</h1>
 
       <p>
-        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element `"co"`, may include any or all of the elements `"kn"` and `"kf"`, and must not include any other elements.
+        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kn"* and *"kf"*, and must not include any other elements.
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes ten locale extension keys that are relevant to collation: `"co"` for collator usage and specializations, `"ka"` for alternate handling, `"kb"` for backward second level weight, `"kc"` for case level, `"kn"` for numeric, `"kh"` for hiragana quaternary, `"kk"` for normalization, `"kf"` for case first, `"kr"` for reordering, `"ks"` for collation strength, and `"vt"` for variable top. Collator, however, requires that the usage is specified through the usage property of the options object, alternate handling through the ignorePunctuation property of the options object, and case level and the strength through the sensitivity property of the options object. The `"co"` key in the language tag is supported only for collator specializations, and the keys `"kb"`, `"kh"`, `"kk"`, `"kr"`, and `"vt"` are not allowed in this version of the Internationalization API. Support for the remaining keys is implementation dependent.
+        Unicode Technical Standard 35 describes ten locale extension keys that are relevant to collation: *"co"* for collator usage and specializations, *"ka"* for alternate handling, *"kb"* for backward second level weight, *"kc"* for case level, *"kn"* for numeric, *"kh"* for hiragana quaternary, *"kk"* for normalization, *"kf"* for case first, *"kr"* for reordering, *"ks"* for collation strength, and *"vt"* for variable top. Collator, however, requires that the usage is specified through the usage property of the options object, alternate handling through the ignorePunctuation property of the options object, and case level and the strength through the sensitivity property of the options object. The *"co"* key in the language tag is supported only for collator specializations, and the keys *"kb"*, *"kh"*, *"kk"*, *"kr"*, and *"vt"* are not allowed in this version of the Internationalization API. Support for the remaining keys is implementation dependent.
       </emu-note>
 
       <p>
@@ -135,8 +135,8 @@
 
       <ul>
         <li>The first element of [[SortLocaleData]][[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]][[&lt;_locale_&gt;]].[[co]] must be *null* for all locale values.</li>
-        <li>The values `"standard"` and `"search"` must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
-        <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a sensitivity field with a String value equal to `"base"`, `"accent"`, `"case"`, or `"variant"` for all locale values.</li>
+        <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
+        <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a sensitivity field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"* for all locale values.</li>
       </ul>
 
     </emu-clause>
@@ -161,7 +161,7 @@
       <h1>Intl.Collator.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the String value `"Object"`.
+        The initial value of the @@toStringTag property is the String value *"Object"*.
       </p>
 
       <p>
@@ -296,37 +296,37 @@
           </thead>
           <tr>
             <td>[[Locale]]</td>
-            <td>`"locale"`</td>
+            <td>*"locale"*</td>
             <td></td>
           </tr>
           <tr>
             <td>[[Usage]]</td>
-            <td>`"usage"`</td>
+            <td>*"usage"*</td>
             <td></td>
           </tr>
           <tr>
             <td>[[Sensitivity]]</td>
-            <td>`"sensitivity"`</td>
+            <td>*"sensitivity"*</td>
             <td></td>
           </tr>
           <tr>
             <td>[[IgnorePunctuation]]</td>
-            <td>`"ignorePunctuation"`</td>
+            <td>*"ignorePunctuation"*</td>
             <td></td>
           </tr>
           <tr>
             <td>[[Collation]]</td>
-            <td>`"collation"`</td>
+            <td>*"collation"*</td>
             <td></td>
           </tr>
           <tr>
             <td>[[Numeric]]</td>
-            <td>`"numeric"`</td>
+            <td>*"numeric"*</td>
             <td>kn</td>
           </tr>
           <tr>
             <td>[[CaseFirst]]</td>
-            <td>`"caseFirst"`</td>
+            <td>*"caseFirst"*</td>
             <td>kf</td>
           </tr>
         </table>
@@ -351,10 +351,10 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for collation.</li>
-      <li>[[Usage]] is one of the String values `"sort"` or `"search"`, identifying the collator usage.</li>
-      <li>[[Sensitivity]] is one of the String values `"base"`, `"accent"`, `"case"`, or `"variant"`, identifying the collator's sensitivity.</li>
+      <li>[[Usage]] is one of the String values *"sort"* or *"search"*, identifying the collator usage.</li>
+      <li>[[Sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator's sensitivity.</li>
       <li>[[IgnorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
-      <li>[[Collation]] is a String value with the `"type"` given in Unicode Technical Standard 35 for the collation, except that the values `"standard"` and `"search"` are not allowed, while the value `"default"` is allowed.</li>
+      <li>[[Collation]] is a String value with the *"type"* given in Unicode Technical Standard 35 for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
     </ul>
 
     <p>
@@ -363,7 +363,7 @@
 
     <ul>
       <li>[[Numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-      <li>[[CaseFirst]] is one of the String values `"upper"`, `"lower"`, or `"false"`.</li>
+      <li>[[CaseFirst]] is one of the String values *"upper"*, *"lower"*, or *"false"*.</li>
     </ul>
 
     <p>

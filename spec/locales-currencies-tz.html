@@ -9,11 +9,11 @@
     <h1>Case Sensitivity and Case Mapping</h1>
 
     <p>
-      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters `"A"` to `"Z"` (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters `"a"` to `"z"` (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range `"a"` to `"z"` (U+0061 to U+007A) to the corresponding characters in the range `"A"` to `"Z"` (U+0041 to U+005A) and maps no other characters to the latter range.
+      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters *"A"* to *"Z"* (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters *"a"* to *"z"* (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range *"a"* to *"z"* (U+0061 to U+007A) to the corresponding characters in the range *"A"* to *"Z"* (U+0041 to U+005A) and maps no other characters to the latter range.
     </p>
 
     <p>
-      EXAMPLES `"ß"` (U+00DF) must not match or be mapped to `"SS"` (U+0053, U+0053). `"ı"` (U+0131) must not match or be mapped to `"I"` (U+0049).
+      EXAMPLES *"ß"* (U+00DF) must not match or be mapped to *"SS"* (U+0053, U+0053). *"ı"* (U+0131) must not match or be mapped to *"I"* (U+0049).
     </p>
   </emu-clause>
 
@@ -32,7 +32,7 @@
       <h1>Unicode Locale Extension Sequences</h1>
 
       <p>
-        This standard uses the term `"Unicode locale extension sequence"` - as described in <a href="https://unicode.org/reports/tr35/#unicode_locale_extensions">`unicode_locale_extensions`</a> in Unicode BCP 47 - for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator `"-"` and the singleton `"u"`, and includes the maximum sequence of following non-singleton subtags and their preceding `"-"` separators.
+        This standard uses the term *"Unicode locale extension sequence"* - as described in <a href="https://unicode.org/reports/tr35/#unicode_locale_extensions">`unicode_locale_extensions`</a> in Unicode BCP 47 - for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator *"-"* and the singleton *"u"*, and includes the maximum sequence of following non-singleton subtags and their preceding *"-"* separators.
       </p>
     </emu-clause>
 
@@ -94,7 +94,7 @@
       <emu-alg>
         1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
         1. If the number of elements in _normalized_ is not 3, return *false*.
-        1. If _normalized_ contains any character that is not in the range `"A"` to `"Z"` (U+0041 to U+005A), return *false*.
+        1. If _normalized_ contains any character that is not in the range *"A"* to *"Z"* (U+0041 to U+005A), return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
@@ -132,8 +132,8 @@
 
       <emu-alg>
         1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the corresponding Zone name as specified in the `"backward"` file of the IANA Time Zone Database.
-        1. If _ianaTimeZone_ is `"Etc/UTC"` or `"Etc/GMT"`, return `"UTC"`.
+        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the corresponding Zone name as specified in the *"backward"* file of the IANA Time Zone Database.
+        1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
       </emu-alg>
 
