@@ -18,9 +18,9 @@
         1. Else
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _t_ be ? GetOption(_options_, `"type"`, `"string"`, &laquo; `"cardinal"`, `"ordinal"` &raquo;, `"cardinal"`).
+        1. Let _t_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *0*, *3*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
@@ -41,7 +41,7 @@
          1. Assert: Type(_s_) is String.
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
-         1. Let _dp_ be ! Call(%StringProto_indexOf%, _s_, &laquo; `"."` &raquo;).
+         1. Let _dp_ be ! Call(%StringProto_indexOf%, _s_, &laquo; *"."* &raquo;).
          1. If _dp_ = -1, then
            1. Set _iv_ to _n_.
            1. Let _f_ be 0.
@@ -53,7 +53,7 @@
            1. Let _v_ be the length of _fv_.
          1. Let _i_ be abs(! ToNumber(_iv_)).
          1. If _f_ ≠ 0, then
-           1. Let _ft_ be the value of _fv_ stripped of trailing `"0"`.
+           1. Let _ft_ be the value of _fv_ stripped of trailing *"0"*.
            1. Let _w_ be the length of _ft_.
            1. Let _t_ be ! ToNumber(_ft_).
          1. Else,
@@ -112,7 +112,7 @@
       <h1>PluralRuleSelect ( _locale_, _type_, _n_, _operands_ )</h1>
 
       <p>
-        When the PluralRuleSelect abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value `"other"`.
+        When the PluralRuleSelect abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value *"other"*.
       </p>
 
     </emu-clause>
@@ -128,7 +128,7 @@
         1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
         1. Assert: Type(_n_) is Number.
         1. If _n_ is not a finite Number, then
-          1. Return `"other"`.
+          1. Return *"other"*.
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
         1. Let _s_ be ! FormatNumericToString(_pluralRules_, _n_).
@@ -156,7 +156,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, `"%PluralRulesPrototype%"`, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRulesPrototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -243,7 +243,7 @@
       <h1>Intl.PluralRules.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the String value `"Object"`.
+        The initial value of the @@toStringTag property is the String value *"Object"*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -281,8 +281,8 @@
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique String values, from the the list `"zero"`, `"one"`, `"two"`, `"few"`, `"many"` and `"other"`, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
-        1. Perform ! CreateDataProperty(_options_, `"pluralCategories"`, CreateArrayFromList(_pluralCategories_)).
+        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique String values, from the the list *"zero"*, *"one"*, *"two"*, *"few"*, *"many"* and *"other"*, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
+        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
 
@@ -297,31 +297,31 @@
           </thead>
           <tr>
             <td>[[Locale]]</td>
-            <td>`"locale"`</td>
+            <td>*"locale"*</td>
           </tr>
           <tr>
             <td>[[Type]]</td>
-            <td>`"type"`</td>
+            <td>*"type"*</td>
           </tr>
           <tr>
             <td>[[MinimumIntegerDigits]]</td>
-            <td>`"minimumIntegerDigits"`</td>
+            <td>*"minimumIntegerDigits"*</td>
           </tr>
           <tr>
             <td>[[MinimumFractionDigits]]</td>
-            <td>`"minimumFractionDigits"`</td>
+            <td>*"minimumFractionDigits"*</td>
           </tr>
           <tr>
             <td>[[MaximumFractionDigits]]</td>
-            <td>`"maximumFractionDigits"`</td>
+            <td>*"maximumFractionDigits"*</td>
           </tr>
           <tr>
             <td>[[MinimumSignificantDigits]]</td>
-            <td>`"minimumSignificantDigits"`</td>
+            <td>*"minimumSignificantDigits"*</td>
           </tr>
           <tr>
             <td>[[MaximumSignificantDigits]]</td>
-            <td>`"maximumSignificantDigits"`</td>
+            <td>*"maximumSignificantDigits"*</td>
           </tr>
         </table>
       </emu-table>
@@ -345,7 +345,7 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
-      <li>[[Type]] is one of the String values `"cardinal"` or `"ordinal"`, identifying the plural rules used.</li>
+      <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>

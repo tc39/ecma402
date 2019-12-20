@@ -13,13 +13,13 @@
     </p>
 
     <ul>
-      <li>[[AvailableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tags identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[AvailableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-resolvelocale"></emu-xref>). For example, implementations that provide a `"de-DE"` locale must include a `"de"` locale that can serve as a fallback for requests such as `"de-AT"` and `"de-CH"`. For locales that in current usage would include a script subtag (such as Chinese locales), old-style language tags without script subtags must be included such that, for example, requests for `"zh-TW"` and `"zh-HK"` lead to output in traditional Chinese rather than the default simplified Chinese. The ordering of the locales within [[AvailableLocales]] is irrelevant.</li>
+      <li>[[AvailableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tags identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[AvailableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-resolvelocale"></emu-xref>). For example, implementations that provide a *"de-DE"* locale must include a *"de"* locale that can serve as a fallback for requests such as *"de-AT"* and *"de-CH"*. For locales that in current usage would include a script subtag (such as Chinese locales), old-style language tags without script subtags must be included such that, for example, requests for *"zh-TW"* and *"zh-HK"* lead to output in traditional Chinese rather than the default simplified Chinese. The ordering of the locales within [[AvailableLocales]] is irrelevant.</li>
       <li>[[RelevantExtensionKeys]] is a List of keys of the language tag extensions defined in Unicode Technical Standard 35 that are relevant for the functionality of the constructed objects.</li>
       <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for Intl.NumberFormat, Intl.DateTimeFormat, and Intl.PluralRules) are records that have fields for each locale contained in [[AvailableLocales]]. The value of each of these fields must be a record that has fields for each key contained in [[RelevantExtensionKeys]]. The value of each of these fields must be a non-empty list of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
     </ul>
 
     <p>
-      EXAMPLE     An implementation of DateTimeFormat might include the language tag `"th"` in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key `"ca"` in its [[RelevantExtensionKeys]] internal slot. For Thai, the `"buddhist"` calendar is usually the default, but an implementation might also support the calendars `"gregory"`, `"chinese"`, and `"islamicc"` for the locale `"th"`. The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; `"buddhist"`, `"gregory"`, `"chinese"`, `"islamicc"` &raquo;}}.
+      EXAMPLE     An implementation of DateTimeFormat might include the language tag *"th"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key *"ca"* in its [[RelevantExtensionKeys]] internal slot. For Thai, the *"buddhist"* calendar is usually the default, but an implementation might also support the calendars *"gregory"*, *"chinese"*, and *"islamicc"* for the locale *"th"*. The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; *"buddhist"*, *"gregory"*, *"chinese"*, *"islamicc"* &raquo;}}.
     </p>
   </emu-clause>
 
@@ -45,7 +45,7 @@
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
-        1. Let _len_ be ? ToLength(? Get(_O_, `"length"`)).
+        1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
         1. Let _k_ be 0.
         1. Repeat, while _k_ < _len_
           1. Let _Pk_ be ToString(_k_).
@@ -66,7 +66,7 @@
       </emu-note>
 
       <emu-note>
-        Requiring _kValue_ to be a String or Object means that the Number value *NaN* will not be interpreted as the language tag `"nan"`, which stands for Min Nan Chinese.
+        Requiring _kValue_ to be a String or Object means that the Number value *NaN* will not be interpreted as the language tag *"nan"*, which stands for Min Nan Chinese.
       </emu-note>
     </emu-clause>
 
@@ -81,8 +81,8 @@
         1. Let _candidate_ be _locale_.
         1. Repeat,
           1. If _availableLocales_ contains an element equal to _candidate_, return _candidate_.
-          1. Let _pos_ be the character index of the last occurrence of `"-"` (U+002D) within _candidate_. If that character does not occur, return *undefined*.
-          1. If _pos_ ≥ 2 and the character `"-"` occurs at index _pos_-2 of candidate, decrease _pos_ by 2.
+          1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
+          1. If _pos_ ≥ 2 and the character *"-"* occurs at index _pos_-2 of candidate, decrease _pos_ by 2.
           1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
     </emu-clause>
@@ -131,7 +131,7 @@
       <emu-alg>
         1. Assert: The number of elements in _key_ is 2.
         1. Let _size_ be the number of elements in _extension_.
-        1. Let _searchValue_ be the string-concatenation of `"-"`, _key_, and `"-"`.
+        1. Let _searchValue_ be the string-concatenation of *"-"*, _key_, and *"-"*.
         1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1, then
           1. Let _start_ be _pos_ + 4.
@@ -139,7 +139,7 @@
           1. Let _k_ be _start_.
           1. Let _done_ be *false*.
           1. Repeat, while _done_ is *false*
-            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, &laquo; `"-"`, _k_ &raquo;).
+            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, &laquo; *"-"*, _k_ &raquo;).
             1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
             1. If _len_ = 2, then
               1. Let _done_ be *true*.
@@ -150,7 +150,7 @@
               1. Let _end_ be _e_.
               1. Let _k_ be _e_ + 1.
           1. Return the String value equal to the substring of _extension_ consisting of the code units at indices _start_ (inclusive) through _end_ (exclusive).
-        1. Let _searchValue_ be the string-concatenation of `"-"` and _key_.
+        1. Let _searchValue_ be the string-concatenation of *"-"* and _key_.
         1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
         1. If _pos_ ≠ -1 and _pos_ + 3 = _size_, then
           1. Return the empty String.
@@ -158,7 +158,7 @@
       </emu-alg>
 
       <emu-note>
-        Non-normative summary: UnicodeExtensionValue returns the type subtags of the first keyword for a given key. For example, UnicodeExtensionValue(`"u-ca-ethiopic-amete-alem-ca-ethioaa"`, `"ca"`) returns `"ethiopic-amete-alem"`. If the keyword for _key_ has no type subtags, UnicodeExtensionValue returns the empty String. If _extension_ contains no keyword for _key_, *undefined* is returned.
+        Non-normative summary: UnicodeExtensionValue returns the type subtags of the first keyword for a given key. For example, UnicodeExtensionValue(*"u-ca-ethiopic-amete-alem-ca-ethioaa"*, *"ca"*) returns *"ethiopic-amete-alem"*. If the keyword for _key_ has no type subtags, UnicodeExtensionValue returns the empty String. If _extension_ contains no keyword for _key_, *undefined* is returned.
       </emu-note>
     </emu-clause>
 
@@ -175,14 +175,14 @@
 
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
-        1. If _matcher_ is `"lookup"`, then
+        1. If _matcher_ is *"lookup"*, then
           1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
-        1. Let _supportedExtension_ be `"-u"`.
+        1. Let _supportedExtension_ be *"-u"*.
         1. For each element _key_ of _relevantExtensionKeys_ in List order, do
           1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
           1. Assert: Type(_foundLocaleData_) is Record.
@@ -190,28 +190,28 @@
           1. Assert: Type(_keyLocaleData_) is List.
           1. Let _value_ be _keyLocaleData_[0].
           1. Assert: Type(_value_) is either String or Null.
-          1. Let _supportedExtensionAddition_ be `""`.
+          1. Let _supportedExtensionAddition_ be *""*.
           1. If _r_ has an [[extension]] field, then
             1. Let _requestedValue_ be UnicodeExtensionValue(_r_.[[extension]], _key_).
             1. If _requestedValue_ is not *undefined*, then
               1. If _requestedValue_ is not the empty String, then
                 1. If _keyLocaleData_ contains _requestedValue_, then
                   1. Let _value_ be _requestedValue_.
-                  1. Let _supportedExtensionAddition_ be the string-concatenation of `"-"`, _key_, `"-"`, and _value_.
-              1. Else if _keyLocaleData_ contains `"true"`, then
-                1. Let _value_ be `"true"`.
-                1. Let _supportedExtensionAddition_ be the string-concatenation of `"-"` and _key_.
+                  1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
+              1. Else if _keyLocaleData_ contains *"true"*, then
+                1. Let _value_ be *"true"*.
+                1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"* and _key_.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
             1. If _keyLocaleData_ contains _optionsValue_, then
               1. If SameValue(_optionsValue_, _value_) is *false*, then
                 1. Let _value_ be _optionsValue_.
-                1. Let _supportedExtensionAddition_ be `""`.
+                1. Let _supportedExtensionAddition_ be *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Append _supportedExtensionAddition_ to _supportedExtension_.
         1. If the number of elements in _supportedExtension_ is greater than 2, then
-          1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, &laquo; `"-x-"` &raquo;).
+          1. Let _privateIndex_ be Call(%StringProto_indexOf%, _foundLocale_, &laquo; *"-x-"* &raquo;).
           1. If _privateIndex_ = -1, then
             1. Let _foundLocale_ be the string-concatenation of _foundLocale_ and _supportedExtension_.
           1. Else,
@@ -264,9 +264,9 @@
       <emu-alg>
         1. If _options_ is not *undefined*, then
           1. Let _options_ be ? ToObject(_options_).
-          1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
-        1. Else, let _matcher_ be `"best fit"`.
-        1. If _matcher_ is `"best fit"`, then
+          1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Else, let _matcher_ be *"best fit"*.
+        1. If _matcher_ is *"best fit"*, then
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
@@ -284,10 +284,10 @@
       <emu-alg>
         1. Let _value_ be ? Get(_options_, _property_).
         1. If _value_ is not *undefined*, then
-          1. Assert: _type_ is `"boolean"` or `"string"`.
-          1. If _type_ is `"boolean"`, then
+          1. Assert: _type_ is *"boolean"* or *"string"*.
+          1. If _type_ is *"boolean"*, then
             1. Let _value_ be ToBoolean(_value_).
-          1. If _type_ is `"string"`, then
+          1. If _type_ is *"string"*, then
             1. Let _value_ be ? ToString(_value_).
           1. If _values_ is not *undefined*, then
             1. If _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
@@ -331,30 +331,30 @@
       <p>
         The PartitionPattern abstract operation is called with argument _pattern_.
         This abstract operation parses an abstract pattern string into a list of Records with two fields, [[Type]] and [[Value]].
-        The [[Value]] field will be a String value if [[Type]] is `"literal"`, and *undefined* otherwise.
+        The [[Value]] field will be a String value if [[Type]] is *"literal"*, and *undefined* otherwise.
         The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
         The following steps are taken:
       </p>
 
       <emu-alg>
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be ! Call(%String.prototype.indexOf%, _pattern_, &laquo; `"{"`, 0 &raquo;).
+        1. Let _beginIndex_ be ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"{"*, 0 &raquo;).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
         1. Repeat, while _beginIndex_ is an integer index into _pattern_
-          1. Set _endIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; `"}"`, _beginIndex_ &raquo;).
+          1. Set _endIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"}"*, _beginIndex_ &raquo;).
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
-            1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
+            1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. Add new part record { [[Type]]: _p_, [[Value]]: *undefined* } as a new element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; `"{"`, _nextIndex_ &raquo;).
+          1. Set _beginIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"{"*, _nextIndex_ &raquo;).
         1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, exclusive, to position _length_, exclusive.
-          1. Add new part record { [[Type]]: `"literal"`, [[Value]]: _literal_ } as a new element of the list _result_.
+          1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
