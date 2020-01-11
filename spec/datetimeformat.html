@@ -288,21 +288,21 @@
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
-            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
+            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[InDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[Type]]: _p_, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal to *"ampm"*, then
-            1. Let _v_ be _tm_.[[hour]].
+            1. Let _v_ be _tm_.[[Hour]].
             1. If _v_ is greater than 11, then
               1. Let _fv_ be an implementation and locale dependent String value representing *"post meridiem"*.
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing *"ante meridiem"*.
             1. Add new part record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal to *"relatedYear"*, then
-            1. Let _v_ be _tm_.[[relatedYear]].
+            1. Let _v_ be _tm_.[[RelatedYear]].
             1. Let _fv_ be FormatNumber(_nf_, _v_).
             1. Add new part record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal to *"yearName"*, then
-            1. Let _v_ be _tm_.[[yearName]].
+            1. Let _v_ be _tm_.[[YearName]].
             1. Add new part record { [[Type]]: *"yearName"*, [[Value]]: _v_ } as a new element of the list _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
@@ -386,47 +386,47 @@
             </tr>
           </thead>
           <tr>
-            <td>[[weekday]]</td>
+            <td>[[Weekday]]</td>
             <td>`WeekDay(tz)` specified in ES2020's <emu-xref href="#sec-week-day">Week Day</emu-xref></td>
           </tr>
           <tr>
-            <td>[[era]]</td>
+            <td>[[Era]]</td>
             <td>Let `year` be `YearFromTime(tz)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref>. If `year` is less than 0, return 'BC', else, return 'AD'.</td>
           </tr>
           <tr>
-            <td>[[year]]</td>
+            <td>[[Year]]</td>
             <td>`YearFromTime(tz)` specified in ES2020's <emu-xref href="#sec-year-number">Year Number</emu-xref></td>
           </tr>
           <tr>
-            <td>[[relatedYear]]</td>
+            <td>[[RelatedYear]]</td>
             <td>*undefined*</td>
           </tr>
           <tr>
-            <td>[[yearName]]</td>
+            <td>[[YearName]]</td>
             <td>*undefined*</td>
           </tr>
           <tr>
-            <td>[[month]]</td>
+            <td>[[Month]]</td>
             <td>`MonthFromTime(tz)` specified in ES2020's <emu-xref href="#sec-month-number">Month Number</emu-xref></td>
           </tr>
           <tr>
-            <td>[[day]]</td>
+            <td>[[Day]]</td>
             <td>`DateFromTime(tz)` specified in ES2020's <emu-xref href="#sec-date-number">Date Number</emu-xref></td>
           </tr>
           <tr>
-            <td>[[hour]]</td>
+            <td>[[Hour]]</td>
             <td>`HourFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
-            <td>[[minute]]</td>
+            <td>[[Minute]]</td>
             <td>`MinuteFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
-            <td>[[second]]</td>
+            <td>[[Second]]</td>
             <td>`SecondFromTime(tz)` specified in ES2020's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
-            <td>[[inDST]]</td>
+            <td>[[InDST]]</td>
             <td>Calculate *true* or *false* using the best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.</td>
           </tr>
         </table>
