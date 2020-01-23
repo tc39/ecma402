@@ -41,7 +41,7 @@
       </p>
 
       <p>
-        The following algorithm refers to <a href="http://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
+        The following algorithm refers to the `type` nonterminal from <a href="http://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
       </p>
 
       <emu-alg>
@@ -55,7 +55,8 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _numberingSystem_ be ? GetOption(_options_, `"numberingSystem"`, `"string"`, *undefined*, *undefined*).
         1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ does not match the `(3*8alphanum) *("-" (3*8alphanum))` sequence, throw a *RangeError* exception.
+          1. If _numberingSystem_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
+          1. Set _numberingSystem_ to the result of mapping _numberingSystem_ to lower case as as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
