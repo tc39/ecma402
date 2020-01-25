@@ -1,8 +1,8 @@
 <emu-clause id="locales-currencies-tz">
-  <h1>Identification of Locales, Currencies, and Time Zones</h1>
+  <h1>Identification of Locales, Currencies, Time Zones, and Measurement Units</h1>
 
   <p>
-    This clause describes the String values used in the ECMAScript 2020 Internationalization API Specification to identify locales, currencies, and time zones.
+    This clause describes the String values used in the ECMAScript 2020 Internationalization API Specification to identify locales, currencies, time zones, and measurement units.
   </p>
 
   <emu-clause id="sec-case-sensitivity-and-case-mapping">
@@ -150,6 +150,107 @@
       </p>
     </emu-clause>
 
+  </emu-clause>
+
+  <emu-clause id="sec-measurement-unit-identifiers">
+    <h1>Measurement Unit Identifiers</h1>
+
+    <p>
+      The ECMAScript 2020 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by Unicode Technical Standard #35, Part 2, Section 6. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+    </p>
+
+    <p>
+      Only a limited set of core unit identifiers are allowed.  An illegal core unit identifier results in a RangeError.
+    </p>
+
+    <emu-clause id="sec-iswellformedunitidentifier" aoid="IsWellFormedUnitIdentifier">
+      <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
+
+      <p>
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in UTS #35, Part 2, Section 6. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
+          1. Return *true*.
+        1. If the substring *"-per-"* does not occur exactly once in _unitIdentifier_, then
+          1. Return *false*.
+        1. Let _numerator_ be the substring of _unitIdentifier_ from the beginning to just before *"-per-"*.
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_numerator_) is *false*, then
+          1. Return *false*.
+        1. Let _denominator_ be the substring of _unitIdentifier_ from just after *"-per-"* to the end.
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_denominator_) is *false*, then
+          1. Return *false*.
+        1. Return *true*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-issanctionedsimpleunitidentifier" aoid="IsSanctionedSimpleUnitIdentifier">
+      <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
+
+      <p>
+        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript standard, a subset of the Validity Data as described in UTS #35, Part 1, Section 3.11; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-simple-unit-identifiers"></emu-xref> below, return *true*.
+        1. Else, Return *false*.
+      </emu-alg>
+
+      <emu-table id="table-sanctioned-simple-unit-identifiers">
+        <emu-caption>Simple units sanctioned for use in ECMAScript</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Simple Unit</th>
+            </tr>
+          </thead>
+          <tr><td>acre</td></tr>
+          <tr><td>bit</td></tr>
+          <tr><td>byte</td></tr>
+          <tr><td>celsius</td></tr>
+          <tr><td>centimeter</td></tr>
+          <tr><td>day</td></tr>
+          <tr><td>degree</td></tr>
+          <tr><td>fahrenheit</td></tr>
+          <tr><td>fluid-ounce</td></tr>
+          <tr><td>foot</td></tr>
+          <tr><td>gallon</td></tr>
+          <tr><td>gigabit</td></tr>
+          <tr><td>gigabyte</td></tr>
+          <tr><td>gram</td></tr>
+          <tr><td>hectare</td></tr>
+          <tr><td>hour</td></tr>
+          <tr><td>inch</td></tr>
+          <tr><td>kilobit</td></tr>
+          <tr><td>kilobyte</td></tr>
+          <tr><td>kilogram</td></tr>
+          <tr><td>kilometer</td></tr>
+          <tr><td>liter</td></tr>
+          <tr><td>megabit</td></tr>
+          <tr><td>megabyte</td></tr>
+          <tr><td>meter</td></tr>
+          <tr><td>mile</td></tr>
+          <tr><td>mile-scandinavian</td></tr>
+          <tr><td>milliliter</td></tr>
+          <tr><td>millimeter</td></tr>
+          <tr><td>millisecond</td></tr>
+          <tr><td>minute</td></tr>
+          <tr><td>month</td></tr>
+          <tr><td>ounce</td></tr>
+          <tr><td>percent</td></tr>
+          <tr><td>petabyte</td></tr>
+          <tr><td>pound</td></tr>
+          <tr><td>second</td></tr>
+          <tr><td>stone</td></tr>
+          <tr><td>terabit</td></tr>
+          <tr><td>terabyte</td></tr>
+          <tr><td>week</td></tr>
+          <tr><td>yard</td></tr>
+          <tr><td>year</td></tr>
+        </table>
+      </emu-table>
+    </emu-clause>
   </emu-clause>
 
 </emu-clause>

@@ -5,7 +5,7 @@
     <h1>Abstract Operations For NumberFormat Objects</h1>
 
     <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
-      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_ )</h1>
+      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_ )</h1>
 
       <p>
         The abstract operation SetNumberFormatDigitOptions applies digit
@@ -16,20 +16,31 @@
         1. Assert: Type(_options_) is Object.
         1. Assert: Type(_mnfdDefault_) is Number.
         1. Assert: Type(_mxfdDefault_) is Number.
-        1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
-        1. Let _mnfd_ be ? GetNumberOption(_options_, *"minimumFractionDigits"*, 0, 20, _mnfdDefault_).
-        1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
-        1. Let _mxfd_ be ? GetNumberOption(_options_, *"maximumFractionDigits"*, _mnfd_, 20, _mxfdActualDefault_).
+        1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
+        1. Let _mnfd_ be ? Get(_options_, *"minimumFractionDigits"*).
+        1. Let _mxfd_ be ? Get(_options_, *"maximumFractionDigits"*).
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
-        1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
-        1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
+          1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
           1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
           1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
           1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
+        1. Else if _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
+          1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
+          1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, _mnfdDefault_).
+          1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
+          1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, _mnfd_, 20, _mxfdActualDefault_).
+          1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
+          1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
+        1. Else if _notation_ is *"compact"*, then
+          1. Set _intlObj_.[[RoundingType]] to ~compactRounding~.
+        1. Else,
+          1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
+          1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
+          1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
       </emu-alg>
     </emu-clause>
 
@@ -52,21 +63,13 @@
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _numberFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _numberFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _numberFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"decimal"*, *"percent"*, *"currency"* &raquo;, *"decimal"*).
-        1. Set _numberFormat_.[[Style]] to _style_.
-        1. Let _currency_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
-        1. If _currency_ is not *undefined*, then
-          1. If the result of IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
-        1. If _style_ is *"currency"* and _currency_ is *undefined*, throw a *TypeError* exception.
+        1. Perform ? SetNumberFormatUnitOptions(_numberFormat_, _options_).
+        1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"currency"*, then
-          1. Let _currency_ be the result of converting _currency_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Set _numberFormat_.[[Currency]] to _currency_.
+          1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _cDigits_ be CurrencyDigits(_currency_).
-        1. Let _currencyDisplay_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"name"* &raquo;, *"symbol"*).
-        1. If _style_ is *"currency"*, set _numberFormat_.[[CurrencyDisplay]] to _currencyDisplay_.
-        1. If _style_ is *"currency"*, then
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
         1. Else,
@@ -75,15 +78,16 @@
             1. Let _mxfdDefault_ be 0.
           1. Else,
             1. Let _mxfdDefault_ be 3.
-        1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_).
+        1. Let _notation_ be ? GetOption(_options_, *"notation"*, *"string"*, &laquo; *"standard"*, *"scientific"*, *"engineering"*, *"compact"* &raquo;, *"standard"*).
+        1. Set _numberFormat_.[[Notation]] to _notation_.
+        1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_).
+        1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, *"string"*, &laquo; *"short"*, *"long"* &raquo;, *"short"*).
+        1. If _notation_ is *"compact"*, then
+          1. Set _numberFormat_.[[CompactDisplay]] to _compactDisplay_.
         1. Let _useGrouping_ be ? GetOption(_options_, *"useGrouping"*, *"boolean"*, *undefined*, *true*).
         1. Set _numberFormat_.[[UseGrouping]] to _useGrouping_.
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _patterns_ be _dataLocaleData_.[[patterns]].
-        1. Assert: _patterns_ is a record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
-        1. Let _stylePatterns_ be _patterns_.[[&lt;_style_&gt;]].
-        1. Set _numberFormat_.[[PositivePattern]] to _stylePatterns_.[[positivePattern]].
-        1. Set _numberFormat_.[[NegativePattern]] to _stylePatterns_.[[negativePattern]].
+        1. Let _signDisplay_ be ? GetOption(_options_, *"signDisplay"*, *"string"*, &laquo; *"auto"*, *"never"*, *"always"*, *"exceptZero"* &raquo;, *"auto"*).
+        1. Set _numberFormat_.[[SignDisplay]] to _signDisplay_.
         1. Return _numberFormat_.
       </emu-alg>
     </emu-clause>
@@ -123,15 +127,32 @@
       <h1>FormatNumericToString ( _intlObject_, _x_ )</h1>
 
       <p>
-        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns _x_ as a String value with digits formatted according to the five formatting parameters.
+        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[RoundingType]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns a Record containing two values: _x_ as a String value with digits formatted according to the five formatting parameters in the field [[FormattedString]], and the final floating decimal value of _x_ after rounding has been performed in the field [[RoundedNumber]].
       </p>
 
       <emu-alg>
-        1. If _intlObject_.[[MinimumSignificantDigits]] and _intlObject_.[[MaximumSignificantDigits]] are both not *undefined*, then
+        1. If _x_ &lt; 0 or _x_ is *-0*, let _isNegative_ be true; else let _isNegative_ be false.
+        1. If _isNegative_, then
+          1. Let _x_ be -_x_.
+        1. If _intlObject_.[[RoundingType]] is ~significantDigits~, then
           1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]]).
+        1. Else if _intlObject_.[[RoundingType]] is ~fractionDigits~, then
+          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]]).
         1. Else,
-          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumIntegerDigits]], _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]]).
-        1. Return _result_.
+          1. Assert: _intlObject_.[[RoundingType]] is ~compactRounding~.
+          1. Let _result_ be ToRawPrecision(_x_, 1, 2).
+          1. If _result_.[[IntegerDigitsCount]] &gt; 1, then
+            1. Let _result_ be ToRawFixed(_x_, 0, 0).
+        1. Let _x_ be _result_.[[RoundedNumber]].
+        1. Let _string_ be _result_.[[FormattedString]].
+        1. Let _int_ be _result_.[[IntegerDigitsCount]].
+        1. Let _minInteger_ be _intlObject_.[[MinimumIntegerDigits]].
+        1. If _int_ < _minInteger_, then
+          1. Let _forwardZeros_ be the String consisting of _minInteger_–_int_ occurrences of the character *"0"*.
+          1. Set _string_ to the string-concatenation of _forwardZeros_ and _string_.
+        1. If _isNegative_, then
+          1. Let _x_ be -_x_.
+        1. Return the Record { [[RoundedNumber]]: _x_, [[FormattedString]]: _string_ }.
       </emu-alg>
     </emu-clause>
 
@@ -143,27 +164,87 @@
       </p>
 
       <emu-alg>
-        1. If _x_ is not *NaN* and _x_ &lt; 0 or _x_ is *-0*, then
-          1. Let _x_ be -_x_.
-          1. Let _pattern_ be _numberFormat_.[[NegativePattern]].
+        1. Let _exponent_ be 0.
+        1. If _x_ is *NaN*, then
+          1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
+        1. Else if _x_ is not a finite Number or BigInt,
+          1. Let _n_ be an ILD String value indicating infinity.
         1. Else,
-          1. Let _pattern_ be _numberFormat_.[[PositivePattern]].
+          1. If _numberFormat_.[[Style]] is *"percent"*, let _x_ be 100 × _x_.
+          1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
+          1. Let _x_ be _x_ × 10<sup>-_exponent_</sup>.
+          1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
+          1. Let _n_ be _formatNumberResult_.[[FormattedString]].
+          1. Let _x_ be _formatNumberResult_.[[RoundedNumber]].
+        1. Let _pattern_ be GetNumberFormatPattern(_numberFormat_, _x_)
         1. Let _result_ be a new empty List.
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. For each element _patternPart_ of _patternParts_, in List order, do
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
             1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as a new element of _result_.
-          1. If _p_ is equal to *"number"*, then
-            1. If _x_ is *NaN*, then
-              1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
-              1. Append a new Record { [[Type]]: *"nan"*, [[Value]]: _n_ } as the last element of _result_.
-            1. Else if _x_ is not a finite Number or BigInt,
-              1. Let _n_ be an ILD String value indicating infinity.
-              1. Append a new Record { [[Type]]: *"infinity"*, [[Value]]: _n_ } as the last element of _result_.
-            1. Else,
-              1. If _numberFormat_.[[Style]] is *"percent"*, let _x_ be 100 × _x_.
-              1. Let _n_ be FormatNumericToString(_numberFormat_, _x_).
+          1. Else if _p_ is equal to *"number"*, then
+            1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _n_, _exponent_).
+            1. Append all elements of _notationSubParts_ to _result_.
+          1. Else if _p_ is equal to *"plusSign"*, then
+            1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
+            1. Append a new Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"minusSign"*, then
+            1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
+            1. Append a new Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
+            1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
+            1. Append a new Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"unitPrefix"* and _numberFormat_.[[Style]] is *"unit"*, then
+            1. Let _unit_ be _numberFormat_.[[Unit]].
+            1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
+            1. Let _mu_ be an ILD String value representing _unit_ before _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
+            1. Append a new Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"unitSuffix"* and _numberFormat_.[[Style]] is *"unit"*, then
+            1. Let _unit_ be _numberFormat_.[[Unit]].
+            1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
+            1. Let _mu_ be an ILD String value representing _unit_ after _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
+            1. Append a new Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"currencyCode"* and _numberFormat_.[[Style]] is *"currency"*, then
+            1. Let _currency_ be _numberFormat_.[[Currency]].
+            1. Let _cd_ be _currency_.
+            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"currencyPrefix"* and _numberFormat_.[[Style]] is *"currency"*, then
+            1. Let _currency_ be _numberFormat_.[[Currency]].
+            1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
+            1. Let _cd_ be an ILD String value representing _currency_ before _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms.
+            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } as the last element of _result_.
+          1. Else if _p_ is equal to *"currencySuffix"* and _numberFormat_.[[Style]] is *"currency"*, then
+            1. Let _currency_ be _numberFormat_.[[Currency]].
+            1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
+            1. Let _cd_ be an ILD String value representing _currency_ after _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms. If the implementation does not have such a representation of _currency_, use _currency_ itself.
+            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } as the last element of _result_.
+          1. Else,
+            1. Let _unknown_ be an ILND String based on _x_ and _p_.
+            1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } as the last element of _result_.
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-partitionnotationsubpattern" aoid="PartitionNotationSubPattern">
+      <h1>PartitionNotationSubPattern ( _numberFormat_, _x_, _n_, _exponent_ )</h1>
+      <p>
+        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is a numeric value after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
+      </p>
+      <emu-alg>
+        1. Let _result_ be a new empty List.
+        1. If _x_ is *NaN*, then
+          1. Append a new Record { [[Type]]: *"nan"*, [[Value]]: _n_ } as the last element of _result_.
+        1. Else if _x_ is not a finite Number or BigInt,
+          1. Append a new Record { [[Type]]: *"infinity"*, [[Value]]: _n_ } as the last element of _result_.
+        1. Else,
+          1. Let _notationSubPattern_ be GetNotationSubPattern(_numberFormat_, _exponent_)
+          1. Let _patternParts_ be PartitionPattern(_notationSubPattern_).
+          1. For each element _patternPart_ of _patternParts_, in List order, do
+            1. Let _p_ be _patternPart_.[[Type]].
+            1. If _p_ is *"literal"*, then
+              1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as a new element of _result_.
+            1. Else If _p_ is equal to *"number"*, then
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the *"Numbering System"* column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
@@ -190,28 +271,25 @@
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append a new Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } as the last element of _result_.
                 1. Append a new Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } as the last element of _result_.
-          1. Else if _p_ is equal to *"plusSign"*, then
-            1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
-            1. Append a new Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal to *"minusSign"*, then
-            1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
-            1. Append a new Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal to *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
-            1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
-            1. Append a new Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } as the last element of _result_.
-          1. Else if _p_ is equal to *"currency"* and _numberFormat_.[[Style]] is *"currency"*, then
-            1. Let _currency_ be _numberFormat_.[[Currency]].
-            1. Assert: _numberFormat_.[[CurrencyDisplay]] is *"code"*, *"symbol"* or *"name"*.
-            1. If _numberFormat_.[[CurrencyDisplay]] is *"code"*, then
-              1. Let _cd_ be _currency_.
-            1. Else if _numberFormat_.[[CurrencyDisplay]] is *"symbol"*, then
-              1. Let _cd_ be an ILD String value representing _currency_ in short form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
-            1. Else if _numberFormat_.[[CurrencyDisplay]] is *"name"*, then
-              1. Let _cd_ be an ILD String value representing _currency_ in long form. If the implementation does not have such a representation of _currency_, use _currency_ itself.
-            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } as the last element of _result_.
-          1. Else,
-            1. Let _unknown_ be an ILND String based on _x_ and _p_.
-            1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } as the last element of _result_.
+            1. Else if _p_ is equal to *"compactSymbol"*, then
+              1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
+              1. Append a new Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } as the last element of _result_.
+            1. Else if _p_ is equal to *"compactName"*, then
+              1. Let _compactName_ be an ILD string representing _exponent_ in long form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactName}"* placeholder.
+              1. Append a new Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } as the last element of _result_.
+            1. Else if _p_ is equal to *"scientificSeparator"*, then
+              1. Let _scientificSeparator_ be the ILND String representing the exponent separator.
+              1. Append a new Record { [[Type]]: *"exponentSeparator"*, [[Value]]: _scientificSeparator_ } as the last element of _result_.
+            1. Else if _p_ is equal to *"scientificExponent"*, then
+              1. If _exponent_ &lt; 0, then
+                1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
+                1. Append a new Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
+                1. Let _exponent_ be -_exponent_.
+              1. Let _exponentResult_ be ToRawFixed(_exponent_, 1, 0, 0).
+              1. Append a new Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } as the last element of _result_.
+            1. Else,
+              1. Let _unknown_ be an ILND String based on _x_ and _p_.
+              1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } as the last element of _result_.
         1. Return _result_.
       </emu-alg>
 
@@ -373,17 +451,22 @@
         1. If _x_ = 0, then
           1. Let _m_ be the String consisting of _p_ occurrences of the character *"0"*.
           1. Let _e_ be 0.
+          1. Let _xFinal_ be 0.
         1. Else,
-          1. Let _e_ and _n_ be integers such that 10<sup>_p_–1</sup> ≤ _n_ < 10<sup>_p_</sup> and for which the exact mathematical value of _n_ × 10<sup>_e_–_p_+1</sup> – _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ × 10<sup>_e_–_p_+1</sup> is larger.
+          1. Let _e_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
+          1. Let _n_ be an integer such that 10<sup>_p_–1</sup> ≤ _n_ < 10<sup>_p_</sup> and for which the exact mathematical value of _n_ × 10<sup>_e_–_p_+1</sup> – _x_ is as close to zero as possible. If there is more than one such _n_, pick the one for which _n_ × 10<sup>_e_–_p_+1</sup> is larger.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
-        1. If _e_ ≥ _p_, then
-          1. Return the string-concatenation of _m_ and _e_-_p_+1 occurrences of the character *"0"*.
-        1. If _e_ = _p_-1, then
-          1. Return _m_.
-        1. If _e_ ≥ 0, then
+          1. Let _xFinal_ be _n_ × 10<sup>_e_–_p_+1</sup>.
+        1. If _e_ ≥ _p_–1, then
+          1. Let _m_ be the string-concatenation of _m_ and _e_–_p_+1 occurrences of the character *"0"*.
+          1. Let _int_ be _e_+1.
+        1. Else if _e_ ≥ 0, then
           1. Let _m_ be the string-concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_–(_e_+1) characters of _m_.
-        1. If _e_ < 0, then
+          1. Let _int_ be _e_+1.
+        1. Else,
+          1. Assert: _e_ < 0.
           1. Let _m_ be the string-concatenation of the String value *"0."*, –(_e_+1) occurrences of the character *"0"*, and _m_.
+          1. Let _int_ be 1.
         1. If _m_ contains the character *"."*, and _maxPrecision_ > _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ – _minPrecision_.
           1. Repeat, while _cut_ > 0 and the last character of _m_ is *"0"*
@@ -391,7 +474,7 @@
             1. Decrease _cut_ by 1.
           1. If the last character of _m_ is *"."*, then
             1. Remove the last character from _m_.
-        1. Return _m_.
+        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
       </emu-alg>
     </emu-clause>
 
@@ -405,6 +488,7 @@
       <emu-alg>
         1. Let _f_ be _maxFraction_.
         1. Let _n_ be an integer for which the exact mathematical value of _n_ ÷ 10<sup>_f_</sup> – _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
+        1. Let _xFinal_ be _n_ ÷ 10<sup>_f_</sup>.
         1. If _n_ = 0, let _m_ be the String *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ ≠ 0, then
           1. Let _k_ be the number of characters in _m_.
@@ -422,10 +506,7 @@
           1. Decrease _cut_ by 1.
         1. If the last character of _m_ is *"."*, then
           1. Remove the last character from _m_.
-        1. If _int_ < _minInteger_, then
-          1. Let _z_ be the String consisting of _minInteger_–_int_ occurrences of the character *"0"*.
-          1. Let _m_ be the string-concatenation of _z_ and _m_.
-        1. Return _m_.
+        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
       </emu-alg>
     </emu-clause>
 
@@ -452,6 +533,166 @@
       </emu-alg>
       <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
     </emu-clause>
+
+    <emu-clause id="sec-setnumberformatunitoptions" aoid="SetNumberFormatUnitOptions">
+      <h1>SetNumberFormatUnitOptions ( _intlObj_, _options_ )</h1>
+      <p>
+        The abstract operation SetNumberFormatUnitOptions resolves the user-specified options relating to units onto the intl object.
+      </p>
+      <emu-alg>
+        1. Assert: Type(_intlObj_) is Object.
+        1. Assert: Type(_options_) is Object.
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"decimal"*, *"percent"*, *"currency"*, *"unit"* &raquo;, *"decimal"*).
+        1. Set _intlObj_.[[Style]] to _style_.
+        1. Let _currency_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
+        1. If _currency_ is not *undefined*, then
+          1. If the result of IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
+        1. Let _currencyDisplay_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"narrowSymbol"*, *"name"* &raquo;, *"symbol"*).
+        1. Let _currencySign_ be ? GetOption(_options_, *"currencySign"*, *"string"*, &laquo; *"standard"*, *"accounting"* &raquo;, *"standard"*).
+        1. Let _unit_ be ? GetOption(_options_, *"unit"*, *"string"*, *undefined*, *undefined*).
+        1. If _unit_ is not *undefined*, then
+          1. If the result of IsWellFormedUnitIdentifier(_unit_) is *false*, throw a *RangeError* exception.
+        1. Let _unitDisplay_ be ? GetOption(_options_, *"unitDisplay"*, *"string"*, &laquo; *"short"*, *"narrow"*, *"long"* &raquo;, *"short"*).
+        1. If _style_ is *"currency"*, then
+          1. If _currency_ is *undefined*, throw a *TypeError* exception.
+          1. Let _currency_ be the result of converting _currency_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Set _intlObj_.[[Currency]] to _currency_.
+          1. Set _intlObj_.[[CurrencyDisplay]] to _currencyDisplay_.
+          1. Set _intlObj_.[[CurrencySign]] to _currencySign_.
+        1. If _style_ is *"unit"*, then
+          1. If _unit_ is *undefined*, throw a *TypeError* exception.
+          1. Set _intlObj_.[[Unit]] to _unit_.
+          1. Set _intlObj_.[[UnitDisplay]] to _unitDisplay_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getnumberformatpattern" aoid="GetNumberFormatPattern">
+      <h1>GetNumberFormatPattern ( _numberFormat_, _x_ )</h1>
+      <p>
+        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>. 
+      </p>
+      <emu-alg>
+        1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
+        1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _patterns_ be _dataLocaleData_.[[patterns]].
+        1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
+        1. Let _style_ be _numberFormat_.[[Style]].
+        1. If _style_ is *"percent"*, then
+          1. Let _patterns_ be _patterns_.[[percent]].
+        1. Else if _style_ is *"unit"*, then
+          1. Let _unit_ be _numberFormat_.[[Unit]].
+          1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
+          1. Let _patterns_ be _patterns_.[[unit]].
+          1. If _patterns_.[[&lt;_unit_&gt;]] is *undefined*, then
+            1. Let _unit_ be *"fallback"*.
+          1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
+          1. Let _patterns_ be _patterns_.[[&lt;_unitDisplay_&gt;]].
+        1. Else if _style_ is *"currency"*, then
+          1. Let _currency_ be _numberFormat_.[[Currency]].
+          1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
+          1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
+          1. Let _patterns_ be _patterns_.[[currency]].
+          1. If _patterns_.[[&lt;_currency_&gt;]] is *undefined*, then
+            1. Let _currency_ be *"fallback"*.
+          1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
+          1. Let _patterns_ be _patterns_.[[&lt;_currencyDisplay_&gt;]].
+          1. Let _patterns_ be _patterns_.[[&lt;_currencySign_&gt;]].
+        1. Else,
+          1. Assert: _style_ is *"decimal"*.
+          1. Let _patterns_ be _patterns_.[[decimal]].
+        1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
+        1. If _signDisplay_ is *"never"*, then
+          1. Let _pattern_ be _patterns_.[[zeroPattern]].
+        1. Else if _signDisplay_ is *"auto"*, then
+          1. If _x_ is 0 or _x_ &gt; 0 or _x_ is *NaN*, then
+            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+          1. Else,
+            1. Let _pattern_ be _patterns_.[[negativePattern]].
+        1. Else if _signDisplay_ is *"always"*, then
+          1. If _x_ is 0 or _x_ &gt; 0 or _x_ is *NaN*, then
+            1. Let _pattern_ be _patterns_.[[positivePattern]].
+          1. Else,
+            1. Let _pattern_ be _patterns_.[[negativePattern]].
+        1. Else,
+          1. Assert: _signDisplay_ is *"exceptZero"*.
+          1. If _x_ is 0 or _x_ is -0 or _x_ is *NaN*, then
+            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+          1. Else if _x_ &gt; 0, then
+            1. Let _pattern_ be _patterns_.[[positivePattern]].
+          1. Else,
+            1. Let _pattern_ be _patterns_.[[negativePattern]].
+        1. Return _pattern_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getnotationsubpattern" aoid="GetNotationSubPattern">
+      <h1>GetNotationSubPattern ( _numberFormat_, _exponent_ )</h1>
+      <p>
+        The abstract operation GetNotationSubPattern considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>. 
+      </p>
+      <emu-alg>
+        1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
+        1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _notationSubPatterns_ be _dataLocaleData_.[[notationSubPatterns]].
+        1. Assert: _notationSubPatterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
+        1. Let _notation_ be _numberFormat_.[[Notation]].
+        1. If _notation_ is *"scientific"* or _notation_ is *"engineering"*, then
+          1. Return _notationSubPatterns_.[[scientific]].
+        1. Else if _exponent_ is not 0, then
+          1. Assert: _notation_ is *"compact"*.
+          1. Let _compactDisplay_ be _numberFormat_.[[CompactDisplay]].
+          1. Let _compactPatterns_ be _notationSubPatterns_.[[compact]].[[&gt;_compactDisplay_&lt;]].
+          1. Return _compactPatterns_.[[_exponent_]].
+        1. Else,
+          1. Return *"{number}"*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-computeexponent" aoid="ComputeExponent">
+      <h1>ComputeExponent ( _numberFormat_, _x_ )</h1>
+      <p>
+        The abstract operation ComputeExponent computes an exponent (power of ten) by which to scale _x_ according to the number formatting settings.  It handles cases such as 999 rounding up to 1000, requiring a different exponent.
+      </p>
+      <emu-alg>
+        1. If _x_ = 0, then
+          1. Return 0.
+        1. If _x_ &lt; 0, then
+          1. Let _x_ = -_x_.
+        1. Let _magnitude_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
+        1. Let _exponent_ be ComputeExponentForMagnitude(_numberFormat_, _magnitude_).
+        1. Let _x_ be _x_ × 10<sup>-_exponent_</sup>.
+        1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
+        1. If _formatNumberResult_.[[RoundedNumber]] = 0, then
+          1. Return _exponent_.
+        1. Let _newMagnitude_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
+        1. If _newMagnitude_ is _magnitude_ – _exponent_, then
+          1. Return _exponent_.
+        1. Return ComputeExponentForMagnitude(_numberFormat_, _magnitude_ + 1).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-computeexponentformagnitude" aoid="ComputeExponentForMagnitude">
+      <h1>ComputeExponentForMagnitude ( _numberFormat_, _magnitude_ )</h1>
+      <p>
+        The abstract operation ComputeExponentHelper computes an exponent by which to scale a number of the given magnitude (power of ten of the most significant digit) according to the locale and the desired notation (scientific, engineering, or compact).
+      </p>
+      <emu-alg>
+        1. Let _notation_ be _numberFormat_.[[Notation]].
+        1. If _notation_ is *"standard"*, then
+          1. Return 0.
+        1. Else if _notation_ is *"scientific"*, then
+          1. Return _magnitude_.
+        1. Else if _notation_ is *"engineering"*, then
+          1. Let _thousands_ be the greatest integer that is not greater than _magnitude_ ÷ 3.
+          1. Return _thousands_ × 3.
+        1. Else,
+          1. Assert: _notation_ is *"compact"*.
+          1. Let _exponent_ be an implementation- and locale-dependent (ILD) integer by which to scale a number of the given magnitude in compact notation for the current locale.
+          1. Return _exponent_.
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-intl-numberformat-constructor">
@@ -470,7 +711,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormatPrototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Currency]], [[CurrencyDisplay]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[UseGrouping]], [[PositivePattern]], [[NegativePattern]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormatPrototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -545,7 +786,11 @@
 
       <ul>
         <li>The list that is the value of the *"nu"* field of any locale field of [[LocaleData]] must not include the values *"native"*, *"traditio"*, or *"finance"*.</li>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a patterns field for all locale values _locale_. The value of this field must be a record, which must have fields with the names of the three number format styles: *"decimal"*, *"percent"*, and *"currency"*. Each of these fields in turn must be a record with the fields positivePattern and negativePattern. The value of these fields must be string values that must contain the substring *"{number}"* and may contain the substrings *"{plusSign}"*, and *"{minusSign}"*; the values within the percent field must also contain the substring *"{percentSign}"*; the values within the currency field must also contain the substring *"{currency}"*. The pattern strings must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
+        <li>The two fields *"currency"* and *"unit"* noted above must be Records with at least one field, *"fallback"*. The *"currency"* may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>.  Each field of *"currency"* must be a Record with fields corresponding to the possible currencyDisplay values: *"code"*, *"symbol"*, *"narrowSymbol"*, and *"name"*.  Each of those fields must contain a Record with fields corresponding to the possible currencySign values: *"standard"* or *"accounting"*. The *"unit"* field (of [[LocaleData]].[[&lt;_locale_&gt;]]) may have additional fields beyond the required field *"fallback"* with keys corresponding to core measurement unit identifiers corresponding to <emu-xref href="#sec-measurement-unit-identifiers"></emu-xref>.  Each field of *"unit"* must be a Record with fields corresponding to the possible unitDisplay values: *"narrow"*, *"short"*, and *"long"*.</li>
+        <li>All of the leaf fields so far described for the patterns tree (*"decimal"*, *"percent"*, great-grandchildren of *"currency"*, and grandchildren of *"unit"*) must be Records with the keys *"positivePattern"*, *"zeroPattern"*, and *"negativePattern"*.</li>
+        <li>The value of the aforementioned fields (the sign-dependent pattern fields) must be string values that must contain the substring *"{number}"*.  *"positivePattern"* must contain the substring *"{plusSign}"* but not *"{minusSign}"*; *"negativePattern"* must contain the substring *"{minusSign}"* but not *"{plusSign}"*; and *"zeroPattern"* must not contain either *"{plusSign}"* or *"{minusSign}"*.  Additionally, the values within the *"percent"* field must also contain the substring *"{percentSign}"*; the values within the *"currency"* field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the *"unit"* field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*. The pattern strings must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
       </ul>
 
       <emu-note>
@@ -669,6 +914,18 @@
             <td>*"currencyDisplay"*</td>
           </tr>
           <tr>
+            <td>[[CurrencySign]]</td>
+            <td>*"currencySign"*</td>
+          </tr>
+          <tr>
+            <td>[[Unit]]</td>
+            <td>*"unit"*</td>
+          </tr>
+          <tr>
+            <td>[[UnitDisplay]]</td>
+            <td>*"unitDisplay"*</td>
+          </tr>
+          <tr>
             <td>[[MinimumIntegerDigits]]</td>
             <td>*"minimumIntegerDigits"*</td>
           </tr>
@@ -692,6 +949,18 @@
             <td>[[UseGrouping]]</td>
             <td>*"useGrouping"*</td>
           </tr>
+          <tr>
+            <td>[[Notation]]</td>
+            <td>*"notation"*</td>
+          </tr>
+          <tr>
+            <td>[[CompactDisplay]]</td>
+            <td>*"compactDisplay"*</td>
+          </tr>
+          <tr>
+            <td>[[SignDisplay]]</td>
+            <td>*"signDisplay"*</td>
+          </tr>
         </table>
       </emu-table>
     </emu-clause>
@@ -714,15 +983,22 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[DataLocale]] is a String value with the language tag of the nearest locale for which the implementation has data to perform the formatting operation. It will be a parent locale of [[Locale]].</li>
       <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
-      <li>[[Style]] is one of the String values *"decimal"*, *"currency"*, or *"percent"*, identifying the number format style used.</li>
-      <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* style. It is only used when [[Style]] has the value *"currency"*.</li>
-      <li>[[CurrencyDisplay]] is one of the String values *"code"*, *"symbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only used when [[Style]] has the value *"currency"*.</li>
+      <li>[[Style]] is one of the String values *"decimal"*, *"currency"*, *"percent"*, or *"unit"*, identifying the type of quantity being measured.</li>
+      <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* unit type. It is only used when [[Style]] has the value *"currency"*.</li>
+      <li>[[CurrencyDisplay]] is one of the String values *"code"*, *"symbol"*, *"narrowSymbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only used when [[Style]] has the value *"currency"*.</li>
+      <li>[[CurrencySign]] is one of the String values *"standard"* or *"accounting"*, specifying whether to render negative numbers in accounting format, often signified by parenthesis. It is only used when [[Style]] has the value *"currency"* and when [[SignDisplay]] is not *"never"*.</li>
+      <li>[[Unit]] is a core unit identifier, as defined by Unicode Technical Standard #35, Part 2, Section 6. It is only used when [[Style]] has the value *"unit"*.</li>
+      <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits – the formatter uses however many integer and fraction digits are required to display the specified number of significant digits.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~.</li>
       <li>[[UseGrouping]] is a Boolean value indicating whether a grouping separator should be used.</li>
-      <li>[[PositivePattern]] and [[NegativePattern]] are String values as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.</li>
+      <li>[[RoundingType]] is one of the String values ~fractionDigits~, ~significantDigits~, or ~compactRounding~, indicating which rounding strategy to use. If ~fractionDigits~, the number is rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significantDigits~, the number is rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~compactRounding~, the number is rounded to 1 maximum fraction digit if there is 1 digit before the decimal separator, and otherwise round to 0 fraction digits.</li>
+      <li>[[Notation]]  is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
+      <li>[[CompactDisplay]] is one of the String values *"short"* or *"long"*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation. It is only used when [[Notation]] has the value *"compact"*.</li>
+      <li>[[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, or *"exceptZero"*, specifying whether to show the sign on negative numbers only, positive and negative numbers including zero, neither positive nor negative numbers, or positive and negative numbers but not zero.  In scientific notation, this slot affects the sign display of the mantissa but not the exponent.</li>
     </ul>
 
     <p>
