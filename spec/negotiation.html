@@ -41,7 +41,7 @@
         1. If _locales_ is *undefined*, then
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
-        1. If Type(_locales_) is String, then
+        1. If Type(_locales_) is String or _locales_ has an [[InitializedLocale]] internal slot, then
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
@@ -53,9 +53,12 @@
           1. If _kPresent_ is *true*, then
             1. Let _kValue_ be ? Get(_O_, _Pk_).
             1. If Type(_kValue_) is not String or Object, throw a *TypeError* exception.
-            1. Let _tag_ be ? ToString(_kValue_).
+            1. If Type(_kValue_) is Object and _kValue_ has an [[InitializedLocale]] internal slot, then
+              1. Let _tag_ be _kValue_.[[Locale]].
+            1. Else,
+              1. Let _tag_ be ? ToString(_kValue_).
             1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
-            1. Let _canonicalizedTag_ be CanonicalizeLanguageTag(_tag_).
+            1. Let _canonicalizedTag_ be CanonicalizeUnicodeLocaleId(_tag_).
             1. If _canonicalizedTag_ is not an element of _seen_, append _canonicalizedTag_ as the last element of _seen_.
           1. Increase _k_ by 1.
         1. Return _seen_.
@@ -219,7 +222,7 @@
             1. Let _postExtension_ be the substring of _foundLocale_ from position _privateIndex_ to the end of the string.
             1. Let _foundLocale_ be the string-concatenation of _preExtension_, _supportedExtension_, and _postExtension_.
           1. Assert: IsStructurallyValidLanguageTag(_foundLocale_) is *true*.
-          1. Let _foundLocale_ be CanonicalizeLanguageTag(_foundLocale_).
+          1. Let _foundLocale_ be CanonicalizeUnicodeLocaleId(_foundLocale_).
         1. Set _result_.[[locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
