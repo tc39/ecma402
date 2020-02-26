@@ -244,7 +244,7 @@
       </emu-alg>
 
       <p>
-        The `length` property of a DateTime format function is 1.
+        The *"length"* property of a DateTime format function is 1.
       </p>
     </emu-clause>
 
@@ -287,7 +287,7 @@
               1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
-              1. If the `length` property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
+              1. If the *"length"* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _f_ in the desired form; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Day]] internal slot. If _p_ is *"timeZoneName"*, then the String value may also depend on the value of the [[inDST]] field of _tm_. If _p_ is *"era"*, then the String value may also depend on whether _dateTimeFormat_ has a [[Era]] internal slot and if the implementation does not have a localized representation of _f_, then use _f_ itself.
             1. Add new part record { [[Type]]: _p_, [[Value]]: _fv_ } as a new element of the list _result_.
           1. Else if _p_ is equal to *"ampm"*, then
@@ -528,7 +528,7 @@
       </emu-alg>
 
       <p>
-        The value of the `length` property of the *supportedLocalesOf* method is 1.
+        The value of the *"length"* property of the *supportedLocalesOf* method is 1.
       </p>
     </emu-clause>
 
@@ -544,7 +544,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes three locale extension keys that are relevant to date and time formatting, *"ca"* for calendar, *"tz"* for time zone, *"hc"* for hour cycle, and implicitly *"nu"* for the numbering system of the number format used for numbers within the date format. DateTimeFormat, however, requires that the time zone is specified through the timeZone property in the options objects.
+        Unicode Technical Standard 35 describes three locale extension keys that are relevant to date and time formatting, *"ca"* for calendar, *"tz"* for time zone, *"hc"* for hour cycle, and implicitly *"nu"* for the numbering system of the number format used for numbers within the date format. DateTimeFormat, however, requires that the time zone is specified through the *"timeZone"* property in the options objects.
       </emu-note>
 
       <p>
@@ -754,11 +754,11 @@
       </emu-table>
 
       <p>
-        For web compatibility reasons, if the property hourCycle is set, the hour12 property should be set to *true* when hourCycle is *"h11"* or *"h12"*, or to *false* when hourCycle is *"h23"* or *"h24"*.
+        For web compatibility reasons, if the property *"hourCycle"* is set, the *"hour12"* property should be set to *true* when *"hourCycle"* is *"h11"* or *"h12"*, or to *false* when *"hourCycle"* is *"h23"* or *"h24"*.
       </p>
 
       <emu-note>
-        In this version of the ECMAScript 2020 Internationalization API, the timeZone property will be the name of the default time zone if no timeZone property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the timeZone property *undefined* in this case.
+        In this version of the ECMAScript 2020 Internationalization API, the *"timeZone"* property will be the name of the default time zone if no *"timeZone"* property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the *"timeZone"* property *undefined* in this case.
       </emu-note>
 
       <emu-note>
