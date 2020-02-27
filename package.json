@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ecma402",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
     "build-es2020": "git remote remove origin && git remote add origin \"git@github.com:$TRAVIS_REPO_SLUG.git\" && git fetch --quiet origin && git checkout --quiet es2020 && mkdir \"out/2020\" && cp -R img \"out/2020\" && ecmarkup --verbose spec/index.html out/2020/index.html --css out/2020/ecmarkup.css --js out/2020/ecmarkup.js",
