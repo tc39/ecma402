@@ -22,7 +22,7 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _t_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *0*, *3*).
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *0*, *3*, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to the value of _r_.[[locale]].
@@ -131,7 +131,8 @@
           1. Return *"other"*.
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _s_ be ! FormatNumericToString(_pluralRules_, _n_).
+        1. Let _res_ be ! FormatNumericToString(_pluralRules_, _n_).
+        1. Let _s_ be _res_.[[FormattedString]]
         1. Let _operands_ be ? GetOperands(_s_).
         1. Return ? PluralRuleSelect(_locale_, _type_, _n_, _operands_).
       </emu-alg>
@@ -349,6 +350,7 @@
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
+      <li>[[RoundingType]] is one of the String values *"fractionDigits"* or *"significantDigits"*, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
     </ul>
 
   </emu-clause>
