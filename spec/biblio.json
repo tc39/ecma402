@@ -1,5 +1,5 @@
 {
-  "https://tc39.github.io/ecma262/": [
+  "https://tc39.es/ecma262/": [
     {
       "type": "op",
       "aoid": "RequireInternalSlot",
@@ -10,28 +10,6 @@
       "term": "string-concatenation",
       "refId": "sec-ecmascript-language-types-string-type",
       "key": "string-concatenation"
-    }
-  ],
-  "https://tc39.es/proposal-bigint/": [
-    {
-      "type": "op",
-      "aoid": "ToNumeric",
-      "id": "sec-tonumeric"
-    },
-    {
-      "type": "op",
-      "aoid": "thisBigIntValue",
-      "id": "sec-properties-of-the-bigint-prototype-object"
-    },
-    {
-      "type": "clause",
-      "number": "Properties of the BigInt Prototype Object",
-      "id": "sec-properties-of-the-bigint-prototype-object"
-    },
-    {
-      "type": "clause",
-      "number": "BigInt.prototype.toLocaleString",
-      "id": "sec-bigint.prototype.tolocalestring"
     }
   ]
 }
