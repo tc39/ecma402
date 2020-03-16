@@ -41,7 +41,7 @@
         1. If _locales_ is *undefined*, then
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
-        1. If Type(_locales_) is String or _locales_ has an [[InitializedLocale]] internal slot, then
+        1. If Type(_locales_) is String or Type(_locales_) is Object and _locales_ has an [[InitializedLocale]] internal slot, then
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
