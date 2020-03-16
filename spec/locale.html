@@ -28,18 +28,20 @@
           1. If _region_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
         1. Assert: _tag_ matches the `unicode_locale_id` production.
+        1. Let _languageId_ be the substring of _tag_ corresponding to the `unicode_language_id` production.
         1. If _language_ is not *undefined*, then
-          1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_language_subtag` production of the `unicode_language_id` replaced by the string _language_.
+          1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_language_subtag` production replaced by the string _language_.
         1. If _script_ is not *undefined*, then
-          1. If _tag_ does not contain a `unicode_script_subtag` production of the `unicode_language_id`, then
-            1. Set _tag_ to the concatenation of the `unicode_language_subtag` production of the `unicode_language_id` of _tag_, *"-"*, _script_, and the rest of _tag_.
+          1. If _languageId_ does not contain a `unicode_script_subtag` production, then
+            1. Set _languageId_ to the concatenation of the `unicode_language_subtag` production of _languageId_, *"-"*, _script_, and the rest of _languageId_.
           1. Else,
-            1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_script_subtag` production of the `unicode_language_id` replaced by the string _script_.
+            1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_script_subtag` production replaced by the string _script_.
         1. If _region_ is not *undefined*, then
-          1. If _tag_ does not contain a `unicode_region_subtag` production of the `unicode_language_id`, then
-            1. Set _tag_ to the concatenation of the `unicode_language_subtag` production of the `unicode_language_id` of _tag_, the substring corresponding to `"-"` and the `unicode_script_subtag` production of the `unicode_language_id` if present, `"-"`, _region_, and the rest of _tag_.
+          1. If _languageId_ does not contain a `unicode_region_subtag` production, then
+            1. Set _languageId_ to the concatenation of the `unicode_language_subtag` production of _languageId_, the substring corresponding to `"-"` and the `unicode_script_subtag` production if present, `"-"`, _region_, and the rest of _languageId_.
           1. Else,
-            1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_region_subtag` production of the `unicode_language_id` replaced by the string _region_.
+            1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_region_subtag` production replaced by the string _region_.
+        1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_language_id` production replaced by the string _languageId_.
         1. Return CanonicalizeUnicodeLocaleId(_tag_).
       </emu-alg>
     </emu-clause>
