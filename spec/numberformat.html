@@ -591,7 +591,7 @@
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
           1. Let _patterns_ be _patterns_.[[unit]].
-          1. If _patterns_.[[&lt;_unit_&gt;]] is *undefined*, then
+          1. If _patterns_ doesn't have a field [[&lt;_unit_&gt;]], then
             1. Let _unit_ be *"fallback"*.
           1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
           1. Let _patterns_ be _patterns_.[[&lt;_unitDisplay_&gt;]].
@@ -600,7 +600,7 @@
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
           1. Let _patterns_ be _patterns_.[[currency]].
-          1. If _patterns_.[[&lt;_currency_&gt;]] is *undefined*, then
+          1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
             1. Let _currency_ be *"fallback"*.
           1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
           1. Let _patterns_ be _patterns_.[[&lt;_currencyDisplay_&gt;]].
