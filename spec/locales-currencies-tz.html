@@ -21,11 +21,11 @@
     <h1>Language Tags</h1>
 
     <p>
-      The ECMAScript 2020 Internationalization API Specification identifies locales using language tags as by the Unicode BCP 47 locale identifiers, which may include extensions such as those registered through RFC 6067. Their canonical form is that of a Unicode BCP 47 Locale Identifier, as specified in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>.
+      The ECMAScript 2020 Internationalization API Specification identifies locales using language tags as by the Unicode BCP 47 locale identifiers, which may include extensions such as those registered through RFC 6067. Their canonical form is that of a Unicode BCP 47 locale identifier, as specified in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>.
     </p>
 
     <p>
-      Unicode BCP 47 Locale Identifiers are structurally valid when they match those syntactical formatting criteria of Unicode Technical Standard 35, section 3.2, or successor, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
+      Unicode BCP 47 locale identifiers are structurally valid when they match those syntactical formatting criteria of Unicode Technical Standard 35, section 3.2, or successor, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
     </p>
 
     <emu-clause id="sec-unicode-locale-extension-sequences">
@@ -44,7 +44,7 @@
       </p>
 
       <ul>
-        <li>represents a well-formed "Unicode BCP 47 Locale Identifier" as specified in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard 35 section 3.2</a>, or successor,</li>
+        <li>represents a well-formed "Unicode BCP 47 locale identifier" as specified in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard 35 section 3.2</a>, or successor,</li>
         <li>does not include duplicate variant subtags, and</li>
         <li>does not include duplicate singleton subtags.</li>
       </ul>
@@ -58,7 +58,7 @@
       <h1>CanonicalizeUnicodeLocaleId ( _locale_ )</h1>
 
       <p>
-        The CanonicalizeUnicodeLocaleId abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 Locale Identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
+        The CanonicalizeUnicodeLocaleId abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 locale identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
         The following steps are taken:
       </p>
 
