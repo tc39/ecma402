@@ -535,8 +535,7 @@
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
-        3. If Type(_nf_) is not Object or _nf_ does not have an [[InitializedNumberFormat]] internal slot, then
-          1. Throw a *TypeError* exception.
+        3. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. Return _nf_.
       </emu-alg>
       <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>

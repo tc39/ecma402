@@ -216,8 +216,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Let _maximal_ be the result of the <a href="https://www.unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
       1. Return ! Construct(%Locale%, _maximal_).
       </emu-alg>
@@ -228,8 +227,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Let _minimal_ be the result of the <a href="https://www.unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
       1. Return ! Construct(%Locale%, _minimal_).
       </emu-alg>
@@ -240,8 +238,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Return _loc_.[[Locale]].
       </emu-alg>
     </emu-clause>
@@ -251,8 +248,7 @@
       <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Return the substring of _locale_ corresponding to the `unicode_language_id` production. 
     </emu-clause>
@@ -262,8 +258,7 @@
       <p>`Intl.Locale.prototype.calendar` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Calendar]].
       </emu-alg>
     </emu-clause>
@@ -274,8 +269,7 @@
       <p>`Intl.Locale.prototype.caseFirst` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[CaseFirst]].
       </emu-alg>
     </emu-clause>
@@ -285,8 +279,7 @@
       <p>`Intl.Locale.prototype.collation` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Collation]].
       </emu-alg>
     </emu-clause>
@@ -296,8 +289,7 @@
       <p>`Intl.Locale.prototype.hourCycle` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[HourCycle]].
       </emu-alg>
     </emu-clause>
@@ -308,8 +300,7 @@
       <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Numeric]].
       </emu-alg>
     </emu-clause>
@@ -319,8 +310,7 @@
       <p>`Intl.Locale.prototype.numberingSystem` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[NumberingSystem]].
       </emu-alg>
     </emu-clause>
@@ -330,8 +320,7 @@
       <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. Return the substring of _locale_ corresponding to the `unicode_language_subtag` production of the `unicode_language_id`.
@@ -343,8 +332,7 @@
       <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_script_subtag]` sequence, return *undefined*.
@@ -357,8 +345,7 @@
       <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_region_subtag]` sequence, return *undefined*.

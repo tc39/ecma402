@@ -466,8 +466,7 @@
       </emu-alg>
       </emu-normative-optional>
       <emu-alg>
-        2. If Type(_dtf_) is not Object or _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot, then
-          1. Throw a *TypeError* exception.
+        3. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Return _dtf_.
       </emu-alg>
       <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>

@@ -308,8 +308,7 @@
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
-        1. If Type(_relativeTimeFormat_) is not Object, throw a *TypeError* exception.
-        1. If _relativeTimeFormat_ does not have an [[InitializedRelativeTimeFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
         1. Let _value_ be ? ToNumber(_value_).
         1. Let _unit_ be ? ToString(_unit_).
         1. Return ? FormatRelativeTime(_relativeTimeFormat_, _value_, _unit_).
@@ -325,8 +324,7 @@
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
-        1. If Type(_relativeTimeFormat_) is not Object, throw a *TypeError* exception.
-        1. If _relativeTimeFormat_ does not have an [[InitializedRelativeTimeFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
         1. Let _value_ be ? ToNumber(_value_).
         1. Let _unit_ be ? ToString(_unit_).
         1. Return ? FormatRelativeTimeToParts(_relativeTimeFormat_, _value_, _unit_).
@@ -342,8 +340,7 @@
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
-        1. If Type(_relativeTimeFormat_) is not Object, throw a *TypeError* exception.
-        1. If _relativeTimeFormat_ does not have an [[InitializedRelativeTimeFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
         1. For each row of <emu-xref href="#table-relativetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
