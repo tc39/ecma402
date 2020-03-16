@@ -252,7 +252,7 @@
             1. Let _p_ be _patternPart_.[[Type]].
             1. If _p_ is *"literal"*, then
               1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as a new element of _result_.
-            1. Else If _p_ is equal to *"number"*, then
+            1. Else if _p_ is equal to *"number"*, then
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the *"Numbering System"* column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
