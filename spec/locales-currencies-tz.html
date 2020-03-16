@@ -44,13 +44,13 @@
       </p>
 
       <ul>
-        <li>represents a well-formed Unicode BCP 47 Locale Identifier" as specified in Unicode Technical Standard 35 section 3.2, or successor,</li>
+        <li>represents a well-formed "Unicode BCP 47 Locale Identifier" as specified in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard 35 section 3.2</a>, or successor,</li>
         <li>does not include duplicate variant subtags, and</li>
         <li>does not include duplicate singleton subtags.</li>
       </ul>
 
       <p>
-        The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, or successor, starting with unicode_locale_id, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
+        The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, or successor, starting with `unicode_locale_id`, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
       </p>
     </emu-clause>
 
@@ -98,7 +98,7 @@
       <h1>DefaultLocale ()</h1>
 
       <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and  canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) BCP 47 language tag for the host environment's current locale.
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) Unicode BCP 47 locale identifier for the host environment's current locale.
       </p>
     </emu-clause>
 
