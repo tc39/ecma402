@@ -126,45 +126,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-unicodeextensionvalue" aoid="UnicodeExtensionValue">
-      <h1>UnicodeExtensionValue ( _extension_, _key_ )</h1>
-
-      <p>The abstract operation UnicodeExtensionValue is called with _extension_, which must be a Unicode locale extension sequence, and String _key_. This operation returns the type subtags for _key_ by performing the following steps:</p>
-
-      <emu-alg>
-        1. Assert: The number of elements in _key_ is 2.
-        1. Let _size_ be the number of elements in _extension_.
-        1. Let _searchValue_ be the string-concatenation of *"-"*, _key_, and *"-"*.
-        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
-        1. If _pos_ ≠ -1, then
-          1. Let _start_ be _pos_ + 4.
-          1. Let _end_ be _start_.
-          1. Let _k_ be _start_.
-          1. Let _done_ be *false*.
-          1. Repeat, while _done_ is *false*
-            1. Let _e_ be Call(%StringProto_indexOf%, _extension_, &laquo; *"-"*, _k_ &raquo;).
-            1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
-            1. If _len_ = 2, then
-              1. Let _done_ be *true*.
-            1. Else if _e_ = -1, then
-              1. Let _end_ be _size_.
-              1. Let _done_ be *true*.
-            1. Else,
-              1. Let _end_ be _e_.
-              1. Let _k_ be _e_ + 1.
-          1. Return the String value equal to the substring of _extension_ consisting of the code units at indices _start_ (inclusive) through _end_ (exclusive).
-        1. Let _searchValue_ be the string-concatenation of *"-"* and _key_.
-        1. Let _pos_ be Call(%StringProto_indexOf%, _extension_, &laquo; _searchValue_ &raquo;).
-        1. If _pos_ ≠ -1 and _pos_ + 3 = _size_, then
-          1. Return the empty String.
-        1. Return *undefined*.
-      </emu-alg>
-
-      <emu-note>
-        Non-normative summary: UnicodeExtensionValue returns the type subtags of the first keyword for a given key. For example, UnicodeExtensionValue(*"u-ca-ethiopic-amete-alem-ca-ethioaa"*, *"ca"*) returns *"ethiopic-amete-alem"*. If the keyword for _key_ has no type subtags, UnicodeExtensionValue returns the empty String. If _extension_ contains no keyword for _key_, *undefined* is returned.
-      </emu-note>
-    </emu-clause>
-
     <emu-clause id="sec-resolvelocale" aoid="ResolveLocale">
       <h1>ResolveLocale ( _availableLocales_, _requestedLocales_, _options_, _relevantExtensionKeys_, _localeData_ )</h1>
 
@@ -185,6 +146,9 @@
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
+        1. If _r_ has an [[extension]] field, then
+          1. Let _components_ be ! UnicodeExtensionComponents(_r_.[[extension]]).
+          1. Let _keywords_ be _components_.[[Keywords]].
         1. Let _supportedExtension_ be *"-u"*.
         1. For each element _key_ of _relevantExtensionKeys_ in List order, do
           1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
@@ -195,8 +159,9 @@
           1. Assert: Type(_value_) is either String or Null.
           1. Let _supportedExtensionAddition_ be *""*.
           1. If _r_ has an [[extension]] field, then
-            1. Let _requestedValue_ be UnicodeExtensionValue(_r_.[[extension]], _key_).
-            1. If _requestedValue_ is not *undefined*, then
+            1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
+              1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
+              1. Let _requestedValue_ be _entry_.[[Value]].
               1. If _requestedValue_ is not the empty String, then
                 1. If _keyLocaleData_ contains _requestedValue_, then
                   1. Let _value_ be _requestedValue_.
