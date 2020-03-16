@@ -180,7 +180,7 @@
         1. Assert: _tag_ matches the `unicode_locale_id` production.
         1. Let _privateIndex_ be ! Call(%StringProto_indexOf%, _locale_, &laquo; *"-x-"* &raquo;).
         1. If _privateIndex_ = -1, then
-          1. Let _locale_ be the concatenation of _locale_ and _extension_.
+          1. Let _locale_ be the string-concatenation of _locale_ and _extension_.
         1. Else,
           1. Let _preExtension_ be the substring of _locale_ from position 0, inclusive, to position _privateIndex_, exclusive.
           1. Let _postExtension_ be the substring of _locale_ from position _privateIndex_ to the end of the string.
