@@ -376,14 +376,14 @@
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
-            1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
+            1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
-          1. Add new part record { [[Type]]: _p_, [[Value]]: *undefined* } as a new element of the list _result_.
+          1. Append a new Record { [[Type]]: _p_, [[Value]]: *undefined* } as the last element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to ! Call(%StringProto_indexOf%, _pattern_, &laquo; *"{"*, _nextIndex_ &raquo;).
         1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
-          1. Add new part record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as a new element of the list _result_.
+          1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
