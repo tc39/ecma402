@@ -146,10 +146,10 @@
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _r_.[[kf]].
         1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. If ! SameValue(_r_.[[kn]], *"true"*) is true or ! SameValue(_r_.[[kn]], *""*) is true, then
-            1. Let _numeric_ be true.
+          1. If ! SameValue(_r_.[[kn]], *"true"*) is *true* or ! SameValue(_r_.[[kn]], *""*) is *true*, then
+            1. Let _numeric_ be *true*.
           1. Else,
-            1. Let _numeric_ be false.
+            1. Let _numeric_ be *false*.
           1. Set _locale_.[[Numeric]] to _numeric_.
         1. Set _locale_.[[NumberingSystem]] to _r_.[[nu]].
         1. Return _locale_.
