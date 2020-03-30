@@ -5,7 +5,7 @@
     <h1>The Intl.Locale Constructor</h1>
 
     <p>
-      The Locale constructor is the <dfn>%Locale%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The Locale constructor is the <dfn>%Locale%</dfn> intrinsic object and a standard built-in property of the Intl object.
     </p>
 
     <emu-clause id="sec-apply-options-to-tag" aoid=ApplyOptionsToTag>
@@ -27,19 +27,21 @@
         1. If _region_ is not *undefined*, then
           1. If _region_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
-        1. If _language_ is not *undefined*,
-          1. Assert: _tag_ matches the `unicode_locale_id` production.
-          1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_language_subtag` production of the `unicode_language_id` replaced by the string _language_.
+        1. Assert: _tag_ matches the `unicode_locale_id` production.
+        1. Let _languageId_ be the substring of _tag_ corresponding to the `unicode_language_id` production.
+        1. If _language_ is not *undefined*, then
+          1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_language_subtag` production replaced by the string _language_.
         1. If _script_ is not *undefined*, then
-          1. If _tag_ does not contain a `unicode_script_subtag` production of the `unicode_language_id`, then
-            1. Set _tag_ to the concatenation of the `unicode_language_subtag` production of the `unicode_language_id` of _tag_, *"-"*, _script_, and the rest of _tag_.
+          1. If _languageId_ does not contain a `unicode_script_subtag` production, then
+            1. Set _languageId_ to the string-concatenation of the `unicode_language_subtag` production of _languageId_, *"-"*, _script_, and the rest of _languageId_.
           1. Else,
-            1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_script_subtag` production of the `unicode_language_id` replaced by the string _script_.
+            1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_script_subtag` production replaced by the string _script_.
         1. If _region_ is not *undefined*, then
-          1. If _tag_ does not contain a `unicode_region_subtag` production of the `unicode_language_id`, then
-            1. Set _tag_ to the concatenation of the `unicode_language_subtag` production of the `unicode_language_id` of _tag_, the substring corresponding to `"-"` and the `unicode_script_subtag` production of the `unicode_language_id` if present, `"-"`, _region_, and the rest of _tag_.
+          1. If _languageId_ does not contain a `unicode_region_subtag` production, then
+            1. Set _languageId_ to the string-concatenation of the `unicode_language_subtag` production of _languageId_, the substring corresponding to `"-"` and the `unicode_script_subtag` production if present, `"-"`, _region_, and the rest of _languageId_.
           1. Else,
-            1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_region_subtag` production of the `unicode_language_id` replaced by the string _region_.
+            1. Set _languageId_ to _languageId_ with the substring corresponding to the `unicode_region_subtag` production replaced by the string _region_.
+        1. Set _tag_ to _tag_ with the substring corresponding to the `unicode_language_id` production replaced by the string _languageId_.
         1. Return CanonicalizeUnicodeLocaleId(_tag_).
       </emu-alg>
     </emu-clause>
@@ -85,70 +87,6 @@
           1. Let _locale_ be ! InsertUnicodeExtensionAndCanonicalize(_locale_, _newExtension_).
         1. Set _result_.[[locale]] to _locale_.
         1. Return _result_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-unicode-extension-components" aoid=UnicodeExtensionComponents>
-      <h1>UnicodeExtensionComponents( _extension_ )</h1>
-      <p>
-        The UnicodeExtensionComponents abstract operation returns the attributes and keywords from _extension_, which must be a Unicode locale extension sequence. If an attribute or a keyword occurs multiple times in _extension_, only the first occurence is returned. The following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _attributes_ be the empty List.
-        1. Let _keywords_ be the empty List.
-        1. Let _isKeyword_ be *false*.
-        1. Let _size_ be the number of elements in _extension_.
-        1. Let _k_ be 3.
-        1. Repeat, while _k_ &lt; _size_
-          1. Let _e_ be ! Call(%StringProto_indexOf%, _extension_, « *"-"*, _k_ »).
-          1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
-          1. Let _subtag_ be the String value equal to the substring of _extension_ consisting of the code units at indices _k_ (inclusive) through _k_ + _len_ (exclusive).
-          1. If _isKeyword_ is *false*, then
-            1. If _len_ &ne; 2 and _subtag_ is not an element of _attributes_, then
-              1. Append _subtag_ to _attributes_.
-          1. Else,
-            1. If _len_ = 2, then
-              1. If _keywords_ does not contain an element whose [[Key]] is the same as _key_, then
-                1. Append the Record{[[Key]]: _key_, [[Value]]: _value_} to _keywords_.
-            1. Else,
-              1. If _value_ is not the empty String, then
-                1. Let _value_ be the string-concatenation of _value_ and *"-"*.
-              1. Let _value_ be the string-concatenation of _value_ and _subtag_.
-          1. If _len_ = 2, then
-            1. Let _isKeyword_ be *true*.
-            1. Let _key_ be _subtag_.
-            1. Let _value_ be the empty String.
-          1. Let _k_ be _k_ + _len_ + 1.
-        1. If _isKeyword_ is *true*, then
-          1. If _keywords_ does not contain an element whose [[Key]] is the same as _key_, then
-            1. Append the Record{[[Key]]: _key_, [[Value]]: _value_} to _keywords_.
-        1. Return the Record{[[Attributes]]: _attributes_, [[Keywords]]: _keywords_}.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-insert-unicode-extension-and-canonicalize" aoid=InsertUnicodeExtensionAndCanonicalize>
-      <h1>InsertUnicodeExtensionAndCanonicalize( _locale_, _extension_ )</h1>
-      <p>
-        The InsertUnicodeExtensionAndCanonicalize abstract operation inserts _extension_, which must be a Unicode locale extension sequence, into _locale_, which must be a String value with a structurally valid and canonicalized BCP 47 language tag. The following steps are taken:
-      </p>
-      <p>
-        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
-      </p>
-
-      <emu-alg>
-        1. Assert: _locale_ does not contain a substring that is a Unicode locale extension sequence.
-        1. Assert: _extension_ is a Unicode extension sequence.
-        1. Assert: _tag_ matches the `unicode_locale_id` production.
-        1. Let _privateIndex_ be ! Call(%StringProto_indexOf%, _locale_, &laquo; *"-x-"* &raquo;).
-        1. If _privateIndex_ = -1, then
-          1. Let _locale_ be the concatenation of _locale_ and _extension_.
-        1. Else,
-          1. Let _preExtension_ be the substring of _locale_ from position 0, inclusive, to position _privateIndex_, exclusive.
-          1. Let _postExtension_ be the substring of _locale_ from position _privateIndex_ to the end of the string.
-          1. Let _locale_ be the string-concatenation of _preExtension_, _extension_, and _postExtension_.
-        1. Assert: IsStructurallyValidLanguageTag(_locale_) is *true*.
-        1. Return ! CanonicalizeUnicodeLocaleId(_locale_).
       </emu-alg>
     </emu-clause>
 
@@ -208,10 +146,10 @@
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _r_.[[kf]].
         1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. If ! SameValue(_r_.[[kn]], *"true"*) is true or ! SameValue(_r_.[[kn]], *""*) is true, then
-            1. Let _numeric_ be true.
+          1. If ! SameValue(_r_.[[kn]], *"true"*) is *true* or ! SameValue(_r_.[[kn]], *""*) is *true*, then
+            1. Let _numeric_ be *true*.
           1. Else,
-            1. Let _numeric_ be false.
+            1. Let _numeric_ be *false*.
           1. Set _locale_.[[Numeric]] to _numeric_.
         1. Set _locale_.[[NumberingSystem]] to _r_.[[nu]].
         1. Return _locale_.
@@ -278,8 +216,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Let _maximal_ be the result of the <a href="https://www.unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
       1. Return ! Construct(%Locale%, _maximal_).
       </emu-alg>
@@ -290,8 +227,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Let _minimal_ be the result of the <a href="https://www.unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
       1. Return ! Construct(%Locale%, _minimal_).
       </emu-alg>
@@ -302,8 +238,7 @@
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
-      1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-        1. Throw a *TypeError* exception.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Return _loc_.[[Locale]].
       </emu-alg>
     </emu-clause>
@@ -313,8 +248,7 @@
       <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Return the substring of _locale_ corresponding to the `unicode_language_id` production. 
     </emu-clause>
@@ -324,8 +258,7 @@
       <p>`Intl.Locale.prototype.calendar` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Calendar]].
       </emu-alg>
     </emu-clause>
@@ -336,8 +269,7 @@
       <p>`Intl.Locale.prototype.caseFirst` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[CaseFirst]].
       </emu-alg>
     </emu-clause>
@@ -347,8 +279,7 @@
       <p>`Intl.Locale.prototype.collation` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Collation]].
       </emu-alg>
     </emu-clause>
@@ -358,8 +289,7 @@
       <p>`Intl.Locale.prototype.hourCycle` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[HourCycle]].
       </emu-alg>
     </emu-clause>
@@ -370,8 +300,7 @@
       <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Numeric]].
       </emu-alg>
     </emu-clause>
@@ -381,8 +310,7 @@
       <p>`Intl.Locale.prototype.numberingSystem` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[NumberingSystem]].
       </emu-alg>
     </emu-clause>
@@ -392,8 +320,7 @@
       <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. Return the substring of _locale_ corresponding to the `unicode_language_subtag` production of the `unicode_language_id`.
@@ -405,8 +332,7 @@
       <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_script_subtag]` sequence, return *undefined*.
@@ -419,8 +345,7 @@
       <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
-        1. If Type(_loc_) is not Object or _loc_ does not have an [[InitializedLocale]] internal slot, then
-          1. Throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_region_subtag]` sequence, return *undefined*.

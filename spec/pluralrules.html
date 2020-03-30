@@ -85,22 +85,22 @@
            <tr>
              <td>[[NumberOfFractionDigits]]</td>
              <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeros.</td>
+             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeroes.</td>
            </tr>
            <tr>
              <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeros.</td>
+             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeroes.</td>
            </tr>
            <tr>
              <td>[[FractionDigits]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>with</i> trailing zeros.</td>
+             <td>Number of visible fractional digits in [[Number]], <i>with</i> trailing zeroes.</td>
            </tr>
            <tr>
              <td>[[FractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>without</i> trailing zeros. </td>
+             <td>Number of visible fractional digits in [[Number]], <i>without</i> trailing zeroes.</td>
            </tr>
          </table>
        </emu-table>
@@ -157,7 +157,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRulesPrototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRulesPrototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -350,7 +350,7 @@
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
-      <li>[[RoundingType]] is one of the String values *"fractionDigits"* or *"significantDigits"*, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
+      <li>[[RoundingType]] is one of the values ~fractionDigits~ or ~significantDigits~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
     </ul>
 
   </emu-clause>
