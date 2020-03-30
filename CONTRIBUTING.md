@@ -18,6 +18,6 @@ If you have a new proposal you want to get into the language, you first need a T
 ### Signing the CLA
 If you wish to submit a proposal and are not a representative of a TC39 member, here are the steps you need to take:
 
-  1. Read the [TC39 process document](https://tc39.github.io/process-document/).
-  2. [Register as a TC39 contributor](https://tc39.github.io/agreements/contributor/) (it is not necessary to submit the contribution as attachment to the form)
+  1. Read the [TC39 process document](https://tc39.es/process-document/).
+  2. [Register as a TC39 contributor](https://tc39.es/agreements/contributor/) (it is not necessary to submit the contribution as attachment to the form)
   3. Submit a pull request here for your strawman proposal.
