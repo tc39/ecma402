@@ -52,6 +52,10 @@
       <p>
         The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, starting with `unicode_locale_id`, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
       </p>
+
+      <emu-note>
+        This function <em>specifically</em> accepts a "Unicode BCP 47 locale identifier", i.e. the backwards compatible syntax from "Unicode CLDR locale identifier" is not accepted. The difference between the two syntaxes is specified in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard 35 section 3.3</a>.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-canonicalizeunicodelocaleid" aoid="CanonicalizeUnicodeLocaleId">
