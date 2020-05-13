@@ -137,16 +137,16 @@
             1. Set _hc_ to _hcDefault_.
           1. If _hour12_ is not *undefined*, then
             1. If _hour12_ is *true*, then
-              1. If _hcDefault_ is *"h11"* or *"h23"*, then
+              1. If _hcDefault_ is *"h11"*, then
                 1. Set _hc_ to *"h11"*.
               1. Else,
                 1. Set _hc_ to *"h12"*.
             1. Else,
               1. Assert: _hour12_ is *false*.
-              1. If _hcDefault_ is *"h11"* or *"h23"*, then
-                1. Set _hc_ to *"h23"*.
-              1. Else,
+              1. If _hcDefault_ is *"h24"*, then
                 1. Set _hc_ to *"h24"*.
+              1. Else,
+                1. Set _hc_ to *"h23"*.
           1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
           1. If _dateTimeformat_.[[HourCycle]] is *"h11"* or *"h12"*, then
             1. Let _pattern_ be _bestFormat_.[[pattern12]].
