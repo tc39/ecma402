@@ -119,12 +119,24 @@
           1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_calendar_&gt;]].
-        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
-        1. If _matcher_ is *"basic"*, then
-          1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
+        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, *"string"*, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
+        1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
+        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, *"string"*, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
+        1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
+        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
+          1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, do
+            1. Let _prop_ be the name given in the Property column of the row.
+            1. Let _p_ be _opt_.[[&lt;_prop_&gt;]].
+            1. If _p_ is not *undefined*, then
+              1. Throw a *TypeError* exception.
+          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _dataLocaleData_).
         1. Else,
-          1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
+          1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_calendar_&gt;]].
+          1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
+          1. If _matcher_ is *"basic"*, then
+            1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
+          1. Else,
+            1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
         1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
@@ -181,6 +193,13 @@
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
+        1. Let _dateStyle_ be ? Get(_options_, *"dateStyle"*).
+        1. Let _timeStyle_ be ? Get(_options_, *"timeStyle"*).
+        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, let _needDefaults_ be *false*.
+        1. If _required_ is *"date"* and _timeStyle_ is not *undefined*,
+          1. Throw a *TypeError* exception.
+        1. If _required_ is *"time"* and _dateStyle_ is not *undefined*,
+          1. Throw a *TypeError* exception.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
           1. For each of the property names *"year"*, *"month"*, *"day"*, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
@@ -188,6 +207,34 @@
           1. For each of the property names *"hour"*, *"minute"*, *"second"*, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
+      <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _dataLocaleData_ )</h1>
+      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _dataLocaleData_, which is a record from %DateTimeFormat%.[[LocaleData]][_locale_] for some locale _locale_. It returns the appropriate format record for date time formatting based on the parameters.</p>
+      <emu-alg>
+        1. If _timeStyle_ is not *undefined*, then
+          1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
+          1. Let _timeFormat_ be _dataLocaleData_.[[TimeFormat]].[[&lt;_timeStyle_&gt;]].
+        1. If _dateStyle_ is not *undefined*, then
+          1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
+          1. Let _dateFormat_ be _dataLocaleData_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
+        1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
+          1. Let _format_ be a new Record.
+          1. Add to _format_ all fields from _dateFormat_ except [[pattern]].
+          1. Add to _format_ all fields from _timeFormat_ except [[pattern]] and [[pattern12]], if present.
+          1. Let _connector_ be _dataLocaleData_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
+          1. Set _format_.[[pattern]] to _pattern_.
+          1. If _timeFormat_ has a [[pattern12]] field, then
+            1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
+            1. Set _format_.[[pattern12]] to _pattern12_.
+          1. Return _format_.
+        1. If _timeStyle_ is not *undefined*, then
+          1. Return _timeFormat_.
+        1. Assert: _dateStyle_ is not *undefined*.
+        1. Return _dateFormat_.
       </emu-alg>
     </emu-clause>
 
@@ -586,6 +633,9 @@
           </ul>
           Each of the records must also have a [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains a substring *"{ampm}"*. If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.
         </li>
+        <li>
+          [[LocaleData]][locale] must contain [[DateFormat]], [[TimeFormat]] and [[DateTimeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in Table 1, where each field must have one of the values specified for the field in Table 1. Each of the records must also have a pattern field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a pattern12 field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring *"{ampm}"*. For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*.
+         </li>
       </ul>
 
       <emu-note>
@@ -688,6 +738,9 @@
             1. Else, let _v_ be *undefined*.
           1. Else,
             1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If the Internal Slot value of the current row is an Internal Slot value in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
+            1. If _dtf_.[[DateStyle]] is not *undefined* or _dtf_.[[TimeStyle]] is not *undefined*, then
+              1. Let _v_ be *undefined*.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
@@ -762,6 +815,14 @@
             <td>[[TimeZoneName]]</td>
             <td>*"timeZoneName"*</td>
           </tr>
+          <tr>
+            <td>[[DateStyle]]</td>
+            <td>*"dateStyle"*</td>
+          </tr>
+          <tr>
+            <td>[[TimeStyle]]</td>
+            <td>*"timeStyle"*</td>
+          </tr>
         </table>
       </emu-table>
 
@@ -801,6 +862,7 @@
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
     </ul>
 
