@@ -849,7 +849,7 @@
         1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
         1. If _formatNumberResult_.[[RoundedNumber]] = 0, then
           1. Return _exponent_.
-        1. Let _newMagnitude_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
+        1. Let _newMagnitude_ be the base 10 logarithm of _formatNumberResult_.[[RoundedNumber]] rounded down to the nearest integer.
         1. If _newMagnitude_ is _magnitude_ – _exponent_, then
           1. Return _exponent_.
         1. Return ComputeExponentForMagnitude(_numberFormat_, _magnitude_ + 1).
