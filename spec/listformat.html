@@ -1,0 +1,395 @@
+<emu-clause id="listformat-objects">
+  <h1>ListFormat Objects</h1>
+
+  <emu-clause id="sec-intl-listformat-abstracts">
+    <h1>Abstract Operations for ListFormat Objects</h1>
+
+    <emu-clause id="sec-deconstructpattern" aoid="DeconstructPattern">
+      <h1>DeconstructPattern ( _pattern_, _placeables_ )</h1>
+
+      <p>
+        The DeconstructPattern abstract operation is called with arguments _pattern_ (which must be a String) and _placeables_ (which must be a Record), and deconstructs the pattern string into a list of parts.
+
+        The placeables record is a record whose keys are placeables tokens used in the pattern string, and values are parts records which will be used in the result List to represent the token part.
+        Example:
+        <pre>
+        Input:
+          DeconstructPattern("AA{xx}BB{yy}CC", {
+            [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
+            [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
+          })
+
+        Output (List of parts records):
+          &laquo;
+            {[[Type]]: "literal", [[Value]]: "AA"},
+            {[[Type]]: "hour", [[Value]]: "15"},
+            {[[Type]]: "literal", [[Value]]: "BB"},
+            {[[Type]]: "minute", [[Value]]: "06"},
+            {[[Type]]: "literal", [[Value]]: "CC"}
+          &raquo;
+        </pre>
+      </p>
+      <emu-alg>
+        1. Let _patternParts_ be PartitionPattern(_pattern_).
+        1. Let _result_ be a new empty List.
+        1. For each element _patternPart_ of _patternParts_, in List order, do
+          1. Let _part_ be _patternPart_.[[Type]].
+          1. If _part_ is *"literal"*, then
+            1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+          1. Else,
+            1. Assert: _placeables_ has a field [[&lt;_part_&gt;]].
+            1. Let _subst_ be _placeables_.[[&lt;_part_&gt;]].
+            1. If Type(_subst_) is List, then
+              1. For each element _s_ of _subst_ in List order, do
+                1. Append _s_ to _result_.
+            1. Else,
+              1. Append _subst_ to _result_.
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-createpartsfromlist" aoid="CreatePartsFromList">
+      <h1>CreatePartsFromList ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The CreatePartsFromList abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and creates the corresponding list of parts according to the effective locale and the formatting options of _listFormat_.
+        Each part is a Record with two fields: [[Type]], which must be a string with values "element" or "literal", and [[Value]] which must be a string or a number.
+        The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _size_ be the number of elements of _list_.
+        1. If _size_ is 0, then
+          1. Return a new empty List.
+        1. If _size_ is 2, then
+          1. Let _n_ be an index into _listFormat_.[[Templates]] based on _listFormat_.[[Locale]], _list_[0], and _list_[1].
+          1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Pair]].
+          1. Let _first_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[0] }.
+          1. Let _second_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[1] }.
+          1. Let _placeables_ be a new Record { [[0]]: _first_, [[1]]: _second_ }.
+          1. Return DeconstructPattern(_pattern_, _placeables_).
+        1. Let _last_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_size_ - 1] }.
+        1. Let _parts_ be &laquo; _last_ &raquo;.
+        1. Let _i_ be _size_ - 2.
+        1. Repeat, while _i_ &ge; 0
+          1. Let _n_ be an implementation-defined index into _listFormat_.[[Templates]] based on _listFormat_.[[Locale]], _head_, and _parts_.
+          1. If _i_ is 0, then
+            1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Start]].
+          1. Else, if _i_ is less than _size_ - 2, then
+            1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Middle]].
+          1. Else,
+            1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[End]].
+          1. Let _head_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_i_] }.
+          1. Let _placeables_ be a new Record { [[0]]: _head_, [[1]]: _parts_ }.
+          1. Set _parts_ to DeconstructPattern(_pattern_, _placeables_).
+          1. Decrement _i_ by 1.
+        1. Return _parts_.
+      </emu-alg>
+
+      <emu-note>
+        The index _n_ to select across multiple templates permits the conjunction to be dependent on the context, as in Spanish, where "y" or "e" may be selected, dependending on the following word.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-formatlist" aoid="FormatList">
+      <h1>FormatList ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The FormatList abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
+        1. Let _result_ be an empty String.
+        1. For each _part_ in _parts_, do
+          1. Set _result_ to a String value produced by concatenating _result_ and _part_.[[Value]].
+        1. Return _result_.
+      </emu-alg>
+
+    </emu-clause>
+
+    <emu-clause id="sec-formatlisttoparts" aoid="FormatListToParts">
+      <h1>FormatListToParts ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The FormatListToParts abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
+        1. Let _result_ be ArrayCreate(0).
+        1. Let _n_ be 0.
+        1. For each _part_ in _parts_, do
+          1. Let _O_ be ObjectCreate(%ObjectPrototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
+          1. Increment _n_ by 1.
+        1. Return _result_.
+      </emu-alg>
+
+    </emu-clause>
+
+    <emu-clause id="sec-createstringlistfromiterable" aoid="StringListFromIterable">
+      <h1>StringListFromIterable ( _iterable_ )</h1>
+
+      <p>The abstract operation StringListFromIterable performs the following steps:</p>
+      <emu-alg>
+        1. If _iterable_ is *undefined*, then
+          1. Return a new empty List.
+        1. Let _iteratorRecord_ be ? GetIterator(_iterable_).
+        1. Let _list_ be a new empty List.
+        1. Let _next_ be *true*.
+        1. Repeat, while _next_ is not *false*
+          1. Set _next_ to ? IteratorStep(_iteratorRecord_).
+          1. If _next_ is not *false*, then
+            1. Let _nextValue_ be ? IteratorValue(_next_).
+            1. If Type(_nextValue_) is not String, then
+              1. Let _error_ be ThrowCompletion(a newly created *TypeError* object).
+              1. Return ? IteratorClose(_iteratorRecord_, _error_).
+            1. Append _nextValue_ to the end of the List _list_.
+        1. Return _list_.
+      </emu-alg>
+      <emu-note>
+        <p>This algorithm raises exceptions when it encounters values that are not Strings, because there is no obvious locale-aware coercion for arbitrary values.</p>
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-listformat-constructor">
+    <h1>The Intl.ListFormat Constructor</h1>
+
+    <p>
+      The ListFormat constructor is the <dfn>%ListFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-Intl.ListFormat">
+      <h1>Intl.ListFormat ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>
+        When the `Intl.ListFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, throw a *TypeError* exception.
+        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%ListFormatPrototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. If _options_ is *undefined*, then
+          1. Let _options_ be ObjectCreate(*null*).
+        1. Else
+          1. Let _options_ be ? ToObject(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _localeData_ be %ListFormat%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %ListFormat%.[[RelevantExtensionKeys]], _localeData_).
+        1. Set _listFormat_.[[Locale]] to _r_.[[locale]].
+        1. Let _type_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
+        1. Set _listFormat_.[[Type]] to _type_.
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
+        1. Set _listFormat_.[[Style]] to _style_.
+        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _dataLocaleTypes_ be _dataLocaleData_.[[&lt;_type_&gt;]].
+        1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[&lt;_style_&gt;]].
+        1. Return _listFormat_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-listformat-constructor">
+    <h1>Properties of the Intl.ListFormat Constructor</h1>
+
+    <p>
+      The Intl.ListFormat constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype">
+      <h1>Intl.ListFormat.prototype</h1>
+
+      <p>
+        The value of `Intl.ListFormat.prototype` is %ListFormatPrototype%.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.supportedLocalesOf">
+      <h1>Intl.ListFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
+
+      <p>
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be %ListFormat%.[[AvailableLocales]].
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+      </p>
+
+      <emu-note>
+        Intl.ListFormat does not have any relevant extension keys.
+      </emu-note>
+
+      <p>
+        The value of the [[LocaleData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for each locale value _locale_ in %ListFormat%.[[AvailableLocales]]:
+      </p>
+
+      <ul>
+        <li>[[LocaleData]][[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
+        <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be List of Records with the fields with names: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules.</li>
+        <li>
+          The ListFormat template set's entry's Record fields each expected to be valid template patterns.  They should each contain one instance of the substring *"{0}"* and once instance of the substring *"{1}"*, and the substring *"{0}"* should occur before the substring *"{1}"*.
+        </li>
+      </ul>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>). In <a href="https://unicode.org/reports/tr35/tr35-general.html#ListPatterns">LDML's listPattern</a>, `conjunction` corresponds to "standard", `disjunction` corresponds to "or", and `unit` corresponds to "unit".
+      </emu-note>
+
+      <emu-note>
+        Among the list types, `conjunction` stands for "and"-based lists (e.g., "A, B, and C"), `disjunction` stands for "or"-based lists (e.g., "A, B, or C"), and `unit` stands for lists of values with units (e.g., "5 pounds, 12 ounces").
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-listformat-prototype-object">
+    <h1>Properties of the Intl.ListFormat Prototype Object</h1>
+
+    <p>
+      The Intl.ListFormat prototype object is itself an ordinary object. <dfn>%ListFormatPrototype%</dfn> is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.
+    </p>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.constructor">
+      <h1>Intl.ListFormat.prototype.constructor</h1>
+
+      <p>
+        The initial value of `Intl.ListFormat.prototype.constructor` is the intrinsic object %ListFormat%.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype-toStringTag">
+      <h1>Intl.ListFormat.prototype [ @@toStringTag ]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Intl.ListFormat"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.format">
+      <h1>Intl.ListFormat.prototype.format ( _list_ )</h1>
+
+      <p>
+        When the `format` method is called with an argument _list_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _lf_ be the *this* value.
+        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
+        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Let _stringList_ be ? StringListFromIterable(_list_).
+        1. Return FormatList(_lf_, _stringList_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.formatToParts">
+      <h1>Intl.ListFormat.prototype.formatToParts ( _list_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an argument _list_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _lf_ be the *this* value.
+        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
+        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Let _stringList_ be ? StringListFromIterable(_list_).
+        1. Return FormatListToParts(_lf_, _stringList_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.resolvedoptions">
+      <h1>Intl.ListFormat.prototype.resolvedOptions ()</h1>
+
+      <p>
+        This function provides access to the locale and options computed during initialization of the object.
+      </p>
+
+      <emu-alg>
+        1. Let _lf_ be the *this* value.
+        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
+        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-listformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _lf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Assert: _v_ is not *undefined*.
+          1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-listformat-resolvedoptions-properties">
+        <emu-caption>Resolved Options of ListFormat Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>*"locale"*</td>
+          </tr>
+          <tr>
+            <td>[[Type]]</td>
+            <td>*"type"*</td>
+          </tr>
+          <tr>
+            <td>[[Style]]</td>
+            <td>*"style"*</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-listformat-instances">
+    <h1>Properties of Intl.ListFormat Instances</h1>
+
+    <p>
+      Intl.ListFormat instances inherit properties from %ListFormatPrototype%.
+    </p>
+
+    <p>
+      Intl.ListFormat instances have an [[InitializedListFormat]] internal slot.
+    </p>
+
+    <p>
+      Intl.ListFormat instances also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the list format styles.</li>
+      <li>[[Type]] is one of the String values *"conjunction"*, *"disjunction"*, or *"unit"*, identifying the list of types used.</li>
+      <li>[[Style]] is one of the String values *"long"*, *"short"*, or *"narrow"*, identifying the list formatting style used.</li>
+      <li>[[Templates]] is a ListFormat template set.</li>
+    </ul>
+  </emu-clause>
+</emu-clause>
