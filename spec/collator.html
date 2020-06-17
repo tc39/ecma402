@@ -14,6 +14,10 @@
         The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a *Collator* object. The following steps are taken:
       </p>
 
+      <p>
+        The following algorithm refers to the `type` nonterminal from <a href="http://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
+      </p>
+      
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
