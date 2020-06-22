@@ -16,6 +16,7 @@
 
       <emu-alg>
         1. Assert: Type(_tag_) is String.
+        1. Assert: Type(_options_) is Object.
         1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
         1. Let _language_ be ? GetOption(_options_, *"language"*, *"string"*, *undefined*, *undefined*).
         1. If _language_ is not *undefined*, then

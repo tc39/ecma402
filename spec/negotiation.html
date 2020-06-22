@@ -311,6 +311,7 @@
       </p>
 
       <emu-alg>
+        1. Assert: Type(_options_) is Object.
         1. Let _value_ be ? Get(_options_, _property_).
         1. If _value_ is not *undefined*, then
           1. Assert: _type_ is *"boolean"* or *"string"*.
@@ -349,6 +350,7 @@
       </p>
 
       <emu-alg>
+        1. Assert: Type(_options_) is Object.
         1. Let _value_ be ? Get(_options_, _property_).
         1. Return ? DefaultNumberOption(_value_, _minimum_, _maximum_, _fallback_).
       </emu-alg>
