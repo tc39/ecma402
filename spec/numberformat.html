@@ -31,8 +31,10 @@
         1. Else if _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
           1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
           1. Let _mnfdActualDefault_ be _mnfdDefault_.
-          1. If Type(_mxfd_) is Number and _mxfd_ is not *NaN*, then
-            1. Set _mnfdActualDefault_ to min( _mxfd_, _mnfdDefault_ ).
+          1. If _mxfd_ is not *undefined*, then
+            1. Let _mxfd_ be ? ToNumber(_mxfd_).
+            1. If _mxfd_ is not *NaN*, then
+              1. Set _mnfdActualDefault_ to min( max( _mxfd_, 0 ), _mnfdDefault_ ).
           1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, _mnfdActualDefault_).
           1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
           1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, _mnfd_, 20, _mxfdActualDefault_).
