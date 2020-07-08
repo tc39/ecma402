@@ -291,10 +291,11 @@
       </p>
 
       <emu-alg>
-        1. If _options_ is not *undefined*, then
+        1. If _options_ is *undefined*, then
+          1. let _matcher_ be *"best fit"*.
+        1. Else,
           1. Let _options_ be ? ToObject(_options_).
           1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Else, let _matcher_ be *"best fit"*.
         1. If _matcher_ is *"best fit"*, then
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
@@ -313,16 +314,14 @@
       <emu-alg>
         1. Assert: Type(_options_) is Object.
         1. Let _value_ be ? Get(_options_, _property_).
-        1. If _value_ is not *undefined*, then
-          1. Assert: _type_ is *"boolean"* or *"string"*.
-          1. If _type_ is *"boolean"*, then
-            1. Let _value_ be ToBoolean(_value_).
-          1. If _type_ is *"string"*, then
-            1. Let _value_ be ? ToString(_value_).
-          1. If _values_ is not *undefined*, then
-            1. If _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
-          1. Return _value_.
-        1. Else, return _fallback_.
+        1. If _value_ is *undefined*, return _fallback_.
+        1. Assert: _type_ is *"boolean"* or *"string"*.
+        1. If _type_ is *"boolean"*, then
+          1. Let _value_ be ToBoolean(_value_).
+        1. If _type_ is *"string"*, then
+          1. Let _value_ be ? ToString(_value_).
+        1. If _values_ is not *undefined* and _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
+        1. Return _value_.
       </emu-alg>
     </emu-clause>
 
@@ -334,11 +333,10 @@
       </p>
 
       <emu-alg>
-        1. If _value_ is not *undefined*, then
-          1. Let _value_ be ? ToNumber(_value_).
-          1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
-          1. Return floor(_value_).
-        1. Else, return _fallback_.
+        1. If _value_ is *undefined*, return _fallback_.
+        1. Let _value_ be ? ToNumber(_value_).
+        1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
+        1. Return floor(_value_).
       </emu-alg>
     </emu-clause>
 
