@@ -75,7 +75,7 @@
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
         1. If %Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
           1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
-        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%CollatorPrototype%"*, _internalSlotsList_).
+        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Collator.prototype%"*, _internalSlotsList_).
         1. Return ? InitializeCollator(_collator_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -92,7 +92,7 @@
       <h1>Intl.Collator.prototype</h1>
 
       <p>
-        The value of `Intl.Collator.prototype` is %CollatorPrototype%.
+        The value of `Intl.Collator.prototype` is %Collator.prototype%.
       </p>
 
       <p>
@@ -146,7 +146,7 @@
     <h1>Properties of the Intl.Collator Prototype Object</h1>
 
     <p>
-      The Intl.Collator prototype object is itself an ordinary object. <dfn>%CollatorPrototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
+      The Intl.Collator prototype object is itself an ordinary object. <dfn>%Collator.prototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
     </p>
 
     <emu-clause id="sec-intl.collator.prototype.constructor">
@@ -271,7 +271,7 @@
       <emu-alg>
         1. Let _collator_ be *this* value.
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
@@ -338,7 +338,7 @@
     <h1>Properties of Intl.Collator Instances</h1>
 
     <p>
-      Intl.Collator instances are ordinary objects that inherit properties from %CollatorPrototype%.
+      Intl.Collator instances are ordinary objects that inherit properties from %Collator.prototype%.
     </p>
 
     <p>
