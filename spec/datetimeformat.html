@@ -632,7 +632,7 @@
       </p>
 
       <emu-alg>
-        1. Let _dtf_ be *this* value.
+        1. Let _dtf_ be the *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
@@ -656,7 +656,7 @@
       </p>
 
       <emu-alg>
-        1. Let _dtf_ be *this* value.
+        1. Let _dtf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _date_ is *undefined*, then
           1. Let _x_ be Call(%Date_now%, *undefined*).
@@ -674,7 +674,7 @@
       </p>
 
       <emu-alg>
-        1. Let _dtf_ be *this* value.
+        1. Let _dtf_ be the *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
