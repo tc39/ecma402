@@ -16,6 +16,21 @@
     The Intl object has an internal slot, [[FallbackSymbol]], which is a new %Symbol% in the current realm with the [[Description]] *"IntlLegacyConstructedSymbol"*.
   </p>
 
+  <emu-clause id="sec-value-properties-of-the-intl-object">
+    <h1>Value Properties of the Intl Object</h1>
+
+    <emu-clause id="sec-Intl-toStringTag">
+      <h1>Intl[ @@toStringTag ]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Intl"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+  </emu-clause>
+
   <emu-clause id="sec-constructor-properties-of-the-intl-object">
     <h1>Constructor Properties of the Intl Object</h1>
 
