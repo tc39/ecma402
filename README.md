@@ -15,6 +15,8 @@ Proposals follow [the TC39 process](https://tc39.es/process-document/) and are t
 * [Active Proposals](https://github.com/tc39/proposals/blob/master/ecma402/README.md)
 * [Stage 0 Proposals](https://github.com/tc39/proposals/blob/master/ecma402/stage-0-proposals.md)
 
+Information about status of tests, documentations and browser implementations of proposals can be found in [this wiki page](https://github.com/tc39/ecma402/wiki/Proposal-and-PR-Progress-Tracking).
+
 ## How to Contribute
 
 Please see [Contributing to ECMAScript](/CONTRIBUTING.md) for the most up-to-date information on contributing proposals to this standard.
