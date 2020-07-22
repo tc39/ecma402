@@ -147,7 +147,10 @@
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _r_.[[kf]].
         1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. Set _locale_.[[Numeric]] to ! SameValue(_r_.[[kn]], *"true"*).
+          1. If ! SameValue(_r_.[[kn]], *"true"*) is *true* or _r_.[[kn]] is the empty String, then
+            1. Set _locale_.[[Numeric]] to *true*.
+          1. Else,
+            1. Set _locale_.[[Numeric]] to *false*.
         1. Set _locale_.[[NumberingSystem]] to _r_.[[nu]].
         1. Return _locale_.
       </emu-alg>
