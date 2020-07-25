@@ -119,6 +119,7 @@
           1. Let _value_ be ? GetOption(_options_, _prop_, *"string"*, &laquo; the strings given in the Values column of the row &raquo;, *undefined*).
           1. Set _opt_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
         1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, *"string"*, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
         1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, *"string"*, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
@@ -132,7 +133,6 @@
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _dataLocaleData_).
         1. Else,
           1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_calendar_&gt;]].
-          1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, *"string"*, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
           1. If _matcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_opt_, _formats_).
           1. Else,
@@ -196,9 +196,9 @@
         1. Let _dateStyle_ be ? Get(_options_, *"dateStyle"*).
         1. Let _timeStyle_ be ? Get(_options_, *"timeStyle"*).
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _required_ is *"date"* and _timeStyle_ is not *undefined*,
+        1. If _required_ is *"date"* and _timeStyle_ is not *undefined*, then
           1. Throw a *TypeError* exception.
-        1. If _required_ is *"time"* and _dateStyle_ is not *undefined*,
+        1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
           1. Throw a *TypeError* exception.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
           1. For each of the property names *"year"*, *"month"*, *"day"*, do
@@ -634,7 +634,7 @@
           Each of the records must also have a [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains a substring *"{ampm}"*. If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.
         </li>
         <li>
-          [[LocaleData]][locale] must contain [[DateFormat]], [[TimeFormat]] and [[DateTimeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in Table 1, where each field must have one of the values specified for the field in Table 1. Each of the records must also have a pattern field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a pattern12 field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring *"{ampm}"*. For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*.
+          [[LocaleData]][&lt;_locale_&gt;] must have a [[styles]] field. The styles field must have a [[&lt;_calendar_&gt;]] field for all calendar values _calendar_. The field must contain [[DateFormat]], [[TimeFormat]] and [[DateTimeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in Table 1, where each field must have one of the values specified for the field in Table 1. Each of the records must also have a pattern field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a pattern12 field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring *"{ampm}"*. For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*.
          </li>
       </ul>
 
