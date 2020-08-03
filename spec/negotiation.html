@@ -289,16 +289,41 @@
       </p>
 
       <emu-alg>
-        1. If _options_ is *undefined*, then
-          1. Let _matcher_ be *"best fit"*.
-        1. Else,
-          1. Let _options_ be ? ToObject(_options_).
-          1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Set _options_ to ? CoerceOptionsToObject(_options_).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. If _matcher_ is *"best fit"*, then
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Return CreateArrayFromList(_supportedLocales_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getoptionsobject" aoid="GetOptionsObject">
+      <h1>GetOptionsObject ( _options_ )</h1>
+      <p>
+        The abstract operation GetOptionsObject returns an Object suitable for use with GetOption, either _options_ itself or a default empty Object.
+        It throws a TypeError if _options_ is not undefined and not an Object.
+      </p>
+      <emu-alg>
+        1. If _options_ is *undefined*, then
+          1. Return ! ObjectCreate(*null*).
+        1. If Type(_options_) is Object, then
+          1. Return _options_.
+        1. Throw a *TypeError* exception.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-coerceoptionstoobject" aoid="CoerceOptionsToObject">
+      <h1>CoerceOptionsToObject ( _options_ )</h1>
+      <p>
+        The abstract operation CoerceOptionsToObject coerces _options_ into an Object suitable for use with GetOption, defaulting to an empty Object.
+        Because it coerces non-null primitive values into objects, its use is discouraged for new functionality in favor of GetOptionsObject.
+      </p>
+      <emu-alg>
+        1. If _options_ is *undefined*, then
+          1. Return ! ObjectCreate(*null*).
+        1. Return ? ToObject(_options_).
       </emu-alg>
     </emu-clause>
 

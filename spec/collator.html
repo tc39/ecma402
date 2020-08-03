@@ -18,10 +18,7 @@
       </p>
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. If _options_ is *undefined*, then
-          1. Let _options_ be ObjectCreate(*null*).
-        1. Else,
-          1. Let _options_ be ? ToObject(_options_).
+        1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _usage_ be ? GetOption(_options_, *"usage"*, *"string"*, &laquo; *"sort"*, *"search"* &raquo;, *"sort"*).
         1. Set _collator_.[[Usage]] to _usage_.
         1. If _usage_ is *"sort"*, then
