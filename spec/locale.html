@@ -113,10 +113,7 @@
           1. Let _tag_ be _tag_.[[Locale]].
         1. Else,
           1. Let _tag_ be ? ToString(_tag_).
-        1. If _options_ is *undefined*, then
-          1. Let _options_ be ! ObjectCreate(*null*).
-        1. Else,
-          1. Let _options_ be ? ToObject(_options_).
+        1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Set _tag_ to ? ApplyOptionsToTag(_tag_, _options_).
         1. Let _opt_ be a new Record.
         1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, *"string"*, *undefined*, *undefined*).
