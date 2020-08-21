@@ -257,7 +257,7 @@
                 1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
-              1. Let _decimalSepIndex_ be Call(%StringProto_indexOf%, _n_, &laquo; *"."*, 0 &raquo;).
+              1. Let _decimalSepIndex_ be Call(%String.prototype.indexOf%, _n_, &laquo; *"."*, 0 &raquo;).
               1. If _decimalSepIndex_ > 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
@@ -557,7 +557,7 @@
           <tr>
             <td>tibt</td>
             <td>U+0F20 to U+0F29</td>
-          </tr>          
+          </tr>
           <tr>
             <td>tirh</td>
             <td>U+114D0 to U+114D9</td>
@@ -614,7 +614,7 @@
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%ObjectPrototype%).
+          1. Let _O_ be ObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
@@ -730,7 +730,7 @@
         1. Let _currency_ be ? GetOption(_options_, *"currency"*, *"string"*, *undefined*, *undefined*).
         1. If _currency_ is *undefined*, then
           1. If _style_ is *"currency"*, throw a *TypeError* exception.
-        1. Else, 
+        1. Else,
           1. If the result of IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
         1. Let _currencyDisplay_ be ? GetOption(_options_, *"currencyDisplay"*, *"string"*, &laquo; *"code"*, *"symbol"*, *"narrowSymbol"*, *"name"* &raquo;, *"symbol"*).
         1. Let _currencySign_ be ? GetOption(_options_, *"currencySign"*, *"string"*, &laquo; *"standard"*, *"accounting"* &raquo;, *"standard"*).
@@ -754,7 +754,7 @@
     <emu-clause id="sec-getnumberformatpattern" aoid="GetNumberFormatPattern">
       <h1>GetNumberFormatPattern ( _numberFormat_, _x_ )</h1>
       <p>
-        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>. 
+        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
       </p>
       <emu-alg>
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
@@ -814,7 +814,7 @@
     <emu-clause id="sec-getnotationsubpattern" aoid="GetNotationSubPattern">
       <h1>GetNotationSubPattern ( _numberFormat_, _exponent_ )</h1>
       <p>
-        The abstract operation GetNotationSubPattern considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>. 
+        The abstract operation GetNotationSubPattern considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
       </p>
       <emu-alg>
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
@@ -896,7 +896,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormatPrototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -925,7 +925,7 @@
       <h1>Intl.NumberFormat.prototype</h1>
 
       <p>
-        The value of `Intl.NumberFormat.prototype` is %NumberFormatPrototype%.
+        The value of `Intl.NumberFormat.prototype` is %NumberFormat.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -988,7 +988,7 @@
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
     <p>
-      The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormatPrototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
+      The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormat.prototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
     </p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
@@ -1060,7 +1060,7 @@
         1. Let _nf_ be the *this* value.
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
@@ -1155,7 +1155,7 @@
     <h1>Properties of Intl.NumberFormat Instances</h1>
 
     <p>
-      Intl.NumberFormat instances are ordinary objects that inherit properties from %NumberFormatPrototype%.
+      Intl.NumberFormat instances are ordinary objects that inherit properties from %NumberFormat.prototype%.
     </p>
 
     <p>

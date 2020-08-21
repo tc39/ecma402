@@ -41,7 +41,7 @@
          1. Assert: Type(_s_) is String.
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
-         1. Let _dp_ be ! Call(%StringProto_indexOf%, _s_, &laquo; *"."* &raquo;).
+         1. Let _dp_ be ! Call(%String.prototype.indexOf%, _s_, &laquo; *"."* &raquo;).
          1. If _dp_ = -1, then
            1. Set _iv_ to _n_.
            1. Let _f_ be 0.
@@ -157,7 +157,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRulesPrototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -174,7 +174,7 @@
       <h1>Intl.PluralRules.prototype</h1>
 
       <p>
-        The value of `Intl.PluralRules.prototype` is %PluralRulesPrototype%.
+        The value of `Intl.PluralRules.prototype` is %PluralRules.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -229,7 +229,7 @@
     <h1>Properties of the Intl.PluralRules Prototype Object</h1>
 
     <p>
-      The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%PluralRulesPrototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
+      The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%PluralRules.prototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
     </p>
 
     <emu-clause id="sec-intl.pluralrules.prototype.constructor">
@@ -276,7 +276,7 @@
       <emu-alg>
         1. Let _pr_ be the *this* value.
         1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-pluralrules-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
@@ -333,7 +333,7 @@
     <h1>Properties of Intl.PluralRules Instances</h1>
 
     <p>
-      Intl.PluralRules instances are ordinary objects that inherit properties from %PluralRulesPrototype%.
+      Intl.PluralRules instances are ordinary objects that inherit properties from %PluralRules.prototype%.
     </p>
 
     <p>

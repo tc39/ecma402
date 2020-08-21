@@ -108,7 +108,7 @@
           1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
         1. If _relevantExtensionKeys_ contains *"kn"*, then
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
-        1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *%LocalePrototype%*, _internalSlotsList_).
+        1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *%Locale.prototype%*, _internalSlotsList_).
         1. If Type(_tag_) is not String or Object, throw a *TypeError* exception.
         1. If Type(_tag_) is Object and _tag_ has an [[InitializedLocale]] internal slot, then
           1. Let _tag_ be _tag_.[[Locale]].
@@ -168,7 +168,7 @@
       <h1>Intl.Locale.prototype</h1>
 
       <p>
-        The value of *Intl.Locale.prototype* is *%LocalePrototype%*.
+        The value of *Intl.Locale.prototype* is *%Locale.prototype%*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -188,7 +188,7 @@
     <h1>Properties of the Intl.Locale Prototype Object</h1>
 
     <p>
-      The Intl.Locale prototype object is itself an ordinary object. <dfn>%LocalePrototype%</dfn> is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.
+      The Intl.Locale prototype object is itself an ordinary object. <dfn>%Locale.prototype%</dfn> is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.
     </p>
 
     <emu-clause id="sec-Intl.Locale.prototype.constructor">
@@ -250,7 +250,7 @@
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
-        1. Return the substring of _locale_ corresponding to the `unicode_language_id` production. 
+        1. Return the substring of _locale_ corresponding to the `unicode_language_id` production.
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.calendar">
