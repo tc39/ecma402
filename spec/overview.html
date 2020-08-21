@@ -16,7 +16,6 @@
     </p>
   </emu-clause>
 
-
   <emu-clause id="sec-api-overview">
     <h1>API Overview</h1>
 
@@ -45,6 +44,14 @@
     </p>
 
     <emu-note>While the API includes a variety of formatters, it does not provide any parsing facilities. This is intentional, has been discussed extensively, and concluded after weighing in all the benefits and drawbacks of including said functionality. See the discussion on the <a href="https://github.com/tc39/ecma402/issues/342">issue tracker</a>.</emu-note>
+  </emu-clause>
+
+  <emu-clause id="sec-api-conventions">
+    <h1>API Conventions</h1>
+
+    <p>
+      Every built-in constructor should behave as if defined inside a class, throwing a *TypeError* exception when called as a function (without NewTarget). For backwards compatibility with past editions, this does not apply to %Collator%, %NumberFormat%, or %DateTimeFormat%, each of which construct and return a new object when called as a function.
+    </p>
   </emu-clause>
 
   <emu-clause id="sec-implementation-dependencies">
