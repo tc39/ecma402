@@ -340,7 +340,7 @@
         1. If _value_ is *undefined*, return _fallback_.
         1. Assert: _type_ is *"boolean"* or *"string"*.
         1. If _type_ is *"boolean"*, then
-          1. Let _value_ be ToBoolean(_value_).
+          1. Let _value_ be ! ToBoolean(_value_).
         1. If _type_ is *"string"*, then
           1. Let _value_ be ? ToString(_value_).
         1. If _values_ is not *undefined* and _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
