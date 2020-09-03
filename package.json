@@ -5,7 +5,7 @@
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
     "build-es2020": "git remote remove origin && git remote add origin \"git@github.com:$TRAVIS_REPO_SLUG.git\" && git fetch --quiet origin && git checkout --quiet es2020 && mkdir \"out/2020\" && cp -R img \"out/2020\" && ecmarkup --verbose spec/index.html out/2020/index.html --css out/2020/ecmarkup.css --js out/2020/ecmarkup.js",
-    "build-master": "mkdir out && cp -R img out && ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "build-master": "mkdir out && cp -R img out && ecmarkup --lint-spec --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
     "prebuild": "npm run clean",
     "build": "npm run build-master",
     "prebuild-for-pdf": "npm run clean",
@@ -13,7 +13,7 @@
     "prebuild-travis": "npm run clean",
     "build-travis": "npm run build-master && npm run build-es2020",
     "clean": "rm -rf out",
-    "test": "exit 0",
+    "test": "ecmarkup --lint-spec spec/index.html /dev/null",
     "prewatch": "npm run clean",
     "watch": "npm run build-master -- --watch"
   },
@@ -22,7 +22,7 @@
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
-    "ecmarkup": "3.19.1"
+    "ecmarkup": "^4.1.0"
   },
   "devDependencies": {
     "@alrra/travis-scripts": "^3.0.0"

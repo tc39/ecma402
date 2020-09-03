@@ -9,7 +9,7 @@
     </p>
 
     <emu-clause id="sec-apply-options-to-tag" aoid=ApplyOptionsToTag>
-      <h1>ApplyOptionsToTag( _tag_, _options_ )</h1>
+      <h1>ApplyOptionsToTag ( _tag_, _options_ )</h1>
       <p>
         The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
       </p>
@@ -48,7 +48,7 @@
     </emu-clause>
 
     <emu-clause id="sec-apply-unicode-extension-to-tag" aoid=ApplyUnicodeExtensionToTag>
-      <h1>ApplyUnicodeExtensionToTag( _tag_, _options_, _relevantExtensionKeys_ )</h1>
+      <h1>ApplyUnicodeExtensionToTag ( _tag_, _options_, _relevantExtensionKeys_ )</h1>
       <p>
         The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
       </p>
@@ -65,12 +65,12 @@
           1. Let _attributes_ be the empty List.
           1. Let _keywords_ be the empty List.
         1. Let _result_ be a new Record.
-        1. Repeat for each element _key_ of _relevantExtensionKeys_ in List order,
+        1. For each element _key_ of _relevantExtensionKeys_ in List order, do
           1. Let _value_ be *undefined*.
           1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
             1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
             1. Let _value_ be _entry_.[[Value]].
-          1. Else
+          1. Else,
             1. Let _entry_ be ~empty~.
           1. Assert: _options_ has a field [[<_key_>]].
           1. Let _optionsValue_ be _options_.[[<_key_>]].
@@ -92,11 +92,10 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale">
-      <h1>Intl.Locale( _tag_ [, _options_] )</h1>
+      <h1>Intl.Locale ( _tag_ [ , _options_ ] )</h1>
 
       <p>
         The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
-
         When the *Intl.Locale* function is called with an argument _tag_ and an optional argument _options_, the following steps are taken:
       </p>
 
@@ -116,7 +115,7 @@
           1. Let _tag_ be ? ToString(_tag_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ! ObjectCreate(*null*).
-        1. Else
+        1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Set _tag_ to ? ApplyOptionsToTag(_tag_, _options_).
         1. Let _opt_ be a new Record.
@@ -212,7 +211,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.maximize">
-      <h1>Intl.Locale.prototype.maximize ()</h1>
+      <h1>Intl.Locale.prototype.maximize ( )</h1>
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
@@ -223,7 +222,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.minimize">
-      <h1>Intl.Locale.prototype.minimize ()</h1>
+      <h1>Intl.Locale.prototype.minimize ( )</h1>
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
@@ -234,7 +233,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.toString">
-      <h1>Intl.Locale.prototype.toString ()</h1>
+      <h1>Intl.Locale.prototype.toString ( )</h1>
 
       <emu-alg>
       1. Let _loc_ be the *this* value.
@@ -251,6 +250,7 @@
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
         1. Return the substring of _locale_ corresponding to the `unicode_language_id` production.
+      </emu-alg>
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.calendar">
