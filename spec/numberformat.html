@@ -706,7 +706,7 @@
       </emu-alg>
       <emu-normative-optional>
       <emu-alg>
-        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? InstanceofOperator(_nf_, %NumberFormat%) is *true*, then
+        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
           1. Let _nf_ be ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
@@ -902,7 +902,7 @@
       <emu-normative-optional>
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and Type(_this_) is Object and ? InstanceofOperator(_this_, %NumberFormat%) is *true*, then
+        1. If NewTarget is *undefined* and Type(_this_) is Object and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
           1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
