@@ -15,20 +15,19 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(*null*).
-        1. Else
+        1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _t_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *0*, *3*, *"standard"*).
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *+0*, *3*, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to the value of _r_.[[locale]].
         1. Return _pluralRules_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-getoperands" aoid="GetOperands">
@@ -104,17 +103,14 @@
            </tr>
          </table>
        </emu-table>
-
     </emu-clause>
 
     <emu-clause id="sec-pluralruleselect" aoid="PluralRuleSelect">
-
       <h1>PluralRuleSelect ( _locale_, _type_, _n_, _operands_ )</h1>
 
       <p>
         When the PluralRuleSelect abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value *"other"*.
       </p>
-
     </emu-clause>
 
     <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
@@ -136,9 +132,7 @@
         1. Let _operands_ be ? GetOperands(_s_).
         1. Return ? PluralRuleSelect(_locale_, _type_, _n_, _operands_).
       </emu-alg>
-
     </emu-clause>
-
   </emu-clause>
 
   <emu-clause id="sec-intl-pluralrules-constructor">
@@ -182,7 +176,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules.supportedlocalesof">
-      <h1>Intl.PluralRules.supportedLocalesOf ( _locales_ [, _options_ ] )</h1>
+      <h1>Intl.PluralRules.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
         When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
@@ -221,7 +215,6 @@
       <emu-note>
         It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).
       </emu-note>
-
     </emu-clause>
   </emu-clause>
 
@@ -252,7 +245,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules.prototype.select">
-      <h1>Intl.PluralRules.prototype.select( _value_ )</h1>
+      <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
 
       <p>
         When the `select` method is called with an argument _value_, the following steps are taken:
@@ -267,7 +260,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules.prototype.resolvedoptions">
-      <h1>Intl.PluralRules.prototype.resolvedOptions ()</h1>
+      <h1>Intl.PluralRules.prototype.resolvedOptions ( )</h1>
 
       <p>
         This function provides access to the locale and options computed during initialization of the object.
@@ -352,6 +345,5 @@
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
       <li>[[RoundingType]] is one of the values ~fractionDigits~ or ~significantDigits~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
     </ul>
-
   </emu-clause>
 </emu-clause>
