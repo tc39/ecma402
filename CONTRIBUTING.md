@@ -30,7 +30,7 @@ When the ECMA-402 subcommittee reviews proposals for *new features*, we hold the
 
 1. **Prior Art**
     1. Our job is to bring features that i18n experts have already solved to JavaScript developers, not to invent new solutions to those problems. If the feature is not yet available in CLDR, ICU, or Unicode, the champion should start there before coming to ECMA-402.
-    2. The data and algorithms specified in CLDR, ICU, and Unicode are of variable quality. In order to be considered for ECMA-402, the prior art must be considered a best i18n practice by a quorum of i18n experts sitting on the ECMA-402 standards committee.
+    2. The data and algorithms specified in CLDR, ICU, and Unicode are of variable quality. In order to be adopted by ECMA-402, the prior art must be considered best i18n practice by a consensus of i18n experts sitting on the ECMA-402 standards committee.
 2. **Difficult to Implement in Userland**
     1. Features in Intl must bring something to the table that a third-party library wouldn't be able to do with the same level of efficiency and performance. The champion can cite a heavy locale data dependency or a complex algorithm to satisfy this criterion.
 3. **Broad Appeal**
