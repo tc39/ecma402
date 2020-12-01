@@ -28,9 +28,14 @@ The ECMA-402 standard should be as small and generic as possible to supply suffi
 
 When the ECMA-402 subcommittee reviews proposals for *new features*, we hold them against the following list of criteria.  It is the reponsibility of the proposal champion to provide a compelling case that their feature request meets these criteria.
 
-1. **Prior Art:** Our job is to bring features that i18n experts have already solved to JavaScript developers, not to invent new solutions to those problems. If the feature is not yet available in CLDR, ICU, or Unicode, the champion should start there before coming to ECMA-402.
-2. **Difficult to implement in userland:** Features in Intl must bring something to the table that a third-party library wouldn't be able to do with the same level of efficiency and performance. The champion can cite a heavy locale data dependency or a complex algorithm to satisfy this criterion.
-3. **Broad appeal:** The champion must demonstrate that their feature request is needed by a large number of smaller web apps or a smaller number of high-profile web apps (Calendar, Travel Booking, etc).  As a rule of thumb, the champion should demonstrate that their new feature is at least as useful as an existing feature in ECMA-402.  The champion can provide npm module statistics or a list of user requests to satisfy this criterion.  Alternatively, the champion can make a case that their feature is critical for a multilingual web, even if it lacks broad appeal.
+1. **Prior Art**
+    1. Our job is to bring features that i18n experts have already solved to JavaScript developers, not to invent new solutions to those problems. If the feature is not yet available in CLDR, ICU, or Unicode, the champion should start there before coming to ECMA-402.
+    2. The data and algorithms specified in CLDR, ICU, and Unicode are of variable quality. In order to be considered for ECMA-402, the prior art must be considered a best i18n practice by a quorum of i18n experts sitting on the ECMA-402 standards committee.
+2. **Difficult to Implement in Userland**
+    1. Features in Intl must bring something to the table that a third-party library wouldn't be able to do with the same level of efficiency and performance. The champion can cite a heavy locale data dependency or a complex algorithm to satisfy this criterion.
+3. **Broad Appeal**
+    1. The champion must demonstrate that their feature request is needed by a large number of smaller web apps or a smaller number of high-profile web apps (Calendar, Travel Booking, etc).  As a rule of thumb, the champion should demonstrate that their new feature is at least as useful as an existing feature in ECMA-402.  The champion can provide npm module statistics or a list of user requests to satisfy this criterion.
+    1. Alternatively, the champion can make a case that their feature is critical for a multilingual web, even if it lacks broad appeal.
 
 The ECMA-402 subcommittee will also review proposals to *improve existing features*.  We will consider such proposals so long as the champion can demonstrate that their request will not make an ECMA-402 implementation substantially more complex.  If the request requires a nontrivial increase in locale data size, the committee will hold the request against the criteria for new features listed above.
 
