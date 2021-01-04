@@ -4,7 +4,6 @@
   <emu-clause id="sec-intl-relativetimeformat--abstracts">
     <h1>Abstract Operations for RelativeTimeFormat Objects</h1>
 
-
     <emu-clause id="sec-InitializeRelativeTimeFormat" aoid="InitializeRelativeTimeFormat">
       <h1>InitializeRelativeTimeFormat ( _relativeTimeFormat_, _locales_, _options_ )</h1>
 
@@ -13,7 +12,6 @@
       </p>
       <p>
         The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
-
         The following steps are taken:
       </p>
 
@@ -136,7 +134,7 @@
             1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else,
             1. Assert: _patternPart_.[[Type]] is *"0"*.
-            1. For each _part_ in _parts_, do
+            1. For each Record _part_ in _parts_, do
               1. Append Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: _unit_ } to _result_.
         1. Return _result_.
       </emu-alg>
@@ -152,7 +150,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
         1. Let _result_ be an empty String.
-        1. For each _part_ in _parts_, do
+        1. For each Record _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -169,11 +167,11 @@
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%ObjectPrototype%).
+        1. For each Record _part_ in _parts_, do
+          1. Let _O_ be ObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. If _part_ has a [[Unit]] field,
+          1. If _part_ has a [[Unit]] field, then
             1. Perform ! CreateDataPropertyOrThrow(_O_, *"unit"*, _part_.[[Unit]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
           1. Increment _n_ by 1.
@@ -190,7 +188,7 @@
     </p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat">
-      <h1>Intl.RelativeTimeFormat ([ _locales_ [ , _options_ ]])</h1>
+      <h1>Intl.RelativeTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
         When the *Intl.RelativeTimeFormat* function is called with optional arguments the following steps are taken:
@@ -198,7 +196,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormatPrototype%"*, « [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] »).
+        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, « [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] »).
         1. Return ? InitializeRelativeTimeFormat(_relativeTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -215,7 +213,7 @@
       <h1>Intl.RelativeTimeFormat.prototype</h1>
 
       <p>
-        The value of `Intl.RelativeTimeFormat.prototype` is %RelativeTimeFormatPrototype%.
+        The value of `Intl.RelativeTimeFormat.prototype` is %RelativeTimeFormat.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -223,7 +221,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.supportedLocalesOf">
-      <h1>Intl.RelativeTimeFormat.supportedLocalesOf ( _locales_ [, _options_ ])</h1>
+      <h1>Intl.RelativeTimeFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
         When the `supportedLocalesOf` method of %RelativeTimeFormat% is called, the following steps are taken:
@@ -235,11 +233,11 @@
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
     </emu-clause>
-    
+
     <p>
       The value of the *"length"* property of the *supportedLocalesOf* method is 1.
     </p>
-    
+
     <emu-clause id="sec-Intl.RelativeTimeFormat-internal-slots">
       <h1>Internal slots</h1>
 
@@ -281,7 +279,7 @@
     <h1>Properties of the Intl.RelativeTimeFormat Prototype Object</h1>
 
     <p>
-      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%RelativeTimeFormatPrototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
+      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
     </p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.constructor">
@@ -304,7 +302,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.format">
-      <h1>Intl.RelativeTimeFormat.prototype.format( _value_, _unit_ )</h1>
+      <h1>Intl.RelativeTimeFormat.prototype.format ( _value_, _unit_ )</h1>
 
       <p>
         When the `format` method is called with arguments _value_ and _unit_, the following steps are taken:
@@ -320,7 +318,7 @@
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.formatToParts">
-      <h1>Intl.RelativeTimeFormat.prototype.formatToParts( _value_, _unit_ )</h1>
+      <h1>Intl.RelativeTimeFormat.prototype.formatToParts ( _value_, _unit_ )</h1>
 
       <p>
         When the `formatToParts` method is called with arguments _value_ and _unit_, the following steps are taken:
@@ -336,7 +334,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.relativetimeformat.prototype.resolvedoptions">
-      <h1>Intl.RelativeTimeFormat.prototype.resolvedOptions ()</h1>
+      <h1>Intl.RelativeTimeFormat.prototype.resolvedOptions ( )</h1>
 
       <p>
         This function provides access to the locale and options computed during initialization of the object.
@@ -345,7 +343,7 @@
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
         1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-relativetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _relativeTimeFormat_'s internal slot whose name is the Internal Slot value of the current row.
@@ -388,7 +386,7 @@
     <h1>Properties of Intl.RelativeTimeFormat Instances</h1>
 
     <p>
-      Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %RelativeTimeFormatPrototype%.
+      Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %RelativeTimeFormat.prototype%.
     </p>
 
     <p>

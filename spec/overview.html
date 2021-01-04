@@ -16,7 +16,6 @@
     </p>
   </emu-clause>
 
-
   <emu-clause id="sec-api-overview">
     <h1>API Overview</h1>
 
@@ -29,7 +28,6 @@
 
     <p>
       Applications can use the API in two ways:
-
       <ol>
         <li>
           Directly, by using the constructors Intl.Collator, Intl.NumberFormat, Intl.DateTimeFormat, or Intl.PluralRules to construct an object, specifying a list of preferred languages and options to configure the behaviour of the resulting object. The object then provides a main function (compare, select, or format), which can be called repeatedly. It also provides a resolvedOptions function, which the application can use to find out the exact configuration of the object.
@@ -47,12 +45,19 @@
     <emu-note>While the API includes a variety of formatters, it does not provide any parsing facilities. This is intentional, has been discussed extensively, and concluded after weighing in all the benefits and drawbacks of including said functionality. See the discussion on the <a href="https://github.com/tc39/ecma402/issues/342">issue tracker</a>.</emu-note>
   </emu-clause>
 
+  <emu-clause id="sec-api-conventions">
+    <h1>API Conventions</h1>
+
+    <p>
+      Every built-in constructor should behave as if defined inside a class, throwing a *TypeError* exception when called as a function (without NewTarget). For backwards compatibility with past editions, this does not apply to %Collator%, %NumberFormat%, or %DateTimeFormat%, each of which construct and return a new object when called as a function.
+    </p>
+  </emu-clause>
+
   <emu-clause id="sec-implementation-dependencies">
     <h1>Implementation Dependencies</h1>
 
     <p>
       Due to the nature of internationalization, the API specification has to leave several details implementation dependent:
-
       <ul>
         <li>
           <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists estimate the number of human languages to around 6000, and the more widely spoken ones have variations based on regions or other parameters. Even large locale data collections, such as the Common Locale Data Repository, cover only a subset of this large set. Implementations targeting resource-constrained devices may have to further reduce the subset.
@@ -82,5 +87,4 @@
       </p>
     </emu-clause>
   </emu-clause>
-
 </emu-clause>

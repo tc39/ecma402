@@ -210,12 +210,12 @@
         1. Assert: Type(_formats_) is List.
         1. For each element _format_ of _formats_ in List order, do
           1. Let _score_ be 0.
-          1. For each _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
+          1. For each property name _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
             1. Let _optionsProp_ be _options_.[[&lt;_property_&gt;]].
             1. Let _formatProp_ be _format_.[[&lt;_property_&gt;]].
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then decrease _score_ by _removalPenalty_.
-            1. Else if _optionsProp_ ≠ _formatProp_,
+            1. Else if _optionsProp_ ≠ _formatProp_, then
               1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
               1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
@@ -249,7 +249,7 @@
         1. Let _dtf_ be _F_.[[DateTimeFormat]].
         1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be Call(%Date_now%, *undefined*).
+          1. Let _x_ be Call(%Date.now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTime(_dtf_, _x_).
@@ -311,7 +311,7 @@
             1. Append a new Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"relatedYear"*, then
             1. Let _v_ be _tm_.[[RelatedYear]].
-            1. Let _fv_ be FormatNumber(_nf_, _v_).
+            1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Append a new Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
@@ -329,11 +329,10 @@
       <emu-note>
         It is recommended that implementations use the time zone information of the IANA Time Zone Database.
       </emu-note>
-
     </emu-clause>
 
     <emu-clause id="sec-formatdatetime" aoid="FormatDateTime">
-      <h1>FormatDateTime( _dateTimeFormat_, _x_ )</h1>
+      <h1>FormatDateTime ( _dateTimeFormat_, _x_ )</h1>
 
       <p>
         The FormatDateTime abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), and performs the following steps:
@@ -342,11 +341,10 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be the empty String.
-        1. For each _part_ in _parts_, do
+        1. For each Record _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-formatdatetimetoparts" aoid="FormatDateTimeToParts">
@@ -360,15 +358,14 @@
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%ObjectPrototype%).
+        1. For each Record _part_ in _parts_, do
+          1. Let _O_ be ObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataProperty(_result_, ! ToString(_n_), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-tolocaltime" aoid="ToLocalTime">
@@ -380,7 +377,7 @@
 
       <emu-alg>
         1. Assert: Type(_t_) is Number.
-        1. If _calendar_ is *"gregory"*,
+        1. If _calendar_ is *"gregory"*, then
           1. Let _timeZoneOffset_ be the value calculated according to <emu-xref href="#sec-local-time-zone-adjustment">LocalTZA(_t_, *true*)</emu-xref> where the local time zone is replaced with timezone _timeZone_.
           1. Let _tz_ be the time value _t_ + _timeZoneOffset_.
           1. Return a record with fields calculated from _tz_ according to <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref>.
@@ -431,11 +428,11 @@
           </tr>
           <tr>
             <td>[[Minute]]</td>
-            <td>`MinuteFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`MinFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[Second]]</td>
-            <td>`SecondFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`SecFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[InDST]]</td>
@@ -450,7 +447,7 @@
     </emu-clause>
 
     <emu-clause id="sec-unwrapdatetimeformat" aoid="UnwrapDateTimeFormat">
-      <h1>UnwrapDateTimeFormat( _dtf_ )</h1>
+      <h1>UnwrapDateTimeFormat ( _dtf_ )</h1>
       <p>
         The UnwrapDateTimeFormat abstract operation gets the underlying DateTimeFormat operation
         for various methods which implement ECMA-402 v1 semantics for supporting initializing
@@ -460,11 +457,13 @@
         1. Assert: Type(_dtf_) is Object.
       </emu-alg>
       <emu-normative-optional>
+      <!-- Note: 2. is intentional -->
       <emu-alg>
         2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is *true*, then
           1. Let _dtf_ be ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
+      <!-- Note: 3. is intentional -->
       <emu-alg>
         3. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Return _dtf_.
@@ -489,10 +488,11 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormatPrototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
+      <!-- Note: 4. is intentional -->
       <emu-alg>
         4. Let _this_ be the *this* value.
         1. If NewTarget is *undefined* and Type(_this_) is Object and ? InstanceofOperator(_this_, %DateTimeFormat%) is *true*, then
@@ -500,6 +500,7 @@
           1. Return _this_.
       </emu-alg>
       </emu-normative-optional>
+      <!-- Note: 6. is intentional -->
       <emu-alg>
         6. Return _dateTimeFormat_.
       </emu-alg>
@@ -518,7 +519,7 @@
       <h1>Intl.DateTimeFormat.prototype</h1>
 
       <p>
-        The value of `Intl.DateTimeFormat.prototype` is %DateTimeFormatPrototype%.
+        The value of `Intl.DateTimeFormat.prototype` is %DateTimeFormat.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -587,9 +588,9 @@
         </li>
       </ul>
 
-      <p>
-        EXAMPLE     An implementation might include the following record as part of its English locale data: {[[hour]]: *"numeric"*, [[minute]]: *"2-digit"*, [[second]]: *"2-digit"*, [[pattern]]: *"{hour}:{minute}:{second}"*, [[pattern12]]: *"{hour}:{minute}:{second} {ampm}"*}.
-      </p>
+      <emu-note>
+        For example, an implementation might include the following record as part of its English locale data: {[[hour]]: *"numeric"*, [[minute]]: *"2-digit"*, [[second]]: *"2-digit"*, [[pattern]]: *"{hour}:{minute}:{second}"*, [[pattern12]]: *"{hour}:{minute}:{second} {ampm}"*}.
+      </emu-note>
 
       <emu-note>
         It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).
@@ -601,7 +602,7 @@
     <h1>Properties of the Intl.DateTimeFormat Prototype Object</h1>
 
     <p>
-      The Intl.DateTimeFormat prototype object is itself an ordinary object. <dfn>%DateTimeFormatPrototype%</dfn> is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.
+      The Intl.DateTimeFormat prototype object is itself an ordinary object. <dfn>%DateTimeFormat.prototype%</dfn> is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.
     </p>
 
     <emu-clause id="sec-intl.datetimeformat.prototype.constructor">
@@ -659,7 +660,7 @@
         1. Let _dtf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _date_ is *undefined*, then
-          1. Let _x_ be Call(%Date_now%, *undefined*).
+          1. Let _x_ be Call(%Date.now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTimeToParts(_dtf_, _x_).
@@ -667,7 +668,7 @@
     </emu-clause>
 
     <emu-clause id="sec-intl.datetimeformat.prototype.resolvedoptions">
-      <h1>Intl.DateTimeFormat.prototype.resolvedOptions ()</h1>
+      <h1>Intl.DateTimeFormat.prototype.resolvedOptions ( )</h1>
 
       <p>
         This function provides access to the locale and formatting options computed during initialization of the object.
@@ -677,7 +678,7 @@
         1. Let _dtf_ be the *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. If _p_ is *"hour12"*, then
@@ -782,7 +783,7 @@
     <h1>Properties of Intl.DateTimeFormat Instances</h1>
 
     <p>
-      Intl.DateTimeFormat instances are ordinary objects that inherit properties from %DateTimeFormatPrototype%.
+      Intl.DateTimeFormat instances are ordinary objects that inherit properties from %DateTimeFormat.prototype%.
     </p>
 
     <p>

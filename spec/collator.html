@@ -58,7 +58,6 @@
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-intl.collator">
@@ -75,7 +74,7 @@
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
         1. If %Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
           1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
-        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%CollatorPrototype%"*, _internalSlotsList_).
+        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Collator.prototype%"*, _internalSlotsList_).
         1. Return ? InitializeCollator(_collator_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -92,7 +91,7 @@
       <h1>Intl.Collator.prototype</h1>
 
       <p>
-        The value of `Intl.Collator.prototype` is %CollatorPrototype%.
+        The value of `Intl.Collator.prototype` is %Collator.prototype%.
       </p>
 
       <p>
@@ -138,7 +137,6 @@
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
         <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a sensitivity field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
       </ul>
-
     </emu-clause>
   </emu-clause>
 
@@ -146,7 +144,7 @@
     <h1>Properties of the Intl.Collator Prototype Object</h1>
 
     <p>
-      The Intl.Collator prototype object is itself an ordinary object. <dfn>%CollatorPrototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
+      The Intl.Collator prototype object is itself an ordinary object. <dfn>%Collator.prototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
     </p>
 
     <emu-clause id="sec-intl.collator.prototype.constructor">
@@ -257,12 +255,11 @@
         <emu-note>
           Applications should not assume that the behaviour of the CompareStrings abstract operation for Collator instances with the same resolved options will remain the same for different versions of the same implementation.
         </emu-note>
-
       </emu-clause>
     </emu-clause>
 
     <emu-clause id="sec-intl.collator.prototype.resolvedoptions">
-      <h1>Intl.Collator.prototype.resolvedOptions ()</h1>
+      <h1>Intl.Collator.prototype.resolvedOptions ( )</h1>
 
       <p>
         This function provides access to the locale and collation options computed during initialization of the object.
@@ -271,7 +268,7 @@
       <emu-alg>
         1. Let _collator_ be the *this* value.
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
-        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
@@ -338,7 +335,7 @@
     <h1>Properties of Intl.Collator Instances</h1>
 
     <p>
-      Intl.Collator instances are ordinary objects that inherit properties from %CollatorPrototype%.
+      Intl.Collator instances are ordinary objects that inherit properties from %Collator.prototype%.
     </p>
 
     <p>
@@ -369,6 +366,5 @@
     <p>
       Finally, Intl.Collator instances have a [[BoundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-intl.collator.prototype.compare"></emu-xref>).
     </p>
-
   </emu-clause>
 </emu-clause>

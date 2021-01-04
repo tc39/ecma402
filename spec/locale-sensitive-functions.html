@@ -42,7 +42,6 @@
       <emu-note>
         The `localeCompare` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
-
     </emu-clause>
 
     <emu-clause id="sup-string.prototype.tolocalelowercase">
@@ -85,7 +84,6 @@
       <emu-note>
         The `toLocaleLowerCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
-
     </emu-clause>
 
     <emu-clause id="sup-string.prototype.tolocaleuppercase">
@@ -102,10 +100,8 @@
       <emu-note>
         The `toLocaleUpperCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
-
     </emu-clause>
   </emu-clause>
-
 
   <emu-clause id="sup-properties-of-the-number-prototype-object">
     <h1>Properties of the Number Prototype Object</h1>
@@ -130,10 +126,8 @@
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return ? FormatNumeric(_numberFormat_, _x_).
       </emu-alg>
-
     </emu-clause>
   </emu-clause>
-
 
   <emu-clause id="sup-properties-of-the-bigint-prototype-object">
     <h1>Properties of the BigInt Prototype Object</h1>
@@ -158,7 +152,6 @@
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return ? FormatNumeric(_numberFormat_, _x_).
       </emu-alg>
-
     </emu-clause>
   </emu-clause>
 
@@ -187,7 +180,6 @@
         1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaledatestring">
@@ -208,7 +200,6 @@
         1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sup-date.prototype.tolocaletimestring">
@@ -229,7 +220,6 @@
         1. Let _timeFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return ? FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
-
     </emu-clause>
   </emu-clause>
 
@@ -253,7 +243,7 @@
         1. Let _separator_ be the String value for the list-separator String appropriate for the host environment's current locale (this is derived in an implementation-defined way).
         1. Let _R_ be the empty String.
         1. Let _k_ be 0.
-        1. Repeat, while _k_ &lt; _len_
+        1. Repeat, while _k_ &lt; _len_,
           1. If _k_ &gt; 0, then
             1. Set _R_ to the string-concatenation of _R_ and _separator_.
           1. Let _nextElement_ be ? Get(_array_, ! ToString(_k_)).
@@ -275,7 +265,6 @@
       <emu-note>
         The `toLocaleString` function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
       </emu-note>
-
     </emu-clause>
   </emu-clause>
 </emu-clause>

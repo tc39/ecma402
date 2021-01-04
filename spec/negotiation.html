@@ -18,9 +18,11 @@
       <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for Intl.NumberFormat, Intl.DateTimeFormat, Intl.PluralRules, and Intl.RelativeTimeFormat) are records that have fields for each locale contained in [[AvailableLocales]]. The value of each of these fields must be a record that has fields for each key contained in [[RelevantExtensionKeys]]. The value of each of these fields must be a non-empty list of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
     </ul>
 
-    <p>
-      EXAMPLE     An implementation of DateTimeFormat might include the language tag *"th"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key *"ca"* in its [[RelevantExtensionKeys]] internal slot. For Thai, the *"buddhist"* calendar is usually the default, but an implementation might also support the calendars *"gregory"*, *"chinese"*, and *"islamicc"* for the locale *"th"*. The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; *"buddhist"*, *"gregory"*, *"chinese"*, *"islamicc"* &raquo;}}.
-    </p>
+    <emu-note>
+      For example, an implementation of DateTimeFormat might include the language tag *"th"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key *"ca"* in its [[RelevantExtensionKeys]] internal slot.
+      For Thai, the *"buddhist"* calendar is usually the default, but an implementation might also support the calendars *"gregory"*, *"chinese"*, and *"islamicc"* for the locale *"th"*.
+      The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; *"buddhist"*, *"gregory"*, *"chinese"*, *"islamicc"* &raquo;}}.
+    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-abstract-operations">
@@ -47,7 +49,7 @@
           1. Let _O_ be ? ToObject(_locales_).
         1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
         1. Let _k_ be 0.
-        1. Repeat, while _k_ < _len_
+        1. Repeat, while _k_ < _len_,
           1. Let _Pk_ be ToString(_k_).
           1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
           1. If _kPresent_ is *true*, then
@@ -127,7 +129,7 @@
     </emu-clause>
 
     <emu-clause id="sec-unicode-extension-components" aoid=UnicodeExtensionComponents>
-      <h1>UnicodeExtensionComponents( _extension_ )</h1>
+      <h1>UnicodeExtensionComponents ( _extension_ )</h1>
       <p>
         The UnicodeExtensionComponents abstract operation returns the attributes and keywords from _extension_, which must be a Unicode locale extension sequence. If an attribute or a keyword occurs multiple times in _extension_, only the first occurence is returned. The following steps are taken:
       </p>
@@ -138,7 +140,7 @@
         1. Let _isKeyword_ be *false*.
         1. Let _size_ be the number of elements in _extension_.
         1. Let _k_ be 3.
-        1. Repeat, while _k_ &lt; _size_
+        1. Repeat, while _k_ &lt; _size_,
           1. Let _e_ be ! StringIndexOf(_extension_, *"-"*, _k_).
           1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
           1. Let _subtag_ be the String value equal to the substring of _extension_ consisting of the code units at indices _k_ (inclusive) through _k_ + _len_ (exclusive).
@@ -166,7 +168,7 @@
     </emu-clause>
 
     <emu-clause id="sec-insert-unicode-extension-and-canonicalize" aoid=InsertUnicodeExtensionAndCanonicalize>
-      <h1>InsertUnicodeExtensionAndCanonicalize( _locale_, _extension_ )</h1>
+      <h1>InsertUnicodeExtensionAndCanonicalize ( _locale_, _extension_ )</h1>
       <p>
         The InsertUnicodeExtensionAndCanonicalize abstract operation inserts _extension_, which must be a Unicode locale extension sequence, into _locale_, which must be a String value with a structurally valid and canonicalized Unicode BCP 47 locale identifier. The following steps are taken:
       </p>
@@ -371,7 +373,7 @@
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
-        1. Repeat, while _beginIndex_ is an integer index into _pattern_
+        1. Repeat, while _beginIndex_ is an integer index into _pattern_,
           1. Set _endIndex_ to ! StringIndexOf(_pattern_, *"}"*, _beginIndex_).
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
@@ -387,6 +389,5 @@
         1. Return _result_.
       </emu-alg>
     </emu-clause>
-
   </emu-clause>
 </emu-clause>
