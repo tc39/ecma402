@@ -62,8 +62,8 @@
           1. Let _attributes_ be _components_.[[Attributes]].
           1. Let _keywords_ be _components_.[[Keywords]].
         1. Else,
-          1. Let _attributes_ be the empty List.
-          1. Let _keywords_ be the empty List.
+          1. Let _attributes_ be a new empty List.
+          1. Let _keywords_ be a new empty List.
         1. Let _result_ be a new Record.
         1. For each element _key_ of _relevantExtensionKeys_ in List order, do
           1. Let _value_ be *undefined*.
@@ -80,7 +80,7 @@
             1. If _entry_ is not ~empty~, then
               1. Set _entry_.[[Value]] to _value_.
             1. Else,
-              1. Append the Record{[[Key]]: _key_, [[Value]]: _value_} to _keywords_.
+              1. Append the Record { [[Key]]: _key_, [[Value]]: _value_ } to _keywords_.
           1. Set _result_.[[<_key_>]] to _value_.
         1. Let _locale_ be the String value that is _tag_ with all Unicode locale extension sequences removed.
         1. Let _newExtension_ be a Unicode BCP 47 U Extension based on _attributes_ and _keywords_.
