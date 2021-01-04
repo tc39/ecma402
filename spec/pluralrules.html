@@ -40,7 +40,7 @@
          1. Assert: Type(_s_) is String.
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
-         1. Let _dp_ be ! Call(%String.prototype.indexOf%, _s_, &laquo; *"."* &raquo;).
+         1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
          1. If _dp_ = -1, then
            1. Set _iv_ to _n_.
            1. Let _f_ be 0.

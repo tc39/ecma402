@@ -141,7 +141,7 @@
         1. Let _size_ be the number of elements in _extension_.
         1. Let _k_ be 3.
         1. Repeat, while _k_ &lt; _size_,
-          1. Let _e_ be ! Call(%String.prototype.indexOf%, _extension_, « *"-"*, _k_ »).
+          1. Let _e_ be ! StringIndexOf(_extension_, *"-"*, _k_).
           1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
           1. Let _subtag_ be the String value equal to the substring of _extension_ consisting of the code units at indices _k_ (inclusive) through _k_ + _len_ (exclusive).
           1. If _isKeyword_ is *false*, then
@@ -180,7 +180,7 @@
         1. Assert: _locale_ does not contain a substring that is a Unicode locale extension sequence.
         1. Assert: _extension_ is a Unicode locale extension sequence.
         1. Assert: _tag_ matches the `unicode_locale_id` production.
-        1. Let _privateIndex_ be ! Call(%String.prototype.indexOf%, _locale_, &laquo; *"-x-"* &raquo;).
+        1. Let _privateIndex_ be ! StringIndexOf(_locale_, *"-x-"*, 0).
         1. If _privateIndex_ = -1, then
           1. Let _locale_ be the string-concatenation of _locale_ and _extension_.
         1. Else,
@@ -369,12 +369,12 @@
 
       <emu-alg>
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"{"*, 0 &raquo;).
+        1. Let _beginIndex_ be ! StringIndexOf(_pattern_, *"{"*, 0).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
         1. Repeat, while _beginIndex_ is an integer index into _pattern_,
-          1. Set _endIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"}"*, _beginIndex_ &raquo;).
+          1. Set _endIndex_ to ! StringIndexOf(_pattern_, *"}"*, _beginIndex_).
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
@@ -382,7 +382,7 @@
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. Append a new Record { [[Type]]: _p_, [[Value]]: *undefined* } as the last element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to ! Call(%String.prototype.indexOf%, _pattern_, &laquo; *"{"*, _nextIndex_ &raquo;).
+          1. Set _beginIndex_ to ! StringIndexOf(_pattern_, *"{"*, _nextIndex_).
         1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
           1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
