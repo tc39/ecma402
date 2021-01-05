@@ -30,9 +30,9 @@
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _localeData_ be %RelativeTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%RelativeTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %RelativeTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Let _locale_ be _r_.[[Locale]].
+        1. Let _locale_ be _r_.[[locale]].
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
-        1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[DataLocale]].
+        1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
         1. Set _relativeTimeFormat_.[[Style]] to _s_.
