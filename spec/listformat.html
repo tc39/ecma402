@@ -172,7 +172,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%ListFormatPrototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
+        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%ListFormat.prototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(*null*).
