@@ -48,20 +48,20 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, `"%DisplayNamesPrototype%"`, « [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[Fields]] »).
+        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[Fields]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
-        1. Let _matcher_ be ? GetOption(_options_, `"localeMatcher"`, `"string"`, &laquo; `"lookup"`, `"best fit"` &raquo;, `"best fit"`).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
-        1. Let _style_ be ? GetOption(_options_, `"style"`, `"string"`, &laquo; `"narrow"`, `"short"`, `"long"` &raquo;, `"long"`).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
-        1. Let _type_ be ? GetOption(_options_, `"type"`, `"string"`, &laquo; `"language"`, `"region"`, `"script"`, `"currency"` &raquo;, *undefined*).
+        1. Let _type_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"language"*, *"region"*, *"script"*, *"currency"* &raquo;, *undefined*).
         1. If _type_ is *undefined*, throw a *TypeError* exception.
         1. Set _displayNames_.[[Type]] to _type_.
-        1. Let _fallback_ be ? GetOption(_options_, `"fallback"`, `"string"`, &laquo; `"code"`, `"none"` &raquo;, `"code"`).
+        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, *"string"*, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
         1. Set _displayNames_.[[Locale]] to the value of _r_.[[Locale]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
