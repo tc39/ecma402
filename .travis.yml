@@ -5,5 +5,5 @@ env:
     - secure: "bXOdBl0KXFzjzlm2+tfzay/hPQGNVMVbb7JlMKxdQdwAovq4w/npw6yHgH5vbGT+m2RuhFwv17+3oaPrHVNwKNWhBPKEDxW0AYe2XmN9rzUHoW9AcqPMc7jMfJrmueENnBjwRCkkJi1smI8dY/1LW4vNTm2RNI3Lt1m9fOqsXJo="
 language: node_js
 node_js:
-  - "10"
+  - "12"
 sudo: false

@@ -2,7 +2,7 @@
   <h1>Implementation Dependent Behaviour</h1>
 
   <p>
-    The following aspects of the ECMAScript 2020 Internationalization API Specification are implementation dependent:
+    The following aspects of the ECMAScript 2021 Internationalization API Specification are implementation dependent:
   </p>
 
   <ul>
@@ -11,9 +11,6 @@
       <ul>
         <li>
           Additional values for some properties of _options_ arguments (<emu-xref href="#conformance"></emu-xref>)
-        </li>
-        <li>
-          Canonicalization of extension subtag sequences beyond the rules of RFC 5646 (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>)
         </li>
         <li>
           The default locale (<emu-xref href="#sec-defaultlocale"></emu-xref>)
@@ -33,19 +30,27 @@
       </ul>
     </li>
     <li>
+      In Locale:
+      <ul>
+        <li>
+          Support for the Unicode extensions keys *"kf"*, *"kn"* and the parallel options properties *"caseFirst"*, *"numeric"* (<emu-xref href="#sec-Intl.Locale"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
       In Collator:
       <ul>
         <li>
-          Support for the Unicode extensions keys kn, kf and the parallel options properties numeric, caseFirst (<emu-xref href="#sec-initializecollator"></emu-xref>)
+          Support for the Unicode extensions keys *"kf"*, *"kn"* and the parallel options properties *"caseFirst"*, *"numeric"* (<emu-xref href="#sec-initializecollator"></emu-xref>)
         </li>
         <li>
-          The set of supported `"co"` key values (collations) per locale beyond a default collation (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
+          The set of supported *"co"* key values (collations) per locale beyond a default collation (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
         </li>
         <li>
-          The set of supported `"kn"` key values (numeric collation) per locale (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
+          The set of supported *"kf"* key values (case order) per locale (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
         </li>
         <li>
-          The set of supported `"kf"` key values (case order) per locale (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
+          The set of supported *"kn"* key values (numeric collation) per locale (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
         </li>
         <li>
           The default search sensitivity per locale (<emu-xref href="#sec-intl-collator-internal-slots"></emu-xref>)
@@ -59,10 +64,10 @@
       In NumberFormat:
       <ul>
         <li>
-          The set of supported `"nu"` key values (numbering systems) per locale (<emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>)
+          The set of supported *"nu"* key values (numbering systems) per locale (<emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>)
         </li>
         <li>
-          The patterns used for formatting positive and negative values as decimal, percent, or currency values per locale (<emu-xref href="#sec-formatnumber"></emu-xref>)
+          The patterns used for formatting values as decimal, percent, currency, or unit values per locale, with or without the sign, with or without accounting format for currencies, and in standard, compact, or scientific notation (<emu-xref href="#sec-formatnumber"></emu-xref>)
         </li>
         <li>
           Localized representations of *NaN* and *Infinity* (<emu-xref href="#sec-formatnumber"></emu-xref>)
@@ -74,12 +79,24 @@
           Localized decimal and grouping separators (<emu-xref href="#sec-formatnumber"></emu-xref>)
         </li>
         <li>
+          Localized plus and minus signs (<emu-xref href="#sec-formatnumber"></emu-xref>)
+        </li>
+        <li>
           Localized digit grouping schemata (<emu-xref href="#sec-formatnumber"></emu-xref>)
         </li>
         <li>
-          Localized currency symbols and names (<emu-xref href="#sec-formatnumber"></emu-xref>)
+          Localized magnitude thresholds for compact notation (<emu-xref href="#sec-formatnumber"></emu-xref>)
         </li>
-      </ul>
+        <li>
+          Localized symbols for compact and scientific notation (<emu-xref href="#sec-formatnumber"></emu-xref>)
+        </li>
+        <li>
+          Localized narrow, short, and long currency symbols and names (<emu-xref href="#sec-formatnumber"></emu-xref>)
+        </li>
+        <li>
+          Localized narrow, short, and long unit symbols (<emu-xref href="#sec-formatnumber"></emu-xref>)
+        </li>
+        </ul>
     </li>
     <li>In DateTimeFormat:
       <ul>
@@ -87,10 +104,10 @@
           The BestFitFormatMatcher algorithm (<emu-xref href="#sec-initializedatetimeformat"></emu-xref>)
         </li>
         <li>
-          The set of supported `"ca"` key values (calendars) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+          The set of supported *"ca"* key values (calendars) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
         </li>
         <li>
-          The set of supported `"nu"` key values (numbering systems) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+          The set of supported *"nu"* key values (numbering systems) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
         </li>
         <li>
           The default hourCycle setting per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
@@ -102,7 +119,18 @@
           Localized weekday names, era names, month names, am/pm indicators, and time zone names (<emu-xref href="#sec-formatdatetime"></emu-xref>)
         </li>
         <li>
-          The calendric calculations used for calendars other than `"gregory"`, and adjustments for local time zones and daylight saving time (<emu-xref href="#sec-formatdatetime"></emu-xref>)
+          The calendric calculations used for calendars other than *"gregory"*, and adjustments for local time zones and daylight saving time (<emu-xref href="#sec-formatdatetime"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
+      In RelativeTimeFormat:
+      <ul>
+        <li>
+          The set of supported *"nu"* key values (numbering systems) per locale (<emu-xref href="#sec-Intl.RelativeTimeFormat-internal-slots"></emu-xref>)
+        </li>
+        <li>
+          The patterns used for formatting values (<emu-xref href="#sec-Intl.RelativeTimeFormat-internal-slots"></emu-xref>)
         </li>
       </ul>
     </li>
@@ -111,6 +139,14 @@
       <ul>
         <li>
           List of Strings representing the possible results of plural selection and their corresponding order per locale. (<emu-xref href="#sec-initializepluralrules"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
+      In ListFormat:
+      <ul>
+        <li>
+          The patterns used for formatting values (<emu-xref href="#sec-Intl.ListFormat-internal-slots"></emu-xref>)
         </li>
       </ul>
     </li>
@@ -125,7 +161,25 @@
       <emu-xref href="#sec-the-intl-collator-constructor"></emu-xref>, <emu-xref href="#sec-intl-numberformat-constructor"></emu-xref>, <emu-xref href="#sec-intl-datetimeformat-constructor"></emu-xref> In ECMA-402, 1st Edition, constructors could be used to create Intl objects from arbitrary objects. This is no longer possible in 2nd Edition.
     </li>
     <li>
-      <emu-xref href="#sec-intl.datetimeformat.prototype.format"></emu-xref> In ECMA-402, 1st Edition, the _length_ property of the function object _F_ was set to 0. In 2nd Edition, _length_ is set to 1.
+      <emu-xref href="#sec-intl.datetimeformat.prototype.format"></emu-xref> In ECMA-402, 1st Edition, the *"length"* property of the function object _F_ was set to *+0*. In 2nd Edition, *"length"* is set to *1*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl.collator.prototype-@@tostringtag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl.Collator.prototype` was set to *"Object"*. In 8th Edition, @@toStringTag is set to *"Intl.Collator"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl.datetimeformat.prototype-@@tostringtag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl.DateTimeFormat.prototype` was set to *"Object"*. In 8th Edition, @@toStringTag is set to *"Intl.DateTimeFormat"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl.numberformat.prototype-@@tostringtag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl.NumberFormat.prototype` was set to *"Object"*. In 8th Edition, @@toStringTag is set to *"Intl.NumberFormat"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl.pluralrules.prototype-tostringtag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl.PluralRules.prototype` was set to *"Object"*. In 8th Edition, @@toStringTag is set to *"Intl.PluralRules"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-Intl-toStringTag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl` was not defined. In 8th Edition, @@toStringTag is set to *"Intl"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl-numberformat-constructor"></emu-xref> In ECMA-402, 8th Edition, the NumberFormat constructor used to throw an error when style="currency" and maximumFractionDigits was set to a value lower than the default fractional digits for that currency. This behavior was corrected in the 9th edition, and it no longer throws an error.
     </li>
   </ul>
 </emu-annex>

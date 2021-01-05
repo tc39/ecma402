@@ -2,14 +2,14 @@
   <h1>Notational Conventions</h1>
 
   <p>
-    This standard uses a subset of the notational conventions of the ECMAScript 2020 Language Specification (ECMA-262 10<sup>th</sup> Edition), as ES2020:
+    This standard uses a subset of the notational conventions of the ECMAScript 2021 Language Specification (ECMA-262 12<sup>th</sup> Edition), as ES2021:
   </p>
 
   <ul>
-    <li>Object Internal Methods and Internal Slots, as described in ES2020, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>Algorithm conventions, including the use of abstract operations, as described in ES2020, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>.</li>
-    <li>Internal Slots, as described in ES2020, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>The List and Record Specification Type, as described in ES2020, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
+    <li>Object Internal Methods and Internal Slots, as described in ES2021, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>Algorithm conventions, as described in ES2021, <emu-xref href="#sec-algorithm-conventions"></emu-xref>, and the use of abstract operations, as described in ES2021, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>.</li>
+    <li>Internal Slots, as described in ES2021, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>The List and Record Specification Type, as described in ES2021, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
   </ul>
 
   <emu-note>
@@ -17,18 +17,18 @@
   </emu-note>
 
   <p>
-    As an extension to the Record Specification Type, the notation &ldquo;[[&lt;_name_&gt;]]&rdquo; denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value `"a"`, then [[&lt;_s_&gt;]] denotes the field [[a]].
+    As an extension to the Record Specification Type, the notation &ldquo;[[&lt;_name_&gt;]]&rdquo; denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the field [[a]].
   </p>
 
   <p>
-    This specification uses blocks demarcated as <span class="normative-optional">Normative Optional</span> to denote the sense of <a href="https://tc39.github.io/ecma262/#sec-additional-ecmascript-features-for-web-browsers">Annex B</a> in ECMA 262. That is, normative optional sections are required when the ECMAScript host is a web browser. The content of the section is normative but optional if the ECMAScript host is not a web browser.
+    This specification uses blocks demarcated as <span class="normative-optional">Normative Optional</span> to denote the sense of <a href="https://tc39.es/ecma262/#sec-additional-ecmascript-features-for-web-browsers">Annex B</a> in ECMA 262. That is, normative optional sections are required when the ECMAScript host is a web browser. The content of the section is normative but optional if the ECMAScript host is not a web browser.
   </p>
 
   <emu-clause id="sec-402-well-known-intrinsic-objects">
     <h1>Well-Known Intrinsic Objects</h1>
 
     <p>
-      The following table extends the Well-Known Intrinsic Objects table defined in ES2020, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
+      The following table extends the Well-Known Intrinsic Objects table defined in ES2021, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
     </p>
 
     <emu-table id="table-402-well-known-intrinsic-objects">
@@ -42,16 +42,6 @@
           </tr>
         </thead>
         <tr>
-          <td><dfn>%Date_now%</dfn></td>
-          <td>`Date.now`</td>
-          <td>The initial value of the `now` data property of the intrinsic %Date% (ES2020, <emu-xref href="#sec-date.now"></emu-xref>)</td>
-        </tr>
-        <tr>
-          <td>%Intl%</td>
-          <td>`Intl`</td>
-          <td>The `Intl` object (<emu-xref href="#intl-object"></emu-xref>).</td>
-        </tr>
-        <tr>
           <td>%Collator%</td>
           <td>`Intl.Collator`</td>
           <td>The `Intl.Collator` constructor (<emu-xref href="#sec-the-intl-collator-constructor"></emu-xref>)</td>
@@ -59,17 +49,12 @@
         <tr>
           <td>%CollatorPrototype%</td>
           <td>`Intl.Collator.prototype`</td>
-          <td>The initial value of the `prototype` data property of the intrinsic %Collator% (<emu-xref href="#sec-intl.collator.prototype"></emu-xref>).</td>
+          <td>The initial value of the *"prototype"* data property of the intrinsic %Collator% (<emu-xref href="#sec-intl.collator.prototype"></emu-xref>).</td>
         </tr>
         <tr>
-          <td>%NumberFormat%</td>
-          <td>`Intl.NumberFormat`</td>
-          <td>The `Intl.NumberFormat` constructor (<emu-xref href="#sec-intl-numberformat-constructor"></emu-xref>)</td>
-        </tr>
-        <tr>
-          <td>%NumberFormatPrototype%</td>
-          <td>`Intl.NumberFormat.prototype`</td>
-          <td>The initial value of the `prototype` data property of the intrinsic %NumberFormat% (<emu-xref href="#sec-intl.numberformat.prototype"></emu-xref>).</td>
+          <td><dfn>%Date_now%</dfn></td>
+          <td>`Date.now`</td>
+          <td>The initial value of the *"now"* data property of the intrinsic %Date% (ES2021, <emu-xref href="#sec-date.now"></emu-xref>)</td>
         </tr>
         <tr>
           <td>%DateTimeFormat%</td>
@@ -79,7 +64,37 @@
         <tr>
           <td>%DateTimeFormatPrototype%</td>
           <td>`Intl.DateTimeFormat.prototype`</td>
-          <td>The initial value of the `prototype` data property of the intrinsic %DateTimeFormat% (<emu-xref href="#sec-intl.datetimeformat.prototype"></emu-xref>).</td>
+          <td>The initial value of the *"prototype"* data property of the intrinsic %DateTimeFormat% (<emu-xref href="#sec-intl.datetimeformat.prototype"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%Intl%</td>
+          <td>`Intl`</td>
+          <td>The `Intl` object (<emu-xref href="#intl-object"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%ListFormat%</td>
+          <td>`Intl.ListFormat`</td>
+          <td>The `Intl.ListFormat` constructor (<emu-xref href="#sec-intl-listformat-constructor"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%Locale%</td>
+          <td>`Intl.Locale`</td>
+          <td>The `Intl.Locale` constructor (<emu-xref href="#sec-intl-locale-constructor"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%LocalePrototype%</td>
+          <td>`Intl.Locale.prototype`</td>
+          <td>The initial value of the `prototype` data property of the intrinsic %Locale% (<emu-xref href="#sec-Intl.Locale.prototype"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%NumberFormat%</td>
+          <td>`Intl.NumberFormat`</td>
+          <td>The `Intl.NumberFormat` constructor (<emu-xref href="#sec-intl-numberformat-constructor"></emu-xref>)</td>
+        </tr>
+        <tr>
+          <td>%NumberFormatPrototype%</td>
+          <td>`Intl.NumberFormat.prototype`</td>
+          <td>The initial value of the *"prototype"* data property of the intrinsic %NumberFormat% (<emu-xref href="#sec-intl.numberformat.prototype"></emu-xref>).</td>
         </tr>
         <tr>
           <td>%PluralRules%</td>
@@ -89,12 +104,17 @@
         <tr>
           <td>%PluralRulesPrototype%</td>
           <td>`Intl.PluralRules.prototype`</td>
-          <td>The initial value of the `prototype` data property of the intrinsic %PluralRules% (<emu-xref href="#sec-intl.pluralrules.prototype"></emu-xref>).</td>
+          <td>The initial value of the *"prototype"* data property of the intrinsic %PluralRules% (<emu-xref href="#sec-intl.pluralrules.prototype"></emu-xref>).</td>
         </tr>
         <tr>
-          <td><dfn>%StringProto_indexOf%</dfn></td>
-          <td>`String.prototype.indexOf`</td>
-          <td>The initial value of the `indexOf` data property of the intrinsic %StringPrototype% (ES2020, <emu-xref href="#sec-string.prototype.indexof"></emu-xref>)</td>
+          <td>%RelativeTimeFormat%</td>
+          <td>`Intl.RelativeTimeFormat`</td>
+          <td>The `Intl.RelativeTimeFormat` constructor (<emu-xref href="#sec-intl-relativetimeformat-constructor"></emu-xref>).</td>
+        </tr>
+        <tr>
+          <td>%RelativeTimeFormatPrototype%</td>
+          <td>`Intl.RelativeTimeFormat.prototype`</td>
+          <td>The initial value of the `prototype` data property of the intrinsic %RelativeTimeFormat% (<emu-xref href="#sec-Intl.RelativeTimeFormat.prototype"></emu-xref>).</td>
         </tr>
       </table>
     </emu-table>

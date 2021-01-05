@@ -1,38 +1,38 @@
 <emu-clause id="locales-currencies-tz">
-  <h1>Identification of Locales, Currencies, and Time Zones</h1>
+  <h1>Identification of Locales, Currencies, Time Zones, and Measurement Units</h1>
 
   <p>
-    This clause describes the String values used in the ECMAScript 2020 Internationalization API Specification to identify locales, currencies, and time zones.
+    This clause describes the String values used in the ECMAScript 2021 Internationalization API Specification to identify locales, currencies, time zones, and measurement units.
   </p>
 
   <emu-clause id="sec-case-sensitivity-and-case-mapping">
     <h1>Case Sensitivity and Case Mapping</h1>
 
     <p>
-      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters `"A"` to `"Z"` (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters `"a"` to `"z"` (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range `"a"` to `"z"` (U+0061 to U+007A) to the corresponding characters in the range `"A"` to `"Z"` (U+0041 to U+005A) and maps no other characters to the latter range.
+      The String values used to identify locales, currencies, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters *"A"* to *"Z"* (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters *"a"* to *"z"* (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range *"a"* to *"z"* (U+0061 to U+007A) to the corresponding characters in the range *"A"* to *"Z"* (U+0041 to U+005A) and maps no other characters to the latter range.
     </p>
 
-    <p>
-      EXAMPLES `"ß"` (U+00DF) must not match or be mapped to `"SS"` (U+0053, U+0053). `"ı"` (U+0131) must not match or be mapped to `"I"` (U+0049).
-    </p>
+    <emu-note>
+      For example, *"ß"* (U+00DF) must not match or be mapped to *"SS"* (U+0053, U+0053). *"ı"* (U+0131) must not match or be mapped to *"I"* (U+0049).
+    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-language-tags">
     <h1>Language Tags</h1>
 
     <p>
-      The ECMAScript 2020 Internationalization API Specification identifies locales using language tags as by the Unicode BCP 47 locale identifiers, which may include extensions such as those registered through RFC 6067. Their canonical form is that of a Unicode BCP 47 Locale Identifier, as specified in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>.
+      The ECMAScript 2021 Internationalization API Specification identifies locales using Unicode BCP 47 locale identifiers as defined by <a href="https://unicode.org/reports/tr35/#Identifiers">Unicode Technical Standard #35 LDML § 3 Unicode Language and Locale Identifiers</a>, which may include extensions such as the <a href="https://unicode.org/reports/tr35/#Locale_Extension_Key_and_Type_Data">Unicode BCP 47 U Extension</a>. Their canonical form is specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
     </p>
 
     <p>
-      Unicode BCP 47 Locale Identifiers are structurally valid when they match those syntactical formatting criteria of Unicode Technical Standard 35, section 3.2, or successor, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
+      Unicode BCP 47 locale identifiers are structurally valid when they match those syntactical formatting criteria of Unicode Technical Standard 35, section 3.2, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
     </p>
 
     <emu-clause id="sec-unicode-locale-extension-sequences">
       <h1>Unicode Locale Extension Sequences</h1>
 
       <p>
-        This standard uses the term `"Unicode locale extension sequence"` - as described in <a href="https://unicode.org/reports/tr35/#unicode_locale_extensions">`unicode_locale_extensions`</a> in Unicode BCP 47 - for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator `"-"` and the singleton `"u"`, and includes the maximum sequence of following non-singleton subtags and their preceding `"-"` separators.
+        This standard uses the term "<dfn>Unicode locale extension sequence</dfn>" - as described in <a href="https://unicode.org/reports/tr35/#unicode_locale_extensions">`unicode_locale_extensions`</a> in UTS 35 Unicode Locale Identifier, section 3.2 - for any substring of a language tag that is not part of a private use subtag sequence, starts with a separator *"-"* and the singleton *"u"*, and includes the maximum sequence of following non-singleton subtags and their preceding *"-"* separators.
       </p>
     </emu-clause>
 
@@ -44,40 +44,71 @@
       </p>
 
       <ul>
-        <li>represents a well-formed Unicode BCP 47 Locale Identifier" as specified in Unicode Technical Standard 35 section 3.2, or successor,</li>
+        <li>represents a well-formed "Unicode BCP 47 locale identifier" as specified in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard 35 section 3.2</a>,</li>
         <li>does not include duplicate variant subtags, and</li>
         <li>does not include duplicate singleton subtags.</li>
       </ul>
 
       <p>
-        The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, or successor, starting with unicode_locale_id, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
+        The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, starting with `unicode_locale_id`, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-canonicalizelanguagetag" aoid="CanonicalizeLanguageTag">
-      <h1>CanonicalizeLanguageTag ( _locale_ )</h1>
+    <emu-clause id="sec-canonicalizeunicodelocaleid" aoid="CanonicalizeUnicodeLocaleId">
+      <h1>CanonicalizeUnicodeLocaleId ( _locale_ )</h1>
 
       <p>
-        The CanonicalizeLanguageTag abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 Locale Identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
-        A conforming implementation shall take the steps specified in the &ldquo;BCP 47 Language Tag to Unicode BCP 47 Locale Identifier&rdquo; algorithm, from <a href="https://unicode.org/reports/tr35/#BCP_47_Language_Tag_Conversion">Unicode Technical Standard #35 LDML § 3.3.1 BCP 47 Language Tag Conversion</a>.
+        The CanonicalizeUnicodeLocaleId abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 locale identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
+        The following steps are taken:
       </p>
+
+      <emu-alg>
+        1. Let _localeId_ be the string _locale_ after performing the algorithm to transform it to canonical syntax per <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
+          (The result is a Unicode BCP 47 locale identifier, in canonical syntax but not necessarily in canonical form.)
+        1. Let _localeId_ be the string _localeId_ after performing the algorithm to <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">transform it to canonical form</a>.
+          (The result is a Unicode BCP 47 locale identifier, in both canonical syntax and canonical form.)
+        1. If _localeId_ contains a substring _extension_ that is a Unicode locale extension sequence, then
+          1. Let _components_ be ! UnicodeExtensionComponents(_extension_).
+          1. Let _attributes_ be _components_.[[Attributes]].
+          1. Let _keywords_ be _components_.[[Keywords]].
+          1. Let _newExtension_ be *"u"*.
+          1. For each element _attr_ of _attributes_ in List order, do
+            1. Append *"-"* to _newExtension_.
+            1. Append _attr_ to _newExtension_.
+          1. For each element _keyword_ of _keywords_ in List order, do
+            1. Append *"-"* to _newExtension_.
+            1. Append _keyword_.[[Key]] to _newExtension_.
+            1. If _keyword_.[[Value]] is not the empty String, then
+              1. Append *"-"* to _newExtension_.
+              1. Append _keyword_.[[Value]] to _newExtension_.
+          1. Assert: _newExtension_ is not equal to *"u"*.
+          1. Let _localeId_ be _localeId_ with the substring corresponding to _extension_ replaced by the string _newExtension_.
+        1. Return _localeId_.
+      </emu-alg>
+
+      <emu-note>
+        The third step of this algorithm ensures that a Unicode locale extension sequence in the returned language tag contains:
+        <ul>
+          <li>only the first instance of any attribute duplicated in the input, and</li>
+          <li>only the first keyword for a given key in the input.</li>
+        </ul>
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-defaultlocale" aoid="DefaultLocale">
-      <h1>DefaultLocale ()</h1>
+      <h1>DefaultLocale ( )</h1>
 
       <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and  canonicalized (<emu-xref href="#sec-canonicalizelanguagetag"></emu-xref>) BCP 47 language tag for the host environment's current locale.
+        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) Unicode BCP 47 locale identifier for the host environment's current locale.
       </p>
     </emu-clause>
-
   </emu-clause>
 
   <emu-clause id="sec-currency-codes">
     <h1>Currency Codes</h1>
 
     <p>
-      The ECMAScript 2020 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is upper case.
+      The ECMAScript 2021 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is upper case.
     </p>
 
     <p>
@@ -94,18 +125,17 @@
       <emu-alg>
         1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
         1. If the number of elements in _normalized_ is not 3, return *false*.
-        1. If _normalized_ contains any character that is not in the range `"A"` to `"Z"` (U+0041 to U+005A), return *false*.
+        1. If _normalized_ contains any character that is not in the range *"A"* to *"Z"* (U+0041 to U+005A), return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
-
   </emu-clause>
 
   <emu-clause id="sec-time-zone-names">
     <h1>Time Zone Names</h1>
 
     <p>
-      The ECMAScript 2020 Internationalization API Specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database.
+      The ECMAScript 2021 Internationalization API Specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database.
     </p>
 
     <p>
@@ -131,9 +161,9 @@
       </p>
 
       <emu-alg>
-        1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to  upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the corresponding Zone name as specified in the `"backward"` file of the IANA Time Zone Database.
-        1. If _ianaTimeZone_ is `"Etc/UTC"` or `"Etc/GMT"`, return `"UTC"`.
+        1. Let _ianaTimeZone_ be the Zone or Link name of the IANA Time Zone Database such that _timeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to _ianaTimeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the corresponding Zone name as specified in the *"backward"* file of the IANA Time Zone Database.
+        1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
       </emu-alg>
 
@@ -143,13 +173,113 @@
     </emu-clause>
 
     <emu-clause id="sec-defaulttimezone" aoid="DefaultTimeZone">
-      <h1>DefaultTimeZone ()</h1>
+      <h1>DefaultTimeZone ( )</h1>
 
       <p>
         The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment's current time zone.
       </p>
     </emu-clause>
-
   </emu-clause>
 
+  <emu-clause id="sec-measurement-unit-identifiers">
+    <h1>Measurement Unit Identifiers</h1>
+
+    <p>
+      The ECMAScript 2021 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by Unicode Technical Standard #35, Part 2, Section 6. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+    </p>
+
+    <p>
+      Only a limited set of core unit identifiers are allowed.
+      An illegal core unit identifier results in a RangeError.
+    </p>
+
+    <emu-clause id="sec-iswellformedunitidentifier" aoid="IsWellFormedUnitIdentifier">
+      <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
+
+      <p>
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in UTS #35, Part 2, Section 6. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
+          1. Return *true*.
+        1. If the substring *"-per-"* does not occur exactly once in _unitIdentifier_, then
+          1. Return *false*.
+        1. Let _numerator_ be the substring of _unitIdentifier_ from the beginning to just before *"-per-"*.
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_numerator_) is *false*, then
+          1. Return *false*.
+        1. Let _denominator_ be the substring of _unitIdentifier_ from just after *"-per-"* to the end.
+        1. If the result of IsSanctionedSimpleUnitIdentifier(_denominator_) is *false*, then
+          1. Return *false*.
+        1. Return *true*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-issanctionedsimpleunitidentifier" aoid="IsSanctionedSimpleUnitIdentifier">
+      <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
+
+      <p>
+        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Validity Data as described in UTS #35, Part 1, Section 3.11; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-simple-unit-identifiers"></emu-xref> below, return *true*.
+        1. Else, Return *false*.
+      </emu-alg>
+
+      <emu-table id="table-sanctioned-simple-unit-identifiers">
+        <emu-caption>Simple units sanctioned for use in ECMAScript</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Simple Unit</th>
+            </tr>
+          </thead>
+          <tr><td>acre</td></tr>
+          <tr><td>bit</td></tr>
+          <tr><td>byte</td></tr>
+          <tr><td>celsius</td></tr>
+          <tr><td>centimeter</td></tr>
+          <tr><td>day</td></tr>
+          <tr><td>degree</td></tr>
+          <tr><td>fahrenheit</td></tr>
+          <tr><td>fluid-ounce</td></tr>
+          <tr><td>foot</td></tr>
+          <tr><td>gallon</td></tr>
+          <tr><td>gigabit</td></tr>
+          <tr><td>gigabyte</td></tr>
+          <tr><td>gram</td></tr>
+          <tr><td>hectare</td></tr>
+          <tr><td>hour</td></tr>
+          <tr><td>inch</td></tr>
+          <tr><td>kilobit</td></tr>
+          <tr><td>kilobyte</td></tr>
+          <tr><td>kilogram</td></tr>
+          <tr><td>kilometer</td></tr>
+          <tr><td>liter</td></tr>
+          <tr><td>megabit</td></tr>
+          <tr><td>megabyte</td></tr>
+          <tr><td>meter</td></tr>
+          <tr><td>mile</td></tr>
+          <tr><td>mile-scandinavian</td></tr>
+          <tr><td>milliliter</td></tr>
+          <tr><td>millimeter</td></tr>
+          <tr><td>millisecond</td></tr>
+          <tr><td>minute</td></tr>
+          <tr><td>month</td></tr>
+          <tr><td>ounce</td></tr>
+          <tr><td>percent</td></tr>
+          <tr><td>petabyte</td></tr>
+          <tr><td>pound</td></tr>
+          <tr><td>second</td></tr>
+          <tr><td>stone</td></tr>
+          <tr><td>terabit</td></tr>
+          <tr><td>terabyte</td></tr>
+          <tr><td>week</td></tr>
+          <tr><td>yard</td></tr>
+          <tr><td>year</td></tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
 </emu-clause>
