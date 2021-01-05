@@ -20,8 +20,8 @@
           1. If _code_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
           1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Return _code_.
-        1. If _type_ is `"script"`, then
-          1. If _code_ does not matches the `unicode_script_subtag` production, throw a *RangeError* exceptipon.
+        1. If _type_ is *"script"*, then
+          1. If _code_ does not match the `unicode_script_subtag` production, throw a *RangeError* exception.
           1. Let _code_ be the result of mapping the first character in _code_ to upper case, and mapping the second, third and fourth character in _code_ to lower case, as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Return _code_.
         1. Assert: _type_ is `"currency"`.
