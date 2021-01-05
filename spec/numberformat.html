@@ -30,9 +30,12 @@
           1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
         1. Else if _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
           1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
-          1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, _mnfdDefault_).
-          1. Let _mxfdActualDefault_ be max( _mnfd_, _mxfdDefault_ ).
-          1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, _mnfd_, 20, _mxfdActualDefault_).
+          1. Let _specifiedMnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
+          1. Let _specifiedMxfd_ be ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
+          1. If _specifiedMxfd_ is not *undefined*, set _mnfdDefault_ to min(_mnfdDefault_, _specifiedMxfd_).
+          1. Set _mnfd_ to ! DefaultNumberOption(_specifiedMnfd_, 0, 20, _mnfdDefault_).
+          1. Set _mxfd_ to ! DefaultNumberOption(_specifiedMxfd_, 0, 20, max(_mxfdDefault_, _mnfd_)).
+          1. If _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
           1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
           1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
         1. Else if _notation_ is *"compact"*, then
@@ -257,7 +260,7 @@
                 1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
-              1. Let _decimalSepIndex_ be Call(%String.prototype.indexOf%, _n_, &laquo; *"."*, 0 &raquo;).
+              1. Let _decimalSepIndex_ be ! StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ > 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.

@@ -150,6 +150,14 @@
         </li>
       </ul>
     </li>
+    <li>
+      In ListFormat:
+      <ul>
+        <li>
+          The patterns used for formatting values (<emu-xref href="#sec-Intl.ListFormat-internal-slots"></emu-xref>)
+        </li>
+      </ul>
+    </li>
   </ul>
 </emu-annex>
 
@@ -177,6 +185,9 @@
     </li>
     <li>
       <emu-xref href="#sec-Intl-toStringTag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl` was not defined. In 8th Edition, @@toStringTag is set to *"Intl"*.
+    </li>
+    <li>
+      <emu-xref href="#sec-intl-numberformat-constructor"></emu-xref> In ECMA-402, 8th Edition, the NumberFormat constructor used to throw an error when style="currency" and maximumFractionDigits was set to a value lower than the default fractional digits for that currency. This behavior was corrected in the 9th edition, and it no longer throws an error.
     </li>
   </ul>
 </emu-annex>
