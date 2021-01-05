@@ -15,11 +15,15 @@ Proposals follow [the TC39 process](https://tc39.es/process-document/) and are t
 * [Active Proposals](https://github.com/tc39/proposals/blob/master/ecma402/README.md)
 * [Stage 0 Proposals](https://github.com/tc39/proposals/blob/master/ecma402/stage-0-proposals.md)
 
+Information about status of tests, documentations and browser implementations of proposals can be found in [this wiki page](https://github.com/tc39/ecma402/wiki/Proposal-and-PR-Progress-Tracking).
+
 ## How to Contribute
 
 Please see [Contributing to ECMAScript](/CONTRIBUTING.md) for the most up-to-date information on contributing proposals to this standard.
 
 ECMA-402 is developed by the ECMA-402 Task Group under TC39.  The task group achieves consensus and brings recommendations to TC39.  The task group has a monthly teleconference.  Community members who have followed the procedures in [CONTRIBUTING.md](/CONTRIBUTING.md) are welcome to join the monthly meeting.  Please see the [ECMA-402 Monthly Calendar](https://calendar.google.com/calendar/embed?src=unicode.org_nubvqveeeol570uuu7kri513vc%40group.calendar.google.com) for the schedule and for information on how to dial into the meeting.  Please also apply for membership in the [ecma402-delegates@chromium.org](https://groups.google.com/a/chromium.org/forum/#!forum/ecma402-delegates) mailing list.
+[![ECMA 402 Calendar](img/calendar.png)](https://calendar.google.com/calendar/embed?src=unicode.org_nubvqveeeol570uuu7kri513vc%40group.calendar.google.com)
+
 
 ## Developing the Specification
 
