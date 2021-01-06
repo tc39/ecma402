@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ljharb/actions/node/run@125357c
-        name: 'npm ci && npm run build-only ./scripts/auto-deploy.sh'
+        name: 'npm install && npm run build-only ./scripts/auto-deploy.sh'
         with:
           node-version: lts/*
           shell-command: |
