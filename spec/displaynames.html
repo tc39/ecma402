@@ -1,0 +1,263 @@
+<emu-biblio href="./biblio.json"></emu-biblio>
+<emu-clause id="intl-displaynames-objects">
+  <h1>DisplayNames Objects</h1>
+
+  <emu-clause id="sec-intl-displaynames-abstracts">
+    <h1>Abstract Operations for DisplayNames Objects</h1>
+
+    <emu-clause id="sec-canonicalcodefordisplaynames" aoid="CanonicalCodeForDisplayNames">
+      <h1>CanonicalCodeForDisplayNames ( _type_, _code_ )</h1>
+      <p>
+        The CanonicalCodeForDisplayNames abstract operation is called with arguments _type_, and _code_. It verifies that the _code_ argument represents a well-formed code according to the _type_ argument and returns the case-regularized form of the _code_. The algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. The following steps are taken:
+      </p>
+      <emu-alg>
+        1. If _type_ is *"language"*, then
+          1. If _code_ does not match the `unicode_language_id` production, throw a *RangeError* exception.
+          1. If IsStructurallyValidLanguageTag(_code_) is *false*, throw a *RangeError* exception.
+          1. Set _code_ to CanonicalizeUnicodeLocaleId(_code_).
+          1. Return _code_.
+        1. If _type_ is *"region"*, then
+          1. If _code_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. If _type_ is *"script"*, then
+          1. If _code_ does not match the `unicode_script_subtag` production, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping the first character in _code_ to upper case, and mapping the second, third and fourth character in _code_ to lower case, as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. Assert: _type_ is *"currency"*.
+        1. If ! IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
+        1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        1. Return _code_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-displaynames-constructor">
+    <h1>The Intl.DisplayNames Constructor</h1>
+
+    <p>
+      The DisplayNames constructor is a standard built-in property of the Intl object.
+    </p>
+
+    <emu-clause id="sec-Intl.DisplayNames">
+      <h1>Intl.DisplayNames ( _locales_, _options_ )</h1>
+
+      <p>
+        When the *Intl.DisplayNames* function is called with arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, throw a *TypeError* exception.
+        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[Fields]] &raquo;).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Let _options_ be ? ToObject(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
+        1. Set _displayNames_.[[Style]] to _style_.
+        1. Let _type_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"language"*, *"region"*, *"script"*, *"currency"* &raquo;, *undefined*).
+        1. If _type_ is *undefined*, throw a *TypeError* exception.
+        1. Set _displayNames_.[[Type]] to _type_.
+        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, *"string"*, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
+        1. Set _displayNames_.[[Fallback]] to _fallback_.
+        1. Set _displayNames_.[[Locale]] to the value of _r_.[[Locale]].
+        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _types_ be _dataLocaleData_.[[types]].
+        1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
+        1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
+        1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
+        1. Let _styleFields_ be _typeFields_.[[&lt;_style_&gt;]].
+        1. Assert: _styleFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
+        1. Set _displayNames_.[[Fields]] to _styleFields_.
+        1. Return _displayNames_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-displaynames-constructor">
+    <h1>Properties of the Intl.DisplayNames Constructor</h1>
+
+    <p>
+      The Intl.DisplayNames constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype">
+      <h1>Intl.DisplayNames.prototype</h1>
+
+      <p>
+        The value of `Intl.DisplayNames.prototype` is *%DisplayNames.prototype%*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames.supportedLocalesOf">
+      <h1>Intl.DisplayNames.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
+
+      <p>
+        When the *supportedLocalesOf* method of *%DisplayNames%* is called, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be *%DisplayNames%*.[[AvailableLocales]].
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+      </p>
+
+      <p>
+        The value of the [[LocaleData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
+      </p>
+
+      <ul>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of one of the valid display name types: *"language"*, *"region"*, *"script"*, and *"currency"*.</li>
+        <li>The value of fields *"language"*, *"region"*, *"script"*, and *"currency"* must be a Records which must have fields with the names of one of the valid display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
+        <li>The display name styles fields under display name type *"language"* should contain Records, with keys corresponding to language codes according to `unicode_language_id` production. The value of these fields must be string values.</li>
+        <li>The display name styles fields under display name type *"region"* should contain Records, with keys corresponding to region codes. The value of these fields must be string values.</li>
+        <li>The display name styles fields under display name type *"script"* should contain Records, with keys corresponding to script codes. The value of these fields must be string values.</li>
+        <li>The display name styles fields under display name type *"currency"* should contain Records, with keys corresponding to currency codes. The value of these fields must be string values.</li>
+      </ul>
+
+      <emu-note>
+        It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org/">http://cldr.unicode.org/</a>).
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-displaynames-prototype-object">
+    <h1>Properties of the Intl.DisplayNames Prototype Object</h1>
+
+    <p>
+      The Intl.DisplayNames prototype object is itself an ordinary object. <dfn>%DisplayNames.prototype%</dfn> is not an Intl.DisplayNames instance and does not have an [[InitializedDisplayNames]] internal slot or any of the other internal slots of Intl.DisplayNames instance objects.
+    </p>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype.constructor">
+      <h1>Intl.DisplayNames.prototype.constructor</h1>
+
+      <p>
+        The initial value of *Intl.DisplayNames.prototype.constructor* is the intrinsic object *%DisplayNames%*.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype-@@tostringtag">
+      <h1>Intl.DisplayNames.prototype[ @@toStringTag ]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the string value *"Intl.DisplayNames"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype.of" aoid="Intl.DisplayNames.prototype.of">
+      <h1>Intl.DisplayNames.prototype.of ( _code_ )</h1>
+
+      <p>
+        When the *Intl.DisplayNames.prototype.of* is called with an argument _code_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _displayNames_ be *this* value.
+        1. If Type(_displayNames_) is not Object, throw a *TypeError* exception.
+        1. If _displayNames_ does not have an [[InitializedDisplayNames]] internal slot, throw a *TypeError* exception.
+        1. Let _code_ be ? ToString(_code_).
+        1. Let _code_ be ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
+        1. Let _fields_ be _displayNames_.[[Fields]].
+        1. Let _name_ be _fields_[[&lt;_code_&gt;]].
+        1. If _name_ is not *undefined*, return _name_.
+        1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.
+        1. Return *undefined*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype.resolvedOptions">
+      <h1>Intl.DisplayNames.prototype.resolvedOptions ( )</h1>
+
+      <p>
+        This function provides access to the locale and options computed during initialization of the object.
+      </p>
+
+      <emu-alg>
+        1. Let _displayNames_ be *this* value.
+        1. If Type(_displayNames_) is not Object, throw a *TypeError* exception.
+        1. If _displayNames_ does not have an [[InitializedDisplayNames]] internal slot, throw a *TypeError* exception.
+        1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
+        1. For each row of <emu-xref href="#table-displaynames-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _displayNames_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-displaynames-resolvedoptions-properties">
+        <emu-caption>Resolved Options of DisplayNames Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>*"locale"*</td>
+          </tr>
+          <tr>
+            <td>[[Style]]</td>
+            <td>*"style"*</td>
+          </tr>
+          <tr>
+            <td>[[Type]]</td>
+            <td>*"type"*</td>
+          </tr>
+          <tr>
+            <td>[[Fallback]]</td>
+            <td>*"fallback"*</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-displaynames-instances">
+    <h1>Properties of Intl.DisplayNames Instances</h1>
+
+    <p>
+      Intl.DisplayNames instances are ordinary objects that inherit properties from %DisplayNames.prototype%.
+    </p>
+
+    <p>
+      Intl.DisplayNames instances have an [[InitializedDisplayNames]] internal slot.
+    </p>
+
+    <p>
+      Intl.DisplayNames instances also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[Style]] is one of the String values *"narrow"*, *"short"*, or *"long"*, identifying the display name style used.</li>
+      <li>[[Type]] is one of the String values *"language"*, *"region"*, *"script"*, or *"currency"*, identifying the type of the display names requested.</li>
+      <li>[[Fallback]] is one of the String values *"code"*, or *"none"*, identifying the fallback return when the system does not have the requested display name.</li>
+      <li>[[Fields]] is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>) which must have fields with keys corresponding to codes according to [[Style]] and [[Type]].</li>
+    </ul>
+  </emu-clause>
+</emu-clause>
