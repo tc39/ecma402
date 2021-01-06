@@ -12,6 +12,8 @@
     "build-for-pdf": "npm run build-master -- --old-toc",
     "prebuild-ci": "npm run clean",
     "build-ci": "npm run build-master && npm run build-es2020",
+    "prebuild-only": "npm run clean && mkdir out && cp -R img out",
+    "build-only": "ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
     "clean": "rm -rf out",
     "test": "ecmarkup --lint-spec spec/index.html /dev/null",
     "prewatch": "npm run clean",
