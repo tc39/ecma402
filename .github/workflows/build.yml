@@ -13,5 +13,4 @@ jobs:
         name: 'npm ci && npm run build-master'
         with:
           node-version: lts/*
-          use-npm-ci: true
           command: 'build-master'

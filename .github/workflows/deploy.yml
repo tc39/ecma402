@@ -17,7 +17,6 @@ jobs:
         name: 'npm ci && npm run build-only ./scripts/auto-deploy.sh'
         with:
           node-version: lts/*
-          use-npm-ci: true
           shell-command: |
             npm run build-only && \
             ./scripts/auto-deploy.sh
