@@ -29,7 +29,7 @@ echo "  IdentityFile ~/.ssh/$PRIVATE_KEY_FILE_NAME" >> ~/.ssh/config
 
 # Update the content from the `gh-pages` branch
 
-$(npm bin)/update-branch --commands "npm run build-travis" \
+$(npm bin)/update-branch --commands "npm run build-ci" \
                          --commit-message "Update gh-pages [skip ci]" \
                          --directory "out" \
                          --distribution-branch "gh-pages" \
