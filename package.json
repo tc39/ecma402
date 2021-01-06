@@ -10,8 +10,8 @@
     "build": "npm run build-master",
     "prebuild-for-pdf": "npm run clean",
     "build-for-pdf": "npm run build-master -- --old-toc",
-    "prebuild-travis": "npm run clean",
-    "build-travis": "npm run build-master && npm run build-es2020",
+    "prebuild-ci": "npm run clean",
+    "build-ci": "npm run build-master && npm run build-es2020",
     "clean": "rm -rf out",
     "test": "ecmarkup --lint-spec spec/index.html /dev/null",
     "prewatch": "npm run clean",
@@ -23,8 +23,5 @@
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
     "ecmarkup": "^4.1.0"
-  },
-  "devDependencies": {
-    "@alrra/travis-scripts": "^3.0.0"
   }
 }

@@ -2,13 +2,18 @@
 
 declare -r PRIVATE_KEY_FILE_NAME='github_deploy_key'
 
+if [ -z "${encrypted_1e2182e20f4c_iv-}" ] || [ -z "${encrypted_1e2182e20f4c_key}" ]; then
+  echo >&2 'secure keys do not exist'
+  exit 0
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Decrypt the file containing the private key
 
 openssl aes-256-cbc \
-    -K  $encrypted_aef280a8b6af_key \
-    -iv $encrypted_aef280a8b6af_iv \
+    -K  $encrypted_1e2182e20f4c_key \
+    -iv $encrypted_1e2182e20f4c_iv \
     -in "$(dirname "$BASH_SOURCE")/${PRIVATE_KEY_FILE_NAME}.enc" \
     -out ~/.ssh/$PRIVATE_KEY_FILE_NAME -d
 
@@ -24,7 +29,7 @@ echo "  IdentityFile ~/.ssh/$PRIVATE_KEY_FILE_NAME" >> ~/.ssh/config
 
 # Update the content from the `gh-pages` branch
 
-$(npm bin)/update-branch --commands "npm run build-travis" \
+$(npm bin)/update-branch --commands "npm run build-ci" \
                          --commit-message "Update gh-pages [skip ci]" \
                          --directory "out" \
                          --distribution-branch "gh-pages" \
