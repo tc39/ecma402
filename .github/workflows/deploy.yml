@@ -1,0 +1,23 @@
+name: 'ecma-402'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: 'deploy github pages'
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'tc39/ecma402' }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/run@125357c
+        name: 'npm ci && npm run build-only ./scripts/auto-deploy.sh'
+        with:
+          node-version: lts/*
+          use-npm-ci: true
+          shell-command: |
+            npm run build-only && \
+            ./scripts/auto-deploy.sh

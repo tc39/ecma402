@@ -1,0 +1,17 @@
+name: 'ecma-402'
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    name: 'build & lint ecmarkup'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/run@125357c
+        name: 'npm ci && npm run build-master'
+        with:
+          node-version: lts/*
+          use-npm-ci: true
+          command: 'build-master'
