@@ -44,6 +44,11 @@
           <td>*"2-digit"*, *"numeric"*</td>
         </tr>
         <tr>
+          <td>[[DayPeriod]]</td>
+          <td>*"dayPeriod"*</td>
+          <td>*"narrow"*, *"short"*, *"long"*</td>
+        </tr>
+        <tr>
           <td>[[Hour]]</td>
           <td>*"hour"*</td>
           <td>*"2-digit"*, *"numeric"*</td>
@@ -197,7 +202,7 @@
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is *"time"* or *"any"*, then
-          1. For each of the property names *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"*, do
+          1. For each of the property names *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"*, do
             1. Let _prop_ be the property name.
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
@@ -560,7 +565,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -657,6 +662,9 @@
             <li>hour, minute, second, fractionalSecondDigits</li>
             <li>hour, minute, second</li>
             <li>hour, minute</li>
+            <li>dayPeriod, hour</li>
+            <li>dayPeriod, hour, minute, second</li>
+            <li>dayPeriod, hour, minute</li>
           </ul>
           Each of the records must also have a [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has an hour field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains a substring *"{ampm}"*. If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.
         </li>
@@ -827,6 +835,10 @@
             <td>*"day"*</td>
           </tr>
           <tr>
+            <td>[[DayPeriod]]</td>
+            <td>*"dayPeriod"*</td>
+          </tr>
+          <tr>
             <td>[[Hour]]</td>
             <td>*"hour"*</td>
           </tr>
@@ -891,7 +903,7 @@
       <li>[[Calendar]] is a String value with the *"type"* given in Unicode Technical Standard 35 for the calendar used for formatting.</li>
       <li>[[NumberingSystem]] is a String value with the *"type"* given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
       <li>[[TimeZone]] is a String value with the IANA time zone name of the time zone used for formatting.</li>
-      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
+      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
       <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-negative integer Number value indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary. </li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
