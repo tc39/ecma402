@@ -19,4 +19,4 @@ jobs:
           node-version: lts/*
           shell-command: |
             npm run build-only && \
-            ./scripts/auto-deploy.sh
+            $PWD/scripts/auto-deploy.sh
