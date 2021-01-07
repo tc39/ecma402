@@ -9,7 +9,8 @@
 
       <p>
         The DeconstructPattern abstract operation is called with arguments _pattern_ (which must be a String) and _placeables_ (which must be a Record), and deconstructs the pattern string into a list of parts.
-
+      </p>
+      <p>
         The placeables record is a record whose keys are placeables tokens used in the pattern string, and values are parts records which will be used in the result List to represent the token part.
         Example:
         <pre>
@@ -71,11 +72,11 @@
         1. Let _last_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_size_ - 1] }.
         1. Let _parts_ be &laquo; _last_ &raquo;.
         1. Let _i_ be _size_ - 2.
-        1. Repeat, while _i_ &ge; 0
+        1. Repeat, while _i_ &ge; 0,
           1. Let _n_ be an implementation-defined index into _listFormat_.[[Templates]] based on _listFormat_.[[Locale]], _head_, and _parts_.
           1. If _i_ is 0, then
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Start]].
-          1. Else, if _i_ is less than _size_ - 2, then
+          1. Else if _i_ is less than _size_ - 2, then
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Middle]].
           1. Else,
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[End]].
@@ -101,11 +102,10 @@
       <emu-alg>
         1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be an empty String.
-        1. For each _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Set _result_ to a String value produced by concatenating _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-formatlisttoparts" aoid="FormatListToParts">
@@ -119,7 +119,7 @@
         1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Let _O_ be ObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
@@ -127,7 +127,6 @@
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-createstringlistfromiterable" aoid="StringListFromIterable">
@@ -140,7 +139,7 @@
         1. Let _iteratorRecord_ be ? GetIterator(_iterable_).
         1. Let _list_ be a new empty List.
         1. Let _next_ be *true*.
-        1. Repeat, while _next_ is not *false*
+        1. Repeat, while _next_ is not *false*,
           1. Set _next_ to ? IteratorStep(_iteratorRecord_).
           1. If _next_ is not *false*, then
             1. Let _nextValue_ be ? IteratorValue(_next_).
@@ -176,7 +175,7 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, then
           1. Let _options_ be ObjectCreate(*null*).
-        1. Else
+        1. Else,
           1. Let _options_ be ? ToObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
@@ -251,9 +250,7 @@
       <ul>
         <li>[[LocaleData]][[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
         <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be List of Records with the fields with names: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules.</li>
-        <li>
-          The ListFormat template set's entry's Record fields each expected to be valid template patterns.  They should each contain one instance of the substring *"{0}"* and once instance of the substring *"{1}"*, and the substring *"{0}"* should occur before the substring *"{1}"*.
-        </li>
+        <li>The ListFormat template set's entry's Record fields each expected to be valid template patterns. They should each contain one instance of the substring *"{0}"* and once instance of the substring *"{1}"*, and the substring *"{0}"* should occur before the substring *"{1}"*.</li>
       </ul>
 
       <emu-note>
