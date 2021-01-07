@@ -25,5 +25,8 @@
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
     "ecmarkup": "^4.2.3"
+  },
+  "devDependencies": {
+    "@alrra/travis-scripts": "^3.0.1"
   }
 }
