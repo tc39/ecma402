@@ -19,5 +19,10 @@ jobs:
           node-version: lts/*
           shell-command: |
             npm run build-only
-      - name: Auto deploy
-        run: ./scripts/auto-deploy.sh
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: out
+          CLEAN: true
