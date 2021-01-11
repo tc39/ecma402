@@ -360,6 +360,7 @@
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append a new Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } as the last element of _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
+            1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is *"year"* and _v_ ≤ 0, let _v_ be 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
