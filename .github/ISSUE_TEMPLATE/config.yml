@@ -1,0 +1,11 @@
+--- 
+blank_issues_enabled: true
+contact_links: 
+  - 
+    about: "See the contributing guidelines for feature requests and proposals"
+    name: "\U0001F680 Feature request"
+    url: "https://github.com/tc39/ecma262/blob/master/CONTRIBUTING.md"
+  - 
+    about: "This repository is a TC39 project and subscribes to its code of conduct"
+    name: "\U0001F4AC Code of Conduct"
+    url: "https://tc39.es/code-of-conduct/"
