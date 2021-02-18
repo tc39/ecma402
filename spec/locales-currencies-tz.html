@@ -40,25 +40,45 @@
       <h1>IsStructurallyValidLanguageTag ( _locale_ )</h1>
 
       <p>
-        The IsStructurallyValidLanguageTag abstract operation verifies that the _locale_ argument (which must be a String value)
+        The IsStructurallyValidLanguageTag abstract operation determines whether the _locale_ argument (which must be a String value) is a language tag recognized by this specification.  (It does not consider whether the language tag conveys any meaningful semantics, differentiate between aliased subtags and their preferred replacement subtags, or require canonical casing or subtag ordering.)
+      </p>
+
+      <p>
+        IsStructurallyValidLanguageTag returns *true* if all of the following conditions hold, *false* otherwise:
       </p>
 
       <ul>
-        <li>represents a well-formed "Unicode BCP 47 locale identifier" as specified in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard 35 section 3.2</a>,</li>
-        <li>does not include duplicate variant subtags, and</li>
-        <li>does not include duplicate singleton subtags.</li>
+        <li>_locale_ can be generated from the EBNF grammar for `unicode_locale_id` in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 LDML § 3.2 Unicode Locale Identifier</a>;</li>
+        <li>_locale_ does not use any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>;</li>
+        <li>the `unicode_language_id` within _locale_ contains no duplicate `unicode_variant_subtag` subtags; and</li>
+        <li>if _locale_ contains an `extensions*` component, that component
+          <ul>
+            <li>does not contain any `other_extensions` components with duplicate `[alphanum-[tTuUxX]]` subtags,</li>
+            <li>contains at most one `unicode_locale_extensions` component,</li>
+            <li>contains at most one `transformed_extensions` component, and</li>
+            <li>if a `transformed_extensions` component that contains a `tlang` component is present, then
+              <ul>
+                <li>the `tlang` component contains no duplicate `unicode_variant_subtag` subtags.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
 
       <p>
-        The abstract operation returns true if _locale_ can be generated from the EBNF grammar in section 3.2 of the Unicode Technical Standard 35, starting with `unicode_locale_id`, and does not contain duplicate variant or singleton subtags (other than as a private use subtag). It returns false otherwise. Terminal value characters in the grammar are interpreted as the Unicode equivalents of the ASCII octet values given.
+        When evaluating each condition, terminal value characters in the grammar are interpreted as the corresponding ASCII code points.  Subtags are duplicates if they are ASCII case-insensitively equivalent.
       </p>
+
+      <emu-note>
+        Every string for which this function returns *true* is both a "Unicode BCP 47 locale identifier", consistent with <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 LDML § 3.2 Unicode Locale Identifier</a> and <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>, and a valid <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> language tag.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-canonicalizeunicodelocaleid" aoid="CanonicalizeUnicodeLocaleId">
       <h1>CanonicalizeUnicodeLocaleId ( _locale_ )</h1>
 
       <p>
-        The CanonicalizeUnicodeLocaleId abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value that is a structurally valid Unicode BCP 47 locale identifier as verified by the IsStructurallyValidLanguageTag abstract operation).
+        The CanonicalizeUnicodeLocaleId abstract operation returns the canonical and case-regularized form of the _locale_ argument (which must be a String value for which IsStructurallyValidLanguageTag(_locale_) equals *true*).
         The following steps are taken:
       </p>
 
