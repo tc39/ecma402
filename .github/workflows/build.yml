@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ljharb/actions/node/run@125357c
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - uses: ljharb/actions/node/run@main
         name: 'npm install && npm run build-master'
         with:
           node-version: lts/*
