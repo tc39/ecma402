@@ -537,7 +537,7 @@
       <emu-normative-optional>
       <!-- Note: 2. is intentional -->
       <emu-alg>
-        2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? InstanceofOperator(_dtf_, %DateTimeFormat%) is *true*, then
+        2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%DateTimeFormat%, _dtf_) is *true*, then
           1. Let _dtf_ be ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
       </emu-alg>
       </emu-normative-optional>
@@ -573,7 +573,7 @@
       <!-- Note: 4. is intentional -->
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and Type(_this_) is Object and ? InstanceofOperator(_this_, %DateTimeFormat%) is *true*, then
+        1. If NewTarget is *undefined* and Type(_this_) is Object and ? OrdinaryHasInstance(%DateTimeFormat%, _this_) is *true*, then
           1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
