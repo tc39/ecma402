@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ljharb/require-allow-edits@a200d61
+    - uses: ljharb/require-allow-edits@b3932796b71a803b05968c8d7910e882baf4e6e6
