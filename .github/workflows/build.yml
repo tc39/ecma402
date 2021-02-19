@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: ljharb/actions/node/run@125357c
+      - uses: ljharb/actions/node/run@125357c94cc5b34492f39fc8886f2789175d0800
         name: 'npm install && npm run build-master'
         with:
           node-version: lts/*
