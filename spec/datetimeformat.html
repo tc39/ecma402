@@ -66,7 +66,7 @@
         <tr>
           <td>[[FractionalSecondDigits]]</td>
           <td>*"fractionalSecondDigits"*</td>
-          <td>*1*, *2*, *3*</td>
+          <td>*1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub></td>
         </tr>
         <tr>
           <td>[[TimeZoneName]]</td>
@@ -247,7 +247,7 @@
           1. If _timeFormat_ has a [[pattern12]] field, then
             1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
             1. Set _format_.[[pattern12]] to _pattern12_.
-          1. Let _dateTimeRangeFormat_ be _dataLocaleData_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]]
+          1. Let _dateTimeRangeFormat_ be _dataLocaleData_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]].
           1. Add to _format_ all fields from _dateTimeRangeFormat_ including [[rangePatterns]] and [[rangePatterns12]], if present.
           1. Return _format_.
         1. If _timeStyle_ is not *undefined*, then
@@ -283,7 +283,7 @@
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
-                1. Let _values_ be &laquo; *1*, *2*, *3* &raquo;.
+                1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
               1. Else,
                 1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
@@ -409,7 +409,6 @@
       <emu-note>
         It is recommended that implementations use the time zone information of the IANA Time Zone Database.
       </emu-note>
-
     </emu-clause>
 
     <emu-clause id="sec-partitiondatetimepattern" aoid="PartitionDateTimePattern">
@@ -461,7 +460,6 @@
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
-
     </emu-clause>
 
     <emu-clause id="sec-partitiondatetimerangepattern" aoid="PartitionDateTimeRangePattern">

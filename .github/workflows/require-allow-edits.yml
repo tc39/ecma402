@@ -9,4 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ljharb/require-allow-edits@a200d61
+    - uses: ljharb/require-allow-edits@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
