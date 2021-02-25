@@ -127,12 +127,12 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of one of the valid display name types: *"language"*, *"region"*, *"script"*, and *"currency"*.</li>
-        <li>The value of fields *"language"*, *"region"*, *"script"*, and *"currency"* must be a Records which must have fields with the names of one of the valid display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
-        <li>The display name styles fields under display name type *"language"* should contain Records, with keys corresponding to language codes according to `unicode_language_id` production. The value of these fields must be string values.</li>
-        <li>The display name styles fields under display name type *"region"* should contain Records, with keys corresponding to region codes. The value of these fields must be string values.</li>
-        <li>The display name styles fields under display name type *"script"* should contain Records, with keys corresponding to script codes. The value of these fields must be string values.</li>
-        <li>The display name styles fields under display name type *"currency"* should contain Records, with keys corresponding to currency codes. The value of these fields must be string values.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of all display name types: *"language"*, *"region"*, *"script"*, and *"currency"*.</li>
+        <li>The value of the fields *"language"*, *"region"*, *"script"*, and *"currency"* must be Records, which must have fields with the names of all display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
+        <li>The display name style fields under display name type *"language"* should contain Records with keys corresponding to language codes matching the `unicode_language_id` production. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"region"* should contain Records with keys corresponding to region codes. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"script"* should contain Records with keys corresponding to script codes. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"currency"* should contain Records with keys corresponding to currency codes. The value of these fields must be string values.</li>
       </ul>
 
       <emu-note>
