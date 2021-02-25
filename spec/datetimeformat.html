@@ -500,7 +500,7 @@
               1. If _v1_ is greater than 11 and _v2_ less or equal than 11, or _v1_ is less or equal than 11 and _v2_ is greater than 11, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
               1. Let _rangePattern_ be _rp_.
-          1. If _fieldName_ is equal to [[FractionalSecondDigits]], then
+          1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
             1. Let _rp_ be _rangePatterns_.[[FractionalSecondDigits]].
             1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
               1. Set _patternContainsLargerDateField_ to *true*.
