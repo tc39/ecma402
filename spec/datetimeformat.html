@@ -490,21 +490,17 @@
         1. Let _patternContainsLargerDateField_ be *false*.
         1. While _dateFieldsPracticallyEqual_ is *true* and _patternContainsLargerDateField_ is *false*, repeat for each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref> in order, except the header row:
           1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
-          1. If _fieldName_ is equal to [[AmPm]], then
-            1. If _rangePatterns_ has a field [[AmPm]], let _rp_ be _rangePatterns_.[[AmPm]]; else let _rp_ be *undefined*.
-            1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
-              1. Set _patternContainsLargerDateField_ to *true*.
-            1. Else,
+          1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rp_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rp_ be *undefined*.
+          1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
+            1. Set _patternContainsLargerDateField_ to *true*.
+          1. Else,
+            1. Let _rangePattern_ be _rp_.
+            1. If _fieldName_ is equal to [[AmPm]], then
               1. Let _v1_ be _tm1_.[[Hour]].
               1. Let _v2_ be _tm2_.[[Hour]].
               1. If _v1_ is greater than 11 and _v2_ less or equal than 11, or _v1_ is less or equal than 11 and _v2_ is greater than 11, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
-              1. Let _rangePattern_ be _rp_.
-          1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
-            1. If _rangePatterns_ has a field [[FractionalSecondDigits]], let _rp_ be _rangePatterns_.[[FractionalSecondDigits]]; else let _rp_ be *undefined*.
-            1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
-              1. Set _patternContainsLargerDateField_ to *true*.
-            1. Else,
+            1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
               1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
               1. If _fractionalSecondDigits_ is *undefined*, then
                 1. Set _fractionalSecondDigits_ to 3.
@@ -514,17 +510,11 @@
               1. Let _v2_ be floor(_v2_ × 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
               1. If _v1_ is not equal to _v2_, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
-              1. Let _rangePattern_ be _rp_.
-          1. Else,
-            1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rp_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rp_ be *undefined*.
-            1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
-              1. Set _patternContainsLargerDateField_ to *true*.
             1. Else,
               1. Let _v1_ be _tm1_.[[&lt;_fieldName_&gt;]].
               1. Let _v2_ be _tm2_.[[&lt;_fieldName_&gt;]].
               1. If _v1_ is not equal to _v2_, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
-              1. Let _rangePattern_ be _rp_.
         1. If _dateFieldsPracticallyEqual_ is *true*, then
           1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
           1. Let _patternParts_ be PartitionPattern(_pattern_).
