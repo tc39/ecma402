@@ -31,8 +31,8 @@
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
-        1. Set _relativeTimeFormat_.[[Style]] to _s_.
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
+        1. Set _relativeTimeFormat_.[[Style]] to _style_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"string"*, «*"always"*, *"auto"*», *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
         1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, « _locale_ »).
