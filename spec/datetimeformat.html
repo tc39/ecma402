@@ -812,23 +812,23 @@
             <li>If the record has an hour field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains a substring *"{ampm}"*.</li>
             <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*</li>
             <li>
-              A [[rangePatterns]] field with a Record value
+              A [[rangePatterns]] field with a Record value:
                 <ul>
-                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and it's value is a Record.
+                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
                     <ul>
-                      <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is Month, it contains the range pattern that should be used to format a date range where the Era and Year values are the same, but Month value is different.</li>
+                      <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is [[Month]], it contains the range pattern that should be used to format a date range where the era and year values are the same, but the month value is different.</li>
                       <li>The record will contain the following fields:</li>
                         <ul>
-                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref>. Only the fields required to format a date with any of the PatternParts will be added.</li>
-                          <li>A [[PatternParts]] field whose value is a list of Records each representing a part of the range pattern. Each record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field must contain one of the following values *"shared"*, *"startRange"* or *"endRange"* which indicates which of the range's dates should be formatted using the value of the Pattern field.</li>
+                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref>. All fields required to format a date for any of the [[PatternParts]] records must be present.</li>
+                          <li>A [[PatternParts]] field whose value is a list of Records each representing a part of the range pattern. Each record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field is one of the String values *"shared"*, *"startRange"*, or *"endRange"*. It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</li>
                         </ul>
                     </ul>
                   </li>
-                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. It's value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
+                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
                 </ul>
             </li>
-            <li>If the record has an hour field, it must also have a [[rangePatterns12]] field. It's value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
-            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*</li>
+            <li>If the record has an hour field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
+            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
           </ol>
         </li>
         <li>
@@ -837,7 +837,7 @@
             <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
             <li>If the record has an hour field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring *"{ampm}"*.</li>
             <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
-            <li>If the record has an hour field, it must also have a [[rangePatterns12]] field. It's value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
+            <li>If the record has an hour field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
           </ol>
           For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested record which also has a [[full]], [[long]], [[medium]] and [[short]] fields. The [[full]], [[long]], [[medium]] and [[short]] fields in the enclosing record refer to the date style of the range pattern, while the fields in the nested record refers to the time style of the range pattern. The value of these fields in the nested record is a record with a [[rangePatterns]] field and a [[rangePatterns12]] which are similar to the [[rangePatterns]] and [rangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
          </li>
