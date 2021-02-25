@@ -491,7 +491,7 @@
         1. While _dateFieldsPracticallyEqual_ is *true* and _patternContainsLargerDateField_ is *false*, repeat for each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref> in order, except the header row:
           1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
           1. If _fieldName_ is equal to [[AmPm]], then
-            1. Let _rp_ be _rangePatterns_.[[AmPm]].
+            1. If _rangePatterns_ has a field [[AmPm]], let _rp_ be _rangePatterns_.[[AmPm]]; else let _rp_ be *undefined*.
             1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
               1. Set _patternContainsLargerDateField_ to *true*.
             1. Else,
@@ -501,7 +501,7 @@
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
               1. Let _rangePattern_ be _rp_.
           1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
-            1. Let _rp_ be _rangePatterns_.[[FractionalSecondDigits]].
+            1. If _rangePatterns_ has a field [[FractionalSecondDigits]], let _rp_ be _rangePatterns_.[[FractionalSecondDigits]]; else let _rp_ be *undefined*.
             1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
               1. Set _patternContainsLargerDateField_ to *true*.
             1. Else,
@@ -516,7 +516,7 @@
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
               1. Let _rangePattern_ be _rp_.
           1. Else,
-            1. Let _rp_ be _rangePatterns_.[[&lt;_fieldName_&gt;]].
+            1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rp_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rp_ be *undefined*.
             1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
               1. Set _patternContainsLargerDateField_ to *true*.
             1. Else,
