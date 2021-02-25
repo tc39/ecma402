@@ -176,8 +176,7 @@
 
       <emu-alg>
         1. Let _displayNames_ be *this* value.
-        1. If Type(_displayNames_) is not Object, throw a *TypeError* exception.
-        1. If _displayNames_ does not have an [[InitializedDisplayNames]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
         1. Let _code_ be ? ToString(_code_).
         1. Let _code_ be ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
         1. Let _fields_ be _displayNames_.[[Fields]].
@@ -197,8 +196,7 @@
 
       <emu-alg>
         1. Let _displayNames_ be *this* value.
-        1. If Type(_displayNames_) is not Object, throw a *TypeError* exception.
-        1. If _displayNames_ does not have an [[InitializedDisplayNames]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
         1. Let _options_ be ! ObjectCreate(%ObjectPrototype%).
         1. For each row of <emu-xref href="#table-displaynames-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.

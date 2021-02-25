@@ -295,8 +295,7 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
         1. Return FormatList(_lf_, _stringList_).
       </emu-alg>
@@ -311,8 +310,7 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
         1. Return FormatListToParts(_lf_, _stringList_).
       </emu-alg>
@@ -327,8 +325,7 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _options_ be ! ObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-listformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
