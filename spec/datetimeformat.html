@@ -153,8 +153,8 @@
             1. Let _bestFormat_ be BestFitFormatMatcher(_opt_, _formats_).
         1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
-          1. If _p_ not *undefined*, then
+          1. If _bestFormat_ has a field [[&lt;_prop_&gt;]], then
+            1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_.[[Hour]] is *undefined*, then
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
@@ -280,8 +280,8 @@
         1. For each element _format_ of _formats_, do
           1. Let _score_ be 0.
           1. For each property name _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
-            1. Let _optionsProp_ be _options_.[[&lt;_property_&gt;]].
-            1. Let _formatProp_ be _format_.[[&lt;_property_&gt;]].
+            1. If _options_ has a field [[&lt;_property_&gt;]], let _optionsProp_ be _options_.[[&lt;_property_&gt;]]; else let _optionsProp_ be *undefined*.
+            1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_, then
