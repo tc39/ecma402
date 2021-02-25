@@ -33,7 +33,7 @@
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
-        1. For each element _patternPart_ of _patternParts_, in List order, do
+        1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _part_ be _patternPart_.[[Type]].
           1. If _part_ is *"literal"*, then
             1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.

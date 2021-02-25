@@ -95,7 +95,7 @@
           1. For each element _attr_ of _attributes_ in List order, do
             1. Append *"-"* to _newExtension_.
             1. Append _attr_ to _newExtension_.
-          1. For each element _keyword_ of _keywords_ in List order, do
+          1. For each Record { [[Key]], [[Value]] } _keyword_ in _keywords_, do
             1. Append *"-"* to _newExtension_.
             1. Append _keyword_.[[Key]] to _newExtension_.
             1. If _keyword_.[[Value]] is not the empty String, then
