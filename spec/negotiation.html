@@ -101,7 +101,7 @@
 
       <emu-alg>
         1. Let _result_ be a new Record.
-        1. For each element _locale_ of _requestedLocales_ in List order, do
+        1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, then
@@ -212,7 +212,7 @@
           1. Let _components_ be ! UnicodeExtensionComponents(_r_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
         1. Let _supportedExtension_ be *"-u"*.
-        1. For each element _key_ of _relevantExtensionKeys_ in List order, do
+        1. For each element _key_ of _relevantExtensionKeys_, do
           1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
           1. Assert: Type(_foundLocaleData_) is Record.
           1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_&gt;]].
@@ -265,7 +265,7 @@
 
       <emu-alg>
         1. Let _subset_ be a new empty List.
-        1. For each element _locale_ of _requestedLocales_ in List order, do
+        1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
