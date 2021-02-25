@@ -402,7 +402,8 @@
             1. Append a new Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
-            1. Append a new Record { [[Type]]: *"yearName"*, [[Value]]: _v_ } as the last element of the list _result_.
+            1. Let _fv_ be an implementation and locale dependent String value representing _v_.
+            1. Append a new Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
             1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } as the last element of _result_.
