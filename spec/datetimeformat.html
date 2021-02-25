@@ -500,6 +500,11 @@
               1. Let _v2_ be _tm2_.[[Hour]].
               1. If _v1_ is greater than 11 and _v2_ less or equal than 11, or _v1_ is less or equal than 11 and _v2_ is greater than 11, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
+            1. Else if _fieldName_ is equal to [[DayPeriod]], then
+              1. Let _v1_ be a String value representing the day period of _tm1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+              1. Let _v2_ be a String value representing the day period of _tm2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+              1. If _v1_ is not equal to _v2_, then
+                1. Set _dateFieldsPracticallyEqual_ to *false*.
             1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
               1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
               1. If _fractionalSecondDigits_ is *undefined*, then
@@ -958,6 +963,10 @@
           <tr>
             <td>[[AmPm]]</td>
             <td>*"ampm"*</td>
+          </tr>
+          <tr>
+            <td>[[DayPeriod]]</td>
+            <td>*"dayPeriod"*</td>
           </tr>
           <tr>
             <td>[[Hour]]</td>
