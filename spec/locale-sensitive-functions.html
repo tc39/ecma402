@@ -68,7 +68,7 @@
         1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
         1. If _locale_ is *undefined*, let _locale_ be *"und"*.
         1. Let _cpList_ be a List containing in order the code points of _S_ as defined in ES2021, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, starting at the first element of _S_.
-        1. Let _cuList_ be a List where the elements are the result of a lower case transformation of the ordered code points in _cpList_ according to the Unicode Default Case Conversion algorithm or an implementation defined conversion algorithm. A conforming implementation's lower case transformation algorithm must always yield the same _cpList_ given the same _cuList_ and locale.
+        1. Let _cuList_ be a List where the elements are the result of a lower case transformation of the ordered code points in _cpList_ according to the Unicode Default Case Conversion algorithm or an implementation-defined conversion algorithm. A conforming implementation's lower case transformation algorithm must always yield the same _cpList_ given the same _cuList_ and locale.
         1. Let _L_ be a String whose elements are the UTF-16 Encoding (defined in ES2021, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>) of the code points of _cuList_.
         1. Return _L_.
       </emu-alg>
