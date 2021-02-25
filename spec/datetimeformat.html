@@ -809,7 +809,7 @@
           Each of the records must also have the following fields:
           <ol>
             <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains a substring *"{ampm}"*.</li>
+            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
             <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*</li>
             <li>
               A [[rangePatterns]] field with a Record value:
@@ -835,7 +835,7 @@
           [[LocaleData]][&lt;_locale_&gt;] must have a [[styles]] field. The styles field must have a [[&lt;_calendar_&gt;]] field for all calendar values _calendar_. The field must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in Table 1, where each field must have one of the values specified for the field in Table 1. Each of the records must also have the following fields:
           <ol>
             <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains a substring *"{ampm}"*.</li>
+            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
             <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
             <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
           </ol>
