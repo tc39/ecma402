@@ -712,7 +712,7 @@
       <!-- Note: 4. is intentional -->
       <emu-alg>
         4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and Type(_this_) is Object and ? OrdinaryHasInstance(%DateTimeFormat%, _this_) is *true*, then
+        1. If NewTarget is *undefined* and ? OrdinaryHasInstance(%DateTimeFormat%, _this_) is *true*, then
           1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
           1. Return _this_.
       </emu-alg>
