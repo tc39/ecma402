@@ -143,7 +143,8 @@
             1. Let _p_ be _opt_.[[&lt;_prop_&gt;]].
             1. If _p_ is not *undefined*, then
               1. Throw a *TypeError* exception.
-          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _dataLocaleData_).
+          1. Let _styles_ be _dataLocaleData_.[[styles]].[[&lt;_calendar_&gt;]].
+          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
           1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_calendar_&gt;]].
           1. If _matcher_ is *"basic"*, then
@@ -228,26 +229,26 @@
     </emu-clause>
 
     <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
-      <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _dataLocaleData_ )</h1>
-      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _dataLocaleData_, which is a record from %DateTimeFormat%.[[LocaleData]][_locale_] for some locale _locale_. It returns the appropriate format record for date time formatting based on the parameters.</p>
+      <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _styles_ )</h1>
+      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]][_locale_].[[styles]][_calendar_] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
       <emu-alg>
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _timeFormat_ be _dataLocaleData_.[[TimeFormat]].[[&lt;_timeStyle_&gt;]].
+          1. Let _timeFormat_ be _styles_.[[TimeFormat]].[[&lt;_timeStyle_&gt;]].
         1. If _dateStyle_ is not *undefined*, then
           1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _dateFormat_ be _dataLocaleData_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
         1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
           1. Let _format_ be a new Record.
           1. Add to _format_ all fields from _dateFormat_ except [[pattern]] and [[rangePatterns]].
           1. Add to _format_ all fields from _timeFormat_ except [[pattern]], [[rangePatterns]], [[pattern12]], and [[rangePatterns12]], if present.
-          1. Let _connector_ be _dataLocaleData_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
           1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
           1. Set _format_.[[pattern]] to _pattern_.
           1. If _timeFormat_ has a [[pattern12]] field, then
             1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
             1. Set _format_.[[pattern12]] to _pattern12_.
-          1. Let _dateTimeRangeFormat_ be _dataLocaleData_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]].
+          1. Let _dateTimeRangeFormat_ be _styles_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]].
           1. Add to _format_ all fields from _dateTimeRangeFormat_ including [[rangePatterns]] and [[rangePatterns12]], if present.
           1. Return _format_.
         1. If _timeStyle_ is not *undefined*, then
