@@ -2,20 +2,14 @@
   "https://tc39.es/ecma262/": [
     {
       "type": "op",
-      "aoid": "RequireInternalSlot",
-      "id": "sec-requireinternalslot"
-    },
-    {
-      "type": "term",
-      "term": "string-concatenation",
-      "refId": "sec-ecmascript-language-types-string-type",
-      "key": "string-concatenation"
-    },
-    {
-      "type": "op",
       "aoid": "StringIndexOf",
       "refId": "sec-stringindexof",
       "key": "StringIndexOf"
+    },
+    {
+      "type": "op",
+      "aoid": "OrdinaryObjectCreate",
+      "id": "sec-ordinaryobjectcreate"
     }
   ]
 }
