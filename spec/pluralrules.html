@@ -126,8 +126,8 @@
         1. Let _type_ be _pluralRules_.[[Type]].
         1. Let _res_ be ! FormatNumericToString(_pluralRules_, _n_).
         1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _operands_ be ? GetOperands(_s_).
-        1. Return ? PluralRuleSelect(_locale_, _type_, _n_, _operands_).
+        1. Let _operands_ be ! GetOperands(_s_).
+        1. Return ! PluralRuleSelect(_locale_, _type_, _n_, _operands_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -252,7 +252,7 @@
         1. Let _pr_ be the *this* value.
         1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
         1. Let _n_ be ? ToNumber(_value_).
-        1. Return ? ResolvePlural(_pr_, _n_).
+        1. Return ! ResolvePlural(_pr_, _n_).
       </emu-alg>
     </emu-clause>
 
