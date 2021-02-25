@@ -307,7 +307,7 @@
       </p>
       <emu-alg>
         1. If _options_ is *undefined*, then
-          1. Return ! ObjectCreate(*null*).
+          1. Return ! OrdinaryObjectCreate(*null*).
         1. If Type(_options_) is Object, then
           1. Return _options_.
         1. Throw a *TypeError* exception.
@@ -322,7 +322,7 @@
       </p>
       <emu-alg>
         1. If _options_ is *undefined*, then
-          1. Return ! ObjectCreate(*null*).
+          1. Return ! OrdinaryObjectCreate(*null*).
         1. Return ? ToObject(_options_).
       </emu-alg>
     </emu-clause>
