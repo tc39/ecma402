@@ -249,7 +249,9 @@
             1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
             1. Set _format_.[[pattern12]] to _pattern12_.
           1. Let _dateTimeRangeFormat_ be _styles_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]].
-          1. Add to _format_ all fields from _dateTimeRangeFormat_ including [[rangePatterns]] and [[rangePatterns12]], if present.
+          1. Set _format_.[[rangePatterns]] to _dateTimeRangeFormat_.[[rangePatterns]].
+          1. If _dateTimeRangeFormat_ has a [[rangePatterns12]] field, then
+            1. Set _format_.[[rangePatterns12]] to _dateTimeRangeFormat_.[[rangePatterns12]].
           1. Return _format_.
         1. If _timeStyle_ is not *undefined*, then
           1. Return _timeFormat_.
