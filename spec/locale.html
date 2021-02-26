@@ -65,7 +65,7 @@
           1. Let _attributes_ be a new empty List.
           1. Let _keywords_ be a new empty List.
         1. Let _result_ be a new Record.
-        1. For each element _key_ of _relevantExtensionKeys_ in List order, do
+        1. For each element _key_ of _relevantExtensionKeys_, do
           1. Let _value_ be *undefined*.
           1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
             1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
@@ -96,7 +96,7 @@
 
       <p>
         The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
-        When the *Intl.Locale* function is called with an argument _tag_ and an optional argument _options_, the following steps are taken:
+        When the `Intl.Locale` function is called with an argument _tag_ and an optional argument _options_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -107,7 +107,7 @@
           1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
         1. If _relevantExtensionKeys_ contains *"kn"*, then
           1. Append [[Numeric]] as the last element of _internalSlotsList_.
-        1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *%Locale.prototype%*, _internalSlotsList_).
+        1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Locale.prototype%"*, _internalSlotsList_).
         1. If Type(_tag_) is not String or Object, throw a *TypeError* exception.
         1. If Type(_tag_) is Object and _tag_ has an [[InitializedLocale]] internal slot, then
           1. Let _tag_ be _tag_.[[Locale]].
@@ -164,7 +164,7 @@
       <h1>Intl.Locale.prototype</h1>
 
       <p>
-        The value of *Intl.Locale.prototype* is *%Locale.prototype%*.
+        The value of `Intl.Locale.prototype` is %Locale.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -191,7 +191,7 @@
       <h1>Intl.Locale.prototype.constructor</h1>
 
       <p>
-        The initial value of *Intl.Locale.prototype.constructor* is *%Locale%*.
+        The initial value of `Intl.Locale.prototype.constructor` is %Locale%.
       </p>
     </emu-clause>
 
@@ -199,7 +199,7 @@
       <h1>Intl.Locale.prototype[ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Intl.Locale"*.
+        The initial value of the @@toStringTag property is the String value *"Intl.Locale"*.
       </p>
 
       <p>

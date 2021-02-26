@@ -30,14 +30,6 @@
       </ul>
     </li>
     <li>
-      In Locale:
-      <ul>
-        <li>
-          Support for the Unicode extensions keys *"kf"*, *"kn"* and the parallel options properties *"caseFirst"*, *"numeric"* (<emu-xref href="#sec-Intl.Locale"></emu-xref>)
-        </li>
-      </ul>
-    </li>
-    <li>
       In Collator:
       <ul>
         <li>
@@ -57,6 +49,55 @@
         </li>
         <li>
           The sort order for each supported locale and options combination (<emu-xref href="#sec-collator-compare-functions"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>In DateTimeFormat:
+      <ul>
+        <li>
+          The BestFitFormatMatcher algorithm (<emu-xref href="#sec-initializedatetimeformat"></emu-xref>)
+        </li>
+        <li>
+          The set of supported *"ca"* key values (calendars) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+        </li>
+        <li>
+          The set of supported *"nu"* key values (numbering systems) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+        </li>
+        <li>
+          The default hourCycle setting per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+        </li>
+        <li>
+          The set of supported date-time formats per locale beyond a core set, including the representations used for each component and the associated patterns (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
+        </li>
+        <li>
+          Localized weekday names, era names, month names, day period names, am/pm indicators, and time zone names (<emu-xref href="#sec-formatdatetime"></emu-xref>)
+        </li>
+        <li>
+          The calendric calculations used for calendars other than *"gregory"*, and adjustments for local time zones and daylight saving time (<emu-xref href="#sec-formatdatetime"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
+      In DisplayNames:
+      <ul>
+        <li>
+          The localized names (<emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
+      In ListFormat:
+      <ul>
+        <li>
+          The patterns used for formatting values (<emu-xref href="#sec-Intl.ListFormat-internal-slots"></emu-xref>)
+        </li>
+      </ul>
+    </li>
+    <li>
+      In Locale:
+      <ul>
+        <li>
+          Support for the Unicode extensions keys *"kf"*, *"kn"* and the parallel options properties *"caseFirst"*, *"numeric"* (<emu-xref href="#sec-Intl.Locale"></emu-xref>)
         </li>
       </ul>
     </li>
@@ -98,36 +139,11 @@
         </li>
         </ul>
     </li>
-    <li>In DateTimeFormat:
-      <ul>
-        <li>
-          The BestFitFormatMatcher algorithm (<emu-xref href="#sec-initializedatetimeformat"></emu-xref>)
-        </li>
-        <li>
-          The set of supported *"ca"* key values (calendars) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
-        </li>
-        <li>
-          The set of supported *"nu"* key values (numbering systems) per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
-        </li>
-        <li>
-          The default hourCycle setting per locale (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
-        </li>
-        <li>
-          The set of supported date-time formats per locale beyond a core set, including the representations used for each component and the associated patterns (<emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>)
-        </li>
-        <li>
-          Localized weekday names, era names, month names, am/pm indicators, and time zone names (<emu-xref href="#sec-formatdatetime"></emu-xref>)
-        </li>
-        <li>
-          The calendric calculations used for calendars other than *"gregory"*, and adjustments for local time zones and daylight saving time (<emu-xref href="#sec-formatdatetime"></emu-xref>)
-        </li>
-      </ul>
-    </li>
     <li>
-      In DisplayNames:
+      In PluralRules:
       <ul>
         <li>
-          The localized names (<emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>)
+          List of Strings representing the possible results of plural selection and their corresponding order per locale. (<emu-xref href="#sec-initializepluralrules"></emu-xref>)
         </li>
       </ul>
     </li>
@@ -139,22 +155,6 @@
         </li>
         <li>
           The patterns used for formatting values (<emu-xref href="#sec-Intl.RelativeTimeFormat-internal-slots"></emu-xref>)
-        </li>
-      </ul>
-    </li>
-    <li>
-      In PluralRules:
-      <ul>
-        <li>
-          List of Strings representing the possible results of plural selection and their corresponding order per locale. (<emu-xref href="#sec-initializepluralrules"></emu-xref>)
-        </li>
-      </ul>
-    </li>
-    <li>
-      In ListFormat:
-      <ul>
-        <li>
-          The patterns used for formatting values (<emu-xref href="#sec-Intl.ListFormat-internal-slots"></emu-xref>)
         </li>
       </ul>
     </li>
@@ -187,7 +187,7 @@
       <emu-xref href="#sec-Intl-toStringTag"></emu-xref> In ECMA-402, 7th Edition, the @@toStringTag property of `Intl` was not defined. In 8th Edition, @@toStringTag is set to *"Intl"*.
     </li>
     <li>
-      <emu-xref href="#sec-intl-numberformat-constructor"></emu-xref> In ECMA-402, 8th Edition, the NumberFormat constructor used to throw an error when style="currency" and maximumFractionDigits was set to a value lower than the default fractional digits for that currency. This behaviour was corrected in the 9th edition, and it no longer throws an error.
+      <emu-xref href="#sec-intl-numberformat-constructor"></emu-xref> In ECMA-402, 8th Edition, the NumberFormat constructor used to throw an error when style is *"currency"* and maximumFractionDigits was set to a value lower than the default fractional digits for that currency. This behaviour was corrected in the 9th edition, and it no longer throws an error.
     </li>
   </ul>
 </emu-annex>

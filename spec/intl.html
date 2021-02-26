@@ -9,7 +9,7 @@
   </p>
 
   <p>
-    The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the *new* operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.
+    The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the `new` operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.
   </p>
 
   <p>
@@ -23,7 +23,7 @@
       <h1>Intl[ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Intl"*.
+        The initial value of the @@toStringTag property is the String value *"Intl"*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -34,24 +34,10 @@
   <emu-clause id="sec-constructor-properties-of-the-intl-object">
     <h1>Constructor Properties of the Intl Object</h1>
 
-    <emu-clause id="sec-intl.locale-intro">
-      <h1>Intl.Locale ( . . . )</h1>
-      <p>
-        See <emu-xref href="#locale-objects"></emu-xref>.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-intl.collator-intro">
       <h1>Intl.Collator ( . . . )</h1>
       <p>
         See <emu-xref href="#collator-objects"></emu-xref>.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.numberformat-intro">
-      <h1>Intl.NumberFormat ( . . . )</h1>
-      <p>
-        See <emu-xref href="#numberformat-objects"></emu-xref>.
       </p>
     </emu-clause>
 
@@ -62,10 +48,31 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.relativetimeformat-intro">
-      <h1>Intl.RelativeTimeFormat ( . . . )</h1>
+    <emu-clause id="sec-intl.displaynames-intro">
+      <h1>Intl.DisplayNames ( . . . )</h1>
       <p>
-        See <emu-xref href="#relativetimeformat-objects"></emu-xref>.
+        See <emu-xref href="#intl-displaynames-objects"></emu-xref>.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.listformat-intro">
+      <h1>Intl.ListFormat ( . . . )</h1>
+      <p>
+        See <emu-xref href="#listformat-objects"></emu-xref>.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.locale-intro">
+      <h1>Intl.Locale ( . . . )</h1>
+      <p>
+        See <emu-xref href="#locale-objects"></emu-xref>.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat-intro">
+      <h1>Intl.NumberFormat ( . . . )</h1>
+      <p>
+        See <emu-xref href="#numberformat-objects"></emu-xref>.
       </p>
     </emu-clause>
 
@@ -73,6 +80,13 @@
       <h1>Intl.PluralRules ( . . . )</h1>
       <p>
         See <emu-xref href="#pluralrules-objects"></emu-xref>.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.relativetimeformat-intro">
+      <h1>Intl.RelativeTimeFormat ( . . . )</h1>
+      <p>
+        See <emu-xref href="#relativetimeformat-objects"></emu-xref>.
       </p>
     </emu-clause>
 

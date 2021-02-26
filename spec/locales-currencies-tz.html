@@ -25,7 +25,7 @@
     </p>
 
     <p>
-      Unicode BCP 47 locale identifiers are structurally valid when they match those syntactical formatting criteria of Unicode Technical Standard 35, section 3.2, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, and PluralRules map the language tags used in requests to locales supported by their respective implementations.
+      Unicode BCP 47 locale identifiers are structurally valid when they match those syntactical formatting criteria of <a href="https://unicode.org/reports/tr35/tr35.html#Unicode_locale_identifier">Unicode Technical Standard 35, section 3.2</a>, but it is not required to validate them according to the Unicode validation data. All structurally valid language tags are valid for use with the APIs defined by this standard. However, the set of locales and thus language tags that an implementation supports with adequate localizations is implementation dependent. The constructors Collator, NumberFormat, DateTimeFormat, PluralRules, ListFormat, and DisplayNames map the language tags used in requests to locales supported by their respective implementations.
     </p>
 
     <emu-clause id="sec-unicode-locale-extension-sequences">
@@ -70,7 +70,7 @@
       </p>
 
       <emu-note>
-        Every string for which this function returns *true* is both a "Unicode BCP 47 locale identifier", consistent with <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 LDML § 3.2 Unicode Locale Identifier</a> and <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>, and a valid <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> language tag.
+        Every string for which this function returns *true* is both a "Unicode BCP 47 locale identifier", consistent with <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 LDML § 3.2 Unicode Locale Identifier</a> and <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>, and a valid <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> language tag.
       </emu-note>
     </emu-clause>
 
@@ -92,10 +92,10 @@
           1. Let _attributes_ be _components_.[[Attributes]].
           1. Let _keywords_ be _components_.[[Keywords]].
           1. Let _newExtension_ be *"u"*.
-          1. For each element _attr_ of _attributes_ in List order, do
+          1. For each element _attr_ of _attributes_, do
             1. Append *"-"* to _newExtension_.
             1. Append _attr_ to _newExtension_.
-          1. For each element _keyword_ of _keywords_ in List order, do
+          1. For each Record { [[Key]], [[Value]] } _keyword_ in _keywords_, do
             1. Append *"-"* to _newExtension_.
             1. Append _keyword_.[[Key]] to _newExtension_.
             1. If _keyword_.[[Value]] is not the empty String, then
@@ -205,7 +205,7 @@
     <h1>Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2021 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by Unicode Technical Standard #35, Part 2, Section 6. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+      The ECMAScript 2021 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">Unicode Technical Standard #35, Part 2, Section 6</a>. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
     </p>
 
     <p>
@@ -217,7 +217,7 @@
       <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in UTS #35, Part 2, Section 6. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">UTS #35, Part 2, Section 6</a>. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -239,12 +239,12 @@
       <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Validity Data as described in UTS #35, Part 1, Section 3.11; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Validity Data as described in <a href="https://unicode.org/reports/tr35/tr35.html#Validity_Data">UTS #35, Part 1, Section 3.11</a>; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
       </p>
 
       <emu-alg>
         1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-simple-unit-identifiers"></emu-xref> below, return *true*.
-        1. Else, Return *false*.
+        1. Else, return *false*.
       </emu-alg>
 
       <emu-table id="table-sanctioned-simple-unit-identifiers">

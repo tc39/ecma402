@@ -31,8 +31,8 @@
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _s_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
-        1. Set _relativeTimeFormat_.[[Style]] to _s_.
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
+        1. Set _relativeTimeFormat_.[[Style]] to _style_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"string"*, «*"always"*, *"auto"*», *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
         1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, « _locale_ »).
@@ -116,9 +116,9 @@
 
         Output (List of Records):
           &laquo;
-            { [[Type]]: "literal", [[Value]]: "AA"},
+            { [[Type]]: "literal", [[Value]]: "AA", [[Unit]]: empty},
             { [[Type]]: "integer", [[Value]]: "15", [[Unit]]: "hour"},
-            { [[Type]]: "literal", [[Value]]: "BB"}
+            { [[Type]]: "literal", [[Value]]: "BB", [[Unit]]: empty}
           &raquo;
         </pre>
       </emu-note>
@@ -126,12 +126,12 @@
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
-        1. For each element _patternPart_ of _patternParts_, in List order, do
+        1. For each Record { [[Type]], [[Value]] } _patternPart_ in _patternParts_, do
           1. If _patternPart_.[[Type]] is *"literal"*, then
-            1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+            1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]], [[Unit]]: ~empty~ } to _result_.
           1. Else,
             1. Assert: _patternPart_.[[Type]] is *"0"*.
-            1. For each Record _part_ in _parts_, do
+            1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
               1. Append Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: _unit_ } to _result_.
         1. Return _result_.
       </emu-alg>
@@ -147,7 +147,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
         1. Let _result_ be an empty String.
-        1. For each Record _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -164,11 +164,11 @@
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%Object.prototype%).
+        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. If _part_ has a [[Unit]] field, then
+          1. If _part_.[[Unit]] is not ~empty~, then
             1. Perform ! CreateDataPropertyOrThrow(_O_, *"unit"*, _part_.[[Unit]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
           1. Increment _n_ by 1.
@@ -188,7 +188,7 @@
       <h1>Intl.RelativeTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        When the *Intl.RelativeTimeFormat* function is called with optional arguments the following steps are taken:
+        When the `Intl.RelativeTimeFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -232,14 +232,14 @@
     </emu-clause>
 
     <p>
-      The value of the *"length"* property of the *supportedLocalesOf* method is 1.
+      The value of the *"length"* property of the `supportedLocalesOf` method is 1.
     </p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat-internal-slots">
       <h1>Internal slots</h1>
 
       <p>
-        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
       </p>
 
       <p>
@@ -251,7 +251,7 @@
       </emu-note>
 
       <p>
-        The value of the [[LocaleData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
       </p>
 
       <ul>
@@ -291,7 +291,7 @@
       <h1>Intl.RelativeTimeFormat.prototype[ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Intl.RelativeTimeFormat"*.
+        The initial value of the @@toStringTag property is the String value *"Intl.RelativeTimeFormat"*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -340,7 +340,7 @@
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
         1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
-        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
+        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-relativetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _relativeTimeFormat_'s internal slot whose name is the Internal Slot value of the current row.

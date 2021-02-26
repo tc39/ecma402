@@ -11,7 +11,7 @@
       <h1>InitializeCollator ( _collator_, _locales_, _options_ )</h1>
 
       <p>
-        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a *Collator* object. The following steps are taken:
+        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a Collator object. The following steps are taken:
       </p>
       <p>
         The following algorithm refers to the `type` nonterminal from <a href="https://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
@@ -115,7 +115,7 @@
       </emu-alg>
 
       <p>
-        The value of the *"length"* property of the *supportedLocalesOf* method is 1.
+        The value of the *"length"* property of the `supportedLocalesOf` method is 1.
       </p>
     </emu-clause>
 
@@ -123,7 +123,7 @@
       <h1>Internal Slots</h1>
 
       <p>
-        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kf"* and *"kn"*, and must not include any other elements.
+        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>. The value of the [[RelevantExtensionKeys]] internal slot is a List that must include the element *"co"*, may include any or all of the elements *"kf"* and *"kn"*, and must not include any other elements.
       </p>
 
       <emu-note>
@@ -131,13 +131,13 @@
       </emu-note>
 
       <p>
-        The values of the [[SortLocaleData]] and [[SearchLocaleData]] internal slots are implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
+        The values of the [[SortLocaleData]] and [[SearchLocaleData]] internal slots are implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
       </p>
 
       <ul>
         <li>The first element of [[SortLocaleData]][[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]][[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
-        <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a sensitivity field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
+        <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
       </ul>
     </emu-clause>
   </emu-clause>
@@ -270,7 +270,7 @@
       <emu-alg>
         1. Let _collator_ be the *this* value.
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
-        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
+        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.

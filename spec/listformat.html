@@ -33,7 +33,7 @@
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
-        1. For each element _patternPart_ of _patternParts_, in List order, do
+        1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _part_ be _patternPart_.[[Type]].
           1. If _part_ is *"literal"*, then
             1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
@@ -41,7 +41,7 @@
             1. Assert: _placeables_ has a field [[&lt;_part_&gt;]].
             1. Let _subst_ be _placeables_.[[&lt;_part_&gt;]].
             1. If Type(_subst_) is List, then
-              1. For each element _s_ of _subst_ in List order, do
+              1. For each element _s_ of _subst_, do
                 1. Append _s_ to _result_.
             1. Else,
               1. Append _subst_ to _result_.
@@ -73,6 +73,7 @@
         1. Let _parts_ be &laquo; _last_ &raquo;.
         1. Let _i_ be _size_ - 2.
         1. Repeat, while _i_ &ge; 0,
+          1. Let _head_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_i_] }.
           1. Let _n_ be an implementation-defined index into _listFormat_.[[Templates]] based on _listFormat_.[[Locale]], _head_, and _parts_.
           1. If _i_ is 0, then
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Start]].
@@ -80,7 +81,6 @@
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[Middle]].
           1. Else,
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[End]].
-          1. Let _head_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_i_] }.
           1. Let _placeables_ be a new Record { [[0]]: _head_, [[1]]: _parts_ }.
           1. Set _parts_ to DeconstructPattern(_pattern_, _placeables_).
           1. Decrement _i_ by 1.
@@ -88,7 +88,7 @@
       </emu-alg>
 
       <emu-note>
-        The index _n_ to select across multiple templates permits the conjunction to be dependent on the context, as in Spanish, where "y" or "e" may be selected, dependending on the following word.
+        The index _n_ to select across multiple templates permits the conjunction to be dependent on the context, as in Spanish, where either "y" or "e" may be selected, depending on the following word.
       </emu-note>
     </emu-clause>
 
@@ -103,7 +103,7 @@
         1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be an empty String.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
-          1. Set _result_ to a String value produced by concatenating _result_ and _part_.[[Value]].
+          1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -120,7 +120,7 @@
         1. Let _result_ be ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%Object.prototype%).
+          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
@@ -173,7 +173,7 @@
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%ListFormat.prototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Let _options_ be GetOptionsObject(_options_).
+        1. Let _options_ be ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
@@ -229,7 +229,7 @@
       <h1>Internal slots</h1>
 
       <p>
-        The value of the [[AvailableLocales]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
       </p>
 
       <p>
@@ -241,13 +241,12 @@
       </emu-note>
 
       <p>
-        The value of the [[LocaleData]] internal slot is implementation defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for each locale value _locale_ in %ListFormat%.[[AvailableLocales]]:
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for each locale value _locale_ in %ListFormat%.[[AvailableLocales]]:
       </p>
 
       <ul>
         <li>[[LocaleData]][[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
-        <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be List of Records with the fields with names: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules.</li>
-        <li>The ListFormat template set's entry's Record fields each expected to be valid template patterns. They should each contain one instance of the substring *"{0}"* and once instance of the substring *"{1}"*, and the substring *"{0}"* should occur before the substring *"{1}"*.</li>
+        <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a List of Records with fields named: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules. Each template string must contain the substrings *"{0}"* and *"{1}"* exactly once. The substring *"{0}"* should occur before the substring *"{1}"*.</li>
       </ul>
 
       <emu-note>
@@ -279,7 +278,7 @@
       <h1>Intl.ListFormat.prototype [ @@toStringTag ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the string value *"Intl.ListFormat"*.
+        The initial value of the @@toStringTag property is the String value *"Intl.ListFormat"*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -295,8 +294,7 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
         1. Return FormatList(_lf_, _stringList_).
       </emu-alg>
@@ -311,8 +309,7 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
         1. Return FormatListToParts(_lf_, _stringList_).
       </emu-alg>
@@ -327,9 +324,8 @@
 
       <emu-alg>
         1. Let _lf_ be the *this* value.
-        1. If Type(_lf_) is not Object, throw a *TypeError* exception.
-        1. If _lf_ does not have an [[InitializedListFormat]] internal slot, throw a *TypeError* exception.
-        1. Let _options_ be ! ObjectCreate(%Object.prototype%).
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
+        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-listformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _lf_'s internal slot whose name is the Internal Slot value of the current row.

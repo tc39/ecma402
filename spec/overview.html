@@ -30,7 +30,7 @@
       Applications can use the API in two ways:
       <ol>
         <li>
-          Directly, by using the constructors Intl.Collator, Intl.NumberFormat, Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, or Intl.PluralRules to construct an object, specifying a list of preferred languages and options to configure the behaviour of the resulting object. The object then provides a main function (compare, select, or format), which can be called repeatedly. It also provides a resolvedOptions function, which the application can use to find out the exact configuration of the object.
+          Directly, by using the constructors Intl.Collator, Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, Intl.NumberFormat, Intl.PluralRules, or Intl.RelativeTimeFormat to construct an object, specifying a list of preferred languages and options to configure the behaviour of the resulting object. The object then provides a main function (compare, select, or format), which can be called repeatedly. It also provides a resolvedOptions function, which the application can use to find out the exact configuration of the object.
         </li>
         <li>
           Indirectly, by using the functions of the ECMAScript 2021 Language Specification mentioned above. The collation and formatting functions are respecified in this specification to accept the same arguments as the Collator, NumberFormat, and DateTimeFormat constructors and produce the same results as their compare or format methods. The case conversion functions are respecified to accept a list of preferred languages.
