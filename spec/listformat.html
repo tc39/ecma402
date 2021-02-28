@@ -157,10 +157,14 @@
 
   <emu-clause id="sec-intl-listformat-constructor">
     <h1>The Intl.ListFormat Constructor</h1>
-
-    <p>
-      The ListFormat constructor is the <dfn>%ListFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.ListFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%ListFormat%</dfn>.</li>
+      <li>is the initial value of the *"ListFormat"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new ListFormat object when called as a constructor.</li>
+      <li>is not intended to be called as a function and will throw an exception when called in that manner.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified ListFormat behaviour must include a `super` call to the Intl.ListFormat constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.ListFormat">
       <h1>Intl.ListFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -195,16 +199,18 @@
 
   <emu-clause id="sec-properties-of-intl-listformat-constructor">
     <h1>Properties of the Intl.ListFormat Constructor</h1>
-
-    <p>
-      The Intl.ListFormat constructor has the following properties:
-    </p>
+    <p>The Intl.ListFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-Intl.ListFormat.prototype">
       <h1>Intl.ListFormat.prototype</h1>
 
       <p>
-        The value of `Intl.ListFormat.prototype` is %ListFormat.prototype%.
+        The value of `Intl.ListFormat.prototype` is the Intl.ListFormat prototype object.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -245,7 +251,7 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]][[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
         <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a List of Records with fields named: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules. Each template string must contain the substrings *"{0}"* and *"{1}"* exactly once. The substring *"{0}"* should occur before the substring *"{1}"*.</li>
       </ul>
 
@@ -261,28 +267,22 @@
 
   <emu-clause id="sec-properties-of-intl-listformat-prototype-object">
     <h1>Properties of the Intl.ListFormat Prototype Object</h1>
-
-    <p>
-      The Intl.ListFormat prototype object is itself an ordinary object. <dfn>%ListFormat.prototype%</dfn> is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.
-    </p>
+    <p>The <dfn>Intl.ListFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%ListFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.ListFormat.prototype.constructor">
       <h1>Intl.ListFormat.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.ListFormat.prototype.constructor` is the intrinsic object %ListFormat%.
-      </p>
+      <p>The initial value of `Intl.ListFormat.prototype.constructor` is %ListFormat%.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.ListFormat.prototype-toStringTag">
       <h1>Intl.ListFormat.prototype [ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.ListFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.ListFormat"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.ListFormat.prototype.format">

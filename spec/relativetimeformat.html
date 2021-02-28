@@ -179,10 +179,14 @@
 
   <emu-clause id="sec-intl-relativetimeformat-constructor">
     <h1>The Intl.RelativeTimeFormat Constructor</h1>
-
-    <p>
-      The RelativeTimeFormat constructor is the <dfn>%RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.RelativeTimeFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%RelativeTimeFormat%</dfn>.</li>
+      <li>is the initial value of the *"RelativeTimeFormat"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new RelativeTimeFormat object when called as a constructor.</li>
+      <li>is not intended to be called as a function and will throw an exception when called in that manner.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified RelativeTimeFormat behaviour must include a `super` call to the Intl.RelativeTimeFormat constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat">
       <h1>Intl.RelativeTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -201,20 +205,17 @@
 
   <emu-clause id="sec-properties-of-intl-relativetimeformat-constructor">
     <h1>Properties of the Intl.RelativeTimeFormat Constructor</h1>
-
-    <p>
-      The Intl.RelativeTimeFormat constructor has the following properties:
-    </p>
+    <p>The Intl.RelativeTimeFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype">
       <h1>Intl.RelativeTimeFormat.prototype</h1>
-
-      <p>
-        The value of `Intl.RelativeTimeFormat.prototype` is %RelativeTimeFormat.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.RelativeTimeFormat.prototype` is the Intl.RelativeTimeFormat prototype object.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.supportedLocalesOf">
@@ -274,28 +275,22 @@
 
   <emu-clause id="sec-properties-of-intl-relativetimeformat-prototype-object">
     <h1>Properties of the Intl.RelativeTimeFormat Prototype Object</h1>
-
-    <p>
-      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
-    </p>
+    <p>The <dfn>Intl.RelativeTimeFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%RelativeTimeFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.constructor">
       <h1>Intl.RelativeTimeFormat.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %RelativeTimeFormat%.
-      </p>
+      <p>The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %RelativeTimeFormat%.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype-toStringTag">
-      <h1>Intl.RelativeTimeFormat.prototype[ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.RelativeTimeFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <h1>Intl.RelativeTimeFormat.prototype [ @@toStringTag ]</h1>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.RelativeTimeFormat"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.format">

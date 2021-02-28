@@ -884,10 +884,13 @@
 
   <emu-clause id="sec-intl-numberformat-constructor">
     <h1>The Intl.NumberFormat Constructor</h1>
-
-    <p>
-      The NumberFormat constructor is the <dfn>%NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.NumberFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%NumberFormat%</dfn>.</li>
+      <li>is the initial value of the *"NumberFormat"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new NumberFormat object when called as a function rather than as a constructor. Thus the function call `Intl.NumberFormat(&hellip;)` is equivalent to the object creation expression `new Intl.NumberFormat(&hellip;)` with the same arguments.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified NumberFormat behaviour must include a `super` call to the Intl.NumberFormat constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-intl.numberformat">
       <h1>Intl.NumberFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -920,20 +923,18 @@
 
   <emu-clause id="sec-properties-of-intl-numberformat-constructor">
     <h1>Properties of the Intl.NumberFormat Constructor</h1>
-
-    <p>
-      The Intl.NumberFormat constructor has the following properties:
-    </p>
+    <p>The Intl.NumberFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.numberformat.prototype">
       <h1>Intl.NumberFormat.prototype</h1>
 
-      <p>
-        The value of `Intl.NumberFormat.prototype` is %NumberFormat.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.NumberFormat.prototype` is the Intl.NumberFormat prototype object.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.supportedlocalesof">
@@ -1001,28 +1002,22 @@
 
   <emu-clause id="sec-properties-of-intl-numberformat-prototype-object">
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
-
-    <p>
-      The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%NumberFormat.prototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
-    </p>
+    <p>The <dfn>Intl.NumberFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%NumberFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.</li>
+    </ul>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.NumberFormat.prototype.constructor` is the intrinsic object %NumberFormat%.
-      </p>
+      <p>The initial value of `Intl.NumberFormat.prototype.constructor` is %NumberFormat%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.prototype-@@tostringtag">
       <h1>Intl.NumberFormat.prototype [ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.NumberFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.NumberFormat"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.prototype.format">

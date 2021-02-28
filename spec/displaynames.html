@@ -33,10 +33,14 @@
 
   <emu-clause id="sec-intl-displaynames-constructor">
     <h1>The Intl.DisplayNames Constructor</h1>
-
-    <p>
-      The DisplayNames constructor is the <dfn>%DisplayNames%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.DisplayNames constructor:</p>
+    <ul>
+      <li>is <dfn>%DisplayNames%</dfn>.</li>
+      <li>is the initial value of the *"DisplayNames"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new DisplayNames object when called as a constructor.</li>
+      <li>is not intended to be called as a function and will throw an exception when called in that manner.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified DisplayNames behaviour must include a `super` call to the Intl.DisplayNames constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.DisplayNames">
       <h1>Intl.DisplayNames ( _locales_, _options_ )</h1>
@@ -80,20 +84,18 @@
 
   <emu-clause id="sec-properties-of-intl-displaynames-constructor">
     <h1>Properties of the Intl.DisplayNames Constructor</h1>
-
-    <p>
-      The Intl.DisplayNames constructor has the following properties:
-    </p>
+    <p>The Intl.DisplayNames constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-Intl.DisplayNames.prototype">
       <h1>Intl.DisplayNames.prototype</h1>
 
-      <p>
-        The value of `Intl.DisplayNames.prototype` is %DisplayNames.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.DisplayNames.prototype` is the Intl.DisplayNames prototype object.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DisplayNames.supportedLocalesOf">
@@ -142,28 +144,22 @@
 
   <emu-clause id="sec-properties-of-intl-displaynames-prototype-object">
     <h1>Properties of the Intl.DisplayNames Prototype Object</h1>
-
-    <p>
-      The Intl.DisplayNames prototype object is itself an ordinary object. <dfn>%DisplayNames.prototype%</dfn> is not an Intl.DisplayNames instance and does not have an [[InitializedDisplayNames]] internal slot or any of the other internal slots of Intl.DisplayNames instance objects.
-    </p>
+    <p>The <dfn>Intl.DisplayNames prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%DisplayNames.prototype%</dfn></li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.DisplayNames instance and does not have an [[InitializedDisplayNames]] internal slot or any of the other internal slots of Intl.DisplayNames instance objects.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.DisplayNames.prototype.constructor">
       <h1>Intl.DisplayNames.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.DisplayNames.prototype.constructor` is the intrinsic object %DisplayNames%.
-      </p>
+      <p>The initial value of `Intl.DisplayNames.prototype.constructor` is %DisplayNames%.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DisplayNames.prototype-@@tostringtag">
-      <h1>Intl.DisplayNames.prototype[ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.DisplayNames"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <h1>Intl.DisplayNames.prototype [ @@toStringTag ]</h1>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.DisplayNames"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.DisplayNames.prototype.of" aoid="Intl.DisplayNames.prototype.of">

@@ -3,9 +3,13 @@
 
   <emu-clause id="sec-the-intl-collator-constructor">
     <h1>The Intl.Collator Constructor</h1>
-    <p>
-      The Intl.Collator constructor is the <dfn>%Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.Collator constructor:</p>
+    <ul>
+      <li>is <dfn>%Collator%</dfn>.</li>
+      <li>is the initial value of the *"Collator"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new Collator object when called as a function rather than as a constructor. Thus the function call `Intl.Collator(&hellip;)` is equivalent to the object creation expression `new Intl.Collator(&hellip;)` with the same arguments.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified Collator behaviour must include a `super` call to the Intl.Collator constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-initializecollator" aoid="InitializeCollator">
       <h1>InitializeCollator ( _collator_, _locales_, _options_ )</h1>
@@ -84,21 +88,17 @@
 
   <emu-clause id="sec-properties-of-the-intl-collator-constructor">
     <h1>Properties of the Intl.Collator Constructor</h1>
-
-    <p>
-      The Intl.Collator constructor has the following properties:
-    </p>
+    <p>The Intl.Collator constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.collator.prototype">
       <h1>Intl.Collator.prototype</h1>
-
-      <p>
-        The value of `Intl.Collator.prototype` is %Collator.prototype%.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.Collator.prototype` is the Intl.Collator prototype object.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.collator.supportedlocalesof">
@@ -135,38 +135,31 @@
       </p>
 
       <ul>
-        <li>The first element of [[SortLocaleData]][[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]][[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
+        <li>The first element of [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
-        <li>[[SearchLocaleData]][[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
+        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
       </ul>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-intl-collator-prototype-object">
     <h1>Properties of the Intl.Collator Prototype Object</h1>
-
-    <p>
-      The Intl.Collator prototype object is itself an ordinary object. <dfn>%Collator.prototype%</dfn> is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.
-    </p>
+    <p>The <dfn>Intl.Collator prototype object</dfn>:</p>
+    <li>
+      <ul>is <dfn>%Collator.prototype%</dfn>.</ul>
+      <ul>is an ordinary object.</ul>
+      <ul>is not an Intl.Collator instance and does not have an [[InitializedCollator]] internal slot or any of the other internal slots of Intl.Collator instance objects.</ul>
+    </li>
 
     <emu-clause id="sec-intl.collator.prototype.constructor">
       <h1>Intl.Collator.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.Collator.prototype.constructor` is the intrinsic object %Collator%.
-      </p>
+      <p>The initial value of `Intl.Collator.prototype.constructor` is %Collator%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.collator.prototype-@@tostringtag">
       <h1>Intl.Collator.prototype [ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.Collator"*.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.Collator"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.collator.prototype.compare">
