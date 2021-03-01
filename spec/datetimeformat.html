@@ -311,27 +311,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-datetime-format-functions">
-      <h1>DateTime Format Functions</h1>
-
-      <p>A DateTime format function is an anonymous built-in function that has a [[DateTimeFormat]] internal slot.</p>
-      <p>When a DateTime format function _F_ is called with optional argument _date_, the following steps are taken:</p>
-
-      <emu-alg>
-        1. Let _dtf_ be _F_.[[DateTimeFormat]].
-        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
-        1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be Call(%Date.now%, *undefined*).
-        1. Else,
-          1. Let _x_ be ? ToNumber(_date_).
-        1. Return ? FormatDateTime(_dtf_, _x_).
-      </emu-alg>
-
-      <p>
-        The *"length"* property of a DateTime format function is 1.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-formatdatetimepattern" aoid="FormatDateTimePattern">
       <h1>FormatDateTimePattern ( _dateTimeFormat_, _patternParts_, _x_, _rangeFormatOptions_ )</h1>
 
@@ -1017,27 +996,28 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.datetimeformat.prototype.format">
+    <emu-clause id="sec-intl.datetimeformat.prototype.format" oldids="sec-datetime-format-functions">
       <h1>get Intl.DateTimeFormat.prototype.format</h1>
-
-      <p>
-        Intl.DateTimeFormat.prototype.format is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:
-      </p>
-
+      <p>`Intl.DateTimeFormat.prototype.format` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _dtf_ be the *this* value.
         1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
         1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Set _F_.[[DateTimeFormat]] to _dtf_.
+          1. Let _closure_ be a new Abstract Closure with parameters (_date_) that captures _dtf_ and performs the following steps when called:
+            1. If _date_ is *undefined*, then
+              1. Let _x_ be Call(%Date.now%, *undefined*).
+            1. Else,
+              1. Let _x_ be ? ToNumber(_date_).
+            1. Return ? FormatDateTime(_dtf_, _x_).
+          1. Let _F_ be CreateBuiltinFunction(_closure_, 1, *""*, &laquo; &raquo;).
           1. Set _dtf_.[[BoundFormat]] to _F_.
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
 
       <emu-note>
-        The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.
-        This is considered a historical artefact, as part of a convention which is no longer followed for new features, but is preserved to maintain compatibility with existing programs.
+        <p>The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.</p>
+        <p>This is considered a historical artefact, as part of a convention which is no longer followed for new features, but is preserved to maintain compatibility with existing programs.</p>
       </emu-note>
     </emu-clause>
 
