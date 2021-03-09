@@ -14,12 +14,21 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: 'build-ci'
+      - name: 'build-main'
         uses: ljharb/actions/node/run@main
         with:
           node-version: lts/*
           shell-command: |
-            npm run build-ci
+            npm run build-only
+      - name: Checkout RC 🛎️ 🛎️
+        uses: actions/checkout@v2
+        ref: 'es2021' # TODO: read the branch name from package.json
+      - name: 'build-main'
+        uses: ljharb/actions/node/run@main
+        with:
+          node-version: lts/*
+          shell-command: |
+            npm run build-rc
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
