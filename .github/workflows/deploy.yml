@@ -28,7 +28,7 @@ jobs:
       - name: mdkir rc folder
         run: mkdir out/2021
       - name: copy images
-        run: cp-R img "out/2021"
+        run: cp -R img "out/2021"
       - name: build rc
         uses: ljharb/actions/node/run@main
         with:
