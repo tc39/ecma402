@@ -336,7 +336,7 @@
       <h1>FormatDateTimePattern ( _dateTimeFormat_, _patternParts_, _x_, _rangeFormatOptions_ )</h1>
 
       <p>
-        The FormatDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _patternParts_ (which is a list of Records as returned by PartitionPattern), _x_ (which must be a Number value), and _rangeFormatOptions_ (which is a range pattern Record as used in [[rangePattern]] or *undefined*), interprets _x_ as a time value as specified in ES2021, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_. The following steps are taken:
+        The FormatDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _patternParts_ (which is a list of Records as returned by PartitionPattern), _x_ (which must be a Number value), and _rangeFormatOptions_ (which is a range pattern Record as used in [[rangePattern]] or *undefined*), interprets _x_ as a time value as specified in es2022, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -423,7 +423,7 @@
       <h1>PartitionDateTimePattern ( _dateTimeFormat_, _x_ )</h1>
 
       <p>
-        The PartitionDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), interprets _x_ as a time value as specified in ES2021, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
+        The PartitionDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat) and _x_ (which must be a Number value), interprets _x_ as a time value as specified in es2022, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -474,7 +474,7 @@
       <h1>PartitionDateTimeRangePattern ( _dateTimeFormat_, _x_, _y_ )</h1>
 
       <p>
-        The PartitionDateTimeRangePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _x_ (which must be a Number value) and _y_ (which must be a Number value), interprets _x_ and _y_ as time values as specified in ES2021, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
+        The PartitionDateTimeRangePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _x_ (which must be a Number value) and _y_ (which must be a Number value), interprets _x_ and _y_ as time values as specified in es2022, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
       </p>
       <emu-alg>
         1. Let _x_ be TimeClip(_x_).
@@ -612,15 +612,15 @@
           </thead>
           <tr>
             <td>[[Weekday]]</td>
-            <td>`WeekDay(tz)` specified in ES2021's <emu-xref href="#sec-week-day">Week Day</emu-xref></td>
+            <td>`WeekDay(tz)` specified in es2022's <emu-xref href="#sec-week-day">Week Day</emu-xref></td>
           </tr>
           <tr>
             <td>[[Era]]</td>
-            <td>Let `year` be `YearFromTime(tz)` specified in ES2021's <emu-xref href="#sec-year-number">Year Number</emu-xref>. If `year` is less than 0, return 'BC', else, return 'AD'.</td>
+            <td>Let `year` be `YearFromTime(tz)` specified in es2022's <emu-xref href="#sec-year-number">Year Number</emu-xref>. If `year` is less than 0, return 'BC', else, return 'AD'.</td>
           </tr>
           <tr>
             <td>[[Year]]</td>
-            <td>`YearFromTime(tz)` specified in ES2021's <emu-xref href="#sec-year-number">Year Number</emu-xref></td>
+            <td>`YearFromTime(tz)` specified in es2022's <emu-xref href="#sec-year-number">Year Number</emu-xref></td>
           </tr>
           <tr>
             <td>[[RelatedYear]]</td>
@@ -632,27 +632,27 @@
           </tr>
           <tr>
             <td>[[Month]]</td>
-            <td>`MonthFromTime(tz)` specified in ES2021's <emu-xref href="#sec-month-number">Month Number</emu-xref></td>
+            <td>`MonthFromTime(tz)` specified in es2022's <emu-xref href="#sec-month-number">Month Number</emu-xref></td>
           </tr>
           <tr>
             <td>[[Day]]</td>
-            <td>`DateFromTime(tz)` specified in ES2021's <emu-xref href="#sec-date-number">Date Number</emu-xref></td>
+            <td>`DateFromTime(tz)` specified in es2022's <emu-xref href="#sec-date-number">Date Number</emu-xref></td>
           </tr>
           <tr>
             <td>[[Hour]]</td>
-            <td>`HourFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`HourFromTime(tz)` specified in es2022's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[Minute]]</td>
-            <td>`MinFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`MinFromTime(tz)` specified in es2022's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[Second]]</td>
-            <td>`SecFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`SecFromTime(tz)` specified in es2022's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[Millisecond]]</td>
-            <td>`msFromTime(tz)` specified in ES2021's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
+            <td>`msFromTime(tz)` specified in es2022's <emu-xref href="#sec-hours-minutes-second-and-milliseconds">Hours, Minutes, Second, and Milliseconds</emu-xref></td>
           </tr>
           <tr>
             <td>[[InDST]]</td>
@@ -1215,7 +1215,7 @@
       </p>
 
       <emu-note>
-        In this version of the ECMAScript 2021 Internationalization API, the *"timeZone"* property will be the name of the default time zone if no *"timeZone"* property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the *"timeZone"* property *undefined* in this case.
+        In this version of the ECMAScript 2022 Internationalization API, the *"timeZone"* property will be the name of the default time zone if no *"timeZone"* property was provided in the options object provided to the Intl.DateTimeFormat constructor. The first edition left the *"timeZone"* property *undefined* in this case.
       </emu-note>
 
       <emu-note>
