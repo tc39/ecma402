@@ -14,6 +14,7 @@ body {
   flex-basis: 66%;
   box-sizing: border-box;
   overflow: hidden;
+  padding-bottom: 1em;
 }
 
 body.oldtoc {
@@ -132,10 +133,12 @@ emu-eqn div:first-child {
 
 emu-note {
   margin: 1em 0;
-  color: #666;
-  border-left: 5px solid #ccc;
   display: flex;
   flex-direction: row;
+  color: inherit;
+  border-left: 5px solid #52E052;
+  background: #E9FBE9;
+  padding: 10px 10px 10px 0;
 }
 
 emu-note > span.note {
@@ -331,16 +334,10 @@ h1.shortname {
 h1.version {
   color: #f60;
   font-size: 1.5em;
-  margin: 0;
 }
 
 h1.title {
-  margin-top: 0;
   color: #f60;
-}
-
-h1.first {
-  margin-top: 0;
 }
 
 h1,
@@ -380,6 +377,14 @@ h5 {
 }
 h6 {
   font-size: 1em;
+}
+
+pre code.hljs {
+  background: transparent;
+}
+
+emu-clause[id], emu-annex[id], emu-intro[id] {
+  scroll-margin-top: 2ex;
 }
 
 emu-intro h1,
@@ -526,6 +531,12 @@ emu-annex emu-annex emu-annex emu-annex emu-annex emu-annex {
   margin-top: 1.8em;
 }
 
+#spec-container > emu-intro:first-of-type,
+#spec-container > emu-clause:first-of-type,
+#spec-container > emu-annex:first-of-type {
+  margin-top: 0;
+}
+
 /* Figures and tables */
 figure {
   display: block;
@@ -566,6 +577,10 @@ emu-table th,
 emu-table thead td,
 table.real-table th {
   background-color: #eeeeee;
+}
+
+emu-table td {
+  background: #fff;
 }
 
 /* Note: the left content edges of table.lightweight-table >tbody >tr >td
