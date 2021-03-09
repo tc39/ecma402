@@ -1,4 +1,4 @@
-name: 'ecma-402'
+name: 'build & lint ecmarkup'
 
 on: [pull_request, push]
 

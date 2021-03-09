@@ -1,4 +1,4 @@
-name: 'ecma-402'
+name: 'deploy github pages'
 
 on:
   push:
