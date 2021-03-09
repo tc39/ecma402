@@ -25,7 +25,7 @@ jobs:
         with:
           ref: 'es2021'
           clean: false
-      - name: 'build-main'
+      - name: 'build-rc'
         uses: ljharb/actions/node/run@main
         with:
           node-version: lts/*
