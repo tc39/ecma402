@@ -4,7 +4,6 @@
   "version": "8.0.0",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
-    "build-rc": "mkdir \"out/2021\" && cp -R img \"out/2021\" && ecmarkup --verbose spec/index.html out/2021/index.html --css out/2021/ecmarkup.css --js out/2021/ecmarkup.js",
     "build-master": "mkdir out && cp -R img out && ecmarkup --lint-spec --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
     "prebuild": "npm run clean",
     "build": "npm run build-master",
