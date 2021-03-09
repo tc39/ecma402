@@ -14,12 +14,12 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: 'npm install && npm run build-only ./scripts/auto-deploy.sh'
+      - name: 'build-ci'
         uses: ljharb/actions/node/run@main
         with:
           node-version: lts/*
           shell-command: |
-            npm run build-only
+            npm run build-ci
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
