@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'es2021'
+          clean: false
       - name: 'build-main'
         uses: ljharb/actions/node/run@main
         with:
