@@ -50,7 +50,7 @@
         1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[Fields]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, throw a *TypeError* exception.
-        1. Let _options_ be ? GetOptionsObject(_options_).
+        1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
