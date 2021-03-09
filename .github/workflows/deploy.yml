@@ -30,11 +30,8 @@ jobs:
       - name: copy images
         run: cp -R img "out/2021"
       - name: build rc
-        uses: ljharb/actions/node/run@main
-        with:
-          node-version: lts/*
-          shell-command: |
-            ecmarkup --verbose spec/index.html out/2021/index.html --css out/2021/ecmarkup.css --js out/2021/ecmarkup.js
+        run: |
+          ./node_modules/.bin/ecmarkup --verbose spec/index.html out/2021/index.html --css out/2021/ecmarkup.css --js out/2021/ecmarkup.js
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
