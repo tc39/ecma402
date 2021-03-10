@@ -2,14 +2,19 @@
   "https://tc39.es/ecma262/": [
     {
       "type": "op",
+      "aoid": "OrdinaryObjectCreate",
+      "id": "sec-ordinaryobjectcreate"
+    },
+    {
+      "type": "op",
       "aoid": "StringIndexOf",
       "refId": "sec-stringindexof",
       "key": "StringIndexOf"
     },
     {
       "type": "op",
-      "aoid": "OrdinaryObjectCreate",
-      "id": "sec-ordinaryobjectcreate"
+      "aoid": "ToIntegerOrInfinity",
+      "id": "sec-tointegerorinfinity"
     }
   ]
 }
