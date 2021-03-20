@@ -13,23 +13,23 @@
       <p>
         The placeables record is a record whose keys are placeables tokens used in the pattern string, and values are parts records which will be used in the result List to represent the token part.
         Example:
-        <pre>
-        Input:
-          DeconstructPattern("AA{xx}BB{yy}CC", {
-            [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
-            [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
-          })
-
-        Output (List of parts records):
-          &laquo;
-            {[[Type]]: "literal", [[Value]]: "AA"},
-            {[[Type]]: "hour", [[Value]]: "15"},
-            {[[Type]]: "literal", [[Value]]: "BB"},
-            {[[Type]]: "minute", [[Value]]: "06"},
-            {[[Type]]: "literal", [[Value]]: "CC"}
-          &raquo;
-        </pre>
       </p>
+      <pre>
+      Input:
+        DeconstructPattern("AA{xx}BB{yy}CC", {
+          [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
+          [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
+        })
+
+      Output (List of parts records):
+        &laquo;
+          {[[Type]]: "literal", [[Value]]: "AA"},
+          {[[Type]]: "hour", [[Value]]: "15"},
+          {[[Type]]: "literal", [[Value]]: "BB"},
+          {[[Type]]: "minute", [[Value]]: "06"},
+          {[[Type]]: "literal", [[Value]]: "CC"}
+        &raquo;
+      </pre>
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
