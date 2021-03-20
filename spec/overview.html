@@ -26,17 +26,15 @@
       The ECMAScript 2022 Internationalization API Specification provides several key pieces of language-sensitive functionality that are required in most applications: String comparison (collation), number formatting, date and time formatting, display names, list formatting, pluralization rules, and case conversion. While the ECMAScript 2022 Language Specification provides functions for this basic functionality (on Array.prototype: toLocaleString; on String.prototype: localeCompare, toLocaleLowerCase, toLocaleUpperCase; on Number.prototype: toLocaleString; on Date.prototype: toLocaleString, toLocaleDateString, and toLocaleTimeString), it leaves the actual behaviour of these functions largely up to implementations to define. The ECMAScript 2022 Internationalization API Specification provides additional functionality, control over the language and over details of the behaviour to be used, and a more complete specification of required functionality.
     </p>
 
-    <p>
-      Applications can use the API in two ways:
-      <ol>
-        <li>
-          Directly, by using the constructors Intl.Collator, Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, Intl.NumberFormat, Intl.PluralRules, or Intl.RelativeTimeFormat to construct an object, specifying a list of preferred languages and options to configure the behaviour of the resulting object. The object then provides a main function (compare, select, or format), which can be called repeatedly. It also provides a resolvedOptions function, which the application can use to find out the exact configuration of the object.
-        </li>
-        <li>
-          Indirectly, by using the functions of the ECMAScript 2022 Language Specification mentioned above. The collation and formatting functions are respecified in this specification to accept the same arguments as the Collator, NumberFormat, and DateTimeFormat constructors and produce the same results as their compare or format methods. The case conversion functions are respecified to accept a list of preferred languages.
-        </li>
-      </ol>
-    </p>
+    <p>Applications can use the API in two ways:</p>
+    <ol>
+      <li>
+        Directly, by using the constructors Intl.Collator, Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, Intl.NumberFormat, Intl.PluralRules, or Intl.RelativeTimeFormat to construct an object, specifying a list of preferred languages and options to configure the behaviour of the resulting object. The object then provides a main function (compare, select, or format), which can be called repeatedly. It also provides a resolvedOptions function, which the application can use to find out the exact configuration of the object.
+      </li>
+      <li>
+        Indirectly, by using the functions of the ECMAScript 2022 Language Specification mentioned above. The collation and formatting functions are respecified in this specification to accept the same arguments as the Collator, NumberFormat, and DateTimeFormat constructors and produce the same results as their compare or format methods. The case conversion functions are respecified to accept a list of preferred languages.
+      </li>
+    </ol>
 
     <p>
       The Intl object is used to package all functionality defined in the ECMAScript 2022 Internationalization API Specification to avoid name collisions.
@@ -58,18 +56,18 @@
 
     <p>
       Due to the nature of internationalization, the API specification has to leave several details implementation dependent:
-      <ul>
-        <li>
-          <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists estimate the number of human languages to around 6000, and the more widely spoken ones have variations based on regions or other parameters. Even large locale data collections, such as the Common Locale Data Repository, cover only a subset of this large set. Implementations targeting resource-constrained devices may have to further reduce the subset.
-        </li>
-        <li>
-          <em>The exact form of localizations such as format patterns:</em> In many cases locale-dependent conventions are not standardized, so different forms may exist side by side, or they vary over time. Different internationalization libraries may have implemented different forms, without any of them being actually wrong. In order to allow this API to be implemented on top of existing libraries, such variations have to be permitted.
-        </li>
-        <li>
-          <em>Subsets of Unicode:</em> Some operations, such as collation, operate on strings that can include characters from the entire Unicode character set. However, both the Unicode standard and the ECMAScript standard allow implementations to limit their functionality to subsets of the Unicode character set. In addition, locale conventions typically don't specify the desired behaviour for the entire Unicode character set, but only for those characters that are relevant for the locale. While the Unicode Collation Algorithm combines a default collation order for the entire Unicode character set with the ability to tailor for local conventions, subsets and tailorings still result in differences in behaviour.
-        </li>
-      </ul>
     </p>
+    <ul>
+      <li>
+        <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists estimate the number of human languages to around 6000, and the more widely spoken ones have variations based on regions or other parameters. Even large locale data collections, such as the Common Locale Data Repository, cover only a subset of this large set. Implementations targeting resource-constrained devices may have to further reduce the subset.
+      </li>
+      <li>
+        <em>The exact form of localizations such as format patterns:</em> In many cases locale-dependent conventions are not standardized, so different forms may exist side by side, or they vary over time. Different internationalization libraries may have implemented different forms, without any of them being actually wrong. In order to allow this API to be implemented on top of existing libraries, such variations have to be permitted.
+      </li>
+      <li>
+        <em>Subsets of Unicode:</em> Some operations, such as collation, operate on strings that can include characters from the entire Unicode character set. However, both the Unicode standard and the ECMAScript standard allow implementations to limit their functionality to subsets of the Unicode character set. In addition, locale conventions typically don't specify the desired behaviour for the entire Unicode character set, but only for those characters that are relevant for the locale. While the Unicode Collation Algorithm combines a default collation order for the entire Unicode character set with the ability to tailor for local conventions, subsets and tailorings still result in differences in behaviour.
+      </li>
+    </ul>
 
     <emu-clause id="sec-compatibility">
       <h1>Compatibility across implementations</h1>
