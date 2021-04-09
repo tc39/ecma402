@@ -19,7 +19,7 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, «*"lookup"*, *"best fit"*», *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[LocaleMatcher]] to _matcher_.
         1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, *"string"*, *undefined*, *undefined*).
         1. If _numberingSystem_ is not *undefined*, then
@@ -31,12 +31,12 @@
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, «*"long"*, *"short"*, *"narrow"*», *"long"*).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
         1. Set _relativeTimeFormat_.[[Style]] to _style_.
-        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"string"*, «*"always"*, *"auto"*», *"always"*).
+        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"string"*, &laquo; *"always"*, *"auto"* &raquo;, *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
-        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, « _locale_ »).
-        1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%PluralRules%, « _locale_ »).
+        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, &laquo; _locale_ &raquo;).
+        1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%PluralRules%, &laquo; _locale_ &raquo;).
         1. Return _relativeTimeFormat_.
       </emu-alg>
     </emu-clause>
@@ -193,7 +193,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, « [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] »).
+        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
         1. Return ? InitializeRelativeTimeFormat(_relativeTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -221,7 +221,7 @@
       <h1>Intl.RelativeTimeFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
-        When the `supportedLocalesOf` method of %RelativeTimeFormat% is called, the following steps are taken:
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
@@ -243,7 +243,7 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is « *"nu"* ».
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; *"nu"* &raquo;.
       </p>
 
       <emu-note>
