@@ -666,30 +666,23 @@
       </emu-note>
     </emu-clause>
 
+    <emu-normative-optional>
     <emu-clause id="sec-unwrapdatetimeformat" aoid="UnwrapDateTimeFormat">
       <h1>UnwrapDateTimeFormat ( _dtf_ )</h1>
       <p>
-        The UnwrapDateTimeFormat abstract operation gets the underlying DateTimeFormat operation
-        for various methods which implement ECMA-402 v1 semantics for supporting initializing
-        existing Intl objects.
+        The UnwrapDateTimeFormat abstract operation returns the DateTimeFormat instance
+        of its input object, which is either the value itself or a value associated
+        with it by %DateTimeFormat% according to the normative optional
+        constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
       </p>
       <emu-alg>
-        1. Assert: Type(_dtf_) is Object.
-      </emu-alg>
-      <emu-normative-optional>
-      <!-- Note: 2. is intentional -->
-      <emu-alg>
-        2. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%DateTimeFormat%, _dtf_) is *true*, then
-          1. Let _dtf_ be ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
-      </emu-alg>
-      </emu-normative-optional>
-      <!-- Note: 3. is intentional -->
-      <emu-alg>
-        3. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
+        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
+        1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%DateTimeFormat%, _dtf_) is *true*, then
+          1. Return ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
         1. Return _dtf_.
       </emu-alg>
-      <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
     </emu-clause>
+    </emu-normative-optional>
   </emu-clause>
 
   <emu-clause id="sec-intl-datetimeformat-constructor">
@@ -710,21 +703,23 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Let _this_ be the *this* value.
+          1. Return ? ChainDateTimeFormat(_dateTimeFormat_, NewTarget, _this_).
+        1. Return _dateTimeFormat_.
       </emu-alg>
+
       <emu-normative-optional>
-      <!-- Note: 4. is intentional -->
-      <emu-alg>
-        4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? OrdinaryHasInstance(%DateTimeFormat%, _this_) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-          1. Return _this_.
-      </emu-alg>
+      <emu-clause id="sec-chaindatetimeformat" aoid="ChainDateTimeFormat">
+        <h1>ChainDateTimeFormat ( _dateTimeFormat_, _newTarget_, _this_ )</h1>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%DateTimeFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _dateTimeFormat_.
+        </emu-alg>
+      </emu-clause>
       </emu-normative-optional>
-      <!-- Note: 6. is intentional -->
-      <emu-alg>
-        6. Return _dateTimeFormat_.
-      </emu-alg>
-      <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
     </emu-clause>
   </emu-clause>
 
@@ -1026,8 +1021,9 @@
 
       <emu-alg>
         1. Let _dtf_ be the *this* value.
-        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
-        1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
           1. Set _F_.[[DateTimeFormat]] to _dtf_.
@@ -1102,8 +1098,9 @@
 
       <emu-alg>
         1. Let _dtf_ be the *this* value.
-        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
-        1. Let _dtf_ be ? UnwrapDateTimeFormat(_dtf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
