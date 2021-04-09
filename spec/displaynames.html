@@ -63,7 +63,7 @@
         1. Set _displayNames_.[[Type]] to _type_.
         1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, *"string"*, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
-        1. Set _displayNames_.[[Locale]] to the value of _r_.[[Locale]].
+        1. Set _displayNames_.[[Locale]] to _r_.[[locale]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _types_ be _dataLocaleData_.[[types]].
@@ -100,7 +100,7 @@
       <h1>Intl.DisplayNames.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
       <p>
-        When the `supportedLocalesOf` method of %DisplayNames% is called, the following steps are taken:
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
       </p>
 
       <emu-alg>
