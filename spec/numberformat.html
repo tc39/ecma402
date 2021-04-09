@@ -693,30 +693,23 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-normative-optional>
     <emu-clause id="sec-unwrapnumberformat" aoid="UnwrapNumberFormat">
       <h1>UnwrapNumberFormat ( _nf_ )</h1>
       <p>
-        The UnwrapNumberFormat abstract operation gets the underlying NumberFormat operation
-        for various methods which implement ECMA-402 v1 semantics for supporting initializing
-        existing Intl objects.
+        The UnwrapNumberFormat abstract operation returns the NumberFormat instance
+        of its input object, which is either the value itself or a value associated
+        with it by %NumberFormat% according to the normative optional
+        constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
       </p>
       <emu-alg>
-        1. Assert: Type(_nf_) is Object.
-      </emu-alg>
-      <emu-normative-optional>
-      <!-- Note: 2. is intentional -->
-      <emu-alg>
-        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
-          1. Let _nf_ be ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
-      </emu-alg>
-      </emu-normative-optional>
-      <!-- Note: 3. is intentional -->
-      <emu-alg>
-        3. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
+          1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
         1. Return _nf_.
       </emu-alg>
-      <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
     </emu-clause>
+    </emu-normative-optional>
 
     <emu-clause id="sec-setnumberformatunitoptions" aoid="SetNumberFormatUnitOptions">
       <h1>SetNumberFormatUnitOptions ( _intlObj_, _options_ )</h1>
@@ -900,22 +893,24 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Let _this_ be the *this* value.
+          1. Return ? ChainNumberFormat(_numberFormat_, NewTarget, _this_).
+        1. Return _numberFormat_.
       </emu-alg>
+
       <emu-normative-optional>
-      <!-- Note: 4. is intentional -->
-      <emu-alg>
-        4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-          1. Return _this_.
-      </emu-alg>
+      <emu-clause id="sec-chainnumberformat" aoid="ChainNumberFormat">
+        <h1>ChainNumberFormat ( _numberFormat_, _newTarget_, _this_ )</h1>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _numberFormat_.
+        </emu-alg>
+      </emu-clause>
       </emu-normative-optional>
-      <!-- Note: 6. is intentional -->
-      <emu-alg>
-        6. Return _numberFormat_.
-      </emu-alg>
     </emu-clause>
-    <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-numberformat-constructor">
@@ -1034,8 +1029,9 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _nf_ to ? UnwrapNumberFormat(_nf_).
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
           1. Set _F_.[[NumberFormat]] to _nf_.
@@ -1073,8 +1069,9 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _nf_ to ? UnwrapNumberFormat(_nf_).
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
