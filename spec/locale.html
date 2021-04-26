@@ -57,7 +57,7 @@
         1. Assert: Type(_tag_) is String.
         1. Assert: _tag_ matches the `unicode_locale_id` production.
         1. If _tag_ contains a substring that is a Unicode locale extension sequence, then
-          1. Let _extension_ be the String value consisting of the substring of Unicode locale extension sequence within _tag_.
+          1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _tag_.
           1. Let _components_ be ! UnicodeExtensionComponents(_extension_).
           1. Let _attributes_ be _components_.[[Attributes]].
           1. Let _keywords_ be _components_.[[Keywords]].
@@ -82,7 +82,7 @@
             1. Else,
               1. Append the Record { [[Key]]: _key_, [[Value]]: _value_ } to _keywords_.
           1. Set _result_.[[<_key_>]] to _value_.
-        1. Let _locale_ be the String value that is _tag_ with all Unicode locale extension sequences removed.
+        1. Let _locale_ be the String value that is _tag_ with any Unicode locale extension sequences removed.
         1. Let _newExtension_ be a Unicode BCP 47 U Extension based on _attributes_ and _keywords_.
         1. If _newExtension_ is not the empty String, then
           1. Let _locale_ be ! InsertUnicodeExtensionAndCanonicalize(_locale_, _newExtension_).
