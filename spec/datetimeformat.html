@@ -371,6 +371,11 @@
             1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
+          1. Else if _p_ is equal to *"timeZoneName"*, then
+            1. Let _f_ be _dateTimeFormat_[[TimeZoneName]].
+            1. Let _v_ be _dateTimeFormat_[[TimeZone]].
+            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_.  If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+            1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. If _rangeFormatOptions_ is not *undefined*, let _f_ be the value of _rangeFormatOptions_'s field whose name matches _p_.
             1. Else, let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
