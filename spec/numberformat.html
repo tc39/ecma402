@@ -174,8 +174,10 @@
         1. Let _exponent_ be 0.
         1. If _x_ is *NaN*, then
           1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
-        1. Else if _x_ is a non-finite Number, then
-          1. Let _n_ be an ILD String value indicating infinity.
+        1. Else if _x_ is *+&infin;*, then
+          1. Let _n_ be an ILD String value indicating positive infinity.
+        1. Else if _x_ is *-&infin;*, then
+          1. Let _n_ be an ILD String value indicating negative infinity.
         1. Else,
           1. If _numberFormat_.[[Style]] is *"percent"*, let _x_ be 100 × _x_.
           1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
