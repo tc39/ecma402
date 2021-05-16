@@ -28,7 +28,6 @@
         1. Let _needFd_ be not _hasSd_ and _notation_ is not *"compact"*.
         1. If _needSd_, then
           1. If _hasSd_, then
-            1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
             1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
             1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
             1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
@@ -37,7 +36,6 @@
             1. Assert *false*.
         1. If _needFd_, then
           1. If _hasFd_, then
-            1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
             1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
             1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
             1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
@@ -46,10 +44,14 @@
             1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
             1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
           1. Else,
-            1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
             1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
             1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
-        1. If not _needSd_ and not _needFd_, then
+        1. If _needSd_ or _needFd_, then
+          1. If _hasSd_, then
+            1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
+          1. Else,
+            1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
+        1. Else,
           1. Set _intlObj_.[[RoundingType]] to ~compactRounding~.
       </emu-alg>
     </emu-clause>
