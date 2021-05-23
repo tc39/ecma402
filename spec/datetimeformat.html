@@ -188,7 +188,7 @@
         1. Set _dateTimeFormat_.[[RangePatterns]] to _rangePatterns_.
         1. Let _nf1Options_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf1Options_, *"useGrouping"*, *false*).
-        1. Set _dateTimeFormat_.[[NumberFormat1]] to ? Construct(%NumberFormat%, &laquo; _r_.[[locale]], _nf1Options_ &raquo;).
+        1. Set _dateTimeFormat_.[[NumberFormat1]] to ? Construct(%NumberFormat%, &laquo; _dateTimeFormat_.[[Locale]], _nf1Options_ &raquo;).
         1. Let _nf2Options_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, 2).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
@@ -387,7 +387,7 @@
             1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h24"*, then
               1. If _v_ is 0, let _v_ be 24.
             1. If _f_ is *"numeric"*, then
-              1. Let _fv_ be FormatNumeric(_nf1_, _v_).
+              1. Let _fv_ be FormatNumeric(_dateTimeFormat_.[[NumberFormat1]], _v_).
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the *"length"* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
@@ -712,7 +712,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[BoundFormat]], [[NumberFormat1]], [[NumberFormat2]], [[NumberFormat3]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]], [[NumberFormat1]], [[NumberFormat2]], [[NumberFormat3]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
       </emu-alg>
       <emu-normative-optional>
@@ -1256,7 +1256,7 @@
       <li>[[RangePatterns]] is a Record as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
       <li>[[NumberFormat1]] is a NumberFormat object used for formatting *"numeric"* values.</li>
       <li>[[NumberFormat2]] is a NumberFormat object used for formatting *"2-digit"* values.</li>
-      <li>[[NumberFormat3]] is a NumberFormat object used for formatting fractional second digits. This slot is only set if *"fractionalSecondDigits"* is set.</li>
+      <li>[[NumberFormat3]] is an Intl.NumberFormat object used for formatting fractional second digits. It is only used when [[FractionalSecondDigits]] is not *undefined*.</li>
     </ul>
 
     <p>
