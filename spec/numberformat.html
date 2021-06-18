@@ -22,18 +22,16 @@
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
-        1. Let _hasSd_ be _mnsd_ is not *undefined* or _mxsd_ is not *undefined*.
-        1. Let _hasFd_ be _mnfd_ is not *undefined* or _mxfd_ is not *undefined*.
+        1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, set _hasSd_ to *true*; else, set _hasSd_ to *false*.
+        1. If _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, set _hasFd_ to *true*; else, set _hasFd_ to *false*.
         1. Let _needSd_ be _hasSd_.
-        1. Let _needFd_ be not _hasSd_ and _notation_ is not *"compact"*.
+        1. If not _hasSd_ and _notation_ is not *"compact"*, set _needFd_ to *true*; else, set _needFd_ to *false*.
         1. If _needSd_, then
-          1. If _hasSd_, then
-            1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
-            1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
-            1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
-            1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
-          1. Else,
-            1. Assert *false*.
+          1. Assert: _hasSd_ is *true*.
+          1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
+          1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
+          1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
+          1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
         1. If _needFd_, then
           1. If _hasFd_, then
             1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
