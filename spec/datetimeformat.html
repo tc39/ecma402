@@ -202,13 +202,11 @@
         1. Let _options_ be OrdinaryObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
         1. If _required_ is *"date"* or *"any"*, then
-          1. For each of the property names *"weekday"*, *"year"*, *"month"*, *"day"*, do
-            1. Let _prop_ be the property name.
+          1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is *"time"* or *"any"*, then
-          1. For each of the property names *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"*, do
-            1. Let _prop_ be the property name.
+          1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. Let _dateStyle_ be ? Get(_options_, *"dateStyle"*).
@@ -219,10 +217,10 @@
         1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
           1. Throw a *TypeError* exception.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
-          1. For each of the property names *"year"*, *"month"*, *"day"*, do
+          1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
-          1. For each of the property names *"hour"*, *"minute"*, *"second"*, do
+          1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
       </emu-alg>
