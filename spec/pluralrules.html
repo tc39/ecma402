@@ -102,12 +102,19 @@
        </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-pluralruleselect" aoid="PluralRuleSelect">
-      <h1>PluralRuleSelect ( _locale_, _type_, _n_, _operands_ )</h1>
-
-      <p>
-        When the PluralRuleSelect abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value *"other"*.
-      </p>
+    <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
+      <h1>
+        PluralRuleSelect (
+          _locale_: a String,
+          _type_: a String,
+          _n_: a finite Number,
+          _operands_: a Plural Rules Operands Record corresponding with _n_,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes _n_ according to the rules for _locale_ and _type_.</dd>
+      </dl>
     </emu-clause>
 
     <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
@@ -272,7 +279,7 @@
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique String values, from the the list *"zero"*, *"one"*, *"two"*, *"few"*, *"many"* and *"other"*, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
+        1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
         1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
