@@ -108,12 +108,12 @@
           _locale_: a String,
           _type_: a String,
           _n_: a finite Number,
-          _operands_: a Plural Rules Operands Record corresponding with _n_,
+          _operands_: a Plural Rules Operands Record derived from formatting _n_,
         )
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes _n_ according to the rules for _locale_ and _type_.</dd>
+        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
       </dl>
     </emu-clause>
 
