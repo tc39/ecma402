@@ -27,35 +27,31 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getoperands" aoid="GetOperands">
-       <h1>GetOperands ( _s_ )</h1>
-       <p>
-         When the GetOperands abstract operation is called with argument _s_, it performs the following steps:
-       </p>
-
+    <emu-clause id="sec-getoperands" type="abstract operation">
+       <h1>
+         GetOperands (
+           _s_: a numeric String,
+         )
+       </h1>
+       <dl class="header">
+       </dl>
        <emu-alg>
-         1. Assert: Type(_s_) is String.
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
          1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
          1. If _dp_ = -1, then
-           1. Set _iv_ to _n_.
-           1. Let _f_ be 0.
-           1. Let _v_ be 0.
+           1. Let _intPart_ be _n_.
+           1. Let _fracSlice_ be *""*.
          1. Else,
-           1. Let _iv_ be the substring of _s_ from position 0, inclusive, to position _dp_, exclusive.
-           1. Let _fv_ be the substring of _s_ from position _dp_, exclusive, to the end of _s_.
-           1. Let _f_ be ! ToNumber(_fv_).
-           1. Let _v_ be the length of _fv_.
-         1. Let _i_ be abs(! ToNumber(_iv_)).
-         1. If _f_ ≠ 0, then
-           1. Let _ft_ be the value of _fv_ stripped of trailing *"0"*.
-           1. Let _w_ be the length of _ft_.
-           1. Let _t_ be ! ToNumber(_ft_).
-         1. Else,
-           1. Let _w_ be 0.
-           1. Let _t_ be 0.
-         1. Return a new Record { [[Number]]: _n_, [[IntegerDigits]]: _i_, [[NumberOfFractionDigits]]: _v_, [[NumberOfFractionDigitsWithoutTrailing]]: _w_, [[FractionDigits]]: _f_, [[FractionDigitsWithoutTrailing]]: _t_ }.
+           1. Let _intPart_ be the substring of _s_ from position 0, inclusive, to position _dp_, exclusive.
+           1. Let _fracSlice_ be the substring of _s_ from position _dp_, exclusive, to the end of _s_.
+         1. Let _i_ be abs(! ToNumber(_intPart_)).
+         1. Let _fracDigitCount_ be the length of _fracSlice_.
+         1. Let _f_ be ! ToNumber(_fracSlice_).
+         1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
+         1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
+         1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
+         1. Return a new Record { [[Number]]: _n_, [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
        </emu-alg>
 
        <emu-table id="table-plural-operands">
@@ -79,24 +75,24 @@
              <td>Number of digits of [[Number]].</td>
            </tr>
            <tr>
-             <td>[[NumberOfFractionDigits]]</td>
-             <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeroes.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeroes.</td>
-           </tr>
-           <tr>
              <td>[[FractionDigits]]</td>
              <td>Number</td>
              <td>Number of visible fractional digits in [[Number]], <i>with</i> trailing zeroes.</td>
            </tr>
            <tr>
+             <td>[[NumberOfFractionDigits]]</td>
+             <td>Number</td>
+             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeroes.</td>
+           </tr>
+           <tr>
              <td>[[FractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
              <td>Number of visible fractional digits in [[Number]], <i>without</i> trailing zeroes.</td>
+           </tr>
+           <tr>
+             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
+             <td>Number</td>
+             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeroes.</td>
            </tr>
          </table>
        </emu-table>
