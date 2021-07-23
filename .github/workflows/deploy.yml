@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
+      - run: npm install
       - run: npm run build-only
       - name: Checkout RC 🛎️ 🛎️
         uses: actions/checkout@v2
