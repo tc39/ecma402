@@ -12,14 +12,12 @@ jobs:
     if: ${{ github.repository == 'tc39/ecma402' }}
 
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - name: 'build-main'
-        uses: ljharb/actions/node/run@main
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: lts/*
-          shell-command: |
-            npm run build-only
+          check-latest: true
+      - run: npm run build-only
       - name: Checkout RC 🛎️ 🛎️
         uses: actions/checkout@v2
         with:
