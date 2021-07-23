@@ -30,10 +30,12 @@
     <emu-clause id="sec-getoperands" type="abstract operation">
        <h1>
          GetOperands (
-           _s_: a numeric String,
+           _s_: a decimal String,
          )
        </h1>
        <dl class="header">
+        <dt>description</dt>
+        <dd>It extracts numeric features from _s_ that correspond with the operands of <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Operands">Unicode Technical Standard #35, Part 3, Section 5.1.1</a>.</dd>
        </dl>
        <emu-alg>
          1. Let _n_ be ! ToNumber(_s_).
@@ -51,7 +53,7 @@
          1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
          1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
          1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
-         1. Return a new Record { [[Number]]: _n_, [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
+         1. Return a new Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
        </emu-alg>
 
        <emu-table id="table-plural-operands">
@@ -61,38 +63,45 @@
              <tr>
                <th>Internal Slot</th>
                <th>Type</th>
+               <th>UTS #35 Operand</th>
                <th>Description</th>
              </tr>
            </thead>
            <tr>
              <td>[[Number]]</td>
              <td>Number</td>
-             <td>Absolute value of the source number (integer and decimals)</td>
+             <td>n</td>
+             <td>Absolute value of the source number</td>
            </tr>
            <tr>
              <td>[[IntegerDigits]]</td>
              <td>Number</td>
-             <td>Number of digits of [[Number]].</td>
+             <td>i</td>
+             <td>Integer part of [[Number]].</td>
            </tr>
            <tr>
              <td>[[FractionDigits]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>with</i> trailing zeroes.</td>
+             <td>f</td>
+             <td>Visible fraction digits in [[Number]], <em>with</em> trailing zeroes, as an integer having [[NumberOfFractionDigits]] digits.</td>
            </tr>
            <tr>
              <td>[[NumberOfFractionDigits]]</td>
              <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeroes.</td>
+             <td>v</td>
+             <td>Number of visible fraction digits in [[Number]], <em>with</em> trailing zeroes.</td>
            </tr>
            <tr>
              <td>[[FractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>without</i> trailing zeroes.</td>
+             <td>t</td>
+             <td>Visible fraction digits in [[Number]], <em>without</em> trailing zeroes, as an integer having [[NumberOfFractionDigitsWithoutTrailing]] digits.</td>
            </tr>
            <tr>
              <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeroes.</td>
+             <td>w</td>
+             <td>Number of visible fraction digits in [[Number]], <em>without</em> trailing zeroes.</td>
            </tr>
          </table>
        </emu-table>
