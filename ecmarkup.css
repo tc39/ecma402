@@ -67,8 +67,40 @@ var {
   cursor: pointer;
 }
 
-var.referenced {
+var.referenced0 {
+  color: inherit;
   background-color: #ffff33;
+  box-shadow: 0 0 0 2px #ffff33;
+}
+var.referenced1 {
+  color: inherit;
+  background-color: #ff87a2;
+  box-shadow: 0 0 0 2px #ff87a2;
+}
+var.referenced2 {
+  color: inherit;
+  background-color: #96e885;
+  box-shadow: 0 0 0 2px #96e885;
+}
+var.referenced3 {
+  color: inherit;
+  background-color: #3eeed2;
+  box-shadow: 0 0 0 2px #3eeed2;
+}
+var.referenced4 {
+  color: inherit;
+  background-color: #eacfb6;
+  box-shadow: 0 0 0 2px #eacfb6;
+}
+var.referenced5 {
+  color: inherit;
+  background-color: #82ddff;
+  box-shadow: 0 0 0 2px #82ddff;
+}
+var.referenced6 {
+  color: inherit;
+  background-color: #ffbcf2;
+  box-shadow: 0 0 0 2px #ffbcf2;
 }
 
 emu-const {
@@ -1127,18 +1159,19 @@ li.menu-search-result-term:before {
   }
 }
 
-[normative-optional] {
+[normative-optional],
+[legacy] {
   border-left: 5px solid #ff6600;
   padding: 0.5em;
   display: block;
   background: #ffeedd;
 }
 
-.normative-optional-tag {
+.clause-attributes-tag {
   text-transform: uppercase;
   color: #884400;
 }
 
-.normative-optional-tag a {
+.clause-attributes-tag a {
   color: #884400;
 }

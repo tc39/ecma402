@@ -565,24 +565,6 @@ Menu.prototype.selectPin = function (num) {
 };
 
 let menu;
-function init() {
-  menu = new Menu();
-  let $container = document.getElementById('spec-container');
-  $container.addEventListener(
-    'mouseover',
-    debounce(e => {
-      Toolbox.activateIfMouseOver(e);
-    })
-  );
-  document.addEventListener(
-    'keydown',
-    debounce(e => {
-      if (e.code === 'Escape' && Toolbox.active) {
-        Toolbox.deactivate();
-      }
-    })
-  );
-}
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -605,18 +587,17 @@ function debounce(fn, opts) {
 }
 
 let CLAUSE_NODES = ['EMU-CLAUSE', 'EMU-INTRO', 'EMU-ANNEX'];
-function findLocalReferences($elem) {
-  let name = $elem.innerHTML;
-  let references = [];
-
+function findContainer($elem) {
   let parentClause = $elem.parentNode;
   while (parentClause && CLAUSE_NODES.indexOf(parentClause.nodeName) === -1) {
     parentClause = parentClause.parentNode;
   }
+  return parentClause;
+}
 
-  if (!parentClause) return;
-
+function findLocalReferences(parentClause, name) {
   let vars = parentClause.querySelectorAll('var');
+  let references = [];
 
   for (let i = 0; i < vars.length; i++) {
     let $var = vars[i];
@@ -629,15 +610,32 @@ function findLocalReferences($elem) {
   return references;
 }
 
+let REFERENCED_CLASSES = Array.from({ length: 7 }, (x, i) => `referenced${i}`);
+function chooseHighlightIndex(parentClause) {
+  let counts = REFERENCED_CLASSES.map($class => parentClause.getElementsByClassName($class).length);
+  // Find the earliest index with the lowest count.
+  let minCount = Infinity;
+  let index = null;
+  for (let i = 0; i < counts.length; i++) {
+    if (counts[i] < minCount) {
+      minCount = counts[i];
+      index = i;
+    }
+  }
+  return index;
+}
+
 function toggleFindLocalReferences($elem) {
-  let references = findLocalReferences($elem);
+  let parentClause = findContainer($elem);
+  let references = findLocalReferences(parentClause, $elem.innerHTML);
   if ($elem.classList.contains('referenced')) {
     references.forEach($reference => {
-      $reference.classList.remove('referenced');
+      $reference.classList.remove('referenced', ...REFERENCED_CLASSES);
     });
   } else {
+    let index = chooseHighlightIndex(parentClause);
     references.forEach($reference => {
-      $reference.classList.add('referenced');
+      $reference.classList.add('referenced', `referenced${index}`);
     });
   }
 }
@@ -716,126 +714,6 @@ function fuzzysearch(searchString, haystack, caseInsensitive) {
 
   return { caseMatch: !caseInsensitive, chunks, prefix: j <= qlen };
 }
-
-let Toolbox = {
-  init() {
-    this.$outer = document.createElement('div');
-    this.$outer.classList.add('toolbox-container');
-    this.$container = document.createElement('div');
-    this.$container.classList.add('toolbox');
-    this.$outer.appendChild(this.$container);
-    this.$permalink = document.createElement('a');
-    this.$permalink.textContent = 'Permalink';
-    this.$pinLink = document.createElement('a');
-    this.$pinLink.textContent = 'Pin';
-    this.$pinLink.setAttribute('href', '#');
-    this.$pinLink.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      menu.togglePinEntry(this.entry.id);
-    });
-
-    this.$refsLink = document.createElement('a');
-    this.$refsLink.setAttribute('href', '#');
-    this.$refsLink.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      referencePane.showReferencesFor(this.entry);
-    });
-    this.$container.appendChild(this.$permalink);
-    this.$container.appendChild(this.$pinLink);
-    this.$container.appendChild(this.$refsLink);
-    document.body.appendChild(this.$outer);
-  },
-
-  activate(el, entry, target) {
-    if (el === this._activeEl) return;
-    sdoBox.deactivate();
-    this.active = true;
-    this.entry = entry;
-    this.$outer.classList.add('active');
-    this.top = el.offsetTop - this.$outer.offsetHeight;
-    this.left = el.offsetLeft - 10;
-    this.$outer.setAttribute('style', 'left: ' + this.left + 'px; top: ' + this.top + 'px');
-    this.updatePermalink();
-    this.updateReferences();
-    this._activeEl = el;
-    if (this.top < document.body.scrollTop && el === target) {
-      // don't scroll unless it's a small thing (< 200px)
-      this.$outer.scrollIntoView();
-    }
-  },
-
-  updatePermalink() {
-    this.$permalink.setAttribute('href', makeLinkToId(this.entry.id));
-  },
-
-  updateReferences() {
-    this.$refsLink.textContent = `References (${this.entry.referencingIds.length})`;
-  },
-
-  activateIfMouseOver(e) {
-    let ref = this.findReferenceUnder(e.target);
-    if (ref && (!this.active || e.pageY > this._activeEl.offsetTop)) {
-      let entry = menu.search.biblio.byId[ref.id];
-      this.activate(ref.element, entry, e.target);
-    } else if (
-      this.active &&
-      (e.pageY < this.top || e.pageY > this._activeEl.offsetTop + this._activeEl.offsetHeight)
-    ) {
-      this.deactivate();
-    }
-  },
-
-  findReferenceUnder(el) {
-    while (el) {
-      let parent = el.parentNode;
-      if (el.nodeName === 'EMU-RHS' || el.nodeName === 'EMU-PRODUCTION') {
-        return null;
-      }
-      if (
-        el.nodeName === 'H1' &&
-        parent.nodeName.match(/EMU-CLAUSE|EMU-ANNEX|EMU-INTRO/) &&
-        parent.id
-      ) {
-        return { element: el, id: parent.id };
-      } else if (el.nodeName === 'EMU-NT') {
-        if (
-          parent.nodeName === 'EMU-PRODUCTION' &&
-          parent.id &&
-          parent.id[0] !== '_' &&
-          parent.firstElementChild === el
-        ) {
-          // return the LHS non-terminal element
-          return { element: el, id: parent.id };
-        }
-        return null;
-      } else if (
-        el.nodeName.match(/EMU-(?!CLAUSE|XREF|ANNEX|INTRO)|DFN/) &&
-        el.id &&
-        el.id[0] !== '_'
-      ) {
-        if (
-          el.nodeName === 'EMU-FIGURE' ||
-          el.nodeName === 'EMU-TABLE' ||
-          el.nodeName === 'EMU-EXAMPLE'
-        ) {
-          // return the figcaption element
-          return { element: el.children[0].children[0], id: el.id };
-        } else {
-          return { element: el, id: el.id };
-        }
-      }
-      el = parent;
-    }
-  },
-
-  deactivate() {
-    this.$outer.classList.remove('active');
-    this._activeEl = null;
-    this.active = false;
-  },
-};
 
 let referencePane = {
   init() {
@@ -976,6 +854,126 @@ let referencePane = {
   },
 };
 
+let Toolbox = {
+  init() {
+    this.$outer = document.createElement('div');
+    this.$outer.classList.add('toolbox-container');
+    this.$container = document.createElement('div');
+    this.$container.classList.add('toolbox');
+    this.$outer.appendChild(this.$container);
+    this.$permalink = document.createElement('a');
+    this.$permalink.textContent = 'Permalink';
+    this.$pinLink = document.createElement('a');
+    this.$pinLink.textContent = 'Pin';
+    this.$pinLink.setAttribute('href', '#');
+    this.$pinLink.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      menu.togglePinEntry(this.entry.id);
+    });
+
+    this.$refsLink = document.createElement('a');
+    this.$refsLink.setAttribute('href', '#');
+    this.$refsLink.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      referencePane.showReferencesFor(this.entry);
+    });
+    this.$container.appendChild(this.$permalink);
+    this.$container.appendChild(this.$pinLink);
+    this.$container.appendChild(this.$refsLink);
+    document.body.appendChild(this.$outer);
+  },
+
+  activate(el, entry, target) {
+    if (el === this._activeEl) return;
+    sdoBox.deactivate();
+    this.active = true;
+    this.entry = entry;
+    this.$outer.classList.add('active');
+    this.top = el.offsetTop - this.$outer.offsetHeight;
+    this.left = el.offsetLeft - 10;
+    this.$outer.setAttribute('style', 'left: ' + this.left + 'px; top: ' + this.top + 'px');
+    this.updatePermalink();
+    this.updateReferences();
+    this._activeEl = el;
+    if (this.top < document.body.scrollTop && el === target) {
+      // don't scroll unless it's a small thing (< 200px)
+      this.$outer.scrollIntoView();
+    }
+  },
+
+  updatePermalink() {
+    this.$permalink.setAttribute('href', makeLinkToId(this.entry.id));
+  },
+
+  updateReferences() {
+    this.$refsLink.textContent = `References (${this.entry.referencingIds.length})`;
+  },
+
+  activateIfMouseOver(e) {
+    let ref = this.findReferenceUnder(e.target);
+    if (ref && (!this.active || e.pageY > this._activeEl.offsetTop)) {
+      let entry = menu.search.biblio.byId[ref.id];
+      this.activate(ref.element, entry, e.target);
+    } else if (
+      this.active &&
+      (e.pageY < this.top || e.pageY > this._activeEl.offsetTop + this._activeEl.offsetHeight)
+    ) {
+      this.deactivate();
+    }
+  },
+
+  findReferenceUnder(el) {
+    while (el) {
+      let parent = el.parentNode;
+      if (el.nodeName === 'EMU-RHS' || el.nodeName === 'EMU-PRODUCTION') {
+        return null;
+      }
+      if (
+        el.nodeName === 'H1' &&
+        parent.nodeName.match(/EMU-CLAUSE|EMU-ANNEX|EMU-INTRO/) &&
+        parent.id
+      ) {
+        return { element: el, id: parent.id };
+      } else if (el.nodeName === 'EMU-NT') {
+        if (
+          parent.nodeName === 'EMU-PRODUCTION' &&
+          parent.id &&
+          parent.id[0] !== '_' &&
+          parent.firstElementChild === el
+        ) {
+          // return the LHS non-terminal element
+          return { element: el, id: parent.id };
+        }
+        return null;
+      } else if (
+        el.nodeName.match(/EMU-(?!CLAUSE|XREF|ANNEX|INTRO)|DFN/) &&
+        el.id &&
+        el.id[0] !== '_'
+      ) {
+        if (
+          el.nodeName === 'EMU-FIGURE' ||
+          el.nodeName === 'EMU-TABLE' ||
+          el.nodeName === 'EMU-EXAMPLE'
+        ) {
+          // return the figcaption element
+          return { element: el.children[0].children[0], id: el.id };
+        } else {
+          return { element: el, id: el.id };
+        }
+      }
+      el = parent;
+    }
+  },
+
+  deactivate() {
+    this.$outer.classList.remove('active');
+    this._activeEl = null;
+    this.active = false;
+  },
+};
+
 function sortByClauseNumber(clause1, clause2) {
   let c1c = clause1.number.split('.');
   let c2c = clause2.number.split('.');
@@ -1049,6 +1047,25 @@ function doShortcut(e) {
       location = 'multipage/' + hash;
     }
   }
+}
+
+function init() {
+  menu = new Menu();
+  let $container = document.getElementById('spec-container');
+  $container.addEventListener(
+    'mouseover',
+    debounce(e => {
+      Toolbox.activateIfMouseOver(e);
+    })
+  );
+  document.addEventListener(
+    'keydown',
+    debounce(e => {
+      if (e.code === 'Escape' && Toolbox.active) {
+        Toolbox.deactivate();
+      }
+    })
+  );
 }
 
 document.addEventListener('keypress', doShortcut);
