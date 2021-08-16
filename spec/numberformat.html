@@ -5,12 +5,19 @@
     <h1>Abstract Operations for NumberFormat Objects</h1>
 
     <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
-      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_ )</h1>
-
-      <p>
-        The abstract operation SetNumberFormatDigitOptions applies digit
-        options used for number formatting onto the intl object.
-      </p>
+      <h1>
+        SetNumberFormatDigitOptions (
+          _intlObj_: an Object,
+          _options_: an Object,
+          _mnfdDefault_: a Number,
+          _mxfdDefault_: a Number,
+          _notation_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It resolves fraction digits and significant digits used for number formatting onto the intl object.</dd>
+      </dl>
       <emu-alg>
         1. Assert: Type(_intlObj_) is Object.
         1. Assert: Type(_options_) is Object.
