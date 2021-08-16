@@ -23,13 +23,13 @@
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
-          1. Let _hasSd_ to *true*.
+          1. Let _hasSd_ be *true*.
         1. Else,
-          1. Let _hasSd_ to *false*.
+          1. Let _hasSd_ be *false*.
         1. If _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
-          1. Let _hasFd_ to *true*.
+          1. Let _hasFd_ be *true*.
         1. Else,
-          1. Let _hasFd_ to *false*.
+          1. Let _hasFd_ be *false*.
         1. Let _needSd_ be _hasSd_.
         1. If _hasSd_ is *false* and _notation_ is not *"compact"*, then
           1. Let _needFd_ be *true*.
