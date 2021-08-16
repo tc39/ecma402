@@ -31,20 +31,20 @@
         1. Else,
           1. Set _hasFd_ to *false*.
         1. Let _needSd_ be _hasSd_.
-        1. If not _hasSd_ and _notation_ is not *"compact"*, then
-          1. Set _needFd_ to *true*.
+        1. If _hasSd_ is *false* and _notation_ is not *"compact"*, then
+          1. Let _needFd_ be *true*.
         1. Else,
-          1. Set _needFd_ to *false*.
-        1. If _needSd_, then
+          1. Let _needFd_ be *false*.
+        1. If _needSd_ is *true*, then
           1. Assert: _hasSd_ is *true*.
-          1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
-          1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
+          1. Set _mnsd_ to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
+          1. Set _mxsd_ to ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
           1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
         1. If _needFd_, then
-          1. If _hasFd_, then
-            1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
-            1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
+          1. If _hasFd_ is *true*, then
+            1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
+            1. Set _mxfd_ to ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
             1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
             1. Else if _mxfd_ is *undefined*, set _mxfd_ to max(_mxfdDefault_, _mnfd_).
             1. Else if _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
