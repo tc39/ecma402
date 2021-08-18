@@ -188,17 +188,17 @@
         1. Set _dateTimeFormat_.[[RangePatterns]] to _rangePatterns_.
         1. Let _nf1Options_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf1Options_, *"useGrouping"*, *false*).
-        1. Set _dateTimeFormat_.[[NumericNumberFormat]] to ? Construct(%NumberFormat%, &laquo; _dateTimeFormat_.[[Locale]], _nf1Options_ &raquo;).
+        1. Set _dateTimeFormat_.[[NumericNumberFormat]] to ! Construct(%NumberFormat%, &laquo; _dateTimeFormat_.[[Locale]], _nf1Options_ &raquo;).
         1. Let _nf2Options_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, 2).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
-        1. Set _dateTimeFormat_.[[2DigitNumberFormat]] to ? Construct(%NumberFormat%, &laquo; _r_.[[locale]], _nf2Options_ &raquo;).
+        1. Set _dateTimeFormat_.[[2DigitNumberFormat]] to ! Construct(%NumberFormat%, &laquo; _r_.[[locale]], _nf2Options_ &raquo;).
         1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
         1. If _fractionalSecondDigits_ is not *undefined*, then
           1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, _fractionalSecondDigits_).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
-          1. Set _dateTimeFormat_.[[FractionalSecondNumberFormat]] to ? Construct(%NumberFormat%, &laquo; _r_.[[locale]], _nf3Options_ &raquo;).
+          1. Set _dateTimeFormat_.[[FractionalSecondNumberFormat]] to ! Construct(%NumberFormat%, &laquo; _r_.[[locale]], _nf3Options_ &raquo;).
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
@@ -363,6 +363,8 @@
           1. If _p_ is *"literal"*, then
             1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as the last element of the list _result_.
           1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
+            1. Let _nf_ be _dateTimeFormat_.[[FractionalSecondNumberFormat]].
+            1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Let _v_ be floor(_v_ × 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_dateTimeFormat_.[[FractionalSecondNumberFormat]], _v_).
