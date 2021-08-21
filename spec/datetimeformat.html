@@ -230,7 +230,7 @@
 
     <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
       <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _styles_ )</h1>
-      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]][_locale_].[[styles]][_calendar_] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
+      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
       <emu-alg>
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
@@ -835,7 +835,7 @@
           </ol>
         </li>
         <li>
-          [[LocaleData]][&lt;_locale_&gt;] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
           <ol>
             <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
             <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
