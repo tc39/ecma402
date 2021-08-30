@@ -4,7 +4,7 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations for NumberFormat Objects</h1>
 
-    <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
+    <emu-clause id="sec-setnfdigitoptions" type="abstract operation">
       <h1>
         SetNumberFormatDigitOptions (
           _intlObj_: an Object,
@@ -16,11 +16,9 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It resolves fraction digits and significant digits used for number formatting onto the intl object.</dd>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref).</dd>
       </dl>
       <emu-alg>
-        1. Assert: Type(_intlObj_) is Object.
-        1. Assert: Type(_options_) is Object.
         1. Assert: Type(_mnfdDefault_) is Number.
         1. Assert: Type(_mxfdDefault_) is Number.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
@@ -38,10 +36,10 @@
         1. Else,
           1. Let _hasFd_ be *false*.
         1. Let _needSd_ be _hasSd_.
-        1. If _hasSd_ is *false* and (_hasFd_ is *true* or _notation_ is not *"compact"*), then
-          1. Let _needFd_ be *true*.
-        1. Else,
+        1. If _hasSd_ is *true*, or _hasFd_ is *false* and _notation_ is *"compact"*, then
           1. Let _needFd_ be *false*.
+        1. Else,
+          1. Let _needFd_ be *true*.
         1. If _needSd_ is *true*, then
           1. Assert: _hasSd_ is *true*.
           1. Set _mnsd_ to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
