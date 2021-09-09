@@ -219,7 +219,7 @@
     <h1>Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35, Part 2, Section 6.2</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
+      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> (or equivalently <em>core unit ID</em>) as defined by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35, Part 2, Section 6.2</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
     </p>
 
     <p>
@@ -231,7 +231,7 @@
       <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">UTS #35, Part 2, Section 6.2</a>. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed UTS #35 core unit identifier that is either a supported simple unit or a complex unit formed by division of two supported single units. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -253,7 +253,7 @@
       <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -262,11 +262,11 @@
       </emu-alg>
 
       <emu-table id="table-sanctioned-simple-unit-identifiers">
-        <emu-caption>Simple units sanctioned for use in ECMAScript</emu-caption>
+        <emu-caption>Single units sanctioned for use in ECMAScript</emu-caption>
         <table class="real-table">
           <thead>
             <tr>
-              <th>Simple Unit</th>
+              <th>Single Unit Identifier</th>
             </tr>
           </thead>
           <tr><td>acre</td></tr>
