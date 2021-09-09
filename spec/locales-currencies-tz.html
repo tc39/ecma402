@@ -205,7 +205,7 @@
     <h1>Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">Unicode Technical Standard #35, Part 2, Section 6</a>. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35, Part 2, Section 6.2</a>. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
     </p>
 
     <p>
@@ -217,7 +217,7 @@
       <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">UTS #35, Part 2, Section 6</a>. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">UTS #35, Part 2, Section 6.2</a>. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -239,7 +239,7 @@
       <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Validity Data as described in <a href="https://unicode.org/reports/tr35/tr35.html#Validity_Data">UTS #35, Part 1, Section 3.11</a>; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
       </p>
 
       <emu-alg>
