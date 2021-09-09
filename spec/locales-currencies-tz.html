@@ -221,17 +221,17 @@
       </p>
 
       <emu-alg>
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
+        1. If ! IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
-        1. If the substring *"-per-"* does not occur exactly once in _unitIdentifier_, then
+        1. Let _i_ be ! StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
+        1. If _i_ is -1 or ! StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not -1, then
           1. Return *false*.
-        1. Let _numerator_ be the substring of _unitIdentifier_ from the beginning to just before *"-per-"*.
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_numerator_) is *false*, then
-          1. Return *false*.
-        1. Let _denominator_ be the substring of _unitIdentifier_ from just after *"-per-"* to the end.
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_denominator_) is *false*, then
-          1. Return *false*.
-        1. Return *true*.
+        1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
+        1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
+        1. Let _denominator_ be the substring of _unitIdentifier_ from _i_ + 5.
+        1. If ! IsSanctionedSimpleUnitIdentifier(_numerator_) and ! IsSanctionedSimpleUnitIdentifier(_denominator_) are both *true*, then
+          1. Return *true*.
+        1. Return *false*.
       </emu-alg>
     </emu-clause>
 
