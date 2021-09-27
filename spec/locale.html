@@ -3,10 +3,14 @@
 
   <emu-clause id="sec-intl-locale-constructor">
     <h1>The Intl.Locale Constructor</h1>
-
-    <p>
-      The Locale constructor is the <dfn>%Locale%</dfn> intrinsic object and a standard built-in property of the Intl object.
-    </p>
+    <p>The Intl.Locale constructor:</p>
+    <ul>
+      <li>is <dfn>%Locale%</dfn>.</li>
+      <li>is the initial value of the *"Locale"* property of the <emu-xref href="#intl-object">Intl object</emu-xref>.</li>
+      <li>creates and initializes a new Locale object when called as a constructor.</li>
+      <li>is not intended to be called as a function and will throw an exception when called in that manner.</li>
+      <li>is designed to be subclassable. It may be used as the value of an `extends` clause of a class definition. Subclass constructors that intend to inherit the specified Locale behaviour must include a `super` call to the Intl.Locale constructor to create and initialize subclass instances with the necessary internal slots.</li>
+    </ul>
 
     <emu-clause id="sec-apply-options-to-tag" aoid=ApplyOptionsToTag>
       <h1>ApplyOptionsToTag ( _tag_, _options_ )</h1>
@@ -155,20 +159,18 @@
 
   <emu-clause id="sec-properties-of-intl-locale-constructor">
     <h1>Properties of the Intl.Locale Constructor</h1>
-
-    <p>
-      The Intl.Locale constructor has the following properties:
-    </p>
+    <p>The Intl.Locale constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the internal slots common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-Intl.Locale.prototype">
       <h1>Intl.Locale.prototype</h1>
 
-      <p>
-        The value of `Intl.Locale.prototype` is %Locale.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.Locale.prototype` is the Intl.Locale prototype object.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.locale-internal-slots">
@@ -182,29 +184,22 @@
 
   <emu-clause id="sec-properties-of-intl-locale-prototype-object">
     <h1>Properties of the Intl.Locale Prototype Object</h1>
-
-    <p>
-      The Intl.Locale prototype object is itself an ordinary object. <dfn>%Locale.prototype%</dfn> is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.
-    </p>
+    <p>The <dfn>Intl.Locale prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Locale.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.Locale.prototype.constructor">
       <h1>Intl.Locale.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.Locale.prototype.constructor` is %Locale%.
-      </p>
+      <p>The initial value of `Intl.Locale.prototype.constructor` is %Locale%.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype-@@tostringtag">
-      <h1>Intl.Locale.prototype[ @@toStringTag ]</h1>
-
-      <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.Locale"*.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <h1>Intl.Locale.prototype [ @@toStringTag ]</h1>
+      <p>The initial value of the @@toStringTag property is the String value *"Intl.Locale"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.maximize">
