@@ -238,20 +238,18 @@
       </p>
 
       <emu-alg>
+        1. Let _lf_ be ? Construct(%ListFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _stringList_ be a new empty List.
         1. Let _array_ be ? ToObject(*this* value).
         1. Let _len_ be ? ToLength(? Get(_array_, *"length"*)).
-        1. Let _separator_ be the String value for the list-separator String appropriate for the host environment's current locale (this is derived in an implementation-defined way).
-        1. Let _R_ be the empty String.
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
-          1. If _k_ &gt; 0, then
-            1. Set _R_ to the string-concatenation of _R_ and _separator_.
           1. Let _nextElement_ be ? Get(_array_, ! ToString(_k_)).
           1. If _nextElement_ is not *undefined* or *null*, then
             1. Let _S_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
-            1. Set _R_ to the string-concatenation of _R_ and _S_.
+            1. Append _S_ to _stringList_.
           1. Increase _k_ by 1.
-        1. Return _R_.
+        1. Return FormatList(_lf_, _stringList_).
       </emu-alg>
 
       <emu-note>
