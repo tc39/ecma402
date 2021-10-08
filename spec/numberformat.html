@@ -19,8 +19,6 @@
         <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref).</dd>
       </dl>
       <emu-alg>
-        1. Assert: Type(_mnfdDefault_) is Number.
-        1. Assert: Type(_mxfdDefault_) is Number.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? Get(_options_, *"minimumFractionDigits"*).
         1. Let _mxfd_ be ? Get(_options_, *"maximumFractionDigits"*).
