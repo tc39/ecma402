@@ -1,6 +1,12 @@
 {
   "https://tc39.es/ecma262/": [
     {
+      "type": "term",
+      "term": "%Object.prototype%",
+      "key": "%Object.prototype%",
+      "refId": "sec-properties-of-the-object-prototype-object"
+    },
+    {
       "type": "op",
       "aoid": "OrdinaryObjectCreate",
       "id": "sec-ordinaryobjectcreate"
