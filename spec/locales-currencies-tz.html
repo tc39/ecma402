@@ -9,7 +9,16 @@
     <h1>Case Sensitivity and Case Mapping</h1>
 
     <p>
-      The String values used to identify locales, currencies, scripts, and time zones are interpreted in a case-insensitive manner, treating the Unicode Basic Latin characters *"A"* to *"Z"* (U+0041 to U+005A) as equivalent to the corresponding Basic Latin characters *"a"* to *"z"* (U+0061 to U+007A). No other case folding equivalences are applied. When mapping to upper case, a mapping shall be used that maps characters in the range *"a"* to *"z"* (U+0061 to U+007A) to the corresponding characters in the range *"A"* to *"Z"* (U+0041 to U+005A) and maps no other characters to the latter range. When mapping to lower case, a mapping shall be used that maps characters in the range *"A"* to *"Z"* (U+0041 to U+005A) to the corresponding characters in the range *"a"* to *"z"* (U+0061 to U+007A) and maps no other characters to the latter range.
+      The String values used to identify locales, currencies, scripts, and time zones are interpreted in an ASCII-case-insensitive manner, treating the code units 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z) as equivalent to the corresponding code units 0x0061 through 0x007A (corresponding to Unicode characters LATIN SMALL LETTER A through LATIN SMALL LETTER Z), inclusive. No other case folding equivalences are applied.
+    </p>
+    <p>
+      Mapping to upper case takes a String value and produces a new String value in which each lower case ASCII letter code unit (0x0061 through 0x007A, inclusive) is replaced with the corresponding upper case ASCII letter code unit (0x0041 through 0x005A, inclusive) and all other code units are preserved.
+    </p>
+    <p>
+      Mapping to lower case takes a String value and produces a new String value in which each upper case ASCII letter code unit (0x0041 through 0x005A, inclusive) is replaced with the corresponding lower case ASCII letter code unit (0x0061 through 0x007A, inclusive) and all other code units are preserved.
+    </p>
+    <p>
+      A String value _A_ is an ASCII-case-insensitive match for String value _B_ if mapping _A_ to upper case is exactly the same sequence of code units as mapping _B_ to upper case. A sequence of Unicode code points _A_ is an ASCII-case-insensitive match for _B_ if _B_ is an ASCII-case-insensitive match for ! CodePointsToString(_A_).
     </p>
 
     <emu-note>
