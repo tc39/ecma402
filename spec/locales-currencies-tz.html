@@ -168,7 +168,7 @@
     </p>
 
     <p>
-      All registered Zone and Link names are allowed. Implementations must recognize all such names (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations. However, the set of combinations of time zone name and language tag for which localized time zone names are available is implementation dependent.
+      A conforming implementation must recognize *"UTC"* and all other Zone and Link names (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations. However, the set of combinations of time zone name and language tag for which localized time zone names are available is implementation dependent.
     </p>
 
     <emu-clause id="sec-isvalidtimezonename" aoid="IsValidTimeZoneName">
@@ -180,9 +180,14 @@
 
       <emu-alg>
         1. If one of the Zone or Link names of the IANA Time Zone Database is an ASCII-case-insensitive match of _timeZone_ as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, return *true*.
+        1. If _timeZone_ is an ASCII-case-insensitive match of *"UTC"*, return *true*.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
+
+    <emu-note>
+      Any value returned from DefaultTimeZone must be recognized as valid.
+    </emu-note>
 
     <emu-clause id="sec-canonicalizetimezonename" aoid="CanonicalizeTimeZoneName">
       <h1>CanonicalizeTimeZoneName</h1>
@@ -197,10 +202,6 @@
         1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
       </emu-alg>
-
-      <p>
-        The Intl.DateTimeFormat constructor allows this time zone name; if the time zone is not specified, the host environment's current time zone is used. Implementations shall support UTC and the host environment's current time zone (if different from UTC) in formatting.
-      </p>
     </emu-clause>
 
     <emu-clause id="sec-defaulttimezone" aoid="DefaultTimeZone">
