@@ -166,7 +166,7 @@
       <h1>IsValidTimeZoneName ( _timeZone_ )</h1>
 
       <p>
-        The IsValidTimeZoneName abstract operation verifies that the _timeZone_ argument (which must be a String value) represents a valid Zone or Link name of the IANA Time Zone Database.
+        The abstract operation IsValidTimeZoneName takes argument _timeZone_, a String value, and verifies that it represents a valid Zone or Link name of the IANA Time Zone Database.
       </p>
       <p>
         The abstract operation returns true if _timeZone_, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, is equal to one of the Zone or Link names of the IANA Time Zone Database, converted to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>. It returns false otherwise.
