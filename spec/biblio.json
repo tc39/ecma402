@@ -14,6 +14,12 @@
     },
     {
       "type": "op",
+      "aoid": "StringToCodePoints",
+      "refId": "sec-stringtocodepoints",
+      "key": "StringToCodePoints"
+    },
+    {
+      "type": "op",
       "aoid": "OrdinaryObjectCreate",
       "id": "sec-ordinaryobjectcreate"
     }
