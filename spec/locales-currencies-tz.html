@@ -153,8 +153,8 @@
 
       <emu-alg>
         1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        1. If the number of elements in _normalized_ is not 3, return *false*.
-        1. If _normalized_ contains any character that is not in the range *"A"* to *"Z"* (U+0041 to U+005A), return *false*.
+        1. If the length of _normalized_ is not 3, return *false*.
+        1. If _normalized_ contains any code unit outside of 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z), return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
