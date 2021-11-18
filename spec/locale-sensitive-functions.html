@@ -58,32 +58,52 @@
       <emu-alg>
         1. Let _O_ be RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. If _requestedLocales_ is not an empty List, then
-          1. Let _requestedLocale_ be _requestedLocales_[0].
-        1. Else,
-          1. Let _requestedLocale_ be DefaultLocale().
-        1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.
-        1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
-        1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-        1. If _locale_ is *undefined*, let _locale_ be *"und"*.
-        1. Let _cpList_ be a List containing in order the code points of _S_ as defined in es2022, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, starting at the first element of _S_.
-        1. Let _cuList_ be a List where the elements are the result of a lower case transformation of the ordered code points in _cpList_ according to the Unicode Default Case Conversion algorithm or an implementation-defined conversion algorithm. A conforming implementation's lower case transformation algorithm must always yield the same _cpList_ given the same _cuList_ and locale.
-        1. Let _L_ be a String whose elements are the UTF-16 Encoding (defined in es2022, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>) of the code points of _cuList_.
-        1. Return _L_.
+        1. Return ? TransformCase(_S_, _locales_, ~lower~).
       </emu-alg>
-
-      <p>
-        Lower case code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale specific tailoring defined in SpecialCasings.txt and/or CLDR and/or any other custom tailoring.
-      </p>
-
-      <emu-note>
-        The case mapping of some code points may produce multiple code points. In this case the result String may not be the same length as the source String. Because both `toLocaleUpperCase` and `toLocaleLowerCase` have context-sensitive behaviour, the functions are not symmetrical. In other words, `s.toLocaleUpperCase().toLocaleLowerCase()` is not necessarily equal to `s.toLocaleLowerCase()`.
-      </emu-note>
 
       <emu-note>
         The `toLocaleLowerCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
       </emu-note>
+
+      <emu-clause id="sec-transform-case" type="abstract operation">
+        <h1>
+          TransformCase (
+            _S_: a String,
+            _locales_: an ECMAScript language value,
+            _targetCase_: ~lower~ or ~upper~,
+          )
+        </h1>
+        <dl class="header">
+          <dt>description</dt>
+          <dd>It interprets _S_ as a sequence of UTF-16 encoded code points, as described in <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and returns the result of implementation- and locale-dependent (ILD) transformation into _targetCase_ as a new String value.</dd>
+        </dl>
+        <emu-alg>
+          1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+          1. If _requestedLocales_ is not an empty List, then
+            1. Let _requestedLocale_ be _requestedLocales_[0].
+          1. Else,
+            1. Let _requestedLocale_ be DefaultLocale().
+          1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.
+          1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
+          1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. If _locale_ is *undefined*, let _locale_ be *"und"*.
+          1. Let _codePoints_ be ! StringToCodePoints(_S_).
+          1. If _targetCase_ is ~lower~, then
+            1. Let _newCodePoints_ be a List whose elements are the result of a lower case transformation of _codePoints_ according to an implementation-derived algorithm using _locale_ or the Unicode Default Case Conversion algorithm.
+          1. Else,
+            1. Assert: _targetCase_ is ~upper~.
+            1. Let _newCodePoints_ be a List whose elements are the result of an upper case transformation of _codePoints_ according to an implementation-derived algorithm using _locale_ or the Unicode Default Case Conversion algorithm.
+          1. Return ! CodePointsToString(_newCodePoints_).
+        </emu-alg>
+
+        <p>
+          Code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale specific tailoring defined in SpecialCasings.txt and/or CLDR and/or any other custom tailoring. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
+        </p>
+
+        <emu-note>
+          The case mapping of some code points may produce multiple code points, and therefore the result may not be the same length as the input. Because both `toLocaleUpperCase` and `toLocaleLowerCase` have context-sensitive behaviour, the functions are not symmetrical. In other words, `s.toLocaleUpperCase().toLocaleLowerCase()` is not necessarily equal to `s.toLocaleLowerCase()` and `s.toLocaleLowerCase().toLocaleUpperCase()` is not necessarily equal to `s.toLocaleUpperCase()`.
+        </emu-note>
+      </emu-clause>
     </emu-clause>
 
     <emu-clause id="sup-string.prototype.tolocaleuppercase">
@@ -94,8 +114,14 @@
       </p>
 
       <p>
-        This function interprets a String value as a sequence of code points, as described in es2022, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. This function behaves in exactly the same way as `String.prototype.toLocaleLowerCase`, except that characters are mapped to their _uppercase_ equivalents. A conforming implementation's upper case transformation algorithm must always yield the same result given the same sequence of code points and locale.
+        This function interprets a String value as a sequence of code points, as described in es2022, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
       </p>
+
+      <emu-alg>
+        1. Let _O_ be RequireObjectCoercible(*this* value).
+        1. Let _S_ be ? ToString(_O_).
+        1. Return ? TransformCase(_S_, _locales_, ~upper~).
+      </emu-alg>
 
       <emu-note>
         The `toLocaleUpperCase` function is intentionally generic; it does not require that its *this* value be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
