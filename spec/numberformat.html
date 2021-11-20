@@ -814,7 +814,7 @@
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else,
           1. Assert: _signDisplay_ is *"exceptZero"*.
-          1. If _x_ is *NaN* or _x_ is finite and ℝ(_x_) is 0, then
+          1. If _x_ is *NaN*, or if _x_ is finite and ℝ(_x_) is 0, then
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
           1. Else if ℝ(_x_) &gt; 0, then
             1. Let _pattern_ be _patterns_.[[positivePattern]].
