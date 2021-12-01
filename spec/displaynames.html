@@ -148,12 +148,12 @@
         1. Let _types_ be _dataLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _languageDisplay_ be ? GetOption(_options_, `"languageDisplay"`, `"string"`, &laquo; `"dialect"`, `"standard"` &raquo;, `"dialect"`).
+        1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
+        1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is `"language"`, then
           1. Set _displayNames_.[[LanguageDisplay]] to _languageDisplay_.
           1. Let _typeFields_ be _typeFields_.[[&lt;_languageDisplay_&gt;]].
           1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
-        1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
-        1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _styleFields_ be _typeFields_.[[&lt;_style_&gt;]].
         1. Assert: _styleFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Set _displayNames_.[[Fields]] to _styleFields_.
