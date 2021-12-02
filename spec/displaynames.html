@@ -38,11 +38,16 @@
     </emu-clause>
   </emu-clause>
 
-    <emu-clause id="sec-isvaliddatetimefieldcode" aoid="IsValidDateTimeFieldCode">
-      <h1>IsValidDateTimeFieldCode ( _field_ )</h1>
-      <p>
-        The IsValidDateTimeFieldCode abstract operation is called with argument _field_. It verifies that the _field_ argument represents a valid date time field code. The following steps are taken:
-      </p>
+    <emu-clause id="sec-isvaliddatetimefieldcode" type="abstract operation">
+      <h1>
+        IsValidDateTimeFieldCode (
+          _field_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _field_ argument represents a valid date time field code.</dd>
+      </dl>
       <emu-alg>
         1. If _field_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
         1. Return *false*.
@@ -107,7 +112,6 @@
           </tr>
         </table>
       </emu-table>
-
     </emu-clause>
 
   <emu-clause id="sec-intl-displaynames-constructor">
