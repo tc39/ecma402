@@ -16,7 +16,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref).</dd>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref>).</dd>
       </dl>
       <emu-alg>
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
@@ -962,10 +962,6 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
-
-      <p>
-        The value of the *"length"* property of the `supportedLocalesOf` method is 1.
-      </p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat-internal-slots">
@@ -1024,7 +1020,7 @@
       <h1>Intl.NumberFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.NumberFormat.prototype.constructor` is the intrinsic object %NumberFormat%.
+        The initial value of `Intl.NumberFormat.prototype.constructor` is %NumberFormat%.
       </p>
     </emu-clause>
 

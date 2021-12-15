@@ -13,12 +13,23 @@
     },
     {
       "type": "op",
+      "aoid": "CodePointsToString",
+      "refId": "sec-codepointstostring",
+      "key": "CodePointsToString"
+    },
+    {
+      "type": "op",
       "aoid": "StringIndexOf",
       "refId": "sec-stringindexof",
       "key": "StringIndexOf"
     },
     {
       "type": "op",
+      "aoid": "StringToCodePoints",
+      "refId": "sec-stringtocodepoints",
+      "key": "StringToCodePoints"
+    },
+    {
       "aoid": "ToIntegerOrInfinity",
       "id": "sec-tointegerorinfinity"
     }
