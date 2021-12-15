@@ -3,19 +3,18 @@
     {
       "type": "term",
       "term": "%Object.prototype%",
-      "key": "%Object.prototype%",
       "refId": "sec-properties-of-the-object-prototype-object"
-    },
-    {
-      "type": "op",
-      "aoid": "OrdinaryObjectCreate",
-      "id": "sec-ordinaryobjectcreate"
     },
     {
       "type": "op",
       "aoid": "CodePointsToString",
       "refId": "sec-codepointstostring",
       "key": "CodePointsToString"
+    },
+    {
+      "type": "op",
+      "aoid": "OrdinaryObjectCreate",
+      "id": "sec-ordinaryobjectcreate"
     },
     {
       "type": "op",
@@ -30,6 +29,7 @@
       "key": "StringToCodePoints"
     },
     {
+      "type": "op",
       "aoid": "ToIntegerOrInfinity",
       "id": "sec-tointegerorinfinity"
     }
