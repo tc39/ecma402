@@ -176,8 +176,7 @@
           1. If the result of IsWellFormedUnitIdentifier(_unit_) is *false*, throw a *RangeError* exception.
         1. Let _unitDisplay_ be ? GetOption(_options_, *"unitDisplay"*, *"string"*, &laquo; *"short"*, *"narrow"*, *"long"* &raquo;, *"short"*).
         1. If _style_ is *"currency"*, then
-          1. Let _currency_ be the result of mapping _currency_ to upper case as specified in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Set _intlObj_.[[Currency]] to _currency_.
+          1. Set _intlObj_.[[Currency]] to the ASCII-uppercase of _currency_.
           1. Set _intlObj_.[[CurrencyDisplay]] to _currencyDisplay_.
           1. Set _intlObj_.[[CurrencySign]] to _currencySign_.
         1. If _style_ is *"unit"*, then
