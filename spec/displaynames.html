@@ -248,7 +248,7 @@
     <emu-clause id="sec-canonicalcodefordisplaynames" aoid="CanonicalCodeForDisplayNames">
       <h1>CanonicalCodeForDisplayNames ( _type_, _code_ )</h1>
       <p>
-        The CanonicalCodeForDisplayNames abstract operation is called with arguments _type_ and _code_. It verifies that the _code_ argument represents a well-formed code according to the _type_ argument and returns the case-regularized form of the _code_. The algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. The following steps are taken:
+        The CanonicalCodeForDisplayNames abstract operation takes arguments _type_ (a String) and _code_ (a String). It verifies that the _code_ argument represents a well-formed code according to the _type_ argument and returns the case-regularized form of the _code_. The algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. The following steps are taken:
       </p>
       <emu-alg>
         1. If _type_ is *"language"*, then
