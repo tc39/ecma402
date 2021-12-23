@@ -193,8 +193,10 @@
         1. Let _exponent_ be 0.
         1. If _x_ is *NaN*, then
           1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
-        1. Else if _x_ is a non-finite Number, then
-          1. Let _n_ be an ILD String value indicating infinity.
+        1. Else if _x_ is *+&infin;*, then
+          1. Let _n_ be an ILD String value indicating positive infinity.
+        1. Else if _x_ is *-&infin;*, then
+          1. Let _n_ be an ILD String value indicating negative infinity.
         1. Else,
           1. If _numberFormat_.[[Style]] is *"percent"*, let _x_ be 100 × _x_.
           1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
@@ -649,14 +651,14 @@
       </p>
 
       <emu-alg>
+        1. Set x to ℝ(x).
         1. Let _p_ be _maxPrecision_.
         1. If _x_ = 0, then
           1. Let _m_ be the String consisting of _p_ occurrences of the character *"0"*.
           1. Let _e_ be 0.
           1. Let _xFinal_ be 0.
         1. Else,
-          1. Let _e_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
-          1. Let _n_ be an integer such that 10<sup>_p_–1</sup> ≤ _n_ < 10<sup>_p_</sup> and for which the exact mathematical value of _n_ × 10<sup>_e_–_p_+1</sup> – _x_ is as close to zero as possible. If there is more than one such _n_, pick the one for which _n_ × 10<sup>_e_–_p_+1</sup> is larger.
+          1. Let _e_ and _n_ be integers such that 10<sup>_p_ - 1</sup> &le; _n_ &lt; 10<sup>_p_</sup> and for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> - _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> is larger.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
           1. Let _xFinal_ be _n_ × 10<sup>_e_–_p_+1</sup>.
         1. If _e_ ≥ _p_–1, then
@@ -688,6 +690,7 @@
       </p>
 
       <emu-alg>
+        1. Set x to ℝ(x).
         1. Let _f_ be _maxFraction_.
         1. Let _n_ be an integer for which the exact mathematical value of _n_ / 10<sup>_f_</sup> – _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
         1. Let _xFinal_ be _n_ / 10<sup>_f_</sup>.
