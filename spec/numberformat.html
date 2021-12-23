@@ -4,18 +4,21 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations for NumberFormat Objects</h1>
 
-    <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
-      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_ )</h1>
-
-      <p>
-        The abstract operation SetNumberFormatDigitOptions applies digit
-        options used for number formatting onto the intl object.
-      </p>
+    <emu-clause id="sec-setnfdigitoptions" type="abstract operation">
+      <h1>
+        SetNumberFormatDigitOptions (
+          _intlObj_: an Object,
+          _options_: an Object,
+          _mnfdDefault_: a Number,
+          _mxfdDefault_: a Number,
+          _notation_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref>).</dd>
+      </dl>
       <emu-alg>
-        1. Assert: Type(_intlObj_) is Object.
-        1. Assert: Type(_options_) is Object.
-        1. Assert: Type(_mnfdDefault_) is Number.
-        1. Assert: Type(_mxfdDefault_) is Number.
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? Get(_options_, *"minimumFractionDigits"*).
         1. Let _mxfd_ be ? Get(_options_, *"maximumFractionDigits"*).
@@ -23,26 +26,42 @@
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
-          1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
-          1. Let _mnsd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
-          1. Let _mxsd_ be ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
+          1. Let _hasSd_ be *true*.
+        1. Else,
+          1. Let _hasSd_ be *false*.
+        1. If _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
+          1. Let _hasFd_ be *true*.
+        1. Else,
+          1. Let _hasFd_ be *false*.
+        1. Let _needSd_ be _hasSd_.
+        1. If _hasSd_ is *true*, or _hasFd_ is *false* and _notation_ is *"compact"*, then
+          1. Let _needFd_ be *false*.
+        1. Else,
+          1. Let _needFd_ be *true*.
+        1. If _needSd_ is *true*, then
+          1. Assert: _hasSd_ is *true*.
+          1. Set _mnsd_ to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
+          1. Set _mxsd_ to ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
           1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
-        1. Else if _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
-          1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
-          1. Let _mnfd_ be ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
-          1. Let _mxfd_ be ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
-          1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
-          1. Else if _mxfd_ is *undefined*, set _mxfd_ to max(_mxfdDefault_, _mnfd_).
-          1. Else if _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
-          1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
-          1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
-        1. Else if _notation_ is *"compact"*, then
+        1. If _needFd_ is *true*, then
+          1. If _hasFd_ is *true*, then
+            1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
+            1. Set _mxfd_ to ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
+            1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
+            1. Else if _mxfd_ is *undefined*, set _mxfd_ to max(_mxfdDefault_, _mnfd_).
+            1. Else if _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
+            1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
+            1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
+          1. Else,
+            1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
+            1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
+        1. If _needSd_ is *false* and _needFd_ is *false*, then
           1. Set _intlObj_.[[RoundingType]] to ~compactRounding~.
+        1. Else if _hasSd_ is *true*, then
+          1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
         1. Else,
           1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
-          1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
-          1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
       </emu-alg>
     </emu-clause>
 
@@ -696,30 +715,23 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-normative-optional>
     <emu-clause id="sec-unwrapnumberformat" aoid="UnwrapNumberFormat">
       <h1>UnwrapNumberFormat ( _nf_ )</h1>
       <p>
-        The UnwrapNumberFormat abstract operation gets the underlying NumberFormat operation
-        for various methods which implement ECMA-402 v1 semantics for supporting initializing
-        existing Intl objects.
+        The UnwrapNumberFormat abstract operation returns the NumberFormat instance
+        of its input object, which is either the value itself or a value associated
+        with it by %NumberFormat% according to the normative optional
+        constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
       </p>
       <emu-alg>
-        1. Assert: Type(_nf_) is Object.
-      </emu-alg>
-      <emu-normative-optional>
-      <!-- Note: 2. is intentional -->
-      <emu-alg>
-        2. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
-          1. Let _nf_ be ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
-      </emu-alg>
-      </emu-normative-optional>
-      <!-- Note: 3. is intentional -->
-      <emu-alg>
-        3. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
+        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
+          1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
         1. Return _nf_.
       </emu-alg>
-      <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
     </emu-clause>
+    </emu-normative-optional>
 
     <emu-clause id="sec-setnumberformatunitoptions" aoid="SetNumberFormatUnitOptions">
       <h1>SetNumberFormatUnitOptions ( _intlObj_, _options_ )</h1>
@@ -903,22 +915,24 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Let _this_ be the *this* value.
+          1. Return ? ChainNumberFormat(_numberFormat_, NewTarget, _this_).
+        1. Return _numberFormat_.
       </emu-alg>
+
       <emu-normative-optional>
-      <!-- Note: 4. is intentional -->
-      <emu-alg>
-        4. Let _this_ be the *this* value.
-        1. If NewTarget is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
-          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-          1. Return _this_.
-      </emu-alg>
+      <emu-clause id="sec-chainnumberformat" aoid="ChainNumberFormat">
+        <h1>ChainNumberFormat ( _numberFormat_, _newTarget_, _this_ )</h1>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _numberFormat_.
+        </emu-alg>
+      </emu-clause>
       </emu-normative-optional>
-      <!-- Note: 6. is intentional -->
-      <emu-alg>
-        6. Return _numberFormat_.
-      </emu-alg>
     </emu-clause>
-    <emu-note>See <emu-xref href="#legacy-constructor"></emu-xref> for the motivation of the normative optional text.</emu-note>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-numberformat-constructor">
@@ -951,10 +965,6 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
-
-      <p>
-        The value of the *"length"* property of the `supportedLocalesOf` method is 1.
-      </p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat-internal-slots">
@@ -969,7 +979,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes two locale extension keys that are relevant to number formatting: *"cu"* for currency and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects.
+        Unicode Technical Standard 35 describes three locale extension keys that are relevant to number formatting: *"cu"* for currency, *"cf"* for currency format style, and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects, and the currency format style of a currency format is specified through the currencySign property in the options objects.
       </emu-note>
 
       <p>
@@ -1013,7 +1023,7 @@
       <h1>Intl.NumberFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.NumberFormat.prototype.constructor` is the intrinsic object %NumberFormat%.
+        The initial value of `Intl.NumberFormat.prototype.constructor` is %NumberFormat%.
       </p>
     </emu-clause>
 
@@ -1037,8 +1047,9 @@
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _nf_ to ? UnwrapNumberFormat(_nf_).
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. If _nf_.[[BoundFormat]] is *undefined*, then
           1. Let _F_ be a new built-in function object as defined in Number Format Functions (<emu-xref href="#sec-number-format-functions"></emu-xref>).
           1. Set _F_.[[NumberFormat]] to _nf_.
@@ -1071,13 +1082,14 @@
       <h1>Intl.NumberFormat.prototype.resolvedOptions ( )</h1>
 
       <p>
-        This function provides access to the locale and formatting options computed during initialization of the object.
+        This function provides access to the locale and options computed during initialization of the object.
       </p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
-        1. Let _nf_ be ? UnwrapNumberFormat(_nf_).
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _nf_ to ? UnwrapNumberFormat(_nf_).
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-numberformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.

@@ -13,23 +13,23 @@
       <p>
         The placeables record is a record whose keys are placeables tokens used in the pattern string, and values are parts records which will be used in the result List to represent the token part.
         Example:
-        <pre>
-        Input:
-          DeconstructPattern("AA{xx}BB{yy}CC", {
-            [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
-            [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
-          })
-
-        Output (List of parts records):
-          &laquo;
-            {[[Type]]: "literal", [[Value]]: "AA"},
-            {[[Type]]: "hour", [[Value]]: "15"},
-            {[[Type]]: "literal", [[Value]]: "BB"},
-            {[[Type]]: "minute", [[Value]]: "06"},
-            {[[Type]]: "literal", [[Value]]: "CC"}
-          &raquo;
-        </pre>
       </p>
+      <pre>
+      Input:
+        DeconstructPattern("AA{xx}BB{yy}CC", {
+          [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
+          [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
+        })
+
+      Output (List of parts records):
+        &laquo;
+          {[[Type]]: "literal", [[Value]]: "AA"},
+          {[[Type]]: "hour", [[Value]]: "15"},
+          {[[Type]]: "literal", [[Value]]: "BB"},
+          {[[Type]]: "minute", [[Value]]: "06"},
+          {[[Type]]: "literal", [[Value]]: "CC"}
+        &raquo;
+      </pre>
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
@@ -245,7 +245,7 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]][[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
         <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a List of Records with fields named: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules. Each template string must contain the substrings *"{0}"* and *"{1}"* exactly once. The substring *"{0}"* should occur before the substring *"{1}"*.</li>
       </ul>
 
@@ -270,7 +270,7 @@
       <h1>Intl.ListFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.ListFormat.prototype.constructor` is the intrinsic object %ListFormat%.
+        The initial value of `Intl.ListFormat.prototype.constructor` is %ListFormat%.
       </p>
     </emu-clause>
 

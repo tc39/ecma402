@@ -2,20 +2,20 @@
   <h1>Locale and Parameter Negotiation</h1>
 
   <p>
-    The constructors for the objects providing locale sensitive services, Collator, NumberFormat, DateTimeFormat, PluralRules, and RelativeTimeFormat, use a common pattern to negotiate the requests represented by the locales and options arguments against the actual capabilities of their implementations. The common behaviour is described here in terms of internal slots describing the capabilities and of abstract operations using these internal slots.
+    <emu-xref href="#service-constructor">Service constructors</emu-xref> use a common pattern to negotiate the requests represented by their _locales_ and _options_ arguments against the actual capabilities of their implementations. That common behaviour is explained here in terms of internal slots describing the capabilities and abstract operations using these internal slots.
   </p>
 
   <emu-clause id="sec-internal-slots">
     <h1>Internal slots of Service Constructors</h1>
 
     <p>
-      The constructors Intl.Collator, Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, Intl.NumberFormat, Intl.PluralRules, and Intl.RelativeTimeFormat have the following internal slots:
+      Each service constructor has the following internal slots:
     </p>
 
     <ul>
       <li>[[AvailableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) Unicode BCP 47 locale identifiers identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[AvailableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-resolvelocale"></emu-xref>). For example, implementations that provide a *"de-DE"* locale must include a *"de"* locale that can serve as a fallback for requests such as *"de-AT"* and *"de-CH"*. For locales that include a script subtag in addition to language and region, the corresponding locale without a script subtag must also be supported; that is, if an implementation recognizes *"zh-Hant-TW"*, it is also expected to recognize *"zh-TW"*. The ordering of the locales within [[AvailableLocales]] is irrelevant.</li>
       <li>[[RelevantExtensionKeys]] is a List of keys of the language tag extensions defined in Unicode Technical Standard 35 that are relevant for the functionality of the constructed objects.</li>
-      <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for Intl.DateTimeFormat, Intl.DisplayNames, Intl.ListFormat, Intl.NumberFormat, Intl.PluralRules, and Intl.RelativeTimeFormat) are records that have fields for each locale contained in [[AvailableLocales]]. The value of each of these fields must be a record that has fields for each key contained in [[RelevantExtensionKeys]]. The value of each of these fields must be a non-empty list of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
+      <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for every other service constructor) are records that have fields for each locale contained in [[AvailableLocales]]. The value of each of these fields must be a record that has fields for each key contained in [[RelevantExtensionKeys]]. The value of each of these fields must be a non-empty list of those values defined in Unicode Technical Standard 35 for the given key that are supported by the implementation for the given locale, with the first element providing the default value.</li>
     </ul>
 
     <emu-note>
@@ -102,12 +102,12 @@
       <emu-alg>
         1. Let _result_ be a new Record.
         1. For each element _locale_ of _requestedLocales_, do
-          1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
+          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, then
             1. Set _result_.[[locale]] to _availableLocale_.
             1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
-              1. Let _extension_ be the String value consisting of the first substring of _locale_ that is a Unicode locale extension sequence.
+              1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _locale_.
               1. Set _result_.[[extension]] to _extension_.
             1. Return _result_.
         1. Let _defLocale_ be DefaultLocale().
@@ -116,7 +116,7 @@
       </emu-alg>
 
       <emu-note>
-        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the first Unicode locale extension sequence within the request locale language tag.
+        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
       </emu-note>
     </emu-clause>
 
@@ -124,7 +124,7 @@
       <h1>BestFitMatcher ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
-        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the first Unicode locale extension sequence within the request locale language tag.
+        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
       </p>
     </emu-clause>
 
@@ -266,7 +266,7 @@
       <emu-alg>
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
-          1. Let _noExtensionsLocale_ be the String value that is _locale_ with all Unicode locale extension sequences removed.
+          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
         1. Return _subset_.
@@ -340,9 +340,9 @@
         1. If _value_ is *undefined*, return _fallback_.
         1. Assert: _type_ is *"boolean"* or *"string"*.
         1. If _type_ is *"boolean"*, then
-          1. Let _value_ be ! ToBoolean(_value_).
+          1. Set _value_ to ! ToBoolean(_value_).
         1. If _type_ is *"string"*, then
-          1. Let _value_ be ? ToString(_value_).
+          1. Set _value_ to ? ToString(_value_).
         1. If _values_ is not *undefined* and _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
         1. Return _value_.
       </emu-alg>
@@ -357,7 +357,7 @@
 
       <emu-alg>
         1. If _value_ is *undefined*, return _fallback_.
-        1. Let _value_ be ? ToNumber(_value_).
+        1. Set _value_ to ? ToNumber(_value_).
         1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
         1. Return floor(_value_).
       </emu-alg>
