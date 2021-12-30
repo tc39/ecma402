@@ -71,7 +71,7 @@
         <tr>
           <td>[[TimeZoneName]]</td>
           <td>*"timeZoneName"*</td>
-          <td>*"short"*, *"long"*</td>
+          <td>*"short"*, *"long"*, *"shortOffset"*, *"longOffset"*, *"shortGeneric"*, *"longGeneric"*</td>
         </tr>
       </table>
     </emu-table>
@@ -272,6 +272,7 @@
         1. Let _longMorePenalty_ be 6.
         1. Let _shortLessPenalty_ be 6.
         1. Let _shortMorePenalty_ be 3.
+        1. Let _offsetPenalty_ be 1.
         1. Let _bestScore_ be -*Infinity*.
         1. Let _bestFormat_ be *undefined*.
         1. Assert: Type(_formats_) is List.
@@ -282,6 +283,22 @@
             1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
+            1. Else if _property_ is *"timeZoneName"*, then
+              1. If _optionsProp_ is *"short"* or *"shortGeneric"*, then
+                1. If _formatProp_ is *"shortOffset"*, decrease _score_ by _offsetPenalty_.
+                1. Else if _formatProp_ is *"longOffset"*, decrease _score_ by (_offsetPenalty_ + _shortMorePenalty_).
+                1. Else if _optionsProp_ is *"short"* and _formatProp_ is *"long"*, decrease _score_ by _shortMorePenalty_.
+                1. Else if _optionsProp_ is *"shortGeneric"* and _formatProp_ is *"longGeneric"*, decrease _score_ by _shortMorePenalty_.
+                1. Else if _optionsProp_ &ne; _formatProp_, decrease _score_ by _removalPenalty_.
+              1. Else if _optionsProp_ is *"shortOffset"* and _formatProp_ is *"longOffset"*, decrease _score_ by _shortMorePenalty_.
+              1. Else if _optionsProp_ is *"long"* or *"longGeneric"*, then
+                1. If _formatProp_ is *"longOffset"*, decrease _score_ by _offsetPenalty_.
+                1. Else if _formatProp_ is *"shortOffset"*, decrease _score_ by (_offsetPenalty_ + _longLessPenalty_).
+                1. Else if _optionsProp_ is *"long"* and _formatProp_ is *"short"*, decrease _score_ by _longLessPenalty_.
+                1. Else if _optionsProp_ is *"longGeneric"* and _formatProp_ is *"shortGeneric"*, decrease _score_ by _longLessPenalty_.
+                1. Else if _optionsProp_ ≠ _formatProp_, decrease _score_ by _removalPenalty_.
+              1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, decrease _score_ by _longLessPenalty_.
+              1. Else if _optionsProp_ ≠ _formatProp_, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
                 1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
@@ -372,7 +389,7 @@
           1. Else if _p_ is equal to *"timeZoneName"*, then
             1. Let _f_ be _dateTimeFormat_.[[TimeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
-            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale. The String value may also depend on the value of the [[InDST]] field of _tm_. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*.  If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. If _rangeFormatOptions_ is not *undefined*, let _f_ be the value of _rangeFormatOptions_'s field whose name matches _p_.
