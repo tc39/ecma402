@@ -27,35 +27,33 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getoperands" aoid="GetOperands">
-       <h1>GetOperands ( _s_ )</h1>
-       <p>
-         When the GetOperands abstract operation is called with argument _s_, it performs the following steps:
-       </p>
-
+    <emu-clause id="sec-getoperands" type="abstract operation">
+       <h1>
+         GetOperands (
+           _s_: a decimal String,
+         )
+       </h1>
+       <dl class="header">
+        <dt>description</dt>
+        <dd>It extracts numeric features from _s_ that correspond with the operands of <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Operands">Unicode Technical Standard #35, Part 3, Section 5.1.1</a>.</dd>
+       </dl>
        <emu-alg>
-         1. Assert: Type(_s_) is String.
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
          1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
          1. If _dp_ = -1, then
-           1. Set _iv_ to _n_.
-           1. Let _f_ be 0.
-           1. Let _v_ be 0.
+           1. Let _intPart_ be _n_.
+           1. Let _fracSlice_ be *""*.
          1. Else,
-           1. Let _iv_ be the substring of _s_ from position 0, inclusive, to position _dp_, exclusive.
-           1. Let _fv_ be the substring of _s_ from position _dp_, exclusive, to the end of _s_.
-           1. Let _f_ be ! ToNumber(_fv_).
-           1. Let _v_ be the length of _fv_.
-         1. Let _i_ be abs(! ToNumber(_iv_)).
-         1. If _f_ ≠ 0, then
-           1. Let _ft_ be the value of _fv_ stripped of trailing *"0"*.
-           1. Let _w_ be the length of _ft_.
-           1. Let _t_ be ! ToNumber(_ft_).
-         1. Else,
-           1. Let _w_ be 0.
-           1. Let _t_ be 0.
-         1. Return a new Record { [[Number]]: _n_, [[IntegerDigits]]: _i_, [[NumberOfFractionDigits]]: _v_, [[NumberOfFractionDigitsWithoutTrailing]]: _w_, [[FractionDigits]]: _f_, [[FractionDigitsWithoutTrailing]]: _t_ }.
+           1. Let _intPart_ be the substring of _s_ from 0 to _dp_.
+           1. Let _fracSlice_ be the substring of _s_ from _dp_ + 1.
+         1. Let _i_ be abs(! ToNumber(_intPart_)).
+         1. Let _fracDigitCount_ be the length of _fracSlice_.
+         1. Let _f_ be ! ToNumber(_fracSlice_).
+         1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
+         1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
+         1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
+         1. Return a new Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
        </emu-alg>
 
        <emu-table id="table-plural-operands">
@@ -65,49 +63,63 @@
              <tr>
                <th>Internal Slot</th>
                <th>Type</th>
+               <th>UTS #35 Operand</th>
                <th>Description</th>
              </tr>
            </thead>
            <tr>
              <td>[[Number]]</td>
              <td>Number</td>
-             <td>Absolute value of the source number (integer and decimals)</td>
+             <td>n</td>
+             <td>Absolute value of the source number</td>
            </tr>
            <tr>
              <td>[[IntegerDigits]]</td>
              <td>Number</td>
-             <td>Number of digits of [[Number]].</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigits]]</td>
-             <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>with</i> trailing zeroes.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>Number of visible fraction digits in [[Number]], <i>without</i> trailing zeroes.</td>
+             <td>i</td>
+             <td>Integer part of [[Number]].</td>
            </tr>
            <tr>
              <td>[[FractionDigits]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>with</i> trailing zeroes.</td>
+             <td>f</td>
+             <td>Visible fraction digits in [[Number]], <em>with</em> trailing zeroes, as an integer having [[NumberOfFractionDigits]] digits.</td>
+           </tr>
+           <tr>
+             <td>[[NumberOfFractionDigits]]</td>
+             <td>Number</td>
+             <td>v</td>
+             <td>Number of visible fraction digits in [[Number]], <em>with</em> trailing zeroes.</td>
            </tr>
            <tr>
              <td>[[FractionDigitsWithoutTrailing]]</td>
              <td>Number</td>
-             <td>Number of visible fractional digits in [[Number]], <i>without</i> trailing zeroes.</td>
+             <td>t</td>
+             <td>Visible fraction digits in [[Number]], <em>without</em> trailing zeroes, as an integer having [[NumberOfFractionDigitsWithoutTrailing]] digits.</td>
+           </tr>
+           <tr>
+             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
+             <td>Number</td>
+             <td>w</td>
+             <td>Number of visible fraction digits in [[Number]], <em>without</em> trailing zeroes.</td>
            </tr>
          </table>
        </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-pluralruleselect" aoid="PluralRuleSelect">
-      <h1>PluralRuleSelect ( _locale_, _type_, _n_, _operands_ )</h1>
-
-      <p>
-        When the PluralRuleSelect abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map _n_ to the appropriate plural representation of the Plural Rules Operands Record _operands_ by selecting the rules denoted by _type_ for the corresponding _locale_, or the String value *"other"*.
-      </p>
+    <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
+      <h1>
+        PluralRuleSelect (
+          _locale_: a String,
+          _type_: a String,
+          _n_: a finite Number,
+          _operands_: a Plural Rules Operands Record derived from formatting _n_,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
+      </dl>
     </emu-clause>
 
     <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
@@ -268,7 +280,7 @@
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Let _pluralCategories_ be a List of Strings representing the possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]]. This List consists of unique String values, from the the list *"zero"*, *"one"*, *"two"*, *"few"*, *"many"* and *"other"*, that are relevant for the locale whose localization is specified in LDML Language Plural Rules.
+        1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
         1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
