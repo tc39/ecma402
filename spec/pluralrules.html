@@ -45,8 +45,8 @@
            1. Let _intPart_ be _n_.
            1. Let _fracSlice_ be *""*.
          1. Else,
-           1. Let _intPart_ be the substring of _s_ from position 0, inclusive, to position _dp_, exclusive.
-           1. Let _fracSlice_ be the substring of _s_ from position _dp_, exclusive, to the end of _s_.
+           1. Let _intPart_ be the substring of _s_ from 0 to _dp_.
+           1. Let _fracSlice_ be the substring of _s_ from _dp_ + 1.
          1. Let _i_ be abs(! ToNumber(_intPart_)).
          1. Let _fracDigitCount_ be the length of _fracSlice_.
          1. Let _f_ be ! ToNumber(_fracSlice_).
