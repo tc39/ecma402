@@ -71,7 +71,7 @@
         <tr>
           <td>[[TimeZoneName]]</td>
           <td>*"timeZoneName"*</td>
-          <td>*"short"*, *"long"*</td>
+          <td>*"short"*, *"long"*, *"shortOffset"*, *"longOffset"*, *"shortGeneric"*, *"longGeneric"*</td>
         </tr>
       </table>
     </emu-table>
@@ -202,13 +202,11 @@
         1. Let _options_ be OrdinaryObjectCreate(_options_).
         1. Let _needDefaults_ be *true*.
         1. If _required_ is *"date"* or *"any"*, then
-          1. For each of the property names *"weekday"*, *"year"*, *"month"*, *"day"*, do
-            1. Let _prop_ be the property name.
+          1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. If _required_ is *"time"* or *"any"*, then
-          1. For each of the property names *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"*, do
-            1. Let _prop_ be the property name.
+          1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
             1. Let _value_ be ? Get(_options_, _prop_).
             1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
         1. Let _dateStyle_ be ? Get(_options_, *"dateStyle"*).
@@ -219,10 +217,10 @@
         1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
           1. Throw a *TypeError* exception.
         1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
-          1. For each of the property names *"year"*, *"month"*, *"day"*, do
+          1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
-          1. For each of the property names *"hour"*, *"minute"*, *"second"*, do
+          1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
             1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
         1. Return _options_.
       </emu-alg>
@@ -230,7 +228,7 @@
 
     <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
       <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _styles_ )</h1>
-      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]][_locale_].[[styles]][_calendar_] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
+      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
       <emu-alg>
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
@@ -274,6 +272,7 @@
         1. Let _longMorePenalty_ be 6.
         1. Let _shortLessPenalty_ be 6.
         1. Let _shortMorePenalty_ be 3.
+        1. Let _offsetPenalty_ be 1.
         1. Let _bestScore_ be -*Infinity*.
         1. Let _bestFormat_ be *undefined*.
         1. Assert: Type(_formats_) is List.
@@ -284,6 +283,22 @@
             1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
+            1. Else if _property_ is *"timeZoneName"*, then
+              1. If _optionsProp_ is *"short"* or *"shortGeneric"*, then
+                1. If _formatProp_ is *"shortOffset"*, decrease _score_ by _offsetPenalty_.
+                1. Else if _formatProp_ is *"longOffset"*, decrease _score_ by (_offsetPenalty_ + _shortMorePenalty_).
+                1. Else if _optionsProp_ is *"short"* and _formatProp_ is *"long"*, decrease _score_ by _shortMorePenalty_.
+                1. Else if _optionsProp_ is *"shortGeneric"* and _formatProp_ is *"longGeneric"*, decrease _score_ by _shortMorePenalty_.
+                1. Else if _optionsProp_ &ne; _formatProp_, decrease _score_ by _removalPenalty_.
+              1. Else if _optionsProp_ is *"shortOffset"* and _formatProp_ is *"longOffset"*, decrease _score_ by _shortMorePenalty_.
+              1. Else if _optionsProp_ is *"long"* or *"longGeneric"*, then
+                1. If _formatProp_ is *"longOffset"*, decrease _score_ by _offsetPenalty_.
+                1. Else if _formatProp_ is *"shortOffset"*, decrease _score_ by (_offsetPenalty_ + _longLessPenalty_).
+                1. Else if _optionsProp_ is *"long"* and _formatProp_ is *"short"*, decrease _score_ by _longLessPenalty_.
+                1. Else if _optionsProp_ is *"longGeneric"* and _formatProp_ is *"shortGeneric"*, decrease _score_ by _longLessPenalty_.
+                1. Else if _optionsProp_ ≠ _formatProp_, decrease _score_ by _removalPenalty_.
+              1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, decrease _score_ by _longLessPenalty_.
+              1. Else if _optionsProp_ ≠ _formatProp_, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ ≠ _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
                 1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
@@ -374,7 +389,7 @@
           1. Else if _p_ is equal to *"timeZoneName"*, then
             1. Let _f_ be _dateTimeFormat_.[[TimeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
-            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale. The String value may also depend on the value of the [[InDST]] field of _tm_. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. If _rangeFormatOptions_ is not *undefined*, let _f_ be the value of _rangeFormatOptions_'s field whose name matches _p_.
@@ -758,10 +773,6 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
-
-      <p>
-        The value of the *"length"* property of the `supportedLocalesOf` method is 1.
-      </p>
     </emu-clause>
 
     <emu-clause id="sec-intl.datetimeformat-internal-slots">
@@ -835,7 +846,7 @@
           </ol>
         </li>
         <li>
-          [[LocaleData]][&lt;_locale_&gt;] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
           <ol>
             <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
             <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
@@ -1001,7 +1012,7 @@
       <h1>Intl.DateTimeFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.DateTimeFormat.prototype.constructor` is the intrinsic object %DateTimeFormat%.
+        The initial value of `Intl.DateTimeFormat.prototype.constructor` is %DateTimeFormat%.
       </p>
     </emu-clause>
 
