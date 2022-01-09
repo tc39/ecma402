@@ -221,7 +221,7 @@
       </p>
 
       <emu-alg>
-        1. If ! IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
+        1. If ! IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
         1. Let _i_ be ! StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
         1. If _i_ is -1 or ! StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not -1, then
@@ -229,25 +229,25 @@
         1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
         1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
         1. Let _denominator_ be the substring of _unitIdentifier_ from _i_ + 5.
-        1. If ! IsSanctionedSimpleUnitIdentifier(_numerator_) and ! IsSanctionedSimpleUnitIdentifier(_denominator_) are both *true*, then
+        1. If ! IsSanctionedSingleUnitIdentifier(_numerator_) and ! IsSanctionedSingleUnitIdentifier(_denominator_) are both *true*, then
           1. Return *true*.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-issanctionedsimpleunitidentifier" aoid="IsSanctionedSimpleUnitIdentifier">
-      <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
+    <emu-clause id="sec-issanctionedsingleunitidentifier" aoid="IsSanctionedSingleUnitIdentifier" oldids="sec-issanctionedsimpleunitidentifier">
+      <h1>IsSanctionedSingleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
+        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
       </p>
 
       <emu-alg>
-        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-simple-unit-identifiers"></emu-xref> below, return *true*.
+        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-single-unit-identifiers"></emu-xref> below, return *true*.
         1. Else, return *false*.
       </emu-alg>
 
-      <emu-table id="table-sanctioned-simple-unit-identifiers">
+      <emu-table id="table-sanctioned-single-unit-identifiers" oldids="table-sanctioned-simple-unit-identifiers">
         <emu-caption>Single units sanctioned for use in ECMAScript</emu-caption>
         <table class="real-table">
           <thead>
