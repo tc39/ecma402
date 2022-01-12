@@ -23,6 +23,13 @@
           1. If _code_ does not match the `unicode_script_subtag` production, throw a *RangeError* exception.
           1. Let _code_ be the result of mapping the first character in _code_ to upper case, and mapping the second, third, and fourth character in _code_ to lower case, as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Return _code_.
+        1. If _type_ is *"calendar"*, then
+          1. If _code_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping _code_ to lower case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. If _type_ is *"dateTimeField"*, then
+          1. If the result of IsValidDateTimeFieldCode(_code_) is *false*, throw a *RangeError* exception.
+          1. Return _code_.
         1. Assert: _type_ is *"currency"*.
         1. If ! IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
         1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
@@ -30,6 +37,82 @@
       </emu-alg>
     </emu-clause>
   </emu-clause>
+
+    <emu-clause id="sec-isvaliddatetimefieldcode" type="abstract operation">
+      <h1>
+        IsValidDateTimeFieldCode (
+          _field_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _field_ argument represents a valid date time field code.</dd>
+      </dl>
+      <emu-alg>
+        1. If _field_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
+        1. Return *false*.
+      </emu-alg>
+
+      <emu-table id="table-validcodefordatetimefield">
+        <emu-caption>Codes For Date Time Field of DisplayNames</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>*"era"*</td>
+            <td>The field indicating the era, e.g. AD or BC in the Gregorian or Julian calendar.</td>
+          </tr>
+          <tr>
+            <td>*"year"*</td>
+            <td>The field indicating the year (within an era).</td>
+          </tr>
+          <tr>
+            <td>*"quarter"*</td>
+            <td>The field indicating the quarter, e.g. Q2, 2nd quarter, etc.</td>
+          </tr>
+          <tr>
+            <td>*"month"*</td>
+            <td>The field indicating the month, e.g. Sep, September, etc.</td>
+          </tr>
+          <tr>
+            <td>*"weekOfYear"*</td>
+            <td>The field indicating the week number within a year.</td>
+          </tr>
+          <tr>
+            <td>*"weekday"*</td>
+            <td>The field indicating the day of week, e.g. Tue, Tuesday, etc.</td>
+          </tr>
+          <tr>
+            <td>*"day"*</td>
+            <td>The field indicating the day in month.</td>
+          </tr>
+          <tr>
+            <td>*"dayPeriod"*</td>
+            <td>The field indicating the day period, either am, pm, etc. or noon, evening, etc..</td>
+          </tr>
+          <tr>
+            <td>*"hour"*</td>
+            <td>The field indicating the hour.</td>
+          </tr>
+          <tr>
+            <td>*"minute"*</td>
+            <td>The field indicating the minute.</td>
+          </tr>
+          <tr>
+            <td>*"second"*</td>
+            <td>The field indicating the second.</td>
+          </tr>
+          <tr>
+            <td>*"timeZoneName"*</td>
+            <td>The field indicating the time zone name, e.g. PDT, Pacific Daylight Time, etc.</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
 
   <emu-clause id="sec-intl-displaynames-constructor">
     <h1>The Intl.DisplayNames Constructor</h1>
@@ -47,7 +130,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[Fields]] &raquo;).
+        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, throw a *TypeError* exception.
         1. Set _options_ to ? GetOptionsObject(_options_).
@@ -58,7 +141,7 @@
         1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
         1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
-        1. Let _type_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"language"*, *"region"*, *"script"*, *"currency"* &raquo;, *undefined*).
+        1. Let _type_ be ? GetOption(_options_, *"type"*, *"string"*, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
         1. If _type_ is *undefined*, throw a *TypeError* exception.
         1. Set _displayNames_.[[Type]] to _type_.
         1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, *"string"*, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
@@ -68,8 +151,13 @@
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _types_ be _dataLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
+        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, *"string"*, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
+        1. If _type_ is *"language"*, then
+          1. Set _displayNames_.[[LanguageDisplay]] to _languageDisplay_.
+          1. Let _typeFields_ be _typeFields_.[[&lt;_languageDisplay_&gt;]].
+          1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _styleFields_ be _typeFields_.[[&lt;_style_&gt;]].
         1. Assert: _styleFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Set _displayNames_.[[Fields]] to _styleFields_.
@@ -126,12 +214,16 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of all display name types: *"language"*, *"region"*, *"script"*, and *"currency"*.</li>
-        <li>The value of the fields *"language"*, *"region"*, *"script"*, and *"currency"* must be Records, which must have fields with the names of all display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of all display name types: *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"*.</li>
+        <li>The value of the field *"language"* must be a Record which must have fields with the names of one of the valid language displays: *"dialect"* and *"standard"*.</li>
+        <li>The language display fields under display name type *"language"* should contain Records which must have fields with the names of one of the valid display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
+        <li>The value of the fields *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"* must be Records, which must have fields with the names of all display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
         <li>The display name style fields under display name type *"language"* should contain Records with keys corresponding to language codes matching the `unicode_language_id` production. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"region"* should contain Records with keys corresponding to region codes. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"script"* should contain Records with keys corresponding to script codes. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"currency"* should contain Records with keys corresponding to currency codes. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"calendar"* should contain Records with keys corresponding to a String value with the `type` given in Unicode Technical Standard 35 for the calendar used for formatting. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"dateTimeField"* should contain Records with keys corresponding to codes listed in <emu-xref href="#table-validcodefordatetimefield"></emu-xref>. The value of these fields must be string values.</li>
       </ul>
 
       <emu-note>
@@ -229,6 +321,10 @@
             <td>[[Fallback]]</td>
             <td>*"fallback"*</td>
           </tr>
+          <tr>
+            <td>[[LanguageDisplay]]</td>
+            <td>*"languageDisplay"*</td>
+          </tr>
         </table>
       </emu-table>
     </emu-clause>
@@ -252,9 +348,10 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
       <li>[[Style]] is one of the String values *"narrow"*, *"short"*, or *"long"*, identifying the display name style used.</li>
-      <li>[[Type]] is one of the String values *"language"*, *"region"*, *"script"*, or *"currency"*, identifying the type of the display names requested.</li>
+      <li>[[Type]] is one of the String values *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, or *"dateTimeField"*, identifying the type of the display names requested.</li>
       <li>[[Fallback]] is one of the String values *"code"* or *"none"*, identifying the fallback return when the system does not have the requested display name.</li>
-      <li>[[Fields]] is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>) which must have fields with keys corresponding to codes according to [[Style]] and [[Type]].</li>
+      <li>[[LanguageDisplay]] is one of the String values *"dialect"* or *"standard"*, identifying the language display kind. It is only used when [[Type]] has the value *"language"*.</li>
+      <li>[[Fields]] is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>) which must have fields with keys corresponding to codes according to [[Style]], [[Type]], and [[LanguageDisplay]].</li>
     </ul>
   </emu-clause>
 </emu-clause>
