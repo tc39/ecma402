@@ -182,12 +182,17 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-partitionnumberpattern" aoid="PartitionNumberPattern">
-      <h1>PartitionNumberPattern ( _numberFormat_, _x_ )</h1>
-
-      <p>
-        The PartitionNumberPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), interprets _x_ as a numeric value, and creates the corresponding parts according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
-      </p>
+    <emu-clause id="sec-partitionnumberpattern" type="abstract operation">
+      <h1>
+        PartitionNumberPattern (
+          _numberFormat_: an object initialized as a NumberFormat,
+          _x_: a Number or a BigInt,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It creates the parts representing the mathematical value of _x_ according to the effective locale and the formatting options of _numberFormat_.</dd>
+      </dl>
 
       <emu-alg>
         1. Let _exponent_ be 0.
