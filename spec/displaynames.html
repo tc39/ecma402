@@ -266,6 +266,7 @@
           1. Return _code_.
         1. If _type_ is *"calendar"*, then
           1. If _code_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
+          1. If _code_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>, throw a *RangeError* exception.
           1. Let _code_ be the result of mapping _code_ to lower case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
           1. Return _code_.
         1. If _type_ is *"dateTimeField"*, then
