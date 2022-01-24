@@ -1,8 +1,26 @@
 <emu-clause id="pluralrules-objects">
   <h1>PluralRules Objects</h1>
 
-  <emu-clause id="sec-intl-pluralrules-abstracts">
-    <h1>Abstract Operations for PluralRules Objects</h1>
+  <emu-clause id="sec-intl-pluralrules-constructor">
+    <h1>The Intl.PluralRules Constructor</h1>
+
+    <p>
+      The PluralRules constructor is the <dfn>%PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-intl.pluralrules">
+      <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>
+        When the `Intl.PluralRules` function is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, throw a *TypeError* exception.
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]] &raquo;).
+        1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
+      </emu-alg>
+    </emu-clause>
 
     <emu-clause id="sec-initializepluralrules" aoid="InitializePluralRules">
       <h1>InitializePluralRules ( _pluralRules_, _locales_, _options_ )</h1>
@@ -24,144 +42,6 @@
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to _r_.[[locale]].
         1. Return _pluralRules_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-getoperands" type="abstract operation">
-       <h1>
-         GetOperands (
-           _s_: a decimal String,
-         )
-       </h1>
-       <dl class="header">
-        <dt>description</dt>
-        <dd>It extracts numeric features from _s_ that correspond with the operands of <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Operands">Unicode Technical Standard #35, Part 3, Section 5.1.1</a>.</dd>
-       </dl>
-       <emu-alg>
-         1. Let _n_ be ! ToNumber(_s_).
-         1. Assert: _n_ is finite.
-         1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
-         1. If _dp_ = -1, then
-           1. Let _intPart_ be _n_.
-           1. Let _fracSlice_ be *""*.
-         1. Else,
-           1. Let _intPart_ be the substring of _s_ from 0 to _dp_.
-           1. Let _fracSlice_ be the substring of _s_ from _dp_ + 1.
-         1. Let _i_ be abs(! ToNumber(_intPart_)).
-         1. Let _fracDigitCount_ be the length of _fracSlice_.
-         1. Let _f_ be ! ToNumber(_fracSlice_).
-         1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
-         1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
-         1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
-         1. Return a new Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
-       </emu-alg>
-
-       <emu-table id="table-plural-operands">
-         <emu-caption>Plural Rules Operands Record Fields</emu-caption>
-         <table class="real-table">
-           <thead>
-             <tr>
-               <th>Internal Slot</th>
-               <th>Type</th>
-               <th>UTS #35 Operand</th>
-               <th>Description</th>
-             </tr>
-           </thead>
-           <tr>
-             <td>[[Number]]</td>
-             <td>Number</td>
-             <td>n</td>
-             <td>Absolute value of the source number</td>
-           </tr>
-           <tr>
-             <td>[[IntegerDigits]]</td>
-             <td>Number</td>
-             <td>i</td>
-             <td>Integer part of [[Number]].</td>
-           </tr>
-           <tr>
-             <td>[[FractionDigits]]</td>
-             <td>Number</td>
-             <td>f</td>
-             <td>Visible fraction digits in [[Number]], <em>with</em> trailing zeroes, as an integer having [[NumberOfFractionDigits]] digits.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigits]]</td>
-             <td>Number</td>
-             <td>v</td>
-             <td>Number of visible fraction digits in [[Number]], <em>with</em> trailing zeroes.</td>
-           </tr>
-           <tr>
-             <td>[[FractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>t</td>
-             <td>Visible fraction digits in [[Number]], <em>without</em> trailing zeroes, as an integer having [[NumberOfFractionDigitsWithoutTrailing]] digits.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>w</td>
-             <td>Number of visible fraction digits in [[Number]], <em>without</em> trailing zeroes.</td>
-           </tr>
-         </table>
-       </emu-table>
-    </emu-clause>
-
-    <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
-      <h1>
-        PluralRuleSelect (
-          _locale_: a String,
-          _type_: a String,
-          _n_: a finite Number,
-          _operands_: a Plural Rules Operands Record derived from formatting _n_,
-        )
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
-      </dl>
-    </emu-clause>
-
-    <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
-      <h1>ResolvePlural ( _pluralRules_, _n_ )</h1>
-      <p>
-        When the ResolvePlural abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules) and _n_ (which must be a Number value), it returns a String value representing the plural form of _n_ according to the effective locale and the options of _pluralRules_. The following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Assert: Type(_pluralRules_) is Object.
-        1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
-        1. Assert: Type(_n_) is Number.
-        1. If _n_ is not a finite Number, then
-          1. Return *"other"*.
-        1. Let _locale_ be _pluralRules_.[[Locale]].
-        1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _res_ be ! FormatNumericToString(_pluralRules_, _n_).
-        1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _operands_ be ! GetOperands(_s_).
-        1. Return ! PluralRuleSelect(_locale_, _type_, _n_, _operands_).
-      </emu-alg>
-    </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-intl-pluralrules-constructor">
-    <h1>The Intl.PluralRules Constructor</h1>
-
-    <p>
-      The PluralRules constructor is the <dfn>%PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
-
-    <emu-clause id="sec-intl.pluralrules">
-      <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
-
-      <p>
-        When the `Intl.PluralRules` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]] &raquo;).
-        1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -350,5 +230,125 @@
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
       <li>[[RoundingType]] is one of the values ~fractionDigits~ or ~significantDigits~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
     </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-pluralrules-abstracts">
+    <h1>Abstract Operations for PluralRules Objects</h1>
+
+    <emu-clause id="sec-getoperands" type="abstract operation">
+       <h1>
+         GetOperands (
+           _s_: a decimal String,
+         )
+       </h1>
+       <dl class="header">
+        <dt>description</dt>
+        <dd>It extracts numeric features from _s_ that correspond with the operands of <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Operands">Unicode Technical Standard #35, Part 3, Section 5.1.1</a>.</dd>
+       </dl>
+       <emu-alg>
+         1. Let _n_ be ! ToNumber(_s_).
+         1. Assert: _n_ is finite.
+         1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
+         1. If _dp_ = -1, then
+           1. Let _intPart_ be _n_.
+           1. Let _fracSlice_ be *""*.
+         1. Else,
+           1. Let _intPart_ be the substring of _s_ from 0 to _dp_.
+           1. Let _fracSlice_ be the substring of _s_ from _dp_ + 1.
+         1. Let _i_ be abs(! ToNumber(_intPart_)).
+         1. Let _fracDigitCount_ be the length of _fracSlice_.
+         1. Let _f_ be ! ToNumber(_fracSlice_).
+         1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
+         1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
+         1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
+         1. Return a new Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
+       </emu-alg>
+
+       <emu-table id="table-plural-operands">
+         <emu-caption>Plural Rules Operands Record Fields</emu-caption>
+         <table class="real-table">
+           <thead>
+             <tr>
+               <th>Internal Slot</th>
+               <th>Type</th>
+               <th>UTS #35 Operand</th>
+               <th>Description</th>
+             </tr>
+           </thead>
+           <tr>
+             <td>[[Number]]</td>
+             <td>Number</td>
+             <td>n</td>
+             <td>Absolute value of the source number</td>
+           </tr>
+           <tr>
+             <td>[[IntegerDigits]]</td>
+             <td>Number</td>
+             <td>i</td>
+             <td>Integer part of [[Number]].</td>
+           </tr>
+           <tr>
+             <td>[[FractionDigits]]</td>
+             <td>Number</td>
+             <td>f</td>
+             <td>Visible fraction digits in [[Number]], <em>with</em> trailing zeroes, as an integer having [[NumberOfFractionDigits]] digits.</td>
+           </tr>
+           <tr>
+             <td>[[NumberOfFractionDigits]]</td>
+             <td>Number</td>
+             <td>v</td>
+             <td>Number of visible fraction digits in [[Number]], <em>with</em> trailing zeroes.</td>
+           </tr>
+           <tr>
+             <td>[[FractionDigitsWithoutTrailing]]</td>
+             <td>Number</td>
+             <td>t</td>
+             <td>Visible fraction digits in [[Number]], <em>without</em> trailing zeroes, as an integer having [[NumberOfFractionDigitsWithoutTrailing]] digits.</td>
+           </tr>
+           <tr>
+             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
+             <td>Number</td>
+             <td>w</td>
+             <td>Number of visible fraction digits in [[Number]], <em>without</em> trailing zeroes.</td>
+           </tr>
+         </table>
+       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
+      <h1>
+        PluralRuleSelect (
+          _locale_: a String,
+          _type_: a String,
+          _n_: a finite Number,
+          _operands_: a Plural Rules Operands Record derived from formatting _n_,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
+      </dl>
+    </emu-clause>
+
+    <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
+      <h1>ResolvePlural ( _pluralRules_, _n_ )</h1>
+      <p>
+        When the ResolvePlural abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules) and _n_ (which must be a Number value), it returns a String value representing the plural form of _n_ according to the effective locale and the options of _pluralRules_. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Assert: Type(_pluralRules_) is Object.
+        1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
+        1. Assert: Type(_n_) is Number.
+        1. If _n_ is not a finite Number, then
+          1. Return *"other"*.
+        1. Let _locale_ be _pluralRules_.[[Locale]].
+        1. Let _type_ be _pluralRules_.[[Type]].
+        1. Let _res_ be ! FormatNumericToString(_pluralRules_, _n_).
+        1. Let _s_ be _res_.[[FormattedString]].
+        1. Let _operands_ be ! GetOperands(_s_).
+        1. Return ! PluralRuleSelect(_locale_, _type_, _n_, _operands_).
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 </emu-clause>
