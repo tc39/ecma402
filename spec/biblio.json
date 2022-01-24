@@ -1,10 +1,20 @@
 {
   "https://tc39.es/ecma262/": [
     {
+      "type": "term",
+      "term": "%Object.prototype%",
+      "refId": "sec-properties-of-the-object-prototype-object"
+    },
+    {
       "type": "op",
       "aoid": "CodePointsToString",
       "refId": "sec-codepointstostring",
       "key": "CodePointsToString"
+    },
+    {
+      "type": "op",
+      "aoid": "OrdinaryObjectCreate",
+      "id": "sec-ordinaryobjectcreate"
     },
     {
       "type": "op",
@@ -20,8 +30,8 @@
     },
     {
       "type": "op",
-      "aoid": "OrdinaryObjectCreate",
-      "id": "sec-ordinaryobjectcreate"
+      "aoid": "ToIntegerOrInfinity",
+      "id": "sec-tointegerorinfinity"
     }
   ]
 }

@@ -1,0 +1,413 @@
+<emu-clause id="segmenter-objects">
+  <h1>Segmenter Objects</h1>
+
+  <emu-clause id="sec-intl-segmenter-constructor">
+    <h1>The Intl.Segmenter Constructor</h1>
+
+    <p>
+      The Segmenter constructor is the <dfn>%Segmenter%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+    </p>
+
+    <emu-clause id="sec-intl.segmenter">
+      <h1>Intl.Segmenter ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>
+        When the `Intl.Segmenter` function is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. If NewTarget is *undefined*, throw a *TypeError* exception.
+        1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[SegmenterGranularity]] &raquo;.
+        1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Segmenter.prototype%"*, _internalSlotsList_).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Set _options_ to ? GetOptionsObject(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _localeData_ be %Segmenter%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Segmenter%.[[RelevantExtensionKeys]], _localeData_).
+        1. Set _segmenter_.[[Locale]] to _r_.[[locale]].
+        1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, *"string"*, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
+        1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
+        1. Return _segmenter_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-segmenter-constructor">
+    <h1>Properties of the Intl.Segmenter Constructor</h1>
+
+    <p>
+      The Intl.Segmenter constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-intl.segmenter.prototype">
+      <h1>Intl.Segmenter.prototype</h1>
+
+      <p>
+        The value of `Intl.Segmenter.prototype` is %Segmenter.prototype%.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.supportedlocalesof">
+      <h1>Intl.Segmenter.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
+
+      <p>
+        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _availableLocales_ be %Segmenter%.[[AvailableLocales]].
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+
+      <p>
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+      </p>
+      <emu-note>
+        Intl.Segmenter does not have any relevant extension keys.
+      </emu-note>
+
+      <p>
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      </p>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-segmenter-prototype-object">
+    <h1>Properties of the Intl.Segmenter Prototype Object</h1>
+
+    <p>
+      The Intl.Segmenter prototype object is itself an ordinary object. <dfn>%Segmenter.prototype%</dfn> is not an Intl.Segmenter instance and does not have an [[InitializedSegmenter]] internal slot or any of the other internal slots of Intl.Segmenter instance objects.
+    </p>
+
+    <emu-clause id="sec-intl.segmenter.prototype.constructor">
+      <h1>Intl.Segmenter.prototype.constructor</h1>
+
+      <p>
+        The initial value of `Intl.Segmenter.prototype.constructor` is %Segmenter%.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.prototype-@@tostringtag">
+      <h1>Intl.Segmenter.prototype [ @@toStringTag ]</h1>
+
+      <p>
+        The initial value of the @@toStringTag property is the String value *"Intl.Segmenter"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.prototype.segment">
+      <h1>Intl.Segmenter.prototype.segment ( _string_ )</h1>
+
+      <p>
+        The `Intl.Segmenter.prototype.segment` method is called on an Intl.Segmenter instance with argument _string_ to create a Segments instance for the string using the locale and options of the Intl.Segmenter instance. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _segmenter_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
+        1. Let _string_ be ? ToString(_string_).
+        1. Return ! CreateSegmentsObject(_segmenter_, _string_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.prototype.resolvedoptions">
+      <h1>Intl.Segmenter.prototype.resolvedOptions ( )</h1>
+
+      <p>
+        This function provides access to the locale and options computed during initialization of the object.
+      </p>
+
+      <emu-alg>
+        1. Let _segmenter_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
+        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. For each row of <emu-xref href="#table-segmenter-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _segmenter_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Assert: _v_ is not *undefined*.
+          1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-segmenter-resolvedoptions-properties">
+        <emu-caption>Resolved Options of Segmenter Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>*"locale"*</td>
+          </tr>
+          <tr>
+            <td>[[SegmenterGranularity]]</td>
+            <td>*"granularity"*</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-segmenter-instances">
+    <h1>Properties of Intl.Segmenter Instances</h1>
+
+    <p>
+      Intl.Segmenter instances are ordinary objects that inherit properties from %Segmenter.prototype%.
+    </p>
+
+    <p>
+      Intl.Segmenter instances have an [[InitializedSegmenter]] internal slot.
+    </p>
+
+    <p>
+      Intl.Segmenter instances also have internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for segmentation.</li>
+      <li>[[SegmenterGranularity]] is one of the String values *"grapheme"*, *"word"*, or *"sentence"*, identifying the kind of text element to segment.</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-segments-objects">
+    <h1>Segments Objects</h1>
+
+    <p>
+      A Segments instance is an object that represents the segments of a specific string, subject to the locale and options of its constructing Intl.Segmenter instance.
+    </p>
+
+    <emu-clause id="sec-createsegmentsobject" aoid="CreateSegmentsObject">
+      <h1>CreateSegmentsObject ( _segmenter_, _string_ )</h1>
+      <p>The CreateSegmentsObject abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segments instance referencing both. The following steps are taken:</p>
+      <emu-alg>
+        1. Let _internalSlotsList_ be &laquo; [[SegmentsSegmenter]], [[SegmentsString]] &raquo;.
+        1. Let _segments_ be ! OrdinaryObjectCreate(%SegmentsPrototype%, _internalSlotsList_).
+        1. Set _segments_.[[SegmentsSegmenter]] to _segmenter_.
+        1. Set _segments_.[[SegmentsString]] to _string_.
+        1. Return _segments_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-%segmentsprototype%-object">
+      <h1>The %SegmentsPrototype% Object</h1>
+      <p>The <dfn>%SegmentsPrototype%</dfn> object:</p>
+      <ul>
+        <li>is the prototype of all Segments objects.</li>
+        <li>is an ordinary object.</li>
+        <li>has the following properties:</li>
+      </ul>
+
+      <emu-clause id="sec-%segmentsprototype%.containing">
+        <h1>%SegmentsPrototype%.containing ( _index_ )</h1>
+        <p>The `containing` method is called on a Segments instance with argument _index_ to return a Segment Data object describing the segment in the string including the code unit at the specified index according to the locale and options of the Segments intance's constructing Intl.Segmenter instance. The following steps are taken:</p>
+        <emu-alg>
+          1. Let _segments_ be the *this* value.
+          1. Perform ? RequireInternalSlot(_segments_, [[SegmentsSegmenter]]).
+          1. Let _segmenter_ be _segments_.[[SegmentsSegmenter]].
+          1. Let _string_ be _segments_.[[SegmentsString]].
+          1. Let _len_ be the length of _string_.
+          1. Let _n_ be ? ToIntegerOrInfinity(_index_).
+          1. If _n_ &lt; 0 or _n_ &ge; _len_, return *undefined*.
+          1. Let _startIndex_ be ! FindBoundary(_segmenter_, _string_, _n_, ~before~).
+          1. Let _endIndex_ be ! FindBoundary(_segmenter_, _string_, _n_, ~after~).
+          1. Return ! CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
+        </emu-alg>
+      </emu-clause>
+
+      <emu-clause id="sec-%segmentsprototype%-@@iterator">
+        <h1>%SegmentsPrototype% [ @@iterator ] ( )</h1>
+        <p>The `@@iterator` method is called on a Segments instance to create a Segment Iterator over its string using the locale and options of its constructing Intl.Segmenter instance. The following steps are taken:</p>
+        <emu-alg>
+          1. Let _segments_ be the *this* value.
+          1. Perform ? RequireInternalSlot(_segments_, [[SegmentsSegmenter]]).
+          1. Let _segmenter_ be _segments_.[[SegmentsSegmenter]].
+          1. Let _string_ be _segments_.[[SegmentsString]].
+          1. Return ! CreateSegmentIterator(_segmenter_, _string_).
+        </emu-alg>
+      </emu-clause>
+    </emu-clause>
+
+    <emu-clause id="sec-properties-of-segments-instances">
+      <h1>Properties of Segments Instances</h1>
+
+      <p>
+        Segments instances are ordinary objects that inherit properties from %SegmentsPrototype%.
+      </p>
+
+      <p>
+        Segments instances have a [[SegmentsSegmenter]] internal slot that references the constructing Intl.Segmenter instance.
+      </p>
+
+      <p>
+        Segments instances have a [[SegmentsString]] internal slot that references the String value whose segments they expose.
+      </p>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-segment-iterator-objects">
+    <h1>Segment Iterator Objects</h1>
+
+    <p>
+      A Segment Iterator is an object that represents a particular iteration over the segments of a specific string.
+    </p>
+
+    <emu-clause id="sec-createsegmentiterator" aoid="CreateSegmentIterator">
+      <h1>CreateSegmentIterator ( _segmenter_, _string_ )</h1>
+      <p>The CreateSegmentIterator abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segment Iterator over _string_ using the locale and options of _segmenter_. The following steps are taken:</p>
+      <emu-alg>
+        1. Let _internalSlotsList_ be &laquo; [[IteratingSegmenter]], [[IteratedString]], [[IteratedStringNextSegmentCodeUnitIndex]] &raquo;.
+        1. Let _iterator_ be ! OrdinaryObjectCreate(%SegmentIteratorPrototype%, _internalSlotsList_).
+        1. Set _iterator_.[[IteratingSegmenter]] to _segmenter_.
+        1. Set _iterator_.[[IteratedString]] to _string_.
+        1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to 0.
+        1. Return _iterator_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-%segmentiteratorprototype%-object">
+      <h1>The %SegmentIteratorPrototype% Object</h1>
+      <p>The <dfn>%SegmentIteratorPrototype%</dfn> object:</p>
+      <ul>
+        <li>is the prototype of all Segment Iterator objects.</li>
+        <li>is an ordinary object.</li>
+        <li>has a [[Prototype]] internal slot whose value is the intrinsic object %Iterator.prototype%.</li>
+        <li>has the following properties:</li>
+      </ul>
+
+      <emu-clause id="sec-%segmentiteratorprototype%.next">
+        <h1>%SegmentIteratorPrototype%.next ( )</h1>
+        <p>The `next` method is called on a Segment Iterator instance to advance it forward one segment and return an <i>IteratorResult</i> object either describing the new segment or declaring iteration done. The following steps are taken:</p>
+        <emu-alg>
+          1. Let _iterator_ be the *this* value.
+          1. Perform ? RequireInternalSlot(_iterator_, [[IteratingSegmenter]]).
+          1. Let _segmenter_ be _iterator_.[[IteratingSegmenter]].
+          1. Let _string_ be _iterator_.[[IteratedString]].
+          1. Let _startIndex_ be _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]].
+          1. Let _endIndex_ be ! FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
+          1. If _endIndex_ is not finite, then
+            1. Return ! CreateIterResultObject(*undefined*, *true*).
+          1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to _endIndex_.
+          1. Let _segmentData_ be ! CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
+          1. Return ! CreateIterResultObject(_segmentData_, *false*).
+        </emu-alg>
+      </emu-clause>
+
+      <emu-clause id="sec-%segmentiteratorprototype%.@@tostringtag">
+        <h1>%SegmentIteratorPrototype% [ @@toStringTag ]</h1>
+
+        <p>
+          The initial value of the @@toStringTag property is the String value *"Segmenter String Iterator"*.
+        </p>
+        <p>
+          This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+        </p>
+      </emu-clause>
+    </emu-clause>
+
+    <emu-clause id="sec-properties-of-segment-iterator-instances">
+      <h1>Properties of Segment Iterator Instances</h1>
+      <p>Segment Iterator instances are ordinary objects that inherit properties from %SegmentIteratorPrototype%. Segment Iterator instances are initially created with the internal slots described in <emu-xref href="#table-segment-iterator-instance-slots"></emu-xref>.</p>
+      <emu-table id="table-segment-iterator-instance-slots">
+        <emu-caption>Internal Slots of Segment Iterator Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[[IteratingSegmenter]]</td>
+              <td>The Intl.Segmenter instance used for iteration.</td>
+            </tr>
+            <tr>
+              <td>[[IteratedString]]</td>
+              <td>The String value being iterated upon.</td>
+            </tr>
+            <tr>
+              <td>[[IteratedStringNextSegmentCodeUnitIndex]]</td>
+              <td>The code unit index in the String value being iterated upon at the start of the next segment.</td>
+            </tr>
+          </tbody>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-segment-data-objects">
+    <h1>Segment Data Objects</h1>
+
+    <p>
+      A Segment Data object is an object that represents a particular segment from a string.
+    </p>
+
+    <emu-clause id="sec-createsegmentdataobject" aoid="CreateSegmentDataObject">
+      <h1>CreateSegmentDataObject ( _segmenter_, _string_, _startIndex_, _endIndex_ )</h1>
+      <p>The CreateSegmentDataObject abstract operation is called with arguments Intl.Segmenter instance _segmenter_, String value _string_, and indices _startIndex_ and _endIndex_ within _string_ to create a Segment Data object describing the segment within _string_ from _segmenter_ that is bounded by the indices. The following steps are taken:</p>
+      <emu-alg>
+        1. Let _len_ be the length of _string_.
+        1. Assert: _startIndex_ &ge; 0.
+        1. Assert: _endIndex_ &le; _len_.
+        1. Assert: _startIndex_ &lt; _endIndex_.
+        1. Let _result_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _segment_ be the substring of _string_ from _startIndex_ to _endIndex_.
+        1. Perform ! CreateDataPropertyOrThrow(_result_, *"segment"*, _segment_).
+        1. Perform ! CreateDataPropertyOrThrow(_result_, *"index"*, 𝔽(_startIndex_)).
+        1. Perform ! CreateDataPropertyOrThrow(_result_, *"input"*, _string_).
+        1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
+        1. If _granularity_ is `"word"`, then
+          1. Let _isWordLike_ be a Boolean value indicating whether the _segment_ in _string_ is "word-like" according to locale _segmenter_.[[Locale]].
+          1. Perform ! CreateDataPropertyOrThrow(_result_, *"isWordLike"*, _isWordLike_).
+        1. Return _result_.
+      </emu-alg>
+      <emu-note>Whether a segment is "word-like" is implementation-dependent, and implementations are recommended to use locale-sensitive tailorings. In general, segments consisting solely of spaces and/or punctuation (such as those terminated with "WORD_NONE" boundaries by ICU [International Components for Unicode, documented at <a href="https://unicode-org.github.io/icu-docs/">https://unicode-org.github.io/icu-docs/</a>]) are not considered to be "word-like".</emu-note>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-segmenter-abstracts">
+    <h1>Abstract Operations for Segmenter Objects</h1>
+
+    <emu-clause id="sec-findboundary" aoid="FindBoundary">
+      <h1>FindBoundary ( _segmenter_, _string_, _startIndex_, _direction_ )</h1>
+      <p>The FindBoundary abstract operation is called with arguments Intl.Segmenter instance _segmenter_, String _string_, integer _startIndex_, and _direction_ (which must be ~before~ or ~after~) to find a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and return the immediately following code unit index (which will be infinite if no such boundary exists). The following steps are taken:</p>
+      <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in Unicode Standard Annex 29 (available at <a href="https://www.unicode.org/reports/tr29/">https://www.unicode.org/reports/tr29/</a>). It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).</emu-note>
+      <emu-alg>
+        1. Let _locale_ be _segmenter_.[[Locale]].
+        1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
+        1. Let _len_ be the length of _string_.
+        1. If _direction_ is ~before~, then
+          1. Assert: _startIndex_ &ge; 0.
+          1. Assert: _startIndex_ &lt; _len_.
+          1. Search _string_ for the last segmentation boundary that is preceded by at most _startIndex_ code units from the beginning, using locale _locale_ and text element granularity _granularity_.
+          1. If a boundary is found, return the count of code units in _string_ preceding it.
+          1. Return 0.
+        1. Assert: _direction_ is ~after~.
+        1. If _len_ is 0 or _startIndex_ &ge; _len_, return +&infin;.
+        1. Search _string_ for the first segmentation boundary that follows the code unit at index _startIndex_, using locale _locale_ and text element granularity _granularity_.
+        1. If a boundary is found, return the count of code units in _string_ preceding it.
+        1. Return _len_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
