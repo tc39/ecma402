@@ -1,119 +1,6 @@
 <emu-clause id="intl-displaynames-objects">
   <h1>DisplayNames Objects</h1>
 
-  <emu-clause id="sec-intl-displaynames-abstracts">
-    <h1>Abstract Operations for DisplayNames Objects</h1>
-
-    <emu-clause id="sec-canonicalcodefordisplaynames" aoid="CanonicalCodeForDisplayNames">
-      <h1>CanonicalCodeForDisplayNames ( _type_, _code_ )</h1>
-      <p>
-        The CanonicalCodeForDisplayNames abstract operation is called with arguments _type_ and _code_. It verifies that the _code_ argument represents a well-formed code according to the _type_ argument and returns the case-regularized form of the _code_. The algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. The following steps are taken:
-      </p>
-      <emu-alg>
-        1. If _type_ is *"language"*, then
-          1. If _code_ does not match the `unicode_language_id` production, throw a *RangeError* exception.
-          1. If IsStructurallyValidLanguageTag(_code_) is *false*, throw a *RangeError* exception.
-          1. Set _code_ to CanonicalizeUnicodeLocaleId(_code_).
-          1. Return _code_.
-        1. If _type_ is *"region"*, then
-          1. If _code_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
-          1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Return _code_.
-        1. If _type_ is *"script"*, then
-          1. If _code_ does not match the `unicode_script_subtag` production, throw a *RangeError* exception.
-          1. Let _code_ be the result of mapping the first character in _code_ to upper case, and mapping the second, third, and fourth character in _code_ to lower case, as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Return _code_.
-        1. If _type_ is *"calendar"*, then
-          1. If _code_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
-          1. Let _code_ be the result of mapping _code_ to lower case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-          1. Return _code_.
-        1. If _type_ is *"dateTimeField"*, then
-          1. If the result of IsValidDateTimeFieldCode(_code_) is *false*, throw a *RangeError* exception.
-          1. Return _code_.
-        1. Assert: _type_ is *"currency"*.
-        1. If ! IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
-        1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        1. Return _code_.
-      </emu-alg>
-    </emu-clause>
-  </emu-clause>
-
-    <emu-clause id="sec-isvaliddatetimefieldcode" type="abstract operation">
-      <h1>
-        IsValidDateTimeFieldCode (
-          _field_: a String,
-        )
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It verifies that the _field_ argument represents a valid date time field code.</dd>
-      </dl>
-      <emu-alg>
-        1. If _field_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
-        1. Return *false*.
-      </emu-alg>
-
-      <emu-table id="table-validcodefordatetimefield">
-        <emu-caption>Codes For Date Time Field of DisplayNames</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>*"era"*</td>
-            <td>The field indicating the era, e.g. AD or BC in the Gregorian or Julian calendar.</td>
-          </tr>
-          <tr>
-            <td>*"year"*</td>
-            <td>The field indicating the year (within an era).</td>
-          </tr>
-          <tr>
-            <td>*"quarter"*</td>
-            <td>The field indicating the quarter, e.g. Q2, 2nd quarter, etc.</td>
-          </tr>
-          <tr>
-            <td>*"month"*</td>
-            <td>The field indicating the month, e.g. Sep, September, etc.</td>
-          </tr>
-          <tr>
-            <td>*"weekOfYear"*</td>
-            <td>The field indicating the week number within a year.</td>
-          </tr>
-          <tr>
-            <td>*"weekday"*</td>
-            <td>The field indicating the day of week, e.g. Tue, Tuesday, etc.</td>
-          </tr>
-          <tr>
-            <td>*"day"*</td>
-            <td>The field indicating the day in month.</td>
-          </tr>
-          <tr>
-            <td>*"dayPeriod"*</td>
-            <td>The field indicating the day period, either am, pm, etc. or noon, evening, etc..</td>
-          </tr>
-          <tr>
-            <td>*"hour"*</td>
-            <td>The field indicating the hour.</td>
-          </tr>
-          <tr>
-            <td>*"minute"*</td>
-            <td>The field indicating the minute.</td>
-          </tr>
-          <tr>
-            <td>*"second"*</td>
-            <td>The field indicating the second.</td>
-          </tr>
-          <tr>
-            <td>*"timeZoneName"*</td>
-            <td>The field indicating the time zone name, e.g. PDT, Pacific Daylight Time, etc.</td>
-          </tr>
-        </table>
-      </emu-table>
-    </emu-clause>
-
   <emu-clause id="sec-intl-displaynames-constructor">
     <h1>The Intl.DisplayNames Constructor</h1>
 
@@ -353,5 +240,118 @@
       <li>[[LanguageDisplay]] is one of the String values *"dialect"* or *"standard"*, identifying the language display kind. It is only used when [[Type]] has the value *"language"*.</li>
       <li>[[Fields]] is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>) which must have fields with keys corresponding to codes according to [[Style]], [[Type]], and [[LanguageDisplay]].</li>
     </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-displaynames-abstracts">
+    <h1>Abstract Operations for DisplayNames Objects</h1>
+
+    <emu-clause id="sec-canonicalcodefordisplaynames" aoid="CanonicalCodeForDisplayNames">
+      <h1>CanonicalCodeForDisplayNames ( _type_, _code_ )</h1>
+      <p>
+        The CanonicalCodeForDisplayNames abstract operation is called with arguments _type_ and _code_. It verifies that the _code_ argument represents a well-formed code according to the _type_ argument and returns the case-regularized form of the _code_. The algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. The following steps are taken:
+      </p>
+      <emu-alg>
+        1. If _type_ is *"language"*, then
+          1. If _code_ does not match the `unicode_language_id` production, throw a *RangeError* exception.
+          1. If IsStructurallyValidLanguageTag(_code_) is *false*, throw a *RangeError* exception.
+          1. Set _code_ to CanonicalizeUnicodeLocaleId(_code_).
+          1. Return _code_.
+        1. If _type_ is *"region"*, then
+          1. If _code_ does not match the `unicode_region_subtag` production, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. If _type_ is *"script"*, then
+          1. If _code_ does not match the `unicode_script_subtag` production, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping the first character in _code_ to upper case, and mapping the second, third, and fourth character in _code_ to lower case, as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. If _type_ is *"calendar"*, then
+          1. If _code_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
+          1. Let _code_ be the result of mapping _code_ to lower case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+          1. Return _code_.
+        1. If _type_ is *"dateTimeField"*, then
+          1. If the result of IsValidDateTimeFieldCode(_code_) is *false*, throw a *RangeError* exception.
+          1. Return _code_.
+        1. Assert: _type_ is *"currency"*.
+        1. If ! IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
+        1. Let _code_ be the result of mapping _code_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        1. Return _code_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-isvaliddatetimefieldcode" type="abstract operation">
+      <h1>
+        IsValidDateTimeFieldCode (
+          _field_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _field_ argument represents a valid date time field code.</dd>
+      </dl>
+      <emu-alg>
+        1. If _field_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
+        1. Return *false*.
+      </emu-alg>
+
+      <emu-table id="table-validcodefordatetimefield">
+        <emu-caption>Codes For Date Time Field of DisplayNames</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>*"era"*</td>
+            <td>The field indicating the era, e.g. AD or BC in the Gregorian or Julian calendar.</td>
+          </tr>
+          <tr>
+            <td>*"year"*</td>
+            <td>The field indicating the year (within an era).</td>
+          </tr>
+          <tr>
+            <td>*"quarter"*</td>
+            <td>The field indicating the quarter, e.g. Q2, 2nd quarter, etc.</td>
+          </tr>
+          <tr>
+            <td>*"month"*</td>
+            <td>The field indicating the month, e.g. Sep, September, etc.</td>
+          </tr>
+          <tr>
+            <td>*"weekOfYear"*</td>
+            <td>The field indicating the week number within a year.</td>
+          </tr>
+          <tr>
+            <td>*"weekday"*</td>
+            <td>The field indicating the day of week, e.g. Tue, Tuesday, etc.</td>
+          </tr>
+          <tr>
+            <td>*"day"*</td>
+            <td>The field indicating the day in month.</td>
+          </tr>
+          <tr>
+            <td>*"dayPeriod"*</td>
+            <td>The field indicating the day period, either am, pm, etc. or noon, evening, etc..</td>
+          </tr>
+          <tr>
+            <td>*"hour"*</td>
+            <td>The field indicating the hour.</td>
+          </tr>
+          <tr>
+            <td>*"minute"*</td>
+            <td>The field indicating the minute.</td>
+          </tr>
+          <tr>
+            <td>*"second"*</td>
+            <td>The field indicating the second.</td>
+          </tr>
+          <tr>
+            <td>*"timeZoneName"*</td>
+            <td>The field indicating the time zone name, e.g. PDT, Pacific Daylight Time, etc.</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
   </emu-clause>
 </emu-clause>
