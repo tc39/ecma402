@@ -263,7 +263,7 @@
     <emu-clause id="sec-partitionnotationsubpattern" aoid="PartitionNotationSubPattern">
       <h1>PartitionNotationSubPattern ( _numberFormat_, _x_, _n_, _exponent_ )</h1>
       <p>
-        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is a numeric value after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
+        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is a Number or a BigInt after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
       </p>
       <emu-alg>
         1. Let _result_ be a new empty List.
