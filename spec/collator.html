@@ -7,6 +7,24 @@
       The Intl.Collator constructor is the <dfn>%Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
+    <emu-clause id="sec-intl.collator">
+      <h1>Intl.Collator ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>
+        When the `Intl.Collator` function is called with optional arguments _locales_ and _options_, the following steps are taken:
+      </p>
+      <emu-alg>
+        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
+        1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
+        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
+          1. Append [[Numeric]] as the last element of _internalSlotsList_.
+        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
+          1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
+        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Collator.prototype%"*, _internalSlotsList_).
+        1. Return ? InitializeCollator(_collator_, _locales_, _options_).
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-initializecollator" aoid="InitializeCollator">
       <h1>InitializeCollator ( _collator_, _locales_, _options_ )</h1>
 
@@ -60,24 +78,6 @@
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, *"boolean"*, *undefined*, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.collator">
-      <h1>Intl.Collator ( [ _locales_ [ , _options_ ] ] )</h1>
-
-      <p>
-        When the `Intl.Collator` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
-      <emu-alg>
-        1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
-        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
-          1. Append [[Numeric]] as the last element of _internalSlotsList_.
-        1. If %Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
-          1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
-        1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Collator.prototype%"*, _internalSlotsList_).
-        1. Return ? InitializeCollator(_collator_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
