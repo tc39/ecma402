@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[SegmenterGranularity]] &raquo;.
+        1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[Granularity]] &raquo;.
         1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Segmenter.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? GetOptionsObject(_options_).
@@ -28,7 +28,7 @@
         1. Let _r_ be ResolveLocale(%Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Segmenter%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _segmenter_.[[Locale]] to _r_.[[locale]].
         1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, *"string"*, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
-        1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
+        1. Set _segmenter_.[[Granularity]] to _granularity_.
         1. Return _segmenter_.
       </emu-alg>
     </emu-clause>
@@ -160,7 +160,7 @@
             <td>*"locale"*</td>
           </tr>
           <tr>
-            <td>[[SegmenterGranularity]]</td>
+            <td>[[Granularity]]</td>
             <td>*"granularity"*</td>
           </tr>
         </table>
@@ -185,7 +185,7 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for segmentation.</li>
-      <li>[[SegmenterGranularity]] is one of the String values *"grapheme"*, *"word"*, or *"sentence"*, identifying the kind of text element to segment.</li>
+      <li>[[Granularity]] is one of the String values *"grapheme"*, *"word"*, or *"sentence"*, identifying the kind of text element to segment.</li>
     </ul>
   </emu-clause>
 
@@ -375,7 +375,7 @@
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"segment"*, _segment_).
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"index"*, 𝔽(_startIndex_)).
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"input"*, _string_).
-        1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
+        1. Let _granularity_ be _segmenter_.[[Granularity]].
         1. If _granularity_ is `"word"`, then
           1. Let _isWordLike_ be a Boolean value indicating whether the _segment_ in _string_ is "word-like" according to locale _segmenter_.[[Locale]].
           1. Perform ! CreateDataPropertyOrThrow(_result_, *"isWordLike"*, _isWordLike_).
@@ -394,7 +394,7 @@
       <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in Unicode Standard Annex 29 (available at <a href="https://www.unicode.org/reports/tr29/">https://www.unicode.org/reports/tr29/</a>). It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).</emu-note>
       <emu-alg>
         1. Let _locale_ be _segmenter_.[[Locale]].
-        1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
+        1. Let _granularity_ be _segmenter_.[[Granularity]].
         1. Let _len_ be the length of _string_.
         1. If _direction_ is ~before~, then
           1. Assert: _startIndex_ &ge; 0.
