@@ -59,8 +59,8 @@
               1. Let _tag_ be _kValue_.[[Locale]].
             1. Else,
               1. Let _tag_ be ? ToString(_kValue_).
-            1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
-            1. Let _canonicalizedTag_ be CanonicalizeUnicodeLocaleId(_tag_).
+            1. If ! IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+            1. Let _canonicalizedTag_ be ! CanonicalizeUnicodeLocaleId(_tag_).
             1. If _canonicalizedTag_ is not an element of _seen_, append _canonicalizedTag_ as the last element of _seen_.
           1. Increase _k_ by 1.
         1. Return _seen_.
@@ -103,14 +103,14 @@
         1. Let _result_ be a new Record.
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. Let _availableLocale_ be ! BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, then
             1. Set _result_.[[locale]] to _availableLocale_.
             1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
               1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _locale_.
               1. Set _result_.[[extension]] to _extension_.
             1. Return _result_.
-        1. Let _defLocale_ be DefaultLocale().
+        1. Let _defLocale_ be ! DefaultLocale().
         1. Set _result_.[[locale]] to _defLocale_.
         1. Return _result_.
       </emu-alg>
@@ -183,7 +183,7 @@
           1. Let _preExtension_ be the substring of _locale_ from position 0, inclusive, to position _privateIndex_, exclusive.
           1. Let _postExtension_ be the substring of _locale_ from position _privateIndex_ to the end of the string.
           1. Let _locale_ be the string-concatenation of _preExtension_, _extension_, and _postExtension_.
-        1. Assert: IsStructurallyValidLanguageTag(_locale_) is *true*.
+        1. Assert: ! IsStructurallyValidLanguageTag(_locale_) is *true*.
         1. Return ! CanonicalizeUnicodeLocaleId(_locale_).
       </emu-alg>
     </emu-clause>
@@ -202,9 +202,9 @@
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
-          1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be ! LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be ! BestFitMatcher(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
@@ -267,7 +267,7 @@
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. Let _availableLocale_ be ! BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
         1. Return _subset_.
       </emu-alg>
