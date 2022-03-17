@@ -24,7 +24,7 @@
       </p>
 
       <emu-alg>
-        1. Let _O_ be RequireObjectCoercible(*this* value).
+        1. Let _O_ be ? RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Let _thatValue_ be ? ToString(_that_).
         1. Let _collator_ be ? Construct(%Collator%, &laquo; _locales_, _options_ &raquo;).
@@ -56,7 +56,7 @@
       </p>
 
       <emu-alg>
-        1. Let _O_ be RequireObjectCoercible(*this* value).
+        1. Let _O_ be ? RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Return ? TransformCase(_S_, _locales_, ~lower~).
       </emu-alg>
@@ -82,10 +82,10 @@
           1. If _requestedLocales_ is not an empty List, then
             1. Let _requestedLocale_ be _requestedLocales_[0].
           1. Else,
-            1. Let _requestedLocale_ be DefaultLocale().
+            1. Let _requestedLocale_ be ! DefaultLocale().
           1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.
           1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
-          1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. Let _locale_ be ! BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _locale_ is *undefined*, set _locale_ to *"und"*.
           1. Let _codePoints_ be ! StringToCodePoints(_S_).
           1. If _targetCase_ is ~lower~, then
@@ -118,7 +118,7 @@
       </p>
 
       <emu-alg>
-        1. Let _O_ be RequireObjectCoercible(*this* value).
+        1. Let _O_ be ? RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Return ? TransformCase(_S_, _locales_, ~upper~).
       </emu-alg>
