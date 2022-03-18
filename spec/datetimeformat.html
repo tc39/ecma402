@@ -472,7 +472,7 @@
         1. Let _dtf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _date_ is *undefined*, then
-          1. Let _x_ be Call(%Date.now%, *undefined*).
+          1. Let _x_ be ! Call(%Date.now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTimeToParts(_dtf_, _x_).
@@ -899,7 +899,7 @@
         1. Let _dtf_ be _F_.[[DateTimeFormat]].
         1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be Call(%Date.now%, *undefined*).
+          1. Let _x_ be ! Call(%Date.now%, *undefined*).
         1. Else,
           1. Let _x_ be ? ToNumber(_date_).
         1. Return ? FormatDateTime(_dtf_, _x_).
