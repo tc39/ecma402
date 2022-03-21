@@ -73,7 +73,6 @@
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
         1. Let _calendar_ be _r_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _calendar_.
-        1. Set _dateTimeFormat_.[[HourCycle]] to _r_.[[hc]].
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
@@ -95,7 +94,7 @@
           1. Set _formatOptions_.[[&lt;_prop_&gt;]] to _value_.
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
-        1. Let _hc_ be _dateTimeFormat_.[[HourCycle]].
+        1. Let _hc_ be _r_.[[hc]].
         1. If _hc_ is *null*, then
           1. Set _hc_ to _hcDefault_.
         1. If _hour12_ is *true*, then
