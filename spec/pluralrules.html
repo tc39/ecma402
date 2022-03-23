@@ -161,7 +161,7 @@
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
-        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
+        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, ! CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
 
