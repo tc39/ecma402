@@ -1002,7 +1002,7 @@
 
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberPattern(_numberFormat_, _x_).
-        1. Let _result_ be ArrayCreate(0).
+        1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
