@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ecma402",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
     "build-master": "mkdir out && cp -R img out && ecmarkup --lint-spec --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
