@@ -1033,10 +1033,10 @@
           1. Let _xFinal_ be _n_ × 10<sup>_e_ - _p_ + 1</sup>.
         1. If _e_ ≥ (_p_ - 1), then
           1. Let _m_ be the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
-          1. Let _int_ be _e_+1.
+          1. Let _int_ be _e_ + 1.
         1. Else if _e_ ≥ 0, then
-          1. Let _m_ be the string-concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_ - (_e_ + 1) characters of _m_.
-          1. Let _int_ be _e_+1.
+          1. Let _m_ be the string-concatenation of the first _e_ + 1 characters of _m_, the character *"."*, and the remaining _p_ - (_e_ + 1) characters of _m_.
+          1. Let _int_ be _e_ + 1.
         1. Else,
           1. Assert: _e_ &lt; 0.
           1. Let _m_ be the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
@@ -1070,7 +1070,7 @@
           1. If _k_ ≤ _f_, then
             1. Let _z_ be the String value consisting of _f_ + 1 - _k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
             1. Let _m_ be the string-concatenation of _z_ and _m_.
-            1. Let _k_ be _f_+1.
+            1. Let _k_ be _f_ + 1.
           1. Let _a_ be the first _k_ - _f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
           1. Let _m_ be the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the number of characters in _a_.
