@@ -518,7 +518,7 @@
       </p>
 
       <emu-alg>
-        1. If _x_ &lt; 0 or _x_ is *-0*<sub>𝔽</sub>, let _isNegative_ be *true*; else let _isNegative_ be *false*.
+        1. If ℝ(_x_) &lt; 0 or _x_ is *-0*<sub>𝔽</sub>, let _isNegative_ be *true*; else let _isNegative_ be *false*.
         1. If _isNegative_, then
           1. Let _x_ be -_x_.
         1. If _intlObject_.[[RoundingType]] is ~significantDigits~, then
@@ -1154,9 +1154,9 @@
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else,
           1. Assert: _signDisplay_ is *"exceptZero"*.
-          1. If _x_ is 0 or _x_ is -0 or _x_ is *NaN*, then
+          1. If _x_ is *NaN*, or if _x_ is finite and ℝ(_x_) is 0, then
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
-          1. Else if _x_ &gt; 0, then
+          1. Else if ℝ(_x_) &gt; 0, then
             1. Let _pattern_ be _patterns_.[[positivePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
