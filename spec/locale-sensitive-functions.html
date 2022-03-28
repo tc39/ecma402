@@ -2,7 +2,7 @@
   <h1>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
 
   <p>
-    The ECMAScript Language Specification, edition 10 or successor, describes several locale sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
+    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
   </p>
 
   <emu-note>
@@ -266,7 +266,7 @@
       <emu-alg>
         1. Let _array_ be ? ToObject(*this* value).
         1. Let _len_ be ? ToLength(? Get(_array_, *"length"*)).
-        1. Let _separator_ be the String value for the list-separator String appropriate for the host environment's current locale (this is derived in an implementation-defined way).
+        1. Let _separator_ be the implementation-defined list-separator String value appropriate for the host environment's current locale (such as *", "*).
         1. Let _R_ be the empty String.
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
@@ -285,7 +285,7 @@
       </emu-note>
 
       <emu-note>
-        The elements of the array are converted to Strings using their `toLocaleString` methods, and these Strings are then concatenated, separated by occurrences of a separator String that has been derived in an implementation-defined locale-specific way. The result of calling this function is intended to be analogous to the result of `toString`, except that the result of this function is intended to be locale-specific.
+        The elements of the array are converted to Strings using their `toLocaleString` methods, and these Strings are then concatenated, separated by occurrences of an implementation-defined locale-sensitive separator String. This function is analogous to `toString` except that it is intended to yield a locale-sensitive result corresponding with conventions of the host environment's current locale.
       </emu-note>
 
       <emu-note>
