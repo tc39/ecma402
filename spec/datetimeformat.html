@@ -78,15 +78,9 @@
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
         1. If _hour12_ is *true*, then
-          1. If _hcDefault_ is *"h11"* or *"h23"*, then
-            1. Let _hc_ be *"h11"*.
-          1. Else,
-            1. Let _hc_ be *"h12"*.
+          1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h11"*. Otherwise, let _hc_ be *"h12"*.
         1. Else if _hour12_ is *false*, then
-          1. If _hcDefault_ is *"h11"* or *"h23"*, then
-            1. Let _hc_ be *"h23"*.
-          1. Else,
-            1. Let _hc_ be *"h24"*.
+          1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h23"*. Otherwise, let _hc_ be *"h24"*.
         1. Else,
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
