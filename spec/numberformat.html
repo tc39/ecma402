@@ -252,7 +252,7 @@
           The value of the aforementioned fields (the sign-dependent pattern fields) must be string values that must contain the substring *"{number}"*.
           *"positivePattern"* must contain the substring *"{plusSign}"* but not *"{minusSign}"*; *"negativePattern"* must contain the substring *"{minusSign}"* but not *"{plusSign}"*; and *"zeroPattern"* must not contain either *"{plusSign}"* or *"{minusSign}"*.
           Additionally, the values within the *"percent"* field must also contain the substring *"{percentSign}"*; the values within the *"currency"* field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the *"unit"* field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*.
-          The pattern strings must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.
+          The pattern strings, when interpreted as a sequence of UTF-16 encoded code points as described in <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
         </li>
         <li>[[LocaleData]].[[&lt;_locale_&gt;]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
       </ul>
@@ -968,7 +968,7 @@
       </emu-table>
 
       <emu-note>
-        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ ("ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ ("ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any characters in the General Category "Number, decimal digit" as specified by the Unicode Standard.
+        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ ("ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ ("ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
       </emu-note>
 
       <emu-note>
@@ -1035,19 +1035,19 @@
           1. Let _m_ be the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _int_ be _e_ + 1.
         1. Else if _e_ &ge; 0, then
-          1. Let _m_ be the string-concatenation of the first _e_ + 1 characters of _m_, the character *"."*, and the remaining _p_ - (_e_ + 1) characters of _m_.
+          1. Let _m_ be the string-concatenation of the first _e_ + 1 code units of _m_, the code unit 0x002E (FULL STOP), and the remaining _p_ - (_e_ + 1) code units of _m_.
           1. Let _int_ be _e_ + 1.
         1. Else,
           1. Assert: _e_ &lt; 0.
           1. Let _m_ be the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
           1. Let _int_ be 1.
-        1. If _m_ contains the character *"."*, and _maxPrecision_ &gt; _minPrecision_, then
+        1. If _m_ contains the code unit 0x002E (FULL STOP) and _maxPrecision_ &gt; _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ - _minPrecision_.
-          1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
-            1. Remove the last character from _m_.
+          1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
+            1. Remove the last code unit from _m_.
             1. Decrease _cut_ by 1.
-          1. If the last character of _m_ is *"."*, then
-            1. Remove the last character from _m_.
+          1. If the last code unit of _m_ is 0x002E (FULL STOP), then
+            1. Remove the last code unit from _m_.
         1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
       </emu-alg>
     </emu-clause>
@@ -1066,21 +1066,21 @@
         1. Let _xFinal_ be _n_ / 10<sup>_f_</sup>.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ &ne; 0, then
-          1. Let _k_ be the number of characters in _m_.
+          1. Let _k_ be the length of _m_.
           1. If _k_ &le; _f_, then
             1. Let _z_ be the String value consisting of _f_ + 1 - _k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
             1. Let _m_ be the string-concatenation of _z_ and _m_.
             1. Let _k_ be _f_ + 1.
-          1. Let _a_ be the first _k_ - _f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
+          1. Let _a_ be the first _k_ - _f_ code units of _m_, and let _b_ be the remaining _f_ code units of _m_.
           1. Let _m_ be the string-concatenation of _a_, *"."*, and _b_.
-          1. Let _int_ be the number of characters in _a_.
-        1. Else, let _int_ be the number of characters in _m_.
+          1. Let _int_ be the length of _a_.
+        1. Else, let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
-        1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
-          1. Remove the last character from _m_.
+        1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
+          1. Remove the last code unit from _m_.
           1. Decrease _cut_ by 1.
-        1. If the last character of _m_ is *"."*, then
-          1. Remove the last character from _m_.
+        1. If the last code unit of _m_ is 0x002E (FULL STOP), then
+          1. Remove the last code unit from _m_.
         1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
       </emu-alg>
     </emu-clause>
