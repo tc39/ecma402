@@ -9,21 +9,20 @@
     <h1>Case Sensitivity and Case Mapping</h1>
 
     <p>
-      The String values used to identify locales, currencies, scripts, and time zones are interpreted in an ASCII-case-insensitive manner, treating the code units 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z) as equivalent to the corresponding code units 0x0061 through 0x007A (corresponding to Unicode characters LATIN SMALL LETTER A through LATIN SMALL LETTER Z), inclusive. No other case folding equivalences are applied.
+      The String values used to identify locales, currencies, scripts, and time zones are interpreted in an ASCII-case-insensitive manner, treating the code units 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z) as equivalent to the corresponding code units 0x0061 through 0x007A (corresponding to Unicode characters LATIN SMALL LETTER A through LATIN SMALL LETTER Z), both inclusive. No other case folding equivalences are applied.
     </p>
-    <p>
-      Mapping to upper case takes a String value and produces a new String value in which each lower case ASCII letter code unit (0x0061 through 0x007A, inclusive) is replaced with the corresponding upper case ASCII letter code unit (0x0041 through 0x005A, inclusive) and all other code units are preserved.
-    </p>
-    <p>
-      Mapping to lower case takes a String value and produces a new String value in which each upper case ASCII letter code unit (0x0041 through 0x005A, inclusive) is replaced with the corresponding lower case ASCII letter code unit (0x0061 through 0x007A, inclusive) and all other code units are preserved.
-    </p>
-    <p>
-      A String value _A_ is an ASCII-case-insensitive match for String value _B_ if mapping _A_ to upper case is exactly the same sequence of code units as mapping _B_ to upper case. A sequence of Unicode code points _A_ is an ASCII-case-insensitive match for _B_ if _B_ is an ASCII-case-insensitive match for ! CodePointsToString(_A_).
-    </p>
-
     <emu-note>
       For example, *"ß"* (U+00DF) must not match or be mapped to *"SS"* (U+0053, U+0053). *"ı"* (U+0131) must not match or be mapped to *"I"* (U+0049).
     </emu-note>
+    <p>
+      The <dfn>ASCII-uppercase</dfn> of a String value _S_ is the String value derived from _S_ by replacing each occurrence of an ASCII lowercase letter code unit (0x0061 through 0x007A, inclusive) with the corresponding ASCII uppercase letter code unit (0x0041 through 0x005A, inclusive) while preserving all other code units.
+    </p>
+    <p>
+      The <dfn>ASCII-lowercase</dfn> of a String value _S_ is the String value derived from _S_ by replacing each occurrence of an ASCII uppercase letter code unit (0x0041 through 0x005A, inclusive) with the corresponding ASCII lowercase letter code unit (0x0061 through 0x007A, inclusive) while preserving all other code units.
+    </p>
+    <p>
+      A String value _A_ is an <dfn>ASCII-case-insensitive match</dfn> for String value _B_ if the ASCII-uppercase of _A_ is exactly the same sequence of code units as the ASCII-uppercase of _B_. A sequence of Unicode code points _A_ is an ASCII-case-insensitive match for _B_ if _B_ is an ASCII-case-insensitive match for ! CodePointsToString(_A_).
+    </p>
   </emu-clause>
 
   <emu-clause id="sec-language-tags">
@@ -75,7 +74,7 @@
       </ul>
 
       <p>
-        When evaluating each condition, terminal value characters in the grammar are interpreted as the corresponding ASCII code points. Subtags are duplicates if they are ASCII case-insensitively equivalent.
+        When evaluating each condition, terminal value characters in the grammar are interpreted as the corresponding Basic Latin code points. Two subtags are duplicates if one is an ASCII-case-insensitive match for the other.
       </p>
 
       <emu-note>
@@ -137,7 +136,7 @@
     <h1>Currency Codes</h1>
 
     <p>
-      The ECMAScript 2022 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is upper case.
+      The ECMAScript 2022 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is uppercase.
     </p>
 
     <p>
@@ -152,9 +151,9 @@
       </p>
 
       <emu-alg>
-        1. Let _normalized_ be the result of mapping _currency_ to upper case as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
-        1. If the number of elements in _normalized_ is not 3, return *false*.
-        1. If _normalized_ contains any character that is not in the range *"A"* to *"Z"* (U+0041 to U+005A), return *false*.
+        1. If the length of _normalized_ is not 3, return *false*.
+        1. Let _normalized_ be the ASCII-uppercase of _currency_.
+        1. If _normalized_ contains any code unit outside of 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z), return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
@@ -179,7 +178,7 @@
       </p>
 
       <emu-alg>
-        1. If one of the Zone or Link names of the IANA Time Zone Database is an ASCII-case-insensitive match of _timeZone_ as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>, return *true*.
+        1. If one of the Zone or Link names of the IANA Time Zone Database is an ASCII-case-insensitive match of _timeZone_, return *true*.
         1. If _timeZone_ is an ASCII-case-insensitive match of *"UTC"*, return *true*.
         1. Return *false*.
       </emu-alg>
@@ -200,7 +199,7 @@
         <dd>It returns the canonical and case-regularized form of _timeZone_.</dd>
       </dl>
       <emu-alg>
-        1. Let _ianaTimeZone_ be the String value of the Zone or Link name of the IANA Time Zone Database that is an ASCII-case-insensitive match of _timeZone_ as described in <emu-xref href="#sec-case-sensitivity-and-case-mapping"></emu-xref>.
+        1. Let _ianaTimeZone_ be the String value of the Zone or Link name of the IANA Time Zone Database that is an ASCII-case-insensitive match of _timeZone_.
         1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the String value of the corresponding Zone name as specified in the file <code>backward</code> of the IANA Time Zone Database.
         1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
@@ -220,54 +219,54 @@
     <h1>Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">Unicode Technical Standard #35, Part 2, Section 6</a>. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+      The ECMAScript 2022 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> (or equivalently <em>core unit ID</em>) as defined by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35, Part 2, Section 6.2</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
     </p>
 
     <p>
-      Only a limited set of core unit identifiers are allowed.
-      An illegal core unit identifier results in a RangeError.
+      Only a limited set of core unit identifiers are sanctioned.
+      Attempting to use an unsanctioned core unit identifier results in a RangeError.
     </p>
 
     <emu-clause id="sec-iswellformedunitidentifier" aoid="IsWellFormedUnitIdentifier">
       <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier as defined in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements">UTS #35, Part 2, Section 6</a>. In addition to obeying the UTS #35 core unit identifier syntax, _unitIdentifier_ must be one of the identifiers sanctioned by UTS #35 or be a compound unit composed of two sanctioned simple units. The following steps are taken:
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed UTS #35 core unit identifier that is either a sanctioned single unit or a complex unit formed by division of two sanctioned single units. The following steps are taken:
       </p>
 
       <emu-alg>
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_unitIdentifier_) is *true*, then
+        1. If ! IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
-        1. If the substring *"-per-"* does not occur exactly once in _unitIdentifier_, then
+        1. Let _i_ be ! StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
+        1. If _i_ is -1 or ! StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not -1, then
           1. Return *false*.
-        1. Let _numerator_ be the substring of _unitIdentifier_ from the beginning to just before *"-per-"*.
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_numerator_) is *false*, then
-          1. Return *false*.
-        1. Let _denominator_ be the substring of _unitIdentifier_ from just after *"-per-"* to the end.
-        1. If the result of IsSanctionedSimpleUnitIdentifier(_denominator_) is *false*, then
-          1. Return *false*.
-        1. Return *true*.
+        1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
+        1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
+        1. Let _denominator_ be the substring of _unitIdentifier_ from _i_ + 5.
+        1. If ! IsSanctionedSingleUnitIdentifier(_numerator_) and ! IsSanctionedSingleUnitIdentifier(_denominator_) are both *true*, then
+          1. Return *true*.
+        1. Return *false*.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-issanctionedsimpleunitidentifier" aoid="IsSanctionedSimpleUnitIdentifier">
-      <h1>IsSanctionedSimpleUnitIdentifier ( _unitIdentifier_ )</h1>
+    <emu-clause id="sec-issanctionedsingleunitidentifier" aoid="IsSanctionedSingleUnitIdentifier" oldids="sec-issanctionedsimpleunitidentifier">
+      <h1>IsSanctionedSingleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSimpleUnitIdentifier abstract operation verifies that the given core unit identifier is among the simple units sanctioned in the current version of the ECMAScript Internationalization API Specification, a subset of the Validity Data as described in <a href="https://unicode.org/reports/tr35/tr35.html#Validity_Data">UTS #35, Part 1, Section 3.11</a>; the list may grow over time. As discussed in UTS #35, a simple unit is one that does not have a numerator and denominator. The following steps are taken:
+        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
       </p>
 
       <emu-alg>
-        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-simple-unit-identifiers"></emu-xref> below, return *true*.
+        1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-single-unit-identifiers"></emu-xref> below, return *true*.
         1. Else, return *false*.
       </emu-alg>
 
-      <emu-table id="table-sanctioned-simple-unit-identifiers">
-        <emu-caption>Simple units sanctioned for use in ECMAScript</emu-caption>
+      <emu-table id="table-sanctioned-single-unit-identifiers" oldids="table-sanctioned-simple-unit-identifiers">
+        <emu-caption>Single units sanctioned for use in ECMAScript</emu-caption>
         <table class="real-table">
           <thead>
             <tr>
-              <th>Simple Unit</th>
+              <th>Single Unit Identifier</th>
             </tr>
           </thead>
           <tr><td>acre</td></tr>
