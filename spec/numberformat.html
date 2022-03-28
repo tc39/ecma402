@@ -1032,14 +1032,14 @@
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
           1. Let _xFinal_ be _n_ &times; 10<sup>_e_ - _p_ + 1</sup>.
         1. If _e_ &ge; (_p_ - 1), then
-          1. Let _m_ be the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
+          1. Set _m_ to the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _int_ be _e_ + 1.
         1. Else if _e_ &ge; 0, then
-          1. Let _m_ be the string-concatenation of the first _e_ + 1 code units of _m_, the code unit 0x002E (FULL STOP), and the remaining _p_ - (_e_ + 1) code units of _m_.
+          1. Set _m_ to the string-concatenation of the first _e_ + 1 code units of _m_, the code unit 0x002E (FULL STOP), and the remaining _p_ - (_e_ + 1) code units of _m_.
           1. Let _int_ be _e_ + 1.
         1. Else,
           1. Assert: _e_ &lt; 0.
-          1. Let _m_ be the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
+          1. Set _m_ to the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
           1. Let _int_ be 1.
         1. If _m_ contains the code unit 0x002E (FULL STOP) and _maxPrecision_ &gt; _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ - _minPrecision_.
@@ -1069,10 +1069,10 @@
           1. Let _k_ be the length of _m_.
           1. If _k_ &le; _f_, then
             1. Let _z_ be the String value consisting of _f_ + 1 - _k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
-            1. Let _m_ be the string-concatenation of _z_ and _m_.
-            1. Let _k_ be _f_ + 1.
+            1. Set _m_ to the string-concatenation of _z_ and _m_.
+            1. Set _k_ to _f_ + 1.
           1. Let _a_ be the first _k_ - _f_ code units of _m_, and let _b_ be the remaining _f_ code units of _m_.
-          1. Let _m_ be the string-concatenation of _a_, *"."*, and _b_.
+          1. Set _m_ to the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the length of _a_.
         1. Else, let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
