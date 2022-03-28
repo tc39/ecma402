@@ -534,7 +534,7 @@
         1. Let _int_ be _result_.[[IntegerDigitsCount]].
         1. Let _minInteger_ be _intlObject_.[[MinimumIntegerDigits]].
         1. If _int_ &lt; _minInteger_, then
-          1. Let _forwardZeros_ be the String consisting of _minInteger_–_int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
+          1. Let _forwardZeros_ be the String consisting of _minInteger_ - _int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Set _string_ to the string-concatenation of _forwardZeros_ and _string_.
         1. If _isNegative_, then
           1. Let _x_ be -_x_.
@@ -1030,19 +1030,19 @@
         1. Else,
           1. Let _e_ and _n_ be integers such that 10<sup>_p_ - 1</sup> &le; _n_ &lt; 10<sup>_p_</sup> and for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> - _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> is larger.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
-          1. Let _xFinal_ be _n_ × 10<sup>_e_–_p_+1</sup>.
-        1. If _e_ ≥ _p_–1, then
-          1. Let _m_ be the string-concatenation of _m_ and _e_–_p_+1 occurrences of the code unit 0x0030 (DIGIT ZERO).
+          1. Let _xFinal_ be _n_ × 10<sup>_e_ - _p_ + 1</sup>.
+        1. If _e_ ≥ (_p_ - 1), then
+          1. Let _m_ be the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _int_ be _e_+1.
         1. Else if _e_ ≥ 0, then
-          1. Let _m_ be the string-concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_–(_e_+1) characters of _m_.
+          1. Let _m_ be the string-concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_ - (_e_ + 1) characters of _m_.
           1. Let _int_ be _e_+1.
         1. Else,
           1. Assert: _e_ &lt; 0.
-          1. Let _m_ be the string-concatenation of *"0."*, –(_e_+1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
+          1. Let _m_ be the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
           1. Let _int_ be 1.
         1. If _m_ contains the character *"."*, and _maxPrecision_ &gt; _minPrecision_, then
-          1. Let _cut_ be _maxPrecision_ – _minPrecision_.
+          1. Let _cut_ be _maxPrecision_ - _minPrecision_.
           1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
             1. Remove the last character from _m_.
             1. Decrease _cut_ by 1.
@@ -1062,20 +1062,20 @@
       <emu-alg>
         1. Set x to ℝ(x).
         1. Let _f_ be _maxFraction_.
-        1. Let _n_ be an integer for which the exact mathematical value of _n_ / 10<sup>_f_</sup> – _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
+        1. Let _n_ be an integer for which the exact mathematical value of _n_ / 10<sup>_f_</sup> - _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
         1. Let _xFinal_ be _n_ / 10<sup>_f_</sup>.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ ≠ 0, then
           1. Let _k_ be the number of characters in _m_.
           1. If _k_ ≤ _f_, then
-            1. Let _z_ be the String value consisting of _f_+1–_k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
+            1. Let _z_ be the String value consisting of _f_ + 1 - _k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
             1. Let _m_ be the string-concatenation of _z_ and _m_.
             1. Let _k_ be _f_+1.
-          1. Let _a_ be the first _k_–_f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
+          1. Let _a_ be the first _k_ - _f_ characters of _m_, and let _b_ be the remaining _f_ characters of _m_.
           1. Let _m_ be the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the number of characters in _a_.
         1. Else, let _int_ be the number of characters in _m_.
-        1. Let _cut_ be _maxFraction_ – _minFraction_.
+        1. Let _cut_ be _maxFraction_ - _minFraction_.
         1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
           1. Remove the last character from _m_.
           1. Decrease _cut_ by 1.
@@ -1205,7 +1205,7 @@
         1. If _formatNumberResult_.[[RoundedNumber]] = 0, then
           1. Return _exponent_.
         1. Let _newMagnitude_ be the base 10 logarithm of _formatNumberResult_.[[RoundedNumber]] rounded down to the nearest integer.
-        1. If _newMagnitude_ is _magnitude_ – _exponent_, then
+        1. If _newMagnitude_ is _magnitude_ - _exponent_, then
           1. Return _exponent_.
         1. Return ComputeExponentForMagnitude(_numberFormat_, _magnitude_ + 1).
       </emu-alg>
