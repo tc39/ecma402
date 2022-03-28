@@ -533,7 +533,7 @@
         1. Let _string_ be _result_.[[FormattedString]].
         1. Let _int_ be _result_.[[IntegerDigitsCount]].
         1. Let _minInteger_ be _intlObject_.[[MinimumIntegerDigits]].
-        1. If _int_ < _minInteger_, then
+        1. If _int_ &lt; _minInteger_, then
           1. Let _forwardZeros_ be the String consisting of _minInteger_–_int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Set _string_ to the string-concatenation of _forwardZeros_ and _string_.
         1. If _isNegative_, then
@@ -644,7 +644,7 @@
                 1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be ! StringIndexOf(_n_, *"."*, 0).
-              1. If _decimalSepIndex_ > 0, then
+              1. If _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
               1. Else,
@@ -1038,12 +1038,12 @@
           1. Let _m_ be the string-concatenation of the first _e_+1 characters of _m_, the character *"."*, and the remaining _p_–(_e_+1) characters of _m_.
           1. Let _int_ be _e_+1.
         1. Else,
-          1. Assert: _e_ < 0.
+          1. Assert: _e_ &lt; 0.
           1. Let _m_ be the string-concatenation of *"0."*, –(_e_+1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
           1. Let _int_ be 1.
-        1. If _m_ contains the character *"."*, and _maxPrecision_ > _minPrecision_, then
+        1. If _m_ contains the character *"."*, and _maxPrecision_ &gt; _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ – _minPrecision_.
-          1. Repeat, while _cut_ > 0 and the last character of _m_ is *"0"*,
+          1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
             1. Remove the last character from _m_.
             1. Decrease _cut_ by 1.
           1. If the last character of _m_ is *"."*, then
@@ -1076,7 +1076,7 @@
           1. Let _int_ be the number of characters in _a_.
         1. Else, let _int_ be the number of characters in _m_.
         1. Let _cut_ be _maxFraction_ – _minFraction_.
-        1. Repeat, while _cut_ > 0 and the last character of _m_ is *"0"*,
+        1. Repeat, while _cut_ &gt; 0 and the last character of _m_ is *"0"*,
           1. Remove the last character from _m_.
           1. Decrease _cut_ by 1.
         1. If the last character of _m_ is *"."*, then
