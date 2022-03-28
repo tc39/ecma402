@@ -564,9 +564,9 @@
           1. Let _n_ be an ILD String value indicating negative infinity.
         1. Else,
           1. Set _x_ to ℝ(_x_).
-          1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ to 100 × _x_.
+          1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ to 100 &times; _x_.
           1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
-          1. Set _x_ to _x_ × 10<sup>-_exponent_</sup>.
+          1. Set _x_ to _x_ &times; 10<sup>-_exponent_</sup>.
           1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
           1. Let _n_ be _formatNumberResult_.[[FormattedString]].
           1. Set _x_ to _formatNumberResult_.[[RoundedNumber]].
@@ -1030,11 +1030,11 @@
         1. Else,
           1. Let _e_ and _n_ be integers such that 10<sup>_p_ - 1</sup> &le; _n_ &lt; 10<sup>_p_</sup> and for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> - _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> is larger.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
-          1. Let _xFinal_ be _n_ × 10<sup>_e_ - _p_ + 1</sup>.
-        1. If _e_ ≥ (_p_ - 1), then
+          1. Let _xFinal_ be _n_ &times; 10<sup>_e_ - _p_ + 1</sup>.
+        1. If _e_ &ge; (_p_ - 1), then
           1. Let _m_ be the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _int_ be _e_ + 1.
-        1. Else if _e_ ≥ 0, then
+        1. Else if _e_ &ge; 0, then
           1. Let _m_ be the string-concatenation of the first _e_ + 1 characters of _m_, the character *"."*, and the remaining _p_ - (_e_ + 1) characters of _m_.
           1. Let _int_ be _e_ + 1.
         1. Else,
@@ -1065,9 +1065,9 @@
         1. Let _n_ be an integer for which the exact mathematical value of _n_ / 10<sup>_f_</sup> - _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
         1. Let _xFinal_ be _n_ / 10<sup>_f_</sup>.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
-        1. If _f_ ≠ 0, then
+        1. If _f_ &ne; 0, then
           1. Let _k_ be the number of characters in _m_.
-          1. If _k_ ≤ _f_, then
+          1. If _k_ &le; _f_, then
             1. Let _z_ be the String value consisting of _f_ + 1 - _k_ occurrences of the code unit 0x0030 (DIGIT ZERO).
             1. Let _m_ be the string-concatenation of _z_ and _m_.
             1. Let _k_ be _f_ + 1.
@@ -1200,7 +1200,7 @@
           1. Let _x_ = -_x_.
         1. Let _magnitude_ be the base 10 logarithm of _x_ rounded down to the nearest integer.
         1. Let _exponent_ be ComputeExponentForMagnitude(_numberFormat_, _magnitude_).
-        1. Let _x_ be _x_ × 10<sup>-_exponent_</sup>.
+        1. Let _x_ be _x_ &times; 10<sup>-_exponent_</sup>.
         1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
         1. If _formatNumberResult_.[[RoundedNumber]] = 0, then
           1. Return _exponent_.
@@ -1224,7 +1224,7 @@
           1. Return _magnitude_.
         1. Else if _notation_ is *"engineering"*, then
           1. Let _thousands_ be the greatest integer that is not greater than _magnitude_ / 3.
-          1. Return _thousands_ × 3.
+          1. Return _thousands_ &times; 3.
         1. Else,
           1. Assert: _notation_ is *"compact"*.
           1. Let _exponent_ be an implementation- and locale-dependent (ILD) integer by which to scale a number of the given magnitude in compact notation for the current locale.
