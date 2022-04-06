@@ -548,7 +548,7 @@ emu-normative-optional:before {
         The IsWellFormedCurrencyCode abstract operation verifies that the <var>currency</var> argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
       </p>
 
-      <emu-alg><ol><li>If the length of <var>normalized</var> is not 3, return <emu-val>false</emu-val>.</li><li>Let <var>normalized</var> be the <emu-xref href="#sec-case-sensitivity-and-case-mapping" id="_ref_189"><a href="#sec-case-sensitivity-and-case-mapping">ASCII-uppercase</a></emu-xref> of <var>currency</var>.</li><li>If <var>normalized</var> contains any code unit outside of 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z), return <emu-val>false</emu-val>.</li><li>Return <emu-val>true</emu-val>.</li></ol></emu-alg>
+      <emu-alg><ol><li>If the length of <var>currency</var> is not 3, return <emu-val>false</emu-val>.</li><li>Let <var>normalized</var> be the <emu-xref href="#sec-case-sensitivity-and-case-mapping" id="_ref_189"><a href="#sec-case-sensitivity-and-case-mapping">ASCII-uppercase</a></emu-xref> of <var>currency</var>.</li><li>If <var>normalized</var> contains any code unit outside of 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z), return <emu-val>false</emu-val>.</li><li>Return <emu-val>true</emu-val>.</li></ol></emu-alg>
     </emu-clause>
   </emu-clause>
 
