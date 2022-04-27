@@ -216,18 +216,18 @@
         </p>
 
         <p>
-          Behaviour depends upon _collator_.[[Sensitivity]] as follows:
+          Behaviour as described below depends upon locale-sensitive identification of the sequence of collation elements for a string, in particular "base letters", and different base letters always compare as unequal (causing the strings containing them to also compare as unequal). Results of comparing variations of the same base letter with different case, diacritic marks, or potentially other aspects further depends upon _collator_.[[Sensitivity]] as follows:
         </p>
 
         <ul>
-          <li>*"base"*: Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A.</li>
-          <li>*"accent"*: Only strings that differ in base letters or accents and other diacritic marks compare as unequal. Examples: a ≠ b, a ≠ á, a = A.</li>
-          <li>*"case"*: Only strings that differ in base letters or case compare as unequal. Examples: a ≠ b, a = á, a ≠ A.</li>
-          <li>*"variant"*: Strings that differ in base letters, accents and other diacritic marks, or case compare as unequal. Other differences may also be taken into consideration. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
+          <li>*"base"*: Characters with the same base letter do not compare as unequal, regardless of differences in case and/or diacritic marks. Examples: a ≠ b, a = á, a = A.</li>
+          <li>*"accent"*: Characters with the same base letter compare as unequal only if they differ in accents and/or other diacritic marks, regardless of differences in case. Examples: a ≠ b, a ≠ á, a = A.</li>
+          <li>*"case"*: Characters with the same base letter compare as unequal only if they differ in case, regardless of differences in accents and/or other diacritic marks. Examples: a ≠ b, a = á, a ≠ A.</li>
+          <li>*"variant"*: Characters with the same base letter compare as unequal if they differ in case, diacritic marks, and/or potentially other differences. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
         </ul>
 
         <emu-note>
-        In some languages, certain letters with diacritic marks are considered base letters. For example, in Swedish, "ö" is a base letter that's different from "o".
+          The mapping from input code points to base letters can include arbitrary contractions, expansions, and collisions, including those that apply special treatment to certain characters with diacritic marks. For example, in Swedish, "ö" is a base letter that differs from "o", and "v" and "w" are considered to be the same base letter. In Slovak, "ch" is a single base letter, and in English, "æ" is a sequence of base letters starting with "a" and ending with "e".
         </emu-note>
 
         <p>
