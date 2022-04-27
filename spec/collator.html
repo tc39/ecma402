@@ -216,14 +216,14 @@
         </p>
 
         <p>
-          The sensitivity of _collator_ is interpreted as follows:
+          Behaviour depends upon _collator_.[[Sensitivity]] as follows:
         </p>
 
         <ul>
-          <li>base: Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A.</li>
-          <li>accent: Only strings that differ in base letters or accents and other diacritic marks compare as unequal. Examples: a ≠ b, a ≠ á, a = A.</li>
-          <li>case: Only strings that differ in base letters or case compare as unequal. Examples: a ≠ b, a = á, a ≠ A.</li>
-          <li>variant: Strings that differ in base letters, accents and other diacritic marks, or case compare as unequal. Other differences may also be taken into consideration. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
+          <li>*"base"*: Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A.</li>
+          <li>*"accent"*: Only strings that differ in base letters or accents and other diacritic marks compare as unequal. Examples: a ≠ b, a ≠ á, a = A.</li>
+          <li>*"case"*: Only strings that differ in base letters or case compare as unequal. Examples: a ≠ b, a = á, a ≠ A.</li>
+          <li>*"variant"*: Strings that differ in base letters, accents and other diacritic marks, or case compare as unequal. Other differences may also be taken into consideration. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
         </ul>
 
         <emu-note>
@@ -231,7 +231,7 @@
         </emu-note>
 
         <p>
-          If the collator is set to ignore punctuation, then strings that differ only in punctuation compare as equal.
+          If _collator_.[[IgnorePunctuation]] is *true*, then punctuation is ignored (e.g., strings that differ only in punctuation compare as equal).
         </p>
 
         <p>
