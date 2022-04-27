@@ -75,7 +75,7 @@
         </h1>
         <dl class="header">
           <dt>description</dt>
-          <dd>It interprets _S_ as a sequence of UTF-16 encoded code points, as described in <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and returns the result of implementation- and locale-dependent (ILD) transformation into _targetCase_ as a new String value.</dd>
+          <dd>It interprets _S_ as a sequence of UTF-16 encoded code points, as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and returns the result of implementation- and locale-dependent (ILD) transformation into _targetCase_ as a new String value.</dd>
         </dl>
         <emu-alg>
           1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
@@ -281,7 +281,7 @@
       </emu-alg>
 
       <emu-note>
-        This algorithm's steps mirror the steps taken in <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>, with the exception that Invoke(_nextElement_, *"toLocaleString"*) now takes _locales_ and _options_ as arguments.
+        This algorithm's steps mirror the steps taken in es2023, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>, with the exception that Invoke(_nextElement_, *"toLocaleString"*) now takes _locales_ and _options_ as arguments.
       </emu-note>
 
       <emu-note>
