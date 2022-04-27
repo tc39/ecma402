@@ -219,12 +219,43 @@
           Behaviour as described below depends upon locale-sensitive identification of the sequence of collation elements for a string, in particular "base letters", and different base letters always compare as unequal (causing the strings containing them to also compare as unequal). Results of comparing variations of the same base letter with different case, diacritic marks, or potentially other aspects further depends upon _collator_.[[Sensitivity]] as follows:
         </p>
 
-        <ul>
-          <li>*"base"*: Characters with the same base letter do not compare as unequal, regardless of differences in case and/or diacritic marks. Examples: a ≠ b, a = á, a = A.</li>
-          <li>*"accent"*: Characters with the same base letter compare as unequal only if they differ in accents and/or other diacritic marks, regardless of differences in case. Examples: a ≠ b, a ≠ á, a = A.</li>
-          <li>*"case"*: Characters with the same base letter compare as unequal only if they differ in case, regardless of differences in accents and/or other diacritic marks. Examples: a ≠ b, a = á, a ≠ A.</li>
-          <li>*"variant"*: Characters with the same base letter compare as unequal if they differ in case, diacritic marks, and/or potentially other differences. Examples: a ≠ b, a ≠ á, a ≠ A.</li>
-        </ul>
+        <emu-table id="table-collator-comparestrings-sensitivity">
+          <emu-caption>Effects of Collator Sensitivity</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>_collator_.[[Sensitivity]]</th>
+                <th>Description</th>
+                <th>*"a"* vs. *"á"*</th>
+                <th>*"a"* vs. *"A"*</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>*"base"*</td>
+              <td>Characters with the same base letter do not compare as unequal, regardless of differences in case and/or diacritic marks.</td>
+              <td>equal</td>
+              <td>equal</td>
+            </tr>
+            <tr>
+              <td>*"accent"*</td>
+              <td>Characters with the same base letter compare as unequal only if they differ in accents and/or other diacritic marks, regardless of differences in case.</td>
+              <td>not equal</td>
+              <td>equal</td>
+            </tr>
+            <tr>
+              <td>*"case"*</td>
+              <td>Characters with the same base letter compare as unequal only if they differ in case, regardless of differences in accents and/or other diacritic marks.</td>
+              <td>equal</td>
+              <td>not equal</td>
+            </tr>
+            <tr>
+              <td>*"variant"*</td>
+              <td>Characters with the same base letter compare as unequal if they differ in case, diacritic marks, and/or potentially other differences.</td>
+              <td>not equal</td>
+              <td>not equal</td>
+            </tr>
+          </table>
+        </emu-table>
 
         <emu-note>
           The mapping from input code points to base letters can include arbitrary contractions, expansions, and collisions, including those that apply special treatment to certain characters with diacritic marks. For example, in Swedish, "ö" is a base letter that differs from "o", and "v" and "w" are considered to be the same base letter. In Slovak, "ch" is a single base letter, and in English, "æ" is a sequence of base letters starting with "a" and ending with "e".
