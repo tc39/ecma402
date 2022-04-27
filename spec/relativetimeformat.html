@@ -197,7 +197,7 @@
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
         1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
-        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-relativetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _relativeTimeFormat_'s internal slot whose name is the Internal Slot value of the current row.
@@ -310,7 +310,7 @@
         1. Let _patterns_ be _fields_.[[&lt;_entry_&gt;]].
         1. Let _numeric_ be _relativeTimeFormat_.[[Numeric]].
         1. If _numeric_ is equal to *"auto"*, then
-          1. Let _valueString_ be ToString(_value_).
+          1. Let _valueString_ be ! ToString(_value_).
           1. If _patterns_ has a field [[&lt;_valueString_&gt;]], then
             1. Let _result_ be _patterns_.[[&lt;_valueString_&gt;]].
             1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_ }.
@@ -388,7 +388,7 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
-          1. Let _O_ be ! OrdinaryObjectCreate(%Object.prototype%).
+          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. If _part_.[[Unit]] is not ~empty~, then

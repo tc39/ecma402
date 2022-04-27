@@ -63,7 +63,7 @@
         1. If _collation_ is *null*, let _collation_ be *"default"*.
         1. Set _collator_.[[Collation]] to _collation_.
         1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. Set _collator_.[[Numeric]] to ! SameValue(_r_.[[kn]], *"true"*).
+          1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, *"string"*, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
@@ -266,7 +266,7 @@
       <emu-alg>
         1. Let _collator_ be the *this* value.
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
-        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.

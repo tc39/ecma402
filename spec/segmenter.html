@@ -137,7 +137,7 @@
       <emu-alg>
         1. Let _segmenter_ be the *this* value.
         1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
-        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-segmenter-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _segmenter_'s internal slot whose name is the Internal Slot value of the current row.
@@ -201,7 +201,7 @@
       <p>The CreateSegmentsObject abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segments instance referencing both. The following steps are taken:</p>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[SegmentsSegmenter]], [[SegmentsString]] &raquo;.
-        1. Let _segments_ be ! OrdinaryObjectCreate(%SegmentsPrototype%, _internalSlotsList_).
+        1. Let _segments_ be OrdinaryObjectCreate(%SegmentsPrototype%, _internalSlotsList_).
         1. Set _segments_.[[SegmentsSegmenter]] to _segmenter_.
         1. Set _segments_.[[SegmentsString]] to _string_.
         1. Return _segments_.
@@ -276,7 +276,7 @@
       <p>The CreateSegmentIterator abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segment Iterator over _string_ using the locale and options of _segmenter_. The following steps are taken:</p>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[IteratingSegmenter]], [[IteratedString]], [[IteratedStringNextSegmentCodeUnitIndex]] &raquo;.
-        1. Let _iterator_ be ! OrdinaryObjectCreate(%SegmentIteratorPrototype%, _internalSlotsList_).
+        1. Let _iterator_ be OrdinaryObjectCreate(%SegmentIteratorPrototype%, _internalSlotsList_).
         1. Set _iterator_.[[IteratingSegmenter]] to _segmenter_.
         1. Set _iterator_.[[IteratedString]] to _string_.
         1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to 0.
@@ -305,10 +305,10 @@
           1. Let _startIndex_ be _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]].
           1. Let _endIndex_ be ! FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
           1. If _endIndex_ is not finite, then
-            1. Return ! CreateIterResultObject(*undefined*, *true*).
+            1. Return CreateIterResultObject(*undefined*, *true*).
           1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to _endIndex_.
           1. Let _segmentData_ be ! CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
-          1. Return ! CreateIterResultObject(_segmentData_, *false*).
+          1. Return CreateIterResultObject(_segmentData_, *false*).
         </emu-alg>
       </emu-clause>
 
@@ -370,7 +370,7 @@
         1. Assert: _startIndex_ &ge; 0.
         1. Assert: _endIndex_ &le; _len_.
         1. Assert: _startIndex_ &lt; _endIndex_.
-        1. Let _result_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _result_ be OrdinaryObjectCreate(%Object.prototype%).
         1. Let _segment_ be the substring of _string_ from _startIndex_ to _endIndex_.
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"segment"*, _segment_).
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"index"*, 𝔽(_startIndex_)).

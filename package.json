@@ -4,13 +4,13 @@
   "version": "9.0.0",
   "description": "ECMAScript Internationalization API Specification",
   "scripts": {
-    "build-master": "mkdir out && cp -R img out && ecmarkup --lint-spec --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "build-master": "mkdir out && cp -R img out && ecmarkup --lint-spec --verbose --load-biblio @tc39/ecma262-biblio spec/index.html out/index.html --css-out out/ecmarkup.css --js-out out/ecmarkup.js",
     "prebuild": "npm run clean",
     "build": "npm run build-master",
     "prebuild-for-pdf": "npm run clean",
     "build-for-pdf": "npm run build-master -- --old-toc",
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
-    "build-only": "ecmarkup --verbose spec/index.html out/index.html --css out/ecmarkup.css --js out/ecmarkup.js",
+    "build-only": "ecmarkup --verbose spec/index.html --load-biblio @tc39/ecma262-biblio out/index.html --css-out out/ecmarkup.css --js-out out/ecmarkup.js",
     "clean": "rm -rf out",
     "test": "ecmarkup --lint-spec spec/index.html /dev/null",
     "prewatch": "npm run clean",
@@ -21,7 +21,8 @@
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
-    "ecmarkup": "^8.1.0"
+    "ecmarkup": "^12.1.1",
+    "@tc39/ecma262-biblio": "^2.0.2329"
   },
   "devDependencies": {
     "@alrra/travis-scripts": "^3.0.1"
