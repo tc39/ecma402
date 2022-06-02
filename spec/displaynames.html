@@ -23,22 +23,22 @@
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, String, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
-        1. Let _style_ be ? GetOption(_options_, *"style"*, String, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
-        1. Let _type_ be ? GetOption(_options_, *"type"*, String, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
+        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
         1. If _type_ is *undefined*, throw a *TypeError* exception.
         1. Set _displayNames_.[[Type]] to _type_.
-        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, String, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
+        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, ~string~, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
         1. Set _displayNames_.[[Locale]] to _r_.[[locale]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _types_ be _dataLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
-        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, String, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
+        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then

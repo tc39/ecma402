@@ -33,9 +33,9 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, String, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _t_ be ? GetOption(_options_, *"type"*, String, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
+        1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *+0*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
