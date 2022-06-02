@@ -348,7 +348,7 @@
           1. Return _default_.
         1. If _type_ is *"boolean"*, then
           1. Set _value_ to ! ToBoolean(_value_).
-        1. If _type_ is *"number"*, then
+        1. Else if _type_ is *"number"*, then
           1. Set _value_ to ? ToNumber(_value_).
           1. If _value_ is *NaN*, throw a *RangeError* exception.
         1. Else,
