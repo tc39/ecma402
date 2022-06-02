@@ -338,10 +338,14 @@
         1. Assert: Type(_options_) is Object.
         1. Let _value_ be ? Get(_options_, _property_).
         1. If _value_ is *undefined*, return _fallback_.
-        1. Assert: _type_ is *"boolean"* or *"string"*.
+        1. Assert: _type_ is *"boolean"* or *"number"* or *"string"*.
         1. If _type_ is *"boolean"*, then
           1. Set _value_ to ! ToBoolean(_value_).
-        1. If _type_ is *"string"*, then
+        1. If _type_ is *"number"*, then
+          1. Set _value_ to ? ToNumber(_value_).
+          1. If _value_ is *NaN*, throw a *RangeError* exception.
+        1. Else,
+          1. Assert: _type_ is *"string"*.
           1. Set _value_ to ? ToString(_value_).
         1. If _values_ is not *undefined* and _values_ does not contain an element equal to _value_, throw a *RangeError* exception.
         1. Return _value_.
