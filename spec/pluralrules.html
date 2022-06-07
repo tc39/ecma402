@@ -154,14 +154,14 @@
       <emu-alg>
         1. Let _pr_ be the *this* value.
         1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. Let _options_ be ! OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-pluralrules-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
-        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, ! CreateArrayFromList(_pluralCategories_)).
+        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
         1. Return _options_.
       </emu-alg>
 
@@ -248,7 +248,7 @@
        <emu-alg>
          1. Let _n_ be ! ToNumber(_s_).
          1. Assert: _n_ is finite.
-         1. Let _dp_ be ! StringIndexOf(_s_, *"."*, 0).
+         1. Let _dp_ be StringIndexOf(_s_, *"."*, 0).
          1. If _dp_ = -1, then
            1. Let _intPart_ be _n_.
            1. Let _fracSlice_ be *""*.

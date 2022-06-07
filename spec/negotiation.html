@@ -44,13 +44,13 @@
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
         1. If Type(_locales_) is String or Type(_locales_) is Object and _locales_ has an [[InitializedLocale]] internal slot, then
-          1. Let _O_ be ! CreateArrayFromList(&laquo; _locales_ &raquo;).
+          1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
         1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
         1. Let _k_ be 0.
         1. Repeat, while _k_ < _len_,
-          1. Let _Pk_ be ToString(_k_).
+          1. Let _Pk_ be ! ToString(_k_).
           1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
           1. If _kPresent_ is *true*, then
             1. Let _kValue_ be ? Get(_O_, _Pk_).
@@ -141,7 +141,7 @@
         1. Let _size_ be the length of _extension_.
         1. Let _k_ be 3.
         1. Repeat, while _k_ &lt; _size_,
-          1. Let _e_ be ! StringIndexOf(_extension_, *"-"*, _k_).
+          1. Let _e_ be StringIndexOf(_extension_, *"-"*, _k_).
           1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
           1. Let _subtag_ be the String value equal to the substring of _extension_ consisting of the code units at indices _k_ (inclusive) through _k_ + _len_ (exclusive).
           1. If _keyword_ is *undefined* and _len_ &ne; 2, then
@@ -176,7 +176,7 @@
         1. Assert: _locale_ does not contain a substring that is a Unicode locale extension sequence.
         1. Assert: _extension_ is a Unicode locale extension sequence.
         1. Assert: _tag_ matches the `unicode_locale_id` production.
-        1. Let _privateIndex_ be ! StringIndexOf(_locale_, *"-x-"*, 0).
+        1. Let _privateIndex_ be StringIndexOf(_locale_, *"-x-"*, 0).
         1. If _privateIndex_ = -1, then
           1. Let _locale_ be the string-concatenation of _locale_ and _extension_.
         1. Else,
@@ -295,7 +295,7 @@
           1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
-        1. Return ! CreateArrayFromList(_supportedLocales_).
+        1. Return CreateArrayFromList(_supportedLocales_).
       </emu-alg>
     </emu-clause>
 
@@ -307,7 +307,7 @@
       </p>
       <emu-alg>
         1. If _options_ is *undefined*, then
-          1. Return ! OrdinaryObjectCreate(*null*).
+          1. Return OrdinaryObjectCreate(*null*).
         1. If Type(_options_) is Object, then
           1. Return _options_.
         1. Throw a *TypeError* exception.
@@ -322,7 +322,7 @@
       </p>
       <emu-alg>
         1. If _options_ is *undefined*, then
-          1. Return ! OrdinaryObjectCreate(*null*).
+          1. Return OrdinaryObjectCreate(*null*).
         1. Return ? ToObject(_options_).
       </emu-alg>
     </emu-clause>
@@ -332,7 +332,7 @@
         GetOption (
           _options_: an Object,
           _property_: a property key,
-          _type_: *"boolean"* or *"number"* or *"string"*,
+          _type_: *"boolean"*, *"number"*, or *"string"*,
           _values_: *undefined* or a List of ECMAScript language values,
           _default_: ~required~ or an ECMAScript language value,
         )
@@ -347,7 +347,7 @@
           1. If _default_ is ~required~, throw a *RangeError* exception.
           1. Return _default_.
         1. If _type_ is *"boolean"*, then
-          1. Set _value_ to ! ToBoolean(_value_).
+          1. Set _value_ to ToBoolean(_value_).
         1. Else if _type_ is *"number"*, then
           1. Set _value_ to ? ToNumber(_value_).
           1. If _value_ is *NaN*, throw a *RangeError* exception.
@@ -401,12 +401,12 @@
 
       <emu-alg>
         1. Let _result_ be a new empty List.
-        1. Let _beginIndex_ be ! StringIndexOf(_pattern_, *"{"*, 0).
+        1. Let _beginIndex_ be StringIndexOf(_pattern_, *"{"*, 0).
         1. Let _endIndex_ be 0.
         1. Let _nextIndex_ be 0.
         1. Let _length_ be the number of code units in _pattern_.
         1. Repeat, while _beginIndex_ is an integer index into _pattern_,
-          1. Set _endIndex_ to ! StringIndexOf(_pattern_, *"}"*, _beginIndex_).
+          1. Set _endIndex_ to StringIndexOf(_pattern_, *"}"*, _beginIndex_).
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
@@ -414,7 +414,7 @@
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
           1. Append a new Record { [[Type]]: _p_, [[Value]]: *undefined* } as the last element of the list _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
-          1. Set _beginIndex_ to ! StringIndexOf(_pattern_, *"{"*, _nextIndex_).
+          1. Set _beginIndex_ to StringIndexOf(_pattern_, *"{"*, _nextIndex_).
         1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
           1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
