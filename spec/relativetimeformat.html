@@ -37,9 +37,9 @@
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, *"string"*, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[LocaleMatcher]] to _matcher_.
-        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, *"string"*, *undefined*, *undefined*).
+        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
         1. If _numberingSystem_ is not *undefined*, then
           1. If _numberingSystem_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
@@ -49,9 +49,9 @@
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, *"string"*, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
         1. Set _relativeTimeFormat_.[[Style]] to _style_.
-        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, *"string"*, &laquo; *"always"*, *"auto"* &raquo;, *"always"*).
+        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~string~, &laquo; *"always"*, *"auto"* &raquo;, *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
         1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, &laquo; _locale_ &raquo;).
         1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%PluralRules%, &laquo; _locale_ &raquo;).
