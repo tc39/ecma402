@@ -13,11 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: ljharb/actions/node/install@56f291b2a0d9e3bce72634356ae949b1e054b9f8
-        name: 'nvm install lts/* && npm ci'
+      - uses: actions/setup-node@v2
         with:
           node-version: lts/*
-          use-npm-ci: true
+          check-latest: true
+      - run: npm install
       - run: npm run build-only
       - name: introspect
         run: pwd && ls -lh spec/ && echo && ls -lh out/ && cat spec/index.html
