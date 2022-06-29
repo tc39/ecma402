@@ -25,6 +25,8 @@
     "@tc39/ecma262-biblio": "^2.0.2329"
   },
   "devDependencies": {
-    "@alrra/travis-scripts": "^3.0.1"
+    "jsdom": "^15.0.0",
+    "tar-stream": "^2.2.0",
+    "tiny-json-http": "^7.1.2"
   }
 }
