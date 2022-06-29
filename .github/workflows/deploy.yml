@@ -19,18 +19,20 @@ jobs:
           check-latest: true
       - run: npm install
       - run: npm run build-only
-      - name: Checkout RC 🛎️ 🛎️
-        uses: actions/checkout@v2
-        with:
-          ref: 'es2022'
-          clean: false
-      - name: mdkir rc folder
-        run: mkdir out/2022
-      - name: copy images
-        run: cp -R img "out/2022"
-      - name: build rc
-        run: |
-          ./node_modules/.bin/ecmarkup --verbose spec/index.html out/2022/index.html --css out/2022/ecmarkup.css --js out/2022/ecmarkup.js
+      # Specific-year rendering is temporarily disabled.
+      # https://github.com/tc39/ecma402/issues/693
+      # - name: Checkout RC 🛎️ 🛎️
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: 'es2022'
+      #     clean: false
+      # - name: mdkir rc folder
+      #   run: mkdir out/2022
+      # - name: copy images
+      #   run: cp -R img "out/2022"
+      # - name: build rc
+      #   run: |
+      #     ./node_modules/.bin/ecmarkup --lint-spec --verbose --load-biblio @tc39/ecma262-biblio spec/index.html out/2022/index.html --css-out out/2022/ecmarkup.css --js-out out/2022/ecmarkup.js
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
