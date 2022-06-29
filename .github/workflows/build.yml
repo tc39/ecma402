@@ -1,10 +1,10 @@
-name: 'build & lint ecmarkup'
+name: 'lint & build'
 
 on: [pull_request, push]
 
 jobs:
   build:
-    name: 'build & lint ecmarkup'
+    name: 'lint & build'
     runs-on: ubuntu-latest
 
     steps:
@@ -13,5 +13,5 @@ jobs:
         with:
           node-version: lts/*
           check-latest: true
-      - run: 'npm install'
-      - run: 'npm run build-master'
+      - run: npm install
+      - run: npm run build

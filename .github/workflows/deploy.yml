@@ -3,7 +3,9 @@ name: 'deploy github pages'
 on:
   push:
     branches:
+      - main
       - master
+      - es[0-9.]+
 
 jobs:
   deploy:
@@ -19,34 +21,34 @@ jobs:
           check-latest: true
       - run: npm install
       - run: npm run build-only
-      - name: Introspect
-        run: pwd && ls -lh spec/ out/ && echo && grep -A1 -i '<emu-import' out/index.html
-      - name: Failsafe
+      - name: 'Introspect build'
+        run: |
+          pwd
+          ls -lh spec/ out/
+          echo
+          grep -A1 -i '<emu-import' out/index.html
+      - name: 'Require output size ≥ input size'
         run: du --bytes spec/ out/index.html | awk '{ print; if($1 < prev) exit 1; prev=$1 }'
-      # Specific-year rendering is currently problematic.
-      # https://github.com/tc39/ecma402/issues/693
-      # - name: Checkout RC 🛎️ 🛎️
-      #   uses: actions/checkout@v2
-      #   with:
-      #     ref: 'es2022'
-      #     clean: false
-      # - name: mdkir rc folder
-      #   run: mkdir out/2022
-      # - name: copy images
-      #   run: cp -R img "out/2022"
-      # - name: build rc
-      #   run: |
-      #     ./node_modules/.bin/ecmarkup --lint-spec --verbose --load-biblio @tc39/ecma262-biblio spec/index.html out/2022/index.html --css-out out/2022/ecmarkup.css --js-out out/2022/ecmarkup.js
-      - name: Checkout gh-pages
+      - name: 'Checkout gh-pages'
         uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: gh-pages
-      - name: Clean gh-pages
-        run: find gh-pages -mindepth 1 -maxdepth 1 -regex '.*/[0-9]*$' -prune -o -exec rm -rf '{}' '+'
-      - name: Copy new content
-        run: cp -r out/* gh-pages/
-      - name: Deploy 🚀
+      - name: 'Update gh-pages (draft)'
+        id: update_draft
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'master' }}
+        run: |
+          find gh-pages -mindepth 1 -maxdepth 1 -regex '.*/[0-9]*$' -prune -o -exec rm -rf '{}' '+'
+          cp -r out/* gh-pages/
+      - name: 'Update gh-pages (snapshot)'
+        if: ${{ steps.update_draft.outcome == 'skipped' }}
+        run: |
+          branch=${{ github.ref_name }}
+          subdir=$(printf '%s' "$branch" | sed 's/^[^0-9]*//')
+          rm -rf "gh-pages/$subdir" || true
+          mkdir -p "gh-pages/$subdir"
+          cp -r out/* "gh-pages/$subdir"
+      - name: 'Deploy 🚀'
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:
           branch: gh-pages
