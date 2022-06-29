@@ -19,8 +19,10 @@ jobs:
           check-latest: true
       - run: npm install
       - run: npm run build-only
-      - name: introspect
-        run: pwd && ls -lh spec/ && echo && ls -lh out/ && cat spec/index.html
+      - name: Introspect
+        run: pwd && ls -lh spec/ out/ && echo && grep -A1 -i '<emu-import' out/index.html
+      - name: Failsafe
+        run: du --bytes spec/ out/index.html | awk '{ print; if($1 < prev) exit 1; prev=$1 }'
       # Specific-year rendering is currently problematic.
       # https://github.com/tc39/ecma402/issues/693
       # - name: Checkout RC 🛎️ 🛎️
