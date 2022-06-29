@@ -25,6 +25,7 @@
     "@tc39/ecma262-biblio": "^2.0.2329"
   },
   "devDependencies": {
+    "glob": "^7.1.6",
     "jsdom": "^15.0.0",
     "tar-stream": "^2.2.0",
     "tiny-json-http": "^7.1.2"
