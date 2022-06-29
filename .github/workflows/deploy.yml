@@ -19,6 +19,8 @@ jobs:
           check-latest: true
       - run: npm install
       - run: npm run build-only
+      - name: introspect
+        run: pwd && ls -lh spec/
       # Specific-year rendering is currently problematic.
       # https://github.com/tc39/ecma402/issues/693
       # - name: Checkout RC 🛎️ 🛎️
