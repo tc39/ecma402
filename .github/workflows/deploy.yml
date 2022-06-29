@@ -21,12 +21,6 @@ jobs:
           check-latest: true
       - run: npm install
       - run: npm run build-only
-      - name: 'Introspect build'
-        run: |
-          pwd
-          ls -lh spec/ out/
-          echo
-          grep -A1 -i '<emu-import' out/index.html
       - name: 'Require output size ≥ input size'
         run: du --bytes spec/ out/index.html | awk '{ print; if($1 < prev) exit 1; prev=$1 }'
       - name: 'Checkout gh-pages'
