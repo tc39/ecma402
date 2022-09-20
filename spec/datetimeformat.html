@@ -37,7 +37,7 @@
       </emu-normative-optional>
     </emu-clause>
 
-    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat">
+    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions">
       <h1>
         CreateDateTimeFormat (
           _newTarget_: a constructor,
@@ -54,9 +54,7 @@
       <emu-alg>
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. If _required_ is not *"any"* or _defaults_ is not *"date"*, then
-          1. Set _options_ to ? ToDateTimeOptions(_options_, _required_, _defaults_).
-        1. Set _options_ to ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
+        1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
@@ -121,9 +119,28 @@
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
           1. If _hasExplicitFormatComponents_ is *true*, then
             1. Throw a *TypeError* exception.
+          1. If _required_ is *"date"* and _timeStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
+          1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
           1. Let _styles_ be _dataLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
+          1. Let _needDefaults_ be *true*.
+          1. If _required_ is *"date"* or *"any"*, then
+            1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
+              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
+              1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
+          1. If _required_ is *"time"* or *"any"*, then
+            1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
+              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
+              1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
+          1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
+            1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
+              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
+          1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
+            1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
+              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
           1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
           1. If _matcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
@@ -750,42 +767,6 @@
         </tr>
       </table>
     </emu-table>
-
-    <emu-clause id="sec-todatetimeoptions" aoid="ToDateTimeOptions">
-      <h1>ToDateTimeOptions ( _options_, _required_, _defaults_ )</h1>
-
-      <p>
-        When the ToDateTimeOptions abstract operation is called with arguments _options_, _required_, and _defaults_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. If _options_ is *undefined*, let _options_ be *null*; otherwise let _options_ be ? ToObject(_options_).
-        1. Let _options_ be OrdinaryObjectCreate(_options_).
-        1. Let _needDefaults_ be *true*.
-        1. If _required_ is *"date"* or *"any"*, then
-          1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
-            1. Let _value_ be ? Get(_options_, _prop_).
-            1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _required_ is *"time"* or *"any"*, then
-          1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
-            1. Let _value_ be ? Get(_options_, _prop_).
-            1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-        1. Let _dateStyle_ be ? Get(_options_, *"dateStyle"*).
-        1. Let _timeStyle_ be ? Get(_options_, *"timeStyle"*).
-        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, let _needDefaults_ be *false*.
-        1. If _required_ is *"date"* and _timeStyle_ is not *undefined*, then
-          1. Throw a *TypeError* exception.
-        1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
-          1. Throw a *TypeError* exception.
-        1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
-          1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
-            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
-        1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
-          1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
-            1. Perform ? CreateDataPropertyOrThrow(_options_, _prop_, *"numeric"*).
-        1. Return _options_.
-      </emu-alg>
-    </emu-clause>
 
     <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
       <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _styles_ )</h1>
