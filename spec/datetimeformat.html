@@ -17,8 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
-        1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
+        1. Let _dateTimeFormat_ be ? CreateDateTimeFormat(_newTarget_, _locales_, _options_, *"any"*, *"date"*).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
           1. Return ? ChainDateTimeFormat(_dateTimeFormat_, NewTarget, _this_).
@@ -38,12 +37,40 @@
       </emu-normative-optional>
     </emu-clause>
 
-    <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
-      <h1>InitializeDateTimeFormat ( _dateTimeFormat_, _locales_, _options_ )</h1>
+    <emu-clause id="sec-createdatetimeformat" type="abstract operation">
+      <h1>
+        CreateDateTimeFormat (
+          _newTarget_: a constructor,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+          _required_: a String,
+          _defaults_: a String
+        ): either a normal completion containing a DateTimeFormat object or a throw completion
+      </h1>
+      <dl class="header">
+      </dl>
 
-      <p>
-        The abstract operation InitializeDateTimeFormat accepts the arguments _dateTimeFormat_ (which must be an object), _locales_, and _options_. It initializes _dateTimeFormat_ as a DateTimeFormat object. This abstract operation functions as follows:
-      </p>
+      <emu-alg>
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
+        1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_, _required_, _defaults_).
+        1. Return _dateTimeFormat_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
+      <h1>
+        InitializeDateTimeFormat (
+          _dateTimeFormat_: an Object,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+          _required_: a String,
+          _defaults_: a String
+        ): either a normal completion containing a DateTimeFormat object or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It initializes _dateTimeFormat_ as a DateTimeFormat object.</dd>
+      </dl>
 
       <p>
         The following algorithm refers to the `type` nonterminal from <a href="https://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
@@ -51,6 +78,8 @@
 
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. If _required_ is not *"any"* or _defaults_ is not *"date"*, then
+          1. Set _options_ to ? ToDateTimeOptions(_options_, _required_, _defaults_).
         1. Set _options_ to ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).

@@ -202,8 +202,7 @@
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"any"*, *"all"*).
-        1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, *"any"*, *"all"*).
         1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
     </emu-clause>
@@ -222,8 +221,7 @@
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"date"*, *"date"*).
-        1. Let _dateFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, *"date"*, *"date"*).
         1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
     </emu-clause>
@@ -242,8 +240,7 @@
       <emu-alg>
         1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
-        1. Let _options_ be ? ToDateTimeOptions(_options_, *"time"*, *"time"*).
-        1. Let _timeFormat_ be ? Construct(%DateTimeFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _timeFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, *"time"*, *"time"*).
         1. Return ? FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
     </emu-clause>
