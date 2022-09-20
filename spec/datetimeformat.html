@@ -37,7 +37,7 @@
       </emu-normative-optional>
     </emu-clause>
 
-    <emu-clause id="sec-createdatetimeformat" type="abstract operation">
+    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat">
       <h1>
         CreateDateTimeFormat (
           _newTarget_: a constructor,
@@ -47,29 +47,8 @@
           _defaults_: a String
         ): either a normal completion containing a DateTimeFormat object or a throw completion
       </h1>
-      <dl class="header">
-      </dl>
 
-      <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
-        1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_, _required_, _defaults_).
-        1. Return _dateTimeFormat_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-initializedatetimeformat" aoid="InitializeDateTimeFormat">
-      <h1>
-        InitializeDateTimeFormat (
-          _dateTimeFormat_: an Object,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-          _required_: a String,
-          _defaults_: a String
-        ): either a normal completion containing a DateTimeFormat object or a throw completion
-      </h1>
       <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _dateTimeFormat_ as a DateTimeFormat object.</dd>
       </dl>
 
       <p>
@@ -77,6 +56,7 @@
       </p>
 
       <emu-alg>
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _required_ is not *"any"* or _defaults_ is not *"date"*, then
           1. Set _options_ to ? ToDateTimeOptions(_options_, _required_, _defaults_).
