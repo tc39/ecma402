@@ -101,7 +101,8 @@
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. If _prop_ is *"fractionalSecondDigits"*, then
-            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
+            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 0, 9, *undefined*).
+            1. If _value_ is one of the values *"0"*, *"4"*, *"5"*, *"6"*, *"7"*, *"8"*, *"9"*, set _value_ to *undefined*.
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the row.
             1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
@@ -736,7 +737,7 @@
         <tr>
           <td>[[FractionalSecondDigits]]</td>
           <td>*"fractionalSecondDigits"*</td>
-          <td>*1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub></td>
+          <td>*1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *4*<sub>𝔽</sub>, *5*<sub>𝔽</sub>, *6*<sub>𝔽</sub>, *7*<sub>𝔽</sub>, *8*<sub>𝔽</sub>, *9*<sub>𝔽</sub></td>
         </tr>
         <tr>
           <td>[[TimeZoneName]]</td>
@@ -857,7 +858,7 @@
               1. Else if _optionsProp_ &ne; _formatProp_, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ &ne; _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
-                1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
+                1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *4*<sub>𝔽</sub>, *5*<sub>𝔽</sub>, *6*<sub>𝔽</sub>, *7*<sub>𝔽</sub>, *8*<sub>𝔽</sub>, *9*<sub>𝔽</sub> &raquo;.
               1. Else,
                 1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
