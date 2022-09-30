@@ -1,8 +1,8 @@
 <emu-clause id="locales-currencies-tz">
-  <h1>Identification of Locales, Currencies, Time Zones, and Measurement Units</h1>
+  <h1>Identification of Locales, Currencies, Time Zones, Measurement Units, Numbering Systems, Collations, and Calendars</h1>
 
   <p>
-    This clause describes the String values used in the ECMAScript 2023 Internationalization API Specification to identify locales, currencies, time zones, and measurement units.
+    This clause describes the String values used in the ECMAScript 2023 Internationalization API Specification to identify locales, currencies, time zones, measurement units, numbering systems, collations, and calendars.
   </p>
 
   <emu-clause id="sec-case-sensitivity-and-case-mapping">
@@ -159,6 +159,15 @@
     </emu-clause>
   </emu-clause>
 
+  <emu-clause id="sec-availablecanonicalcurrencies" type="implementation-defined abstract operation">
+    <h1>AvailableCanonicalCurrencies (
+    ): a List of Strings</h1>
+    <dl class="header">
+    <dt>description</dt>
+      <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique, well-formed, and upper case canonicalized 3-letter ISO 4217 currency codes, identifying the currencies for which the implementation provides the functionality of Intl.DisplayNames and Intl.NumberFormat objects.</dd>
+    </dl>
+  </emu-clause>
+
   <emu-clause id="sec-time-zone-names">
     <h1>Time Zone Names</h1>
 
@@ -212,6 +221,29 @@
       <p>
         The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment's current time zone.
       </p>
+    </emu-clause>
+
+    <emu-clause id="sec-availablecanonicaltimezones" type="implementation-defined abstract operation">
+      <h1>
+        AvailableCanonicalTimeZones (
+        ): a List of Strings
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List is a sorted List of supported Zone and Link names in the IANA Time Zone Database.</dd>
+      </dl>
+
+      <emu-alg>
+        1. Let _names_ be a List of all supported Zone and Link names in the IANA Time Zone Database.
+        1. Let _result_ be a new empty List.
+        1. For each element _name_ of _names_, do
+          1. Assert: ! IsValidTimeZoneName( _name_ ) is *true*.
+          1. Let _canonical_ be ! CanonicalizeTimeZoneName( _name_ ).
+          1. If _result_ does not contain an element equal to _canonical_, then
+            1. Append _canonical_ to the end of _result_.
+        1. Sort _result_ in order as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_.
+        1. Return _result_.
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 
@@ -314,6 +346,65 @@
           <tr><td>year</td></tr>
         </table>
       </emu-table>
+    </emu-clause>
+    <emu-clause id="sec-availablecanonicalunits" type="abstract operation">
+      <h1>AvailableCanonicalUnits (
+      ): a List of Strings</h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and consists of the unique values of simple unit identifiers listed in every row of <emu-xref href="#table-sanctioned-single-unit-identifiers"></emu-xref>, except the header row.</dd>
+      </dl>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-numberingsystem-identifiers">
+    <h1>Numbering System Identifiers</h1>
+
+    <p>
+      The ECMAScript 2023 Internationalization API Specification identifies numbering systems using a <em>numbering system identifier</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Numbering_Systems">Unicode Technical Standard #35, Part 3, Section 1</a>. Their canonical form is a string containing all lowercase letters.
+    </p>
+
+    <emu-clause id="sec-availablecanonicalnumberingsystems" type="implementation-defined abstract operation">
+      <h1>AvailableCanonicalNumberingSystems (
+      ): a List of Strings</h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique numbering systems identifiers identifying the numbering systems for which the implementation provides the functionality of Intl.DateTimeFormat, Intl.NumberFormat, and Intl.RelativeTimeFormat objects. The list must include the Numbering System value of every row of <emu-xref href="#table-numbering-system-digits"></emu-xref>, except the header row.</dd>
+      </dl>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-collation-types">
+    <h1>Collation Types</h1>
+
+    <p>
+      The ECMAScript 2023 Internationalization API Specification identifies collations using a <em>collation type</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-collation.html#Collation_Types">Unicode Technical Standard #35, Part 5, Section 3.1</a>. Their canonical form is a string containing all lowercase letters with zero or more hyphens.
+    </p>
+
+    <emu-clause id="sec-availablecanonicalcollations" type="implementation-defined abstract operation">
+      <h1>AvailableCanonicalCollations (
+      ): a List of Strings</h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique collation types identifying the collations for which the implementation provides the functionality of Intl.Collator objects.</dd>
+      </dl>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-calendar-types">
+    <h1>Calendar Types</h1>
+
+    <p>
+      The ECMAScript 2023 Internationalization API Specification identifies calendars using a <em>calendar type</em> as defined by <a href="https://unicode.org/reports/tr35/tr35-dates.html#Calendar_Elements">Unicode Technical Standard #35, Part 4, Section 2</a>. Their canonical form is a string containing all lower case letters with zero or more hyphens.
+    </p>
+
+    <emu-clause id="sec-availablecanonicalcalendars" type="implementation-defined abstract operation">
+      <h1>AvailableCanonicalCalendars (
+      ): a List of Strings</h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique calendar types identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects. The list must include *"iso8601"*.</dd>
+      </dl>
     </emu-clause>
   </emu-clause>
 </emu-clause>
