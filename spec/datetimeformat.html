@@ -102,7 +102,7 @@
           1. Let _prop_ be the name given in the Property column of the row.
           1. If _prop_ is *"fractionalSecondDigits"*, then
             1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 0, 9, *undefined*).
-            1. If _value_ is one of the values *"0"*, *"4"*, *"5"*, *"6"*, *"7"*, *"8"*, *"9"*, set _value_ to *undefined*.
+            1. If _value_ is one of *"0"*, *"4"*, *"5"*, *"6"*, *"7"*, *"8"*, *"9"*, set _value_ to *undefined*.
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the row.
             1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
