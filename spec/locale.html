@@ -1,6 +1,149 @@
 <emu-clause id="locale-objects">
   <h1>Locale Objects</h1>
 
+  <emu-clause id="sec-locale-abstracts">
+    <h1>Abstract Operations for Locale Objects</h1>
+
+    <emu-clause id="sec-create-array-from-list-or-restricted" aoid=CreateArrayFromListOrRestricted>
+      <h1>CreateArrayFromListOrRestricted ( _list_, _restricted_ )</h1>
+      <p>
+        The abstract operation CreateArrayFromListOrRestricted accepts the arguments _list_ and _restricted_ , and performs the following steps:
+      </p>
+      <emu-alg>
+        1. If _restricted_ is not *undefined*, then
+          1. Set _list_ to &laquo; _restricted_ &raquo;.
+        1. Return CreateArrayFromList( _list_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-calendars-of-locale" aoid=CalendarsOfLocale>
+      <h1>CalendarsOfLocale ( _loc_ )</h1>
+      <p>
+        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. Let _restricted_ be _loc_.[[Calendar]].
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Let _list_ be a List of 1 or more unique canonical calendar identifiers, which must be lower case String values conforming to the type sequence from <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35 Unicode Locale Identifier, section 3.2</a>, sorted in descending preference of those in common use for date and time formatting in _locale_.
+        1. Return ! CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-collations-of-locale" aoid=CollationsOfLocale>
+      <h1>CollationsOfLocale ( _loc_ )</h1>
+      <p>
+        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. Let _restricted_ be _loc_.[[Collation]].
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Let _list_ be a List of 1 or more unique canonical collation identifiers, which must be lower case String values conforming to the type sequence from <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35 Unicode Locale Identifier, section 3.2</a>, sorted in descending preference of those in common use for string comparison in _locale_. The values *"standard"* and *"search"* must be excluded from _list_.
+        1. Return ! CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-hour-cycles-of-locale" aoid=HourCyclesOfLocale>
+      <h1>HourCyclesOfLocale ( _loc_ )</h1>
+      <p>
+        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. Let _restricted_ be _loc_.[[HourCycle]].
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Let _list_ be a List of 1 or more unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _locale_.
+        1. Return ! CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-numbering-systems-of-locale" aoid=NumberingSystemsOfLocale>
+      <h1>NumberingSystemsOfLocale ( _loc_ )</h1>
+      <p>
+        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. Let _restricted_ be _loc_.[[NumberingSystem]].
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Let _list_ be a List of 1 or more unique canonical numbering system identifiers, which must be lower case String values conforming to the type sequence from <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35 Unicode Locale Identifier, section 3.2</a>, sorted in descending preference of those in common use for formatting numeric values in _locale_.
+        1. Return ! CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-time-zones-of-locale" aoid=TimeZonesOfLocale>
+      <h1>TimeZonesOfLocale ( _loc_ )</h1>
+      <p>
+        The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>.
+      </p>
+
+      <emu-alg>
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Let _region_ be the substring of _locale_ corresponding to the `unicode_region_subtag` production of the `unicode_language_id`.
+        1. Let _list_ be a List of unique canonical time zone identifiers, which must be String values indicating a canonical Zone name of the IANA Time Zone Database, ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, of those in common use in _region_. If no time zones are commonly used in _region_, let list be a new empty List.
+        1. Return CreateArrayFromList( _list_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-character-direction-of-locale" aoid=CharacterDirectionOfLocale>
+      <h1>CharacterDirectionOfLocale ( _loc_ )</h1>
+      <p>
+        The abstract operation CharacterDirectionOfLocale accepts the argument _loc_ , and performs the following steps:
+      </p>
+      <emu-alg>
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. If the default general ordering of characters (characterOrder) within a line in _locale_ is right-to-left, return *"rtl"*.
+        1. Return *"ltr"*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-week-info-of-locale" aoid=WeekInfoOfLocale>
+      <h1>WeekInfoOfLocale ( _loc_ )</h1>
+      <p>
+        The abstract operation WeekInfoOfLocale accepts the argument _loc_ , and performs the following steps:
+      </p>
+      <emu-alg>
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Return a record whose fields are defined by <emu-xref href="#table-locale-weekinfo-record"></emu-xref>, with values based on _locale_.
+      </emu-alg>
+
+      <emu-table id="table-locale-weekinfo-record">
+        <emu-caption>WeekInfo Record Fields</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Field Name</th>
+              <th>Value</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[FirstDay]]</td>
+            <td>Integer value between 1 and 7: 1 specifies Monday; 2 specifies Tuesday; 3 specifies Wednesday; 4 specifies Thursday; 5 specifies Friday; 6 specifies Saturday; and 7 specifies Sunday.</td>
+            <td>The weekday value indicating which day of the week is considered the 'first' day, for calendar purposes.</td>
+          </tr>
+          <tr>
+            <td>[[Weekend]]</td>
+            <td>A List of 1 or more integer values, in ascending order, between 1 and 7: 1 specifies Monday; 2 specifies Tuesday; 3 specifies Wednesday; 4 specifies Thursday; 5 specifies Friday; 6 specifies Saturday; and 7 specifies Sunday.</td>
+            <td>The list of weekday values indicating which days of the week are considered as part of the 'weekend', for calendar purposes. Notice that the number of days in the weekend are different in each locale and may not be contiguous.</td>
+          </tr>
+          <tr>
+            <td>[[MinimalDays]]</td>
+            <td>Integer value between 1 and 7.</td>
+            <td>The minimal days required in the first week of a month or year, for calendar purposes.</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
   <emu-clause id="sec-intl-locale-constructor">
     <h1>The Intl.Locale Constructor</h1>
 
@@ -347,6 +490,87 @@
         1. Assert: _locale_ matches the `unicode_locale_id` production.
         1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_region_subtag]` sequence, return *undefined*.
         1. Return the substring of _locale_ corresponding to the `unicode_region_subtag` production of the `unicode_language_id`.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.calendars">
+      <h1>get Intl.Locale.prototype.calendars</h1>
+      <p>`Intl.Locale.prototype.calendars` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return ! CalendarsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.collations">
+      <h1>get Intl.Locale.prototype.collations</h1>
+      <p>`Intl.Locale.prototype.collations` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return ! CollationsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.hourCycles">
+      <h1>get Intl.Locale.prototype.hourCycles</h1>
+      <p>`Intl.Locale.prototype.hourCycles` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return ! HourCyclesOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.numberingSystems">
+      <h1>get Intl.Locale.prototype.numberingSystems</h1>
+      <p>`Intl.Locale.prototype.numberingSystems` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return ! NumberingSystemsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.timeZones">
+      <h1>get Intl.Locale.prototype.timeZones</h1>
+      <p>`Intl.Locale.prototype.timeZones` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to <a href="https://www.unicode.org/reports/tr35/#Identifiers">UTS 35's Unicode Language and Locale Identifiers grammar</a>. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. If the `unicode_language_id` production of _locale_ does not contain the `["-" unicode_region_subtag]` sequence, return *undefined*.
+        1. Return ! TimeZonesOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.textInfo">
+      <h1>get Intl.Locale.prototype.textInfo</h1>
+      <p>`Intl.Locale.prototype.textInfo` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to Locale data specified in <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Layout_Elements">UTS 35's Layouts Elements</a>. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _info_ be ! ObjectCreate(%Object.prototype%).
+        1. Let _dir_ be ! CharacterDirectionOfLocale(_loc_).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
+        1. Return _info_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.weekInfo">
+      <h1>get Intl.Locale.prototype.weekInfo</h1>
+      <p>`Intl.Locale.prototype.weekInfo` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to Locale data specified in <a href="https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Patterns_Week_Elements">UTS 35's Week Elements</a>. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _info_ be ! ObjectCreate(%Object.prototype%).
+        1. Let _wi_ be ! WeekInfoOfLocale(_loc_).
+        1. Let _we_ be CreateArrayFromList( _wi_.[[Weekend]] ).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"firstDay"*, _wi_.[[FirstDay]]).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"weekend"*, _we_).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"minimalDays"*, _wi_.[[MinimalDays]]).
+        1. Return _info_.
       </emu-alg>
     </emu-clause>
   </emu-clause>
