@@ -95,7 +95,7 @@
           (The result is a Unicode BCP 47 locale identifier, in canonical syntax but not necessarily in canonical form.)
         1. Let _localeId_ be the string _localeId_ after performing the algorithm to <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">transform it to canonical form</a>.
           (The result is a Unicode BCP 47 locale identifier, in both canonical syntax and canonical form.)
-        1. If _localeId_ contains a substring _extension_ that is a Unicode locale extension sequence, then
+        1. [declared="extension"] If _localeId_ contains a substring _extension_ that is a Unicode locale extension sequence, then
           1. Let _components_ be ! UnicodeExtensionComponents(_extension_).
           1. Let _attributes_ be _components_.[[Attributes]].
           1. Let _keywords_ be _components_.[[Keywords]].
