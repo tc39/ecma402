@@ -173,9 +173,9 @@
       </p>
 
       <emu-alg>
-        1. Assert: _locale_ does not contain a substring that is a Unicode locale extension sequence.
+        1. Assert: _locale_ matches the `unicode_locale_id` production.
+        1. Assert: _locale_ does not contain a Unicode locale extension sequence.
         1. Assert: _extension_ is a Unicode locale extension sequence.
-        1. Assert: _tag_ matches the `unicode_locale_id` production.
         1. Let _privateIndex_ be StringIndexOf(_locale_, *"-x-"*, 0).
         1. If _privateIndex_ = -1, then
           1. Let _locale_ be the string-concatenation of _locale_ and _extension_.
