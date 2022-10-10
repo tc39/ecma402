@@ -19,7 +19,7 @@
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
     "ecmarkup": "^12.1.1",
-    "@tc39/ecma262-biblio": "^2.0.2329"
+    "@tc39/ecma262-biblio": "2.1.2458"
   },
   "devDependencies": {
   }

@@ -88,7 +88,7 @@
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
-          1. Set _timeZone_ to ! DefaultTimeZone().
+          1. Set _timeZone_ to DefaultTimeZone().
         1. Else,
           1. Set _timeZone_ to ? ToString(_timeZone_).
           1. If the result of ! IsValidTimeZoneName(_timeZone_) is *false*, then
