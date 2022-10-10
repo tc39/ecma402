@@ -1159,21 +1159,30 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-tolocaltime" aoid="ToLocalTime">
-      <h1>ToLocalTime ( _t_, _calendar_, _timeZone_ )</h1>
+    <emu-clause id="sec-tolocaltime" type="implementation-defined abstract operation">
+      <h1>
+        ToLocalTime (
+          _t_: a finite time value,
+          _calendar_: a String,
+          _timeZone_: a String,
+        )
+      </h1>
 
-      <p>
-        When the ToLocalTime abstract operation is called with arguments _t_, _calendar_, and _timeZone_, the following steps are taken:
-      </p>
+      <dl class="header">
+        <dt>description</dt>
+        <dd></dd>
+      </dl>
 
       <emu-alg>
-        1. Assert: Type(_t_) is Number.
+        1. Let _epochNs_ be ℤ(ℝ(_t_) &times; 10<sup>6</sup>).
+        1. Let _offsetNs_ be GetNamedTimeZoneOffsetNanoseconds(_timeZone_, _epochNs_).
+        1. Let _offsetMs_ be truncate(_offsetNs_ / 10<sup>6</sup>).
+        1. Let _tz_ be _t_ + 𝔽(_offsetMs_).
+        1. Assert: _tz_ is an integral Number.
         1. If _calendar_ is *"gregory"*, then
-          1. Let _timeZoneOffset_ be the value calculated according to <emu-xref href="#sec-local-time-zone-adjustment">LocalTZA(_t_, *true*)</emu-xref> where the local time zone is replaced with timezone _timeZone_.
-          1. Let _tz_ be the time value _t_ + _timeZoneOffset_.
           1. Return a record with fields calculated from _tz_ according to <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref>.
         1. Else,
-          1. Return a record with the fields of Column 1 of <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref> calculated from _t_ for the given _calendar_ and _timeZone_. The calculations should use best available information about the specified _calendar_ and _timeZone_, including current and historical information about time zone offsets from UTC and daylight saving time rules.
+          1. Return a record with the fields of Column 1 of <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref> calculated from _tz_ for the given _calendar_. The calculations should use best available information about the specified _calendar_.
       </emu-alg>
 
       <emu-table id="table-datetimeformat-tolocaltime-record">
