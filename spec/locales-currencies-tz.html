@@ -206,11 +206,16 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-defaulttimezone" aoid="DefaultTimeZone">
-      <h1>DefaultTimeZone ( )</h1>
+    <emu-clause id="sup-defaulttimezone" oldids="sec-defaulttimezone" type="implementation-defined abstract operation">
+      <h1>DefaultTimeZone ( ): a String</h1>
+
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns a String value representing the host environment's current time zone, which is a valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name.</dd>
+      </dl>
 
       <p>
-        The DefaultTimeZone abstract operation returns a String value representing the valid (<emu-xref href="#sec-isvalidtimezonename"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizetimezonename"></emu-xref>) time zone name for the host environment's current time zone.
+        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-defaulttimezone"></emu-xref>.
       </p>
     </emu-clause>
   </emu-clause>
