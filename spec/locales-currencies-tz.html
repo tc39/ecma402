@@ -201,7 +201,7 @@
       <emu-alg>
         1. Let _ianaTimeZone_ be the String value of the Zone or Link name of the IANA Time Zone Database that is an ASCII-case-insensitive match for _timeZone_.
         1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the String value of the corresponding Zone name as specified in the file <code>backward</code> of the IANA Time Zone Database.
-        1. If _ianaTimeZone_ is *"Etc/UTC"* or *"Etc/GMT"*, return *"UTC"*.
+        1. If _ianaTimeZone_ is one of *"Etc/UTC"*, *"Etc/GMT"*, or *"GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
       </emu-alg>
     </emu-clause>
