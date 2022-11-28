@@ -101,7 +101,8 @@
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. If _prop_ is *"fractionalSecondDigits"*, then
-            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
+            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 0, 3, *undefined*).
+            1. If _value_ is 0, set _value_ to *undefined*.
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the row.
             1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
