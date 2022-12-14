@@ -29,7 +29,7 @@
     <h1>Language Tags</h1>
 
     <p>
-      This specification identifies locales using Unicode BCP 47 locale identifiers as defined by <a href="https://unicode.org/reports/tr35/#Identifiers">Unicode Technical Standard #35 LDML § 3 Unicode Language and Locale Identifiers</a>, which may include extensions such as the <a href="https://unicode.org/reports/tr35/#Locale_Extension_Key_and_Type_Data">Unicode BCP 47 U Extension</a>. Their canonical form is specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
+      This specification identifies locales using Unicode BCP 47 locale identifiers as defined by <a href="https://unicode.org/reports/tr35/#Identifiers">Unicode Technical Standard #35 LDML § 3 Unicode Language and Locale Identifiers</a>, which may include extensions such as the <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode BCP 47 U Extension</a>. Their canonical form is specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Canonical Unicode Locale Identifiers</a>.
     </p>
 
     <p>
@@ -91,10 +91,7 @@
       </p>
 
       <emu-alg>
-        1. Let _localeId_ be the string _locale_ after performing the algorithm to transform it to canonical syntax per <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
-          (The result is a Unicode BCP 47 locale identifier, in canonical syntax but not necessarily in canonical form.)
-        1. Let _localeId_ be the string _localeId_ after performing the algorithm to <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">transform it to canonical form</a>.
-          (The result is a Unicode BCP 47 locale identifier, in both canonical syntax and canonical form.)
+        1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 LDML Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
         1. [declared="extension"] If _localeId_ contains a substring _extension_ that is a Unicode locale extension sequence, then
           1. Let _components_ be ! UnicodeExtensionComponents(_extension_).
           1. Let _attributes_ be _components_.[[Attributes]].

@@ -235,8 +235,9 @@
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
             1. If Type(_optionsValue_) is String, then
-              1. Let _optionsValue_ be the string _optionsValue_ after performing the algorithm steps to transform Unicode extension values to canonical syntax per <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>, treating _key_ as `ukey` and _optionsValue_ as `uvalue` productions.
-              1. Let _optionsValue_ be the string _optionsValue_ after performing the algorithm steps to replace Unicode extension values with their canonical form per <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>, treating _key_ as `ukey` and _optionsValue_ as `uvalue` productions.
+              1. Let _ukey_ be the ASCII-lowercase of _key_.
+              1. Let _optionsUValue_ be the ASCII-lowercase of _optionsValue_.
+              1. Set _optionsValue_ to the String value resulting from using CLDR 'u' extension data in <code>common/bcp47</code> to canonicalize _optionsUValue_ as a value of key _ukey_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 LDML Annex C LocaleId Canonicalization Processing LocaleIds</a>.
               1. If _optionsValue_ is the empty String, then
                 1. Let _optionsValue_ be *"true"*.
             1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
