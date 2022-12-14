@@ -8,7 +8,7 @@
     "build-to": "ecmarkup --verbose --load-biblio @tc39/ecma262-biblio spec/index.html",
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
     "build-only": "npm run build-to -- out/index.html --css-out out/ecmarkup.css --js-out out/ecmarkup.js",
-    "build": "npm run build-only -- --lint-spec",
+    "build": "npm run build-only -- --lint-spec --strict",
     "build-for-pdf": "npm run build -- --old-toc",
     "test": "npm run build-to -- --lint-spec /dev/null",
     "watch": "npm run build -- --watch"
