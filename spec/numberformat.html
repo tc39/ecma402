@@ -640,8 +640,20 @@
               1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as the last element of _result_.
             1. Else if _p_ is equal to *"number"*, then
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the *"Numbering System"* column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
-                1. Let _digits_ be a List whose 10 String valued elements are the UTF-16 string representations of the 10 _digits_ specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
-                1. Replace each _digit_ in _n_ with the value of _digits_[_digit_].
+                1. Let _digits_ be a List whose elements are the code points specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
+                1. Assert: The length of _digits_ is 10.
+                1. Let _transliterated_ be the empty String.
+                1. Let _len_ be the length of _n_.
+                1. Let _position_ be 0.
+                1. Repeat, while _position_ &lt; _len_,
+                  1. Let _c_ be the code unit at index _position_ within _n_.
+                  1. If 0x0030 &le; _c_ &le; 0x0039, then
+                    1. NOTE: _c_ is an ASCII digit.
+                    1. Let _i_ be _c_ - 0x0030.
+                    1. Set _c_ to CodePointsToString(&laquo; _digits_[_i_] &raquo;).
+                  1. Set _transliterated_ to the string-concatenation of _transliterated_ and _c_.
+                  1. Set _position_ to _position_ + 1.
+                1. Set _n_ to _transliterated_.
               1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ &gt; 0, then
