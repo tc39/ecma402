@@ -12,7 +12,6 @@
       <h1>Intl.Locale ( _tag_ [ , _options_ ] )</h1>
 
       <p>
-        The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>.
         When the `Intl.Locale` function is called with an argument _tag_ and an optional argument _options_, the following steps are taken:
       </p>
 
@@ -35,11 +34,11 @@
         1. Let _opt_ be a new Record.
         1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
         1. If _calendar_ is not *undefined*, then
-          1. If _calendar_ cannot be matched by the <code>type</code> nonterminal, throw a *RangeError* exception.
+          1. If _calendar_ cannot be matched by the <code>type</code> language tag nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[ca]] to _calendar_.
         1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
         1. If _collation_ is not *undefined*, then
-          1. If _collation_ cannot be matched by the <code>type</code> nonterminal, throw a *RangeError* exception.
+          1. If _collation_ cannot be matched by the <code>type</code> language tag nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[co]] to _collation_.
         1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, ~string~, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
         1. Set _opt_.[[hc]] to _hc_.
@@ -50,7 +49,7 @@
         1. Set _opt_.[[kn]] to _kn_.
         1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
         1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ cannot be matched by the <code>type</code> nonterminal, throw a *RangeError* exception.
+          1. If _numberingSystem_ cannot be matched by the <code>type</code> language tag nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _r_ be ! ApplyUnicodeExtensionToTag(_tag_, _opt_, _relevantExtensionKeys_).
         1. Set _locale_.[[Locale]] to _r_.[[locale]].
@@ -71,9 +70,6 @@
 
     <emu-clause id="sec-apply-options-to-tag" aoid=ApplyOptionsToTag>
       <h1>ApplyOptionsToTag ( _tag_, _options_ )</h1>
-      <p>
-        The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>.
-      </p>
 
       <emu-alg>
         1. Assert: Type(_tag_) is String.
@@ -81,47 +77,44 @@
         1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
         1. Let _language_ be ? GetOption(_options_, *"language"*, ~string~, ~empty~, *undefined*).
         1. If _language_ is not *undefined*, then
-          1. If _language_ cannot be matched by the <code>unicode_language_subtag</code> nonterminal, throw a *RangeError* exception.
+          1. If _language_ cannot be matched by the <code>unicode_language_subtag</code> language tag nonterminal, throw a *RangeError* exception.
         1. Let _script_ be ? GetOption(_options_, *"script"*, ~string~, ~empty~, *undefined*).
         1. If _script_ is not *undefined*, then
-          1. If _script_ cannot be matched by the <code>unicode_script_subtag</code> nonterminal, throw a *RangeError* exception.
+          1. If _script_ cannot be matched by the <code>unicode_script_subtag</code> language tag nonterminal, throw a *RangeError* exception.
         1. Let _region_ be ? GetOption(_options_, *"region"*, ~string~, ~empty~, *undefined*).
         1. If _region_ is not *undefined*, then
-          1. If _region_ cannot be matched by the <code>unicode_region_subtag</code> nonterminal, throw a *RangeError* exception.
+          1. If _region_ cannot be matched by the <code>unicode_region_subtag</code> language tag nonterminal, throw a *RangeError* exception.
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
-        1. Assert: _tag_ can be matched by the <code>unicode_locale_id</code> nonterminal.
-        1. Let _languageId_ be the longest prefix of _tag_ matched by the <code>unicode_language_id</code> nonterminal.
+        1. Assert: _tag_ can be matched by the <code>unicode_locale_id</code> language tag nonterminal.
+        1. Let _languageId_ be the longest prefix of _tag_ matched by the <code>unicode_language_id</code> language tag nonterminal.
         1. If _language_ is not *undefined*, then
-          1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_subtag</code> nonterminal replaced by the string _language_.
+          1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_subtag</code> language tag nonterminal replaced by the string _language_.
         1. If _script_ is not *undefined*, then
-          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> nonterminal, then
-            1. Set _languageId_ to the string-concatenation of the <emu-not-ref>substring</emu-not-ref> of _languageId_ matched by the <code>unicode_language_subtag</code> nonterminal, *"-"*, _script_, and the rest of _languageId_.
+          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> language tag nonterminal, then
+            1. Set _languageId_ to the string-concatenation of the <emu-not-ref>substring</emu-not-ref> of _languageId_ matched by the <code>unicode_language_subtag</code> language tag nonterminal, *"-"*, _script_, and the rest of _languageId_.
           1. Else,
-            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> nonterminal replaced by the string _script_.
+            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> language tag nonterminal replaced by the string _script_.
         1. If _region_ is not *undefined*, then
-          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> nonterminal, then
-            1. Let _variants_ be the longest suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> nonterminal. If there is no such suffix, let _variants_ be the empty String.
+          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> language tag nonterminal, then
+            1. Let _variants_ be the longest suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> language tag nonterminal. If there is no such suffix, let _variants_ be the empty String.
             1. Set _languageId_ to the string-concatenation of:
               * the longest <emu-not-ref>substring</emu-not-ref> of _languageId_ that is immediately followed by _variants_
               * *"-"*
               * _region_
               * _variants_
           1. Else,
-            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> nonterminal replaced with the string _region_.
-        1. Set _tag_ to _tag_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_id</code> nonterminal replaced by the string _languageId_.
+            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> language tag nonterminal replaced with the string _region_.
+        1. Set _tag_ to _tag_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_id</code> language tag nonterminal replaced by the string _languageId_.
         1. Return CanonicalizeUnicodeLocaleId(_tag_).
       </emu-alg>
     </emu-clause>
 
     <emu-clause id="sec-apply-unicode-extension-to-tag" aoid=ApplyUnicodeExtensionToTag>
       <h1>ApplyUnicodeExtensionToTag ( _tag_, _options_, _relevantExtensionKeys_ )</h1>
-      <p>
-        The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>.
-      </p>
 
       <emu-alg>
         1. Assert: Type(_tag_) is String.
-        1. Assert: _tag_ can be matched by the <code>unicode_locale_id</code> nonterminal.
+        1. Assert: _tag_ can be matched by the <code>unicode_locale_id</code> language tag nonterminal.
         1. If _tag_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
           1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _tag_.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
@@ -246,12 +239,12 @@
 
     <emu-clause id="sec-Intl.Locale.prototype.baseName">
       <h1>get Intl.Locale.prototype.baseName</h1>
-      <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>. Its get accessor function performs the following steps:</p>
+      <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
-        1. Return the longest prefix of _locale_ matched by the <code>unicode_language_id</code> nonterminal.
+        1. Return the longest prefix of _locale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
       </emu-alg>
     </emu-clause>
 
@@ -319,26 +312,26 @@
 
     <emu-clause id="sec-Intl.Locale.prototype.language">
       <h1>get Intl.Locale.prototype.language</h1>
-      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>. Its get accessor function performs the following steps:</p>
+      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> nonterminal.
-        1. Return the longest <emu-not-ref>substring</emu-not-ref> of _lang_ matched by the <code>unicode_language_subtag</code> nonterminal.
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> language tag nonterminal.
+        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
+        1. Return the longest <emu-not-ref>substring</emu-not-ref> of _lang_ matched by the <code>unicode_language_subtag</code> language tag nonterminal.
       </emu-alg>
     </emu-clause>
 
     <emu-clause id="sec-Intl.Locale.prototype.script">
       <h1>get Intl.Locale.prototype.script</h1>
-      <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>. Its get accessor function performs the following steps:</p>
+      <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> nonterminal.
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> language tag nonterminal.
+        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
         1. If _lang_ contains a subtag of length 4, return that subtag.
         1. Return *undefined*.
       </emu-alg>
@@ -346,13 +339,13 @@
 
     <emu-clause id="sec-Intl.Locale.prototype.region">
       <h1>get Intl.Locale.prototype.region</h1>
-      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>. Its get accessor function performs the following steps:</p>
+      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> nonterminal.
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> language tag nonterminal.
+        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
         1. Let _subtags_ be a List of the subtags of _lang_.
         1. If the length of _subtags_ is greater than 1 and the length of _subtags_[1] is 4, let _i_ be 2. Otherwise, let _i_ be 1.
         1. If the length of _subtags_ is greater than _i_ and the length of _subtags_[_i_] is in the inclusive range from 2 to 3, return _subtags_[_i_].
