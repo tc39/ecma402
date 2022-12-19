@@ -391,7 +391,7 @@
     <emu-clause id="sec-findboundary" aoid="FindBoundary">
       <h1>FindBoundary ( _segmenter_, _string_, _startIndex_, _direction_ )</h1>
       <p>The FindBoundary abstract operation is called with arguments Intl.Segmenter instance _segmenter_, String _string_, integer _startIndex_, and _direction_ (which must be ~before~ or ~after~) to find a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and return the immediately following code unit index (which will be infinite if no such boundary exists). The following steps are taken:</p>
-      <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in Unicode Standard Annex 29 (available at <a href="https://www.unicode.org/reports/tr29/">https://www.unicode.org/reports/tr29/</a>). It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).</emu-note>
+      <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in <a href="https://unicode.org/reports/tr29/">Unicode Standard Annex #29</a>. It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="http://cldr.unicode.org">http://cldr.unicode.org</a>).</emu-note>
       <emu-alg>
         1. Let _locale_ be _segmenter_.[[Locale]].
         1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].

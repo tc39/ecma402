@@ -123,7 +123,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes ten locale extension keys that are relevant to collation: *"co"* for collator usage and specializations, *"ka"* for alternate handling, *"kb"* for backward second level weight, *"kc"* for case level, *"kf"* for case first, *"kh"* for hiragana quaternary, *"kk"* for normalization, *"kn"* for numeric, *"kr"* for reordering, *"ks"* for collation strength, and *"vt"* for variable top. Collator, however, requires that the usage is specified through the *"usage"* property of the options object, alternate handling through the *"ignorePunctuation"* property of the options object, and case level and the strength through the *"sensitivity"* property of the options object. The *"co"* key in the language tag is supported only for collator specializations, and the keys *"kb"*, *"kh"*, *"kk"*, *"kr"*, and *"vt"* are not allowed in this version of the Internationalization API. Support for the remaining keys is implementation dependent.
+        <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes ten locale extension keys that are relevant to collation: *"co"* for collator usage and specializations, *"ka"* for alternate handling, *"kb"* for backward second level weight, *"kc"* for case level, *"kf"* for case first, *"kh"* for hiragana quaternary, *"kk"* for normalization, *"kn"* for numeric, *"kr"* for reordering, *"ks"* for collation strength, and *"vt"* for variable top. Collator, however, requires that the usage is specified through the *"usage"* property of the options object, alternate handling through the *"ignorePunctuation"* property of the options object, and case level and the strength through the *"sensitivity"* property of the options object. The *"co"* key in the language tag is supported only for collator specializations, and the keys *"kb"*, *"kh"*, *"kk"*, *"kr"*, and *"vt"* are not allowed in this version of the Internationalization API. Support for the remaining keys is implementation dependent.
       </emu-note>
 
       <p>
@@ -266,7 +266,7 @@
         </p>
 
         <p>
-          For the interpretation of options settable through locale extension keys, see <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 LDML § 3.6.1 U Extension Key And Type Definitions</a>.
+          For the interpretation of options settable through locale extension keys, see <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a>.
         </p>
 
         <p>
@@ -274,7 +274,7 @@
         </p>
 
         <emu-note>
-          It is recommended that the CompareStrings abstract operation be implemented following Unicode Technical Standard 10, Unicode Collation Algorithm (available at <a href="https://unicode.org/reports/tr10/">https://unicode.org/reports/tr10/</a>), using tailorings for the effective locale and collation options of _collator_. It is recommended that implementations use the tailorings provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
+          It is recommended that the CompareStrings abstract operation be implemented following <a href="https://unicode.org/reports/tr10/">Unicode Technical Standard #10: Unicode Collation Algorithm</a>, using tailorings for the effective locale and collation options of _collator_. It is recommended that implementations use the tailorings provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
         </emu-note>
 
         <emu-note>
@@ -376,7 +376,7 @@
       <li>[[Usage]] is one of the String values *"sort"* or *"search"*, identifying the collator usage.</li>
       <li>[[Sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator's sensitivity.</li>
       <li>[[IgnorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
-      <li>[[Collation]] is a String value with the *"type"* given in Unicode Technical Standard 35 for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
+      <li>[[Collation]] is a String value with the *"type"* given in Unicode Technical Standard #35 for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
     </ul>
 
     <p>
