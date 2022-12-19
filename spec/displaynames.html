@@ -97,7 +97,7 @@
       </p>
 
       <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints (some of which refer to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>):
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
       </p>
 
       <ul>
@@ -105,11 +105,11 @@
         <li>The value of the field *"language"* must be a Record which must have fields with the names of one of the valid language displays: *"dialect"* and *"standard"*.</li>
         <li>The language display fields under display name type *"language"* should contain Records which must have fields with the names of one of the valid display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
         <li>The value of the fields *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"* must be Records, which must have fields with the names of all display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
-        <li>The display name style fields under display name type *"language"* should contain Records with keys corresponding to language codes that can be matched by the <code>unicode_language_id</code> nonterminal. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"language"* should contain Records with keys corresponding to language codes that can be matched by the <code>unicode_language_id</code> language tag nonterminal. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"region"* should contain Records with keys corresponding to region codes. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"script"* should contain Records with keys corresponding to script codes. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"currency"* should contain Records with keys corresponding to currency codes. The value of these fields must be string values.</li>
-        <li>The display name style fields under display name type *"calendar"* should contain Records with keys corresponding to calendar identifiers that can be matched by the <code>type</code> nonterminal. The value of these fields must be string values.</li>
+        <li>The display name style fields under display name type *"calendar"* should contain Records with keys corresponding to calendar identifiers that can be matched by the <code>type</code> language tag nonterminal. The value of these fields must be string values.</li>
         <li>The display name style fields under display name type *"dateTimeField"* should contain Records with keys corresponding to codes listed in <emu-xref href="#table-validcodefordatetimefield"></emu-xref>. The value of these fields must be string values.</li>
       </ul>
 
@@ -256,26 +256,23 @@
         <dt>description</dt>
         <dd>It verifies that _code_ represents a well-formed code according to _type_ and returns the case-regularized form of _code_.</dd>
       </dl>
-      <p>
-        The following algorithm refers to EBNF grammar nonterminals defined in <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Unicode Technical Standard #35, Unicode Language and Locale Identifiers</a>.
-      </p>
       <emu-alg>
         1. If _type_ is *"language"*, then
-          1. If _code_ cannot be matched by the <code>unicode_language_id</code> nonterminal, throw a *RangeError* exception.
+          1. If _code_ cannot be matched by the <code>unicode_language_id</code> language tag nonterminal, throw a *RangeError* exception.
           1. If IsStructurallyValidLanguageTag(_code_) is *false*, throw a *RangeError* exception.
           1. Return CanonicalizeUnicodeLocaleId(_code_).
         1. If _type_ is *"region"*, then
-          1. If _code_ cannot be matched by the <code>unicode_region_subtag</code> nonterminal, throw a *RangeError* exception.
+          1. If _code_ cannot be matched by the <code>unicode_region_subtag</code> language tag nonterminal, throw a *RangeError* exception.
           1. Return the ASCII-uppercase of _code_.
         1. If _type_ is *"script"*, then
-          1. If _code_ cannot be matched by the <code>unicode_script_subtag</code> nonterminal, throw a *RangeError* exception.
+          1. If _code_ cannot be matched by the <code>unicode_script_subtag</code> language tag nonterminal, throw a *RangeError* exception.
           1. Assert: The length of _code_ is 4, and every code unit of _code_ represents an ASCII letter (0x0041 through 0x005A and 0x0061 through 0x007A, both inclusive).
           1. Let _first_ be the ASCII-uppercase of the substring of _code_ from 0 to 1.
           1. Let _rest_ be the ASCII-lowercase of the substring of _code_ from 1.
           1. Return the string-concatenation of _first_ and _rest_.
         1. If _type_ is *"calendar"*, then
-          1. If _code_ cannot be matched by the <code>type</code> nonterminal, throw a *RangeError* exception.
-          1. If _code_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 LDML § 3.3 BCP 47 Conformance</a>, throw a *RangeError* exception.
+          1. If _code_ cannot be matched by the <code>type</code> language tag nonterminal, throw a *RangeError* exception.
+          1. If _code_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, throw a *RangeError* exception.
           1. Return the ASCII-lowercase of _code_.
         1. If _type_ is *"dateTimeField"*, then
           1. If the result of IsValidDateTimeFieldCode(_code_) is *false*, throw a *RangeError* exception.
