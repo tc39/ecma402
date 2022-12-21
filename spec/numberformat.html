@@ -230,7 +230,7 @@
       </p>
 
       <emu-note>
-        Unicode Technical Standard 35 describes three locale extension keys that are relevant to number formatting: *"cu"* for currency, *"cf"* for currency format style, and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects, and the currency format style of a currency format is specified through the currencySign property in the options objects.
+        Unicode Technical Standard #35 describes three locale extension keys that are relevant to number formatting: *"cu"* for currency, *"cf"* for currency format style, and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects, and the currency format style of a currency format is specified through the currencySign property in the options objects.
       </emu-note>
 
       <p>
@@ -450,12 +450,12 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
       <li>[[DataLocale]] is a String value with the language tag of the nearest locale for which the implementation has data to perform the formatting operation. It will be a parent locale of [[Locale]].</li>
-      <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard 35 for the numbering system used for formatting.</li>
+      <li>[[NumberingSystem]] is a String value with the "type" given in Unicode Technical Standard #35 for the numbering system used for formatting.</li>
       <li>[[Style]] is one of the String values *"decimal"*, *"currency"*, *"percent"*, or *"unit"*, identifying the type of quantity being measured.</li>
       <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* unit type. It is only used when [[Style]] has the value *"currency"*.</li>
       <li>[[CurrencyDisplay]] is one of the String values *"code"*, *"symbol"*, *"narrowSymbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only used when [[Style]] has the value *"currency"*.</li>
       <li>[[CurrencySign]] is one of the String values *"standard"* or *"accounting"*, specifying whether to render negative numbers in accounting format, often signified by parenthesis. It is only used when [[Style]] has the value *"currency"* and when [[SignDisplay]] is not *"never"*.</li>
-      <li>[[Unit]] is a core unit identifier, as defined by Unicode Technical Standard #35, Part 2, Section 6. It is only used when [[Style]] has the value *"unit"*.</li>
+      <li>[[Unit]] is a core unit identifier. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~.</li>

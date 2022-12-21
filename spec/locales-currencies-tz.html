@@ -224,19 +224,19 @@
     <h1>Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification identifies measurement units using a <em>core unit identifier</em> (or equivalently <em>core unit ID</em>) as defined by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35, Part 2, Section 6.2</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
+      The ECMAScript 2023 Internationalization API Specification identifies measurement units using a <dfn variants="core unit identifiers,core unit ID,core unit IDs">core unit identifier</dfn> (or equivalently <em>core unit ID</em>) as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
     </p>
 
     <p>
       Only a limited set of core unit identifiers are sanctioned.
-      Attempting to use an unsanctioned core unit identifier results in a RangeError.
+      Attempting to use an unsanctioned core unit identifier results in a *RangeError*.
     </p>
 
     <emu-clause id="sec-iswellformedunitidentifier" aoid="IsWellFormedUnitIdentifier">
       <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed UTS #35 core unit identifier that is either a sanctioned single unit or a complex unit formed by division of two sanctioned single units. The following steps are taken:
+        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier that is either a sanctioned single unit or a complex unit formed by division of two sanctioned single units. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -258,7 +258,7 @@
       <h1>IsSanctionedSingleUnitIdentifier ( _unitIdentifier_ )</h1>
 
       <p>
-        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in UTS #35, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
+        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
       </p>
 
       <emu-alg>
