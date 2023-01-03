@@ -58,18 +58,18 @@
         1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> language tag nonterminal, return *false*.
         1. If _lowerLocale_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, return *false*.
         1. Let _lang_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
-        1. Let _langSuffix_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> language tag nonterminal.
-        1. If _langSuffix_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
-        1. Let _localeSuffix_ be the suffix of _lowerLocale_ following _lang_.
-        1. If _localeSuffix_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> language tag nonterminal, let _extensions_ be the prefix of _localeSuffix_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _localeSuffix_.
+        1. Let _langRefinements_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> language tag nonterminal.
+        1. If _langRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
+        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _lang_.
+        1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> language tag nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
           1. Let _transformExtension_ be the longest <emu-not-ref>substring</emu-not-ref> of _extensions_ matched by the <code>transformed_extensions</code> language tag nonterminal. If there is no such <emu-not-ref>substring</emu-not-ref>, return *true*.
           1. Assert: The substring of _transformExtension_ from 0 to 3 is *"-t-"*.
           1. Let _tPrefix_ be the substring of _transformExtension_ from 3.
           1. Let _tlang_ be the longest prefix of _tPrefix_ matched by the <code>tlang</code> language tag nonterminal. If there is no such prefix, return *true*.
-          1. Let _tlangSuffix_ be the longest suffix of _tlang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> language tag nonterminal.
-          1. If _tlangSuffix_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
+          1. Let _tlangRefinements_ be the longest suffix of _tlang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> language tag nonterminal.
+          1. If _tlangRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
