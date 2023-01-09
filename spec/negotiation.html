@@ -239,14 +239,13 @@
               1. Let _optionsValue_ be the string _optionsValue_ after performing the algorithm steps to replace Unicode extension values with their canonical form per <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>, treating _key_ as `ukey` and _optionsValue_ as `uvalue` productions.
               1. If _optionsValue_ is the empty String, then
                 1. Let _optionsValue_ be *"true"*.
-            1. If _keyLocaleData_ contains _optionsValue_, then
-              1. If SameValue(_optionsValue_, _value_) is *false*, then
-                1. Let _value_ be _optionsValue_.
-                1. Let _supportedExtensionAddition_ be *""*.
+            1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
+              1. Let _value_ be _optionsValue_.
+              1. Let _supportedExtensionAddition_ be *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
-          1. Append _supportedExtensionAddition_ to _supportedExtension_.
-        1. If the number of elements in _supportedExtension_ is greater than 2, then
-          1. Let _foundLocale_ be InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
+          1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
+        1. If _supportedExtension_ is not *"-u"*, then
+          1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
         1. Set _result_.[[locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
