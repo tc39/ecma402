@@ -33,7 +33,7 @@ In addition to the specification TC39 (ECMA-262) stage advancement requirements,
 When the [ECMA-402 task group](https://www.ecma-international.org/task-groups/tc39-tg2/) reviews proposals for *new features*, we hold them against the following list of criteria.  It is the reponsibility of the proposal champion to provide a compelling case that their feature request meets these criteria.
 
 1. **Prior Art**
-    1. Our job is bringing to JavaScript developers solutions that <abbr title="internationalization">i18n</abbr> experts have already described, not inventing new solutions. We often reference [Unicode](https://unicode.org/), [CLDR](https://cldr.unicode.org/), and [ICU](https://icu.unicode.org/) as prior art.
+    1. Our job is bringing to JavaScript developers solutions that <abbr>i18n</abbr> (internationalization) experts have already described, not inventing new solutions. We often reference [Unicode](https://unicode.org/), [CLDR](https://cldr.unicode.org/), and [ICU](https://icu.unicode.org/) as prior art.
     2. The data and algorithms specified in Unicode, CLDR, and ICU are of variable quality. In order to be adopted by ECMA-402, the prior art must be considered best practice by consensus of the task group.
 2. **Expensive to Implement in Userland**
     1. Features in Intl must be significantly more efficient and less complex than a third-party library implementing the same feature. The champion can cite a heavy locale data dependency or a complex algorithm to satisfy this criterion.
