@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? CreateDateTimeFormat(_newTarget_, _locales_, _options_, *"any"*, *"date"*).
+        1. Let _dateTimeFormat_ be ? CreateDateTimeFormat(_newTarget_, _locales_, _options_, ~any~, ~date~).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
           1. Return ? ChainDateTimeFormat(_dateTimeFormat_, NewTarget, _this_).
@@ -43,8 +43,8 @@
           _newTarget_: a constructor,
           _locales_: an ECMAScript language value,
           _options_: an ECMAScript language value,
-          _required_: a String,
-          _defaults_: a String
+          _required_: ~date~, ~time~, or ~any~,
+          _defaults_: ~date~, ~time~, or ~all~,
         ): either a normal completion containing a DateTimeFormat object or a throw completion
       </h1>
 
@@ -123,26 +123,26 @@
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
           1. If _hasExplicitFormatComponents_ is *true*, then
             1. Throw a *TypeError* exception.
-          1. If _required_ is *"date"* and _timeStyle_ is not *undefined*, then
+          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
             1. Throw a *TypeError* exception.
-          1. If _required_ is *"time"* and _dateStyle_ is not *undefined*, then
+          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
             1. Throw a *TypeError* exception.
           1. Let _styles_ be _dataLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
           1. Let _needDefaults_ be *true*.
-          1. If _required_ is *"date"* or *"any"*, then
+          1. If _required_ is ~date~ or ~any~, then
             1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-          1. If _required_ is *"time"* or *"any"*, then
+          1. If _required_ is ~time~ or ~any~, then
             1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, let _needDefaults_ be *false*.
-          1. If _needDefaults_ is *true* and _defaults_ is either *"date"* or *"all"*, then
+          1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
             1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
               1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
-          1. If _needDefaults_ is *true* and _defaults_ is either *"time"* or *"all"*, then
+          1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
             1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
               1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
           1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
