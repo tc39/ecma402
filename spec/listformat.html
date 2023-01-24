@@ -22,15 +22,15 @@
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Set _opt_.[[LocaleMatcher]] to _matcher_.
         1. Let _localeData_ be %ListFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %ListFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _listFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _listFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
         1. Set _listFormat_.[[Style]] to _style_.
-        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _dataLocale_ be _r_.[[DataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _dataLocaleTypes_ be _dataLocaleData_.[[&lt;_type_&gt;]].
         1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[&lt;_style_&gt;]].
@@ -91,7 +91,7 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] is a Record which has three fields [[Conjunction]], [[Disjunction]], and [[Unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[Long]], [[Short]], and [[Narrow]].</li>
         <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a List of Records with fields named: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules. Each template string must contain the substrings *"{0}"* and *"{1}"* exactly once. The substring *"{0}"* should occur before the substring *"{1}"*.</li>
       </ul>
 
