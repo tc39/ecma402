@@ -26,7 +26,7 @@ See also [ECMA-402 Guidelines for Feature Requests and Proposals](#ecma-402-guid
 
 The ECMA-402 specification should be as small and generic as possible to supply sufficient internationalization capabilities for JavaScript developers producing applications with global audiences. The ECMA-402 Task Group tries to balance the never-ending stream of additions against the need to remain small, lean, and stable for maintenance time frames of 10+ years.
 
-In addition to the specification TC39 (ECMA-262) stage advancement requirements, ECMA-402 proposals are held against the following additional criteria.
+In addition to the usual TC39 (ECMA-262) stage advancement requirements, ECMA-402 proposals are held against the following additional criteria.
 
 ### ECMA-402 Stage 2 Requirements
 
