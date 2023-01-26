@@ -6,7 +6,7 @@ Thank you for your interest in improving ECMA-402, the ECMAScript's solution for
 
 ### Bug Reports & Bug Fixes
 
-File a bug or pull requests against the current text of ECMA-402 in this repository. For more information, see [ECMA-262 CONTRIBUTING.md](https://github.com/tc39/ecma262/blob/HEAD/CONTRIBUTING.md#issues-and-pull-requests).
+File a bug report or pull request against the current text of ECMA-402 in this repository. For more information, see [ECMA-262 CONTRIBUTING.md](https://github.com/tc39/ecma262/blob/HEAD/CONTRIBUTING.md#issues-and-pull-requests).
 
 If the fix is trivial you may not need to sign the CLA. If your fix is involved, signing the CLA will be required. See the "Patent Policy and CLA" section below.
 
