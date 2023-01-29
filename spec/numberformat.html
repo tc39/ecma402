@@ -639,8 +639,8 @@
             1. If _p_ is *"literal"*, then
               1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as the last element of _result_.
             1. Else if _p_ is equal to *"number"*, then
-              1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the *"Numbering System"* column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
-                1. Let _digits_ be a List whose elements are the code points specified in the *"Digits"* column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
+              1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the Numbering System column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
+                1. Let _digits_ be a List whose elements are the code points specified in the Digits column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Assert: The length of _digits_ is 10.
                 1. Let _transliterated_ be the empty String.
                 1. Let _len_ be the length of _n_.
