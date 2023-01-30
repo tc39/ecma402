@@ -649,8 +649,9 @@
             <td>➕ [1]</td>
             <td>➕ [2]</td>
           </tr>
+        </tbody>
       </table>
-      <emu-note>The examples are illustrative of the unique behavior of each option. ➕ means "resolves toward positive infinity"; ➖ means "resolves toward negative infinity".</emu-note>
+      <emu-note>The examples are illustrative of the unique behaviour of each option. ➕ means "resolves toward positive infinity"; ➖ means "resolves toward negative infinity".</emu-note>
     </emu-table>
 
     <p>
@@ -716,13 +717,13 @@
         1. Else,
           1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
           1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
-          1. If _intlObj_.[[RoundingType]] is ~morePrecision~, then
+          1. If _intlObject_.[[RoundingType]] is ~morePrecision~, then
             1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
               1. Let _result_ be _sResult_.
             1. Else,
               1. Let _result_ be _fResult_.
           1. Else,
-            1. Assert: _intlObj_.[[RoundingType]] is ~lessPrecision~.
+            1. Assert: _intlObject_.[[RoundingType]] is ~lessPrecision~.
             1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
               1. Let _result_ be _fResult_.
             1. Else,
@@ -764,7 +765,7 @@
         1. Else if _x_ is ~negative-infinity~, then
           1. Let _n_ be an ILD String value indicating negative infinity.
         1. Else,
-          1. If _x_ is not ~negative-zero~,
+          1. If _x_ is not ~negative-zero~, then
             1. Assert: _x_ is a mathematical value.
             1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ be 100 &times; _x_.
             1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
@@ -1506,7 +1507,6 @@
       </emu-alg>
     </emu-clause>
 
-
     <emu-clause id="sec-runtime-semantics-stringintlmv" type="sdo">
       <h1>Runtime Semantics: StringIntlMV</h1>
       <dl class="header">
@@ -1572,13 +1572,13 @@
       <emu-alg>
         1. Let _primValue_ be ? ToPrimitive(_value_, ~number~).
         1. If Type(_primValue_) is BigInt, return ℝ(_primValue_).
-        1. If Type(_primValue_) is String,
+        1. If Type(_primValue_) is String, then
           1. Let _str_ be _primValue_.
         1. Else,
           1. Let _x_ be ? ToNumber(_primValue_).
           1. If _x_ is *-0*<sub>𝔽</sub>, return ~negative-zero~.
-          1. Let _str_ be ! Number::toString(_x_).
-        1. Let _text_ be ! StringToCodePoints(_str_).
+          1. Let _str_ be Number::toString(_x_, 10).
+        1. Let _text_ be StringToCodePoints(_str_).
         1. Let _literal_ be ParseText(_text_, |StringNumericLiteral|).
         1. If _literal_ is a List of errors, return ~not-a-number~.
         1. Let _intlMV_ be the StringIntlMV of _literal_.
@@ -1733,15 +1733,15 @@
         1. Let _yResult_ be ? PartitionNumberPattern(_numberFormat_, _y_).
         1. If _xResult_ is equal to _yResult_, then
           1. Let _appxResult_ be ? FormatApproximately(_numberFormat_, _xResult_).
-          1. For each _r_ in _appxResult_, do
+          1. For each element _r_ in _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
-        1. For each _r_ in _xResult_, do
+        1. For each element _r_ in _xResult_, do
           1. Set _r_.[[Source]] to *"startRange"*.
         1. Add all elements in _xResult_ to _result_ in order.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
         1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } element to _result_.
-        1. For each _r_ in _yResult_, do
+        1. For each element _r_ in _yResult_, do
           1. Set _r_.[[Source]] to *"endRange"*.
         1. Add all elements in _yResult_ to _result_ in order.
         1. Return ! CollapseNumberRange(_result_).
@@ -1778,7 +1778,7 @@
     </emu-clause>
 
     <emu-clause id="sec-formatnumericrange" aoid="FormatNumericRange">
-      <h1>FormatNumericRange( _numberFormat_, _x_, _y_ )</h1>
+      <h1>FormatNumericRange ( _numberFormat_, _x_, _y_ )</h1>
 
       <p>
         The FormatNumericRange abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
@@ -1787,14 +1787,14 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
         1. Let _result_ be the empty String.
-        1. For each _part_ in _parts_, do
+        1. For each element _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
     </emu-clause>
 
     <emu-clause id="sec-formatnumericrangetoparts" aoid="FormatNumericRangeToParts">
-      <h1>FormatNumericRangeToParts( _numberFormat_, _x_, _y_ )</h1>
+      <h1>FormatNumericRangeToParts ( _numberFormat_, _x_, _y_ )</h1>
 
       <p>
         The FormatNumericRangeToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
@@ -1802,10 +1802,10 @@
 
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
-        1. Let _result_ be ArrayCreate(0).
+        1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each _part_ in _parts_, do
-          1. Let _O_ be ObjectCreate(%ObjectPrototype%).
+        1. For each element _part_ in _parts_, do
+          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"source"*, _part_.[[Source]]).
