@@ -239,7 +239,7 @@
         1. For each element _name_ of _names_, do
           1. Assert: ! IsValidTimeZoneName( _name_ ) is *true*.
           1. Let _canonical_ be ! CanonicalizeTimeZoneName( _name_ ).
-          1. If _result_ does not contain an element equal to _canonical_, then
+          1. If _result_ does not contain _canonical_, then
             1. Append _canonical_ to the end of _result_.
         1. Sort _result_ in order as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_.
         1. Return _result_.
