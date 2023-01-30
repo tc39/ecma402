@@ -542,12 +542,12 @@
       <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
       <li>[[CompactDisplay]] is one of the String values *"short"* or *"long"*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation. It is only used when [[Notation]] has the value *"compact"*.</li>
       <li>
-        [[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, *"exceptZero"*, or *"negative"*, specifying when to include a sign (with non-*"auto"* options respectively corresponding with inclusion always, never, only for nonzero numbers, or only for nonzero negative numbers).
+        [[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, *"exceptZero"*, or *"negative"*, specifying when to include a sign (with non-*"auto"* options respectively corresponding with inclusion always, never, only for non-zero numbers, or only for non-zero negative numbers).
         In scientific notation, this slot affects the sign display of the mantissa but not the exponent.
       </li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
       <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
-      <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no nonzero fraction digit).</li>
+      <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
 
     <emu-table id="table-intl-rounding-modes">
@@ -1392,44 +1392,44 @@
           1. Assert: _style_ is *"decimal"*.
           1. Let _patterns_ be _patterns_.[[decimal]].
         1. If _x_ is ~negative-infinity~, then
-          1. Let _category_ be ~negative-nonzero~.
+          1. Let _category_ be ~negative-non-zero~.
         1. Else if _x_ is ~negative-zero~, then
           1. Let _category_ be ~negative-zero~.
         1. Else if _x_ is ~not-a-number~, then
           1. Let _category_ be ~positive-zero~.
         1. Else if _x_ is ~positive-infinity~, then
-          1. Let _category_ be ~positive-nonzero~.
+          1. Let _category_ be ~positive-non-zero~.
         1. Else,
           1. Assert: _x_ is a mathematical value.
           1. If _x_ &lt; 0, then
-            1. Let _category_ be ~negative-nonzero~.
+            1. Let _category_ be ~negative-non-zero~.
           1. Else if _x_ &gt; 0, then
-            1. Let _category_ be ~positive-nonzero~.
+            1. Let _category_ be ~positive-non-zero~.
           1. Else,
             1. Let _category_ be ~positive-zero~.
         1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
         1. If _signDisplay_ is *"never"*, then
           1. Let _pattern_ be _patterns_.[[zeroPattern]].
         1. Else if _signDisplay_ is *"auto"*, then
-          1. If _category_ is ~positive-nonzero~ or ~positive-zero~, then
+          1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else if _signDisplay_ is *"always"*, then
-          1. If _category_ is ~positive-nonzero~ or ~positive-zero~, then
+          1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
             1. Let _pattern_ be _patterns_.[[positivePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else if _signDisplay_ is *"exceptZero"*, then
           1. If _category_ is ~positive-zero~ or ~negative-zero~, then
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
-          1. Else if _category_ is ~positive-nonzero~, then
+          1. Else if _category_ is ~positive-non-zero~, then
             1. Let _pattern_ be _patterns_.[[positivePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else,
           1. Assert: _signDisplay_ is *"negative"*.
-          1. If _category_ is ~negative-nonzero~, then
+          1. If _category_ is ~negative-non-zero~, then
             1. Let _pattern_ be _patterns_.[[negativePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
