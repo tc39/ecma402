@@ -76,15 +76,15 @@
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
         1. If _hour12_ is *true*, then
-          1. Let _hc_ be *"h12"*.
+          1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h11"*. Otherwise, let _hc_ be *"h12"*.
         1. Else if _hour12_ is *false*, then
           1. Let _hc_ be *"h23"*.
         1. Else,
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
-          1. If _hc_ is *null*, then
-            1. Set _hc_ to _dataLocaleData_.[[hourCycle]].
+          1. If _hc_ is *null*, set _hc_ to _hcDefault_.
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
