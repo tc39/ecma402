@@ -84,8 +84,7 @@
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
           1. If _hc_ is *null*, then
-            1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
-            1. Set _hc_ to _hcDefault_.
+            1. Set _hc_ to _dataLocaleData_.[[hourCycle]].
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
