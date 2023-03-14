@@ -54,7 +54,7 @@
         1. Set _options_ to ? ToDateTimeOptions(_options_, *"any"*, *"date"*).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Set _opt_.[[LocaleMatcher]] to _matcher_.
         1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
         1. If _calendar_ is not *undefined*, then
           1. If _calendar_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
@@ -70,13 +70,13 @@
         1. Set _opt_.[[hc]] to _hourCycle_.
         1. Let _localeData_ be %DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedCalendar_ be _r_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _dataLocale_ be _r_.[[DataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
+        1. Let _hcDefault_ be _dataLocaleData_.[[HourCycle]].
         1. If _hour12_ is *true*, then
           1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h11"*. Otherwise, let _hc_ be *"h12"*.
         1. Else if _hour12_ is *false*, then
@@ -96,7 +96,7 @@
           1. Set _timeZone_ to CanonicalizeTimeZoneName(_timeZone_).
         1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
         1. Let _formatOptions_ be a new Record.
-        1. Set _formatOptions_.[[hourCycle]] to _hc_.
+        1. Set _formatOptions_.[[HourCycle]] to _hc_.
         1. Let _hasExplicitFormatComponents_ be *false*.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
@@ -105,7 +105,10 @@
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the row.
             1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
-          1. Set _formatOptions_.[[&lt;_prop_&gt;]] to _value_.
+          1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+          1. Let _rest_ be the substring of prop from 1.
+          1. Let _field_ be the string-concatenation of _first_ and _rest_.
+          1. Set _formatOptions_.[[&lt;_field_&gt;]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
         1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
@@ -116,27 +119,30 @@
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
           1. If _hasExplicitFormatComponents_ is *true*, then
             1. Throw a *TypeError* exception.
-          1. Let _styles_ be _dataLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _styles_ be _dataLocaleData_.[[Styles]].[[&lt;_resolvedCalendar_&gt;]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
-          1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _formats_ be _dataLocaleData_.[[Formats]].[[&lt;_resolvedCalendar_&gt;]].
           1. If _matcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
         1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
-          1. If _bestFormat_ has a field [[&lt;_prop_&gt;]], then
-            1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
+          1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+          1. Let _rest_ be the substring of prop from 1.
+          1. Let _field_ be the string-concatenation of _first_ and _rest_.
+          1. If _bestFormat_ has a field [[&lt;_field_&gt;]], then
+            1. Let _p_ be _bestFormat_.[[&lt;_field_&gt;]].
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_.[[Hour]] is *undefined*, then
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
         1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
-          1. Let _pattern_ be _bestFormat_.[[pattern12]].
-          1. Let _rangePatterns_ be _bestFormat_.[[rangePatterns12]].
+          1. Let _pattern_ be _bestFormat_.[[Pattern12]].
+          1. Let _rangePatterns_ be _bestFormat_.[[RangePatterns12]].
         1. Else,
-          1. Let _pattern_ be _bestFormat_.[[pattern]].
-          1. Let _rangePatterns_ be _bestFormat_.[[rangePatterns]].
+          1. Let _pattern_ be _bestFormat_.[[Pattern]].
+          1. Let _rangePatterns_ be _bestFormat_.[[RangePatterns]].
         1. Set _dateTimeFormat_.[[Pattern]] to _pattern_.
         1. Set _dateTimeFormat_.[[RangePatterns]] to _rangePatterns_.
         1. Return _dateTimeFormat_.
@@ -203,33 +209,33 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[HourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Formats]] field. This [[Formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in the Internal slot/Field column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
           <ul>
-            <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
-            <li>weekday, year, month, day, hour, minute, second</li>
-            <li>weekday, year, month, day</li>
-            <li>year, month, day</li>
-            <li>year, month</li>
-            <li>month, day</li>
-            <li>hour, minute, second, fractionalSecondDigits</li>
-            <li>hour, minute, second</li>
-            <li>hour, minute</li>
-            <li>dayPeriod, hour</li>
-            <li>dayPeriod, hour, minute, second</li>
-            <li>dayPeriod, hour, minute</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]]</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]]</li>
+            <li>[[Year]], [[Month]], [[Day]]</li>
+            <li>[[Year]], [[Month]]</li>
+            <li>[[Month]], [[Day]]</li>
+            <li>[[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]]</li>
+            <li>[[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[Hour]], [[Minute]]</li>
+            <li>[[DayPeriod]], [[Hour]]</li>
+            <li>[[DayPeriod]], [[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[DayPeriod]], [[Hour]], [[Minute]]</li>
           </ul>
           Each of the records must also have the following fields:
           <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+            <li>A [[Pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the record has an [[Hour]] field, it must also have a [[Pattern12]] field, whose value is a String value that, in addition to the substrings of the [[Pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>If the record has a [[Year]] field, the [[Pattern]] and [[Pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
             <li>
-              A [[rangePatterns]] field with a Record value:
+              A [[RangePatterns]] field with a Record value:
                 <ul>
-                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
+                  <li>The [[RangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
                     <ul>
                       <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is [[Month]], it contains the range pattern that should be used to format a date range where the era and year values are the same, but the month value is different.</li>
                       <li>The record will contain the following fields:</li>
@@ -239,37 +245,37 @@
                         </ul>
                     </ul>
                   </li>
-                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
+                  <li>The [[RangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[RangePatterns]] record.</li>
                 </ul>
             </li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
-            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+            <li>If the record has an [[Hour]] field, it must also have a [[RangePatterns12]] field. Its value is similar to the Record in [[RangePatterns]], but it uses a String similar to [[Pattern12]] for each part of the range pattern.</li>
+            <li>If the record has a [[Year]] field, the [[RangePatterns]] and [[RangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
           </ol>
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Styles]] field. The [[Styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[Full]], [[Long]], [[Medium]] and [[Short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
           <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
+            <li>A [[Pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the record has an [[Hour]] field, it must also have a [[Pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>A [[RangePatterns]] field that contains a record similar to the one described in the [[Formats]] field.</li>
+            <li>If the record has an [[Hour]] field, it must also have a [[RangePatterns12]] field. Its value is similar to the record in [[RangePatterns]] but it uses a string similar to [[Pattern12]] for each range pattern.</li>
           </ol>
-          For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested record which also has [[full]], [[long]], [[medium]] and [[short]] fields. The [[full]], [[long]], [[medium]] and [[short]] fields in the enclosing record refer to the date style of the range pattern, while the fields in the nested record refers to the time style of the range pattern. The value of these fields in the nested record is a record with a [[rangePatterns]] field and a [[rangePatterns12]] field which are similar to the [[rangePatterns]] and [rangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
+          For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested record which also has [[Full]], [[Long]], [[Medium]] and [[Short]] fields. The [[Full]], [[Long]], [[Medium]] and [[Short]] fields in the enclosing record refer to the date style of the range pattern, while the fields in the nested record refers to the time style of the range pattern. The value of these fields in the nested record is a record with a [[RangePatterns]] field and a [[RangePatterns12]] field which are similar to the [[RangePatterns]] and [[RangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
          </li>
       </ul>
 
       <emu-note>
         For example, an implementation might include the following record as part of its English locale data:
         <ul>
-          <li>[[hour]]: *"numeric"*</li>
-          <li>[[minute]]: *"numeric"*</li>
-          <li>[[pattern]]: *"{hour}:{minute}"*</li>
-          <li>[[pattern12]]: *"{hour}:{minute} {ampm}"*</li>
-          <li>[[rangePatterns]]:</li>
+          <li>[[Hour]]: *"numeric"*</li>
+          <li>[[Minute]]: *"numeric"*</li>
+          <li>[[Pattern]]: *"{hour}:{minute}"*</li>
+          <li>[[Pattern12]]: *"{hour}:{minute} {ampm}"*</li>
+          <li>[[RangePatterns]]:</li>
           <ul>
             <li>[[Hour]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
@@ -278,8 +284,8 @@
               </ul>
             </ul></li>
             <li>[[Minute]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
@@ -288,11 +294,11 @@
               </ul>
             </ul></li>
             <li>[[Default]]:<ul>
-              <li>[[year]]: *"2-digit"*</li>
-              <li>[[month]]: *"numeric"*</li>
-              <li>[[day]]: *"numeric"*</li>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Year]]: *"2-digit"*</li>
+              <li>[[Month]]: *"numeric"*</li>
+              <li>[[Day]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
@@ -301,11 +307,11 @@
               </ul>
             </ul></li>
           </ul>
-          <li>[[rangePatterns12]]:
+          <li>[[RangePatterns12]]:
           <ul>
             <li>[[Hour]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
@@ -315,8 +321,8 @@
               </ul>
             </ul></li>
             <li>[[Minute]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
@@ -326,11 +332,11 @@
               </ul>
             </ul></li>
             <li>[[Default]]:<ul>
-              <li>[[year]]: *"2-digit"*</li>
-              <li>[[month]]: *"numeric"*</li>
-              <li>[[day]]: *"numeric"*</li>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
+              <li>[[Year]]: *"2-digit"*</li>
+              <li>[[Month]]: *"numeric"*</li>
+              <li>[[Day]]: *"numeric"*</li>
+              <li>[[Hour]]: *"numeric"*</li>
+              <li>[[Minute]]: *"numeric"*</li>
               <li>[[PatternParts]]:</li>
               <ul>
                 <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
@@ -683,7 +689,7 @@
       <table class="real-table">
         <thead>
           <tr>
-            <th>Internal Slot</th>
+            <th>Internal Slot/Field</th>
             <th>Property</th>
             <th>Values</th>
           </tr>
@@ -784,28 +790,40 @@
 
     <emu-clause id="sec-date-time-style-format" aoid="DateTimeStyleFormat">
       <h1>DateTimeStyleFormat ( _dateStyle_, _timeStyle_, _styles_ )</h1>
-      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
+      <p>The DateTimeStyleFormat abstract operation accepts arguments _dateStyle_ and _timeStyle_, which are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*, at least one of which is not *undefined*, and _styles_, which is a record from %DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[Styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</p>
       <emu-alg>
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _timeFormat_ be _styles_.[[TimeFormat]].[[&lt;_timeStyle_&gt;]].
+          1. Let _first_ be the ASCII-uppercase of the substring of _timeStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _timeStyle_ from 1.
+          1. Let _timeStyleField_ be the string-concatenation of _first_ and _rest_.
+          1. Let _timeFormat_ be _styles_.[[TimeFormat]].[[&lt;_timeStyleField_&gt;]].
         1. If _dateStyle_ is not *undefined*, then
           1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _dateStyleField_ be the string-concatenation of _first_ and _rest_.
+          1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyleField_&gt;]].
         1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
           1. Let _format_ be a new Record.
-          1. Add to _format_ all fields from _dateFormat_ except [[pattern]] and [[rangePatterns]].
-          1. Add to _format_ all fields from _timeFormat_ except [[pattern]], [[rangePatterns]], [[pattern12]], and [[rangePatterns12]], if present.
-          1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
-          1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
-          1. Set _format_.[[pattern]] to _pattern_.
-          1. If _timeFormat_ has a [[pattern12]] field, then
-            1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
-            1. Set _format_.[[pattern12]] to _pattern12_.
-          1. Let _dateTimeRangeFormat_ be _styles_.[[DateTimeRangeFormat]].[[&lt;_dateStyle_&gt;]].[[&lt;_timeStyle_&gt;]].
-          1. Set _format_.[[rangePatterns]] to _dateTimeRangeFormat_.[[rangePatterns]].
-          1. If _dateTimeRangeFormat_ has a [[rangePatterns12]] field, then
-            1. Set _format_.[[rangePatterns12]] to _dateTimeRangeFormat_.[[rangePatterns12]].
+          1. Add to _format_ all fields from _dateFormat_ except [[Pattern]] and [[RangePatterns]].
+          1. Add to _format_ all fields from _timeFormat_ except [[Pattern]], [[RangePatterns]], [[Pattern12]], and [[RangePatterns12]], if present.
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _dateStyleField_ be the string-concatenation of _first_ and _rest_.
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _timeStyleField_ be the string-concatenation of _first_ and _rest_.
+          1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyleField_&gt;]].
+          1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[Pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[Pattern]].
+          1. Set _format_.[[Pattern]] to _pattern_.
+          1. If _timeFormat_ has a [[Pattern12]] field, then
+            1. Let _pattern12_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[Pattern12]] and the substring *"{1}"* replaced with _dateFormat_.[[Pattern]].
+            1. Set _format_.[[Pattern12]] to _pattern12_.
+          1. Let _dateTimeRangeFormat_ be _styles_.[[DateTimeRangeFormat]].[[&lt;_dateStyleField_&gt;]].[[&lt;_timeStyleField_&gt;]].
+          1. Set _format_.[[RangePatterns]] to _dateTimeRangeFormat_.[[RangePatterns]].
+          1. If _dateTimeRangeFormat_ has a [[RangePatterns12]] field, then
+            1. Set _format_.[[RangePatterns12]] to _dateTimeRangeFormat_.[[RangePatterns12]].
           1. Return _format_.
         1. If _timeStyle_ is not *undefined*, then
           1. Return _timeFormat_.
@@ -834,12 +852,15 @@
         1. Assert: Type(_formats_) is List.
         1. For each element _format_ of _formats_, do
           1. Let _score_ be 0.
-          1. For each property name _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
-            1. If _options_ has a field [[&lt;_property_&gt;]], let _optionsProp_ be _options_.[[&lt;_property_&gt;]]; else let _optionsProp_ be *undefined*.
-            1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
+          1. For each property name _prop_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
+            1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+            1. Let _rest_ be the substring of _prop_ from 1.
+            1. Let _field_ be the string-concatenation of _first_ and _rest_.
+            1. If _options_ has a field [[&lt;_field_&gt;]], let _optionsProp_ be _options_.[[&lt;_field_&gt;]]; else let _optionsProp_ be *undefined*.
+            1. If _format_ has a field [[&lt;_field_&gt;]], let _formatProp_ be _format_.[[&lt;_field_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
-            1. Else if _property_ is *"timeZoneName"*, then
+            1. Else if _prop_ is *"timeZoneName"*, then
               1. If _optionsProp_ is *"short"* or *"shortGeneric"*, then
                 1. If _formatProp_ is *"shortOffset"*, decrease _score_ by _offsetPenalty_.
                 1. Else if _formatProp_ is *"longOffset"*, decrease _score_ by (_offsetPenalty_ + _shortMorePenalty_).
@@ -856,7 +877,7 @@
               1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, decrease _score_ by _longLessPenalty_.
               1. Else if _optionsProp_ &ne; _formatProp_, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ &ne; _formatProp_, then
-              1. If _property_ is *"fractionalSecondDigits"*, then
+              1. If _prop_ is *"fractionalSecondDigits"*, then
                 1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
               1. Else,
                 1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
@@ -907,7 +928,7 @@
       <h1>FormatDateTimePattern ( _dateTimeFormat_, _patternParts_, _x_, _rangeFormatOptions_ )</h1>
 
       <p>
-        The FormatDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _patternParts_ (which is a list of Records as returned by PartitionPattern), _x_ (which must be a Number value), and _rangeFormatOptions_ (which is a range pattern Record as used in [[rangePattern]] or *undefined*), interprets _x_ as a time value as specified in es2023, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_. The following steps are taken:
+        The FormatDateTimePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _patternParts_ (which is a list of Records as returned by PartitionPattern), _x_ (which must be a Number value), and _rangeFormatOptions_ (which is a range pattern Record as used in [[RangePattern]] or *undefined*), interprets _x_ as a time value as specified in es2023, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -963,7 +984,7 @@
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the *"length"* property of _fv_ is greater than 2, let _fv_ be the substring of _fv_ containing the last two characters.
-            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[era]] is *undefined*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[Day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[Era]] is *undefined*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
