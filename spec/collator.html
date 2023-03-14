@@ -45,7 +45,7 @@
           1. Let _localeData_ be %Collator%.[[SearchLocaleData]].
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Set _opt_.[[LocaleMatcher]] to _matcher_.
         1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
         1. If _collation_ is not *undefined*, then
           1. If _collation_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
