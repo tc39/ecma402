@@ -45,7 +45,7 @@
           1. Let _localeData_ be %Collator%.[[SearchLocaleData]].
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Set _opt_.[[LocaleMatcher]] to _matcher_.
         1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
         1. If _collation_ is not *undefined*, then
           1. If _collation_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
@@ -58,7 +58,7 @@
         1. Set _opt_.[[kf]] to _caseFirst_.
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
-        1. Set _collator_.[[Locale]] to _r_.[[locale]].
+        1. Set _collator_.[[Locale]] to _r_.[[Locale]].
         1. Let _collation_ be _r_.[[co]].
         1. If _collation_ is *null*, let _collation_ be *"default"*.
         1. Set _collator_.[[Collation]] to _collation_.
@@ -71,9 +71,9 @@
           1. If _usage_ is *"sort"*, then
             1. Let _sensitivity_ be *"variant"*.
           1. Else,
-            1. Let _dataLocale_ be _r_.[[dataLocale]].
+            1. Let _dataLocale_ be _r_.[[DataLocale]].
             1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-            1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
+            1. Let _sensitivity_ be _dataLocaleData_.[[Sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
@@ -133,7 +133,7 @@
       <ul>
         <li>The first element of [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
-        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
+        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[Sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
       </ul>
     </emu-clause>
   </emu-clause>
