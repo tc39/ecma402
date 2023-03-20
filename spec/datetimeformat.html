@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeDateTimeFormat(_dateTimeFormat_, _locales_, _options_).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
