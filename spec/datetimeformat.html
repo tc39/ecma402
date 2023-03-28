@@ -76,7 +76,7 @@
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
+        1. Let _hcDefault_ be _dataLocaleData_.[[HourCycle]].
         1. If _hour12_ is *true*, then
           1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h11"*. Otherwise, let _hc_ be *"h12"*.
         1. Else if _hour12_ is *false*, then
@@ -96,7 +96,7 @@
           1. Set _timeZone_ to CanonicalizeTimeZoneName(_timeZone_).
         1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
         1. Let _formatOptions_ be a new Record.
-        1. Set _formatOptions_.[[hourCycle]] to _hc_.
+        1. Set _formatOptions_.[[HourCycle]] to _hc_.
         1. Let _hasExplicitFormatComponents_ be *false*.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
