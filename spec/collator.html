@@ -73,7 +73,7 @@
           1. Else,
             1. Let _dataLocale_ be _r_.[[DataLocale]].
             1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-            1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
+            1. Let _sensitivity_ be _dataLocaleData_.[[Sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
@@ -133,7 +133,7 @@
       <ul>
         <li>The first element of [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
-        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
+        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[Sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
       </ul>
     </emu-clause>
   </emu-clause>
