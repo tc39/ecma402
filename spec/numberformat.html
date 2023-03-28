@@ -61,7 +61,7 @@
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _numberFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _numberFormat_.[[Locale]] to _r_.[[Locale]].
         1. Set _numberFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _numberFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Perform ? SetNumberFormatUnitOptions(_numberFormat_, _options_).
