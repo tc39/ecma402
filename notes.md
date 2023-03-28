@@ -273,3 +273,28 @@ parameters have parameters that could have already had a field named
  done!
 
  start 7:45
+
+ end 9:30
+
+
+ ==
+ find the next one!
+ ==
+
+ hourCycle!
+
+ -- appears in only two places, in datetimeformat.html
+
+ 11.1.2 InitializeDateTimeFormat
+
+thoughts: 
+
+this is a spec bug as stands! 
+
+[[LocaleData]].[[<locale>]].[[HourCycle]] <-- in internal slots listed in 11.2.3
+
+I can change all of them without problems (in fact, it fixes problems)
+
+Finished 10:12
+
+== TIME FOR WALK ==
