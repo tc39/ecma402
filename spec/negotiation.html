@@ -108,7 +108,7 @@
             1. Set _result_.[[Locale]] to _availableLocale_.
             1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
               1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _locale_.
-              1. Set _result_.[[extension]] to _extension_.
+              1. Set _result_.[[Extension]] to _extension_.
             1. Return _result_.
         1. Let _defLocale_ be ! DefaultLocale().
         1. Set _result_.[[Locale]] to _defLocale_.
@@ -116,7 +116,7 @@
       </emu-alg>
 
       <emu-note>
-        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[Locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
+        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[Locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[Extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
       </emu-note>
     </emu-clause>
 
@@ -124,7 +124,7 @@
       <h1>BestFitMatcher ( _availableLocales_, _requestedLocales_ )</h1>
 
       <p>
-        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[Locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
+        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[Locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[Extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
       </p>
     </emu-clause>
 
@@ -208,8 +208,8 @@
         1. Let _foundLocale_ be _r_.[[Locale]].
         1. Let _result_ be a new Record.
         1. Set _result_.[[DataLocale]] to _foundLocale_.
-        1. If _r_ has an [[extension]] field, then
-          1. Let _components_ be ! UnicodeExtensionComponents(_r_.[[extension]]).
+        1. If _r_ has an [[Extension]] field, then
+          1. Let _components_ be ! UnicodeExtensionComponents(_r_.[[Extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
         1. Let _supportedExtension_ be *"-u"*.
         1. For each element _key_ of _relevantExtensionKeys_, do
@@ -220,7 +220,7 @@
           1. Let _value_ be _keyLocaleData_[0].
           1. Assert: Type(_value_) is either String or Null.
           1. Let _supportedExtensionAddition_ be *""*.
-          1. If _r_ has an [[extension]] field, then
+          1. If _r_ has an [[Extension]] field, then
             1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
               1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
               1. Let _requestedValue_ be _entry_.[[Value]].
