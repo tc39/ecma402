@@ -989,10 +989,6 @@
       <emu-note>
         It is recommended that implementations use the locale and calendar dependent strings provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>), and use CLDR *"abbreviated"* strings for DateTimeFormat *"short"* strings, and CLDR *"wide"* strings for DateTimeFormat *"long"* strings.
       </emu-note>
-
-      <emu-note>
-        A conforming implementation must recognize *"UTC"* and all other Zone and Link names (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations.
-      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-partitiondatetimepattern" aoid="PartitionDateTimePattern">
@@ -1243,7 +1239,7 @@
       </emu-table>
 
       <emu-note>
-        A conforming implementation must recognize *"UTC"* and all other Zone and Link names (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations.
+        A conforming implementation must recognize *"UTC"* and all Zone and Link names from the IANA Time Zone Database (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations.
       </emu-note>
     </emu-clause>
 
