@@ -32,60 +32,21 @@
         1. Set _listFormat_.[[Style]] to _style_.
         1. Let _dataLocale_ be _r_.[[DataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _dataLocaleTypes_ be _dataLocaleData_.[[&lt;_type_&gt;]].
-        1. Let _dataLocaleTypes_ be the value stored in the field of _dataLocaleData_ that is given in the Field column of the row of <emu-xref href="#table-listformat-types"></emu-xref> with _type_ in its Property column.
-        1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[&lt;_style_&gt;]].
-        1. Set _listFormat_.[[Templates]] to the value stored in the field of _dataLocaleTypes_ that is given in the Field column of the row of <emu-xref href="#table-listformat-types"></emu-xref> with _style_ in its Property column.
+        1. Let _dataLocaleType_ be *undefined*. 
+        1. If _type_ is "conjunction", then
+          1. Set _dataLocaleTypes_ to _dataLocaleData_.[[Conjunction]].
+        1. Else if _type_ is "disjunction", then
+          1. Set _dataLocaleTypes_ to _dataLocaleData_.[[Disjunction]].
+        1. Else,
+          1. Set _dataLocaleTypes_ to _dataLocaleData_.[[Unit]]
+        1. If _style_ is "long", then
+          1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[Long]].
+        1. Else if _style_ is "short", then
+          1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[Short]].
+        1. Else,
+          1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[Narrow]].
         1. Return _listFormat_.
       </emu-alg>
-
-      <emu-table id="table-listformat-types">
-        <emu-caption>Type-related fields and properties</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Property</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>[[Conjunction]]</td>
-            <td>*"conjunction"*</td>
-          </tr>
-          <tr>
-            <td>[[Disjunction]]</td>
-            <td>*"disjunction"*</td>
-          </tr>
-          <tr>
-            <td>[[Unit]]</td>
-            <td>*"unit"*</td>
-          </tr>
-        </table>
-      </emu-table>
-
-      <emu-table id="table-listformat-styles">
-        <emu-caption>Style-related Fields and properties</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Property</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>[[Conjunction]]</td>
-            <td>*"conjunction"*</td>
-          </tr>
-          <tr>
-            <td>[[Disjunction]]</td>
-            <td>*"disjunction"*</td>
-          </tr>
-          <tr>
-            <td>[[Unit]]</td>
-            <td>*"unit"*</td>
-          </tr>
-        </table>
-      </emu-table>
     </emu-clause>
   </emu-clause>
 
