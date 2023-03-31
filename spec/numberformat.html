@@ -239,7 +239,7 @@
 
       <ul>
         <li>The list that is the value of the *"nu"* field of any locale field of [[LocaleData]] must not include the values *"native"*, *"traditio"*, or *"finance"*.</li>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
         <li>
           The two fields *"currency"* and *"unit"* noted above must be Records with at least one field, *"fallback"*.
           The *"currency"* may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>.
@@ -1132,7 +1132,7 @@
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _patterns_ be _dataLocaleData_.[[patterns]].
+        1. Let _patterns_ be _dataLocaleData_.[[Patterns]].
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
