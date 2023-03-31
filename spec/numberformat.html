@@ -239,7 +239,7 @@
 
       <ul>
         <li>The list that is the value of the *"nu"* field of any locale field of [[LocaleData]] must not include the values *"native"*, *"traditio"*, or *"finance"*.</li>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields [[Decimal]], [[Percent]], [[Currency]], and [[Unit]], corresponding the names of the four number format styles *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
         <li>
           The two fields *"currency"* and *"unit"* noted above must be Records with at least one field, *"fallback"*.
           The *"currency"* may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>.
@@ -1136,11 +1136,11 @@
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
-          1. Let _patterns_ be _patterns_.[[percent]].
+          1. Let _patterns_ be _patterns_.[[Percent]].
         1. Else if _style_ is *"unit"*, then
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
-          1. Let _patterns_ be _patterns_.[[unit]].
+          1. Let _patterns_ be _patterns_.[[Unit]].
           1. If _patterns_ doesn't have a field [[&lt;_unit_&gt;]], then
             1. Let _unit_ be *"fallback"*.
           1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
@@ -1149,7 +1149,7 @@
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
-          1. Let _patterns_ be _patterns_.[[currency]].
+          1. Let _patterns_ be _patterns_.[[Currency]].
           1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
             1. Let _currency_ be *"fallback"*.
           1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
@@ -1157,7 +1157,7 @@
           1. Let _patterns_ be _patterns_.[[&lt;_currencySign_&gt;]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
-          1. Let _patterns_ be _patterns_.[[decimal]].
+          1. Let _patterns_ be _patterns_.[[Decimal]].
         1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
         1. If _signDisplay_ is *"never"*, then
           1. Let _pattern_ be _patterns_.[[zeroPattern]].
