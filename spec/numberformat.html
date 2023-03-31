@@ -242,14 +242,11 @@
         <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields [[Decimal]], [[Percent]], [[Currency]], and [[Unit]], corresponding the names of the four number format styles *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
         <li>
           The two fields [[Currency]] and [[Unit]] noted above must be Records with at least one field, *"fallback"*.
-          The [[Currency]] field may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>.
-          Each field of [[Currency]] must be a Record with fields corresponding to the possible currencyDisplay values: *"code"*, *"symbol"*, *"narrowSymbol"*, and *"name"*.
-          Each of those fields must contain a Record with fields corresponding to the possible currencySign values: *"standard"* or *"accounting"*. The *"unit"* field (of [[LocaleData]].[[&lt;_locale_&gt;]]) may have additional fields beyond the required field *"fallback"* with keys corresponding to core measurement unit identifiers corresponding to <emu-xref href="#sec-measurement-unit-identifiers"></emu-xref>.
-          Each field of [[Unit]] must be a Record with fields corresponding to the possible unitDisplay values: *"narrow"*, *"short"*, and *"long"*.
+          The [[Currency]] field may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>. Each field of [[Currency]] must be a Record with fields [[Code]], [[Symbol]], [[NarrowSymbol]], and [[Name]], corresponding to the possible currencyDisplay values: *"code"*, *"symbol"*, *"narrowSymbol"*, and *"name"*. Each of those fields must contain a Record with fields [[Standard]] and [[Accounting]], corresponding to the possible currencySign values *"standard"* or *"accounting"*. The [[Unit]] field (of [[LocaleData]].[[&lt;_locale_&gt;]]) may have additional fields beyond the required field *"fallback"* with keys corresponding to core measurement unit identifiers given in <emu-xref href="#sec-measurement-unit-identifiers"></emu-xref>. Each field of [[Unit]] must be a Record with fields corresponding to the possible unitDisplay values: *"narrow"*, *"short"*, and *"long"*.
         </li>
-        <li>All of the leaf fields so far described for the patterns tree (*"decimal"*, *"percent"*, great-grandchildren of *"currency"*, and grandchildren of *"unit"*) must be Records with the keys *"positivePattern"*, *"zeroPattern"*, and *"negativePattern"*.</li>
+        <li>All of the leaf fields so far described for the patterns tree ([[Decimal]], [[Percent]], great-grandchildren of [[Currency]], and grandchildren of [[Unit]]) must be Records with the keys *"positivePattern"*, *"zeroPattern"*, and *"negativePattern"*.</li>
         <li>
-          The value of the aforementioned fields (the sign-dependent pattern fields) must be string values that must contain the substring *"{number}"*. *"positivePattern"* must contain the substring *"{plusSign}"* but not *"{minusSign}"*; *"negativePattern"* must contain the substring *"{minusSign}"* but not *"{plusSign}"*; and *"zeroPattern"* must not contain either *"{plusSign}"* or *"{minusSign}"*. Additionally, the values within the [[Percent]] field must also contain the substring *"{percentSign}"*; the values within the [[Currency]] field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the [[Unit"]] field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*. The pattern strings, when interpreted as a sequence of UTF-16 encoded code points as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
+          The value of the aforementioned fields (the sign-dependent pattern fields) must be string values that must contain the substring *"{number}"*. *"positivePattern"* must contain the substring *"{plusSign}"* but not *"{minusSign}"*; *"negativePattern"* must contain the substring *"{minusSign}"* but not *"{plusSign}"*; and *"zeroPattern"* must not contain either *"{plusSign}"* or *"{minusSign}"*. Additionally, the values within the [[Percent]] field must also contain the substring *"{percentSign}"*; the values within the [[Currency]] field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the [[Unit]] field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*. The pattern strings, when interpreted as a sequence of UTF-16 encoded code points as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
         </li>
         <li>[[LocaleData]].[[&lt;_locale_&gt;]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
       </ul>
@@ -1150,8 +1147,18 @@
           1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
             1. Let _currency_ be *"fallback"*.
           1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencyDisplay_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencySign_&gt;]].
+          1. If _currencyDisplay_ is *"code"*, then
+            1. Let _patterns_ be _patterns_.[[Code]].
+          1. Else if _currencyDisplay_ is *"symbol"*, then
+            1. Let _patterns_ be _patterns_.[[Symbol]].
+          1. Else if _currencyDisplay_ is *"narrowSymbol"*, then
+            1. Let _patterns_ be _patterns_.[[NarrowSymbol]].
+          1. Else,
+            1. Let _patterns_ be _patterns_.[[Name]].
+          1. If _currencySign_ is *"standard"*, then
+            1. Let _patterns_ be _patterns_.[[Standard]].
+          1. Else,
+            1. Let _patterns_ be _patterns_.[[Accounting]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
           1. Let _patterns_ be _patterns_.[[Decimal]].
