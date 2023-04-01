@@ -1137,7 +1137,12 @@
             1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
           1. Else,
             1. Let _patterns_ be _patterns_.[[Fallback]].
-          1. Let _patterns_ be _patterns_.[[&lt;_unitDisplay_&gt;]].
+          1. If _unitDisplay_ is *"short"*, then
+            1. Let _patterns_ be _patterns_.[[Short]].
+          1. Else if _unitDisplay_ is *"narrow"*, then
+            1. Let _patterns_ be _patterns_.[[Narrow]].
+          1. Else,
+            1. Let _patterns_ be _patterns_.[[Long]].
         1. Else if _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
