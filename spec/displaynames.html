@@ -36,7 +36,7 @@
         1. Set _displayNames_.[[Locale]] to _r_.[[Locale]].
         1. Let _dataLocale_ be _r_.[[DataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _types_ be _dataLocaleData_.[[types]].
+        1. Let _types_ be _dataLocaleData_.[[Types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
@@ -101,7 +101,7 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of all display name types: *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Types]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of all display name types: *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"*.</li>
         <li>The value of the field *"language"* must be a Record which must have fields with the names of one of the valid language displays: *"dialect"* and *"standard"*.</li>
         <li>The language display fields under display name type *"language"* should contain Records which must have fields with the names of one of the valid display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
         <li>The value of the fields *"region"*, *"script"*, *"currency"*, *"calendar"*, and *"dateTimeField"* must be Records, which must have fields with the names of all display name styles: *"narrow"*, *"short"*, and *"long"*.</li>
