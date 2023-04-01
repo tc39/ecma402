@@ -39,7 +39,7 @@
         1. Let _types_ be _dataLocaleData_.[[Types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
-        1. Let _typeFields_ be the field of the Fields column of <emu-xref href="#table-displaynames-types"></emu-xref> in the row with _type_ in its Display Name Type Names column.
+        1. Let _typeFields_ be the field of the Fields column of <emu-xref href="#table-displaynames-types"></emu-xref> in the row with _type_ in its Type Names column.
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then
           1. Set _displayNames_.[[LanguageDisplay]] to _languageDisplay_.
@@ -59,12 +59,12 @@
         1. Return _displayNames_.
       </emu-alg>
       <emu-table id="table-displaynames-types">
-        <emu-caption>Fields Corresponding to Display Name Type Names</emu-caption>
+        <emu-caption>Fields Corresponding to Type Names</emu-caption>
         <table class="real-table">
           <thead>
             <tr>
               <th>Field</th>
-              <th>Display Name Type Names</th>
+              <th>Type Names</th>
             </tr>
           </thead>
           <tr>
@@ -322,15 +322,15 @@
     <emu-clause id="sec-isvaliddatetimefieldcode" type="abstract operation">
       <h1>
         IsValidDateTimeFieldCode (
-          _field_: a String,
+          _fieldCode_: a String,
         )
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It verifies that the _field_ argument represents a valid date time field code.</dd>
+        <dd>It verifies that the _fieldCode_ argument represents a valid date time field code.</dd>
       </dl>
       <emu-alg>
-        1. If _field_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
+        1. If _fieldCode_ is listed in the Code column of <emu-xref href="#table-validcodefordatetimefield"></emu-xref>, return *true*.
         1. Return *false*.
       </emu-alg>
 
