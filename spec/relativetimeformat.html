@@ -112,9 +112,9 @@
       </p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] has fields *"second"*, *"minute"*, *"hour"*, *"day"*, *"week"*, *"month"*, *"quarter"*, and *"year"*. Additional fields may exist with the previous names concatenated with the strings *"-narrow"* or *"-short"*. The values corresponding to these fields are Records which contain these two categories of fields:
+        <li>[[LocaleData]].[[&lt;_locale_&gt;]] has fields [[Second]], [[Minute]], [[Hour]], [[Day]], [[Week]], [[Month]], [[Quarter]], and [[Year]]. Additional fields may exist with the previous names concatenated with the strings [[Narrow]] or [[Short]]. The values corresponding to these fields are Records which contain these two categories of fields:
         <ul>
-        <li>*"future"* and *"past"* fields, which are Records with a field for each of the plural categories relevant for _locale_. The value corresponding to those fields is a pattern which may contain *"{0}"* to be replaced by a formatted number.</li>
+        <li>[[Future]] and [[Past]] fields, which are Records with a field for each of the plural categories relevant for _locale_. The value corresponding to those fields is a pattern which may contain *"{0}"* to be replaced by a formatted number.</li>
         <li>Optionally, additional fields whose key is the result of ToString of a Number, and whose values are literal Strings which are not treated as templates.</li>
         </ul>
         </li>
@@ -299,13 +299,31 @@
         1. Let _dataLocale_ be _relativeTimeFormat_.[[DataLocale]].
         1. Let _fields_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _style_ be _relativeTimeFormat_.[[Style]].
+        1. Assert: _unit_ is *"second"*, "*minute"*, "*hour*", *"day"*, *"week"*, *"month*", *"quarter"*, or *"year"*.
+        1. Let _entry_ be _unit_.
+        1. If _entry_ is equal to *"second"*, then
+          1. Let _entry_ be *"Second"*.
+        1. Else if _entry_ is equal to *"minute"*, then
+          1. Let _entry_ be *"Minute"*.
+        1. Else if _entry_ is equal to *"hour"*, then
+          1. Let _entry_ be *"Hour"*.
+        1. Else if _entry_ is equal to *"day"*, then
+          1. Let _entry_ be *"Day"*.
+        1. Else if _entry_ is equal to *"week"*, then
+          1. Let _entry_ be *"Week"*.
+        1. Else if _entry_ is equal to *"month"*, then
+          1. Let _entry_ be *"Month"*.
+        1. Else if _entry_ is equal to *"quarter"*, then
+          1. Let _entry_ be *"Quarter"*.
+        1. Else,
+          1. Let _entry_ be *"Year"*.
         1. If _style_ is equal to *"short"*, then
-          1. Let _entry_ be the string-concatenation of _unit_ and *"-short"*.
+          1. Let _entry_ be the string-concatenation of _unit_ and *"Short"*.
         1. Else if _style_ is equal to *"narrow"*, then
-          1. Let _entry_ be the string-concatenation of _unit_ and *"-narrow"*.
+          1. Let _entry_ be the string-concatenation of _unit_ and *"Narrow"*.
         1. Else,
           1. Let _entry_ be _unit_.
-        1. If _fields_ doesn't have a field [[&lt;_entry_&gt;]], then
+        1. If _fields_ desn't have a field [[&lt;_entry_&gt;]], then
           1. Let _entry_ be _unit_.
         1. Let _patterns_ be _fields_.[[&lt;_entry_&gt;]].
         1. Let _numeric_ be _relativeTimeFormat_.[[Numeric]].
@@ -315,10 +333,9 @@
             1. Let _result_ be _patterns_.[[&lt;_valueString_&gt;]].
             1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_ }.
         1. If _value_ is *-0*<sub>𝔽</sub> or if _value_ is less than 0, then
-          1. Let _tl_ be *"past"*.
+          1. Let _po_ be _patterns_.[[Past]].
         1. Else,
-          1. Let _tl_ be *"future"*.
-        1. Let _po_ be _patterns_.[[&lt;_tl_&gt;]].
+          1. Let _po_ be _patterns_.[[Future]].
         1. Let _fv_ be ! PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], _value_).
         1. Let _pr_ be ! ResolvePlural(_relativeTimeFormat_.[[PluralRules]], _value_).
         1. Let _pattern_ be _po_.[[&lt;_pr_&gt;]].
