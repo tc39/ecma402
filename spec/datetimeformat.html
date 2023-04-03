@@ -105,8 +105,10 @@
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the row.
             1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
-          1. Let _fieldName_ be the string-concatenation of the ASCII-uppercase of the substring of _prop_ from 0 to 1 and the substring of _prop_ from 1.
-          1. Set _formatOptions_.[[&lt;_fieldName_&gt;]] to _value_.
+          1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+          1. Let _rest_ be the substring of prop from 1.
+          1. Let _field_ be the string-concatenation of _first_ and _rest_.
+          1. Set _formatOptions_.[[&lt;_field_&gt;]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
         1. Let _matcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
@@ -127,9 +129,11 @@
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
         1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
-          1. Let _fieldName_ be the string-concatenation of the ASCII-uppercase of the substring of _prop_ from 0 to 1 and the substring of _prop_ from 1.
-          1. If _bestFormat_ has a field [[&lt;_fieldName_&gt;]], then
-            1. Let _p_ be _bestFormat_.[[&lt;_fieldName_&gt;]].
+          1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+          1. Let _rest_ be the substring of prop from 1.
+          1. Let _field_ be the string-concatenation of _first_ and _rest_.
+          1. If _bestFormat_ has a field [[&lt;_field_&gt;]], then
+            1. Let _p_ be _bestFormat_.[[&lt;_field_&gt;]].
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_.[[Hour]] is *undefined*, then
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
@@ -210,18 +214,18 @@
         <li>
           [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[Formats]] field. This [[Formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in the Internal slot/Field column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
           <ul>
-            <li>Weekday, Year, Month, Day, Hour, Minute, Second, FractionalSecondDigits</li>
-            <li>Weekday, Year, Month, Day, Hour, Minute, Second</li>
-            <li>Weekday, Year, Month, Day</li>
-            <li>Year, Month, Day</li>
-            <li>Year, Month</li>
-            <li>Month, Day</li>
-            <li>Hour, Minute, Second, FractionalSecondDigits</li>
-            <li>Hour, Minute, Second</li>
-            <li>Hour, Minute</li>
-            <li>DayPeriod, Hour</li>
-            <li>DayPeriod, Hour, Minute, Second</li>
-            <li>DayPeriod, Hour, Minute</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]]</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]], [[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[Weekday]], [[Year]], [[Month]], [[Day]]</li>
+            <li>[[Year]], [[Month]], [[Day]]</li>
+            <li>[[Year]], [[Month]]</li>
+            <li>[[Month]], [[Day]]</li>
+            <li>[[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]]</li>
+            <li>[[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[Hour]], [[Minute]]</li>
+            <li>[[DayPeriod]], [[Hour]]</li>
+            <li>[[DayPeriod]], [[Hour]], [[Minute]], [[Second]]</li>
+            <li>[[DayPeriod]], [[Hour]], [[Minute]]</li>
           </ul>
           Each of the records must also have the following fields:
           <ol>
@@ -790,18 +794,26 @@
       <emu-alg>
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _timeStyleField_ be the string-concatenation of the ASCII-uppercase of the substring of _timeStyle_ from 0 to 1 and the substring of _timeStyle from 1.
+          1. Let _first_ be the ASCII-uppercase of the substring of _timeStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _timeStyle_ from 1.
+          1. Let _timeStyleField_ be the string-concatenation of _first_ and _rest_.
           1. Let _timeFormat_ be _styles_.[[TimeFormat]].[[&lt;_timeStyleField_&gt;]].
         1. If _dateStyle_ is not *undefined*, then
           1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _dateStyleField_ be the string-concatenation of the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1 and the substring of _dateStyle_ from 1.
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _dateStyleField_ be the string-concatenation of _first_ and _rest_.
           1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyleField_&gt;]].
         1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
           1. Let _format_ be a new Record.
           1. Add to _format_ all fields from _dateFormat_ except [[Pattern]] and [[RangePatterns]].
           1. Add to _format_ all fields from _timeFormat_ except [[Pattern]], [[RangePatterns]], [[Pattern12]], and [[RangePatterns12]], if present.
-          1. Let _dateStyleField_ be the string-concatenation of the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1 and the substring of _dateStyle_ from 1.
-          1. Let _timeStyleField_ be the string-concatenation of the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1 and the substring of _dateStyle from 1.
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _dateStyleField_ be the string-concatenation of _first_ and _rest_.
+          1. Let _first_ be the ASCII-uppercase of the substring of _dateStyle_ from 0 to 1.
+          1. Let _rest_ be the substring of _dateStyle_ from 1.
+          1. Let _timeStyleField_ be the string-concatenation of _first_ and _rest_.
           1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyleField_&gt;]].
           1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[Pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[Pattern]].
           1. Set _format_.[[Pattern]] to _pattern_.
@@ -841,9 +853,11 @@
         1. For each element _format_ of _formats_, do
           1. Let _score_ be 0.
           1. For each property name _prop_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
-            1. Let _fieldName_ be the string-concatenation of the ASCII-uppercase of the substring of _prop_ from 0 to 1 and the substring of _prop_ from 1.
-            1. If _options_ has a field [[&lt;_fieldName_&gt;]], let _optionsProp_ be _options_.[[&lt;_fieldName_&gt;]]; else let _optionsProp_ be *undefined*.
-            1. If _format_ has a field [[&lt;_fieldName_&gt;]], let _formatProp_ be _format_.[[&lt;_fieldName_&gt;]]; else let _formatProp_ be *undefined*.
+            1. Let _first_ be the ASCII-uppercase of the substring of _prop_ from 0 to 1.
+            1. Let _rest_ be the substring of _prop_ from 1.
+            1. Let _field_ be the string-concatenation of _first_ and _rest_.
+            1. If _options_ has a field [[&lt;_field_&gt;]], let _optionsProp_ be _options_.[[&lt;_field_&gt;]]; else let _optionsProp_ be *undefined*.
+            1. If _format_ has a field [[&lt;_field_&gt;]], let _formatProp_ be _format_.[[&lt;_field_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, decrease _score_ by _additionPenalty_.
             1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, decrease _score_ by _removalPenalty_.
             1. Else if _prop_ is *"timeZoneName"*, then
