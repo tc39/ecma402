@@ -1734,19 +1734,17 @@
         1. Let _result_ be a new empty List.
         1. Let _xResult_ be ? PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _yResult_ be ? PartitionNumberPattern(_numberFormat_, _y_).
-        1. If _xResult_ is equal to _yResult_, then
+        1. If ! FormatNumeric(_numberFormat_, _x_) is equal to ! FormatNumeric(_numberFormat_, _y_), then
           1. Let _appxResult_ be ? FormatApproximately(_numberFormat_, _xResult_).
           1. For each element _r_ in _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
         1. For each element _r_ in _xResult_, do
-          1. Set _r_.[[Source]] to *"startRange"*.
-        1. Add all elements in _xResult_ to _result_ in order.
+          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } as the last element of _result_.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
         1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } element to _result_.
         1. For each element _r_ in _yResult_, do
-          1. Set _r_.[[Source]] to *"endRange"*.
-        1. Add all elements in _yResult_ to _result_ in order.
+          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } as the last element of _result_.
         1. Return ! CollapseNumberRange(_result_).
       </emu-alg>
     </emu-clause>
@@ -1757,9 +1755,8 @@
         The FormatApproximately abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberPattern, by adding a new Record for the approximately sign, which may depend on _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
       </p>
       <emu-alg>
-        1. Let _i_ be an index into _result_, determined by an implementation-defined algorithm based on _numberFormat_ and _result_. For example, to insert the approximately sign before the integer, choose the index of the integer.
         1. Let _approximatelySign_ be an ILND String value used to signify that a number is approximate.
-        1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at index _i_ in _result_.
+        1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at an ILND index in _result_. For example, if _numberFormat_ has [[Locale]] *"en-US"* and [[NumberingSystem]] *"latn"* and [[Style]] *"decimal"*, the new Record might be inserted before the first element of _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -1767,13 +1764,13 @@
     <emu-clause id="sec-collapsenumberrange" aoid="CollapseNumberRange">
       <h1>CollapseNumberRange ( _result_ )</h1>
       <p>
-        The CollapseNumberRange abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberRangePattern, by removing redundant information, and returns the resulting List. The algorithm is implementation dependent, but it must not introduce ambiguity: the resulting list after modification should be unique for all pairs _start_ and _end_.
+        The CollapseNumberRange abstract operation modifies _result_ (which must be a List of { [[Type]], [[Value]], [[Source]] } Records as constructed within PartitionNumberRangePattern) by removing redundant information and resolving internal inconsistency, and returns the resulting List. The algorithm is implementation dependent, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.
       </p>
       <p>
-        For example, an implementation may choose to remove the currency symbol following the range separator, to produce "$3–5" instead of "$3–$5".
+        For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.
       </p>
       <p>
-        The implementation may choose to modify symbols for grammatical correctness; for example, "0.5 miles–1 mile" may become "0.5–1 miles".
+        An implementation may also modify Record [[Value]] fields for grammatical correctness; for example, converting a _results_ List representing *"0.5 miles–1 mile"* into one representing *"0.5–1 miles"*.
       </p>
       <p>
         Returning _result_ unmodified is guaranteed to be a correct implementation of CollapseNumberRange.
