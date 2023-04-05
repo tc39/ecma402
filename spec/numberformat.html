@@ -160,21 +160,20 @@
           1. Else,
             1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
             1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
-        1. If _needSd_ is *true* or _needFd_ is *true*, then
-          1. If _roundingPriority_ is *"morePrecision"*, then
-            1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
-          1. Else if _roundingPriority_ is *"lessPrecision"*, then
-            1. Set _intlObj_.[[RoundingType]] to ~lessPrecision~.
-          1. Else if _hasSd_ is *true*, then
-            1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
-          1. Else,
-            1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
-        1. Else,
-          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+        1. If _needSd_ is *false* and _needFd_ is *false*, then
           1. Set _intlObj_.[[MinimumFractionDigits]] to 0.
           1. Set _intlObj_.[[MaximumFractionDigits]] to 0.
           1. Set _intlObj_.[[MinimumSignificantDigits]] to 1.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to 2.
+          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+        1. Else if _roundingPriority_ is *"morePrecision"*, then
+          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+        1. Else if _roundingPriority_ is *"lessPrecision"*, then
+          1. Set _intlObj_.[[RoundingType]] to ~lessPrecision~.
+        1. Else if _hasSd_ is *true*, then
+          1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
+        1. Else,
+          1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
         1. If _roundingIncrement_ is not 1, then
           1. If _intlObj_.[[RoundingType]] is not ~fractionDigits~, throw a *TypeError* exception.
           1. If _intlObj_.[[MaximumFractionDigits]] is not equal to _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
