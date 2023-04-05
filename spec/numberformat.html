@@ -96,14 +96,20 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-setnfdigitoptions" aoid="SetNumberFormatDigitOptions">
-      <h1>SetNumberFormatDigitOptions ( _intlObj_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_ )</h1>
-
-      <p>
-        The abstract operation SetNumberFormatDigitOptions applies digit
-        options used for number formatting onto the intl object.
-        It is used by both Intl.NumberFormat and Intl.PluralRules.
-      </p>
+    <emu-clause id="sec-setnfdigitoptions" type="abstract operation">
+      <h1>
+        SetNumberFormatDigitOptions (
+          _intlObj_: an Object,
+          _options_: an Object,
+          _mnfdDefault_: a Number,
+          _mxfdDefault_: a Number,
+          _notation_: a String,
+        )
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref>).</dd>
+      </dl>
       <emu-alg>
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
         1. Let _mnfd_ be ? Get(_options_, *"minimumFractionDigits"*).
