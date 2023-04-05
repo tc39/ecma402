@@ -371,7 +371,7 @@
     <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
       <h1>ResolvePlural ( _pluralRules_, _n_ )</h1>
       <p>
-        When the ResolvePlural abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules) and _n_ (which must be a Number value), it returns a Record containing two values: a String value representing the plural form of _n_ according to the effective locale and the options of _pluralRules_ in the field [[PluralCategory]], and _n_ as a formatted string in the field [[FormattedString]]. The following steps are taken:
+        When the ResolvePlural abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules) and _n_ (which must be a Number value), it returns a Record with two string-valued fields describing _n_ according to the effective locale and the options of _pluralRules_: [[PluralCategory]] characterizing its <emu-xref href="#sec-pluralruleselect">plural category</emu-xref>, and [[FormattedString]] containing its formatted representation. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -394,7 +394,7 @@
       <h1>PluralRuleSelectRange ( _locale_, _type_, _xp_, _yp_ )</h1>
 
       <p>
-        When the PluralRuleSelectRange abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map the plural form String values _xp_ and _yp_, representing the plural forms of the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ for the corresponding _locale_, or the String value *"other"*.
+        When the PluralRuleSelectRange abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ (which must be *"cardinal"* or *"ordinal"*) for the corresponding _locale_, or the String value *"other"*.
       </p>
     </emu-clause>
 
