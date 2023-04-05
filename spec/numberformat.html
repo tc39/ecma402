@@ -1757,7 +1757,7 @@
         The FormatApproximately abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberPattern, by adding a new Record for the approximately sign, which may depend on _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
       </p>
       <emu-alg>
-        1. Let _i_ be an index into _result_, determined by an implementation-defined algorithm based on _numberFormat_ and _result_.
+        1. Let _i_ be an index into _result_, determined by an implementation-defined algorithm based on _numberFormat_ and _result_. For example, to insert the approximately sign before the integer, choose the index of the integer.
         1. Let _approximatelySign_ be an ILND String value used to signify that a number is approximate.
         1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at index _i_ in _result_.
         1. Return _result_.
@@ -1767,7 +1767,7 @@
     <emu-clause id="sec-collapsenumberrange" aoid="CollapseNumberRange">
       <h1>CollapseNumberRange ( _result_ )</h1>
       <p>
-        The CollapseNumberRange abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberRangePattern, by removing redundant information, and returns the resulting List. The algorithm is implementation dependent, but it must not introduce ambiguity: the resulting list after modification should be unique for all pairs _x_ and _y_.
+        The CollapseNumberRange abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberRangePattern, by removing redundant information, and returns the resulting List. The algorithm is implementation dependent, but it must not introduce ambiguity: the resulting list after modification should be unique for all pairs _start_ and _end_.
       </p>
       <p>
         For example, an implementation may choose to remove the currency symbol following the range separator, to produce "$3–5" instead of "$3–$5".
