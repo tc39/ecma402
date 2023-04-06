@@ -76,15 +76,14 @@
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _hcDefault_ be _dataLocaleData_.[[hourCycle]].
         1. If _hour12_ is *true*, then
-          1. If _hcDefault_ is *"h11"* or *"h23"*, let _hc_ be *"h11"*. Otherwise, let _hc_ be *"h12"*.
+          1. Let _hc_ to _dataLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then
-          1. Let _hc_ be *"h23"*.
+          1. Let _hc_ to _dataLocaleData_.[[hourCycle24]].
         1. Else,
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
-          1. If _hc_ is *null*, set _hc_ to _hcDefault_.
+          1. If _hc_ is *null*, set _hc_ to _dataLocaleData_.[[hourCycle]].
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
@@ -204,6 +203,12 @@
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle12]] must be a String value equal to *"h11"*, *"h12"*.
+        </li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle24]] must be a String value equal to *"h23"*, or *"h24"*.
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
