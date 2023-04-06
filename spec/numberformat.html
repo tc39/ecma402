@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingMode]], [[RoundingIncrement]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
@@ -81,11 +81,16 @@
         1. Set _numberFormat_.[[Notation]] to _notation_.
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_).
         1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, ~string~, &laquo; *"short"*, *"long"* &raquo;, *"short"*).
+        1. Let _defaultUseGrouping_ be *"auto"*.
         1. If _notation_ is *"compact"*, then
           1. Set _numberFormat_.[[CompactDisplay]] to _compactDisplay_.
-        1. Let _useGrouping_ be ? GetOption(_options_, *"useGrouping"*, ~boolean~, ~empty~, *true*).
+          1. Set _defaultUseGrouping_ to *"min2"*.
+        1. NOTE: For historical reasons, the strings *"true"* and *"false"* are accepted and replaced with the default value.
+        1. Let _useGrouping_ be ? GetBooleanOrStringNumberFormatOption(_options_, *"useGrouping"*, &laquo; *"min2"*, *"auto"*, *"always"*, *"true"*, *"false"* &raquo;, _defaultUseGrouping_).
+        1. If _useGrouping_ is *"true"* or _useGrouping_ is *"false"*, set _useGrouping_ to _defaultUseGrouping_.
+        1. If _useGrouping_ is *true*, set _useGrouping_ to *"always"*.
         1. Set _numberFormat_.[[UseGrouping]] to _useGrouping_.
-        1. Let _signDisplay_ be ? GetOption(_options_, *"signDisplay"*, ~string~, &laquo; *"auto"*, *"never"*, *"always"*, *"exceptZero"* &raquo;, *"auto"*).
+        1. Let _signDisplay_ be ? GetOption(_options_, *"signDisplay"*, ~string~, &laquo; *"auto"*, *"never"*, *"always"*, *"exceptZero"*, *"negative"* &raquo;, *"auto"*).
         1. Set _numberFormat_.[[SignDisplay]] to _signDisplay_.
         1. Return _numberFormat_.
       </emu-alg>
@@ -112,6 +117,16 @@
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
+        1. Let _roundingPriority_ be ? GetOption(_options_, *"roundingPriority"*, ~string~, &laquo; *"auto"*, *"morePrecision"*, *"lessPrecision"* &raquo;, *"auto"*).
+        1. Let _roundingIncrement_ be ? GetNumberOption(_options_, *"roundingIncrement"*, 1, 5000, 1).
+        1. If _roundingIncrement_ is not in « 1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000 », throw a *RangeError* exception.
+        1. Let _roundingMode_ be ? GetOption(_options_, *"roundingMode"*, ~string~, &laquo; *"ceil"*, *"floor"*, *"expand"*, *"trunc"*, *"halfCeil"*, *"halfFloor"*, *"halfExpand"*, *"halfTrunc"*, *"halfEven"* &raquo;, *"halfExpand"*).
+        1. Let _trailingZeroDisplay_ be ? GetOption(_options_, *"trailingZeroDisplay"*, ~string~, &laquo; *"auto"*, *"stripIfInteger"* &raquo;, *"auto"*).
+        1. NOTE: All fields required by SetNumberFormatDigitOptions have now been read from _options_. The remainder of this AO interprets the options and may throw exceptions.
+        1. If _roundingIncrement_ is not 1, set _mxfdDefault_ to _mnfdDefault_.
+        1. Set _intlObj_.[[RoundingIncrement]] to _roundingIncrement_.
+        1. Set _intlObj_.[[RoundingMode]] to _roundingMode_.
+        1. Set _intlObj_.[[TrailingZeroDisplay]] to _trailingZeroDisplay_.
         1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
           1. Let _hasSd_ be *true*.
         1. Else,
@@ -120,17 +135,19 @@
           1. Let _hasFd_ be *true*.
         1. Else,
           1. Let _hasFd_ be *false*.
-        1. Let _needSd_ be _hasSd_.
-        1. If _hasSd_ is *true*, or _hasFd_ is *false* and _notation_ is *"compact"*, then
-          1. Let _needFd_ be *false*.
-        1. Else,
-          1. Let _needFd_ be *true*.
+        1. Let _needSd_ be *true*.
+        1. Let _needFd_ be *true*.
+        1. If _roundingPriority_ is *"auto"*, then
+          1. Set _needSd_ to _hasSd_.
+          1. If _needSd_ is *true*, or _hasFd_ is *false* and _notation_ is *"compact"*, then
+            1. Set _needFd_ to *false*.
         1. If _needSd_ is *true*, then
-          1. Assert: _hasSd_ is *true*.
-          1. Set _mnsd_ to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
-          1. Set _mxsd_ to ? DefaultNumberOption(_mxsd_, _mnsd_, 21, 21).
-          1. Set _intlObj_.[[MinimumSignificantDigits]] to _mnsd_.
-          1. Set _intlObj_.[[MaximumSignificantDigits]] to _mxsd_.
+          1. If _hasSd_ is *true*, then
+            1. Set _intlObj_.[[MinimumSignificantDigits]] to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
+            1. Set _intlObj_.[[MaximumSignificantDigits]] to ? DefaultNumberOption(_mxsd_, _intlObj_.[[MinimumSignificantDigits]], 21, 21).
+          1. Else,
+            1. Set _intlObj_.[[MinimumSignificantDigits]] to 1.
+            1. Set _intlObj_.[[MaximumSignificantDigits]] to 21.
         1. If _needFd_ is *true*, then
           1. If _hasFd_ is *true*, then
             1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
@@ -144,11 +161,22 @@
             1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
             1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
         1. If _needSd_ is *false* and _needFd_ is *false*, then
-          1. Set _intlObj_.[[RoundingType]] to ~compactRounding~.
+          1. Set _intlObj_.[[MinimumFractionDigits]] to 0.
+          1. Set _intlObj_.[[MaximumFractionDigits]] to 0.
+          1. Set _intlObj_.[[MinimumSignificantDigits]] to 1.
+          1. Set _intlObj_.[[MaximumSignificantDigits]] to 2.
+          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+        1. Else if _roundingPriority_ is *"morePrecision"*, then
+          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+        1. Else if _roundingPriority_ is *"lessPrecision"*, then
+          1. Set _intlObj_.[[RoundingType]] to ~lessPrecision~.
         1. Else if _hasSd_ is *true*, then
           1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
         1. Else,
           1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
+        1. If _roundingIncrement_ is not 1, then
+          1. If _intlObj_.[[RoundingType]] is not ~fractionDigits~, throw a *TypeError* exception.
+          1. If _intlObj_.[[MaximumFractionDigits]] is not equal to _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
       </emu-alg>
     </emu-clause>
 
@@ -166,7 +194,7 @@
         1. If _currency_ is *undefined*, then
           1. If _style_ is *"currency"*, throw a *TypeError* exception.
         1. Else,
-          1. If ! IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
+          1. If IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
         1. Let _currencyDisplay_ be ? GetOption(_options_, *"currencyDisplay"*, ~string~, &laquo; *"code"*, *"symbol"*, *"narrowSymbol"*, *"name"* &raquo;, *"symbol"*).
         1. Let _currencySign_ be ? GetOption(_options_, *"currencySign"*, ~string~, &laquo; *"standard"*, *"accounting"* &raquo;, *"standard"*).
         1. Let _unit_ be ? GetOption(_options_, *"unit"*, ~string~, ~empty~, *undefined*).
@@ -324,8 +352,42 @@
       <emu-alg>
         1. Let _nf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
-        1. Let _x_ be ? ToNumeric(_value_).
+        1. Let _x_ be ? ToIntlMathematicalValue(_value_).
         1. Return ? FormatNumericToParts(_nf_, _x_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype.formatrange">
+      <h1>Intl.NumberFormat.prototype.formatRange ( _start_, _end_ )</h1>
+
+      <p>
+        When the `formatRange` method is called with arguments _start_ and _end_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
+        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToIntlMathematicalValue(_start_).
+        1. Let _y_ be ? ToIntlMathematicalValue(_end_).
+        1. Return ? FormatNumericRange(_nf_, _x_, _y_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype.formatrangetoparts">
+      <h1>Intl.NumberFormat.prototype.formatRangeToParts ( _start_, _end_ )</h1>
+
+      <p>
+        When the `formatRangeToParts` method is called with arguments _start_ and _end_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
+        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToIntlMathematicalValue(_start_).
+        1. Let _y_ be ? ToIntlMathematicalValue(_end_).
+        1. Return ? FormatNumericRangeToParts(_nf_, _x_, _y_).
       </emu-alg>
     </emu-clause>
 
@@ -347,6 +409,12 @@
           1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. If _nf_.[[RoundingType]] is ~morePrecision~, then
+          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"morePrecision"*).
+        1. Else if _nf_.[[RoundingType]] is ~lessPrecision~, then
+          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"lessPrecision"*).
+        1. Else,
+          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"auto"*).
         1. Return _options_.
       </emu-alg>
 
@@ -427,6 +495,18 @@
             <td>[[SignDisplay]]</td>
             <td>*"signDisplay"*</td>
           </tr>
+          <tr>
+            <td>[[RoundingMode]]</td>
+            <td>*"roundingMode"*</td>
+          </tr>
+          <tr>
+            <td>[[RoundingIncrement]]</td>
+            <td>*"roundingIncrement"*</td>
+          </tr>
+          <tr>
+            <td>[[TrailingZeroDisplay]]</td>
+            <td>*"trailingZeroDisplay"*</td>
+          </tr>
         </table>
       </emu-table>
     </emu-clause>
@@ -458,17 +538,124 @@
       <li>[[Unit]] is a core unit identifier. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~.</li>
-      <li>[[UseGrouping]] is a Boolean value indicating whether a grouping separator should be used.</li>
-      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, or ~compactRounding~, indicating which rounding strategy to use. If ~fractionDigits~, the number is rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significantDigits~, the number is rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~compactRounding~, the number is rounded to 1 maximum fraction digit if there is 1 digit before the decimal separator, and otherwise round to 0 fraction digits.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~, ~morePrecision~, or ~lessPrecision~.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~, ~morePrecision~, or ~lessPrecision~.</li>
+      <li>[[UseGrouping]] is a Boolean or String value indicating the conditions under which a grouping separator should be used. The positions of grouping separators, and whether to display grouping separators for a given number, is implementation-defined. A value *"always"* hints the implementation to display grouping separators if possible; *"min2"*, if there are at least 2 digits in a group; *"auto"*, if the locale prefers to use grouping separators for the number. A value *false* disables grouping separators.</li>
+      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use. If ~fractionDigits~, the number is rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significantDigits~, the number is rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~morePrecision~ or ~lessPrecision~, all four of those settings are used, with specific rules for disambiguating when to use one set versus the other. [[RoundingType]] is derived from the *"roundingPriority"* option and is converted back to *"roundingPriority"* in <emu-xref href="#sec-intl.numberformat.prototype.resolvedoptions"></emu-xref>.</li>
       <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
       <li>[[CompactDisplay]] is one of the String values *"short"* or *"long"*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation. It is only used when [[Notation]] has the value *"compact"*.</li>
       <li>
-        [[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, or *"exceptZero"*, specifying whether to show the sign on negative numbers only, positive and negative numbers including zero, neither positive nor negative numbers, or positive and negative numbers but not zero.
+        [[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, *"exceptZero"*, or *"negative"*, specifying when to include a sign (with non-*"auto"* options respectively corresponding with inclusion always, never, only for non-zero numbers, or only for non-zero negative numbers).
         In scientific notation, this slot affects the sign display of the mantissa but not the exponent.
       </li>
+      <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
+      <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
+      <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
+
+    <emu-table id="table-intl-rounding-modes">
+      <emu-caption>Rounding modes in Intl.NumberFormat</emu-caption>
+      <table class="real-table">
+        <thead>
+          <tr>
+            <th rowspan="2">Identifier</th>
+            <th rowspan="2">Description</th>
+            <th colspan="5">Examples: Round to 0 fraction digits</th>
+          </tr>
+          <tr>
+            <th>-1.5</th>
+            <th>0.4</th>
+            <th>0.5</th>
+            <th>0.6</th>
+            <th>1.5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>*"ceil"*</td>
+            <td>Toward positive infinity</td>
+            <td>⬆️ [-1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [2]</td>
+          </tr>
+          <tr>
+            <td>*"floor"*</td>
+            <td>Toward negative infinity</td>
+            <td>⬇️ [-2]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [1]</td>
+          </tr>
+          <tr>
+            <td>*"expand"*</td>
+            <td>Away from zero</td>
+            <td>⬇️ [-2]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [2]</td>
+          </tr>
+          <tr>
+            <td>*"trunc"*</td>
+            <td>Toward zero</td>
+            <td>⬆️ [-1]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [1]</td>
+          </tr>
+          <tr>
+            <td>*"halfCeil"*</td>
+            <td>Ties toward positive infinity</td>
+            <td>⬆️ [-1]</td>
+            <td>⬇️ [0]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [2]</td>
+          </tr>
+          <tr>
+            <td>*"halfFloor"*</td>
+            <td>Ties toward negative infinity</td>
+            <td>⬇️ [-2]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬆️ [1]</td>
+            <td>⬇️ [1]</td>
+          </tr>
+          <tr>
+            <td>*"halfExpand"*</td>
+            <td>Ties away from zero</td>
+            <td>⬇️ [-2]</td>
+            <td>⬇️ [0]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [2]</td>
+          </tr>
+          <tr>
+            <td>*"halfTrunc"*</td>
+            <td>Ties toward zero</td>
+            <td>⬆️ [-1]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬆️ [1]</td>
+            <td>⬇️ [1]</td>
+          </tr>
+          <tr>
+            <td>*"halfEven"*</td>
+            <td>Ties toward an even rounding increment multiple</td>
+            <td>⬇️ [-2]</td>
+            <td>⬇️ [0]</td>
+            <td>⬇️ [0]</td>
+            <td>⬆️ [1]</td>
+            <td>⬆️ [2]</td>
+          </tr>
+        </tbody>
+      </table>
+      <emu-note>The examples are illustrative of the unique behaviour of each option. ⬆️ means "resolves toward positive infinity"; ⬇️ means "resolves toward negative infinity".</emu-note>
+    </emu-table>
 
     <p>
       Finally, Intl.NumberFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).
@@ -500,7 +687,7 @@
         1. Let _nf_ be _F_.[[NumberFormat]].
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
-        1. Let _x_ be ? ToNumeric(_value_).
+        1. Let _x_ be ? ToIntlMathematicalValue(_value_).
         1. Return ? FormatNumeric(_nf_, _x_).
       </emu-alg>
 
@@ -513,31 +700,49 @@
       <h1>FormatNumericToString ( _intlObject_, _x_ )</h1>
 
       <p>
-        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[RoundingType]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], and [[MaximumFractionDigits]] internal slots), and _x_ (which must be a Number or BigInt value), and returns a Record containing two values: _x_ as a String value with digits formatted according to the five formatting parameters in the field [[FormattedString]], and the final floating decimal value of _x_ after rounding has been performed in the field [[RoundedNumber]].
+        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[RoundingMode]], [[RoundingType]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[RoundingIncrement]], and [[TrailingZeroDisplay]] internal slots), and _x_ (which must be a mathematical value or ~negative-zero~). It rounds _x_ to an Intl mathematical value according to the internal slots of _intlObject_ and returns a Record with a [[RoundedNumber]] field containing containing that result and a [[FormattedString]] field containing a String value representation of that result formatted according to the internal slots of _intlObject_.
       </p>
 
       <emu-alg>
-        1. If ℝ(_x_) &lt; 0 or _x_ is *-0*<sub>𝔽</sub>, let _isNegative_ be *true*; else let _isNegative_ be *false*.
-        1. If _isNegative_, then
-          1. Let _x_ be -_x_.
-        1. If _intlObject_.[[RoundingType]] is ~significantDigits~, then
-          1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]]).
-        1. Else if _intlObject_.[[RoundingType]] is ~fractionDigits~, then
-          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]]).
+        1. If _x_ is ~negative-zero~, then
+          1. Let _isNegative_ be *true*.
+          1. Set _x_ to 0.
         1. Else,
-          1. Assert: _intlObject_.[[RoundingType]] is ~compactRounding~.
-          1. Let _result_ be ToRawPrecision(_x_, 1, 2).
-          1. If _result_.[[IntegerDigitsCount]] &gt; 1, then
-            1. Let _result_ be ToRawFixed(_x_, 0, 0).
-        1. Let _x_ be _result_.[[RoundedNumber]].
+          1. Assert: _x_ is a mathematical value.
+          1. If _x_ &lt; 0, let _isNegative_ be *true*; else let _isNegative_ be *false*.
+          1. If _isNegative_ is *true*, then
+            1. Set _x_ to -_x_.
+        1. Let _unsignedRoundingMode_ be GetUnsignedRoundingMode(_intlObject_.[[RoundingMode]], _isNegative_).
+        1. If _intlObject_.[[RoundingType]] is ~significantDigits~, then
+          1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
+        1. Else if _intlObject_.[[RoundingType]] is ~fractionDigits~, then
+          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
+        1. Else,
+          1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
+          1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
+          1. If _intlObject_.[[RoundingType]] is ~morePrecision~, then
+            1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
+              1. Let _result_ be _sResult_.
+            1. Else,
+              1. Let _result_ be _fResult_.
+          1. Else,
+            1. Assert: _intlObject_.[[RoundingType]] is ~lessPrecision~.
+            1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
+              1. Let _result_ be _fResult_.
+            1. Else,
+              1. Let _result_ be _sResult_.
+        1. Set _x_ to _result_.[[RoundedNumber]].
         1. Let _string_ be _result_.[[FormattedString]].
+        1. If _intlObject_.[[TrailingZeroDisplay]] is *"stripIfInteger"* and <emu-eqn>_x_ modulo 1 = 0</emu-eqn>, then
+          1. Let _i_ be StringIndexOf(_string_, *"."*, 0).
+          1. If _i_ &ne; -1, set _string_ to the substring of _string_ from 0 to _i_.
         1. Let _int_ be _result_.[[IntegerDigitsCount]].
         1. Let _minInteger_ be _intlObject_.[[MinimumIntegerDigits]].
         1. If _int_ &lt; _minInteger_, then
           1. Let _forwardZeros_ be the String consisting of _minInteger_ - _int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Set _string_ to the string-concatenation of _forwardZeros_ and _string_.
-        1. If _isNegative_, then
-          1. Let _x_ be -_x_.
+        1. If _isNegative_ is *true*, then
+          1. If _x_ is 0, set _x_ to ~negative-zero~. Otherwise, set _x_ to -_x_.
         1. Return the Record { [[RoundedNumber]]: _x_, [[FormattedString]]: _string_ }.
       </emu-alg>
     </emu-clause>
@@ -546,7 +751,7 @@
       <h1>
         PartitionNumberPattern (
           _numberFormat_: an object initialized as a NumberFormat,
-          _x_: a Number or a BigInt,
+          _x_: an Intl mathematical value,
         )
       </h1>
       <dl class="header">
@@ -556,17 +761,18 @@
 
       <emu-alg>
         1. Let _exponent_ be 0.
-        1. If _x_ is *NaN*, then
+        1. If _x_ is ~not-a-number~, then
           1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
-        1. Else if _x_ is *+&infin;*<sub>𝔽</sub>, then
+        1. Else if _x_ is ~positive-infinity~, then
           1. Let _n_ be an ILD String value indicating positive infinity.
-        1. Else if _x_ is *-&infin;*<sub>𝔽</sub>, then
+        1. Else if _x_ is ~negative-infinity~, then
           1. Let _n_ be an ILD String value indicating negative infinity.
         1. Else,
-          1. Set _x_ to ℝ(_x_).
-          1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ to 100 &times; _x_.
-          1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
-          1. Set _x_ to _x_ &times; 10<sup>-_exponent_</sup>.
+          1. If _x_ is not ~negative-zero~, then
+            1. Assert: _x_ is a mathematical value.
+            1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ be 100 &times; _x_.
+            1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
+            1. Set _x_ to _x_ &times; 10<sup>-_exponent_</sup>.
           1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
           1. Let _n_ be _formatNumberResult_.[[FormattedString]].
           1. Set _x_ to _formatNumberResult_.[[RoundedNumber]].
@@ -623,13 +829,13 @@
     <emu-clause id="sec-partitionnotationsubpattern" aoid="PartitionNotationSubPattern">
       <h1>PartitionNotationSubPattern ( _numberFormat_, _x_, _n_, _exponent_ )</h1>
       <p>
-        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is a numeric value after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
+        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is an Intl mathematical value after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
       </p>
       <emu-alg>
         1. Let _result_ be a new empty List.
-        1. If _x_ is *NaN*, then
+        1. If _x_ is ~not-a-number~, then
           1. Append a new Record { [[Type]]: *"nan"*, [[Value]]: _n_ } as the last element of _result_.
-        1. Else if _x_ is a non-finite Number, then
+        1. Else if _x_ is ~positive-infinity~ or ~negative-infinity~, then
           1. Append a new Record { [[Type]]: *"infinity"*, [[Value]]: _n_ } as the last element of _result_.
         1. Else,
           1. Let _notationSubPattern_ be GetNotationSubPattern(_numberFormat_, _exponent_).
@@ -662,17 +868,17 @@
               1. Else,
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
-              1. If the _numberFormat_.[[UseGrouping]] is *true*, then
+              1. If the _numberFormat_.[[UseGrouping]] is *false*, then
+                1. Append a new Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } as the last element of _result_.
+              1. Else,
                 1. Let _groupSepSymbol_ be the implementation-, locale-, and numbering system-dependent (ILND) String representing the grouping separator.
-                1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_.
+                1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_, which may depend on the value of _numberFormat_.[[UseGrouping]].
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty,
                   1. Remove the first element from _groups_ and let _integerGroup_ be the value of that element.
                   1. Append a new Record { [[Type]]: *"integer"*, [[Value]]: _integerGroup_ } as the last element of _result_.
                   1. If _groups_ List is not empty, then
                     1. Append a new Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } as the last element of _result_.
-              1. Else,
-                1. Append a new Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } as the last element of _result_.
               1. If _fraction_ is not *undefined*, then
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append a new Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } as the last element of _result_.
@@ -691,7 +897,7 @@
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
                 1. Append a new Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } as the last element of _result_.
                 1. Let _exponent_ be -_exponent_.
-              1. Let _exponentResult_ be ToRawFixed(_exponent_, 1, 0, 0).
+              1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*).
               1. Append a new Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } as the last element of _result_.
             1. Else,
               1. Let _unknown_ be an ILND String based on _x_ and _p_.
@@ -1000,7 +1206,7 @@
       <h1>FormatNumeric ( _numberFormat_, _x_ )</h1>
 
       <p>
-        The FormatNumeric abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), and performs the following steps:
+        The FormatNumeric abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be an Intl mathematical value), and performs the following steps:
       </p>
 
       <emu-alg>
@@ -1016,7 +1222,7 @@
       <h1>FormatNumericToParts ( _numberFormat_, _x_ )</h1>
 
       <p>
-        The FormatNumericToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be a Number or BigInt value), and performs the following steps:
+        The FormatNumericToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be an Intl mathematical value), and performs the following steps:
       </p>
 
       <emu-alg>
@@ -1034,23 +1240,40 @@
     </emu-clause>
 
     <emu-clause id="sec-torawprecision" aoid="ToRawPrecision">
-      <h1>ToRawPrecision ( _x_, _minPrecision_, _maxPrecision_ )</h1>
+      <h1>ToRawPrecision ( _x_, _minPrecision_, _maxPrecision_, _unsignedRoundingMode_ )</h1>
 
       <p>
-        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative Number or BigInt), _minPrecision_, and _maxPrecision_ (both must be integers between 1 and 21), the following steps are taken:
+        ToRawPrecision is an abstract operation that involves solving the following equation, which returns a valid mathematical value given integer inputs:
+      </p>
+
+      <emu-eqn id="eqn-ToRawPrecisionFn" aoid="ToRawPrecisionFn">
+        ToRawPrecisionFn(_n_, _e_, _p_) = _n_ × 10<sup>_e_–_p_+1</sup>
+        where 10<sup>_p_–1</sup> ≤ _n_ &lt; 10<sup>_p_</sup>
+      </emu-eqn>
+
+      <p>
+        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minPrecision_, _maxPrecision_ (both must be integers between 1 and 21), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Set x to ℝ(x).
         1. Let _p_ be _maxPrecision_.
         1. If _x_ = 0, then
           1. Let _m_ be the String consisting of _p_ occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _e_ be 0.
           1. Let _xFinal_ be 0.
         1. Else,
-          1. Let _e_ and _n_ be integers such that 10<sup>_p_ - 1</sup> &le; _n_ &lt; 10<sup>_p_</sup> and for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> - _x_ is as close to zero as possible. If there are two such sets of _e_ and _n_, pick the _e_ and _n_ for which _n_ &times; 10<sup>_e_ - _p_ + 1</sup> is larger.
+          1. [declared="n1,e1,r1"] Let _n1_ and _e1_ each be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawPrecisionFn(_n1_, _e1_, _p_)</emu-eqn>, such that <emu-eqn>_r1_ ≤ _x_</emu-eqn> and _r1_ is maximized.
+          1. [declared="n2,e2,r2"] Let _n2_ and _e2_ each be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawPrecisionFn(_n2_, _e2_, _p_)</emu-eqn>, such that <emu-eqn>_r2_ ≥ _x_</emu-eqn> and _r2_ is minimized.
+          1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+          1. If _r_ is _r1_, then
+            1. Let _n_ be _n1_.
+            1. Let _e_ be _e1_.
+            1. Let _xFinal_ be _r1_.
+          1. Else,
+            1. Let _n_ be _n2_.
+            1. Let _e_ be _e2_.
+            1. Let _xFinal_ be _r2_.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
-          1. Let _xFinal_ be _n_ &times; 10<sup>_e_ - _p_ + 1</sup>.
         1. If _e_ &ge; (_p_ - 1), then
           1. Set _m_ to the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Let _int_ be _e_ + 1.
@@ -1068,22 +1291,36 @@
             1. Decrease _cut_ by 1.
           1. If the last code unit of _m_ is 0x002E (FULL STOP), then
             1. Remove the last code unit from _m_.
-        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
+        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_, [[RoundingMagnitude]]: _e_–_p_+1 }.
       </emu-alg>
     </emu-clause>
 
     <emu-clause id="sec-torawfixed" aoid="ToRawFixed">
-      <h1>ToRawFixed ( _x_, _minInteger_, _minFraction_, _maxFraction_ )</h1>
+      <h1>ToRawFixed ( _x_, _minFraction_, _maxFraction_, _roundingIncrement_, _unsignedRoundingMode_ )</h1>
 
       <p>
-        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative Number or BigInt), _minInteger_ (which must be an integer between 1 and 21), _minFraction_, and _maxFraction_ (which must be integers between 0 and 20), the following steps are taken:
+        ToRawFixed is an abstract operation that involves solving the following equation, which returns a valid mathematical value given integer inputs:
+      </p>
+
+      <emu-eqn id="eqn-ToRawFixedFn" aoid="ToRawFixedFn">
+        ToRawFixedFn(_n_, _f_) = _n_ × 10<sup>–_f_</sup>
+      </emu-eqn>
+
+      <p>
+        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minFraction_, _maxFraction_ (which must be integers between 0 and 20), _roundingIncrement_ (an integer), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
       </p>
 
       <emu-alg>
-        1. Set x to ℝ(x).
         1. Let _f_ be _maxFraction_.
-        1. Let _n_ be an integer for which the exact mathematical value of _n_ / 10<sup>_f_</sup> - _x_ is as close to zero as possible. If there are two such _n_, pick the larger _n_.
-        1. Let _xFinal_ be _n_ / 10<sup>_f_</sup>.
+        1. [declared="n1,r1"] Let _n1_ be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawFixedFn(_n1_, _f_)</emu-eqn>, such that <emu-eqn>_n1_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r1_ ≤ _x_</emu-eqn>, and _r1_ is maximized.
+        1. [declared="n2,r2"] Let _n2_ be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawFixedFn(_n2_, _f_)</emu-eqn>, such that <emu-eqn>_n2_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r2_ ≥ _x_</emu-eqn>, and _r2_ is minimized.
+        1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+        1. If _r_ is _r1_, then
+          1. Let _n_ be _n1_.
+          1. Let _xFinal_ be _r1_.
+        1. Else,
+          1. Let _n_ be _n2_.
+          1. Let _xFinal_ be _r2_.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ &ne; 0, then
           1. Let _k_ be the length of _m_.
@@ -1101,7 +1338,7 @@
           1. Decrease _cut_ by 1.
         1. If the last code unit of _m_ is 0x002E (FULL STOP), then
           1. Remove the last code unit from _m_.
-        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_ }.
+        1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_, [[RoundingMagnitude]]: –_f_ }.
       </emu-alg>
     </emu-clause>
 
@@ -1126,7 +1363,7 @@
     <emu-clause id="sec-getnumberformatpattern" aoid="GetNumberFormatPattern">
       <h1>GetNumberFormatPattern ( _numberFormat_, _x_ )</h1>
       <p>
-        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
       </p>
       <emu-alg>
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
@@ -1158,27 +1395,48 @@
         1. Else,
           1. Assert: _style_ is *"decimal"*.
           1. Let _patterns_ be _patterns_.[[decimal]].
+        1. If _x_ is ~negative-infinity~, then
+          1. Let _category_ be ~negative-non-zero~.
+        1. Else if _x_ is ~negative-zero~, then
+          1. Let _category_ be ~negative-zero~.
+        1. Else if _x_ is ~not-a-number~, then
+          1. Let _category_ be ~positive-zero~.
+        1. Else if _x_ is ~positive-infinity~, then
+          1. Let _category_ be ~positive-non-zero~.
+        1. Else,
+          1. Assert: _x_ is a mathematical value.
+          1. If _x_ &lt; 0, then
+            1. Let _category_ be ~negative-non-zero~.
+          1. Else if _x_ &gt; 0, then
+            1. Let _category_ be ~positive-non-zero~.
+          1. Else,
+            1. Let _category_ be ~positive-zero~.
         1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
         1. If _signDisplay_ is *"never"*, then
           1. Let _pattern_ be _patterns_.[[zeroPattern]].
         1. Else if _signDisplay_ is *"auto"*, then
-          1. If _x_ is 0 or _x_ &gt; 0 or _x_ is *NaN*, then
+          1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else if _signDisplay_ is *"always"*, then
-          1. If _x_ is 0 or _x_ &gt; 0 or _x_ is *NaN*, then
+          1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
+            1. Let _pattern_ be _patterns_.[[positivePattern]].
+          1. Else,
+            1. Let _pattern_ be _patterns_.[[negativePattern]].
+        1. Else if _signDisplay_ is *"exceptZero"*, then
+          1. If _category_ is ~positive-zero~ or ~negative-zero~, then
+            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+          1. Else if _category_ is ~positive-non-zero~, then
             1. Let _pattern_ be _patterns_.[[positivePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[negativePattern]].
         1. Else,
-          1. Assert: _signDisplay_ is *"exceptZero"*.
-          1. If _x_ is *NaN*, or if _x_ is finite and ℝ(_x_) is 0, then
-            1. Let _pattern_ be _patterns_.[[zeroPattern]].
-          1. Else if ℝ(_x_) &gt; 0, then
-            1. Let _pattern_ be _patterns_.[[positivePattern]].
-          1. Else,
+          1. Assert: _signDisplay_ is *"negative"*.
+          1. If _category_ is ~negative-non-zero~, then
             1. Let _pattern_ be _patterns_.[[negativePattern]].
+          1. Else,
+            1. Let _pattern_ be _patterns_.[[zeroPattern]].
         1. Return _pattern_.
       </emu-alg>
     </emu-clause>
@@ -1234,7 +1492,7 @@
     <emu-clause id="sec-computeexponentformagnitude" aoid="ComputeExponentForMagnitude">
       <h1>ComputeExponentForMagnitude ( _numberFormat_, _magnitude_ )</h1>
       <p>
-        The abstract operation ComputeExponentHelper computes an exponent by which to scale a number of the given magnitude (power of ten of the most significant digit) according to the locale and the desired notation (scientific, engineering, or compact).
+        The abstract operation ComputeExponentForMagnitude computes an exponent by which to scale a number of the given magnitude (power of ten of the most significant digit) according to the locale and the desired notation (scientific, engineering, or compact).
       </p>
       <emu-alg>
         1. Let _notation_ be _numberFormat_.[[Notation]].
@@ -1249,6 +1507,311 @@
           1. Assert: _notation_ is *"compact"*.
           1. Let _exponent_ be an implementation- and locale-dependent (ILD) integer by which to scale a number of the given magnitude in compact notation for the current locale.
           1. Return _exponent_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-runtime-semantics-stringintlmv" type="sdo">
+      <h1>Runtime Semantics: StringIntlMV</h1>
+      <dl class="header">
+      </dl>
+      <emu-note>
+        <p>The conversion of a |StringNumericLiteral| to a Number value is similar overall to the determination of the NumericValue of a |NumericLiteral| (see <emu-xref href="#sec-literals-numeric-literals"></emu-xref>), but some of the details are different.</p>
+      </emu-note>
+      <emu-grammar>StringNumericLiteral ::: StrWhiteSpace?</emu-grammar>
+      <emu-alg>
+        1. Return 0.
+      </emu-alg>
+      <emu-grammar>StringNumericLiteral ::: StrWhiteSpace? StrNumericLiteral StrWhiteSpace?</emu-grammar>
+      <emu-alg>
+        1. Return StringIntlMV of |StrNumericLiteral|.
+      </emu-alg>
+      <emu-grammar>StrNumericLiteral ::: NonDecimalIntegerLiteral</emu-grammar>
+      <emu-alg>
+        1. Return MV of |NonDecimalIntegerLiteral|.
+      </emu-alg>
+      <emu-grammar>StrDecimalLiteral ::: `-` StrUnsignedDecimalLiteral</emu-grammar>
+      <emu-alg>
+        1. Let _a_ be StringIntlMV of |StrUnsignedDecimalLiteral|.
+        1. If _a_ is 0, return ~negative-zero~.
+        1. If _a_ is ~positive-infinity~, return ~negative-infinity~.
+        1. Return -_a_.
+      </emu-alg>
+      <emu-grammar>StrUnsignedDecimalLiteral ::: `Infinity`</emu-grammar>
+      <emu-alg>
+        1. Return ~positive-infinity~.
+      </emu-alg>
+      <emu-grammar>StrUnsignedDecimalLiteral ::: DecimalDigits `.` DecimalDigits? ExponentPart?</emu-grammar>
+      <emu-alg>
+        1. Let _a_ be MV of the first |DecimalDigits|.
+        1. If the second |DecimalDigits| is present, then
+          1. Let _b_ be MV of the second |DecimalDigits|.
+          1. Let _n_ be the number of code points in the second |DecimalDigits|.
+        1. Else,
+          1. Let _b_ be 0.
+          1. Let _n_ be 0.
+        1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
+        1. Return (_a_ + (_b_ &times; 10<sup>-_n_</sup>)) &times; 10<sup>_e_</sup>.
+      </emu-alg>
+      <emu-grammar>StrUnsignedDecimalLiteral ::: `.` DecimalDigits ExponentPart?</emu-grammar>
+      <emu-alg>
+        1. Let _b_ be MV of |DecimalDigits|.
+        1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
+        1. Let _n_ be the number of code points in |DecimalDigits|.
+        1. Return _b_ &times; 10<sup>_e_ - _n_</sup>.
+      </emu-alg>
+      <emu-grammar>StrUnsignedDecimalLiteral ::: DecimalDigits ExponentPart?</emu-grammar>
+      <emu-alg>
+        1. Let _a_ be MV of |DecimalDigits|.
+        1. If |ExponentPart| is present, let _e_ be MV of |ExponentPart|. Otherwise, let _e_ be 0.
+        1. Return _a_ &times; 10<sup>_e_</sup>.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-tointlmathematicalvalue" aoid="ToIntlMathematicalValue">
+      <h1>ToIntlMathematicalValue ( _value_ )</h1>
+      <p>
+        The abstract operation ToIntlMathematicalValue takes argument _value_. It returns _value_ converted to an <dfn id="intl-mathematical-value">Intl mathematical value</dfn>, which is a mathematical value together with ~positive-infinity~, ~negative-infinity~, ~not-a-number~, and ~negative-zero~. This abstract operation is similar to <emu-xref href="#sec-tonumeric"></emu-xref>, but a mathematical value can be returned instead of a Number or BigInt, so that exact decimal values can be represented. The following steps are taken:
+      </p>
+      <emu-alg>
+        1. Let _primValue_ be ? ToPrimitive(_value_, ~number~).
+        1. If Type(_primValue_) is BigInt, return ℝ(_primValue_).
+        1. If Type(_primValue_) is String, then
+          1. Let _str_ be _primValue_.
+        1. Else,
+          1. Let _x_ be ? ToNumber(_primValue_).
+          1. If _x_ is *-0*<sub>𝔽</sub>, return ~negative-zero~.
+          1. Let _str_ be Number::toString(_x_, 10).
+        1. Let _text_ be StringToCodePoints(_str_).
+        1. Let _literal_ be ParseText(_text_, |StringNumericLiteral|).
+        1. If _literal_ is a List of errors, return ~not-a-number~.
+        1. Let _intlMV_ be the StringIntlMV of _literal_.
+        1. If _intlMV_ is a mathematical value, then
+          1. Let _rounded_ be RoundMVResult(abs(_intlMV_)).
+          1. If _rounded_ is *+∞*<sub>𝔽</sub> and _intlMV_ &lt; 0, return ~negative-infinity~.
+          1. If _rounded_ is *+∞*<sub>𝔽</sub>, return ~positive-infinity~.
+          1. If _rounded_ is *+0*<sub>𝔽</sub> and _intlMV_ &lt; 0, return ~negative-zero~.
+          1. If _rounded_ is *+0*<sub>𝔽</sub>, return 0.
+        1. Return _intlMV_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getunsignedroundingmode" aoid="GetUnsignedRoundingMode">
+      <h1>GetUnsignedRoundingMode ( _roundingMode_, _isNegative_ )</h1>
+      <p>
+        The abstract operation GetUnsignedRoundingMode returns the rounding mode that should be applied to the absolute value of a number to produce the same result as if _roundingMode_, one of the String values in the *Identifier* column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, were applied to the signed value of the number (negative if the boolean _isNegative_ is *true*, or positive otherwise). The following steps are taken:
+      </p>
+      <emu-alg>
+        1. If _isNegative_ is *true*, return the specification type in the third column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> where the first column is _roundingMode_ and the second column is "negative".
+        1. Else, return the specification type in the third column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> where the first column is _roundingMode_ and the second column is "positive".
+      </emu-alg>
+      <emu-table id="table-intl-unsigned-rounding-modes">
+        <emu-caption>Conversion from rounding mode to unsigned rounding mode</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Identifier</th>
+              <th>Sign</th>
+              <th>Unsigned Rounding Mode</th>
+            </tr>
+          </thead>
+          <tr>
+            <td rowspan="2">*"ceil"*</td>
+            <td>positive</td>
+            <td>~infinity~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~zero~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"floor"*</td>
+            <td>positive</td>
+            <td>~zero~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~infinity~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"expand"*</td>
+            <td>positive</td>
+            <td>~infinity~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~infinity~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"trunc"*</td>
+            <td>positive</td>
+            <td>~zero~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~zero~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"halfCeil"*</td>
+            <td>positive</td>
+            <td>~half-infinity~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~half-zero~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"halfFloor"*</td>
+            <td>positive</td>
+            <td>~half-zero~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~half-infinity~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"halfExpand"*</td>
+            <td>positive</td>
+            <td>~half-infinity~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~half-infinity~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"halfTrunc"*</td>
+            <td>positive</td>
+            <td>~half-zero~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~half-zero~</td>
+          </tr>
+          <tr>
+            <td rowspan="2">*"halfEven"*</td>
+            <td>positive</td>
+            <td>~half-even~</td>
+          </tr>
+          <tr>
+            <td>negative</td>
+            <td>~half-even~</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-applyunsignedroundingmode" aoid="ApplyUnsignedRoundingMode">
+      <h1>ApplyUnsignedRoundingMode ( _x_, _r1_, _r2_, _unsignedRoundingMode_ )</h1>
+      <p>
+        The abstract operation ApplyUnsignedRoundingMode considers _x_ (a mathematical value), bracketed below by _r1_ (a mathematical value) and above by _r2_ (a mathematical value), and returns either _r1_ or _r2_ according to _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*). The following steps are taken:
+      </p>
+      <emu-alg>
+        1. If _x_ is equal to _r1_, return _r1_.
+        1. Assert: _r1_ &lt; _x_ &lt; _r2_.
+        1. Assert: _unsignedRoundingMode_ is not *undefined*.
+        1. If _unsignedRoundingMode_ is ~zero~, return _r1_.
+        1. If _unsignedRoundingMode_ is ~infinity~, return _r2_.
+        1. Let _d1_ be <emu-eqn>_x_ – _r1_</emu-eqn>.
+        1. Let _d2_ be <emu-eqn>_r2_ – _x_</emu-eqn>.
+        1. If _d1_ &lt; _d2_, return _r1_.
+        1. If _d2_ &lt; _d1_, return _r2_.
+        1. Assert: _d1_ is equal to _d2_.
+        1. If _unsignedRoundingMode_ is ~half-zero~, return _r1_.
+        1. If _unsignedRoundingMode_ is ~half-infinity~, return _r2_.
+        1. Assert: _unsignedRoundingMode_ is ~half-even~.
+        1. Let _cardinality_ be <emu-eqn>(_r1_ / (_r2_ – _r1_)) modulo 2</emu-eqn>.
+        1. If _cardinality_ is 0, return _r1_.
+        1. Return _r2_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-partitionnumberrangepattern" aoid="PartitionNumberRangePattern">
+      <h1>PartitionNumberRangePattern ( _numberFormat_, _x_, _y_ )</h1>
+      <p>
+        The abstract operation PartitionNumberRangePattern creates the parts for a localized number range according to _x_ (which must be an Intl mathematical value), _y_ (which must be an Intl mathematical value), and the formatting options of _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
+      </p>
+      <emu-alg>
+        1. If _x_ is ~not-a-number~ or _y_ is ~not-a-number~, throw a *RangeError* exception.
+        1. Let _result_ be a new empty List.
+        1. Let _xResult_ be ? PartitionNumberPattern(_numberFormat_, _x_).
+        1. Let _yResult_ be ? PartitionNumberPattern(_numberFormat_, _y_).
+        1. If ! FormatNumeric(_numberFormat_, _x_) is equal to ! FormatNumeric(_numberFormat_, _y_), then
+          1. Let _appxResult_ be ? FormatApproximately(_numberFormat_, _xResult_).
+          1. For each element _r_ in _appxResult_, do
+            1. Set _r_.[[Source]] to *"shared"*.
+          1. Return _appxResult_.
+        1. For each element _r_ in _xResult_, do
+          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } as the last element of _result_.
+        1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
+        1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } element to _result_.
+        1. For each element _r_ in _yResult_, do
+          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } as the last element of _result_.
+        1. Return ! CollapseNumberRange(_result_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-formatapproximately" aoid="FormatApproximately">
+      <h1>FormatApproximately ( _numberFormat_, _result_ )</h1>
+      <p>
+        The FormatApproximately abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberPattern, by adding a new Record for the approximately sign, which may depend on _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
+      </p>
+      <emu-alg>
+        1. Let _approximatelySign_ be an ILND String value used to signify that a number is approximate.
+        1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at an ILND index in _result_. For example, if _numberFormat_ has [[Locale]] *"en-US"* and [[NumberingSystem]] *"latn"* and [[Style]] *"decimal"*, the new Record might be inserted before the first element of _result_.
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-collapsenumberrange" aoid="CollapseNumberRange">
+      <h1>CollapseNumberRange ( _result_ )</h1>
+      <p>
+        The CollapseNumberRange abstract operation modifies _result_ (which must be a List of { [[Type]], [[Value]], [[Source]] } Records as constructed within PartitionNumberRangePattern) by removing redundant information and resolving internal inconsistency, and returns the resulting List. The algorithm is implementation dependent, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.
+      </p>
+      <p>
+        For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.
+      </p>
+      <p>
+        An implementation may also modify Record [[Value]] fields for grammatical correctness; for example, converting a _results_ List representing *"0.5 miles–1 mile"* into one representing *"0.5–1 miles"*.
+      </p>
+      <p>
+        Returning _result_ unmodified is guaranteed to be a correct implementation of CollapseNumberRange.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-formatnumericrange" aoid="FormatNumericRange">
+      <h1>FormatNumericRange ( _numberFormat_, _x_, _y_ )</h1>
+
+      <p>
+        The FormatNumericRange abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
+        1. Let _result_ be the empty String.
+        1. For each element _part_ in _parts_, do
+          1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-formatnumericrangetoparts" aoid="FormatNumericRangeToParts">
+      <h1>FormatNumericRangeToParts ( _numberFormat_, _x_, _y_ )</h1>
+
+      <p>
+        The FormatNumericRangeToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
+        1. Let _result_ be ! ArrayCreate(0).
+        1. Let _n_ be 0.
+        1. For each element _part_ in _parts_, do
+          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_O_, *"source"*, _part_.[[Source]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
+          1. Increment _n_ by 1.
+        1. Return _result_.
       </emu-alg>
     </emu-clause>
   </emu-clause>
