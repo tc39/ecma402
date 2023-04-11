@@ -1049,9 +1049,9 @@
         The PartitionDateTimeRangePattern abstract operation is called with arguments _dateTimeFormat_ (which must be an object initialized as a DateTimeFormat), _x_ (which must be a Number value) and _y_ (which must be a Number value), interprets _x_ and _y_ as time values as specified in es2023, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_. The following steps are taken:
       </p>
       <emu-alg>
-        1. Let _x_ be TimeClip(_x_).
+        1. Set _x_ to TimeClip(_x_).
         1. If _x_ is *NaN*, throw a *RangeError* exception.
-        1. Let _y_ be TimeClip(_y_).
+        1. Set _y_ to TimeClip(_y_).
         1. If _y_ is *NaN*, throw a *RangeError* exception.
         1. Let _tm1_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _tm2_ be ToLocalTime(ℤ(ℝ(_y_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
@@ -1059,13 +1059,13 @@
         1. Let _rangePattern_ be *undefined*.
         1. Let _dateFieldsPracticallyEqual_ be *true*.
         1. Let _patternContainsLargerDateField_ be *false*.
-        1. While _dateFieldsPracticallyEqual_ is *true* and _patternContainsLargerDateField_ is *false*, repeat for each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref> in order, except the header row:
+        1. For each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, except the header row, in table order, do
           1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
           1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rp_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rp_ be *undefined*.
           1. If _rangePattern_ is not *undefined* and _rp_ is *undefined*, then
             1. Set _patternContainsLargerDateField_ to *true*.
-          1. Else,
-            1. Let _rangePattern_ be _rp_.
+          1. If _dateFieldsPracticallyEqual_ is *true* and _patternContainsLargerDateField_ is *false*, then
+            1. Set _rangePattern_ to _rp_.
             1. If _fieldName_ is equal to [[AmPm]], then
               1. Let _v1_ be _tm1_.[[Hour]].
               1. Let _v2_ be _tm2_.[[Hour]].
@@ -1092,15 +1092,16 @@
               1. If _v1_ is not equal to _v2_, then
                 1. Set _dateFieldsPracticallyEqual_ to *false*.
         1. If _dateFieldsPracticallyEqual_ is *true*, then
+          1. Let _result_ be a new empty List.
           1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
           1. Let _patternParts_ be PartitionPattern(_pattern_).
-          1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
-          1. For each Record { [[Type]], [[Value]] } _r_ in _result_, do
-            1. Set _r_.[[Source]] to *"shared"*.
+          1. Let _partResult_ be ? FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
+          1. For each Record { [[Type]], [[Value]] } _r_ in _partResult_, do
+            1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } as the last element of _result_.
           1. Return _result_.
         1. Let _result_ be a new empty List.
         1. If _rangePattern_ is *undefined*, then
-          1. Let _rangePattern_ be _rangePatterns_.[[Default]].
+          1. Set _rangePattern_ to _rangePatterns_.[[Default]].
         1. For each Record { [[Pattern]], [[Source]] } _rangePatternPart_ in _rangePattern_.[[PatternParts]], do
           1. Let _pattern_ be _rangePatternPart_.[[Pattern]].
           1. Let _source_ be _rangePatternPart_.[[Source]].
@@ -1111,8 +1112,7 @@
           1. Let _patternParts_ be PartitionPattern(_pattern_).
           1. Let _partResult_ be ? FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _z_, _rangePattern_).
           1. For each Record { [[Type]], [[Value]] } _r_ in _partResult_, do
-            1. Set _r_.[[Source]] to _source_.
-          1. Add all elements in _partResult_ to _result_ in order.
+            1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } as the last element of _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
