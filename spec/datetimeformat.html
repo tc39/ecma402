@@ -1063,6 +1063,7 @@
           1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
           1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rangePattern_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rangePattern_ be *undefined*.
           1. If _selectedRangePattern_ is not *undefined* and _rangePattern_ is *undefined*, then
+            1. NOTE: Because there is no range pattern for differences at or below this field, no further checks will be performed.
             1. Set _checkMoreFields_ to *false*.
           1. If _relevantFieldsEqual_ is *true* and _checkMoreFields_ is *true*, then
             1. Set _selectedRangePattern_ to _rangePattern_.
