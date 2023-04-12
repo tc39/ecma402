@@ -29,14 +29,14 @@
     <h1>Language Tags</h1>
 
     <p>
-      This specification identifies locales using <dfn variants="Unicode BCP 47 locale identifier">Unicode BCP 47 locale identifiers</dfn> as defined by <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, and its algorithms refer to <dfn variants="language tag nonterminal">language tag nonterminals</dfn> defined in the grammars of <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Section 3 Unicode Language and Locale Identifiers</a>.
+      This specification identifies locales using <dfn variants="Unicode BCP 47 locale identifier">Unicode BCP 47 locale identifiers</dfn> as defined by <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, and its algorithms refer to <dfn variants="Unicode locale nonterminal">Unicode locale nonterminals</dfn> defined in the grammars of <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Section 3 Unicode Language and Locale Identifiers</a>.
       Each such identifier can also be referred to as a <dfn variants="language tags">language tag</dfn>, and is in fact a valid language tag as that term is used in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a>.
       A locale identifier in canonical form as specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 Part 1 Core, Section 3.2.1 Canonical Unicode Locale Identifiers</a> is referred to as a "<dfn variants="Unicode canonicalized locale identifiers">Unicode canonicalized locale identifier</dfn>".
     </p>
 
     <p>
       Locale identifiers consist of case-insensitive Unicode Basic Latin alphanumeric <dfn id="bcp-47-subtag" variants="subtag">subtags</dfn> separated by *"-"* (U+002D HYPHEN-MINUS) characters, with single-character <emu-not-ref>subtags</emu-not-ref> referred to as "<dfn variants="singleton subtag">singleton subtags</dfn>".
-      <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> language tag nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>. It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators. For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
+      <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> Unicode locale nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>. It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators. For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
     </p>
 
     <p>
@@ -55,21 +55,21 @@
       </dl>
       <emu-alg>
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
-        1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> language tag nonterminal, return *false*.
+        1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal, return *false*.
         1. If _lowerLocale_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, return *false*.
-        1. Let _lang_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> language tag nonterminal.
-        1. Let _langRefinements_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> language tag nonterminal.
-        1. If _langRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
+        1. Let _lang_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Let _langRefinements_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> Unicode locale nonterminal.
+        1. If _langRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, return *false*.
         1. Let _allExtensions_ be the suffix of _lowerLocale_ following _lang_.
-        1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> language tag nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
+        1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
-          1. Let _transformExtension_ be the longest <emu-not-ref>substring</emu-not-ref> of _extensions_ matched by the <code>transformed_extensions</code> language tag nonterminal. If there is no such <emu-not-ref>substring</emu-not-ref>, return *true*.
+          1. Let _transformExtension_ be the longest <emu-not-ref>substring</emu-not-ref> of _extensions_ matched by the <code>transformed_extensions</code> Unicode locale nonterminal. If there is no such <emu-not-ref>substring</emu-not-ref>, return *true*.
           1. Assert: The substring of _transformExtension_ from 0 to 3 is *"-t-"*.
           1. Let _tPrefix_ be the substring of _transformExtension_ from 3.
-          1. Let _tlang_ be the longest prefix of _tPrefix_ matched by the <code>tlang</code> language tag nonterminal. If there is no such prefix, return *true*.
-          1. Let _tlangRefinements_ be the longest suffix of _tlang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> language tag nonterminal.
-          1. If _tlangRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> language tag nonterminal, return *false*.
+          1. Let _tlang_ be the longest prefix of _tPrefix_ matched by the <code>tlang</code> Unicode locale nonterminal. If there is no such prefix, return *true*.
+          1. Let _tlangRefinements_ be the longest suffix of _tlang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+          1. If _tlangRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
@@ -86,7 +86,7 @@
       </dl>
       <emu-alg>
         1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
-        1. If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> language tag nonterminal, let _localeWithoutPrivateUse_ be the prefix of _localeId_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _localeWithoutPrivateUse_ be _localeId_.
+        1. If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _localeWithoutPrivateUse_ be the prefix of _localeId_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _localeWithoutPrivateUse_ be _localeId_.
         1. Let _extension_ be the longest <emu-not-ref>substring</emu-not-ref> of _localeWithoutPrivateUse_ that is a Unicode locale extension sequence. If there is no such <emu-not-ref>substring</emu-not-ref>, let _extension_ be the empty String.
         1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _extension_ is not the empty String, then
           1. Let _newExtension_ be *"u"*.
