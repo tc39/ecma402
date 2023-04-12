@@ -166,10 +166,10 @@ emu-normative-optional:before {
 <emu-import href="conformance.html"><emu-clause id="conformance">
   <h1><span class="secnum">2</span> Conformance</h1>
   <p>
-    A conforming implementation of the ECMAScript 2023 Internationalization API Specification must conform to the ECMAScript 2023 Language Specification (ECMA-262 14<sup>th</sup> Edition, or successor), and must provide and support all the objects, properties, functions, and program semantics described in this specification. Nothing in this specification is intended to allow behaviour that is otherwise prohibited by ECMA-262, and any such conflict should be considered an editorial error rather than an override of constraints from ECMA-262.
+    A conforming implementation of this specification must conform to the ECMAScript 2023 Language Specification (ECMA-262 14<sup>th</sup> Edition, or successor), and must provide and support all the objects, properties, functions, and program semantics described in this specification. Nothing in this specification is intended to allow behaviour that is otherwise prohibited by ECMA-262, and any such conflict should be considered an editorial error rather than an override of constraints from ECMA-262.
   </p>
   <p>
-    A conforming implementation of the ECMAScript 2023 Internationalization API Specification is permitted to provide additional objects, properties, and functions beyond those described in this specification. In particular, a conforming implementation of the ECMAScript 2023 Internationalization API Specification is permitted to provide properties not described in this specification, and values for those properties, for objects that are described in this specification. A conforming implementation is not permitted to add optional arguments to the functions defined in this specification.
+    A conforming implementation is permitted to provide additional objects, properties, and functions beyond those described in this specification. In particular, a conforming implementation is permitted to provide properties not described in this specification, and values for those properties, for objects that are described herein. A conforming implementation is not permitted to add optional arguments to the functions defined in this specification.
   </p>
   <p>
     A conforming implementation is permitted to accept additional values, and then have <emu-xref href="#implementation-defined"><a href="https://tc39.es/ecma262/#implementation-defined">implementation-defined</a></emu-xref> behaviour instead of throwing a <emu-val>RangeError</emu-val>, for the following properties of <var>options</var> arguments:
@@ -259,7 +259,7 @@ emu-normative-optional:before {
       Internationalization of software means designing it such that it supports or can be easily adapted to support the needs of users speaking different languages and having different cultural expectations, and enables worldwide communication between them. Localization then is the actual adaptation to a specific language and culture. Globalization of software is commonly understood to be the combination of internationalization and localization. Globalization starts at the lowest level by using a text representation that supports all languages in the world, and using standard identifiers to identify languages, countries, time zones, and other relevant parameters. It continues with using a user interface language and data presentation that the user understands, and finally often requires product-specific adaptations to the user's language, culture, and environment.
     </p>
     <p>
-      The ECMAScript 2023 Language Specification lays the foundation by using Unicode for text representation and by providing a few language-sensitive functions, but gives applications little control over the behaviour of these functions. The ECMAScript 2023 Internationalization API Specification builds on this by providing a set of customizable language-sensitive functionality. The API is useful even for applications that themselves are not internationalized, as even applications targeting only one language and one region need to properly support that one language and region. However, the API also enables applications that support multiple languages and regions, even concurrently, as may be needed in server environments.
+      The ECMAScript 2023 Language Specification lays the foundation by using Unicode for text representation and by providing a few language-sensitive functions, but gives applications little control over the behaviour of these functions. This specification builds on that foundation by providing a set of customizable language-sensitive functionality. The API is useful even for applications that themselves are not internationalized, as even applications targeting only one language and one region need to properly support that one language and region. However, the API also enables applications that support multiple languages and regions, even concurrently, as may be needed in server environments.
     </p>
   </emu-clause>
 
@@ -267,10 +267,10 @@ emu-normative-optional:before {
     <h1><span class="secnum">4.2</span> API Overview</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification is designed to complement the ECMAScript 2023 Language Specification by providing key language-sensitive functionality. The API can be added to an implementation of the ECMAScript 2023 Language Specification (ECMA-262 14<sup>th</sup> Edition, or successor) in whole or in part. This specification introduces new language values observable to ECMAScript code (such as the value of a [[FallbackSymbol]] internal slot and the set of values transitively reachable from <emu-xref href="#intl-object" id="_ref_184"><a href="#intl-object">%Intl%</a></emu-xref> by <emu-xref href="#sec-property-accessors"><a href="https://tc39.es/ecma262/#sec-property-accessors">property access</a></emu-xref>), and also refines the definition of some functions specified in ECMA-262 (as described below). Neither category prohibits behaviour that is otherwise permitted for values and interfaces defined in ECMA-262, in order to support adoption of this specification by any implementation of ECMA-262.
+      This specification is designed to complement the ECMAScript 2023 Language Specification by providing key language-sensitive functionality. The API can be added to an implementation of the ECMAScript 2023 Language Specification (ECMA-262 14<sup>th</sup> Edition, or successor) in whole or in part. This specification introduces new language values observable to ECMAScript code (such as the value of a [[FallbackSymbol]] internal slot and the set of values transitively reachable from <emu-xref href="#intl-object" id="_ref_184"><a href="#intl-object">%Intl%</a></emu-xref> by <emu-xref href="#sec-property-accessors"><a href="https://tc39.es/ecma262/#sec-property-accessors">property access</a></emu-xref>), and also refines the definition of some functions specified in ECMA-262 (as described below). Neither category prohibits behaviour that is otherwise permitted for values and interfaces defined in ECMA-262, in order to support adoption of this specification by any implementation of ECMA-262.
     </p>
     <p>
-      The ECMAScript 2023 Internationalization API Specification provides several key pieces of language-sensitive functionality that are required in most applications: String comparison (collation), number formatting, date and time formatting, relative time formatting, display names, list formatting, locale selection and operation, pluralization rules, case conversion, and text segmentation. While the ECMAScript 2023 Language Specification provides functions for this basic functionality (on <emu-xref href="#sec-array.prototype"><a href="https://tc39.es/ecma262/#sec-array.prototype">Array.prototype</a></emu-xref>: <code>toLocaleString</code>; on <emu-xref href="#sec-string.prototype"><a href="https://tc39.es/ecma262/#sec-string.prototype">String.prototype</a></emu-xref>: <code>localeCompare</code>, <code>toLocaleLowerCase</code>, <code>toLocaleUpperCase</code>; on <emu-xref href="#sec-number.prototype"><a href="https://tc39.es/ecma262/#sec-number.prototype">Number.prototype</a></emu-xref>: <code>toLocaleString</code>; on <emu-xref href="#sec-date.prototype"><a href="https://tc39.es/ecma262/#sec-date.prototype">Date.prototype</a></emu-xref>: <code>toLocaleString</code>, <code>toLocaleDateString</code>, and <code>toLocaleTimeString</code>), their actual behaviour is left largely implemenation-defined. The ECMAScript 2023 Internationalization API Specification provides additional functionality, control over the language and over details of the behaviour to be used, and a more complete specification of required functionality.
+      This specification provides several key pieces of language-sensitive functionality that are required in most applications: String comparison (collation), number formatting, date and time formatting, relative time formatting, display names, list formatting, locale selection and operation, pluralization rules, case conversion, and text segmentation. While the ECMAScript 2023 Language Specification provides functions for this basic functionality (on <emu-xref href="#sec-array.prototype"><a href="https://tc39.es/ecma262/#sec-array.prototype">Array.prototype</a></emu-xref>: <code>toLocaleString</code>; on <emu-xref href="#sec-string.prototype"><a href="https://tc39.es/ecma262/#sec-string.prototype">String.prototype</a></emu-xref>: <code>localeCompare</code>, <code>toLocaleLowerCase</code>, <code>toLocaleUpperCase</code>; on <emu-xref href="#sec-number.prototype"><a href="https://tc39.es/ecma262/#sec-number.prototype">Number.prototype</a></emu-xref>: <code>toLocaleString</code>; on <emu-xref href="#sec-date.prototype"><a href="https://tc39.es/ecma262/#sec-date.prototype">Date.prototype</a></emu-xref>: <code>toLocaleString</code>, <code>toLocaleDateString</code>, and <code>toLocaleTimeString</code>), their actual behaviour is left largely implemenation-defined. This specification provides additional functionality, control over the language and over details of the behaviour to be used, and a more complete specification of required functionality.
     </p>
 
     <p>Applications can use the API in two ways:</p>
@@ -284,7 +284,7 @@ emu-normative-optional:before {
     </ol>
 
     <p>
-      The Intl object is used to package all functionality defined in the ECMAScript 2023 Internationalization API Specification to avoid name collisions.
+      The Intl object is used to package all functionality defined in this specification in order to avoid name collisions.
     </p>
 
     <emu-note><span class="note">Note</span><div class="note-contents">While the API includes a variety of formatters, it does not provide any parsing facilities. This is intentional, has been discussed extensively, and concluded after weighing in all the benefits and drawbacks of including said functionality. See the discussion on the <a href="https://github.com/tc39/ecma402/issues/342">issue tracker</a>.</div></emu-note>
@@ -306,7 +306,7 @@ emu-normative-optional:before {
     <h1><span class="secnum">4.4</span> Implementation Dependencies</h1>
 
     <p>
-      Due to the nature of internationalization, the API specification has to leave several details implementation dependent:
+      Due to the nature of internationalization, this specification has to leave several details implementation dependent:
     </p>
     <ul>
       <li>
@@ -465,7 +465,7 @@ emu-normative-optional:before {
     <h1><span class="secnum">6.2</span> Language Tags</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification identifies locales using Unicode BCP 47 locale identifiers as defined by <a href="https://unicode.org/reports/tr35/#Identifiers">Unicode Technical Standard #35 LDML § 3 Unicode Language and Locale Identifiers</a>, which may include extensions such as the <a href="https://unicode.org/reports/tr35/#Locale_Extension_Key_and_Type_Data">Unicode BCP 47 U Extension</a>. Their canonical form is specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
+      This specification identifies locales using Unicode BCP 47 locale identifiers as defined by <a href="https://unicode.org/reports/tr35/#Identifiers">Unicode Technical Standard #35 LDML § 3 Unicode Language and Locale Identifiers</a>, which may include extensions such as the <a href="https://unicode.org/reports/tr35/#Locale_Extension_Key_and_Type_Data">Unicode BCP 47 U Extension</a>. Their canonical form is specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 LDML § 3.2.1 Canonical Unicode Locale Identifiers</a>.
     </p>
 
     <p>
@@ -552,7 +552,7 @@ emu-normative-optional:before {
     <h1><span class="secnum">6.3</span> Currency Codes</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is uppercase.
+      This specification identifies currencies using 3-letter currency codes as defined by ISO 4217. Their canonical form is uppercase.
     </p>
 
     <p>
@@ -579,7 +579,7 @@ emu-normative-optional:before {
     <h1><span class="secnum">6.5</span> Time Zone Names</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database except as specifically overridden by <emu-xref aoid="CanonicalizeTimeZoneName" id="_ref_205"><a href="#sec-canonicalizetimezonename">CanonicalizeTimeZoneName</a></emu-xref>.
+      This specification identifies time zones using the Zone and Link names of the IANA Time Zone Database. Their canonical form is the corresponding Zone name in the casing used in the IANA Time Zone Database except as specifically overridden by <emu-xref aoid="CanonicalizeTimeZoneName" id="_ref_205"><a href="#sec-canonicalizetimezonename">CanonicalizeTimeZoneName</a></emu-xref>.
     </p>
 
     <p>
@@ -628,7 +628,7 @@ emu-normative-optional:before {
     <h1><span class="secnum">6.6</span> Measurement Unit Identifiers</h1>
 
     <p>
-      The ECMAScript 2023 Internationalization API Specification identifies measurement units using a <dfn variants="core unit identifiers,core unit ID,core unit IDs">core unit identifier</dfn> (or equivalently <em>core unit ID</em>) as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
+      This specification identifies measurement units using a <dfn variants="core unit identifiers,core unit ID,core unit IDs">core unit identifier</dfn> (or equivalently <em>core unit ID</em>) as defined by <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).
     </p>
 
     <p>
@@ -650,7 +650,7 @@ emu-normative-optional:before {
       <h1><span class="secnum">6.6.2</span> IsSanctionedSingleUnitIdentifier ( <var>unitIdentifier</var> )</h1>
 
       <p>
-        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the <var>unitIdentifier</var> argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of the ECMAScript Internationalization API Specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>, a single unit identifier is a <emu-xref href="#sec-measurement-unit-identifiers" id="_ref_217"><a href="#sec-measurement-unit-identifiers">core unit identifier</a></emu-xref> that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
+        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the <var>unitIdentifier</var> argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of this specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>, a single unit identifier is a <emu-xref href="#sec-measurement-unit-identifiers" id="_ref_217"><a href="#sec-measurement-unit-identifiers">core unit identifier</a></emu-xref> that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
       </p>
 
       <emu-alg><ol><li>If <var>unitIdentifier</var> is listed in <emu-xref href="#table-sanctioned-single-unit-identifiers" id="_ref_18"><a href="#table-sanctioned-single-unit-identifiers">Table 2</a></emu-xref> below, return <emu-val>true</emu-val>.</li><li>Else, return <emu-val>false</emu-val>.</li></ol></emu-alg>
@@ -1886,7 +1886,7 @@ emu-normative-optional:before {
       </p>
 
       <emu-note><span class="note">Note 1</span><div class="note-contents">
-        In this version of the ECMAScript 2023 Internationalization API, the <emu-val>"timeZone"</emu-val> property will be the identifier of the <emu-xref href="#host-environment"><a href="https://tc39.es/ecma262/#host-environment">host environment</a></emu-xref>'s time zone if no <emu-val>"timeZone"</emu-val> property was provided in the options object provided to the Intl.DateTimeFormat <emu-xref href="#constructor"><a href="https://tc39.es/ecma262/#constructor">constructor</a></emu-xref>. The first edition left the <emu-val>"timeZone"</emu-val> property <emu-val>undefined</emu-val> in this case.
+        In this version of the API, the <emu-val>"timeZone"</emu-val> property will be the identifier of the <emu-xref href="#host-environment"><a href="https://tc39.es/ecma262/#host-environment">host environment</a></emu-xref>'s time zone if no <emu-val>"timeZone"</emu-val> property was provided in the options object provided to the Intl.DateTimeFormat <emu-xref href="#constructor"><a href="https://tc39.es/ecma262/#constructor">constructor</a></emu-xref>. The first edition left the <emu-val>"timeZone"</emu-val> property <emu-val>undefined</emu-val> in this case.
       </div></emu-note>
 
       <emu-note><span class="note">Note 2</span><div class="note-contents">
@@ -4947,7 +4947,7 @@ emu-normative-optional:before {
   <h1><span class="secnum">19</span> Locale Sensitive Functions of the ECMAScript Language Specification</h1>
 
   <p>
-    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
+    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this specification shall implement these functions as described here.
   </p>
 
   <emu-note><span class="note">Note</span><div class="note-contents">
@@ -5162,7 +5162,7 @@ emu-normative-optional:before {
   <h1><span class="secnum">A</span> Implementation Dependent Behaviour</h1>
 
   <p>
-    The following aspects of the ECMAScript 2023 Internationalization API Specification are implementation dependent:
+    The following aspects of this specification are implementation dependent:
   </p>
 
   <ul>
