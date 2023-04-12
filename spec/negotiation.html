@@ -62,7 +62,7 @@
               1. Let _tag_ be ? ToString(_kValue_).
             1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
             1. Let _canonicalizedTag_ be CanonicalizeUnicodeLocaleId(_tag_).
-            1. If _canonicalizedTag_ is not an element of _seen_, append _canonicalizedTag_ as the last element of _seen_.
+            1. If _seen_ does not contain _canonicalizedTag_, append _canonicalizedTag_ to _seen_.
           1. Set _k_ to _k_ + 1.
         1. Return _seen_.
       </emu-alg>
@@ -291,7 +291,7 @@
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-          1. If _availableLocale_ is not *undefined*, append _locale_ to the end of _subset_.
+          1. If _availableLocale_ is not *undefined*, append _locale_ to _subset_.
         1. Return _subset_.
       </emu-alg>
     </emu-clause>
@@ -492,14 +492,14 @@
           1. Assert: _endIndex_ is greater than _beginIndex_.
           1. If _beginIndex_ is greater than _nextIndex_, then
             1. Let _literal_ be a substring of _pattern_ from position _nextIndex_, inclusive, to position _beginIndex_, exclusive.
-            1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
+            1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } to _result_.
           1. Let _p_ be the substring of _pattern_ from position _beginIndex_, exclusive, to position _endIndex_, exclusive.
-          1. Append a new Record { [[Type]]: _p_, [[Value]]: *undefined* } as the last element of the list _result_.
+          1. Append the Record { [[Type]]: _p_, [[Value]]: *undefined* } to _result_.
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to StringIndexOf(_pattern_, *"{"*, _nextIndex_).
         1. If _nextIndex_ is less than _length_, then
           1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
-          1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } as the last element of the list _result_.
+          1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } to _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
