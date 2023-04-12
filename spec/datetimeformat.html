@@ -162,7 +162,7 @@
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
-        1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the row.
           1. If _bestFormat_ has a field [[&lt;_prop_&gt;]], then
             1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
@@ -896,7 +896,8 @@
         1. Assert: Type(_formats_) is List.
         1. For each element _format_ of _formats_, do
           1. Let _score_ be 0.
-          1. For each property name _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
+          1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
+            1. Let _property_ be the name given in the Property column of the row.
             1. If _options_ has a field [[&lt;_property_&gt;]], let _optionsProp_ be _options_.[[&lt;_property_&gt;]]; else let _optionsProp_ be *undefined*.
             1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
             1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then
@@ -1007,7 +1008,7 @@
           1. Let _nf3_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _result_ be a new empty List.
-        1. For each Record { [[Type]], [[Value]] } _patternPart_ in _patternParts_, do
+        1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
@@ -1101,7 +1102,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be the empty String.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -1120,7 +1121,7 @@
         1. Let _parts_ be ? PartitionDateTimePattern(_dateTimeFormat_, _x_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
@@ -1184,13 +1185,13 @@
           1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
           1. Let _patternParts_ be PartitionPattern(_pattern_).
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
-          1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
+          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
           1. Return _collapsedResult_.
         1. Let _rangeResult_ be a new empty List.
         1. If _selectedRangePattern_ is *undefined*, then
           1. Set _selectedRangePattern_ to _rangePatterns_.[[Default]].
-        1. For each Record { [[Pattern]], [[Source]] } _rangePatternPart_ in _selectedRangePattern_.[[PatternParts]], do
+        1. For each Record { [[Pattern]], [[Source]] } _rangePatternPart_ of _selectedRangePattern_.[[PatternParts]], do
           1. Let _pattern_ be _rangePatternPart_.[[Pattern]].
           1. Let _source_ be _rangePatternPart_.[[Source]].
           1. If _source_ is *"startRange"* or *"shared"*, then
@@ -1199,7 +1200,7 @@
             1. Let _z_ be _y_.
           1. Let _patternParts_ be PartitionPattern(_pattern_).
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _z_, _selectedRangePattern_).
-          1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
+          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
         1. Return _rangeResult_.
       </emu-alg>
@@ -1218,7 +1219,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionDateTimeRangePattern(_dateTimeFormat_, _x_, _y_).
         1. Let _result_ be the empty String.
-        1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -1238,7 +1239,7 @@
         1. Let _parts_ be ? PartitionDateTimeRangePattern(_dateTimeFormat_, _x_, _y_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ of _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).

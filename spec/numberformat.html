@@ -837,7 +837,7 @@
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else if _p_ is equal to *"number"*, then
             1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _n_, _exponent_).
-            1. For each Record { [[Type]], [[Value]] } _subPart_ in _notationSubParts_, do
+            1. For each Record { [[Type]], [[Value]] } _subPart_ of _notationSubParts_, do
               1. Append _subPart_ to _result_.
           1. Else if _p_ is equal to *"plusSign"*, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
@@ -1279,7 +1279,7 @@
       <emu-alg>
         1. Let _parts_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be the empty String.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -1298,7 +1298,7 @@
         1. Let _parts_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
@@ -1881,14 +1881,14 @@
         1. Let _yResult_ be PartitionNumberPattern(_numberFormat_, _y_).
         1. If FormatNumeric(_numberFormat_, _x_) is equal to FormatNumeric(_numberFormat_, _y_), then
           1. Let _appxResult_ be FormatApproximately(_numberFormat_, _xResult_).
-          1. For each element _r_ in _appxResult_, do
+          1. For each element _r_ of _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
-        1. For each element _r_ in _xResult_, do
+        1. For each element _r_ of _xResult_, do
           1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } to _result_.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
         1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
-        1. For each element _r_ in _yResult_, do
+        1. For each element _r_ of _yResult_, do
           1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } to _result_.
         1. Return CollapseNumberRange(_result_).
       </emu-alg>
@@ -1948,7 +1948,7 @@
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
         1. Let _result_ be the empty String.
-        1. For each element _part_ in _parts_, do
+        1. For each element _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -1970,7 +1970,7 @@
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each element _part_ in _parts_, do
+        1. For each element _part_ of _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).

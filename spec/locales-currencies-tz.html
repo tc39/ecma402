@@ -93,7 +93,7 @@
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
           1. For each element _attr_ of _components_.[[Attributes]], do
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _attr_.
-          1. For each Record { [[Key]], [[Value]] } _keyword_ in _components_.[[Keywords]], do
+          1. For each Record { [[Key]], [[Value]] } _keyword_ of _components_.[[Keywords]], do
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Key]].
             1. If _keyword_.[[Value]] is not the empty String, then
               1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Value]].
