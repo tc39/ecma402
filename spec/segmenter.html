@@ -17,16 +17,19 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[SegmenterGranularity]] &raquo;.
+        1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[SentenceBreakSuppressions]], [[SegmenterGranularity]] &raquo;.
         1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Segmenter.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _sentenceBreakSuppressions_ be ? GetOption(_options_, *"sentenceBreakSuppressions"*, ~string~, &laquo; *"none"*, *"standard"* &raquo;, *"none"*).
+        1. Set _opt_.[[ss]] to _sentenceBreakSuppressions_.
         1. Let _localeData_ be %Segmenter%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Segmenter%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _segmenter_.[[Locale]] to _r_.[[locale]].
+        1. Set _segmenter_.[[SentenceBreakSuppressions]] to _sentenceBreakSuppressions_.
         1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, ~string~, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
         1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
         1. Return _segmenter_.
@@ -74,11 +77,8 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; *"ss"* &raquo;.
       </p>
-      <emu-note>
-        Intl.Segmenter does not have any relevant extension keys.
-      </emu-note>
 
       <p>
         The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
@@ -160,6 +160,9 @@
             <td>*"locale"*</td>
           </tr>
           <tr>
+            <td>[[SentenceBreakSuppressions]]</td>
+            <td>*"sentenceBreakSuppressions"*"</td>
+          </tr>
             <td>[[SegmenterGranularity]]</td>
             <td>*"granularity"*</td>
           </tr>
@@ -185,6 +188,7 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for segmentation.</li>
+      <li>[[SentenceBreakSuppressions]] is one of the String values *"none"* or *"standard"*, identifying whether to suppress certain sentence breaks that would otherwise be found by <a href="https://unicode.org/reports/tr14/">Unicode Standard Annex #14</a> rules</li>
       <li>[[SegmenterGranularity]] is one of the String values *"grapheme"*, *"word"*, or *"sentence"*, identifying the kind of text element to segment.</li>
     </ul>
   </emu-clause>
@@ -394,17 +398,18 @@
       <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in <a href="https://unicode.org/reports/tr29/">Unicode Standard Annex #29</a>. It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org">https://cldr.unicode.org</a>).</emu-note>
       <emu-alg>
         1. Let _locale_ be _segmenter_.[[Locale]].
+        1. Let _sentenceBreakSuppressions_ be _segmenter_.[[SentenceBreakSuppressions]].
         1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
         1. Let _len_ be the length of _string_.
         1. If _direction_ is ~before~, then
           1. Assert: _startIndex_ &ge; 0.
           1. Assert: _startIndex_ &lt; _len_.
-          1. Search _string_ for the last segmentation boundary that is preceded by at most _startIndex_ code units from the beginning, using locale _locale_ and text element granularity _granularity_.
+          1. Search _string_ for the last segmentation boundary that is preceded by at most _startIndex_ code units from the beginning, using locale _locale_, sentence break suppression _sentenceBreakSuppressions_, and text element granularity _granularity_.
           1. If a boundary is found, return the count of code units in _string_ preceding it.
           1. Return 0.
         1. Assert: _direction_ is ~after~.
         1. If _len_ is 0 or _startIndex_ &ge; _len_, return +&infin;.
-        1. Search _string_ for the first segmentation boundary that follows the code unit at index _startIndex_, using locale _locale_ and text element granularity _granularity_.
+        1. Search _string_ for the first segmentation boundary that follows the code unit at index _startIndex_, using locale _locale_, sentence break suppressions _sentenceBreakSuppressions_, and text element granularity _granularity_.
         1. If a boundary is found, return the count of code units in _string_ preceding it.
         1. Return _len_.
       </emu-alg>
