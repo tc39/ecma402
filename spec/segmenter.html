@@ -29,7 +29,7 @@
         1. Let _localeData_ be %Segmenter%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Segmenter%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _segmenter_.[[Locale]] to _r_.[[locale]].
-        1. Set _segmenter_.[[SentenceBreakSuppressions]] to _sentenceBreakSuppressions_.
+        1. Set _segmenter_.[[SentenceBreakSuppressions]] to _r_.[[ss]].
         1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, ~string~, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
         1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
         1. Return _segmenter_.
