@@ -146,8 +146,8 @@
             1. Set _intlObj_.[[MaximumSignificantDigits]] to 21.
         1. If _needFd_ is *true*, then
           1. If _hasFd_ is *true*, then
-            1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 20, *undefined*).
-            1. Set _mxfd_ to ? DefaultNumberOption(_mxfd_, 0, 20, *undefined*).
+            1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 100, *undefined*).
+            1. Set _mxfd_ to ? DefaultNumberOption(_mxfd_, 0, 100, *undefined*).
             1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
             1. Else if _mxfd_ is *undefined*, set _mxfd_ to max(_mxfdDefault_, _mnfd_).
             1. Else if _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
@@ -1303,7 +1303,7 @@
       </emu-eqn>
 
       <p>
-        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minFraction_, _maxFraction_ (which must be integers between 0 and 20), _roundingIncrement_ (an integer), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
+        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minFraction_, _maxFraction_ (which must be integers between 0 and 100), _roundingIncrement_ (an integer), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
       </p>
 
       <emu-alg>
