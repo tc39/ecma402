@@ -19,9 +19,9 @@
     </ul>
 
     <emu-note>
-      For example, an implementation of DateTimeFormat might include the language tag *"th"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the key *"ca"* in its [[RelevantExtensionKeys]] internal slot.
-      For Thai, the *"buddhist"* calendar is usually the default, but an implementation might also support the calendars *"gregory"*, *"chinese"*, and *"islamicc"* for the locale *"th"*.
-      The [[LocaleData]] internal slot would therefore at least include {[[th]]: {[[ca]]: &laquo; *"buddhist"*, *"gregory"*, *"chinese"*, *"islamicc"* &raquo;}}.
+      For example, an implementation of DateTimeFormat might include the language tag *"fa-IR"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the keys *"ca"*, *"hc"*, and *"nu"* in its [[RelevantExtensionKeys]] internal slot.
+      The default calendar for that locale is usually *"persian"*, but an implementation might also support *"gregory"*, *"islamic"*, and *"islamic-civil"*.
+	  The Record in the DateTimeFormat [[LocaleData]] internal slot would therefore include a [[fa-IR]] field whose value is a Record like { [[ca]]: « *"persian"*, *"gregory"*, *"islamic"*, *"islamic-civil"* », [[hc]]: « … », [[nu]]: « … » }, along with other locale-named fields having the same value shape but different elements in their Lists.
     </emu-note>
   </emu-clause>
 
