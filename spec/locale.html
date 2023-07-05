@@ -371,18 +371,18 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[Calendar]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the calendar used for formatting.</li>
-      <li>[[Collation]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24.</li>
-      <li>[[NumberingSystem]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the numbering system used for formatting.</li>
+      <li>[[Calendar]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the calendar used for formatting, or is *undefined*.</li>
+      <li>[[Collation]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the collation, or is the String value *"default"*, or is *undefined*.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used, or is *undefined*.</li>
+      <li>[[NumberingSystem]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the numbering system used for formatting, or is *undefined*.</li>
     </ul>
     <p>
       If the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kn"* and/or *"kf"*, Intl.Locale instances will also have the following internal slots:
     </p>
 
     <ul>
-      <li>[[CaseFirst]] is one of the String values *"upper"*, *"lower"*, or *"false"*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kf"*.</li>
-      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kn"*.</li>
+      <li>[[CaseFirst]] is one of the String values *"upper"*, *"lower"*, or *"false"*, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kf"*.</li>
+      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kn"*.</li>
     </ul>
   </emu-clause>
 </emu-clause>
