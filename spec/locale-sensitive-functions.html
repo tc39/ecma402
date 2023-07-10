@@ -273,7 +273,7 @@
           1. If _nextElement_ is not *undefined* or *null*, then
             1. Let _S_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
             1. Set _R_ to the string-concatenation of _R_ and _S_.
-          1. Increase _k_ by 1.
+          1. Set _k_ to _k_ + 1.
         1. Return _R_.
       </emu-alg>
 
