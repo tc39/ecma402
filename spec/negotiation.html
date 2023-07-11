@@ -170,16 +170,24 @@
     <emu-clause id="sec-insert-unicode-extension-and-canonicalize" type="abstract operation">
       <h1>
         InsertUnicodeExtensionAndCanonicalize (
-          _locale_: a Unicode canonicalized locale identifier,
-          _extension_: a Unicode locale extension sequence,
+          _locale_: a language tag,
+          _attributes_: a List of Strings,
+          _keywords_: a List of Records,
         ): a Unicode canonicalized locale identifier
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It incorporates _extension_ into _locale_ and returns the canonicalized result.</dd>
+        <dd>It incorporates _attributes_ and _keywords_ into _locale_ as a Unicode locale extension sequence and returns the canonicalized result.</dd>
       </dl>
       <emu-alg>
         1. Assert: _locale_ does not contain a Unicode locale extension sequence.
+        1. Let _extension_ be *"-u"*.
+        1. For each element _attr_ of _attributes_, do
+          1. Set _extension_ to the string-concatenation of _extension_, *"-"*, and _attr_.
+        1. For each Record { [[Key]], [[Value]] } _keyword_ of _keywords_, do
+          1. Set _extension_ to the string-concatenation of _extension_, *"-"*, and _keyword_.[[Key]].
+          1. If _keyword_.[[Value]] is not the empty String, set _extension_ to the string-concatenation of _extension_, *"-"*, and _keyword_.[[Value]].
+        1. If _extension_ is *"-u"*, return CanonicalizeUnicodeLocaleId(_locale_).
         1. Let _privateIndex_ be StringIndexOf(_locale_, *"-x-"*, 0).
         1. If _privateIndex_ is ~not-found~, then
           1. Let _newLocale_ be the string-concatenation of _locale_ and _extension_.
@@ -221,24 +229,25 @@
         1. If _r_.[[extension]] is not ~empty~, then
           1. Let _components_ be UnicodeExtensionComponents(_r_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
-        1. Let _supportedExtension_ be *"-u"*.
+        1. Else,
+          1. Let _keywords_ be a new empty List.
+        1. Let _supportedKeywords_ be a new empty List.
         1. For each element _key_ of _relevantExtensionKeys_, do
           1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_&gt;]].
           1. Assert: _keyLocaleData_ is a List.
           1. Let _value_ be _keyLocaleData_[0].
           1. Assert: _value_ is a String or _value_ is *null*.
-          1. Let _supportedExtensionAddition_ be *""*.
-          1. If _r_.[[extension]] is not ~empty~, then
-            1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
-              1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
-              1. Let _requestedValue_ be _entry_.[[Value]].
-              1. If _requestedValue_ is not the empty String, then
-                1. If _keyLocaleData_ contains _requestedValue_, then
-                  1. Set _value_ to _requestedValue_.
-                  1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
-              1. Else if _keyLocaleData_ contains *"true"*, then
-                1. Set _value_ to *"true"*.
-                1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"* and _key_.
+          1. Let _supportedKeyword_ be ~empty~.
+          1. If _keywords_ contains an element whose [[Key]] is _key_, then
+            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
+            1. Let _requestedValue_ be _entry_.[[Value]].
+            1. If _requestedValue_ is not the empty String, then
+              1. If _keyLocaleData_ contains _requestedValue_, then
+                1. Set _value_ to _requestedValue_.
+                1. Set _supportedKeyword_ to the Record { [[Key]]: _key_, [[Value]]: _value_ }.
+            1. Else if _keyLocaleData_ contains *"true"*, then
+              1. Set _value_ to *"true"*.
+              1. Set _supportedKeyword_ to the Record { [[Key]]: _key_, [[Value]]: *""* }.
           1. Assert: _options_ has a field [[&lt;_key_&gt;]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
           1. Assert: _optionsValue_ is a String, or _optionsValue_ is either *undefined* or *null*.
@@ -251,13 +260,13 @@
               1. Set _optionsValue_ to *"true"*.
           1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
             1. Set _value_ to _optionsValue_.
-            1. Set _supportedExtensionAddition_ to *""*.
+            1. Set _supportedKeyword_ to ~empty~.
+          1. If _supportedKeyword_ is not ~empty~, append _supportedKeyword_ to _supportedKeywords_.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
-          1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
-        1. If _supportedExtension_ is *"-u"*, then
-          1. Set _result_.[[Locale]] to _foundLocale_.
-        1. Else,
-          1. Set _result_.[[Locale]] to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
+        1. If _supportedKeywords_ is not empty, then
+          1. Let _supportedAttributes_ be a new empty List.
+          1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedAttributes_, _supportedKeywords_).
+        1. Set _result_.[[locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
