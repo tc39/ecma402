@@ -31,9 +31,7 @@
       <p>
         The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a Collator object. The following steps are taken:
       </p>
-      <p>
-        The following algorithm refers to the `type` nonterminal from <a href="https://www.unicode.org/reports/tr35/#Unicode_locale_identifier">UTS 35's Unicode Locale Identifier grammar</a>.
-      </p>
+
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -48,7 +46,7 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
         1. If _collation_ is not *undefined*, then
-          1. If _collation_ does not match the Unicode Locale Identifier `type` nonterminal, throw a *RangeError* exception.
+          1. If _collation_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[co]] to _collation_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~boolean~, ~empty~, *undefined*).
         1. If _numeric_ is not *undefined*, then
@@ -80,6 +78,10 @@
         1. Return _collator_.
       </emu-alg>
     </emu-clause>
+
+    <emu-note>
+      The collation associated with the *"search"* value for the *"usage"* option should only be used to find matching strings, since this collation is not guaranteed to be in any particular order. This behaviour is described in <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Technical Standard #35 Part 1 Core, Unicode Collation Identifier</a> and <a href="https://unicode.org/reports/tr10/#Searching">Unicode Technical Standard #10 Unicode Collation Algorithm, Searching and Matching</a>.
+    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-the-intl-collator-constructor">
@@ -212,7 +214,7 @@
         <h1>CompareStrings ( _collator_, _x_, _y_ )</h1>
 
         <p>
-          When the CompareStrings abstract operation is called with arguments _collator_ (which must be an object initialized as a Collator), _x_ and _y_ (which must be String values), it returns a Number other than *NaN* representing the result of an implementation-defined locale-sensitive String comparison of _x_ with _y_. The result is intended to correspond with a sort order of String values according to the effective locale and collation options of _collator_, and will be negative when _x_ is ordered before _y_, positive when _x_ is ordered after _y_, and zero in all other cases (representing no relative ordering between _x_ and _y_). String values must be interpreted as UTF-16 code unit sequences as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
+          When the CompareStrings abstract operation is called with arguments _collator_ (which must be an object initialized as a Collator), _x_ and _y_ (which must be String values), it returns a Number other than *NaN* representing the result of an implementation-defined locale-sensitive String comparison of _x_ with _y_. The result is intended to correspond with a sort order of String values according to the effective locale and collation options of _collator_, and will be negative when _x_ is ordered before _y_, positive when _x_ is ordered after _y_, and zero in all other cases (representing no relative ordering between _x_ and _y_). String values must be interpreted as UTF-16 code unit sequences as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
         </p>
 
         <p>
@@ -376,7 +378,7 @@
       <li>[[Usage]] is one of the String values *"sort"* or *"search"*, identifying the collator usage.</li>
       <li>[[Sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator's sensitivity.</li>
       <li>[[IgnorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
-      <li>[[Collation]] is a String value with the *"type"* given in Unicode Technical Standard #35 for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
+      <li>[[Collation]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
     </ul>
 
     <p>

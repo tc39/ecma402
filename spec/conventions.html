@@ -2,14 +2,14 @@
   <h1>Notational Conventions</h1>
 
   <p>
-    This standard uses a subset of the notational conventions of the ECMAScript 2023 Language Specification (ECMA-262 14<sup>th</sup> Edition), as es2023:
+    This standard uses a subset of the notational conventions of the ECMAScript 2024 Language Specification (ECMA-262 15<sup>th</sup> Edition), as es2024:
   </p>
 
   <ul>
-    <li>Object Internal Methods and Internal Slots, as described in es2023, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>Algorithm conventions, as described in es2023, <emu-xref href="#sec-algorithm-conventions"></emu-xref>, and the use of abstract operations, as described in es2023, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>, <emu-xref href="#sec-operations-on-iterator-objects"></emu-xref>.</li>
-    <li>Internal Slots, as described in es2023, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
-    <li>The List and Record Specification Type, as described in es2023, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
+    <li>Object Internal Methods and Internal Slots, as described in es2024, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>Algorithm conventions, as described in es2024, <emu-xref href="#sec-algorithm-conventions"></emu-xref>, and the use of abstract operations, as described in es2024, <emu-xref href="#sec-type-conversion"></emu-xref>, <emu-xref href="#sec-testing-and-comparison-operations"></emu-xref>, <emu-xref href="#sec-operations-on-objects"></emu-xref>, <emu-xref href="#sec-operations-on-iterator-objects"></emu-xref>.</li>
+    <li>Internal Slots, as described in es2024, <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>.</li>
+    <li>The List and Record Specification Type, as described in es2024, <emu-xref href="#sec-list-and-record-specification-type"></emu-xref>.</li>
   </ul>
 
   <emu-note>
@@ -28,7 +28,7 @@
     <h1>Well-Known Intrinsic Objects</h1>
 
     <p>
-      The following table extends the Well-Known Intrinsic Objects table defined in es2023, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
+      The following table extends the Well-Known Intrinsic Objects table defined in es2024, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
     </p>
 
     <emu-table id="table-402-well-known-intrinsic-objects">
@@ -89,7 +89,17 @@
         <tr>
           <td>%Segmenter%</td>
           <td>`Intl.Segmenter`</td>
-          <td>The `Intl.Segmenter` constructor (<emu-xref href="#sec-intl-segmenter-constructor"></emu-xref>).</td>
+          <td>The `Intl.Segmenter` constructor (<emu-xref href="#sec-intl-segmenter-constructor"></emu-xref>)</td>
+        </tr>
+        <tr>
+          <td>%SegmentIteratorPrototype%</td>
+          <td></td>
+          <td>The prototype of Segment Iterator objects (<emu-xref href="#sec-%segmentiteratorprototype%-object"></emu-xref>)</td>
+        </tr>
+        <tr>
+          <td>%SegmentsPrototype%</td>
+          <td></td>
+          <td>The prototype of Segments objects (<emu-xref href="#sec-%segmentsprototype%-object"></emu-xref>)</td>
         </tr>
       </table>
     </emu-table>

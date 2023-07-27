@@ -2,7 +2,7 @@
   <h1>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
 
   <p>
-    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this Internationalization API Specification shall implement these functions as described here.
+    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this specification shall implement these functions as described here.
   </p>
 
   <emu-note>
@@ -16,7 +16,7 @@
       <h1>String.prototype.localeCompare ( _that_ [ , _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
       </p>
 
       <p>
@@ -48,11 +48,11 @@
       <h1>String.prototype.toLocaleLowerCase ( [ _locales_ ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
       </p>
 
       <p>
-        This function interprets a String value as a sequence of code points, as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
+        This function interprets a String value as a sequence of code points, as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -75,7 +75,7 @@
         </h1>
         <dl class="header">
           <dt>description</dt>
-          <dd>It interprets _S_ as a sequence of UTF-16 encoded code points, as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and returns the result of implementation- and locale-dependent (ILD) transformation into _targetCase_ as a new String value.</dd>
+          <dd>It interprets _S_ as a sequence of UTF-16 encoded code points, as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and returns the result of implementation- and locale-dependent (ILD) transformation into _targetCase_ as a new String value.</dd>
         </dl>
         <emu-alg>
           1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
@@ -83,9 +83,9 @@
             1. Let _requestedLocale_ be _requestedLocales_[0].
           1. Else,
             1. Let _requestedLocale_ be ! DefaultLocale().
-          1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences (<emu-xref href="#sec-unicode-locale-extension-sequences"></emu-xref>) removed.
+          1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
-          1. Let _locale_ be ! BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
+          1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _locale_ is *undefined*, set _locale_ to *"und"*.
           1. Let _codePoints_ be StringToCodePoints(_S_).
           1. If _targetCase_ is ~lower~, then
@@ -110,11 +110,11 @@
       <h1>String.prototype.toLocaleUpperCase ( [ _locales_ ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
       </p>
 
       <p>
-        This function interprets a String value as a sequence of code points, as described in es2023, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
+        This function interprets a String value as a sequence of code points, as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
       </p>
 
       <emu-alg>
@@ -133,14 +133,14 @@
     <h1>Properties of the Number Prototype Object</h1>
 
     <p>
-      The following definition(s) refer to the abstract operation thisNumberValue as defined in es2023, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.
+      The following definition(s) refer to the abstract operation thisNumberValue as defined in es2024, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.
     </p>
 
     <emu-clause id="sup-number.prototype.tolocalestring">
       <h1>Number.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -159,14 +159,14 @@
     <h1>Properties of the BigInt Prototype Object</h1>
 
     <p>
-      The following definition(s) refer to the abstract operation thisBigIntValue as defined in es2023, <emu-xref href="#sec-properties-of-the-bigint-prototype-object"></emu-xref>.
+      The following definition(s) refer to the abstract operation thisBigIntValue as defined in es2024, <emu-xref href="#sec-properties-of-the-bigint-prototype-object"></emu-xref>.
     </p>
 
     <emu-clause id="sup-bigint.prototype.tolocalestring">
       <h1>BigInt.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-bigint.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-bigint.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -185,14 +185,14 @@
     <h1>Properties of the Date Prototype Object</h1>
 
     <p>
-      The following definition(s) refer to the abstract operation thisTimeValue as defined in es2023, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.
+      The following definition(s) refer to the abstract operation thisTimeValue as defined in es2024, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.
     </p>
 
     <emu-clause id="sup-date.prototype.tolocalestring">
       <h1>Date.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -211,7 +211,7 @@
       <h1>Date.prototype.toLocaleDateString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
       </p>
 
       <p>
@@ -230,7 +230,7 @@
       <h1>Date.prototype.toLocaleTimeString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
       </p>
 
       <p>
@@ -253,7 +253,7 @@
       <h1>Array.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
-        This definition supersedes the definition provided in es2023, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
+        This definition supersedes the definition provided in es2024, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
       </p>
 
       <p>
@@ -278,7 +278,7 @@
       </emu-alg>
 
       <emu-note>
-        This algorithm's steps mirror the steps taken in es2023, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>, with the exception that Invoke(_nextElement_, *"toLocaleString"*) now takes _locales_ and _options_ as arguments.
+        This algorithm's steps mirror the steps taken in es2024, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>, with the exception that Invoke(_nextElement_, *"toLocaleString"*) now takes _locales_ and _options_ as arguments.
       </emu-note>
 
       <emu-note>
