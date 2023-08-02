@@ -253,8 +253,6 @@
               1. Let _supportedExtensionAddition_ be *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
-        1. If _supportedExtension_ is not *"-u"*, then
-          1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
         1. Set _result_.[[locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
