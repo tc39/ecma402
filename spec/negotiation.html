@@ -88,10 +88,15 @@
       </dl>
       <emu-alg>
         1. Let _candidate_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
+        1. Let _xTagIndex be StringIndexOf(_locale_, *"-x-"*, 0).
+        1. If _xTagIndex_ is equal to -1, let _xTagIndex_ be the length of _candidate_.
         1. Repeat,
           1. If _availableLocales_ contains _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
-          1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, decrease _pos_ by 2.
+          1. If _pos_ &ge; 3 and the character *"-"* occurs at index _pos_ - 2 of _candidate_, then
+            1. Let _t_ be the substring of _locale_ from position _pos_ - 2, inclusive, to position _pos_, exclusive.
+            1. If _pos_ &lt; _xTagIndex_ and _t_ can be matched by the <code>tkey</code> Unicode locale nonterminal, decrease _pos_ by 3.
+          1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of _candidate_, decrease _pos_ by 2.
           1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
     </emu-clause>
