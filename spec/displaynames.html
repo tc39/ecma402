@@ -25,7 +25,7 @@
         1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
+        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]], _localeData_).
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
