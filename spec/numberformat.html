@@ -800,7 +800,7 @@
           1. If _x_ is not ~negative-zero~, then
             1. Assert: _x_ is a mathematical value.
             1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ be 100 &times; _x_.
-            1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
+            1. Set _exponent_ to ComputeExponent(_numberFormat_, _x_).
             1. Set _x_ to _x_ &times; 10<sup>-_exponent_</sup>.
           1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
           1. Let _n_ be _formatNumberResult_.[[FormattedString]].
@@ -900,7 +900,8 @@
                   1. Set _transliterated_ to the string-concatenation of _transliterated_ and _c_.
                   1. Set _position_ to _position_ + 1.
                 1. Set _n_ to _transliterated_.
-              1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
+              1. Else,
+                1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
@@ -1386,7 +1387,8 @@
           1. Let _a_ be the first _k_ - _f_ code units of _m_, and let _b_ be the remaining _f_ code units of _m_.
           1. Set _m_ to the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the length of _a_.
-        1. Else, let _int_ be the length of _m_.
+        1. Else,
+          1. Let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
         1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
           1. Remove the last code unit from _m_.
@@ -1440,28 +1442,28 @@
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
-          1. Let _patterns_ be _patterns_.[[percent]].
+          1. Set _patterns_ to _patterns_.[[percent]].
         1. Else if _style_ is *"unit"*, then
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
-          1. Let _patterns_ be _patterns_.[[unit]].
+          1. Set _patterns_ to _patterns_.[[unit]].
           1. If _patterns_ doesn't have a field [[&lt;_unit_&gt;]], then
-            1. Let _unit_ be *"fallback"*.
-          1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_unitDisplay_&gt;]].
+            1. Set _unit_ to *"fallback"*.
+          1. Set _patterns_ to _patterns_.[[&lt;_unit_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_unitDisplay_&gt;]].
         1. Else if _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
-          1. Let _patterns_ be _patterns_.[[currency]].
+          1. Set _patterns_ to _patterns_.[[currency]].
           1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
-            1. Let _currency_ be *"fallback"*.
-          1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencyDisplay_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencySign_&gt;]].
+            1. Set _currency_ to *"fallback"*.
+          1. Set _patterns_ to _patterns_.[[&lt;_currency_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencyDisplay_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencySign_&gt;]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
-          1. Let _patterns_ be _patterns_.[[decimal]].
+          1. Set _patterns_ to _patterns_.[[decimal]].
         1. If _x_ is ~negative-infinity~, then
           1. Let _category_ be ~negative-non-zero~.
         1. Else if _x_ is ~negative-zero~, then

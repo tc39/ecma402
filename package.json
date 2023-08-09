@@ -18,7 +18,7 @@
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
-    "ecmarkup": "^16.0.0",
+    "ecmarkup": "^17.1.1",
     "@tc39/ecma262-biblio": "2.1.2616"
   },
   "devDependencies": {
