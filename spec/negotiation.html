@@ -94,6 +94,10 @@
           1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, decrease _pos_ by 2.
           1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
+
+      <emu-note>
+        In cases where Unicode T Extensions are included in _locale_, this algorithm may temporarily generate invalid language tags. However, it is not possible for the abstract operation to return non-canonical or otherwise invalid language tags.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-lookupmatcher" aoid="LookupMatcher">
