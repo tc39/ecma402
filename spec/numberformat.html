@@ -174,22 +174,22 @@
           1. Set _intlObj_.[[MaximumFractionDigits]] to 0.
           1. Set _intlObj_.[[MinimumSignificantDigits]] to 1.
           1. Set _intlObj_.[[MaximumSignificantDigits]] to 2.
-          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+          1. Set _intlObj_.[[RoundingType]] to ~more-precision~.
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"morePrecision"*.
         1. Else if _roundingPriority_ is *"morePrecision"*, then
-          1. Set _intlObj_.[[RoundingType]] to ~morePrecision~.
+          1. Set _intlObj_.[[RoundingType]] to ~more-precision~.
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"morePrecision"*.
         1. Else if _roundingPriority_ is *"lessPrecision"*, then
-          1. Set _intlObj_.[[RoundingType]] to ~lessPrecision~.
+          1. Set _intlObj_.[[RoundingType]] to ~less-precision~.
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"lessPrecision"*.
         1. Else if _hasSd_ is *true*, then
-          1. Set _intlObj_.[[RoundingType]] to ~significantDigits~.
+          1. Set _intlObj_.[[RoundingType]] to ~significant-digits~.
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"auto"*.
         1. Else,
-          1. Set _intlObj_.[[RoundingType]] to ~fractionDigits~.
+          1. Set _intlObj_.[[RoundingType]] to ~fraction-digits~.
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"auto"*.
         1. If _roundingIncrement_ is not 1, then
-          1. If _intlObj_.[[RoundingType]] is not ~fractionDigits~, throw a *TypeError* exception.
+          1. If _intlObj_.[[RoundingType]] is not ~fraction-digits~, throw a *TypeError* exception.
           1. If _intlObj_.[[MaximumFractionDigits]] is not equal to _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
         1. Return ~unused~.
       </emu-alg>
@@ -581,10 +581,10 @@
       <li>[[Unit]] is a core unit identifier. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~, ~morePrecision~, or ~lessPrecision~.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~, ~morePrecision~, or ~lessPrecision~.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fraction-digits~, ~more-precision~, or ~less-precision~.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significant-digits~, ~more-precision~, or ~less-precision~.</li>
       <li>[[UseGrouping]] is a Boolean or String value indicating the conditions under which a grouping separator should be used. The positions of grouping separators, and whether to display grouping separators for a formatted number, is implementation-defined. A value *"always"* hints the implementation to display grouping separators if possible; *"min2"*, if there are at least 2 digits in a group; *"auto"*, if the locale prefers to use grouping separators for the formatted number. A value *false* disables grouping separators.</li>
-      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use. If ~fractionDigits~, formatted numbers are rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significantDigits~, formatted numbers are rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~morePrecision~ or ~lessPrecision~, all four of those settings are used, with specific rules for disambiguating when to use one set versus the other. [[RoundingType]] is derived from the *"roundingPriority"* option.</li>
+      <li>[[RoundingType]] is one of the values ~fraction-digits~, ~significant-digits~, ~more-precision~, or ~less-precision~, indicating which rounding strategy to use. If ~fraction-digits~, formatted numbers are rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significant-digits~, formatted numbers are rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~more-precision~ or ~less-precision~, all four of those settings are used, with specific rules for disambiguating when to use one set versus the other. [[RoundingType]] is derived from the *"roundingPriority"* option.</li>
       <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"morePrecision"*, or *"lessPrecision"*. It is only used in <emu-xref href="#sec-intl.numberformat.prototype.resolvedoptions"></emu-xref> to convert [[RoundingType]] back to a valid *"roundingPriority"* option.</li>
       <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the formatted number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
       <li>[[CompactDisplay]] is one of the String values *"short"* or *"long"*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation. It is only used when [[Notation]] has the value *"compact"*.</li>
@@ -765,20 +765,20 @@
           1. If _sign_ is ~negative~, then
             1. Set _x_ to -_x_.
         1. Let _unsignedRoundingMode_ be GetUnsignedRoundingMode(_intlObject_.[[RoundingMode]], _sign_).
-        1. If _intlObject_.[[RoundingType]] is ~significantDigits~, then
+        1. If _intlObject_.[[RoundingType]] is ~significant-digits~, then
           1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
-        1. Else if _intlObject_.[[RoundingType]] is ~fractionDigits~, then
+        1. Else if _intlObject_.[[RoundingType]] is ~fraction-digits~, then
           1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
         1. Else,
           1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
           1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
-          1. If _intlObject_.[[RoundingType]] is ~morePrecision~, then
+          1. If _intlObject_.[[RoundingType]] is ~more-precision~, then
             1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
               1. Let _result_ be _sResult_.
             1. Else,
               1. Let _result_ be _fResult_.
           1. Else,
-            1. Assert: _intlObject_.[[RoundingType]] is ~lessPrecision~.
+            1. Assert: _intlObject_.[[RoundingType]] is ~less-precision~.
             1. If _sResult_.[[RoundingMagnitude]] &le; _fResult_.[[RoundingMagnitude]], then
               1. Let _result_ be _fResult_.
             1. Else,
@@ -823,7 +823,7 @@
           1. If _x_ is not ~negative-zero~, then
             1. Assert: _x_ is a mathematical value.
             1. If _numberFormat_.[[Style]] is *"percent"*, set _x_ be 100 &times; _x_.
-            1. Let _exponent_ be ComputeExponent(_numberFormat_, _x_).
+            1. Set _exponent_ to ComputeExponent(_numberFormat_, _x_).
             1. Set _x_ to _x_ &times; 10<sup>-_exponent_</sup>.
           1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
           1. Let _n_ be _formatNumberResult_.[[FormattedString]].
@@ -923,7 +923,8 @@
                   1. Set _transliterated_ to the string-concatenation of _transliterated_ and _c_.
                   1. Set _position_ to _position_ + 1.
                 1. Set _n_ to _transliterated_.
-              1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
+              1. Else,
+                1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
@@ -1409,7 +1410,8 @@
           1. Let _a_ be the first _k_ - _f_ code units of _m_, and let _b_ be the remaining _f_ code units of _m_.
           1. Set _m_ to the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the length of _a_.
-        1. Else, let _int_ be the length of _m_.
+        1. Else,
+          1. Let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
         1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
           1. Remove the last code unit from _m_.
@@ -1463,28 +1465,28 @@
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
-          1. Let _patterns_ be _patterns_.[[percent]].
+          1. Set _patterns_ to _patterns_.[[percent]].
         1. Else if _style_ is *"unit"*, then
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
-          1. Let _patterns_ be _patterns_.[[unit]].
+          1. Set _patterns_ to _patterns_.[[unit]].
           1. If _patterns_ doesn't have a field [[&lt;_unit_&gt;]], then
-            1. Let _unit_ be *"fallback"*.
-          1. Let _patterns_ be _patterns_.[[&lt;_unit_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_unitDisplay_&gt;]].
+            1. Set _unit_ to *"fallback"*.
+          1. Set _patterns_ to _patterns_.[[&lt;_unit_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_unitDisplay_&gt;]].
         1. Else if _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
-          1. Let _patterns_ be _patterns_.[[currency]].
+          1. Set _patterns_ to _patterns_.[[currency]].
           1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
-            1. Let _currency_ be *"fallback"*.
-          1. Let _patterns_ be _patterns_.[[&lt;_currency_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencyDisplay_&gt;]].
-          1. Let _patterns_ be _patterns_.[[&lt;_currencySign_&gt;]].
+            1. Set _currency_ to *"fallback"*.
+          1. Set _patterns_ to _patterns_.[[&lt;_currency_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencyDisplay_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencySign_&gt;]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
-          1. Let _patterns_ be _patterns_.[[decimal]].
+          1. Set _patterns_ to _patterns_.[[decimal]].
         1. If _x_ is ~negative-infinity~, then
           1. Let _category_ be ~negative-non-zero~.
         1. Else if _x_ is ~negative-zero~, then

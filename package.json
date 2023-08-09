@@ -7,7 +7,7 @@
     "clean": "rm -rf out",
     "build-to": "ecmarkup --verbose --load-biblio @tc39/ecma262-biblio spec/index.html",
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
-    "build-only": "npm run build-to -- out/index.html --css-out out/ecmarkup.css --js-out out/ecmarkup.js",
+    "build-only": "npm run build-to -- out/index.html --assets-dir=out",
     "build": "npm run build-only -- --lint-spec --strict",
     "build-for-pdf": "npm run build -- --old-toc",
     "test": "npm run build-to -- --lint-spec /dev/null",
@@ -18,7 +18,7 @@
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
-    "ecmarkup": "^16.0.0",
+    "ecmarkup": "^18.0.0",
     "@tc39/ecma262-biblio": "2.1.2638"
   },
   "devDependencies": {
