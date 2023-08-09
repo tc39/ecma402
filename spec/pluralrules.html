@@ -288,10 +288,10 @@
       <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
+      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
+      <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"morePrecision"*, or *"lessPrecision"*. It is only used in <emu-xref href="#sec-intl.pluralrules.prototype.resolvedoptions"></emu-xref> to convert [[RoundingType]] back to a valid *"roundingPriority"* option.</li>
       <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
-      <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"lessPrecision"*, or *"morePrecision"*, specifying the strategy to resolve mixed fraction digits and significant digits settings.</li>
-      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
   </emu-clause>
