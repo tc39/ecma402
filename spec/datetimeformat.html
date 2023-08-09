@@ -558,6 +558,7 @@
             1. Else, let _v_ be *undefined*.
           1. Else,
             1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+            1. If _p_ is *"fractionalSecondDigits"*, set _v_ to 𝔽(_v_).
           1. If the Internal Slot value of the current row is an Internal Slot value in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. If _dtf_.[[DateStyle]] is not *undefined* or _dtf_.[[TimeStyle]] is not *undefined*, then
               1. Let _v_ be *undefined*.
@@ -689,7 +690,7 @@
       <li>[[NumberingSystem]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
       <li>[[TimeZone]] is a String value that is a time zone identifier from the IANA Time Zone Database used for formatting.</li>
       <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-zero integer Number value indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-zero integer indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
@@ -766,7 +767,7 @@
         <tr>
           <td>[[FractionalSecondDigits]]</td>
           <td>*"fractionalSecondDigits"*</td>
-          <td>*1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub></td>
+          <td>1, 2, 3</td>
         </tr>
         <tr>
           <td>[[TimeZoneName]]</td>
@@ -863,7 +864,7 @@
               1. Else if _optionsProp_ &ne; _formatProp_, decrease _score_ by _removalPenalty_.
             1. Else if _optionsProp_ &ne; _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
-                1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
+                1. Let _values_ be &laquo; 1, 2, 3 &raquo;.
               1. Else,
                 1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
@@ -941,7 +942,7 @@
         1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
         1. If _fractionalSecondDigits_ is not *undefined*, then
           1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
-          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, _fractionalSecondDigits_).
+          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
           1. Let _nf3_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
@@ -951,12 +952,13 @@
           1. If _p_ is *"literal"*, then
             1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as the last element of the list _result_.
           1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
+            1. Assert: _fractionalSecondDigits_ is not *undefined*.
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Let _v_ be floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append a new Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } as the last element of _result_.
           1. Else if _p_ is equal to *"dayPeriod"*, then
-            1. Let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
+            1. Let _f_ be _dateTimeFormat_.[[DayPeriod]].
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"timeZoneName"*, then
@@ -1227,55 +1229,68 @@
           <thead>
             <tr>
               <th>Field Name</th>
+              <th>Value Type</th>
               <th>Value Calculation for Gregorian Calendar</th>
             </tr>
           </thead>
           <tr>
             <td>[[Weekday]]</td>
-            <td>WeekDay(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(WeekDay(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Era]]</td>
+            <td>a String</td>
             <td>Let _year_ be YearFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))). If _year_ &lt; *1*<sub>𝔽</sub>, return *"BC"*, else return *"AD"*.</td>
           </tr>
           <tr>
             <td>[[Year]]</td>
-            <td>YearFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(YearFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[RelatedYear]]</td>
+            <td>an integer or *undefined*</td>
             <td>*undefined*</td>
           </tr>
           <tr>
             <td>[[YearName]]</td>
+            <td>a String or *undefined*</td>
             <td>*undefined*</td>
           </tr>
           <tr>
             <td>[[Month]]</td>
-            <td>MonthFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(MonthFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Day]]</td>
-            <td>DateFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(DateFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Hour]]</td>
-            <td>HourFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(HourFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Minute]]</td>
-            <td>MinFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(MinFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Second]]</td>
-            <td>SecFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(SecFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[Millisecond]]</td>
-            <td>msFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>)))</td>
+            <td>an integer</td>
+            <td>ℝ(msFromTime(𝔽(floor(_tz_ / 10<sup>6</sup>))))</td>
           </tr>
           <tr>
             <td>[[InDST]]</td>
+            <td>a Boolean</td>
             <td>Calculate *true* or *false* using the best available information about the specified _calendar_ and _timeZoneIdentifier_, including current and historical information from the IANA Time Zone Database about time zone offsets from UTC and daylight saving time rules.</td>
           </tr>
         </table>
