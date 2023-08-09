@@ -333,7 +333,7 @@
         1. Else,
           1. Let _tl_ be *"future"*.
         1. Let _po_ be _patterns_.[[&lt;_tl_&gt;]].
-        1. Let _fv_ be ! PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], _value_).
+        1. Let _fv_ be PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], _value_).
         1. Let _pr_ be ResolvePlural(_relativeTimeFormat_.[[PluralRules]], _value_).[[PluralCategory]].
         1. Let _pattern_ be _po_.[[&lt;_pr_&gt;]].
         1. Return MakePartsList(_pattern_, _unit_, _fv_).
