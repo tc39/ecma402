@@ -26,8 +26,16 @@
       </emu-alg>
 
       <emu-normative-optional>
-      <emu-clause id="sec-chainnumberformat" aoid="ChainNumberFormat">
-        <h1>ChainNumberFormat ( _numberFormat_, _newTarget_, _this_ )</h1>
+      <emu-clause id="sec-chainnumberformat" type="abstract operation">
+        <h1>
+          ChainNumberFormat (
+            _numberFormat_: an Intl.NumberFormat,
+            _newTarget_: an ECMAScript language value,
+            _this_: an ECMAScript language value,
+          ): either a normal completion containing an Object or a throw completion
+        </h1>
+        <dl class="header">
+        </dl>
         <emu-alg>
           1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
             1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
@@ -38,13 +46,18 @@
       </emu-normative-optional>
     </emu-clause>
 
-    <emu-clause id="sec-initializenumberformat" aoid="InitializeNumberFormat">
-      <h1>InitializeNumberFormat ( _numberFormat_, _locales_, _options_ )</h1>
-
-      <p>
-        The abstract operation InitializeNumberFormat accepts the arguments _numberFormat_ (which must be an object), _locales_, and _options_. It initializes _numberFormat_ as a NumberFormat object. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-initializenumberformat" type="abstract operation">
+      <h1>
+        InitializeNumberFormat (
+          _numberFormat_: an Intl.NumberFormat,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing ~unused~ or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It initializes _numberFormat_ as a NumberFormat object.</dd>
+      </dl>
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -88,7 +101,7 @@
         1. Set _numberFormat_.[[UseGrouping]] to _useGrouping_.
         1. Let _signDisplay_ be ? GetOption(_options_, *"signDisplay"*, ~string~, &laquo; *"auto"*, *"never"*, *"always"*, *"exceptZero"*, *"negative"* &raquo;, *"auto"*).
         1. Set _numberFormat_.[[SignDisplay]] to _signDisplay_.
-        1. Return _numberFormat_.
+        1. Return ~unused~.
       </emu-alg>
     </emu-clause>
 
@@ -100,7 +113,7 @@
           _mnfdDefault_: a Number,
           _mxfdDefault_: a Number,
           _notation_: a String,
-        )
+        ): either a normal completion containing ~unused~ or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -178,17 +191,22 @@
         1. If _roundingIncrement_ is not 1, then
           1. If _intlObj_.[[RoundingType]] is not ~fractionDigits~, throw a *TypeError* exception.
           1. If _intlObj_.[[MaximumFractionDigits]] is not equal to _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
+        1. Return ~unused~.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-setnumberformatunitoptions" aoid="SetNumberFormatUnitOptions">
-      <h1>SetNumberFormatUnitOptions ( _intlObj_, _options_ )</h1>
-      <p>
-        The abstract operation SetNumberFormatUnitOptions resolves the user-specified options relating to units onto the intl object.
-      </p>
+    <emu-clause id="sec-setnumberformatunitoptions" type="abstract operation">
+      <h1>
+        SetNumberFormatUnitOptions (
+          _intlObj_: an Intl.NumberFormat,
+          _options_: an Object,
+        ): either a normal completion containing ~unused~ or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It resolves the user-specified options relating to units onto _intlObj_.</dd>
+      </dl>
       <emu-alg>
-        1. Assert: Type(_intlObj_) is Object.
-        1. Assert: Type(_options_) is Object.
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"decimal"*, *"percent"*, *"currency"*, *"unit"* &raquo;, *"decimal"*).
         1. Set _intlObj_.[[Style]] to _style_.
         1. Let _currency_ be ? GetOption(_options_, *"currency"*, ~string~, ~empty~, *undefined*).
@@ -211,6 +229,7 @@
         1. If _style_ is *"unit"*, then
           1. Set _intlObj_.[[Unit]] to _unit_.
           1. Set _intlObj_.[[UnitDisplay]] to _unitDisplay_.
+        1. Return ~unused~.
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -354,7 +373,7 @@
         1. Let _nf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
         1. Let _x_ be ? ToIntlMathematicalValue(_value_).
-        1. Return ? FormatNumericToParts(_nf_, _x_).
+        1. Return FormatNumericToParts(_nf_, _x_).
       </emu-alg>
     </emu-clause>
 
@@ -664,14 +683,17 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations for NumberFormat Objects</h1>
 
-    <emu-clause id="sec-currencydigits" aoid="CurrencyDigits">
-      <h1>CurrencyDigits ( _currency_ )</h1>
-
-      <p>
-        When the CurrencyDigits abstract operation is called with an argument _currency_ (which must be an uppercase String value), the following steps are taken:
-      </p>
-
+    <emu-clause id="sec-currencydigits" type="abstract operation">
+      <h1>
+        CurrencyDigits (
+          _currency_: a String,
+        ): a non-negative integer
+      </h1>
+      <dl class="header">
+      </dl>
       <emu-alg>
+        1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
+        1. Assert: _currency_ is equal to the ASCII-uppercase of _currency_.
         1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, return the minor unit value corresponding to the _currency_ from the list; otherwise, return 2.
       </emu-alg>
     </emu-clause>
@@ -687,7 +709,7 @@
         1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToIntlMathematicalValue(_value_).
-        1. Return ? FormatNumeric(_nf_, _x_).
+        1. Return FormatNumeric(_nf_, _x_).
       </emu-alg>
 
       <p>
@@ -695,14 +717,19 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumberstring" aoid="FormatNumericToString">
-      <h1>FormatNumericToString ( _intlObject_, _x_ )</h1>
-
-      <p>
-        The FormatNumericToString abstract operation is called with arguments _intlObject_ (which must be an object with [[RoundingMode]], [[RoundingType]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[RoundingIncrement]], and [[TrailingZeroDisplay]] internal slots), and _x_ (which must be a mathematical value or ~negative-zero~). It rounds _x_ to an Intl mathematical value according to the internal slots of _intlObject_ and returns a Record with a [[RoundedNumber]] field containing containing that result and a [[FormattedString]] field containing a String value representation of that result formatted according to the internal slots of _intlObject_.
-      </p>
-
+    <emu-clause id="sec-formatnumberstring" type="abstract operation">
+      <h1>
+        FormatNumericToString (
+          _intlObject_: an Object,
+          _x_: a mathematical value or ~negative-zero~,
+        ): a Record with fields [[RoundedNumber]] (a mathematical value or ~negative-zero~) and [[FormattedString]] (a String)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It rounds _x_ to an Intl mathematical value according to the internal slots of _intlObject_. The [[RoundedNumber]] field contains the rounded result value and the [[FormattedString]] field contains a String value representation of that result formatted according to the internal slots of _intlObject_.</dd>
+      </dl>
       <emu-alg>
+        1. Assert: _intlObject_ has [[RoundingMode]], [[RoundingType]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[RoundingIncrement]], and [[TrailingZeroDisplay]] internal slots.
         1. If _x_ is ~negative-zero~, then
           1. Let _isNegative_ be *true*.
           1. Set _x_ to 0.
@@ -751,7 +778,7 @@
         PartitionNumberPattern (
           _numberFormat_: an object initialized as a NumberFormat,
           _x_: an Intl mathematical value,
-        )
+        ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String)
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -825,11 +852,22 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-partitionnotationsubpattern" aoid="PartitionNotationSubPattern">
-      <h1>PartitionNotationSubPattern ( _numberFormat_, _x_, _n_, _exponent_ )</h1>
-      <p>
-        The PartitionNotationSubPattern abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which is an Intl mathematical value after rounding is applied), _n_ (which is an intermediate formatted string), and _exponent_ (an integer), and creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_. The following steps are taken:
-      </p>
+    <emu-clause id="sec-partitionnotationsubpattern" type="abstract operation">
+      <h1>
+        PartitionNotationSubPattern (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value,
+          _n_: a String,
+          _exponent_: an integer,
+        ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          _x_ is an Intl mathematical value after rounding is applied and _n_ is an intermediate formatted string.
+          It creates the corresponding parts for the number and notation according to the effective locale and the formatting options of _numberFormat_.
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _result_ be a new empty List.
         1. If _x_ is ~not-a-number~, then
@@ -1201,15 +1239,17 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumber" aoid="FormatNumeric">
-      <h1>FormatNumeric ( _numberFormat_, _x_ )</h1>
-
-      <p>
-        The FormatNumeric abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be an Intl mathematical value), and performs the following steps:
-      </p>
-
+    <emu-clause id="sec-formatnumber" type="abstract operation">
+      <h1>
+        FormatNumeric (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value
+        ): a String
+      </h1>
+      <dl class="header">
+      </dl>
       <emu-alg>
-        1. Let _parts_ be ? PartitionNumberPattern(_numberFormat_, _x_).
+        1. Let _parts_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be the empty String.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
@@ -1217,15 +1257,17 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumbertoparts" aoid="FormatNumericToParts">
-      <h1>FormatNumericToParts ( _numberFormat_, _x_ )</h1>
-
-      <p>
-        The FormatNumericToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat) and _x_ (which must be an Intl mathematical value), and performs the following steps:
-      </p>
-
+    <emu-clause id="sec-formatnumbertoparts" type="abstract operation">
+      <h1>
+        FormatNumericToParts (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value
+        ): an Array
+      </h1>
+      <dl class="header">
+      </dl>
       <emu-alg>
-        1. Let _parts_ be ? PartitionNumberPattern(_numberFormat_, _x_).
+        1. Let _parts_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
@@ -1238,22 +1280,27 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-torawprecision" aoid="ToRawPrecision">
-      <h1>ToRawPrecision ( _x_, _minPrecision_, _maxPrecision_, _unsignedRoundingMode_ )</h1>
-
-      <p>
-        ToRawPrecision is an abstract operation that involves solving the following equation, which returns a valid mathematical value given integer inputs:
-      </p>
-
-      <emu-eqn id="eqn-ToRawPrecisionFn" aoid="ToRawPrecisionFn">
-        ToRawPrecisionFn(_n_, _e_, _p_) = _n_ × 10<sup>_e_–_p_+1</sup>
-        where 10<sup>_p_–1</sup> ≤ _n_ &lt; 10<sup>_p_</sup>
-      </emu-eqn>
-
-      <p>
-        When the ToRawPrecision abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minPrecision_, _maxPrecision_ (both must be integers between 1 and 21), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
-      </p>
-
+    <emu-clause id="sec-torawprecision" type="abstract operation">
+      <h1>
+        ToRawPrecision (
+          _x_: finite non-negative mathematical value,
+          _minPrecision_: an integer between 1 and 21,
+          _maxPrecision_: an integer between 1 and 21,
+          _unsignedRoundingMode_: a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*,
+        ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          <p>
+            It involves solving the following equation, which returns a valid mathematical value given integer inputs:
+          </p>
+          <emu-eqn id="eqn-ToRawPrecisionFn" aoid="ToRawPrecisionFn">
+            ToRawPrecisionFn(_n_, _e_, _p_) = _n_ × 10<sup>_e_–_p_+1</sup>
+            where 10<sup>_p_–1</sup> ≤ _n_ &lt; 10<sup>_p_</sup>
+          </emu-eqn>
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _p_ be _maxPrecision_.
         1. If _x_ = 0, then
@@ -1294,21 +1341,27 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-torawfixed" aoid="ToRawFixed">
-      <h1>ToRawFixed ( _x_, _minFraction_, _maxFraction_, _roundingIncrement_, _unsignedRoundingMode_ )</h1>
-
-      <p>
-        ToRawFixed is an abstract operation that involves solving the following equation, which returns a valid mathematical value given integer inputs:
-      </p>
-
-      <emu-eqn id="eqn-ToRawFixedFn" aoid="ToRawFixedFn">
-        ToRawFixedFn(_n_, _f_) = _n_ × 10<sup>–_f_</sup>
-      </emu-eqn>
-
-      <p>
-        When the ToRawFixed abstract operation is called with arguments _x_ (which must be a finite non-negative mathematical value), _minFraction_, _maxFraction_ (which must be integers between 0 and 100), _roundingIncrement_ (an integer), and _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*), the following steps are taken:
-      </p>
-
+    <emu-clause id="sec-torawfixed" type="abstract operation">
+      <h1>
+        ToRawFixed (
+          _x_: finite non-negative mathematical value,
+          _minFraction_: an integer between 0 and 100,
+          _maxFraction_: an integer between 0 and 100,
+          _roundingIncrement_: an integer,
+          _unsignedRoundingMode_: a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*,
+        ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          <p>
+            It involves solving the following equation, which returns a valid mathematical value given integer inputs:
+          </p>
+          <emu-eqn id="eqn-ToRawFixedFn" aoid="ToRawFixedFn">
+            ToRawFixedFn(_n_, _f_) = _n_ × 10<sup>–_f_</sup>
+          </emu-eqn>
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _f_ be _maxFraction_.
         1. [declared="n1,r1"] Let _n1_ be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawFixedFn(_n1_, _f_)</emu-eqn>, such that <emu-eqn>_n1_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r1_ ≤ _x_</emu-eqn>, and _r1_ is maximized.
@@ -1342,14 +1395,18 @@
     </emu-clause>
 
     <emu-normative-optional>
-    <emu-clause id="sec-unwrapnumberformat" aoid="UnwrapNumberFormat">
-      <h1>UnwrapNumberFormat ( _nf_ )</h1>
-      <p>
-        The UnwrapNumberFormat abstract operation returns the NumberFormat instance
-        of its input object, which is either the value itself or a value associated
-        with it by %NumberFormat% according to the normative optional
-        constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
-      </p>
+    <emu-clause id="sec-unwrapnumberformat" type="abstract operation">
+      <h1>
+        UnwrapNumberFormat (
+          _nf_: an ECMAScript language value,
+        ): either a normal completion containing an ECMAScript language value or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It returns the NumberFormat instance of its input object, which is either the value itself or a value associated with it by %NumberFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
+        </dd>
+      </dl>
       <emu-alg>
         1. If Type(_nf_) is not Object, throw a *TypeError* exception.
         1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%NumberFormat%, _nf_) is *true*, then
@@ -1359,11 +1416,19 @@
     </emu-clause>
     </emu-normative-optional>
 
-    <emu-clause id="sec-getnumberformatpattern" aoid="GetNumberFormatPattern">
-      <h1>GetNumberFormatPattern ( _numberFormat_, _x_ )</h1>
-      <p>
-        The abstract operation GetNumberFormatPattern considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
-      </p>
+    <emu-clause id="sec-getnumberformatpattern" type="abstract operation">
+      <h1>
+        GetNumberFormatPattern (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value,
+        ): a String
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
@@ -1440,11 +1505,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getnotationsubpattern" aoid="GetNotationSubPattern">
-      <h1>GetNotationSubPattern ( _numberFormat_, _exponent_ )</h1>
-      <p>
-        The abstract operation GetNotationSubPattern considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
-      </p>
+    <emu-clause id="sec-getnotationsubpattern" type="abstract operation">
+      <h1>
+        GetNotationSubPattern (
+          _numberFormat_: an Intl.NumberFormat,
+          _exponent_: an integer,
+        ): a String
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _localeData_ be %NumberFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
@@ -1464,12 +1537,20 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-computeexponent" aoid="ComputeExponent">
-      <h1>ComputeExponent ( _numberFormat_, _x_ )</h1>
-      <p>
-        The abstract operation ComputeExponent computes an exponent (power of ten) by which to scale _x_ according to the number formatting settings.
-        It handles cases such as 999 rounding up to 1000, requiring a different exponent.
-      </p>
+    <emu-clause id="sec-computeexponent" type="abstract operation">
+      <h1>
+        ComputeExponent (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: a mathematical value,
+        ): an integer
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It computes an exponent (power of ten) by which to scale _x_ according to the number formatting settings.
+          It handles cases such as 999 rounding up to 1000, requiring a different exponent.
+        </dd>
+      </dl>
       <emu-alg>
         1. If _x_ = 0, then
           1. Return 0.
@@ -1488,11 +1569,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-computeexponentformagnitude" aoid="ComputeExponentForMagnitude">
-      <h1>ComputeExponentForMagnitude ( _numberFormat_, _magnitude_ )</h1>
-      <p>
-        The abstract operation ComputeExponentForMagnitude computes an exponent by which to scale a number of the given magnitude (power of ten of the most significant digit) according to the locale and the desired notation (scientific, engineering, or compact).
-      </p>
+    <emu-clause id="sec-computeexponentformagnitude" type="abstract operation">
+      <h1>
+        ComputeExponentForMagnitude (
+          _numberFormat_: an Intl.NumberFormat,
+          _magnitude_: an integer,
+        ): an integer
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It computes an exponent by which to scale a number of the given magnitude (power of ten of the most significant digit) according to the locale and the desired notation (scientific, engineering, or compact).
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _notation_ be _numberFormat_.[[Notation]].
         1. If _notation_ is *"standard"*, then
@@ -1566,11 +1655,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-tointlmathematicalvalue" aoid="ToIntlMathematicalValue">
-      <h1>ToIntlMathematicalValue ( _value_ )</h1>
-      <p>
-        The abstract operation ToIntlMathematicalValue takes argument _value_. It returns _value_ converted to an <dfn id="intl-mathematical-value">Intl mathematical value</dfn>, which is a mathematical value together with ~positive-infinity~, ~negative-infinity~, ~not-a-number~, and ~negative-zero~. This abstract operation is similar to <emu-xref href="#sec-tonumeric"></emu-xref>, but a mathematical value can be returned instead of a Number or BigInt, so that exact decimal values can be represented. The following steps are taken:
-      </p>
+    <emu-clause id="sec-tointlmathematicalvalue" type="abstract operation">
+      <h1>
+        ToIntlMathematicalValue (
+          _value_: an ECMAScript language value,
+        ): either a normal completion containing an Intl mathematical value or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It returns _value_ converted to an <dfn id="intl-mathematical-value">Intl mathematical value</dfn>, which is a mathematical value together with ~positive-infinity~, ~negative-infinity~, ~not-a-number~, and ~negative-zero~.
+          This abstract operation is similar to <emu-xref href="#sec-tonumeric"></emu-xref>, but a mathematical value can be returned instead of a Number or BigInt, so that exact decimal values can be represented.
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _primValue_ be ? ToPrimitive(_value_, ~number~).
         1. If Type(_primValue_) is BigInt, return ℝ(_primValue_).
@@ -1594,11 +1691,17 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getunsignedroundingmode" aoid="GetUnsignedRoundingMode">
-      <h1>GetUnsignedRoundingMode ( _roundingMode_, _isNegative_ )</h1>
-      <p>
-        The abstract operation GetUnsignedRoundingMode returns the rounding mode that should be applied to the absolute value of a number to produce the same result as if _roundingMode_, one of the String values in the *Identifier* column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, were applied to the signed value of the number (negative if the boolean _isNegative_ is *true*, or positive otherwise). The following steps are taken:
-      </p>
+    <emu-clause id="sec-getunsignedroundingmode" type="abstract operation">
+      <h1>
+        GetUnsignedRoundingMode (
+          _roundingMode_: a String,
+          _isNegative_: a Boolean,
+        ): a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the rounding mode that should be applied to the absolute value of a number to produce the same result as if _roundingMode_, one of the String values in the *Identifier* column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, were applied to the signed value of the number (negative if the boolean _isNegative_ is *true*, or positive otherwise).</dd>
+      </dl>
       <emu-alg>
         1. If _isNegative_ is *true*, return the specification type in the third column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> where the first column is _roundingMode_ and the second column is "negative".
         1. Else, return the specification type in the third column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> where the first column is _roundingMode_ and the second column is "positive".
@@ -1698,11 +1801,19 @@
       </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-applyunsignedroundingmode" aoid="ApplyUnsignedRoundingMode">
-      <h1>ApplyUnsignedRoundingMode ( _x_, _r1_, _r2_, _unsignedRoundingMode_ )</h1>
-      <p>
-        The abstract operation ApplyUnsignedRoundingMode considers _x_ (a mathematical value), bracketed below by _r1_ (a mathematical value) and above by _r2_ (a mathematical value), and returns either _r1_ or _r2_ according to _unsignedRoundingMode_ (a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*). The following steps are taken:
-      </p>
+    <emu-clause id="sec-applyunsignedroundingmode" type="abstract operation">
+      <h1>
+        ApplyUnsignedRoundingMode (
+          _x_: a mathematical value,
+          _r1_: a mathematical value,
+          _r2_: a mathematical value,
+          _unsignedRoundingMode_: a specification type from the *Unsigned Rounding Mode* column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> or *undefined*,
+        ): a mathematical value
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It considers _x_, bracketed below by _r1_ and above by _r2_, and returns either _r1_ or _r2_ according to _unsignedRoundingMode_.</dd>
+      </dl>
       <emu-alg>
         1. If _x_ is equal to _r1_, return _r1_.
         1. Assert: _r1_ &lt; _x_ &lt; _r2_.
@@ -1723,18 +1834,25 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-partitionnumberrangepattern" aoid="PartitionNumberRangePattern">
-      <h1>PartitionNumberRangePattern ( _numberFormat_, _x_, _y_ )</h1>
-      <p>
-        The abstract operation PartitionNumberRangePattern creates the parts for a localized number range according to _x_ (which must be an Intl mathematical value), _y_ (which must be an Intl mathematical value), and the formatting options of _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
-      </p>
+    <emu-clause id="sec-partitionnumberrangepattern" type="abstract operation">
+      <h1>
+        PartitionNumberRangePattern (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value,
+          _y_: an Intl mathematical value,
+        ): either a normal completion containing a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Source]] (a String), or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It creates the parts for a localized number range according to _x_, _y_, and the formatting options of _numberFormat_.</dd>
+      </dl>
       <emu-alg>
         1. If _x_ is ~not-a-number~ or _y_ is ~not-a-number~, throw a *RangeError* exception.
         1. Let _result_ be a new empty List.
-        1. Let _xResult_ be ? PartitionNumberPattern(_numberFormat_, _x_).
-        1. Let _yResult_ be ? PartitionNumberPattern(_numberFormat_, _y_).
-        1. If ! FormatNumeric(_numberFormat_, _x_) is equal to ! FormatNumeric(_numberFormat_, _y_), then
-          1. Let _appxResult_ be ? FormatApproximately(_numberFormat_, _xResult_).
+        1. Let _xResult_ be PartitionNumberPattern(_numberFormat_, _x_).
+        1. Let _yResult_ be PartitionNumberPattern(_numberFormat_, _y_).
+        1. If FormatNumeric(_numberFormat_, _x_) is equal to FormatNumeric(_numberFormat_, _y_), then
+          1. Let _appxResult_ be FormatApproximately(_numberFormat_, _xResult_).
           1. For each element _r_ in _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
@@ -1744,15 +1862,21 @@
         1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } element to _result_.
         1. For each element _r_ in _yResult_, do
           1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } as the last element of _result_.
-        1. Return ! CollapseNumberRange(_result_).
+        1. Return CollapseNumberRange(_result_).
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-formatapproximately" aoid="FormatApproximately">
-      <h1>FormatApproximately ( _numberFormat_, _result_ )</h1>
-      <p>
-        The FormatApproximately abstract operation modifies _result_, which must be a List of Record values as described in PartitionNumberPattern, by adding a new Record for the approximately sign, which may depend on _numberFormat_ (which must be an object initialized as NumberFormat). The following steps are taken:
-      </p>
+    <emu-clause id="sec-formatapproximately" type="abstract operation">
+      <h1>
+        FormatApproximately (
+          _numberFormat_: an Intl.NumberFormat,
+          _result_: a List of Records with fields [[Type]] (a String) and [[Value]] (a String),
+        ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It modifies _result_, which must be a List of Record values as described in PartitionNumberPattern, by adding a new Record for the approximately sign, which may depend on _numberFormat_.</dd>
+      </dl>
       <emu-alg>
         1. Let _approximatelySign_ be an ILND String value used to signify that a number is approximate.
         1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at an ILND index in _result_. For example, if _numberFormat_ has [[Locale]] *"en-US"* and [[NumberingSystem]] *"latn"* and [[Style]] *"decimal"*, the new Record might be inserted before the first element of _result_.
@@ -1760,11 +1884,16 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-collapsenumberrange" aoid="CollapseNumberRange">
-      <h1>CollapseNumberRange ( _result_ )</h1>
-      <p>
-        The CollapseNumberRange abstract operation modifies _result_ (which must be a List of { [[Type]], [[Value]], [[Source]] } Records as constructed within PartitionNumberRangePattern) by removing redundant information and resolving internal inconsistency, and returns the resulting List. The algorithm is implementation dependent, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.
-      </p>
+    <emu-clause id="sec-collapsenumberrange" type="implementation-defined abstract operation">
+      <h1>
+        CollapseNumberRange (
+          _result_: a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Source]] (a String),
+        ): a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Source]] (a String)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It modifies _result_ (which must be a List of Records as constructed within PartitionNumberRangePattern) by removing redundant information and resolving internal inconsistency, and returns the resulting List. The algorithm is implementation dependent, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.</dd>
+      </dl>
       <p>
         For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.
       </p>
@@ -1776,13 +1905,18 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumericrange" aoid="FormatNumericRange">
-      <h1>FormatNumericRange ( _numberFormat_, _x_, _y_ )</h1>
-
-      <p>
-        The FormatNumericRange abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
-      </p>
-
+    <emu-clause id="sec-formatnumericrange" type="abstract operation">
+      <h1>
+        FormatNumericRange (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value,
+          _y_: an Intl mathematical value,
+        ): either a normal completion containing a String or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd></dd>
+      </dl>
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
         1. Let _result_ be the empty String.
@@ -1792,13 +1926,18 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumericrangetoparts" aoid="FormatNumericRangeToParts">
-      <h1>FormatNumericRangeToParts ( _numberFormat_, _x_, _y_ )</h1>
-
-      <p>
-        The FormatNumericRangeToParts abstract operation is called with arguments _numberFormat_ (which must be an object initialized as a NumberFormat), _x_ (which must be an Intl mathematical value), and _y_ (which must be an Intl mathematical value greater than or equal to _x_), and performs the following steps:
-      </p>
-
+    <emu-clause id="sec-formatnumericrangetoparts" type="abstract operation">
+      <h1>
+        FormatNumericRangeToParts (
+          _numberFormat_: an Intl.NumberFormat,
+          _x_: an Intl mathematical value,
+          _y_: an Intl mathematical value,
+        ): either a normal completion containing an Array or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd></dd>
+      </dl>
       <emu-alg>
         1. Let _parts_ be ? PartitionNumberRangePattern(_numberFormat_, _x_, _y_).
         1. Let _result_ be ! ArrayCreate(0).
