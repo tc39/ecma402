@@ -42,7 +42,7 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *+0*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *"standard"*).
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to _r_.[[locale]].
@@ -181,6 +181,8 @@
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
+            1. If _p_ is one of *"minimumIntegerDigits"*, *"minimumFractionDigits"*, *"maximumFractionDigits"*, *"minimumSignificantDigits"*, *"maximumSignificantDigits"*, or *"roundingIncrement"*, then
+              1. Set _v_ to 𝔽(_v_).
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
         1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
@@ -265,12 +267,12 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
-      <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
+      <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
       <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
-      <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
+      <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
   </emu-clause>

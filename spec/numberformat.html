@@ -110,8 +110,8 @@
         SetNumberFormatDigitOptions (
           _intlObj_: an Object,
           _options_: an Object,
-          _mnfdDefault_: a Number,
-          _mxfdDefault_: a Number,
+          _mnfdDefault_: an integer,
+          _mxfdDefault_: an integer,
           _notation_: a String,
         ): either a normal completion containing ~unused~ or a throw completion
       </h1>
@@ -428,6 +428,8 @@
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _nf_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
+            1. If _p_ is one of *"minimumIntegerDigits"*, *"minimumFractionDigits"*, *"maximumFractionDigits"*, *"minimumSignificantDigits"*, *"maximumSignificantDigits"*, or *"roundingIncrement"*, then
+              1. Set _v_ to 𝔽(_v_).
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
       </emu-alg>
@@ -555,9 +557,9 @@
       <li>[[CurrencySign]] is one of the String values *"standard"* or *"accounting"*, specifying whether to render negative numbers in accounting format, often signified by parenthesis. It is only used when [[Style]] has the value *"currency"* and when [[SignDisplay]] is not *"never"*.</li>
       <li>[[Unit]] is a core unit identifier. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
-      <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~, ~morePrecision~, or ~lessPrecision~.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~, ~morePrecision~, or ~lessPrecision~.</li>
+      <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used. Numbers will be padded with leading zeroes if necessary.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary. These properties are only used when [[RoundingType]] is ~fractionDigits~, ~morePrecision~, or ~lessPrecision~.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be shown. If present, the formatter uses however many fraction digits are required to display the specified number of significant digits. These properties are only used when [[RoundingType]] is ~significantDigits~, ~morePrecision~, or ~lessPrecision~.</li>
       <li>[[UseGrouping]] is a Boolean or String value indicating the conditions under which a grouping separator should be used. The positions of grouping separators, and whether to display grouping separators for a given number, is implementation-defined. A value *"always"* hints the implementation to display grouping separators if possible; *"min2"*, if there are at least 2 digits in a group; *"auto"*, if the locale prefers to use grouping separators for the number. A value *false* disables grouping separators.</li>
       <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use. If ~fractionDigits~, the number is rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significantDigits~, the number is rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~morePrecision~ or ~lessPrecision~, all four of those settings are used, with specific rules for disambiguating when to use one set versus the other. [[RoundingType]] is derived from the *"roundingPriority"* option and is converted back to *"roundingPriority"* in <emu-xref href="#sec-intl.numberformat.prototype.resolvedoptions"></emu-xref>.</li>
       <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
@@ -567,7 +569,7 @@
         In scientific notation, this slot affects the sign display of the mantissa but not the exponent.
       </li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
-      <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
+      <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
 
