@@ -42,7 +42,7 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *+0*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *"standard"*).
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to _r_.[[locale]].
@@ -185,6 +185,9 @@
           1. Else,
             1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
+            1. If there is a Conversion value in the current row, then
+              1. Assert: The Conversion value of the current row is ~number~.
+              1. Set _v_ to 𝔽(_v_).
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
       </emu-alg>
@@ -196,55 +199,68 @@
             <tr>
               <th>Internal Slot</th>
               <th>Property</th>
+              <th>Conversion</th>
             </tr>
           </thead>
           <tr>
             <td>[[Locale]]</td>
             <td>*"locale"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Type]]</td>
             <td>*"type"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MinimumIntegerDigits]]</td>
             <td>*"minimumIntegerDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MinimumFractionDigits]]</td>
             <td>*"minimumFractionDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MaximumFractionDigits]]</td>
             <td>*"maximumFractionDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MinimumSignificantDigits]]</td>
             <td>*"minimumSignificantDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MaximumSignificantDigits]]</td>
             <td>*"maximumSignificantDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
-            <td> </td>
+            <td></td>
             <td>*"pluralCategories"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[RoundingIncrement]]</td>
             <td>*"roundingIncrement"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[RoundingMode]]</td>
             <td>*"roundingMode"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[ComputedRoundingPriority]]</td>
             <td>*"roundingPriority"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[TrailingZeroDisplay]]</td>
             <td>*"trailingZeroDisplay"*</td>
+            <td></td>
           </tr>
         </table>
       </emu-table>
@@ -269,10 +285,10 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
-      <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
-      <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
+      <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
+      <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
       <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"lessPrecision"*, or *"morePrecision"*, specifying the strategy to resolve mixed fraction digits and significant digits settings.</li>
       <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
