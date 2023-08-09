@@ -186,12 +186,7 @@
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
         1. Perform ! CreateDataPropertyOrThrow(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
-        1. If _pr_.[[RoundingType]] is ~morePrecision~, then
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"morePrecision"*).
-        1. Else if _pr_.[[RoundingType]] is ~lessPrecision~, then
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"lessPrecision"*).
-        1. Else,
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"auto"*).
+        1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, _pr_.[[ComputedRoundingPriority]]).
         1. Return _options_.
       </emu-alg>
 
