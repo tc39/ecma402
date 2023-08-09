@@ -73,7 +73,11 @@
       </li>
     </ul>
     <emu-note>
-      The set of locales, currencies, calendars, numbering systems, and other enumerable items made available by ECMAScript hosts must not change as the result of user behaviour, or otherwise allow two users using the same version of the same host on the same platform to be distinguishable from each other. This constraint exists to mitigate potential fingerprinting concerns. This constraint may be relaxed in future revisions.
+      The set of locales, currencies, calendars, numbering systems, and other enumerable items made available by ECMAScript hosts must not change as the result of user behaviour, or otherwise result in two users using the same version of the same host on the same platform becoming distinguishable from each other. This constraint is imposed to reduce the fingerprinting risk inherent in internationalization, and may be relaxed in future revisions.
+    </emu-note>
+
+    <emu-note>
+      As a result of this constraint, browser implementations that allow on-demand installation of new locales should not disclose whether non-standard locales and locale components are already installed.
     </emu-note>
 
     <emu-clause id="sec-compatibility">
