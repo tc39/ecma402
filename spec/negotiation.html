@@ -48,10 +48,10 @@
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
-        1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
+        1. Let _len_ be ? LengthOfArrayLike(_O_).
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
-          1. Let _Pk_ be ! ToString(_k_).
+          1. Let _Pk_ be ! ToString(𝔽(_k_)).
           1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
           1. If _kPresent_ is *true*, then
             1. Let _kValue_ be ? Get(_O_, _Pk_).
@@ -379,7 +379,7 @@
         GetOption (
           _options_: an Object,
           _property_: a property key,
-          _type_: ~boolean~, ~number~, or ~string~,
+          _type_: ~boolean~ or ~string~,
           _values_: ~empty~ or a List of ECMAScript language values,
           _default_: ~required~ or an ECMAScript language value,
         ): either a normal completion containing an ECMAScript language value or a throw completion
@@ -395,9 +395,6 @@
           1. Return _default_.
         1. If _type_ is ~boolean~, then
           1. Set _value_ to ToBoolean(_value_).
-        1. Else if _type_ is ~number~, then
-          1. Set _value_ to ? ToNumber(_value_).
-          1. If _value_ is *NaN*, throw a *RangeError* exception.
         1. Else,
           1. Assert: _type_ is ~string~.
           1. Set _value_ to ? ToString(_value_).
@@ -441,13 +438,13 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It converts _value_ to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+        <dd>It converts _value_ to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
       </dl>
       <emu-alg>
         1. If _value_ is *undefined*, return _fallback_.
         1. Set _value_ to ? ToNumber(_value_).
-        1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
-        1. Return floor(_value_).
+        1. If _value_ is not finite or ℝ(_value_) &lt; _minimum_ or ℝ(_value_) &gt; _maximum_, throw a *RangeError* exception.
+        1. Return floor(ℝ(_value_)).
       </emu-alg>
     </emu-clause>
 
@@ -463,7 +460,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It extracts the value of the property named _property_ from the provided _options_ object, converts it to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+        <dd>It extracts the value of the property named _property_ from the provided _options_ object, converts it to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
       </dl>
       <emu-alg>
         1. Let _value_ be ? Get(_options_, _property_).

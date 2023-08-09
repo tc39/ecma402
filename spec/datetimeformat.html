@@ -835,7 +835,7 @@
         1. Let _shortLessPenalty_ be 6.
         1. Let _shortMorePenalty_ be 3.
         1. Let _offsetPenalty_ be 1.
-        1. Let _bestScore_ be -*Infinity*.
+        1. Let _bestScore_ be -∞.
         1. Let _bestFormat_ be *undefined*.
         1. Assert: Type(_formats_) is List.
         1. For each element _format_ of _formats_, do
@@ -910,7 +910,7 @@
       </emu-alg>
 
       <p>
-        The *"length"* property of a DateTime format function is 1.
+        The *"length"* property of a DateTime format function is *1*<sub>𝔽</sub>.
       </p>
     </emu-clause>
 
@@ -935,7 +935,7 @@
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"useGrouping"*, *false*).
         1. Let _nf_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nfOptions_ &raquo;).
         1. Let _nf2Options_ be OrdinaryObjectCreate(*null*).
-        1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, 2).
+        1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
         1. Let _nf2_ be ? Construct(%NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
         1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
@@ -1061,7 +1061,7 @@
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataProperty(_result_, ! ToString(_n_), _O_).
+          1. Perform ! CreateDataProperty(_result_, ! ToString(𝔽(_n_)), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
@@ -1180,7 +1180,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"source"*, _part_.[[Source]]).
-          1. Perform ! CreateDataProperty(_result_, ! ToString(_n_), _O_).
+          1. Perform ! CreateDataProperty(_result_, ! ToString(𝔽(_n_)), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
