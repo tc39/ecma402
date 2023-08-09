@@ -148,7 +148,7 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? thisNumberValue(*this* value).
+        1. Let _x_ be ? ThisNumberValue(*this* value).
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatNumeric(_numberFormat_, ! ToIntlMathematicalValue(_x_)).
       </emu-alg>
@@ -174,7 +174,7 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? thisBigIntValue(*this* value).
+        1. Let _x_ be ? ThisBigIntValue(*this* value).
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
         1. Return FormatNumeric(_numberFormat_, ℝ(_x_)).
       </emu-alg>
@@ -200,7 +200,9 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. Let _dateObject_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
+        1. Let _x_ be _dateObject_.[[DateValue]].
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~any~, ~all~).
         1. Return ! FormatDateTime(_dateFormat_, _x_).
@@ -219,7 +221,9 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. Let _dateObject_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
+        1. Let _x_ be _dateObject_.[[DateValue]].
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~date~, ~date~).
         1. Return ! FormatDateTime(_dateFormat_, _x_).
@@ -238,7 +242,9 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? thisTimeValue(*this* value).
+        1. Let _dateObject_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
+        1. Let _x_ be _dateObject_.[[DateValue]].
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _timeFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~time~, ~time~).
         1. Return ! FormatDateTime(_timeFormat_, _x_).
