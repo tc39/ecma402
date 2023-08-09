@@ -714,7 +714,7 @@
       </emu-alg>
 
       <p>
-        The *"length"* property of a Number format function is 1.
+        The *"length"* property of a Number format function is *1*<sub>𝔽</sub>.
       </p>
     </emu-clause>
 
@@ -1275,7 +1275,7 @@
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
@@ -1947,7 +1947,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"source"*, _part_.[[Source]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
