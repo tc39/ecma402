@@ -236,7 +236,7 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a List of DateTime Format Records. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
           <ul>
             <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
             <li>weekday, year, month, day, hour, minute, second</li>
@@ -251,42 +251,516 @@
             <li>dayPeriod, hour, minute, second</li>
             <li>dayPeriod, hour, minute</li>
           </ul>
-          Each of the records must also have the following fields:
-          <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
-            <li>
-              A [[rangePatterns]] field with a Record value:
-                <ul>
-                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
-                    <ul>
-                      <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is [[Month]], it contains the range pattern that should be used to format a date range where the era and year values are the same, but the month value is different.</li>
-                      <li>The record will contain the following fields:</li>
-                        <ul>
-                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref>. All fields required to format a date for any of the [[PatternParts]] records must be present.</li>
-                          <li>A [[PatternParts]] field whose value is a list of Records each representing a part of the range pattern. Each record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field is one of the String values *"shared"*, *"startRange"*, or *"endRange"*. It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</li>
-                        </ul>
-                    </ul>
-                  </li>
-                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
-                </ul>
-            </li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
-            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
-          </ol>
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
-          <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
-          </ol>
-          For [[DateTimeFormat]], the field value must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested record which also has [[full]], [[long]], [[medium]] and [[short]] fields. The [[full]], [[long]], [[medium]] and [[short]] fields in the enclosing record refer to the date style of the range pattern, while the fields in the nested record refers to the time style of the range pattern. The value of these fields in the nested record is a record with a [[rangePatterns]] field and a [[rangePatterns12]] field which are similar to the [[rangePatterns]] and [rangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field is a DateTime Calendar Style Record.
          </li>
       </ul>
+
+      <emu-clause id="sec-datetimeformat-format-record">
+        <h1>DateTime Format Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-format-record" variants="DateTime Format Records">DateTime Format Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-format-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-format-record">
+          <emu-caption>DateTime Time Range Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[weekday]]</td>
+              <td>[[Weekday]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{weekday}"*.</td>
+            </tr>
+            <tr>
+              <td>[[era]]</td>
+              <td>[[Era]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{era}"*.</td>
+            </tr>
+            <tr>
+              <td>[[year]]</td>
+              <td>[[Year]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains at least one of the substrings *"{year}"*, *"{yearName}"*, or *"{relatedYear}"*.</td>
+            </tr>
+            <tr>
+              <td>[[month]]</td>
+              <td>[[Month]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{month}"*.</td>
+            </tr>
+            <tr>
+              <td>[[day]]</td>
+              <td>[[Day]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{day}"*.</td>
+            </tr>
+            <tr>
+              <td>[[dayPeriod]]</td>
+              <td>[[DayPeriod]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{dayPeriod}"*.</td>
+            </tr>
+            <tr>
+              <td>[[hour]]</td>
+              <td>[[Hour]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{hour}"*.</td>
+            </tr>
+            <tr>
+              <td>[[minute]]</td>
+              <td>[[Minute]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{minute}"*.</td>
+            </tr>
+            <tr>
+              <td>[[second]]</td>
+              <td>[[Second]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{second}"*.</td>
+            </tr>
+            <tr>
+              <td>[[fractionalSecondDigits]]</td>
+              <td>[[FractionalSecondDigits]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{fractionalSecondDigits}"*.</td>
+            </tr>
+            <tr>
+              <td>[[timeZoneName]]</td>
+              <td>[[TimeZoneName]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if [[pattern]] contains the substring *"{timeZoneName}"*.</td>
+            </tr>
+            <tr>
+              <td>[[pattern]]</td>
+              <td>a Pattern String</td>
+              <td><emu-not-ref>Contains</emu-not-ref> for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*. If the record has a [[year]] field, the string may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</td>
+            </tr>
+            <tr>
+              <td>[[pattern12]]</td>
+              <td>a Pattern String</td>
+              <td>Optional field. Only present if the [[hour]] field is present. In addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</td>
+            </tr>
+            <tr>
+              <td>[[rangePatterns]]</td>
+              <td>a DateTime Range Pattern Record</td>
+              <td>Pattern strings in this field are similar to [[pattern]].</td>
+            </tr>
+            <tr>
+              <td>[[rangePatterns12]]</td>
+              <td>a DateTime Range Pattern Record</td>
+              <td>Optional field. Only present if the [[hour]] field is present. Pattern strings in this field are similar to [[pattern12]].</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-range-pattern-record">
+        <h1>DateTime Range Pattern Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-range-pattern-record">DateTime Range Pattern Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-range-pattern-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-range-pattern-record">
+          <emu-caption>DateTime Range Pattern Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[Default]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>It contains the default range pattern used when a more specific range pattern is not available.</td>
+            </tr>
+            <tr>
+              <td>[[Era]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>era</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Year]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>year</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Month]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>month</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Day]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>day</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[AmPm]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>ante</em> or <em>post meridiem</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[DayPeriod]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>day period</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Hour]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>hour</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Minute]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>minute</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[Second]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>second</em> is the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+            <tr>
+              <td>[[FractionalSecondDigits]]</td>
+              <td>a DateTime Range Pattern Format Record</td>
+              <td>Optional field. Used when <em>fractional seconds</em> are the largest calendar element that is different between the start and end dates.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-range-pattern-format-record">
+        <h1>DateTime Range Pattern Format Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-range-pattern-format-record">DateTime Range Pattern Format Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-range-pattern-format-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-range-pattern-format-record">
+          <emu-caption>DateTime Range Pattern Format Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[weekday]]</td>
+              <td>[[Weekday]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{weekday}"*.</td>
+            </tr>
+            <tr>
+              <td>[[era]]</td>
+              <td>[[Era]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{era}"*.</td>
+            </tr>
+            <tr>
+              <td>[[year]]</td>
+              <td>[[Year]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains at least one of the substrings *"{year}"*, *"{yearName}"*, or *"{relatedYear}"*.</td>
+            </tr>
+            <tr>
+              <td>[[month]]</td>
+              <td>[[Month]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{month}"*.</td>
+            </tr>
+            <tr>
+              <td>[[day]]</td>
+              <td>[[Day]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{day}"*.</td>
+            </tr>
+            <tr>
+              <td>[[dayPeriod]]</td>
+              <td>[[DayPeriod]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{dayPeriod}"*.</td>
+            </tr>
+            <tr>
+              <td>[[hour]]</td>
+              <td>[[Hour]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{hour}"*.</td>
+            </tr>
+            <tr>
+              <td>[[minute]]</td>
+              <td>[[Minute]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{minute}"*.</td>
+            </tr>
+            <tr>
+              <td>[[second]]</td>
+              <td>[[Second]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{second}"*.</td>
+            </tr>
+            <tr>
+              <td>[[fractionalSecondDigits]]</td>
+              <td>[[FractionalSecondDigits]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{fractionalSecondDigits}"*.</td>
+            </tr>
+            <tr>
+              <td>[[timeZoneName]]</td>
+              <td>[[TimeZoneName]] values in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref></td>
+              <td>Optional field. Present if a Pattern String in [[PatternParts]] contains the substring *"{timeZoneName}"*.</td>
+            </tr>
+            <tr>
+              <td>[[PatternParts]]</td>
+              <td>a List of DateTime Range Pattern Part Records</td>
+              <td>Each record represents a part of the range pattern.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-range-pattern-part-record">
+        <h1>DateTime Range Pattern Part Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-range-pattern-part-record" variants="DateTime Range Pattern Part Records">DateTime Range Pattern Part Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-range-pattern-part-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-range-pattern-part-record">
+          <emu-caption>DateTime Range Pattern Part Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[Source]]</td>
+              <td>*"shared"*, *"startRange"*, or *"endRange"*</td>
+              <td>It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</td>
+            </tr>
+            <tr>
+              <td>[[Pattern]]</td>
+              <td>a Pattern String</td>
+              <td>A String of the same format as the regular date pattern String.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-calendar-style-record">
+        <h1>DateTime Calendar Style Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-calendar-style-record">DateTime Calendar Style Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-calendar-style-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-calendar-style-record">
+          <emu-caption>DateTime Calendar Style Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[DateFormat]]</td>
+              <td>a DateTime Style Record</td>
+            </tr>
+            <tr>
+              <td>[[TimeFormat]]</td>
+              <td>a DateTime Style Record</td>
+            </tr>
+            <tr>
+              <td>[[DateTimeFormat]]</td>
+              <td>a DateTime Connector Record</td>
+            </tr>
+            <tr>
+              <td>[[DateTimeRangeFormat]]</td>
+              <td>a DateTime Date Range Record</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-style-record">
+        <h1>DateTime Style Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-style-record">DateTime Style Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-style-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-style-record">
+          <emu-caption>DateTime Style Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[full]]</td>
+              <td>a DateTime Format Record</td>
+              <td>Format record for the *"full"* style.</td>
+            </tr>
+            <tr>
+              <td>[[long]]</td>
+              <td>a DateTime Format Record</td>
+              <td>Format record for the *"long"* style.</td>
+            </tr>
+            <tr>
+              <td>[[medium]]</td>
+              <td>a DateTime Format Record</td>
+              <td>Format record for the *"medium"* style.</td>
+            </tr>
+            <tr>
+              <td>[[short]]</td>
+              <td>a DateTime Format Record</td>
+              <td>Format record for the *"short"* style.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-connector-record">
+        <h1>DateTime Connector Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-connector-record">DateTime Connector Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-connector-record"></emu-xref>. All connector pattern strings must contain the strings *"{0}"* and *"{1}"*.
+        </p>
+        <emu-table id="table-datetimeformat-connector-record">
+          <emu-caption>DateTime Connector Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[full]]</td>
+              <td>a Pattern String</td>
+              <td>Connector pattern when the date style is *"full"*.</td>
+            </tr>
+            <tr>
+              <td>[[long]]</td>
+              <td>a Pattern String</td>
+              <td>Connector pattern when the date style is *"long"*.</td>
+            </tr>
+            <tr>
+              <td>[[medium]]</td>
+              <td>a Pattern String</td>
+              <td>Connector pattern when the date style is *"medium"*.</td>
+            </tr>
+            <tr>
+              <td>[[short]]</td>
+              <td>a Pattern String</td>
+              <td>Connector pattern when the date style is *"short"*.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-date-range-record">
+        <h1>DateTime Date Range Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-date-range-record">DateTime Date Range Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-date-range-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-date-range-record">
+          <emu-caption>DateTime Date Range Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[full]]</td>
+              <td>a DateTime Time Range Record</td>
+              <td>Used when date style is *"full"*.</td>
+            </tr>
+            <tr>
+              <td>[[long]]</td>
+              <td>a DateTime Time Range Record</td>
+              <td>Used when date style is *"long"*.</td>
+            </tr>
+            <tr>
+              <td>[[medium]]</td>
+              <td>a DateTime Time Range Record</td>
+              <td>Used when date style is *"medium"*.</td>
+            </tr>
+            <tr>
+              <td>[[short]]</td>
+              <td>a DateTime Time Range Record</td>
+              <td>Used when date style is *"short"*.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-time-range-record">
+        <h1>DateTime Time Range Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-time-range-record">DateTime Time Range Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-time-range-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-time-range-record">
+          <emu-caption>DateTime Time Range Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[full]]</td>
+              <td>a DateTime Style Range Record</td>
+              <td>Used when time style is *"full"*.</td>
+            </tr>
+            <tr>
+              <td>[[long]]</td>
+              <td>a DateTime Style Range Record</td>
+              <td>Used when time style is *"long"*.</td>
+            </tr>
+            <tr>
+              <td>[[medium]]</td>
+              <td>a DateTime Style Range Record</td>
+              <td>Used when time style is *"medium"*.</td>
+            </tr>
+            <tr>
+              <td>[[short]]</td>
+              <td>a DateTime Style Range Record</td>
+              <td>Used when time style is *"short"*.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
+
+      <emu-clause id="sec-datetimeformat-style-range-record">
+        <h1>DateTime Style Range Records</h1>
+
+        <p>
+          Each <dfn id="datetimeformat-style-range-record">DateTime Style Range Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-style-range-record"></emu-xref>.
+        </p>
+        <emu-table id="table-datetimeformat-style-range-record">
+          <emu-caption>DateTime Style Range Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[rangePatterns]]</td>
+              <td>a DateTime Range Pattern Record</td>
+              <td>Range patterns to combine date and time styles.</td>
+            </tr>
+            <tr>
+              <td>[[rangePatterns12]]</td>
+              <td>a DateTime Range Pattern Record</td>
+              <td>Optional Field. Range patterns to combine date and time styles for 12-hour formats.</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
 
       <emu-note>
         For example, an implementation might include the following record as part of its English locale data:
