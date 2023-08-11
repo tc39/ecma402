@@ -1050,11 +1050,15 @@
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
           1. Let _p_ be the Property value of the current row.
-          1. If the Internal Slot value of the current row is an Internal Slot value in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
-            1. If _dtf_.[[DateStyle]] is not *undefined* or _dtf_.[[TimeStyle]] is not *undefined*, then
-              1. Set _v_ to *undefined*.
+          1. If there is an Internal Slot value in the current row, then
+            1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Else,
+            1. Let _format_ be _dtf_.[[DateTimeFormat]].
+            1. If _format_ has a field [[&lt;_p_&gt;]] and _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
+              1. Let _v_ be _format_.[[&lt;_p_&gt;]].
+            1. Else,
+              1. Let _v_ be *undefined*.
           1. If _v_ is not *undefined*, then
             1. If there is a Conversion value in the current row, then
               1. Let _conversion_ be the Conversion value of the current row.
@@ -1108,57 +1112,57 @@
             <td>~hour12~</td>
           </tr>
           <tr>
-            <td>[[Weekday]]</td>
+            <td></td>
             <td>*"weekday"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Era]]</td>
+            <td></td>
             <td>*"era"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Year]]</td>
+            <td></td>
             <td>*"year"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Month]]</td>
+            <td></td>
             <td>*"month"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Day]]</td>
+            <td></td>
             <td>*"day"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[DayPeriod]]</td>
+            <td></td>
             <td>*"dayPeriod"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Hour]]</td>
+            <td></td>
             <td>*"hour"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Minute]]</td>
+            <td></td>
             <td>*"minute"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[Second]]</td>
+            <td></td>
             <td>*"second"*</td>
             <td></td>
           </tr>
           <tr>
-            <td>[[FractionalSecondDigits]]</td>
+            <td></td>
             <td>*"fractionalSecondDigits"*</td>
             <td>~number~</td>
           </tr>
           <tr>
-            <td>[[TimeZoneName]]</td>
+            <td></td>
             <td>*"timeZoneName"*</td>
             <td></td>
           </tr>
