@@ -1223,7 +1223,7 @@
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
-      <li>[[RangePatterns]] is a Record as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
+      <li>[[RangePatterns]] is a DateTime Range Pattern Record.</li>
     </ul>
 
     <p>
@@ -1311,8 +1311,8 @@
         DateTimeStyleFormat (
           _dateStyle_: *"full"*, *"long"*, *"medium"*, *"short"*, or *undefined*,
           _timeStyle_: *"full"*, *"long"*, *"medium"*, *"short"*, or *undefined*,
-          _styles_: a Record,
-        ): a Record
+          _styles_: a DateTime Calendar Style Record,
+        ): a DateTime Format Record
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -1327,7 +1327,7 @@
           1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
           1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
         1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
-          1. Let _format_ be a new Record.
+          1. Let _format_ be a new DateTime Format Record.
           1. Add to _format_ all fields from _dateFormat_ except [[pattern]] and [[rangePatterns]].
           1. Add to _format_ all fields from _timeFormat_ except [[pattern]], [[rangePatterns]], [[pattern12]], and [[rangePatterns12]], if present.
           1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
@@ -1352,8 +1352,8 @@
       <h1>
         BasicFormatMatcher (
           _options_: a Record,
-          _formats_: a List of Records,
-        ): a Record
+          _formats_: a List of DateTime Format Records,
+        ): a DateTime Format Record
       </h1>
       <dl class="header">
       </dl>
@@ -1420,8 +1420,8 @@
       <h1>
         BestFitFormatMatcher (
           _options_: a Record,
-          _formats_: a List of Records,
-        ): a Record
+          _formats_: a List of DateTime Format Records,
+        ): a DateTime Format Record
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -1456,7 +1456,7 @@
           _dateTimeFormat_: an Intl.DateTimeFormat,
           _patternParts_: a List of Records as returned by PartitionPattern,
           _x_: a Number,
-          _rangeFormatOptions_: a range pattern Record as used in [[rangePattern]], or *undefined*,
+          _rangeFormatOptions_: a DateTime Range Pattern Format Record or *undefined*,
         ): either a normal completion containing a List of Records with fields [[Type]] (a String) and [[Value]] (a String), or a throw completion
       </h1>
       <dl class="header">
