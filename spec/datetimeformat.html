@@ -1018,19 +1018,28 @@
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
-          1. If _p_ is *"hour12"*, then
-            1. Let _hc_ be _dtf_.[[HourCycle]].
-            1. If _hc_ is *"h11"* or *"h12"*, let _v_ be *true*.
-            1. Else if, _hc_ is *"h23"* or *"h24"*, let _v_ be *false*.
-            1. Else, let _v_ be *undefined*.
-          1. Else,
-            1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
-            1. If _p_ is *"fractionalSecondDigits"*, set _v_ to 𝔽(_v_).
-          1. If the Internal Slot value of the current row is an Internal Slot value in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
-            1. If _dtf_.[[DateStyle]] is not *undefined* or _dtf_.[[TimeStyle]] is not *undefined*, then
-              1. Let _v_ be *undefined*.
-          1. If _v_ is not *undefined*, then
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+          1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Assert: _v_ is not *undefined*.
+          1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. If _dtf_.[[HourCycle]] is not *undefined*, then
+          1. Let _hc_ be _dtf_.[[HourCycle]].
+          1. Perform ! CreateDataPropertyOrThrow(_options_, *"hourCycle"*, _hc_).
+          1. If _hc_ is *"h11"* or *"h12"*, let _h12_ be *true*.
+          1. Else, let _h12_ be *false*.
+          1. Perform ! CreateDataPropertyOrThrow(_options_, *"hour12"*, _h12_).
+        1. If _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
+          1. Let _format_ be _dtf_.[[DateTimeFormat]].
+          1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
+            1. Let _p_ be the name given in the Property column of the row.
+            1. If _format_ has a field [[&lt;_p_&gt;]], then
+              1. Let _v_ be _format_.[[&lt;_p_&gt;]].
+              1. If _p_ is *"fractionalSecondDigits"*, set _v_ to 𝔽(_v_).
+              1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Else,
+          1. If _dtf_.[[DateStyle]] is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, *"dateStyle"*, _dtf_.[[DateStyle]]).
+          1. If _dtf_.[[TimeStyle]] is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, *"timeStyle"*, _dtf_.[[TimeStyle]]).
         1. Return _options_.
       </emu-alg>
 
@@ -1058,66 +1067,6 @@
           <tr>
             <td>[[TimeZone]]</td>
             <td>*"timeZone"*</td>
-          </tr>
-          <tr>
-            <td>[[HourCycle]]</td>
-            <td>*"hourCycle"*</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>*"hour12"*</td>
-          </tr>
-          <tr>
-            <td>[[Weekday]]</td>
-            <td>*"weekday"*</td>
-          </tr>
-          <tr>
-            <td>[[Era]]</td>
-            <td>*"era"*</td>
-          </tr>
-          <tr>
-            <td>[[Year]]</td>
-            <td>*"year"*</td>
-          </tr>
-          <tr>
-            <td>[[Month]]</td>
-            <td>*"month"*</td>
-          </tr>
-          <tr>
-            <td>[[Day]]</td>
-            <td>*"day"*</td>
-          </tr>
-          <tr>
-            <td>[[DayPeriod]]</td>
-            <td>*"dayPeriod"*</td>
-          </tr>
-          <tr>
-            <td>[[Hour]]</td>
-            <td>*"hour"*</td>
-          </tr>
-          <tr>
-            <td>[[Minute]]</td>
-            <td>*"minute"*</td>
-          </tr>
-          <tr>
-            <td>[[Second]]</td>
-            <td>*"second"*</td>
-          </tr>
-          <tr>
-            <td>[[FractionalSecondDigits]]</td>
-            <td>*"fractionalSecondDigits"*</td>
-          </tr>
-          <tr>
-            <td>[[TimeZoneName]]</td>
-            <td>*"timeZoneName"*</td>
-          </tr>
-          <tr>
-            <td>[[DateStyle]]</td>
-            <td>*"dateStyle"*</td>
-          </tr>
-          <tr>
-            <td>[[TimeStyle]]</td>
-            <td>*"timeStyle"*</td>
           </tr>
         </table>
       </emu-table>
