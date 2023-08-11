@@ -60,7 +60,7 @@
       </dl>
 
       <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[Pattern]], [[RangePatterns]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
@@ -169,14 +169,7 @@
             1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
         1. If _dateTimeFormat_.[[Hour]] is *undefined*, then
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
-        1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
-          1. Let _pattern_ be _bestFormat_.[[pattern12]].
-          1. Let _rangePatterns_ be _bestFormat_.[[rangePatterns12]].
-        1. Else,
-          1. Let _pattern_ be _bestFormat_.[[pattern]].
-          1. Let _rangePatterns_ be _bestFormat_.[[rangePatterns]].
-        1. Set _dateTimeFormat_.[[Pattern]] to _pattern_.
-        1. Set _dateTimeFormat_.[[RangePatterns]] to _rangePatterns_.
+        1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
@@ -1222,8 +1215,7 @@
       <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-zero integer indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
-      <li>[[Pattern]] is a String value as described in <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>.</li>
-      <li>[[RangePatterns]] is a DateTime Range Pattern Record.</li>
+      <li>[[DateTimeFormat]] is a DateTime Format Record.</li>
     </ul>
 
     <p>
@@ -1559,7 +1551,12 @@
         <dd>It interprets _x_ as a time value as specified in es2024, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_.</dd>
       </dl>
       <emu-alg>
-        1. Let _patternParts_ be PartitionPattern(_dateTimeFormat_.[[Pattern]]).
+        1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
+        1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
+          1. Let _pattern_ be _format_.[[pattern12]].
+        1. Else,
+          1. Let _pattern_ be _format_.[[pattern]].
+        1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
         1. Return _result_.
       </emu-alg>
@@ -1625,7 +1622,13 @@
         1. If _y_ is *NaN*, throw a *RangeError* exception.
         1. Let _tm1_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _tm2_ be ToLocalTime(ℤ(ℝ(_y_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
-        1. Let _rangePatterns_ be _dateTimeFormat_.[[RangePatterns]].
+        1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
+        1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
+          1. Let _pattern_ be _format_.[[pattern12]].
+          1. Let _rangePatterns_ be _format_.[[rangePatterns12]].
+        1. Else,
+          1. Let _pattern_ be _format_.[[pattern]].
+          1. Let _rangePatterns_ be _format_.[[rangePatterns]].
         1. Let _selectedRangePattern_ be *undefined*.
         1. Let _relevantFieldsEqual_ be *true*.
         1. Let _checkMoreFields_ be *true*.
@@ -1657,7 +1660,6 @@
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
-          1. Let _pattern_ be _dateTimeFormat_.[[Pattern]].
           1. Let _patternParts_ be PartitionPattern(_pattern_).
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
           1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
