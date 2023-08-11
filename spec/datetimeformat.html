@@ -60,7 +60,7 @@
       </dl>
 
       <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[FractionalSecondDigits]], [[TimeZoneName]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
@@ -154,12 +154,7 @@
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
-        1. For each row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
-          1. Let _prop_ be the name given in the Property column of the row.
-          1. If _bestFormat_ has a field [[&lt;_prop_&gt;]], then
-            1. Let _p_ be _bestFormat_.[[&lt;_prop_&gt;]].
-            1. Set _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the row to _p_.
-        1. If _dateTimeFormat_.[[Hour]] is *undefined*, then
+        1. If _bestFormat_ doesn't have a field [[hour]], then
           1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
         1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
         1. Return _dateTimeFormat_.
@@ -1105,9 +1100,7 @@
       <li>[[Calendar]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> used for formatting.</li>
       <li>[[NumberingSystem]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
       <li>[[TimeZone]] is a String value that is a time zone identifier from the IANA Time Zone Database used for formatting.</li>
-      <li>[[Weekday]], [[Era]], [[Year]], [[Month]], [[Day]], [[DayPeriod]], [[Hour]], [[Minute]], [[Second]], [[TimeZoneName]] are each either *undefined*, indicating that the component is not used for formatting, or one of the String values given in <emu-xref href="#table-datetimeformat-components"></emu-xref>, indicating how the component should be presented in the formatted output.</li>
-      <li>[[FractionalSecondDigits]] is either *undefined* or a positive, non-zero integer indicating the fraction digits to be used for fractional seconds. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[Hour]] is not *undefined*.</li>
+      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[DateTimeFormat]] has an [[hour]] field.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[DateTimeFormat]] is a DateTime Format Record.</li>
     </ul>
@@ -1129,7 +1122,7 @@
       <table class="real-table">
         <thead>
           <tr>
-            <th>Internal Slot</th>
+            <th>Field Name</th>
             <th>Property</th>
             <th>Values</th>
           </tr>
