@@ -429,14 +429,13 @@
     <emu-clause id="sec-partitionpattern" type="abstract operation">
       <h1>
         PartitionPattern (
-          _pattern_: a String,
+          _pattern_: a Pattern String,
         ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String or *undefined*)
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It interprets _pattern_ as containing an arbitrary number of brace-wrapped "placeholder" <emu-not-ref>substrings</emu-not-ref> and returns a List in which each such placeholder is represented as a Record with [[Type]] equal to the unwrapped <emu-not-ref>substring</emu-not-ref> and [[Value]] equal to *undefined*, and each non-empty <emu-not-ref>substring</emu-not-ref> adjacent to or between such placeholders is represented as a Record with [[Type]] equal to *"literal"* and [[Value]] equal to the <emu-not-ref>substring</emu-not-ref>, preserving the relative order of appearance such that _pattern_ could be recovered by concatenating the value from the appropriate field of each Record in turn.
-          The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
+          The [[Value]] field will be a String value if [[Type]] is *"literal"*, and *undefined* otherwise.
         </dd>
       </dl>
       <emu-alg>
