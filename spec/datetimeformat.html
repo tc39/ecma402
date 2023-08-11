@@ -1390,14 +1390,14 @@
       <h1>
         FormatDateTimePattern (
           _dateTimeFormat_: an Intl.DateTimeFormat,
+          _format_: a DateTime Format Record or a DateTime Range Pattern Format Record,
           _pattern_: a Pattern String,
           _x_: a Number,
-          _rangeFormatOptions_: a DateTime Range Pattern Field Record or *undefined*,
         ): either a normal completion containing a List of Records with fields [[Type]] (a String) and [[Value]] (a String), or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It interprets _x_ as a time value as specified in es2024, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_.</dd>
+        <dd>It interprets _x_ as a time value as specified in es2024, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _format_.</dd>
       </dl>
       <emu-alg>
         1. Let _x_ be TimeClip(_x_).
@@ -1410,12 +1410,12 @@
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
         1. Let _nf2_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
-        1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
-        1. If _fractionalSecondDigits_ is *undefined*, set _fractionalSecondDigits_ to 1.
-        1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
-        1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
-        1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
-        1. Let _nf3_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
+        1. If _format_ has a field [[fractionalSecondDigits]], then
+          1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
+          1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
+          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
+          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
+          1. Let _nf3_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
@@ -1424,24 +1424,25 @@
           1. If _p_ is *"literal"*, then
             1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } as the last element of the list _result_.
           1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
+            1. Assert: _format_ has a field [[fractionalSecondDigits]].
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Set _v_ to floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append a new Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } as the last element of _result_.
           1. Else if _p_ is equal to *"dayPeriod"*, then
-            1. If _rangeFormatOptions_ is not *undefined*, let _f_ be _rangeFormatOptions_.[[dayPeriod]].
-            1. Else, let _f_ be _dateTimeFormat_.[[DayPeriod]].
+            1. Assert: _format_ has a field [[dayPeriod]].
+            1. Let _f_ be _format_.[[dayPeriod]].
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"timeZoneName"*, then
-            1. If _rangeFormatOptions_ is not *undefined*, let _f_ be _rangeFormatOptions_.[[timeZoneName]].
-            1. Else, let _f_ be _dateTimeFormat_.[[TimeZoneName]].
+            1. Assert: _format_ has a field [[timeZoneName]].
+            1. Let _f_ be _format_.[[timeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
             1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
-            1. If _rangeFormatOptions_ is not *undefined*, let _f_ be the value of _rangeFormatOptions_'s field whose name matches _p_.
-            1. Else, let _f_ be the value of _dateTimeFormat_'s internal slot whose name is the Internal Slot column of the matching row.
+            1. Assert: _format_ has a field [[&lt;_p_&gt;]].
+            1. Let _f_ be _format_.[[&lt;_p_&gt;]].
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
             1. If _p_ is *"year"* and _v_ &le; 0, set _v_ to 1 - _v_.
             1. If _p_ is *"month"*, increase _v_ by 1.
@@ -1456,7 +1457,7 @@
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the *"length"* property of _fv_ is greater than 2, set _fv_ to the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
-              1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[era]] is *undefined*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+              1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If _p_ is *"era"*, then the String value may also depend on whether _format_.[[era]] is present. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
@@ -1501,7 +1502,7 @@
           1. Let _pattern_ be _format_.[[pattern12]].
         1. Else,
           1. Let _pattern_ be _format_.[[pattern]].
-        1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _pattern_, _x_, *undefined*).
+        1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _format_, _pattern_, _x_).
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -1604,7 +1605,7 @@
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
-          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _pattern_, _x_, *undefined*).
+          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _format_, _pattern_, _x_).
           1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
             1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } as the last element of _collapsedResult_.
           1. Return _collapsedResult_.
@@ -1618,7 +1619,7 @@
             1. Let _z_ be _x_.
           1. Else,
             1. Let _z_ be _y_.
-          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _pattern_, _z_, _selectedRangePattern_).
+          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _selectedRangePattern_, _pattern_, _z_).
           1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
             1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } as the last element of _rangeResult_.
         1. Return _rangeResult_.
