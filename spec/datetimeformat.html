@@ -838,49 +838,6 @@
       <emu-note>
         It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
       </emu-note>
-
-      <emu-table id="table-datetimeformat-rangepatternfields">
-        <emu-caption>Range pattern fields</emu-caption>
-
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Range Pattern Field</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>[[Era]]</td>
-          </tr>
-          <tr>
-            <td>[[Year]]</td>
-          </tr>
-          <tr>
-            <td>[[Month]]</td>
-          </tr>
-          <tr>
-            <td>[[Day]]</td>
-          </tr>
-          <tr>
-            <td>[[AmPm]]</td>
-          </tr>
-          <tr>
-            <td>[[DayPeriod]]</td>
-          </tr>
-          <tr>
-            <td>[[Hour]]</td>
-          </tr>
-          <tr>
-            <td>[[Minute]]</td>
-          </tr>
-          <tr>
-            <td>[[Second]]</td>
-          </tr>
-          <tr>
-            <td>[[FractionalSecondDigits]]</td>
-          </tr>
-        </table>
-
-      </emu-table>
     </emu-clause>
   </emu-clause>
 
@@ -1509,13 +1466,13 @@
         1. Let _selectedRangePattern_ be *undefined*.
         1. Let _relevantFieldsEqual_ be *true*.
         1. Let _checkMoreFields_ be *true*.
-        1. For each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, except the header row, in table order, do
-          1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
+        1. For each row of <emu-xref href="#table-datetimeformat-range-pattern-record"></emu-xref>, except the header row, in table order, do
+          1. Let _fieldName_ be the name given in the Field Name column of the row.
           1. If _rangePatterns_ has a field whose name is _fieldName_, let _rangePattern_ be _rangePatterns_' field whose name is _fieldName_; else let _rangePattern_ be *undefined*.
           1. If _selectedRangePattern_ is not *undefined* and _rangePattern_ is *undefined*, then
             1. NOTE: Because there is no range pattern for differences at or below this field, no further checks will be performed.
             1. Set _checkMoreFields_ to *false*.
-          1. If _relevantFieldsEqual_ is *true* and _checkMoreFields_ is *true*, then
+          1. If _fieldName_ is not equal to [[Default]] and _relevantFieldsEqual_ is *true* and _checkMoreFields_ is *true*, then
             1. Set _selectedRangePattern_ to _rangePattern_.
             1. If _fieldName_ is equal to [[AmPm]], then
               1. If _tm1_.[[Hour]] is less than 12, let _v1_ be *"am"*; else let _v1_ be *"pm"*.
