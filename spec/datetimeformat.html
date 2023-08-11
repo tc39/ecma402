@@ -1619,8 +1619,8 @@
         1. Let _relevantFieldsEqual_ be *true*.
         1. Let _checkMoreFields_ be *true*.
         1. For each row of <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, except the header row, in table order, do
-          1. Let _fieldName_ be the name given in the Range Pattern Field column of the current row.
-          1. If _rangePatterns_ has a field [[&lt;_fieldName_&gt;]], let _rangePattern_ be _rangePatterns_.[[&lt;_fieldName_&gt;]]; else let _rangePattern_ be *undefined*.
+          1. Let _fieldName_ be the name given in the Range Pattern Field column of the row.
+          1. If _rangePatterns_ has a field whose name is _fieldName_, let _rangePattern_ be _rangePatterns_' field whose name is _fieldName_; else let _rangePattern_ be *undefined*.
           1. If _selectedRangePattern_ is not *undefined* and _rangePattern_ is *undefined*, then
             1. NOTE: Because there is no range pattern for differences at or below this field, no further checks will be performed.
             1. Set _checkMoreFields_ to *false*.
@@ -1640,9 +1640,9 @@
               1. Let _v1_ be floor(_tm1_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
               1. Let _v2_ be floor(_tm2_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
             1. Else,
-              1. Let _v1_ be _tm1_.[[&lt;_fieldName_&gt;]].
-              1. Let _v2_ be _tm2_.[[&lt;_fieldName_&gt;]].
-            1. If _v1_ is not _v2_, then
+              1. Let _v1_ be _tm1_'s field whose name is _fieldName_.
+              1. Let _v2_ be _tm2_'s field whose name is _fieldName_.
+            1. If _v1_ is not equal to _v2_, then
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
