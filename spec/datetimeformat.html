@@ -1444,14 +1444,14 @@
       <h1>
         FormatDateTimePattern (
           _dateTimeFormat_: an Intl.DateTimeFormat,
-          _patternParts_: a List of Records as returned by PartitionPattern,
+          _pattern_: a Pattern String,
           _x_: a Number,
           _rangeFormatOptions_: a DateTime Range Pattern Format Record or *undefined*,
         ): either a normal completion containing a List of Records with fields [[Type]] (a String) and [[Value]] (a String), or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It interprets _x_ as a time value as specified in es2024, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_.</dd>
+        <dd>It interprets _x_ as a time value as specified in es2024, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to _pattern_ and to the effective locale and the formatting options of _dateTimeFormat_ and _rangeFormatOptions_.</dd>
       </dl>
       <emu-alg>
         1. Let _x_ be TimeClip(_x_).
@@ -1471,6 +1471,7 @@
         1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
         1. Let _nf3_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
+        1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _p_ be _patternPart_.[[Type]].
@@ -1554,8 +1555,7 @@
           1. Let _pattern_ be _format_.[[pattern12]].
         1. Else,
           1. Let _pattern_ be _format_.[[pattern]].
-        1. Let _patternParts_ be PartitionPattern(_pattern_).
-        1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
+        1. Let _result_ be ? FormatDateTimePattern(_dateTimeFormat_, _pattern_, _x_, *undefined*).
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -1658,8 +1658,7 @@
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
-          1. Let _patternParts_ be PartitionPattern(_pattern_).
-          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _x_, *undefined*).
+          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _pattern_, _x_, *undefined*).
           1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
           1. Return _collapsedResult_.
@@ -1673,8 +1672,7 @@
             1. Let _z_ be _x_.
           1. Else,
             1. Let _z_ be _y_.
-          1. Let _patternParts_ be PartitionPattern(_pattern_).
-          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _patternParts_, _z_, _selectedRangePattern_).
+          1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _pattern_, _z_, _selectedRangePattern_).
           1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
         1. Return _rangeResult_.
