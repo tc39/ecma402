@@ -95,7 +95,6 @@
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
           1. If _hc_ is *null*, set _hc_ to _dataLocaleData_.[[hourCycle]].
-        1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
           1. Set _timeZone_ to SystemTimeZoneIdentifier().
@@ -162,9 +161,9 @@
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
-        1. If _bestFormat_ doesn't have a field [[hour]], then
-          1. Set _dateTimeFormat_.[[HourCycle]] to *undefined*.
         1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
+        1. If _bestFormat_ has a field [[hour]], then
+          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
