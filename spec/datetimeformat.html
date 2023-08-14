@@ -1359,7 +1359,7 @@
 
       <emu-alg>
         1. Let _dtf_ be _F_.[[DateTimeFormat]].
-        1. Assert: Type(_dtf_) is Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
+        1. Assert: _dtf_ is an Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be ! Call(%Date.now%, *undefined*).
         1. Else,
@@ -1779,7 +1779,7 @@
         </dd>
       </dl>
       <emu-alg>
-        1. If Type(_dtf_) is not Object, throw a *TypeError* exception.
+        1. If _dtf_ is not an Object, throw a *TypeError* exception.
         1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _dtf_) is *true*, then
           1. Return ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
         1. Return _dtf_.

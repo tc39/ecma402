@@ -53,7 +53,7 @@
         1. If _locales_ is *undefined*, then
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
-        1. If Type(_locales_) is String or Type(_locales_) is Object and _locales_ has an [[InitializedLocale]] internal slot, then
+        1. If _locales_ is a String or _locales_ is an Object and _locales_ has an [[InitializedLocale]] internal slot, then
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
@@ -64,8 +64,8 @@
           1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
           1. If _kPresent_ is *true*, then
             1. Let _kValue_ be ? Get(_O_, _Pk_).
-            1. If Type(_kValue_) is not String or Object, throw a *TypeError* exception.
-            1. If Type(_kValue_) is Object and _kValue_ has an [[InitializedLocale]] internal slot, then
+            1. If _kValue_ is not a String and _kValue_ is not an Object, throw a *TypeError* exception.
+            1. If _kValue_ is an Object and _kValue_ has an [[InitializedLocale]] internal slot, then
               1. Let _tag_ be _kValue_.[[Locale]].
             1. Else,
               1. Let _tag_ be ? ToString(_kValue_).
@@ -225,9 +225,9 @@
         1. Let _supportedExtension_ be *"-u"*.
         1. For each element _key_ of _relevantExtensionKeys_, do
           1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_&gt;]].
-          1. Assert: Type(_keyLocaleData_) is List.
+          1. Assert: _keyLocaleData_ is a List.
           1. Let _value_ be _keyLocaleData_[0].
-          1. Assert: Type(_value_) is either String or Null.
+          1. Assert: _value_ is a String or _value_ is *null*.
           1. Let _supportedExtensionAddition_ be *""*.
           1. If _r_.[[extension]] is not ~empty~, then
             1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
@@ -242,8 +242,8 @@
                 1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"* and _key_.
           1. Assert: _options_ has a field [[&lt;_key_&gt;]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
-          1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
-          1. If Type(_optionsValue_) is String, then
+          1. Assert: _optionsValue_ is a String, or _optionsValue_ is either *undefined* or *null*.
+          1. If _optionsValue_ is a String, then
             1. Let _ukey_ be the ASCII-lowercase of _key_.
             1. Let _optionsUValue_ be the ASCII-lowercase of _optionsValue_.
             1. Set _optionsValue_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _ukey_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
@@ -306,7 +306,7 @@
       <emu-alg>
         1. If _options_ is *undefined*, then
           1. Return OrdinaryObjectCreate(*null*).
-        1. If Type(_options_) is Object, then
+        1. If _options_ is an Object, then
           1. Return _options_.
         1. Throw a *TypeError* exception.
       </emu-alg>

@@ -725,7 +725,7 @@
 
       <emu-alg>
         1. Let _nf_ be _F_.[[NumberFormat]].
-        1. Assert: Type(_nf_) is Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
+        1. Assert: _nf_ is an Object and _nf_ has an [[InitializedNumberFormat]] internal slot.
         1. If _value_ is not provided, let _value_ be *undefined*.
         1. Let _x_ be ? ToIntlMathematicalValue(_value_).
         1. Return FormatNumeric(_nf_, _x_).
@@ -1430,7 +1430,7 @@
         </dd>
       </dl>
       <emu-alg>
-        1. If Type(_nf_) is not Object, throw a *TypeError* exception.
+        1. If _nf_ is not an Object, throw a *TypeError* exception.
         1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%Intl.NumberFormat%, _nf_) is *true*, then
           1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
         1. Return _nf_.
@@ -1688,8 +1688,8 @@
       </dl>
       <emu-alg>
         1. Let _primValue_ be ? ToPrimitive(_value_, ~number~).
-        1. If Type(_primValue_) is BigInt, return ℝ(_primValue_).
-        1. If Type(_primValue_) is String, then
+        1. If _primValue_ is a BigInt, return ℝ(_primValue_).
+        1. If _primValue_ is a String, then
           1. Let _str_ be _primValue_.
         1. Else,
           1. Let _x_ be ? ToNumber(_primValue_).
