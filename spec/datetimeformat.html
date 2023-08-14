@@ -1343,7 +1343,12 @@
               1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
-              1. If the *"length"* property of _fv_ is greater than 2, set _fv_ to the substring of _fv_ containing the last two characters.
+              1. Let _codePoints_ be StringToCodePoints(_fv_).
+              1. Let _count_ be the number of elements in _codePoints_.
+              1. If _count_ > 2, then
+                1. Let _tens_ be _codePoints_[_count_ - 2].
+                1. Let _ones_ be _codePoints_[_count_ - 1].
+                1. Set _fv_ to CodePointsToString(&laquo; _tens_, _ones_ &raquo;).
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
               1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
