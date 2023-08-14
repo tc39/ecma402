@@ -1847,7 +1847,6 @@
       </dl>
       <emu-alg>
         1. If _x_ is ~not-a-number~ or _y_ is ~not-a-number~, throw a *RangeError* exception.
-        1. Let _result_ be a new empty List.
         1. Let _xResult_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _yResult_ be PartitionNumberPattern(_numberFormat_, _y_).
         1. If FormatNumeric(_numberFormat_, _x_) is FormatNumeric(_numberFormat_, _y_), then
@@ -1855,8 +1854,9 @@
           1. For each element _r_ of _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
-        1. For each element _r_ of _xResult_, do
-          1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } to _result_.
+        1. Let _result_ be a new empty List.
+        1. For each element _r_ in _xResult_, do
+          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } as the last element of _result_.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
         1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
         1. For each element _r_ of _yResult_, do
