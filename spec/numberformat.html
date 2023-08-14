@@ -796,7 +796,7 @@
             1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else if _p_ is equal to *"number"*, then
             1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _n_, _exponent_).
-            1. Append all elements of _notationSubParts_ to _result_.
+            1. Set _result_ to the list-concatenation of _result_ and _notationSubParts_.
           1. Else if _p_ is equal to *"plusSign"*, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
             1. Append a new Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
