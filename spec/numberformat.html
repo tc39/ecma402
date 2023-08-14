@@ -903,7 +903,7 @@
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from 0 to _decimalSepIndex_.
-                1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
+                1. Let _fraction_ be the substring of _n_ from _decimalSepIndex_ + 1.
               1. Else,
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
