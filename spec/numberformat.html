@@ -8,7 +8,7 @@
       The NumberFormat constructor is the <dfn>%NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-intl.numberformat">
+    <emu-clause id="sec-intl.numberformat" oldids="sec-initializenumberformat">
       <h1>Intl.NumberFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
@@ -18,47 +18,6 @@
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingMode]], [[RoundingIncrement]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
-        1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
-        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
-          1. Let _this_ be the *this* value.
-          1. Return ? ChainNumberFormat(_numberFormat_, NewTarget, _this_).
-        1. Return _numberFormat_.
-      </emu-alg>
-
-      <emu-normative-optional>
-      <emu-clause id="sec-chainnumberformat" type="abstract operation">
-        <h1>
-          ChainNumberFormat (
-            _numberFormat_: an Intl.NumberFormat,
-            _newTarget_: an ECMAScript language value,
-            _this_: an ECMAScript language value,
-          ): either a normal completion containing an Object or a throw completion
-        </h1>
-        <dl class="header">
-        </dl>
-        <emu-alg>
-          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
-            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-            1. Return _this_.
-          1. Return _numberFormat_.
-        </emu-alg>
-      </emu-clause>
-      </emu-normative-optional>
-    </emu-clause>
-
-    <emu-clause id="sec-initializenumberformat" type="abstract operation">
-      <h1>
-        InitializeNumberFormat (
-          _numberFormat_: an Intl.NumberFormat,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing ~unused~ or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _numberFormat_ as a NumberFormat object.</dd>
-      </dl>
-      <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
@@ -101,8 +60,31 @@
         1. Set _numberFormat_.[[UseGrouping]] to _useGrouping_.
         1. Let _signDisplay_ be ? GetOption(_options_, *"signDisplay"*, ~string~, &laquo; *"auto"*, *"never"*, *"always"*, *"exceptZero"*, *"negative"* &raquo;, *"auto"*).
         1. Set _numberFormat_.[[SignDisplay]] to _signDisplay_.
-        1. Return ~unused~.
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Let _this_ be the *this* value.
+          1. Return ? ChainNumberFormat(_numberFormat_, NewTarget, _this_).
+        1. Return _numberFormat_.
       </emu-alg>
+
+      <emu-normative-optional>
+      <emu-clause id="sec-chainnumberformat" type="abstract operation">
+        <h1>
+          ChainNumberFormat (
+            _numberFormat_: an Intl.NumberFormat,
+            _newTarget_: an ECMAScript language value,
+            _this_: an ECMAScript language value,
+          ): either a normal completion containing an Object or a throw completion
+        </h1>
+        <dl class="header">
+        </dl>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _numberFormat_.
+        </emu-alg>
+      </emu-clause>
+      </emu-normative-optional>
     </emu-clause>
 
     <emu-clause id="sec-setnfdigitoptions" type="abstract operation">
