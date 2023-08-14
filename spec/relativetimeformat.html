@@ -308,7 +308,7 @@
           1. Let _valueString_ be ! ToString(_value_).
           1. If _patterns_ has a field [[&lt;_valueString_&gt;]], then
             1. Let _result_ be _patterns_.[[&lt;_valueString_&gt;]].
-            1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_ }.
+            1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_, [[Unit]]: ~empty~ }.
         1. If _value_ is *-0*<sub>𝔽</sub> or _value_ &lt; *-0*<sub>𝔽</sub>, then
           1. Let _tl_ be *"past"*.
         1. Else,
