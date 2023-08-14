@@ -902,7 +902,7 @@
                 1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ &gt; 0, then
-                1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
+                1. Let _integer_ be the substring of _n_ from 0 to _decimalSepIndex_.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
               1. Else,
                 1. Let _integer_ be _n_.
@@ -919,7 +919,6 @@
                   1. If _groups_ List is not empty, then
                     1. Append the Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } to _result_.
               1. If _fraction_ is not *undefined*, then
-                1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
             1. Else if _p_ is *"compactSymbol"*, then
               1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.

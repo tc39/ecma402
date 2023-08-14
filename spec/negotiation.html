@@ -446,7 +446,7 @@
           1. If _literal_ is not the empty String, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } to _result_.
           1. Set _placeholderEnd_ to StringIndexOf(_pattern_, *"}"*, _placeholderStart_).
-          1. Assert: _placeholderEnd_ is not ~not-found~ and _placeholderStart_ < _placeholderEnd_.
+          1. Assert: _placeholderEnd_ is not ~not-found~ and _placeholderStart_ &lt; _placeholderEnd_.
           1. Let _placeholderName_ be the substring of _pattern_ from _placeholderStart_ + 1 to _placeholderEnd_.
           1. Append the Record { [[Type]]: _placeholderName_, [[Value]]: *undefined* } to _result_.
           1. Set _placeholderStart_ to StringIndexOf(_pattern_, *"{"*, _placeholderEnd_).
