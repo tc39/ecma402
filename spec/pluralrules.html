@@ -8,7 +8,7 @@
       The PluralRules constructor is the <dfn>%Intl.PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-intl.pluralrules">
+    <emu-clause id="sec-intl.pluralrules" oldids="sec-initializepluralrules">
       <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
@@ -18,23 +18,6 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] &raquo;).
-        1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-initializepluralrules" type="abstract operation">
-      <h1>
-        InitializePluralRules (
-          _pluralRules_: an Intl.PluralRules,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing _pluralRules_ or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _pluralRules_ as a PluralRules object.</dd>
-      </dl>
-      <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.

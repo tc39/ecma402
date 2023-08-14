@@ -8,7 +8,7 @@
       The RelativeTimeFormat constructor is the <dfn>%Intl.RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-Intl.RelativeTimeFormat">
+    <emu-clause id="sec-Intl.RelativeTimeFormat" oldids="sec-InitializeRelativeTimeFormat">
       <h1>Intl.RelativeTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
@@ -17,26 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[LocaleData]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
-        1. Return ? InitializeRelativeTimeFormat(_relativeTimeFormat_, _locales_, _options_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-InitializeRelativeTimeFormat" type="abstract operation">
-      <h1>
-        InitializeRelativeTimeFormat (
-          _relativeTimeFormat_: an Intl.RelativeTimeFormat,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing _relativeTimeFormat_ or a throw completion
-      </h1>
-
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _relativeTimeFormat_ as a RelativeTimeFormat object.</dd>
-      </dl>
-
-      <emu-alg>
+        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[LocaleData]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.

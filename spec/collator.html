@@ -7,7 +7,7 @@
       The Intl.Collator constructor is the <dfn>%Intl.Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-intl.collator">
+    <emu-clause id="sec-intl.collator" oldids="sec-initializecollator">
       <h1>Intl.Collator ( [ _locales_ [ , _options_ ] ] )</h1>
 
       <p>
@@ -17,27 +17,10 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
-          1. Append [[Numeric]] to _internalSlotsList_.
+          1. Append [[Numeric]] as the last element of _internalSlotsList_.
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
-          1. Append [[CaseFirst]] to _internalSlotsList_.
+          1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
         1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.Collator.prototype%"*, _internalSlotsList_).
-        1. Return ? InitializeCollator(_collator_, _locales_, _options_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-initializecollator" type="abstract operation">
-      <h1>
-        InitializeCollator (
-          _collator_: an Intl.Collator,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing _collator_ or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _collator_ as a Collator object.</dd>
-      </dl>
-      <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _usage_ be ? GetOption(_options_, *"usage"*, ~string~, &laquo; *"sort"*, *"search"* &raquo;, *"sort"*).
