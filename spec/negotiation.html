@@ -448,11 +448,11 @@
           1. Set _placeholderEnd_ to StringIndexOf(_pattern_, *"}"*, _placeholderStart_).
           1. Assert: _placeholderEnd_ is not ~not-found~ and _placeholderStart_ < _placeholderEnd_.
           1. Let _placeholderName_ be the substring of _pattern_ from _placeholderStart_ + 1 to _placeholderEnd_.
-          1. Append a new Record { [[Type]]: _placeholderName_, [[Value]]: *undefined* } to _result_.
+          1. Append the Record { [[Type]]: _placeholderName_, [[Value]]: *undefined* } to _result_.
           1. Set _placeholderStart_ to StringIndexOf(_pattern_, *"{"*, _placeholderEnd_).
         1. Let _tail_ be the substring of _pattern_ from _placeholderEnd_ + 1.
         1. If _tail_ is not the empty String, then
-          1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _tail_ } to _result_.
+          1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _tail_ } to _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>

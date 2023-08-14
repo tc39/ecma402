@@ -1408,24 +1408,25 @@
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
-            1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+            1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
             1. Assert: _format_ has a field [[fractionalSecondDigits]].
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Set _v_ to floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
-            1. Append a new Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is equal to *"dayPeriod"*, then
             1. Assert: _format_ has a field [[dayPeriod]].
             1. Let _f_ be _format_.[[dayPeriod]].
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
-            1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is equal to *"timeZoneName"*, then
             1. Assert: _format_ has a field [[timeZoneName]].
             1. Let _f_ be _format_.[[timeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
+=======
             1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _f_, then use the String value of _v_ itself.
-            1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. Assert: _format_ has a field [[&lt;_p_&gt;]].
             1. Let _f_ be _format_.[[&lt;_p_&gt;]].
@@ -1444,25 +1445,25 @@
               1. If the *"length"* property of _fv_ is greater than 2, set _fv_ to the substring of _fv_ containing the last two characters.
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
               1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
-            1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
             1. If _v_ is greater than 11, then
               1. Let _fv_ be an implementation and locale dependent String value representing *"post meridiem"*.
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing *"ante meridiem"*.
-            1. Append a new Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is *"relatedYear"*, then
             1. Let _v_ be _tm_.[[RelatedYear]].
             1. Let _fv_ be FormatNumeric(_nf_, _v_).
-            1. Append a new Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is equal to *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
             1. Let _fv_ be an implementation and locale dependent String value representing _v_.
-            1. Append a new Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
+            1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _x_ and _p_.
-            1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
+            1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
         1. Return _result_.
       </emu-alg>
 
@@ -1593,7 +1594,7 @@
           1. Let _collapsedResult_ be a new empty List.
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _format_, _pattern_, _x_).
           1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
-            1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
+            1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
           1. Return _collapsedResult_.
         1. Let _rangeResult_ be a new empty List.
         1. If _selectedRangePattern_ is *undefined*, then
@@ -1607,7 +1608,7 @@
             1. Let _z_ be _y_.
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _selectedRangePattern_, _pattern_, _z_).
           1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
-            1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
+            1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
         1. Return _rangeResult_.
       </emu-alg>
     </emu-clause>
