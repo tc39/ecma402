@@ -240,19 +240,19 @@
               1. Else if _keyLocaleData_ contains *"true"*, then
                 1. Set _value_ to *"true"*.
                 1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"* and _key_.
-          1. If _options_ has a field [[&lt;_key_&gt;]], then
-            1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
-            1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
-            1. If Type(_optionsValue_) is String, then
-              1. Assert: The ASCII-lowercase of _key_ is _key_.
-              1. Let _optionsUValue_ be the ASCII-lowercase of _optionsValue_.
-              1. Set _optionsValue_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _key_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
-              1. NOTE: It is recommended that implementations use the 'u' extension data in <code>common/bcp47</code> provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
-              1. If _optionsValue_ is the empty String, then
-                1. Set _optionsValue_ to *"true"*.
-            1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
-              1. Set _value_ to _optionsValue_.
-              1. Set _supportedExtensionAddition_ to *""*.
+          1. Assert: _options_ has a field [[&lt;_key_&gt;]].
+          1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
+          1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
+          1. If Type(_optionsValue_) is String, then
+            1. Let _ukey_ be the ASCII-lowercase of _key_.
+            1. Let _optionsUValue_ be the ASCII-lowercase of _optionsValue_.
+            1. Set _optionsValue_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _ukey_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
+            1. NOTE: It is recommended that implementations use the 'u' extension data in <code>common/bcp47</code> provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
+            1. If _optionsValue_ is the empty String, then
+              1. Set _optionsValue_ to *"true"*.
+          1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
+            1. Set _value_ to _optionsValue_.
+            1. Set _supportedExtensionAddition_ to *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
         1. If _supportedExtension_ is *"-u"*, then
