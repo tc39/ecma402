@@ -275,7 +275,7 @@ Output (List of parts records):
           1. Else,
             1. Assert: _placeables_ has a field [[&lt;_part_&gt;]].
             1. Let _subst_ be _placeables_.[[&lt;_part_&gt;]].
-            1. If Type(_subst_) is List, then
+            1. If _subst_ is a List, then
               1. For each element _s_ of _subst_, do
                 1. Append _s_ to _result_.
             1. Else,
@@ -388,7 +388,7 @@ Output (List of parts records):
           1. Set _next_ to ? IteratorStep(_iteratorRecord_).
           1. If _next_ is not *false*, then
             1. Let _nextValue_ be ? IteratorValue(_next_).
-            1. If Type(_nextValue_) is not String, then
+            1. If _nextValue_ is not a String, then
               1. Let _error_ be ThrowCompletion(a newly created *TypeError* object).
               1. Return ? IteratorClose(_iteratorRecord_, _error_).
             1. Append _nextValue_ to the end of the List _list_.
