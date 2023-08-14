@@ -20,9 +20,9 @@
         1. Let _relevantExtensionKeys_ be %Locale%.[[RelevantExtensionKeys]].
         1. Let _internalSlotsList_ be &laquo; [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[HourCycle]], [[NumberingSystem]] &raquo;.
         1. If _relevantExtensionKeys_ contains *"kf"*, then
-          1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
+          1. Append [[CaseFirst]] to _internalSlotsList_.
         1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. Append [[Numeric]] as the last element of _internalSlotsList_.
+          1. Append [[Numeric]] to _internalSlotsList_.
         1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Locale.prototype%"*, _internalSlotsList_).
         1. If _tag_ is not a String and _tag_ is not an Object, throw a *TypeError* exception.
         1. If _tag_ is an Object and _tag_ has an [[InitializedLocale]] internal slot, then
