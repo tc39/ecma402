@@ -809,19 +809,19 @@
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
-            1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+            1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else if _p_ is *"number"*, then
             1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _n_, _exponent_).
             1. Set _result_ to the list-concatenation of _result_ and _notationSubParts_.
           1. Else if _p_ is *"plusSign"*, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
-            1. Append a new Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
+            1. Append the Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
           1. Else if _p_ is *"minusSign"*, then
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
             1. Append a new Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
           1. Else if _p_ is *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
             1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
-            1. Append a new Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } to _result_.
+            1. Append the Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } to _result_.
           1. Else if _p_ is *"unitPrefix"* and _numberFormat_.[[Style]] is *"unit"*, then
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
@@ -831,24 +831,24 @@
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
             1. Let _mu_ be an ILD String value representing _unit_ after _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
-            1. Append a new Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
+            1. Append the Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
           1. Else if _p_ is *"currencyCode"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _cd_ be _currency_.
-            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
+            1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
           1. Else if _p_ is *"currencyPrefix"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
             1. Let _cd_ be an ILD String value representing _currency_ before _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms.
-            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
+            1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
           1. Else if _p_ is *"currencySuffix"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
             1. Let _cd_ be an ILD String value representing _currency_ after _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms. If the implementation does not have such a representation of _currency_, use _currency_ itself.
-            1. Append a new Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
+            1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
           1. Else,
             1. Let _unknown_ be an ILND String based on _x_ and _p_.
-            1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
+            1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -872,16 +872,16 @@
       <emu-alg>
         1. Let _result_ be a new empty List.
         1. If _x_ is ~not-a-number~, then
-          1. Append a new Record { [[Type]]: *"nan"*, [[Value]]: _n_ } to _result_.
+          1. Append the Record { [[Type]]: *"nan"*, [[Value]]: _n_ } to _result_.
         1. Else if _x_ is ~positive-infinity~ or ~negative-infinity~, then
-          1. Append a new Record { [[Type]]: *"infinity"*, [[Value]]: _n_ } to _result_.
+          1. Append the Record { [[Type]]: *"infinity"*, [[Value]]: _n_ } to _result_.
         1. Else,
           1. Let _notationSubPattern_ be GetNotationSubPattern(_numberFormat_, _exponent_).
           1. Let _patternParts_ be PartitionPattern(_notationSubPattern_).
           1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
             1. Let _p_ be _patternPart_.[[Type]].
             1. If _p_ is *"literal"*, then
-              1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+              1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
             1. Else if _p_ is *"number"*, then
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the Numbering System column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be a List whose elements are the code points specified in the Digits column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
@@ -908,39 +908,38 @@
                 1. Let _integer_ be _n_.
                 1. Let _fraction_ be *undefined*.
               1. If the _numberFormat_.[[UseGrouping]] is *false*, then
-                1. Append a new Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } to _result_.
+                1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } to _result_.
               1. Else,
                 1. Let _groupSepSymbol_ be the implementation-, locale-, and numbering system-dependent (ILND) String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_, which may depend on the value of _numberFormat_.[[UseGrouping]].
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty,
                   1. Remove the first element from _groups_ and let _integerGroup_ be the value of that element.
-                  1. Append a new Record { [[Type]]: *"integer"*, [[Value]]: _integerGroup_ } to _result_.
+                  1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _integerGroup_ } to _result_.
                   1. If _groups_ List is not empty, then
-                    1. Append a new Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } to _result_.
+                    1. Append the Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } to _result_.
               1. If _fraction_ is not *undefined*, then
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
-                1. Append a new Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } to _result_.
-                1. Append a new Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
+                1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
             1. Else if _p_ is *"compactSymbol"*, then
               1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
-              1. Append a new Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
+              1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
             1. Else if _p_ is *"compactName"*, then
               1. Let _compactName_ be an ILD string representing _exponent_ in long form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactName}"* placeholder.
-              1. Append a new Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } to _result_.
+              1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } to _result_.
             1. Else if _p_ is *"scientificSeparator"*, then
               1. Let _scientificSeparator_ be the ILND String representing the exponent separator.
-              1. Append a new Record { [[Type]]: *"exponentSeparator"*, [[Value]]: _scientificSeparator_ } to _result_.
+              1. Append the Record { [[Type]]: *"exponentSeparator"*, [[Value]]: _scientificSeparator_ } to _result_.
             1. Else if _p_ is *"scientificExponent"*, then
               1. If _exponent_ &lt; 0, then
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
-                1. Append a new Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
+                1. Append the Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
                 1. Let _exponent_ be -_exponent_.
               1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*).
-              1. Append a new Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } to _result_.
+              1. Append the Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } to _result_.
             1. Else,
               1. Let _unknown_ be an ILND String based on _x_ and _p_.
-              1. Append a new Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
+              1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
         1. Return _result_.
       </emu-alg>
 
@@ -1855,11 +1854,11 @@
           1. Return _appxResult_.
         1. Let _result_ be a new empty List.
         1. For each element _r_ in _xResult_, do
-          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } to _result_.
+          1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } to _result_.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
-        1. Append a new Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
+        1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
         1. For each element _r_ in _yResult_, do
-          1. Append a new Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } to _result_.
+          1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } to _result_.
         1. Return CollapseNumberRange(_result_).
       </emu-alg>
     </emu-clause>
@@ -1877,7 +1876,7 @@
       </dl>
       <emu-alg>
         1. Let _approximatelySign_ be an ILND String value used to signify that a number is approximate.
-        1. If _approximatelySign_ is not empty, insert a new Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at an ILND index in _result_. For example, if _numberFormat_ has [[Locale]] *"en-US"* and [[NumberingSystem]] *"latn"* and [[Style]] *"decimal"*, the new Record might be inserted before the first element of _result_.
+        1. If _approximatelySign_ is not empty, insert the Record { [[Type]]: *"approximatelySign"*, [[Value]]: _approximatelySign_ } at an ILND index in _result_. For example, if _numberFormat_ has [[Locale]] *"en-US"* and [[NumberingSystem]] *"latn"* and [[Style]] *"decimal"*, the new Record might be inserted before the first element of _result_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
