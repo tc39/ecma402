@@ -319,9 +319,10 @@
           1. Let _segmenter_ be _iterator_.[[IteratingSegmenter]].
           1. Let _string_ be _iterator_.[[IteratedString]].
           1. Let _startIndex_ be _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]].
-          1. Let _endIndex_ be FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
-          1. If _endIndex_ is not finite, then
+          1. Let _len_ be the length of _string_.
+          1. If _startIndex_ &ge; _len_, then
             1. Return CreateIterResultObject(*undefined*, *true*).
+          1. Let _endIndex_ be FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
           1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to _endIndex_.
           1. Let _segmentData_ be CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
           1. Return CreateIterResultObject(_segmentData_, *false*).
@@ -393,7 +394,6 @@
       </dl>
       <emu-alg>
         1. Let _len_ be the length of _string_.
-        1. Assert: _startIndex_ &ge; 0.
         1. Assert: _endIndex_ &le; _len_.
         1. Assert: _startIndex_ &lt; _endIndex_.
         1. Let _result_ be OrdinaryObjectCreate(%Object.prototype%).
@@ -421,24 +421,22 @@
           _string_: a String,
           _startIndex_: a non-negative integer,
           _direction_: ~before~ or ~after~,
-        ): a non-negative integer or +&infin;
+        ): a non-negative integer
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It finds a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and returns the immediately following code unit index (which will be infinite if no such boundary exists).</dd>
+        <dd>It finds a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and returns the immediately following code unit index.</dd>
       </dl>
       <emu-alg>
+        1. Let _len_ be the length of _string_.
+        1. Assert: _startIndex_ &lt; _len_.
         1. Let _locale_ be _segmenter_.[[Locale]].
         1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
-        1. Let _len_ be the length of _string_.
         1. If _direction_ is ~before~, then
-          1. Assert: _startIndex_ &ge; 0.
-          1. Assert: _startIndex_ &lt; _len_.
           1. Search _string_ for the last segmentation boundary that is preceded by at most _startIndex_ code units from the beginning, using locale _locale_ and text element granularity _granularity_.
           1. If a boundary is found, return the count of code units in _string_ preceding it.
           1. Return 0.
         1. Assert: _direction_ is ~after~.
-        1. If _len_ is 0 or _startIndex_ &ge; _len_, return +&infin;.
         1. Search _string_ for the first segmentation boundary that follows the code unit at index _startIndex_, using locale _locale_ and text element granularity _granularity_.
         1. If a boundary is found, return the count of code units in _string_ preceding it.
         1. Return _len_.
