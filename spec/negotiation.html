@@ -93,7 +93,7 @@
           1. If _availableLocales_ contains _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
           1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, decrease _pos_ by 2.
-          1. Set _candidate_ to the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
+          1. Set _candidate_ to the substring of _candidate_ from 0 to _pos_.
       </emu-alg>
     </emu-clause>
 
@@ -497,7 +497,7 @@
           1. Set _nextIndex_ to _endIndex_ + 1.
           1. Set _beginIndex_ to StringIndexOf(_pattern_, *"{"*, _nextIndex_).
         1. If _nextIndex_ is less than _length_, then
-          1. Let _literal_ be the substring of _pattern_ from position _nextIndex_, inclusive, to position _length_, exclusive.
+          1. Let _literal_ be the substring of _pattern_ from _nextIndex_ to _length_.
           1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } to _result_.
         1. Return _result_.
       </emu-alg>
