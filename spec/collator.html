@@ -17,9 +17,9 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
-          1. Append [[Numeric]] as the last element of _internalSlotsList_.
+          1. Append [[Numeric]] to _internalSlotsList_.
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
-          1. Append [[CaseFirst]] as the last element of _internalSlotsList_.
+          1. Append [[CaseFirst]] to _internalSlotsList_.
         1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.Collator.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
