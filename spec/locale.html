@@ -124,12 +124,12 @@
           1. Let _keywords_ be a new empty List.
         1. Let _result_ be a new Record.
         1. For each element _key_ of _relevantExtensionKeys_, do
-          1. Let _value_ be *undefined*.
-          1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
-            1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
-            1. Set _value_ to _entry_.[[Value]].
+          1. If _keywords_ contains an element whose [[Key]] is _key_, then
+            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
+            1. Let _value_ be _entry_.[[Value]].
           1. Else,
             1. Let _entry_ be ~empty~.
+            1. Let _value_ be *undefined*.
           1. Assert: _options_ has a field [[&lt;_key_&gt;]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
           1. If _optionsValue_ is not *undefined*, then
