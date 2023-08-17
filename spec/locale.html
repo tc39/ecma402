@@ -53,7 +53,7 @@
         1. If _numberingSystem_ is not *undefined*, then
           1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _r_ be MergeLocaleData(_tag_, _opt_, _relevantExtensionKeys_).
+        1. Let _r_ be MakeLocaleRecord(_tag_, _opt_, _relevantExtensionKeys_).
         1. Set _locale_.[[Locale]] to _r_.[[locale]].
         1. Set _locale_.[[Calendar]] to _r_.[[ca]].
         1. Set _locale_.[[Collation]] to _r_.[[co]].
@@ -101,9 +101,9 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-mergelocaledata" type="abstract operation" oldids="sec-apply-unicode-extension-to-tag">
+    <emu-clause id="sec-makelocalerecord" type="abstract operation" oldids="sec-apply-unicode-extension-to-tag">
       <h1>
-        MergeLocaleData (
+        MakeLocaleRecord (
           _tag_: a language tag,
           _options_: a Record,
           _relevantExtensionKeys_: a List of Strings,
