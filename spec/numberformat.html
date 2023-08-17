@@ -1287,7 +1287,7 @@
           1. Let _cut_ be _maxPrecision_ - _minPrecision_.
           1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
             1. Remove the last code unit from _m_.
-            1. Decrease _cut_ by 1.
+            1. Set _cut_ to _cut_ - 1.
           1. If the last code unit of _m_ is 0x002E (FULL STOP), then
             1. Remove the last code unit from _m_.
         1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_, [[RoundingMagnitude]]: _e_–_p_+1 }.
@@ -1334,7 +1334,7 @@
         1. Let _cut_ be _maxFraction_ - _minFraction_.
         1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
           1. Remove the last code unit from _m_.
-          1. Decrease _cut_ by 1.
+          1. Set _cut_ to _cut_ - 1.
         1. If the last code unit of _m_ is 0x002E (FULL STOP), then
           1. Remove the last code unit from _m_.
         1. Return the Record { [[FormattedString]]: _m_, [[RoundedNumber]]: _xFinal_, [[IntegerDigitsCount]]: _int_, [[RoundingMagnitude]]: –_f_ }.
