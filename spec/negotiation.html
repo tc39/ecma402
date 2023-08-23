@@ -96,7 +96,7 @@
       </emu-alg>
 
       <emu-note>
-        In cases where Unicode T Extensions are included in _locale_, this algorithm may temporarily generate invalid language tags. However, it is not possible in any case for the abstract operation to return invalid language tags.
+        When _locale_ includes a <a href="https://unicode.org/reports/tr35/#BCP47_T_Extension">Unicode Technical Standard #35 Part 1 Core BCP 47 T Extension</a> subtag sequence, the truncation in this algorithm may temporarily generate invalid language tags. However, none of them will be returned because _availableLocales_ contains only valid language tags.
       </emu-note>
     </emu-clause>
 
