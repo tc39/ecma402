@@ -332,7 +332,7 @@
         1. Let _locale_ be _loc_.[[Locale]].
         1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
         1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. If _lang_ contains a subtag of length 4, return that subtag.
+        1. If _lang_ contains a subtag matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, return that subtag.
         1. Return *undefined*.
       </emu-alg>
     </emu-clause>
@@ -347,8 +347,9 @@
         1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
         1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
         1. Let _subtags_ be a List of the subtags of _lang_.
-        1. If the length of _subtags_ is greater than 1 and the length of _subtags_[1] is 4, let _i_ be 2. Otherwise, let _i_ be 1.
-        1. If the length of _subtags_ is greater than _i_ and the length of _subtags_[_i_] is in the inclusive range from 2 to 3, return _subtags_[_i_].
+        1. NOTE: A <code>unicode_region_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag, optionally with a single <code>unicode_script_subtag</code> subtag between them. In that position, <code>unicode_region_subtag</code> cannot be confused with any other valid subtag because all their productions are disjoint.
+        1. If the length of _subtags_ is greater than 1 and _subtags_[1] can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[1].
+        1. If the length of _subtags_ is greater than 2 and _subtags_[2] can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[2].
         1. Return *undefined*.
       </emu-alg>
     </emu-clause>
