@@ -4,6 +4,7 @@ This document is an evolving list of recommendations for the ECMA-402 specificat
 
 This document contains background on how the style decisions were reached.  The actual recommendations are highlighted with a :star2: emoji.
 
+
 ## Table of Contents
 
 - [Casing Conventions](#casing-conventions)
@@ -27,7 +28,9 @@ This document contains background on how the style decisions were reached.  The 
             - [Pros](#pros-3)
             - [Cons](#cons-3)
             - [Decision](#decision-3)
-
+    - [Element Ordering](#element-ordering)
+	    - [General Guidelines](#general-guidelines)
+	    - [resolvedOptions](#resolvedoptions)
 
 *Table of Contents generated using https://magnetikonline.github.io/markdown-toc-generate/*
 
@@ -199,3 +202,22 @@ We could enforce a camel case convention on these strings, such as the following
 ##### Decision
 
 - Defer the decision on the syntax for identifiers to the other specification when possible.
+
+## Element Ordering
+
+This section concerns the observable order for elements of arrays and properties of objects.
+
+### General Guidelines
+
+:star2: *ECMA-402 must provide a deterministic order for the elements of all arrays and the properties of all objects. This order should be lexicographic except in cases for which there is a clearly preferable semantic ordering. :star2:*
+
+For example, an array holding the time zone identifiers "Asia/Tokyo", "Asia/Ho_Chi_Minh", and "Asia/Dubai" should use the order `["Asia/Dubai", "Asia/Ho_Chi_Minh", "Asia/Tokyo"]`
+
+For an example of when *not* to use lexicographic order, consider an array holding calendar time scale units. This array could be ordered by descending magnitude as `["years", "months", "weeks", "days"]` or its reverse ascending magnitude as `["days", "weeks", "months", "years"]`, but should not use the lexicographic `["days", "months", "weeks", "years"]` order.
+
+### `resolvedOptions`
+:star2: *Properties in the output from `resolvedOptions()` of an Intl object should start with `locale` and otherwise use lexicographic order. Deviations (such as those motivated by semantic order involving a subset of properties) must be documented.* :star2:
+
+Spec changes that add properties should do so in accordance with this recommendation, rather than automatically placing them at the end—relative enumeration order of properties should remain stable over time, but there is no such expectation regarding adjacency.
+#### Examples
+`Object.keys(new Intl.Segmenter().resolvedOptions())` returns `[ 'locale', 'granularity' ]`. If support for the [Unicode BCP 47 U Extension "dx" key](https://unicode.org/reports/tr35/#UnicodeDictionaryBreakExclusionIdentifier) were added and exposed as `dictionaryBreakExcludedScripts`, that property would belong before `granularity`.
