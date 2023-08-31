@@ -4,6 +4,7 @@ This document is an evolving list of recommendations for the ECMA-402 specificat
 
 This document contains background on how the style decisions were reached.  The actual recommendations are highlighted with a :star2: emoji.
 
+
 ## Table of Contents
 
 - [Casing Conventions](#casing-conventions)
@@ -27,7 +28,9 @@ This document contains background on how the style decisions were reached.  The 
             - [Pros](#pros-3)
             - [Cons](#cons-3)
             - [Decision](#decision-3)
-
+    - [Element Ordering](#element-ordering)
+	      - [General Guidelines](#general-guidelines)
+	      - [resolvedOptions](#resolvedoptions)
 
 *Table of Contents generated using https://magnetikonline.github.io/markdown-toc-generate/*
 
@@ -199,3 +202,24 @@ We could enforce a camel case convention on these strings, such as the following
 ##### Decision
 
 - Defer the decision on the syntax for identifiers to the other specification when possible.
+
+## Element Ordering
+
+This section concerns the order in which containers store elements. 
+
+### General Guidelines
+
+:star2: *ECMA-402 spec must provide a deterministic order for the contents of all containers. This order should be lexicographic except in cases wherein there is a clearly preferable semantic ordering. :star2:*
+
+For example, an array holding the time zone identifiers `Asia/Tokyo`, `Asia/Ho_Chi_Minh`, and `Asia/Dubai` should use the order `["Asia/Dubai", "Asia/Ho_Chi_Minh", "Asia/Tokyo"]`
+  
+For an example of when *not* to use lexicographic order, consider an array holding calendar time scale units. This array could be ordered by descending magnitude as `["years", "months", "weeks", "days"]` or its reverse ascending magnitude as `["days", "weeks", "months", "years"]`, but should not use the lexicographic `["days", "months", "weeks", "years"]` order.
+
+### `resolvedOptions`
+
+:star2: <em>The `resolvedOptions` of Intl objects should appear in the following order: 
+
+1. `locale`
+2. All properties (given in lexicographical order) that can be set by extension keys and that are guaranteed to exist
+3. Properties (in lexicographical order) that are not set by extension keys and that are guaranteed to exist 
+4. All properties (in lexicographical order) that exist conditionally.</em> :star2:
