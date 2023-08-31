@@ -206,6 +206,16 @@ We could enforce a camel case convention on these strings, such as the following
 
 This section concerns the order in which containers store elements. 
 
+### General Guidelines
+
 :star2: ECMA-402 spec must provide a deterministic order for the contents of all containers. This order should be lexicographic except in cases wherein there is a clearly preferable semantic ordering. :star2:
   
-For example, an array holding days of the week should store those days in the order `["monday", "tuesday", "wednesday", ...]` instead of `["friday", "monday", "saturday", "sunday", ...]`
+For an example of when *not* to use lexicographic order, consider an array holding days of the week. This array should store those days in the order `["monday", "tuesday", "wednesday", ...]` instead of the lexicographic `["friday", "monday", "saturday", "sunday", ...]` order.
+
+### `resolvedOptions`
+
+:star2: The `resolvedOptions` of Intl objects should appear in the following order: 
+
+1. `locale`
+2. All properties (given in lexicographical order) that can be set by extension keys and that are guaranteed to exist
+3. Properties (in lexicographical order) that are not set by extension keys and that are guaranteed to exist 4. All properties (in lexicographical order) that exist conditionally. :star2:
