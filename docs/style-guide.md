@@ -7,29 +7,29 @@ This document contains background on how the style decisions were reached.  The 
 ## Table of Contents
 
 - [Casing Conventions](#casing-conventions)
-    - [Identifiers defined by ECMA-402](#identifiers-defined-by-ecma-402)
-        - [Examples](#examples)
-        - [Alternative: Kebab case for all string enumerations](#alternative-kebab-case-for-all-string-enumerations)
-            - [Pros](#pros)
-            - [Cons](#cons)
-            - [Decision](#decision)
-        - [Alternative: Kebab case for new identifiers only](#alternative-kebab-case-for-new-identifiers-only)
-            - [Pros](#pros-1)
-            - [Cons](#cons-1)
-            - [Decision](#decision-1)
-        - [Alternative: Use kebab case but also accept camel case](#alternative-use-kebab-case-but-also-accept-camel-case)
-            - [Pros](#pros-2)
-            - [Cons](#cons-2)
-            - [Decision](#decision-2)
-    - [Identifiers defined outside ECMA-402](#identifiers-defined-outside-ecma-402)
-        - [Examples](#examples-1)
-        - [Alternative: Convert identifiers to camel case](#alternative-convert-identifiers-to-camel-case)
-            - [Pros](#pros-3)
-            - [Cons](#cons-3)
-            - [Decision](#decision-3)
-- [Sort orders](#sort-orders)
-
-
+	- [Identifiers defined by ECMA-401](#identifiers-defined-by-ecma-401)
+		- [Examples](#examples)
+		- [Alternative: Kebab case for all string enumerations](#alternative-kebab-case-for-all-string-enumerations)
+			- [Pros](#pros)
+			- [Cons](#cons)
+			- [Decision](#decision)
+		- [Alternative: Kebab case for new identifiers only](#alternative-kebab-case-for-new-identifiers-only)
+			- [Pros](#pros-1)
+			- [Cons](#cons-1)
+			- [Decision](#decision-1)
+		- [Alternative: Use kebab case but also accept camel case](#alternative-use-kebab-case-but-also-accept-camel-case)
+			- [Pros](#pros-2)
+			- [Cons](#cons-2)
+			- [Decision](#decision-2)
+	- [Identifiers defined outside ECMA-402](#identifiers-defined-outside-ecma-402)
+		- [Examples](#examples-1)
+		- [Alternative: Convert identifiers to camel case](#alternative-convert-identifiers-to-camel-case)
+			- [Pros](#pros-3)
+			- [Cons](#cons-3)
+			- [Decision](#decision-3)
+- [Element Ordering](#element-ordering)
+	- [General Guidelines](#general-guidelines)
+	- [resolvedOptions](#resolvedoptions)
 
 *Table of Contents generated using https://magnetikonline.github.io/markdown-toc-generate/*
 
@@ -218,4 +218,5 @@ For an example of when *not* to use lexicographic order, consider an array holdi
 
 1. `locale`
 2. All properties (given in lexicographical order) that can be set by extension keys and that are guaranteed to exist
-3. Properties (in lexicographical order) that are not set by extension keys and that are guaranteed to exist 4. All properties (in lexicographical order) that exist conditionally. :star2:
+3. Properties (in lexicographical order) that are not set by extension keys and that are guaranteed to exist 
+4. All properties (in lexicographical order) that exist conditionally. :star2:
