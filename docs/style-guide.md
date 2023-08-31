@@ -27,6 +27,8 @@ This document contains background on how the style decisions were reached.  The 
             - [Pros](#pros-3)
             - [Cons](#cons-3)
             - [Decision](#decision-3)
+- [Sort orders](#sort-orders)
+
 
 
 *Table of Contents generated using https://magnetikonline.github.io/markdown-toc-generate/*
@@ -199,3 +201,11 @@ We could enforce a camel case convention on these strings, such as the following
 ##### Decision
 
 - Defer the decision on the syntax for identifiers to the other specification when possible.
+
+## Element Ordering
+
+This section concerns the order in which containers store elements. 
+
+:star2: ECMA-402 spec must provide a deterministic order for the contents of all containers. This order should be lexicographic except in cases wherein there is a clearly preferable semantic ordering. :star2:
+  
+For example, an array holding days of the week should store those days in the order `["monday", "tuesday", "wednesday", ...]` instead of `["friday", "monday", "saturday", "sunday", ...]`
