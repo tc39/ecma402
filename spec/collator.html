@@ -64,16 +64,17 @@
           1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
+        1. Let _dataLocale_ be _r_.[[dataLocale]].
+        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is *"sort"*, then
             1. Let _sensitivity_ be *"variant"*.
           1. Else,
-            1. Let _dataLocale_ be _r_.[[dataLocale]].
-            1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
             1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
-        1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, *false*).
+        1. Let _defaultIgnorePunctuation_ be _dataLocaleData_.[[ignorePunctuation]].
+        1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, _defaultIgnorePunctuation_).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
       </emu-alg>
@@ -136,6 +137,7 @@
         <li>The first element of [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] must be *null*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_&gt;]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_&gt;]].[[co]] list.</li>
         <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] must have a [[sensitivity]] field with a String value equal to *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
+        <li>[[SearchLocaleData]].[[&lt;_locale_&gt;]] and [[SortLocaleData]].[[&lt;_locale_&gt;]] must have a [[ignorePunctuation]] field with a Boolean value.</li>
       </ul>
     </emu-clause>
   </emu-clause>
