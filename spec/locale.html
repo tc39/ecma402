@@ -128,14 +128,14 @@
           1. Let _value_ be *undefined*.
           1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
             1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
-            1. Let _value_ be _entry_.[[Value]].
+            1. Set _value_ to _entry_.[[Value]].
           1. Else,
             1. Let _entry_ be ~empty~.
           1. Assert: _options_ has a field [[&lt;_key_&gt;]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
           1. If _optionsValue_ is not *undefined*, then
             1. Assert: Type(_optionsValue_) is String.
-            1. Let _value_ be _optionsValue_.
+            1. Set _value_ to _optionsValue_.
             1. If _entry_ is not ~empty~, then
               1. Set _entry_.[[Value]] to _value_.
             1. Else,
@@ -144,7 +144,7 @@
         1. Let _locale_ be the String value that is _tag_ with any Unicode locale extension sequences removed.
         1. Let _newExtension_ be a Unicode BCP 47 U Extension based on _attributes_ and _keywords_.
         1. If _newExtension_ is not the empty String, then
-          1. Let _locale_ be InsertUnicodeExtensionAndCanonicalize(_locale_, _newExtension_).
+          1. Set _locale_ to InsertUnicodeExtensionAndCanonicalize(_locale_, _newExtension_).
         1. Set _result_.[[locale]] to _locale_.
         1. Return _result_.
       </emu-alg>

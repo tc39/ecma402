@@ -43,7 +43,7 @@
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then
           1. Set _displayNames_.[[LanguageDisplay]] to _languageDisplay_.
-          1. Let _typeFields_ be _typeFields_.[[&lt;_languageDisplay_&gt;]].
+          1. Set _typeFields_ to _typeFields_.[[&lt;_languageDisplay_&gt;]].
           1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _styleFields_ be _typeFields_.[[&lt;_style_&gt;]].
         1. Assert: _styleFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
@@ -156,7 +156,7 @@
         1. Let _displayNames_ be *this* value.
         1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
         1. Let _code_ be ? ToString(_code_).
-        1. Let _code_ be ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
+        1. Set _code_ to ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
         1. Let _fields_ be _displayNames_.[[Fields]].
         1. If _fields_ has a field [[&lt;_code_&gt;]], return _fields_.[[&lt;_code_&gt;]].
         1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.

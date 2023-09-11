@@ -92,7 +92,7 @@
           1. If _availableLocales_ contains _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
           1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, set _pos_ to _pos_ - 2.
-          1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
+          1. Set _candidate_ to the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
     </emu-clause>
 
@@ -165,7 +165,7 @@
             1. Set _keyword_.[[Value]] to _subtag_.
           1. Else,
             1. Set _keyword_.[[Value]] to the string-concatenation of _keyword_.[[Value]], *"-"*, and _subtag_.
-          1. Let _k_ be _k_ + _len_ + 1.
+          1. Set _k_ to _k_ + _len_ + 1.
         1. Return the Record { [[Attributes]]: _attributes_, [[Keywords]]: _keywords_ }.
       </emu-alg>
     </emu-clause>
@@ -233,11 +233,11 @@
               1. Let _requestedValue_ be _entry_.[[Value]].
               1. If _requestedValue_ is not the empty String, then
                 1. If _keyLocaleData_ contains _requestedValue_, then
-                  1. Let _value_ be _requestedValue_.
-                  1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
+                  1. Set _value_ to _requestedValue_.
+                  1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
               1. Else if _keyLocaleData_ contains *"true"*, then
-                1. Let _value_ be *"true"*.
-                1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"* and _key_.
+                1. Set _value_ to *"true"*.
+                1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"* and _key_.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
@@ -247,10 +247,10 @@
               1. Set _optionsValue_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _ukey_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
               1. NOTE: It is recommended that implementations use the 'u' extension data in <code>common/bcp47</code> provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
               1. If _optionsValue_ is the empty String, then
-                1. Let _optionsValue_ be *"true"*.
+                1. Set _optionsValue_ to *"true"*.
             1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
-              1. Let _value_ be _optionsValue_.
-              1. Let _supportedExtensionAddition_ be *""*.
+              1. Set _value_ to _optionsValue_.
+              1. Set _supportedExtensionAddition_ to *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
         1. If _supportedExtension_ is not *"-u"*, then
@@ -385,7 +385,7 @@
         1. If _value_ is *undefined*, return _fallback_.
         1. If _value_ is *true*, return *true*.
         1. If ToBoolean(_value_) is *false*, return *false*.
-        1. Let _value_ be ? ToString(_value_).
+        1. Set _value_ to ? ToString(_value_).
         1. If _stringValues_ does not contain _value_, throw a *RangeError* exception.
         1. Return _value_.
       </emu-alg>
