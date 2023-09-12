@@ -860,7 +860,8 @@
                   1. Set _transliterated_ to the string-concatenation of _transliterated_ and _c_.
                   1. Set _position_ to _position_ + 1.
                 1. Set _n_ to _transliterated_.
-              1. Else use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
+              1. Else,
+                1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
               1. If _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
@@ -1331,7 +1332,8 @@
           1. Let _a_ be the first _k_ - _f_ code units of _m_, and let _b_ be the remaining _f_ code units of _m_.
           1. Set _m_ to the string-concatenation of _a_, *"."*, and _b_.
           1. Let _int_ be the length of _a_.
-        1. Else, let _int_ be the length of _m_.
+        1. Else,
+          1. Let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
         1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
           1. Remove the last code unit from _m_.

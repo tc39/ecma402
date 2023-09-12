@@ -823,8 +823,10 @@
           1. For each property name _property_ shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, do
             1. If _options_ has a field [[&lt;_property_&gt;]], let _optionsProp_ be _options_.[[&lt;_property_&gt;]]; else let _optionsProp_ be *undefined*.
             1. If _format_ has a field [[&lt;_property_&gt;]], let _formatProp_ be _format_.[[&lt;_property_&gt;]]; else let _formatProp_ be *undefined*.
-            1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, set _score_ to _score_ - _additionPenalty_.
-            1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, set _score_ to _score_ - _removalPenalty_.
+            1. If _optionsProp_ is *undefined* and _formatProp_ is not *undefined*, then
+              1. Set _score_ to _score_ - _additionPenalty_.
+            1. Else if _optionsProp_ is not *undefined* and _formatProp_ is *undefined*, then
+              1. Set _score_ to _score_ - _removalPenalty_.
             1. Else if _property_ is *"timeZoneName"*, then
               1. If _optionsProp_ is *"short"* or *"shortGeneric"*, then
                 1. If _formatProp_ is *"shortOffset"*, set _score_ to _score_ - _offsetPenalty_.
@@ -832,15 +834,18 @@
                 1. Else if _optionsProp_ is *"short"* and _formatProp_ is *"long"*, set _score_ to _score_ - _shortMorePenalty_.
                 1. Else if _optionsProp_ is *"shortGeneric"* and _formatProp_ is *"longGeneric"*, set _score_ to _score - _shortMorePenalty_.
                 1. Else if _optionsProp_ &ne; _formatProp_, set _score_ to _score_ - _removalPenalty_.
-              1. Else if _optionsProp_ is *"shortOffset"* and _formatProp_ is *"longOffset"*, set _score_ to _score_ - _shortMorePenalty_.
+              1. Else if _optionsProp_ is *"shortOffset"* and _formatProp_ is *"longOffset"*, then
+                1. Set _score_ to _score_ - _shortMorePenalty_.
               1. Else if _optionsProp_ is *"long"* or *"longGeneric"*, then
                 1. If _formatProp_ is *"longOffset"*, set _score_ to _score_ - _offsetPenalty_.
                 1. Else if _formatProp_ is *"shortOffset"*, set _score_ to _score_ - (_offsetPenalty_ + _longLessPenalty_).
                 1. Else if _optionsProp_ is *"long"* and _formatProp_ is *"short"*, set _score_ to _score_ - _longLessPenalty_.
                 1. Else if _optionsProp_ is *"longGeneric"* and _formatProp_ is *"shortGeneric"*, set _score_ to _score - _longLessPenalty_.
                 1. Else if _optionsProp_ &ne; _formatProp_, set _score_ to _score_ - _removalPenalty_.
-              1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, set _score_ to _score_ - _longLessPenalty_.
-              1. Else if _optionsProp_ &ne; _formatProp_, set _score_ to _score_ - _removalPenalty_.
+              1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, then
+                1. Set _score_ to _score_ - _longLessPenalty_.
+              1. Else if _optionsProp_ &ne; _formatProp_, then
+                1. Set _score_ to _score_ - _removalPenalty_.
             1. Else if _optionsProp_ &ne; _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
                 1. Let _values_ be &laquo; *1*<sub>𝔽</sub>, *2*<sub>𝔽</sub>, *3*<sub>𝔽</sub> &raquo;.
@@ -949,7 +954,8 @@
             1. Else if _f_ is *"2-digit"*, then
               1. Let _fv_ be FormatNumeric(_nf2_, _v_).
               1. If the *"length"* property of _fv_ is greater than 2, set _fv_ to the substring of _fv_ containing the last two characters.
-            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[era]] is *undefined*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
+            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
+              1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[era]] is *undefined*. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append a new Record { [[Type]]: _p_, [[Value]]: _fv_ } as the last element of the list _result_.
           1. Else if _p_ is equal to *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
