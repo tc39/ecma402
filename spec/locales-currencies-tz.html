@@ -87,7 +87,7 @@
       <emu-alg>
         1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
         1. If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _localeWithoutPrivateUse_ be the prefix of _localeId_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _localeWithoutPrivateUse_ be _localeId_.
-        1. Let _extension_ be the longest <emu-not-ref>substring</emu-not-ref> of _localeWithoutPrivateUse_ that is a Unicode locale extension sequence. If there is no such <emu-not-ref>substring</emu-not-ref>, let _extension_ be the empty String.
+        1. If there is a <emu-not-ref>substring</emu-not-ref> of _localeWithoutPrivateUse_ that is a Unicode locale extension sequence, let _extension_ be the longest such substring. Otherwise, let _extension_ be the empty String.
         1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _extension_ is not the empty String, then
           1. Let _newExtension_ be *"u"*.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).

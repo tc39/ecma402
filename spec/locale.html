@@ -96,7 +96,7 @@
             1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal replaced by the string _script_.
         1. If _region_ is not *undefined*, then
           1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, then
-            1. Let _variants_ be the longest suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal. If there is no such suffix, let _variants_ be the empty String.
+            1. If there is a suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, let _variants_ be the longest such suffix of _languageId_. Otherwise, let _variants_ be the empty String.
             1. Set _languageId_ to the string-concatenation of:
               * the longest <emu-not-ref>substring</emu-not-ref> of _languageId_ that is immediately followed by _variants_
               * *"-"*
