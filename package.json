@@ -16,5 +16,11 @@
   "repository": "tc39/ecma402",
   "author": "ECMA TC39",
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
-  "homepage": "https://tc39.es/ecma402/"
+  "homepage": "https://tc39.es/ecma402/",
+  "dependencies": {
+    "ecmarkup": "^17.0.0",
+    "@tc39/ecma262-biblio": "2.1.2631"
+  },
+  "devDependencies": {
+  }
 }
