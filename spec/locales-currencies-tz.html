@@ -57,10 +57,11 @@
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
         1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal, return *false*.
         1. If _lowerLocale_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, return *false*.
-        1. Let _lang_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Let _langRefinements_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> Unicode locale nonterminal.
-        1. If _langRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, return *false*.
-        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _lang_.
+        1. Let _languageId_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Let _variants_ be GetLocaleVariants(_languageId_).
+        1. If _variants_ is not *undefined*, then
+          1. If _variants_ contains any duplicate subtags, return *false*.
+        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _languageId_.
         1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
@@ -86,10 +87,9 @@
       </dl>
       <emu-alg>
         1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
-        1. If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _localeWithoutPrivateUse_ be the prefix of _localeId_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _localeWithoutPrivateUse_ be _localeId_.
-        1. Let _extension_ be the longest <emu-not-ref>substring</emu-not-ref> of _localeWithoutPrivateUse_ that is a Unicode locale extension sequence. If there is no such <emu-not-ref>substring</emu-not-ref>, set _extension_ to the empty String.
-        1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _extension_ is not the empty String, then
-          1. Let _newExtension_ be *"u"*.
+        1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _localeId_ contains a substring that is a Unicode locale extension sequence, then
+          1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _localeId_.
+          1. Let _newExtension_ be *"-u"*.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
           1. For each element _attr_ of _components_.[[Attributes]], do
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _attr_.
@@ -97,7 +97,7 @@
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Key]].
             1. If _keyword_.[[Value]] is not the empty String, then
               1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Value]].
-          1. Assert: _newExtension_ is not equal to *"u"*.
+          1. Assert: _newExtension_ is not equal to *"-u"*.
           1. Set _localeId_ to a copy of _localeId_ in which the first appearance of <emu-not-ref>substring</emu-not-ref> _extension_ has been replaced with _newExtension_.
         1. Return _localeId_.
       </emu-alg>
