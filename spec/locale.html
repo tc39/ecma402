@@ -91,23 +91,14 @@
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
         1. Assert: _tag_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
         1. Let _languageId_ be the longest prefix of _tag_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. If _language_ is not *undefined*, then
-          1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal replaced by the string _language_.
-        1. If _script_ is not *undefined*, then
-          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, then
-            1. Set _languageId_ to the string-concatenation of the <emu-not-ref>substring</emu-not-ref> of _languageId_ matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal, *"-"*, _script_, and the rest of _languageId_.
-          1. Else,
-            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal replaced by the string _script_.
-        1. If _region_ is not *undefined*, then
-          1. If _languageId_ does not contain a <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, then
-            1. Let _variants_ be the longest suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal. If there is no such suffix, set _variants_ to the empty String.
-            1. Set _languageId_ to the string-concatenation of:
-              * the longest <emu-not-ref>substring</emu-not-ref> of _languageId_ that is immediately followed by _variants_
-              * *"-"*
-              * _region_
-              * _variants_
-          1. Else,
-            1. Set _languageId_ to _languageId_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal replaced with the string _region_.
+        1. If _language_ is *undefined*, set _language_ to GetLocaleLanguage(_languageId_).
+        1. If _script_ is *undefined*, set _script_ to GetLocaleScript(_languageId_).
+        1. If _region_ is *undefined*, set _region_ to GetLocaleRegion(_languageId_).
+        1. Let _variants_ be GetLocaleVariants(_languageId_).
+        1. Set _languageId_ to _language_.
+        1. If _script_ is not *undefined*, set _languageId_ to the string-concatenation of _languageId_, *"-"*, and _script_.
+        1. If _region_ is not *undefined*, set _languageId_ to the string-concatenation of _languageId_, *"-"*, and _region_.
+        1. If _variants_ is not *undefined*, set _languageId_ to the string-concatenation of _languageId_, *"-"*, and _variants_.
         1. Set _tag_ to _tag_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_id</code> Unicode locale nonterminal replaced by the string _languageId_.
         1. Return CanonicalizeUnicodeLocaleId(_tag_).
       </emu-alg>
@@ -326,10 +317,7 @@
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Return the longest <emu-not-ref>substring</emu-not-ref> of _lang_ matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. Return GetLocaleLanguage(_loc_.[[Locale]]).
       </emu-alg>
     </emu-clause>
 
@@ -339,11 +327,7 @@
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. If _lang_ contains a subtag matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, return that subtag.
-        1. Return *undefined*.
+        1. Return GetLocaleScript(_loc_.[[Locale]]).
       </emu-alg>
     </emu-clause>
 
@@ -353,14 +337,7 @@
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
-        1. Let _lang_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Let _subtags_ be a List of the subtags of _lang_.
-        1. NOTE: A <code>unicode_region_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag, optionally with a single <code>unicode_script_subtag</code> subtag between them. In that position, <code>unicode_region_subtag</code> cannot be confused with any other valid subtag because all their productions are disjoint.
-        1. If the length of _subtags_ is greater than 1 and _subtags_[1] can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[1].
-        1. If the length of _subtags_ is greater than 2 and _subtags_[2] can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[2].
-        1. Return *undefined*.
+        1. Return GetLocaleRegion(_loc_.[[Locale]]).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -389,5 +366,80 @@
       <li>[[CaseFirst]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kf"*.</li>
       <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Locale% contains *"kn"*.</li>
     </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-locale-abstracts">
+    <h1>Abstract Operations for Locale Objects</h1>
+
+    <emu-clause id="sec-getlocalelanguage" type="abstract operation">
+      <h1>
+        GetLocaleLanguage (
+          _locale_: a String,
+        ): a String
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
+        1. Let _languageId_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Assert: The first subtag of _languageId_ can be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. Return the first subtag of _languageId_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getlocalescript" type="abstract operation">
+      <h1>
+        GetLocaleScript (
+          _locale_: a String,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
+        1. Let _languageId_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Assert: _languageId_ contains at most one subtag that can be matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal.
+        1. If _languageId_ contains a subtag matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, return that subtag.
+        1. Return *undefined*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getlocaleregion" type="abstract operation">
+      <h1>
+        GetLocaleRegion (
+          _locale_: a String,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
+        1. Let _languageId_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. NOTE: A <code>unicode_region_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag, optionally with a single <code>unicode_script_subtag</code> subtag between them. In that position, <code>unicode_region_subtag</code> cannot be confused with any other valid subtag because all their productions are disjoint.
+        1. Assert: The first subtag of _languageId_ can be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. Let _languageIdTail_ be the suffix of _languageId_ following the first subtag.
+        1. Assert: _languageIdTail_ contains at most one subtag that can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal.
+        1. If _languageIdTail_ contains a subtag matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return that subtag.
+        1. Return *undefined*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-getlocalevariants" type="abstract operation">
+      <h1>
+        GetLocaleVariants (
+          _locale_: a String,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Assert: _locale_ can be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal.
+        1. Let _languageId_ be the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. If there is a non-empty suffix of _languageId_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, then
+          1. Let _variants_ be the longest such suffix.
+          1. Return the substring of _variants_ from 1.
+        1. Return *undefined*.
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 </emu-clause>
