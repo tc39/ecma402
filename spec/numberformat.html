@@ -113,10 +113,10 @@
         1. Let _mnsd_ be ? Get(_options_, *"minimumSignificantDigits"*).
         1. Let _mxsd_ be ? Get(_options_, *"maximumSignificantDigits"*).
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _mnid_.
-        1. Let _roundingPriority_ be ? GetOption(_options_, *"roundingPriority"*, ~string~, &laquo; *"auto"*, *"morePrecision"*, *"lessPrecision"* &raquo;, *"auto"*).
         1. Let _roundingIncrement_ be ? GetNumberOption(_options_, *"roundingIncrement"*, 1, 5000, 1).
         1. If _roundingIncrement_ is not in « 1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000 », throw a *RangeError* exception.
         1. Let _roundingMode_ be ? GetOption(_options_, *"roundingMode"*, ~string~, &laquo; *"ceil"*, *"floor"*, *"expand"*, *"trunc"*, *"halfCeil"*, *"halfFloor"*, *"halfExpand"*, *"halfTrunc"*, *"halfEven"* &raquo;, *"halfExpand"*).
+        1. Let _roundingPriority_ be ? GetOption(_options_, *"roundingPriority"*, ~string~, &laquo; *"auto"*, *"morePrecision"*, *"lessPrecision"* &raquo;, *"auto"*).
         1. Let _trailingZeroDisplay_ be ? GetOption(_options_, *"trailingZeroDisplay"*, ~string~, &laquo; *"auto"*, *"stripIfInteger"* &raquo;, *"auto"*).
         1. NOTE: All fields required by SetNumberFormatDigitOptions have now been read from _options_. The remainder of this AO interprets the options and may throw exceptions.
         1. If _roundingIncrement_ is not 1, set _mxfdDefault_ to _mnfdDefault_.
@@ -491,12 +491,12 @@
             <td>*"signDisplay"*</td>
           </tr>
           <tr>
-            <td>[[RoundingMode]]</td>
-            <td>*"roundingMode"*</td>
-          </tr>
-          <tr>
             <td>[[RoundingIncrement]]</td>
             <td>*"roundingIncrement"*</td>
+          </tr>
+          <tr>
+            <td>[[RoundingMode]]</td>
+            <td>*"roundingMode"*</td>
           </tr>
           <tr>
             <td>[[ComputedRoundingPriority]]</td>
