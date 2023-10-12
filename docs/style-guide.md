@@ -7,7 +7,7 @@ This document contains background on how the style decisions were reached.  The 
 ## Table of Contents
 
 - [Casing Conventions](#casing-conventions)
-	- [Identifiers defined by ECMA-401](#identifiers-defined-by-ecma-401)
+	- [Identifiers defined by ECMA-402](#identifiers-defined-by-ecma-402)
 		- [Examples](#examples)
 		- [Alternative: Kebab case for all string enumerations](#alternative-kebab-case-for-all-string-enumerations)
 			- [Pros](#pros)
