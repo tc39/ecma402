@@ -25,7 +25,7 @@
         1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]]).
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
@@ -43,7 +43,7 @@
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then
           1. Set _displayNames_.[[LanguageDisplay]] to _languageDisplay_.
-          1. Set _typeFields_ to _typeFields_.[[&lt;_languageDisplay_&gt;]].
+          1. Let _typeFields_ be _typeFields_.[[&lt;_languageDisplay_&gt;]].
           1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _styleFields_ be _typeFields_.[[&lt;_style_&gt;]].
         1. Assert: _styleFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
@@ -145,7 +145,7 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.DisplayNames.prototype.of">
+    <emu-clause id="sec-Intl.DisplayNames.prototype.of" aoid="Intl.DisplayNames.prototype.of">
       <h1>Intl.DisplayNames.prototype.of ( _code_ )</h1>
 
       <p>
@@ -156,7 +156,7 @@
         1. Let _displayNames_ be *this* value.
         1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
         1. Let _code_ be ? ToString(_code_).
-        1. Set _code_ to ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
+        1. Let _code_ be ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
         1. Let _fields_ be _displayNames_.[[Fields]].
         1. If _fields_ has a field [[&lt;_code_&gt;]], return _fields_.[[&lt;_code_&gt;]].
         1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.
@@ -278,7 +278,7 @@
           1. If the result of IsValidDateTimeFieldCode(_code_) is *false*, throw a *RangeError* exception.
           1. Return _code_.
         1. Assert: _type_ is *"currency"*.
-        1. If IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
+        1. If ! IsWellFormedCurrencyCode(_code_) is *false*, throw a *RangeError* exception.
         1. Return the ASCII-uppercase of _code_.
       </emu-alg>
     </emu-clause>
@@ -287,7 +287,7 @@
       <h1>
         IsValidDateTimeFieldCode (
           _field_: a String,
-        ): a Boolean
+        )
       </h1>
       <dl class="header">
         <dt>description</dt>

@@ -25,18 +25,13 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-initializecollator" type="abstract operation">
-      <h1>
-        InitializeCollator (
-          _collator_: an Intl.Collator,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing _collator_ or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It initializes _collator_ as a Collator object.</dd>
-      </dl>
+    <emu-clause id="sec-initializecollator" aoid="InitializeCollator">
+      <h1>InitializeCollator ( _collator_, _locales_, _options_ )</h1>
+
+      <p>
+        The abstract operation InitializeCollator accepts the arguments _collator_ (which must be an object), _locales_, and _options_. It initializes _collator_ as a Collator object. The following steps are taken:
+      </p>
+
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -55,15 +50,15 @@
         1. Set _opt_.[[co]] to _collation_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~boolean~, ~empty~, *undefined*).
         1. If _numeric_ is not *undefined*, then
-          1. Set _numeric_ to ! ToString(_numeric_).
+          1. Let _numeric_ be ! ToString(_numeric_).
         1. Set _opt_.[[kn]] to _numeric_.
         1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, ~string~, &laquo; *"upper"*, *"lower"*, *"false"* &raquo;, *undefined*).
         1. Set _opt_.[[kf]] to _caseFirst_.
         1. Let _relevantExtensionKeys_ be %Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
         1. Set _collator_.[[Locale]] to _r_.[[locale]].
-        1. Set _collation_ to _r_.[[co]].
-        1. If _collation_ is *null*, set _collation_ to *"default"*.
+        1. Let _collation_ be _r_.[[co]].
+        1. If _collation_ is *null*, let _collation_ be *"default"*.
         1. Set _collator_.[[Collation]] to _collation_.
         1. If _relevantExtensionKeys_ contains *"kn"*, then
           1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
@@ -72,11 +67,11 @@
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is *"sort"*, then
-            1. Set _sensitivity_ to *"variant"*.
+            1. Let _sensitivity_ be *"variant"*.
           1. Else,
             1. Let _dataLocale_ be _r_.[[dataLocale]].
             1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-            1. Set _sensitivity_ to _dataLocaleData_.[[sensitivity]].
+            1. Let _sensitivity_ be _dataLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
@@ -212,25 +207,15 @@
           1. Return CompareStrings(_collator_, _X_, _Y_).
         </emu-alg>
 
-        <p>The *"length"* property of a Collator compare function is *2*<sub>𝔽</sub>.</p>
+        <p>The *"length"* property of a Collator compare function is 2.</p>
       </emu-clause>
 
-      <emu-clause id="sec-collator-comparestrings" type="implementation-defined abstract operation">
-        <h1>
-          CompareStrings (
-            _collator_: an Intl.Collator,
-            _x_: a String,
-            _y_: a String,
-          ): a Number, but not *NaN*
-        </h1>
-        <dl class="header">
-          <dt>description</dt>
-          <dd>
-            The returned Number represents the result of an implementation-defined locale-sensitive String comparison of _x_ with _y_.
-            The result is intended to correspond with a sort order of String values according to the effective locale and collation options of _collator_, and will be negative when _x_ is ordered before _y_, positive when _x_ is ordered after _y_, and zero in all other cases (representing no relative ordering between _x_ and _y_).
-            String values must be interpreted as UTF-16 code unit sequences as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
-          </dd>
-        </dl>
+      <emu-clause id="sec-collator-comparestrings" aoid="CompareStrings">
+        <h1>CompareStrings ( _collator_, _x_, _y_ )</h1>
+
+        <p>
+          When the CompareStrings abstract operation is called with arguments _collator_ (which must be an object initialized as a Collator), _x_ and _y_ (which must be String values), it returns a Number other than *NaN* representing the result of an implementation-defined locale-sensitive String comparison of _x_ with _y_. The result is intended to correspond with a sort order of String values according to the effective locale and collation options of _collator_, and will be negative when _x_ is ordered before _y_, positive when _x_ is ordered after _y_, and zero in all other cases (representing no relative ordering between _x_ and _y_). String values must be interpreted as UTF-16 code unit sequences as described in es2024, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, and a surrogate pair (a code unit in the range 0xD800 to 0xDBFF followed by a code unit in the range 0xDC00 to 0xDFFF) within a string must be interpreted as the corresponding code point.
+        </p>
 
         <p>
           Behaviour as described below depends upon locale-sensitive identification of the sequence of collation elements for a string, in particular "base letters", and different base letters always compare as unequal (causing the strings containing them to also compare as unequal). Results of comparing variations of the same base letter with different case, diacritic marks, or potentially other aspects further depends upon _collator_.[[Sensitivity]] as follows:
@@ -317,7 +302,7 @@
           1. If the current row has an Extension Key value, then
             1. Let _extensionKey_ be the Extension Key value of the current row.
             1. If %Collator%.[[RelevantExtensionKeys]] does not contain _extensionKey_, then
-              1. Set _v_ to *undefined*.
+              1. Let _v_ be *undefined*.
           1. If _v_ is not *undefined*, then
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.

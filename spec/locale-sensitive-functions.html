@@ -82,7 +82,7 @@
           1. If _requestedLocales_ is not an empty List, then
             1. Let _requestedLocale_ be _requestedLocales_[0].
           1. Else,
-            1. Let _requestedLocale_ be DefaultLocale().
+            1. Let _requestedLocale_ be ! DefaultLocale().
           1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
           1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
@@ -148,9 +148,9 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? ThisNumberValue(*this* value).
+        1. Let _x_ be ? thisNumberValue(*this* value).
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
-        1. Return FormatNumeric(_numberFormat_, ! ToIntlMathematicalValue(_x_)).
+        1. Return ? FormatNumeric(_numberFormat_, _x_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -174,9 +174,9 @@
       </p>
 
       <emu-alg>
-        1. Let _x_ be ? ThisBigIntValue(*this* value).
+        1. Let _x_ be ? thisBigIntValue(*this* value).
         1. Let _numberFormat_ be ? Construct(%NumberFormat%, &laquo; _locales_, _options_ &raquo;).
-        1. Return FormatNumeric(_numberFormat_, ℝ(_x_)).
+        1. Return ? FormatNumeric(_numberFormat_, _x_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -200,12 +200,10 @@
       </p>
 
       <emu-alg>
-        1. Let _dateObject_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
-        1. Let _x_ be _dateObject_.[[DateValue]].
+        1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~any~, ~all~).
-        1. Return ! FormatDateTime(_dateFormat_, _x_).
+        1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
     </emu-clause>
 
@@ -221,12 +219,10 @@
       </p>
 
       <emu-alg>
-        1. Let _dateObject_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
-        1. Let _x_ be _dateObject_.[[DateValue]].
+        1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _dateFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~date~, ~date~).
-        1. Return ! FormatDateTime(_dateFormat_, _x_).
+        1. Return ? FormatDateTime(_dateFormat_, _x_).
       </emu-alg>
     </emu-clause>
 
@@ -242,12 +238,10 @@
       </p>
 
       <emu-alg>
-        1. Let _dateObject_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_dateObject_, [[DateValue]]).
-        1. Let _x_ be _dateObject_.[[DateValue]].
+        1. Let _x_ be ? thisTimeValue(*this* value).
         1. If _x_ is *NaN*, return *"Invalid Date"*.
         1. Let _timeFormat_ be ? CreateDateTimeFormat(%DateTimeFormat%, _locales_, _options_, ~time~, ~time~).
-        1. Return ! FormatDateTime(_timeFormat_, _x_).
+        1. Return ? FormatDateTime(_timeFormat_, _x_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
@@ -268,14 +262,14 @@
 
       <emu-alg>
         1. Let _array_ be ? ToObject(*this* value).
-        1. Let _len_ be ? LengthOfArrayLike(_array_).
+        1. Let _len_ be ? ToLength(? Get(_array_, *"length"*)).
         1. Let _separator_ be the implementation-defined list-separator String value appropriate for the host environment's current locale (such as *", "*).
         1. Let _R_ be the empty String.
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
           1. If _k_ &gt; 0, then
             1. Set _R_ to the string-concatenation of _R_ and _separator_.
-          1. Let _nextElement_ be ? Get(_array_, ! ToString(𝔽(_k_))).
+          1. Let _nextElement_ be ? Get(_array_, ! ToString(_k_)).
           1. If _nextElement_ is not *undefined* or *null*, then
             1. Let _S_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
             1. Set _R_ to the string-concatenation of _R_ and _S_.

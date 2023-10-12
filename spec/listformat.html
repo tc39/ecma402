@@ -142,7 +142,7 @@
         1. Let _lf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
-        1. Return FormatList(_lf_, _stringList_).
+        1. Return ! FormatList(_lf_, _stringList_).
       </emu-alg>
     </emu-clause>
 
@@ -157,7 +157,7 @@
         1. Let _lf_ be the *this* value.
         1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
         1. Let _stringList_ be ? StringListFromIterable(_list_).
-        1. Return FormatListToParts(_lf_, _stringList_).
+        1. Return ! FormatListToParts(_lf_, _stringList_).
       </emu-alg>
     </emu-clause>
 
@@ -232,41 +232,34 @@
   <emu-clause id="sec-intl-listformat-abstracts">
     <h1>Abstract Operations for ListFormat Objects</h1>
 
-    <emu-clause id="sec-deconstructpattern" type="abstract operation">
-      <h1>
-        DeconstructPattern (
-          _pattern_: a String,
-          _placeables_: a Record,
-        ): a List
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>
-          It deconstructs the pattern string into a list of parts.
-          <p>
-            _placeables_ is a Record whose keys are placeables tokens used in the pattern string, and values are parts records (as from PartitionPattern) which will be used in the result List to represent the token part.
-            Example:
-          </p>
-          <pre>
-Input:
-  DeconstructPattern("AA{xx}BB{yy}CC", {
-    [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
-    [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
-  })
+    <emu-clause id="sec-deconstructpattern" aoid="DeconstructPattern">
+      <h1>DeconstructPattern ( _pattern_, _placeables_ )</h1>
 
-Output (List of parts records):
-  &laquo;
-    {[[Type]]: "literal", [[Value]]: "AA"},
-    {[[Type]]: "hour", [[Value]]: "15"},
-    {[[Type]]: "literal", [[Value]]: "BB"},
-    {[[Type]]: "minute", [[Value]]: "06"},
-    {[[Type]]: "literal", [[Value]]: "CC"}
-  &raquo;
-          </pre>
-        </dd>
-      </dl>
+      <p>
+        The DeconstructPattern abstract operation is called with arguments _pattern_ (which must be a String) and _placeables_ (which must be a Record), and deconstructs the pattern string into a list of parts.
+      </p>
+      <p>
+        The placeables record is a record whose keys are placeables tokens used in the pattern string, and values are parts records which will be used in the result List to represent the token part.
+        Example:
+      </p>
+      <pre>
+      Input:
+        DeconstructPattern("AA{xx}BB{yy}CC", {
+          [[xx]]: {[[Type]]: "hour", [[Value]]: "15"},
+          [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
+        })
+
+      Output (List of parts records):
+        &laquo;
+          {[[Type]]: "literal", [[Value]]: "AA"},
+          {[[Type]]: "hour", [[Value]]: "15"},
+          {[[Type]]: "literal", [[Value]]: "BB"},
+          {[[Type]]: "minute", [[Value]]: "06"},
+          {[[Type]]: "literal", [[Value]]: "CC"}
+        &raquo;
+      </pre>
       <emu-alg>
-        1. Let _patternParts_ be PartitionPattern(_pattern_).
+        1. Let _patternParts_ be ! PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _part_ be _patternPart_.[[Type]].
@@ -284,17 +277,15 @@ Output (List of parts records):
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-createpartsfromlist" type="abstract operation">
-      <h1>
-        CreatePartsFromList (
-          _listFormat_: an Intl.ListFormat,
-          _list_: a List of Strings,
-        ): a List of Records with fields [[Type]] (*"element"* or *"literal"*) and [[Value]] (a String)
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It creates the corresponding list of parts according to the effective locale and the formatting options of _listFormat_.</dd>
-      </dl>
+    <emu-clause id="sec-createpartsfromlist" aoid="CreatePartsFromList">
+      <h1>CreatePartsFromList ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The CreatePartsFromList abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and creates the corresponding list of parts according to the effective locale and the formatting options of _listFormat_.
+        Each part is a Record with two fields: [[Type]], which must be a string with values "element" or "literal", and [[Value]] which must be a string or a number.
+        The following steps are taken:
+      </p>
+
       <emu-alg>
         1. Let _size_ be the number of elements of _list_.
         1. If _size_ is 0, then
@@ -305,7 +296,7 @@ Output (List of parts records):
           1. Let _first_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[0] }.
           1. Let _second_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[1] }.
           1. Let _placeables_ be a new Record { [[0]]: _first_, [[1]]: _second_ }.
-          1. Return DeconstructPattern(_pattern_, _placeables_).
+          1. Return ! DeconstructPattern(_pattern_, _placeables_).
         1. Let _last_ be a new Record { [[Type]]: *"element"*, [[Value]]: _list_[_size_ - 1] }.
         1. Let _parts_ be &laquo; _last_ &raquo;.
         1. Let _i_ be _size_ - 2.
@@ -319,7 +310,7 @@ Output (List of parts records):
           1. Else,
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[End]].
           1. Let _placeables_ be a new Record { [[0]]: _head_, [[1]]: _parts_ }.
-          1. Set _parts_ to DeconstructPattern(_pattern_, _placeables_).
+          1. Set _parts_ to ! DeconstructPattern(_pattern_, _placeables_).
           1. Decrement _i_ by 1.
         1. Return _parts_.
       </emu-alg>
@@ -329,17 +320,15 @@ Output (List of parts records):
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-formatlist" type="abstract operation">
-      <h1>
-        FormatList (
-          _listFormat_: an Intl.ListFormat,
-          _list_: a List of Strings,
-        ): a String
-      </h1>
-      <dl class="header">
-      </dl>
+    <emu-clause id="sec-formatlist" aoid="FormatList">
+      <h1>FormatList ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The FormatList abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and performs the following steps:
+      </p>
+
       <emu-alg>
-        1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
+        1. Let _parts_ be ! CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be an empty String.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
@@ -347,37 +336,31 @@ Output (List of parts records):
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-formatlisttoparts" type="abstract operation">
-      <h1>
-        FormatListToParts (
-          _listFormat_: an Intl.ListFormat,
-          _list_: a List of Strings,
-        ): an Array
-      </h1>
-      <dl class="header">
-      </dl>
+    <emu-clause id="sec-formatlisttoparts" aoid="FormatListToParts">
+      <h1>FormatListToParts ( _listFormat_, _list_ )</h1>
+
+      <p>
+        The FormatListToParts abstract operation is called with arguments _listFormat_ (which must be an object initialized as a ListFormat) and _list_ (which must be a List of String values), and performs the following steps:
+      </p>
+
       <emu-alg>
-        1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
+        1. Let _parts_ be ! CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-createstringlistfromiterable" type="abstract operation">
-      <h1>
-        StringListFromIterable (
-          _iterable_: an ECMAScript language value,
-        ): either a normal completion containing a List of Strings or a throw completion
-      </h1>
-      <dl class="header">
-      </dl>
+    <emu-clause id="sec-createstringlistfromiterable" aoid="StringListFromIterable">
+      <h1>StringListFromIterable ( _iterable_ )</h1>
+
+      <p>The abstract operation StringListFromIterable performs the following steps:</p>
       <emu-alg>
         1. If _iterable_ is *undefined*, then
           1. Return a new empty List.
