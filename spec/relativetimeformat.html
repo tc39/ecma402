@@ -22,12 +22,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-InitializeRelativeTimeFormat" aoid="InitializeRelativeTimeFormat">
-      <h1>InitializeRelativeTimeFormat ( _relativeTimeFormat_, _locales_, _options_ )</h1>
+    <emu-clause id="sec-InitializeRelativeTimeFormat" type="abstract operation">
+      <h1>
+        InitializeRelativeTimeFormat (
+          _relativeTimeFormat_: an Intl.RelativeTimeFormat,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing _relativeTimeFormat_ or a throw completion
+      </h1>
 
-      <p>
-        The abstract operation InitializeRelativeTimeFormat accepts the arguments _relativeTimeFormat_ (which must be an object), _locales_, and _options_. It initializes _relativeTimeFormat_ as a RelativeTimeFormat object.
-      </p>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It initializes _relativeTimeFormat_ as a RelativeTimeFormat object.</dd>
+      </dl>
 
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
@@ -261,10 +268,17 @@
   <emu-clause id="sec-intl-relativetimeformat--abstracts">
     <h1>Abstract Operations for RelativeTimeFormat Objects</h1>
 
-    <emu-clause id="sec-singularrelativetimeunit" aoid=SingularRelativeTimeUnit>
-      <h1>SingularRelativeTimeUnit ( _unit_ )</h1>
+    <emu-clause id="sec-singularrelativetimeunit" type="abstract operation">
+      <h1>
+        SingularRelativeTimeUnit (
+          _unit_: a String,
+        ): either a normal completion containing a String or a throw completion
+      </h1>
+
+      <dl class="header">
+      </dl>
+
       <emu-alg>
-        1. Assert: Type(_unit_) is String.
         1. If _unit_ is *"seconds"*, return *"second"*.
         1. If _unit_ is *"minutes"*, return *"minute"*.
         1. If _unit_ is *"hours"*, return *"hour"*.
@@ -278,17 +292,21 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-PartitionRelativeTimePattern" aoid="PartitionRelativeTimePattern">
-      <h1>PartitionRelativeTimePattern ( _relativeTimeFormat_, _value_, _unit_ )</h1>
+    <emu-clause id="sec-PartitionRelativeTimePattern" type="abstract operation">
+      <h1>
+        PartitionRelativeTimePattern (
+          _relativeTimeFormat_: an Intl.RelativeTimeFormat,
+          _value_: a Number,
+          _unit_: a String,
+        ): either a normal completion containing a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Unit]] (a String or ~empty~), or a throw completion
+      </h1>
 
-      <p>
-        When the PartitionRelativeTimePattern abstract operation is called with arguments _relativeTimeFormat_, _value_, and _unit_ it returns a String value representing _value_ (which must be a Number value) according to the effective locale and the formatting options of _relativeTimeFormat_.
-      </p>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned List represents _value_ according to the effective locale and the formatting options of _relativeTimeFormat_.</dd>
+      </dl>
 
       <emu-alg>
-        1. Assert: _relativeTimeFormat_ has an [[InitializedRelativeTimeFormat]] internal slot.
-        1. Assert: Type(_value_) is Number.
-        1. Assert: Type(_unit_) is String.
         1. If _value_ is *NaN*, *+&infin;*<sub>𝔽</sub>, or *-&infin;*<sub>𝔽</sub>, throw a *RangeError* exception.
         1. Let _unit_ be ? SingularRelativeTimeUnit(_unit_).
         1. Let _localeData_ be %RelativeTimeFormat%.[[LocaleData]].
@@ -310,37 +328,29 @@
           1. If _patterns_ has a field [[&lt;_valueString_&gt;]], then
             1. Let _result_ be _patterns_.[[&lt;_valueString_&gt;]].
             1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_ }.
-        1. If _value_ is *-0*<sub>𝔽</sub> or if _value_ is less than 0, then
+        1. If _value_ is *-0*<sub>𝔽</sub> or _value_ &lt; *-0*<sub>𝔽</sub>, then
           1. Let _tl_ be *"past"*.
         1. Else,
           1. Let _tl_ be *"future"*.
         1. Let _po_ be _patterns_.[[&lt;_tl_&gt;]].
-        1. Let _fv_ be ! PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], _value_).
-        1. Let _pr_ be ! ResolvePlural(_relativeTimeFormat_.[[PluralRules]], _value_).[[PluralCategory]].
+        1. Let _fv_ be PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], ℝ(_value_)).
+        1. Let _pr_ be ResolvePlural(_relativeTimeFormat_.[[PluralRules]], _value_).[[PluralCategory]].
         1. Let _pattern_ be _po_.[[&lt;_pr_&gt;]].
-        1. Return ! MakePartsList(_pattern_, _unit_, _fv_).
+        1. Return MakePartsList(_pattern_, _unit_, _fv_).
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-makepartslist" aoid="MakePartsList">
-      <h1>MakePartsList ( _pattern_, _unit_, _parts_ )</h1>
+    <emu-clause id="sec-makepartslist" type="abstract operation">
+      <h1>
+        MakePartsList (
+          _pattern_: a pattern String,
+          _unit_: a String,
+          _parts_: a List of Records representing a formatted Number,
+        ): a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Unit]] (a String or ~empty~)
+      </h1>
 
-      <p>
-        The MakePartsList abstract operation is called with arguments _pattern_, a pattern String, _unit_, a String, and _parts_, a List of Records representing a formatted Number.
-      </p>
-
-      <emu-note>
-        Example:
-        <emu-alg>1. Return ! MakePartsList(*"AA{0}BB"*, *"hour"*, &laquo; Record { [[Type]]: *"integer"*, [[Value]]: *"15"* } &raquo;).</emu-alg>
-        will return a List of Records like
-        <kbd style="font: inherit; white-space: pre-wrap">
-          &laquo;
-            { [[Type]]: *"literal"*, [[Value]]: *"AA"*, [[Unit]]: ~empty~},
-            { [[Type]]: *"integer"*, [[Value]]: *"15"*, [[Unit]]: *"hour"*},
-            { [[Type]]: *"literal"*, [[Value]]: *"BB"*, [[Unit]]: ~empty~}
-          &raquo;
-        </kbd>
-      </emu-note>
+      <dl class="header">
+      </dl>
 
       <emu-alg>
         1. Let _patternParts_ be PartitionPattern(_pattern_).
@@ -354,14 +364,32 @@
               1. Append Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: _unit_ } to _result_.
         1. Return _result_.
       </emu-alg>
+
+      <emu-note>
+        Example:
+        <emu-alg>1. Return MakePartsList(*"AA{0}BB"*, *"hour"*, &laquo; Record { [[Type]]: *"integer"*, [[Value]]: *"15"* } &raquo;).</emu-alg>
+        will return a List of Records like
+        <kbd style="font: inherit; white-space: pre-wrap">
+          &laquo;
+            { [[Type]]: *"literal"*, [[Value]]: *"AA"*, [[Unit]]: ~empty~},
+            { [[Type]]: *"integer"*, [[Value]]: *"15"*, [[Unit]]: *"hour"*},
+            { [[Type]]: *"literal"*, [[Value]]: *"BB"*, [[Unit]]: ~empty~}
+          &raquo;
+        </kbd>
+      </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-FormatRelativeTime" aoid="FormatRelativeTime">
-      <h1>FormatRelativeTime ( _relativeTimeFormat_, _value_, _unit_ )</h1>
+    <emu-clause id="sec-FormatRelativeTime" type="abstract operation">
+      <h1>
+        FormatRelativeTime (
+          _relativeTimeFormat_: an Intl.RelativeTimeFormat,
+          _value_: a Number,
+          _unit_: a String,
+        ): either a normal completion containing a String or a throw completion
+      </h1>
 
-      <p>
-        The FormatRelativeTime abstract operation is called with arguments _relativeTimeFormat_ (which must be an object initialized as a RelativeTimeFormat), _value_ (which must be a Number value), and _unit_ (which must be a String denoting the value unit) and performs the following steps:
-      </p>
+      <dl class="header">
+      </dl>
 
       <emu-alg>
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
@@ -372,12 +400,17 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-FormatRelativeTimeToParts" aoid="FormatRelativeTimeToParts">
-      <h1>FormatRelativeTimeToParts ( _relativeTimeFormat_, _value_, _unit_ )</h1>
+    <emu-clause id="sec-FormatRelativeTimeToParts" type="abstract operation">
+      <h1>
+        FormatRelativeTimeToParts (
+          _relativeTimeFormat_: an Intl.RelativeTimeFormat,
+          _value_: a Number,
+          _unit_: a String,
+        ): either a normal completion containing an Array or a throw completion
+      </h1>
 
-      <p>
-        The FormatRelativeTimeToParts abstract operation is called with arguments _relativeTimeFormat_ (which must be an object initialized as a RelativeTimeFormat), _value_ (which must be a Number value), and _unit_ (which must be a String denoting the value unit) and performs the following steps:
-      </p>
+      <dl class="header">
+      </dl>
 
       <emu-alg>
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
@@ -389,7 +422,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
           1. If _part_.[[Unit]] is not ~empty~, then
             1. Perform ! CreateDataPropertyOrThrow(_O_, *"unit"*, _part_.[[Unit]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(_n_), _O_).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>

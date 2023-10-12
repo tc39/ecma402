@@ -57,10 +57,11 @@
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
         1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal, return *false*.
         1. If _lowerLocale_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, return *false*.
-        1. Let _lang_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Let _langRefinements_ be the longest suffix of _lang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> or <code>unicode_script_subtag</code> Unicode locale nonterminal.
-        1. If _langRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, return *false*.
-        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _lang_.
+        1. Let _languageId_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Let _variants_ be GetLocaleVariants(_languageId_).
+        1. If _variants_ is not *undefined*, then
+          1. If _variants_ contains any duplicate subtags, return *false*.
+        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _languageId_.
         1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
@@ -86,10 +87,9 @@
       </dl>
       <emu-alg>
         1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
-        1. If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _localeWithoutPrivateUse_ be the prefix of _localeId_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _localeWithoutPrivateUse_ be _localeId_.
-        1. Let _extension_ be the longest <emu-not-ref>substring</emu-not-ref> of _localeWithoutPrivateUse_ that is a Unicode locale extension sequence. If there is no such <emu-not-ref>substring</emu-not-ref>, let _extension_ be the empty String.
-        1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _extension_ is not the empty String, then
-          1. Let _newExtension_ be *"u"*.
+        1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _localeId_ contains a substring that is a Unicode locale extension sequence, then
+          1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _localeId_.
+          1. Let _newExtension_ be *"-u"*.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
           1. For each element _attr_ of _components_.[[Attributes]], do
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _attr_.
@@ -97,7 +97,7 @@
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Key]].
             1. If _keyword_.[[Value]] is not the empty String, then
               1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Value]].
-          1. Assert: _newExtension_ is not equal to *"u"*.
+          1. Assert: _newExtension_ is not equal to *"-u"*.
           1. Set _localeId_ to a copy of _localeId_ in which the first appearance of <emu-not-ref>substring</emu-not-ref> _extension_ has been replaced with _newExtension_.
         1. Return _localeId_.
       </emu-alg>
@@ -111,12 +111,15 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-defaultlocale" aoid="DefaultLocale">
-      <h1>DefaultLocale ( )</h1>
-
-      <p>
-        The DefaultLocale abstract operation returns a String value representing the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale.
-      </p>
+    <emu-clause id="sec-defaultlocale" type="implementation-defined abstract operation">
+      <h1>
+        DefaultLocale (
+        ): a Unicode canonicalized locale identifier
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned String value represents the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale.</dd>
+      </dl>
     </emu-clause>
   </emu-clause>
 
@@ -131,13 +134,16 @@
       All well-formed 3-letter ISO 4217 currency codes are allowed. However, the set of combinations of currency code and language tag for which localized currency symbols are available is implementation dependent. Where a localized currency symbol is not available, the ISO 4217 currency code is used for formatting.
     </p>
 
-    <emu-clause id="sec-iswellformedcurrencycode" aoid="IsWellFormedCurrencyCode">
-      <h1>IsWellFormedCurrencyCode ( _currency_ )</h1>
-
-      <p>
-        The IsWellFormedCurrencyCode abstract operation verifies that the _currency_ argument (which must be a String value) represents a well-formed 3-letter ISO currency code. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-iswellformedcurrencycode" type="abstract operation">
+      <h1>
+        IsWellFormedCurrencyCode (
+          _currency_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _currency_ argument represents a well-formed 3-letter ISO currency code.</dd>
+      </dl>
       <emu-alg>
         1. If the length of _currency_ is not 3, return *false*.
         1. Let _normalized_ be the ASCII-uppercase of _currency_.
@@ -148,10 +154,12 @@
   </emu-clause>
 
   <emu-clause id="sec-availablecanonicalcurrencies" type="implementation-defined abstract operation">
-    <h1>AvailableCanonicalCurrencies (
-    ): a List of Strings</h1>
+    <h1>
+      AvailableCanonicalCurrencies (
+      ): a List of Strings
+    </h1>
     <dl class="header">
-    <dt>description</dt>
+      <dt>description</dt>
       <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique, well-formed, and upper case canonicalized 3-letter ISO 4217 currency codes, identifying the currencies for which the implementation provides the functionality of Intl.DisplayNames and Intl.NumberFormat objects.</dd>
     </dl>
   </emu-clause>
@@ -167,13 +175,16 @@
       A conforming implementation must recognize *"UTC"* and all other Zone and Link names (and <strong>only</strong> such names), and use best available current and historical information about their offsets from UTC and their daylight saving time rules in calculations. However, the set of combinations of time zone name and language tag for which localized time zone names are available is implementation dependent.
     </p>
 
-    <emu-clause id="sec-isvalidtimezonename" aoid="IsValidTimeZoneName">
-      <h1>IsValidTimeZoneName ( _timeZone_ )</h1>
-
-      <p>
-        The abstract operation IsValidTimeZoneName takes argument _timeZone_, a String value, and verifies that it represents a valid Zone or Link name of the IANA Time Zone Database.
-      </p>
-
+    <emu-clause id="sec-isvalidtimezonename" type="abstract operation">
+      <h1>
+        IsValidTimeZoneName (
+          _timeZone_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _timeZone_ argument represents a valid Zone or Link name of the IANA Time Zone Database.</dd>
+      </dl>
       <emu-alg>
         1. If one of the Zone or Link names of the IANA Time Zone Database is an ASCII-case-insensitive match for _timeZone_, return *true*.
         1. If _timeZone_ is an ASCII-case-insensitive match for *"UTC"*, return *true*.
@@ -182,14 +193,14 @@
     </emu-clause>
 
     <emu-note>
-      Any value returned from DefaultTimeZone that is not recognized as valid by IsTimeZoneOffsetString must be recognized as valid by IsValidTimeZoneName.
+      Any value returned from SystemTimeZoneIdentifier that is not recognized as valid by IsTimeZoneOffsetString must be recognized as valid by IsValidTimeZoneName.
     </emu-note>
 
     <emu-clause id="sec-canonicalizetimezonename" type="abstract operation">
       <h1>
         CanonicalizeTimeZoneName (
           _timeZone_: a String value that is a valid time zone name as verified by IsValidTimeZoneName,
-        )
+        ): a String
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -197,7 +208,7 @@
       </dl>
       <emu-alg>
         1. Let _ianaTimeZone_ be the String value of the Zone or Link name of the IANA Time Zone Database that is an ASCII-case-insensitive match for _timeZone_.
-        1. If _ianaTimeZone_ is a Link name, let _ianaTimeZone_ be the String value of the corresponding Zone name as specified in the file <code>backward</code> of the IANA Time Zone Database.
+        1. If _ianaTimeZone_ is a Link name, set _ianaTimeZone_ to the String value of the corresponding Zone name as specified in the file <code>backward</code> of the IANA Time Zone Database.
         1. If _ianaTimeZone_ is one of *"Etc/UTC"*, *"Etc/GMT"*, or *"GMT"*, return *"UTC"*.
         1. Return _ianaTimeZone_.
       </emu-alg>
@@ -217,8 +228,8 @@
         1. Let _names_ be a List of all Zone and Link names in the IANA Time Zone Database that are supported by the implementation.
         1. Let _result_ be a new empty List.
         1. For each element _name_ of _names_, do
-          1. Assert: ! IsValidTimeZoneName( _name_ ) is *true*.
-          1. Let _canonical_ be ! CanonicalizeTimeZoneName( _name_ ).
+          1. Assert: IsValidTimeZoneName( _name_ ) is *true*.
+          1. Let _canonical_ be CanonicalizeTimeZoneName( _name_ ).
           1. If _result_ does not contain _canonical_, then
             1. Append _canonical_ to the end of _result_.
         1. [declared="comparefn"] Sort _result_ in order as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_.
@@ -239,15 +250,18 @@
       Attempting to use an unsanctioned core unit identifier results in a *RangeError*.
     </p>
 
-    <emu-clause id="sec-iswellformedunitidentifier" aoid="IsWellFormedUnitIdentifier">
-      <h1>IsWellFormedUnitIdentifier ( _unitIdentifier_ )</h1>
-
-      <p>
-        The IsWellFormedUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) represents a well-formed core unit identifier that is either a sanctioned single unit or a complex unit formed by division of two sanctioned single units. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-iswellformedunitidentifier" type="abstract operation">
+      <h1>
+        IsWellFormedUnitIdentifier (
+          _unitIdentifier_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _unitIdentifier_ argument represents a well-formed core unit identifier that is either a sanctioned single unit or a complex unit formed by division of two sanctioned single units.</dd>
+      </dl>
       <emu-alg>
-        1. If ! IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
+        1. If IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
         1. Let _i_ be StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
         1. If _i_ is -1 or StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not -1, then
@@ -255,19 +269,22 @@
         1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
         1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
         1. Let _denominator_ be the substring of _unitIdentifier_ from _i_ + 5.
-        1. If ! IsSanctionedSingleUnitIdentifier(_numerator_) and ! IsSanctionedSingleUnitIdentifier(_denominator_) are both *true*, then
+        1. If IsSanctionedSingleUnitIdentifier(_numerator_) and IsSanctionedSingleUnitIdentifier(_denominator_) are both *true*, then
           1. Return *true*.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-issanctionedsingleunitidentifier" aoid="IsSanctionedSingleUnitIdentifier" oldids="sec-issanctionedsimpleunitidentifier">
-      <h1>IsSanctionedSingleUnitIdentifier ( _unitIdentifier_ )</h1>
-
-      <p>
-        The IsSanctionedSingleUnitIdentifier abstract operation verifies that the _unitIdentifier_ argument (which must be a String value) is among the single unit identifiers sanctioned in the current version of this specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-issanctionedsingleunitidentifier" type="abstract operation" oldids="sec-issanctionedsimpleunitidentifier">
+      <h1>
+        IsSanctionedSingleUnitIdentifier (
+          _unitIdentifier_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It verifies that the _unitIdentifier_ argument is among the single unit identifiers sanctioned in the current version of this specification, which are a subset of the Common Locale Data Repository <a href="https://github.com/unicode-org/cldr/blob/maint/maint-38/common/validity/unit.xml">release 38 unit validity data</a>; the list may grow over time. As discussed in <a href="https://unicode.org/reports/tr35/tr35-general.html#Unit_Identifiers">Unicode Technical Standard #35 Part 2 General, Section 6.2 Unit Identifiers</a>, a single unit identifier is a core unit identifier that is not composed of multiplication or division of other unit identifiers.</dd>
+      </dl>
       <emu-alg>
         1. If _unitIdentifier_ is listed in <emu-xref href="#table-sanctioned-single-unit-identifiers"></emu-xref> below, return *true*.
         1. Else, return *false*.
@@ -330,8 +347,10 @@
       </emu-table>
     </emu-clause>
     <emu-clause id="sec-availablecanonicalunits" type="abstract operation">
-      <h1>AvailableCanonicalUnits (
-      ): a List of Strings</h1>
+      <h1>
+        AvailableCanonicalUnits (
+        ): a List of Strings
+      </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and consists of the unique values of simple unit identifiers listed in every row of <emu-xref href="#table-sanctioned-single-unit-identifiers"></emu-xref>, except the header row.</dd>
@@ -347,8 +366,10 @@
     </p>
 
     <emu-clause id="sec-availablecanonicalnumberingsystems" type="implementation-defined abstract operation">
-      <h1>AvailableCanonicalNumberingSystems (
-      ): a List of Strings</h1>
+      <h1>
+        AvailableCanonicalNumberingSystems (
+        ): a List of Strings
+      </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique canonical numbering systems identifiers identifying the numbering systems for which the implementation provides the functionality of Intl.DateTimeFormat, Intl.NumberFormat, and Intl.RelativeTimeFormat objects. The list must include the Numbering System value of every row of <emu-xref href="#table-numbering-system-digits"></emu-xref>, except the header row.</dd>
@@ -364,8 +385,10 @@
     </p>
 
     <emu-clause id="sec-availablecanonicalcollations" type="implementation-defined abstract operation">
-      <h1>AvailableCanonicalCollations (
-      ): a List of Strings</h1>
+      <h1>
+        AvailableCanonicalCollations (
+        ): a List of Strings
+      </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique canonical collation types identifying the collations for which the implementation provides the functionality of Intl.Collator objects.</dd>
@@ -381,8 +404,10 @@
     </p>
 
     <emu-clause id="sec-availablecanonicalcalendars" type="implementation-defined abstract operation">
-      <h1>AvailableCanonicalCalendars (
-      ): a List of Strings</h1>
+      <h1>
+        AvailableCanonicalCalendars (
+        ): a List of Strings
+      </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique canonical calendar types identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects. The list must include *"iso8601"*.</dd>

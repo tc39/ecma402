@@ -123,7 +123,7 @@
         1. Let _segmenter_ be the *this* value.
         1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
         1. Let _string_ be ? ToString(_string_).
-        1. Return ! CreateSegmentsObject(_segmenter_, _string_).
+        1. Return CreateSegmentsObject(_segmenter_, _string_).
       </emu-alg>
     </emu-clause>
 
@@ -193,12 +193,20 @@
     <h1>Segments Objects</h1>
 
     <p>
-      A Segments instance is an object that represents the segments of a specific string, subject to the locale and options of its constructing Intl.Segmenter instance.
+      A <dfn>Segments instance</dfn> is an object that represents the segments of a specific string, subject to the locale and options of its constructing Intl.Segmenter instance.
     </p>
 
-    <emu-clause id="sec-createsegmentsobject" aoid="CreateSegmentsObject">
-      <h1>CreateSegmentsObject ( _segmenter_, _string_ )</h1>
-      <p>The CreateSegmentsObject abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segments instance referencing both. The following steps are taken:</p>
+    <emu-clause id="sec-createsegmentsobject" type="abstract operation">
+      <h1>
+        CreateSegmentsObject (
+          _segmenter_: an Intl.Segmenter,
+          _string_: a String,
+        ): a Segments instance
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The Segments instance references _segmenter_ and _string_.</dd>
+      </dl>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[SegmentsSegmenter]], [[SegmentsString]] &raquo;.
         1. Let _segments_ be OrdinaryObjectCreate(%SegmentsPrototype%, _internalSlotsList_).
@@ -219,7 +227,7 @@
 
       <emu-clause id="sec-%segmentsprototype%.containing">
         <h1>%SegmentsPrototype%.containing ( _index_ )</h1>
-        <p>The `containing` method is called on a Segments instance with argument _index_ to return a Segment Data object describing the segment in the string including the code unit at the specified index according to the locale and options of the Segments intance's constructing Intl.Segmenter instance. The following steps are taken:</p>
+        <p>The `containing` method is called on a Segments instance with argument _index_ to return a Segment Data object describing the segment in the string including the code unit at the specified index according to the locale and options of the Segments instance's constructing Intl.Segmenter instance. The following steps are taken:</p>
         <emu-alg>
           1. Let _segments_ be the *this* value.
           1. Perform ? RequireInternalSlot(_segments_, [[SegmentsSegmenter]]).
@@ -228,9 +236,9 @@
           1. Let _len_ be the length of _string_.
           1. Let _n_ be ? ToIntegerOrInfinity(_index_).
           1. If _n_ &lt; 0 or _n_ &ge; _len_, return *undefined*.
-          1. Let _startIndex_ be ! FindBoundary(_segmenter_, _string_, _n_, ~before~).
-          1. Let _endIndex_ be ! FindBoundary(_segmenter_, _string_, _n_, ~after~).
-          1. Return ! CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
+          1. Let _startIndex_ be FindBoundary(_segmenter_, _string_, _n_, ~before~).
+          1. Let _endIndex_ be FindBoundary(_segmenter_, _string_, _n_, ~after~).
+          1. Return CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
         </emu-alg>
       </emu-clause>
 
@@ -242,7 +250,7 @@
           1. Perform ? RequireInternalSlot(_segments_, [[SegmentsSegmenter]]).
           1. Let _segmenter_ be _segments_.[[SegmentsSegmenter]].
           1. Let _string_ be _segments_.[[SegmentsString]].
-          1. Return ! CreateSegmentIterator(_segmenter_, _string_).
+          1. Return CreateSegmentIterator(_segmenter_, _string_).
         </emu-alg>
       </emu-clause>
     </emu-clause>
@@ -268,12 +276,20 @@
     <h1>Segment Iterator Objects</h1>
 
     <p>
-      A Segment Iterator is an object that represents a particular iteration over the segments of a specific string.
+      A <dfn>Segment Iterator</dfn> is an object that represents a particular iteration over the segments of a specific string.
     </p>
 
-    <emu-clause id="sec-createsegmentiterator" aoid="CreateSegmentIterator">
-      <h1>CreateSegmentIterator ( _segmenter_, _string_ )</h1>
-      <p>The CreateSegmentIterator abstract operation is called with arguments Intl.Segmenter instance _segmenter_ and String value _string_ to create a Segment Iterator over _string_ using the locale and options of _segmenter_. The following steps are taken:</p>
+    <emu-clause id="sec-createsegmentiterator" type="abstract operation">
+      <h1>
+        CreateSegmentIterator (
+          _segmenter_: an Intl.Segmenter,
+          _string_: a String,
+        ): a Segment Iterator
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The Segment Iterator iterates over _string_ using the locale and options of _segmenter_.</dd>
+      </dl>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[IteratingSegmenter]], [[IteratedString]], [[IteratedStringNextSegmentCodeUnitIndex]] &raquo;.
         1. Let _iterator_ be OrdinaryObjectCreate(%SegmentIteratorPrototype%, _internalSlotsList_).
@@ -303,11 +319,11 @@
           1. Let _segmenter_ be _iterator_.[[IteratingSegmenter]].
           1. Let _string_ be _iterator_.[[IteratedString]].
           1. Let _startIndex_ be _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]].
-          1. Let _endIndex_ be ! FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
+          1. Let _endIndex_ be FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
           1. If _endIndex_ is not finite, then
             1. Return CreateIterResultObject(*undefined*, *true*).
           1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to _endIndex_.
-          1. Let _segmentData_ be ! CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
+          1. Let _segmentData_ be CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
           1. Return CreateIterResultObject(_segmentData_, *false*).
         </emu-alg>
       </emu-clause>
@@ -359,12 +375,22 @@
     <h1>Segment Data Objects</h1>
 
     <p>
-      A Segment Data object is an object that represents a particular segment from a string.
+      A <dfn>Segment Data object</dfn> is an object that represents a particular segment from a string.
     </p>
 
-    <emu-clause id="sec-createsegmentdataobject" aoid="CreateSegmentDataObject">
-      <h1>CreateSegmentDataObject ( _segmenter_, _string_, _startIndex_, _endIndex_ )</h1>
-      <p>The CreateSegmentDataObject abstract operation is called with arguments Intl.Segmenter instance _segmenter_, String value _string_, and indices _startIndex_ and _endIndex_ within _string_ to create a Segment Data object describing the segment within _string_ from _segmenter_ that is bounded by the indices. The following steps are taken:</p>
+    <emu-clause id="sec-createsegmentdataobject" type="abstract operation">
+      <h1>
+        CreateSegmentDataObject (
+          _segmenter_: an Intl.Segmenter,
+          _string_: a String,
+          _startIndex_: a non-negative integer,
+          _endIndex_: a non-negative integer,
+        ): a Segment Data object
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The Segment Data object describes the segment within _string_ from _segmenter_ that is bounded by the indices _startIndex_ and _endIndex_.</dd>
+      </dl>
       <emu-alg>
         1. Let _len_ be the length of _string_.
         1. Assert: _startIndex_ &ge; 0.
@@ -388,10 +414,19 @@
   <emu-clause id="sec-intl-segmenter-abstracts">
     <h1>Abstract Operations for Segmenter Objects</h1>
 
-    <emu-clause id="sec-findboundary" aoid="FindBoundary">
-      <h1>FindBoundary ( _segmenter_, _string_, _startIndex_, _direction_ )</h1>
-      <p>The FindBoundary abstract operation is called with arguments Intl.Segmenter instance _segmenter_, String _string_, integer _startIndex_, and _direction_ (which must be ~before~ or ~after~) to find a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and return the immediately following code unit index (which will be infinite if no such boundary exists). The following steps are taken:</p>
-      <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in <a href="https://unicode.org/reports/tr29/">Unicode Standard Annex #29</a>. It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org">https://cldr.unicode.org</a>).</emu-note>
+    <emu-clause id="sec-findboundary" type="abstract operation">
+      <h1>
+        FindBoundary (
+          _segmenter_: an Intl.Segmenter,
+          _string_: a String,
+          _startIndex_: a non-negative integer,
+          _direction_: ~before~ or ~after~,
+        ): a non-negative integer or +&infin;
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It finds a segmentation boundary between two code units in _string_ in the specified _direction_ from the code unit at index _startIndex_ according to the locale and options of _segmenter_ and returns the immediately following code unit index (which will be infinite if no such boundary exists).</dd>
+      </dl>
       <emu-alg>
         1. Let _locale_ be _segmenter_.[[Locale]].
         1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
@@ -408,6 +443,7 @@
         1. If a boundary is found, return the count of code units in _string_ preceding it.
         1. Return _len_.
       </emu-alg>
+      <emu-note>Boundary determination is implementation-dependent, but general default algorithms are specified in <a href="https://unicode.org/reports/tr29/">Unicode Standard Annex #29</a>. It is recommended that implementations use locale-sensitive tailorings such as those provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org">https://cldr.unicode.org</a>).</emu-note>
     </emu-clause>
   </emu-clause>
 </emu-clause>

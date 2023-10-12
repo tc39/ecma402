@@ -32,13 +32,14 @@
       Where the following abstract operations take an _availableLocales_ argument, it must be an [[AvailableLocales]] List as specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
-    <emu-clause id="sec-canonicalizelocalelist" aoid="CanonicalizeLocaleList">
-      <h1>CanonicalizeLocaleList ( _locales_ )</h1>
-
-      <p>
-        The abstract operation CanonicalizeLocaleList takes the following steps:
-      </p>
-
+    <emu-clause id="sec-canonicalizelocalelist" type="abstract operation">
+      <h1>
+        CanonicalizeLocaleList (
+          _locales_: an ECMAScript language value,
+        ): either a normal completion containing a List of Unicode canonicalized locale identifiers or a throw completion
+      </h1>
+      <dl class="header">
+      </dl>
       <emu-alg>
         1. If _locales_ is *undefined*, then
           1. Return a new empty List.
@@ -47,10 +48,10 @@
           1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
-        1. Let _len_ be ? ToLength(? Get(_O_, *"length"*)).
+        1. Let _len_ be ? LengthOfArrayLike(_O_).
         1. Let _k_ be 0.
-        1. Repeat, while _k_ < _len_,
-          1. Let _Pk_ be ! ToString(_k_).
+        1. Repeat, while _k_ &lt; _len_,
+          1. Let _Pk_ be ! ToString(𝔽(_k_)).
           1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
           1. If _kPresent_ is *true*, then
             1. Let _kValue_ be ? Get(_O_, _Pk_).
@@ -92,31 +93,33 @@
           1. If _availableLocales_ contains _candidate_, return _candidate_.
           1. Let _pos_ be the character index of the last occurrence of *"-"* (U+002D) within _candidate_. If that character does not occur, return *undefined*.
           1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, set _pos_ to _pos_ - 2.
-          1. Let _candidate_ be the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
+          1. Set _candidate_ to the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-lookupmatcher" aoid="LookupMatcher">
-      <h1>LookupMatcher ( _availableLocales_, _requestedLocales_ )</h1>
-
-      <p>
-        The LookupMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-lookupmatcher" type="abstract operation">
+      <h1>
+        LookupMatcher (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request.</dd>
+      </dl>
       <emu-alg>
-        1. Let _result_ be a new Record.
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _availableLocale_ is not *undefined*, then
-            1. Set _result_.[[locale]] to _availableLocale_.
             1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
               1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _locale_.
-              1. Set _result_.[[extension]] to _extension_.
-            1. Return _result_.
-        1. Let _defLocale_ be ! DefaultLocale().
-        1. Set _result_.[[locale]] to _defLocale_.
-        1. Return _result_.
+            1. Else,
+              1. Let _extension_ be ~empty~.
+            1. Return the Record { [[locale]]: _availableLocale_, [[extension]]: _extension_ }.
+        1. Let _defLocale_ be DefaultLocale().
+        1. Return the Record { [[locale]]: _defLocale_, [[extension]]: ~empty~ }.
       </emu-alg>
 
       <emu-note>
@@ -124,19 +127,24 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-bestfitmatcher" aoid="BestFitMatcher">
-      <h1>BestFitMatcher ( _availableLocales_, _requestedLocales_ )</h1>
-
-      <p>
-        The BestFitMatcher abstract operation compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
-      </p>
+    <emu-clause id="sec-bestfitmatcher" type="implementation-defined abstract operation">
+      <h1>
+        BestFitMatcher (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record's [[extension]] field is set to the substring of the Unicode locale extension sequence within the request locale language tag. Otherwise the [[extension]] field is set to ~empty~.</dd>
+      </dl>
     </emu-clause>
 
     <emu-clause id="sec-unicode-extension-components" type="abstract operation">
       <h1>
         UnicodeExtensionComponents (
           _extension_: a Unicode locale extension sequence,
-        ): a String
+        ): a Record with fields [[Attributes]] and [[Keywords]]
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -165,7 +173,7 @@
             1. Set _keyword_.[[Value]] to _subtag_.
           1. Else,
             1. Set _keyword_.[[Value]] to the string-concatenation of _keyword_.[[Value]], *"-"*, and _subtag_.
-          1. Let _k_ be _k_ + _len_ + 1.
+          1. Set _k_ to _k_ + _len_ + 1.
         1. Return the Record { [[Attributes]]: _attributes_, [[Keywords]]: _keywords_ }.
       </emu-alg>
     </emu-clause>
@@ -195,27 +203,30 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-resolvelocale" aoid="ResolveLocale">
-      <h1>ResolveLocale ( _availableLocales_, _requestedLocales_, _options_, _relevantExtensionKeys_, _localeData_ )</h1>
-
-      <p>
-        The ResolveLocale abstract operation compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request. _availableLocales_, _requestedLocales_, and _relevantExtensionKeys_ must be provided as List values, _options_ and _localeData_ as Records.
-      </p>
-
-      <p>
-        The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-resolvelocale" type="abstract operation">
+      <h1>
+        ResolveLocale (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _options_: a Record,
+          _relevantExtensionKeys_: a List of Strings,
+          _localeData_: a Record,
+        ): a Record
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request.</dd>
+      </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
-          1. Let _r_ be ! LookupMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _r_ be ! BestFitMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _result_ be a new Record.
         1. Set _result_.[[dataLocale]] to _foundLocale_.
-        1. If _r_ has an [[extension]] field, then
+        1. If _r_.[[extension]] is not ~empty~, then
           1. Let _components_ be UnicodeExtensionComponents(_r_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
         1. Let _supportedExtension_ be *"-u"*.
@@ -227,17 +238,17 @@
           1. Let _value_ be _keyLocaleData_[0].
           1. Assert: Type(_value_) is either String or Null.
           1. Let _supportedExtensionAddition_ be *""*.
-          1. If _r_ has an [[extension]] field, then
+          1. If _r_.[[extension]] is not ~empty~, then
             1. If _keywords_ contains an element whose [[Key]] is the same as _key_, then
               1. Let _entry_ be the element of _keywords_ whose [[Key]] is the same as _key_.
               1. Let _requestedValue_ be _entry_.[[Value]].
               1. If _requestedValue_ is not the empty String, then
                 1. If _keyLocaleData_ contains _requestedValue_, then
-                  1. Let _value_ be _requestedValue_.
-                  1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
+                  1. Set _value_ to _requestedValue_.
+                  1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"*, _key_, *"-"*, and _value_.
               1. Else if _keyLocaleData_ contains *"true"*, then
-                1. Let _value_ be *"true"*.
-                1. Let _supportedExtensionAddition_ be the string-concatenation of *"-"* and _key_.
+                1. Set _value_ to *"true"*.
+                1. Set _supportedExtensionAddition_ to the string-concatenation of *"-"* and _key_.
           1. If _options_ has a field [[&lt;_key_&gt;]], then
             1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
             1. Assert: Type(_optionsValue_) is either String, Undefined, or Null.
@@ -247,10 +258,10 @@
               1. Set _optionsValue_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _ukey_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
               1. NOTE: It is recommended that implementations use the 'u' extension data in <code>common/bcp47</code> provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
               1. If _optionsValue_ is the empty String, then
-                1. Let _optionsValue_ be *"true"*.
+                1. Set _optionsValue_ to *"true"*.
             1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
-              1. Let _value_ be _optionsValue_.
-              1. Let _supportedExtensionAddition_ be *""*.
+              1. Set _value_ to _optionsValue_.
+              1. Set _supportedExtensionAddition_ to *""*.
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
         1. If _supportedExtension_ is not *"-u"*, then
@@ -264,13 +275,17 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-lookupsupportedlocales" aoid="LookupSupportedLocales">
-      <h1>LookupSupportedLocales ( _availableLocales_, _requestedLocales_ )</h1>
-
-      <p>
-        The LookupSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-lookupsupportedlocales" type="abstract operation">
+      <h1>
+        LookupSupportedLocales (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+        ): a List of Unicode canonicalized locale identifiers
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+      </dl>
       <emu-alg>
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
@@ -281,21 +296,31 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-bestfitsupportedlocales" aoid="BestFitSupportedLocales">
-      <h1>BestFitSupportedLocales ( _availableLocales_, _requestedLocales_ )</h1>
-
-      <p>
-        The BestFitSupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the Best Fit Matcher algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The steps taken are implementation dependent.
-      </p>
+    <emu-clause id="sec-bestfitsupportedlocales" type="implementation-defined abstract operation">
+      <h1>
+        BestFitSupportedLocales (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+        ): a List of Unicode canonicalized locale identifiers
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the Best Fit Matcher algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+      </dl>
     </emu-clause>
 
-    <emu-clause id="sec-supportedlocales" aoid="SupportedLocales">
-      <h1>SupportedLocales ( _availableLocales_, _requestedLocales_, _options_ )</h1>
-
-      <p>
-        The SupportedLocales abstract operation returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale. Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Locales appear in the same order in the returned list as in _requestedLocales_. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-supportedlocales" type="abstract operation">
+      <h1>
+        SupportedLocales (
+          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing a List of Unicode canonicalized locale identifiers or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale. Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+      </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
@@ -307,12 +332,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getoptionsobject" aoid="GetOptionsObject">
-      <h1>GetOptionsObject ( _options_ )</h1>
-      <p>
-        The abstract operation GetOptionsObject returns an Object suitable for use with GetOption, either _options_ itself or a default empty Object.
-        It throws a TypeError if _options_ is not undefined and not an Object.
-      </p>
+    <emu-clause id="sec-getoptionsobject" type="abstract operation">
+      <h1>
+        GetOptionsObject (
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing an Object or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It returns an Object suitable for use with GetOption, either _options_ itself or a default empty Object.
+          It throws a *TypeError* if _options_ is not *undefined* and not an Object.
+        </dd>
+      </dl>
       <emu-alg>
         1. If _options_ is *undefined*, then
           1. Return OrdinaryObjectCreate(*null*).
@@ -322,12 +354,19 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-coerceoptionstoobject" aoid="CoerceOptionsToObject">
-      <h1>CoerceOptionsToObject ( _options_ )</h1>
-      <p>
-        The abstract operation CoerceOptionsToObject coerces _options_ into an Object suitable for use with GetOption, defaulting to an empty Object.
-        Because it coerces non-null primitive values into objects, its use is discouraged for new functionality in favour of GetOptionsObject.
-      </p>
+    <emu-clause id="sec-coerceoptionstoobject" type="abstract operation">
+      <h1>
+        CoerceOptionsToObject (
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing an Object or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It coerces _options_ into an Object suitable for use with GetOption, defaulting to an empty Object.
+          Because it coerces non-null primitive values into objects, its use is discouraged for new functionality in favour of GetOptionsObject.
+        </dd>
+      </dl>
       <emu-alg>
         1. If _options_ is *undefined*, then
           1. Return OrdinaryObjectCreate(*null*).
@@ -340,10 +379,10 @@
         GetOption (
           _options_: an Object,
           _property_: a property key,
-          _type_: ~boolean~, ~number~, or ~string~,
+          _type_: ~boolean~ or ~string~,
           _values_: ~empty~ or a List of ECMAScript language values,
           _default_: ~required~ or an ECMAScript language value,
-        )
+        ): either a normal completion containing an ECMAScript language value or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -356,9 +395,6 @@
           1. Return _default_.
         1. If _type_ is ~boolean~, then
           1. Set _value_ to ToBoolean(_value_).
-        1. Else if _type_ is ~number~, then
-          1. Set _value_ to ? ToNumber(_value_).
-          1. If _value_ is *NaN*, throw a *RangeError* exception.
         1. Else,
           1. Assert: _type_ is ~string~.
           1. Set _value_ to ? ToString(_value_).
@@ -385,52 +421,66 @@
         1. If _value_ is *undefined*, return _fallback_.
         1. If _value_ is *true*, return *true*.
         1. If ToBoolean(_value_) is *false*, return *false*.
-        1. Let _value_ be ? ToString(_value_).
+        1. Set _value_ to ? ToString(_value_).
         1. If _stringValues_ does not contain _value_, throw a *RangeError* exception.
         1. Return _value_.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-defaultnumberoption" aoid="DefaultNumberOption">
-      <h1>DefaultNumberOption ( _value_, _minimum_, _maximum_, _fallback_ )</h1>
-
-      <p>
-        The abstract operation DefaultNumberOption converts _value_ to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.
-      </p>
-
+    <emu-clause id="sec-defaultnumberoption" type="abstract operation">
+      <h1>
+        DefaultNumberOption (
+          _value_: an ECMAScript language value,
+          _minimum_: an integer,
+          _maximum_: an integer,
+          _fallback_: an integer or *undefined*,
+        ): either a normal completion containing either an integer or *undefined*, or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It converts _value_ to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+      </dl>
       <emu-alg>
         1. If _value_ is *undefined*, return _fallback_.
         1. Set _value_ to ? ToNumber(_value_).
-        1. If _value_ is *NaN* or less than _minimum_ or greater than _maximum_, throw a *RangeError* exception.
-        1. Return floor(_value_).
+        1. If _value_ is not finite or ℝ(_value_) &lt; _minimum_ or ℝ(_value_) &gt; _maximum_, throw a *RangeError* exception.
+        1. Return floor(ℝ(_value_)).
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getnumberoption" aoid="GetNumberOption">
-      <h1>GetNumberOption ( _options_, _property_, _minimum_, _maximum_, _fallback_ )</h1>
-
-      <p>
-        The abstract operation GetNumberOption extracts the value of the property named _property_ from the provided _options_ object, converts it to a Number value, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.
-      </p>
-
+    <emu-clause id="sec-getnumberoption" type="abstract operation">
+      <h1>
+        GetNumberOption (
+          _options_: an Object,
+          _property_: a String,
+          _minimum_: an integer,
+          _maximum_: an integer,
+          _fallback_: an integer or *undefined*,
+        ): either a normal completion containing either an integer or *undefined*, or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It extracts the value of the property named _property_ from the provided _options_ object, converts it to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+      </dl>
       <emu-alg>
-        1. Assert: Type(_options_) is Object.
         1. Let _value_ be ? Get(_options_, _property_).
         1. Return ? DefaultNumberOption(_value_, _minimum_, _maximum_, _fallback_).
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-partitionpattern" aoid="PartitionPattern">
-      <h1>PartitionPattern ( _pattern_ )</h1>
-
-      <p>
-        The PartitionPattern abstract operation is called with argument _pattern_.
-        This abstract operation parses an abstract pattern string into a list of Records with two fields, [[Type]] and [[Value]].
-        The [[Value]] field will be a String value if [[Type]] is *"literal"*, and *undefined* otherwise.
-        The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
-        The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-partitionpattern" type="abstract operation">
+      <h1>
+        PartitionPattern (
+          _pattern_: a String,
+        ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String or *undefined*)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          The [[Value]] field will be a String value if [[Type]] is *"literal"*, and *undefined* otherwise.
+          The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
+        </dd>
+      </dl>
       <emu-alg>
         1. Let _result_ be a new empty List.
         1. Let _beginIndex_ be StringIndexOf(_pattern_, *"{"*, 0).
