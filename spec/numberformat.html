@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencyPrecision]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
@@ -77,7 +77,8 @@
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
-          1. Let _cDigits_ be CurrencyDigits(_currency_).
+          1. Let _currencyPrecision_ be _numberFormat_.[[CurrencyPrecision]].
+          1. Let _cDigits_ be CurrencyDigits(_currency_, _currencyPrecision_).
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
         1. Else,
@@ -215,6 +216,7 @@
         1. Else,
           1. If IsWellFormedCurrencyCode(_currency_) is *false*, throw a *RangeError* exception.
         1. Let _currencyDisplay_ be ? GetOption(_options_, *"currencyDisplay"*, ~string~, &laquo; *"code"*, *"symbol"*, *"narrowSymbol"*, *"name"* &raquo;, *"symbol"*).
+        1. Let _currencyPrecision_ be ? GetOption(_options_, *"currencyPrecision"*, ~string~, &laquo; *"cash"*, *"financial"* &raquo;, *"financial"*).
         1. Let _currencySign_ be ? GetOption(_options_, *"currencySign"*, ~string~, &laquo; *"standard"*, *"accounting"* &raquo;, *"standard"*).
         1. Let _unit_ be ? GetOption(_options_, *"unit"*, ~string~, ~empty~, *undefined*).
         1. If _unit_ is *undefined*, then
@@ -225,6 +227,7 @@
         1. If _style_ is *"currency"*, then
           1. Set _intlObj_.[[Currency]] to the ASCII-uppercase of _currency_.
           1. Set _intlObj_.[[CurrencyDisplay]] to _currencyDisplay_.
+          1. Set _intlObj_.[[CurrencyPrecision]] to _currencyPrecision_.
           1. Set _intlObj_.[[CurrencySign]] to _currencySign_.
         1. If _style_ is *"unit"*, then
           1. Set _intlObj_.[[Unit]] to _unit_.
@@ -471,6 +474,11 @@
             <td></td>
           </tr>
           <tr>
+            <td>[[CurrencyPrecision]]</td>
+            <td>*"currencyPrecision"*</td>
+            <td></td>
+          </tr>
+          <tr>
             <td>[[CurrencySign]]</td>
             <td>*"currencySign"*</td>
             <td></td>
@@ -577,6 +585,7 @@
       <li>[[Style]] is one of the String values *"decimal"*, *"currency"*, *"percent"*, or *"unit"*, identifying the type of quantity being measured.</li>
       <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* unit type. It is only used when [[Style]] has the value *"currency"*.</li>
       <li>[[CurrencyDisplay]] is one of the String values *"code"*, *"symbol"*, *"narrowSymbol"*, or *"name"*, specifying whether to display the currency as an ISO 4217 alphabetic currency code, a localized currency symbol, or a localized currency name if formatting with the *"currency"* style. It is only used when [[Style]] has the value *"currency"*.</li>
+      <li>[[CurrencyPrecision]] is one of the String values *"cash"* or *"financial"*, specifying whether to round currency values to the smallest denomination of the currency in common usage, or instead to round to the number of fractional digits used for the currency in accounting and by financial institutions. It is only used when [[Style]] has the value *"currency"*.</li>
       <li>[[CurrencySign]] is one of the String values *"standard"* or *"accounting"*, specifying whether to render negative numbers in accounting format, often signified by parenthesis. It is only used when [[Style]] has the value *"currency"* and when [[SignDisplay]] is not *"never"*.</li>
       <li>[[Unit]] is a core unit identifier. It is only used when [[Style]] has the value *"unit"*.</li>
       <li>[[UnitDisplay]] is one of the String values *"short"*, *"narrow"*, or *"long"*, specifying whether to display the unit as a symbol, narrow symbol, or localized long name if formatting with the *"unit"* style. It is only used when [[Style]] has the value *"unit"*.</li>
@@ -713,6 +722,7 @@
       <h1>
         CurrencyDigits (
           _currency_: a String,
+          _currencyPrecision_: a String,
         ): a non-negative integer
       </h1>
       <dl class="header">
@@ -720,7 +730,9 @@
       <emu-alg>
         1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
         1. Assert: _currency_ is equal to the ASCII-uppercase of _currency_.
-        1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, return the minor unit value corresponding to the _currency_ from the list; otherwise, return 2.
+        1. If the Common Locale Data Repository supplemental data pertaining to fractional currency values contains an element with _currency_ as the value of its iso4217 attribute, then
+          1. If _currencyPrecision_ is *"cash"* and the element with _currency_ as the value of its iso4217 attribute has a cashDigits attribute, return the value of that attribute; otherwise, return the value of that element's digits attribute.
+        1. Return 2.
       </emu-alg>
     </emu-clause>
 
