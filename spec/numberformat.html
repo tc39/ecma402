@@ -79,7 +79,7 @@
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyPrecision_ be _numberFormat_.[[CurrencyPrecision]].
           1. Let _cDigits_ be CurrencyDigits(_currency_, _currencyPrecision_).
-          1. Let _defaultRoundingIncrement_ be CurrencyRounding(_currency_, _currencyPrecision_).
+          1. Let _defaultRoundingIncrement_ be CurrencyRoundingIncrement(_currency_, _currencyPrecision_).
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
         1. Else,
@@ -741,7 +741,7 @@
 
     <emu-clause id="sec-currencyrounding" type="abstract operation">
       <h1>
-        CurrencyRounding (
+        CurrencyRoundingIncrement (
           _currency_: a String,
           _currencyPrecision_: a String,
         ): a non-negative integer
