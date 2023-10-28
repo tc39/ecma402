@@ -734,10 +734,14 @@
       <emu-alg>
         1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
         1. Assert: _currency_ is equal to the ASCII-uppercase of _currency_.
-        1. If the Common Locale Data Repository supplemental data pertaining to fractional currency values contains an element with _currency_ as the value of its iso4217 attribute, then
-          1. If _currencyPrecision_ is *"cash"* and the element with _currency_ as the value of its iso4217 attribute has a cashDigits attribute, return the value of that attribute; otherwise, return the value of that element's digits attribute.
+        1. If _currencyPrecision_ is *"cash"*, then
+          1. If there is available locale data that specifies the number of fractional digits to be used when dealing with cash values, return that number.
+        1. If there is available locale data that specifies the number of fractional digits to be used when dealing with non-cash values, return that number.
         1. Return 2.
       </emu-alg>
+      <emu-note>
+        It is recommended that implementations use the Common Locale Data Repository supplemental data on currencies. In this case, if _currencyPrecison_ is *"cash"* and the element with _currency_ as the value of its iso4217 attribute has a cashDigits attribute, return the value of that attribute, otherwise, return the value of that element's digits attribute.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-currencyrounding" type="abstract operation">
@@ -752,10 +756,13 @@
       <emu-alg>
         1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
         1. Assert: _currency_ is equal to the ASCII-uppercase of _currency_.
-        1. If the Common Locale Repository supplemental data pertaining to fractional currency values contains an element with _currency_ as the value of its iso4217 attribute, then
-          1. If _currencyPrecision_ is *"cash"* and the element with _currency_ as the value of its iso4217 attribute has a cashRounding attribute, return the value of that attribute.
+        1. If _currencyPrecision_ is *"cash"*, then
+          1. If there is available locale data that specifies the number to which cash values should be rounded, return that number.
         1. Return 1.
       </emu-alg>
+        <emu-note>
+          It is recommended that implementations use the Common Locale Data Repository supplemental data on currencies. In this case, if _currencyRounding_ is *"cash"* and the element with _currency_ as the value of its iso4217 attribute has a cashRounding attribute, return the value of that attribute,
+        </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-number-format-functions">
