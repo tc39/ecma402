@@ -271,7 +271,7 @@ Output (List of parts records):
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
           1. Let _part_ be _patternPart_.[[Type]].
           1. If _part_ is *"literal"*, then
-            1. Append Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
+            1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
           1. Else,
             1. Assert: _placeables_ has a field [[&lt;_part_&gt;]].
             1. Let _subst_ be _placeables_.[[&lt;_part_&gt;]].
@@ -341,7 +341,7 @@ Output (List of parts records):
       <emu-alg>
         1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be an empty String.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -360,7 +360,7 @@ Output (List of parts records):
         1. Let _parts_ be CreatePartsFromList(_listFormat_, _list_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
           1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
@@ -391,7 +391,7 @@ Output (List of parts records):
             1. If Type(_nextValue_) is not String, then
               1. Let _error_ be ThrowCompletion(a newly created *TypeError* object).
               1. Return ? IteratorClose(_iteratorRecord_, _error_).
-            1. Append _nextValue_ to the end of the List _list_.
+            1. Append _nextValue_ to _list_.
         1. Return _list_.
       </emu-alg>
       <emu-note>
