@@ -5,7 +5,7 @@
     <h1>The Intl.RelativeTimeFormat Constructor</h1>
 
     <p>
-      The RelativeTimeFormat constructor is the <dfn>%RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The RelativeTimeFormat constructor is the <dfn>%Intl.RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat">
@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
+        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[DataLocale]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
         1. Return ? InitializeRelativeTimeFormat(_relativeTimeFormat_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -46,8 +46,8 @@
         1. If _numberingSystem_ is not *undefined*, then
           1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _localeData_ be %RelativeTimeFormat%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%RelativeTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %RelativeTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %Intl.RelativeTimeFormat%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%Intl.RelativeTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.RelativeTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Let _locale_ be _r_.[[locale]].
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[DataLocale]] to _r_.[[dataLocale]].
@@ -56,8 +56,8 @@
         1. Set _relativeTimeFormat_.[[Style]] to _style_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~string~, &laquo; *"always"*, *"auto"* &raquo;, *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
-        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%NumberFormat%, &laquo; _locale_ &raquo;).
-        1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%PluralRules%, &laquo; _locale_ &raquo;).
+        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%Intl.NumberFormat%, &laquo; _locale_ &raquo;).
+        1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%Intl.PluralRules%, &laquo; _locale_ &raquo;).
         1. Return _relativeTimeFormat_.
       </emu-alg>
     </emu-clause>
@@ -74,7 +74,7 @@
       <h1>Intl.RelativeTimeFormat.prototype</h1>
 
       <p>
-        The value of `Intl.RelativeTimeFormat.prototype` is %RelativeTimeFormat.prototype%.
+        The value of `Intl.RelativeTimeFormat.prototype` is %Intl.RelativeTimeFormat.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -89,7 +89,7 @@
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be %RelativeTimeFormat%.[[AvailableLocales]].
+        1. Let _availableLocales_ be %Intl.RelativeTimeFormat%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
@@ -136,14 +136,14 @@
     <h1>Properties of the Intl.RelativeTimeFormat Prototype Object</h1>
 
     <p>
-      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
+      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%Intl.RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
     </p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.constructor">
       <h1>Intl.RelativeTimeFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %RelativeTimeFormat%.
+        The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %Intl.RelativeTimeFormat%.
       </p>
     </emu-clause>
 
@@ -243,7 +243,7 @@
     <h1>Properties of Intl.RelativeTimeFormat Instances</h1>
 
     <p>
-      Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %RelativeTimeFormat.prototype%.
+      Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %Intl.RelativeTimeFormat.prototype%.
     </p>
 
     <p>
@@ -309,7 +309,7 @@
       <emu-alg>
         1. If _value_ is *NaN*, *+&infin;*<sub>𝔽</sub>, or *-&infin;*<sub>𝔽</sub>, throw a *RangeError* exception.
         1. Let _unit_ be ? SingularRelativeTimeUnit(_unit_).
-        1. Let _localeData_ be %RelativeTimeFormat%.[[LocaleData]].
+        1. Let _localeData_ be %Intl.RelativeTimeFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _relativeTimeFormat_.[[DataLocale]].
         1. Let _fields_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _style_ be _relativeTimeFormat_.[[Style]].

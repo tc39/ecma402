@@ -5,7 +5,7 @@
     <h1>The Intl.Segmenter Constructor</h1>
 
     <p>
-      The Segmenter constructor is the <dfn>%Segmenter%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The Segmenter constructor is the <dfn>%Intl.Segmenter%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-intl.segmenter">
@@ -18,14 +18,14 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _internalSlotsList_ be &laquo; [[InitializedSegmenter]], [[Locale]], [[SegmenterGranularity]] &raquo;.
-        1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Segmenter.prototype%"*, _internalSlotsList_).
+        1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.Segmenter.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be %Segmenter%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Segmenter%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %Intl.Segmenter%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%Intl.Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.Segmenter%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _segmenter_.[[Locale]] to _r_.[[locale]].
         1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, ~string~, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
         1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
@@ -45,7 +45,7 @@
       <h1>Intl.Segmenter.prototype</h1>
 
       <p>
-        The value of `Intl.Segmenter.prototype` is %Segmenter.prototype%.
+        The value of `Intl.Segmenter.prototype` is %Intl.Segmenter.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -60,7 +60,7 @@
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be %Segmenter%.[[AvailableLocales]].
+        1. Let _availableLocales_ be %Intl.Segmenter%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
@@ -90,14 +90,14 @@
     <h1>Properties of the Intl.Segmenter Prototype Object</h1>
 
     <p>
-      The Intl.Segmenter prototype object is itself an ordinary object. <dfn>%Segmenter.prototype%</dfn> is not an Intl.Segmenter instance and does not have an [[InitializedSegmenter]] internal slot or any of the other internal slots of Intl.Segmenter instance objects.
+      The Intl.Segmenter prototype object is itself an ordinary object. <dfn>%Intl.Segmenter.prototype%</dfn> is not an Intl.Segmenter instance and does not have an [[InitializedSegmenter]] internal slot or any of the other internal slots of Intl.Segmenter instance objects.
     </p>
 
     <emu-clause id="sec-intl.segmenter.prototype.constructor">
       <h1>Intl.Segmenter.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.Segmenter.prototype.constructor` is %Segmenter%.
+        The initial value of `Intl.Segmenter.prototype.constructor` is %Intl.Segmenter%.
       </p>
     </emu-clause>
 
@@ -172,7 +172,7 @@
     <h1>Properties of Intl.Segmenter Instances</h1>
 
     <p>
-      Intl.Segmenter instances are ordinary objects that inherit properties from %Segmenter.prototype%.
+      Intl.Segmenter instances are ordinary objects that inherit properties from %Intl.Segmenter.prototype%.
     </p>
 
     <p>
