@@ -209,24 +209,24 @@
       </dl>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[SegmentsSegmenter]], [[SegmentsString]] &raquo;.
-        1. Let _segments_ be OrdinaryObjectCreate(%SegmentsPrototype%, _internalSlotsList_).
+        1. Let _segments_ be OrdinaryObjectCreate(%IntlSegmentsPrototype%, _internalSlotsList_).
         1. Set _segments_.[[SegmentsSegmenter]] to _segmenter_.
         1. Set _segments_.[[SegmentsString]] to _string_.
         1. Return _segments_.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-%segmentsprototype%-object">
-      <h1>The %SegmentsPrototype% Object</h1>
-      <p>The <dfn>%SegmentsPrototype%</dfn> object:</p>
+    <emu-clause id="sec-%intlsegmentsprototype%-object" oldids="sec-%segmentsprototype%-object">
+      <h1>The %IntlSegmentsPrototype% Object</h1>
+      <p>The <dfn>%IntlSegmentsPrototype%</dfn> object:</p>
       <ul>
         <li>is the prototype of all Segments objects.</li>
         <li>is an ordinary object.</li>
         <li>has the following properties:</li>
       </ul>
 
-      <emu-clause id="sec-%segmentsprototype%.containing">
-        <h1>%SegmentsPrototype%.containing ( _index_ )</h1>
+      <emu-clause id="sec-%intlsegmentsprototype%.containing" oldids="sec-%segmentsprototype%.containing">
+        <h1>%IntlSegmentsPrototype%.containing ( _index_ )</h1>
         <p>The `containing` method is called on a Segments instance with argument _index_ to return a Segment Data object describing the segment in the string including the code unit at the specified index according to the locale and options of the Segments instance's constructing Intl.Segmenter instance. The following steps are taken:</p>
         <emu-alg>
           1. Let _segments_ be the *this* value.
@@ -242,8 +242,8 @@
         </emu-alg>
       </emu-clause>
 
-      <emu-clause id="sec-%segmentsprototype%-@@iterator">
-        <h1>%SegmentsPrototype% [ @@iterator ] ( )</h1>
+      <emu-clause id="sec-%intlsegmentsprototype%-@@iterator" oldids="sec-%segmentsprototype%-@@iterator">
+        <h1>%IntlSegmentsPrototype% [ @@iterator ] ( )</h1>
         <p>The `@@iterator` method is called on a Segments instance to create a Segment Iterator over its string using the locale and options of its constructing Intl.Segmenter instance. The following steps are taken:</p>
         <emu-alg>
           1. Let _segments_ be the *this* value.
@@ -259,7 +259,7 @@
       <h1>Properties of Segments Instances</h1>
 
       <p>
-        Segments instances are ordinary objects that inherit properties from %SegmentsPrototype%.
+        Segments instances are ordinary objects that inherit properties from %IntlSegmentsPrototype%.
       </p>
 
       <p>
@@ -292,7 +292,7 @@
       </dl>
       <emu-alg>
         1. Let _internalSlotsList_ be &laquo; [[IteratingSegmenter]], [[IteratedString]], [[IteratedStringNextSegmentCodeUnitIndex]] &raquo;.
-        1. Let _iterator_ be OrdinaryObjectCreate(%SegmentIteratorPrototype%, _internalSlotsList_).
+        1. Let _iterator_ be OrdinaryObjectCreate(%IntlSegmentIteratorPrototype%, _internalSlotsList_).
         1. Set _iterator_.[[IteratingSegmenter]] to _segmenter_.
         1. Set _iterator_.[[IteratedString]] to _string_.
         1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to 0.
@@ -300,9 +300,9 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-%segmentiteratorprototype%-object">
-      <h1>The %SegmentIteratorPrototype% Object</h1>
-      <p>The <dfn>%SegmentIteratorPrototype%</dfn> object:</p>
+    <emu-clause id="sec-%intlsegmentiteratorprototype%-object" oldids="sec-%segmentiteratorprototype%-object">
+      <h1>The %IntlSegmentIteratorPrototype% Object</h1>
+      <p>The <dfn>%IntlSegmentIteratorPrototype%</dfn> object:</p>
       <ul>
         <li>is the prototype of all Segment Iterator objects.</li>
         <li>is an ordinary object.</li>
@@ -310,8 +310,8 @@
         <li>has the following properties:</li>
       </ul>
 
-      <emu-clause id="sec-%segmentiteratorprototype%.next">
-        <h1>%SegmentIteratorPrototype%.next ( )</h1>
+      <emu-clause id="sec-%intlsegmentiteratorprototype%.next" oldids="sec-%segmentiteratorprototype%.next">
+        <h1>%IntlSegmentIteratorPrototype%.next ( )</h1>
         <p>The `next` method is called on a Segment Iterator instance to advance it forward one segment and return an <i>IteratorResult</i> object either describing the new segment or declaring iteration done. The following steps are taken:</p>
         <emu-alg>
           1. Let _iterator_ be the *this* value.
@@ -328,8 +328,8 @@
         </emu-alg>
       </emu-clause>
 
-      <emu-clause id="sec-%segmentiteratorprototype%.@@tostringtag">
-        <h1>%SegmentIteratorPrototype% [ @@toStringTag ]</h1>
+      <emu-clause id="sec-%intlsegmentiteratorprototype%.@@tostringtag" oldids="sec-%segmentiteratorprototype%.@@tostringtag">
+        <h1>%IntlSegmentIteratorPrototype% [ @@toStringTag ]</h1>
 
         <p>
           The initial value of the @@toStringTag property is the String value *"Segmenter String Iterator"*.
