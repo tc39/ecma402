@@ -22,13 +22,18 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-initializepluralrules" aoid="InitializePluralRules">
-      <h1>InitializePluralRules ( _pluralRules_, _locales_, _options_ )</h1>
-
-      <p>
-        The abstract operation InitializePluralRules accepts the arguments _pluralRules_ (which must be an object), _locales_, and _options_. It initializes _pluralRules_ as a PluralRules object. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-initializepluralrules" type="abstract operation">
+      <h1>
+        InitializePluralRules (
+          _pluralRules_: an Intl.PluralRules,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+        ): either a normal completion containing _pluralRules_ or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It initializes _pluralRules_ as a PluralRules object.</dd>
+      </dl>
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -37,7 +42,7 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, *+0*<sub>𝔽</sub>, *3*<sub>𝔽</sub>, *"standard"*).
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
         1. Let _localeData_ be %PluralRules%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to _r_.[[locale]].
@@ -140,7 +145,7 @@
         1. Let _pr_ be the *this* value.
         1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
         1. Let _n_ be ? ToNumber(_value_).
-        1. Return ! ResolvePlural(_pr_, _n_).[[PluralCategory]].
+        1. Return ResolvePlural(_pr_, _n_).[[PluralCategory]].
       </emu-alg>
     </emu-clause>
 
@@ -172,19 +177,18 @@
         1. Let _pr_ be the *this* value.
         1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
         1. For each row of <emu-xref href="#table-pluralrules-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
-          1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _p_ is *"pluralCategories"*, then
+            1. Let _v_ be CreateArrayFromList(_pluralCategories_).
+          1. Else,
+            1. Let _v_ be the value of _pr_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _v_ is not *undefined*, then
+            1. If there is a Conversion value in the current row, then
+              1. Assert: The Conversion value of the current row is ~number~.
+              1. Set _v_ to 𝔽(_v_).
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Let _pluralCategories_ be a List of Strings containing all possible results of <emu-xref href="#sec-pluralruleselect">PluralRuleSelect</emu-xref> for the selected locale _pr_.[[Locale]].
-        1. Perform ! CreateDataProperty(_options_, *"pluralCategories"*, CreateArrayFromList(_pluralCategories_)).
-        1. If _pr_.[[RoundingType]] is ~morePrecision~, then
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"morePrecision"*).
-        1. Else if _pr_.[[RoundingType]] is ~lessPrecision~, then
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"lessPrecision"*).
-        1. Else,
-          1. Perform ! CreateDataPropertyOrThrow(_options_, *"roundingPriority"*, *"auto"*).
         1. Return _options_.
       </emu-alg>
 
@@ -195,47 +199,68 @@
             <tr>
               <th>Internal Slot</th>
               <th>Property</th>
+              <th>Conversion</th>
             </tr>
           </thead>
           <tr>
             <td>[[Locale]]</td>
             <td>*"locale"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Type]]</td>
             <td>*"type"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MinimumIntegerDigits]]</td>
             <td>*"minimumIntegerDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MinimumFractionDigits]]</td>
             <td>*"minimumFractionDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MaximumFractionDigits]]</td>
             <td>*"maximumFractionDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MinimumSignificantDigits]]</td>
             <td>*"minimumSignificantDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
             <td>[[MaximumSignificantDigits]]</td>
             <td>*"maximumSignificantDigits"*</td>
+            <td>~number~</td>
           </tr>
           <tr>
-            <td>[[RoundingMode]]</td>
-            <td>*"roundingMode"*</td>
+            <td></td>
+            <td>*"pluralCategories"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[RoundingIncrement]]</td>
             <td>*"roundingIncrement"*</td>
+            <td>~number~</td>
+          </tr>
+          <tr>
+            <td>[[RoundingMode]]</td>
+            <td>*"roundingMode"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[ComputedRoundingPriority]]</td>
+            <td>*"roundingPriority"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[TrailingZeroDisplay]]</td>
             <td>*"trailingZeroDisplay"*</td>
+            <td></td>
           </tr>
         </table>
       </emu-table>
@@ -260,13 +285,13 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
-      <li>[[MinimumIntegerDigits]] is a non-negative integer Number value indicating the minimum integer digits to be used.</li>
-      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integer Number values indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
-      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integer Number values indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
-      <li>[[RoundingIncrement]] is an integer-valued Number that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then the number is rounded to the nearest 0.05 ("nickel rounding").</li>
+      <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
+      <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
+      <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
+      <li>[[RoundingType]] is one of the values ~fraction-digits~, ~significant-digits~, ~more-precision~, or ~less-precision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
+      <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"morePrecision"*, or *"lessPrecision"*. It is only used in <emu-xref href="#sec-intl.pluralrules.prototype.resolvedoptions"></emu-xref> to convert [[RoundingType]] back to a valid *"roundingPriority"* option.</li>
+      <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
       <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
-      <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"lessPrecision"*, or *"morePrecision"*, specifying the strategy to resolve mixed fraction digits and significant digits settings.</li>
-      <li>[[RoundingType]] is one of the values ~fractionDigits~, ~significantDigits~, ~morePrecision~, or ~lessPrecision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
   </emu-clause>
@@ -278,7 +303,7 @@
        <h1>
          GetOperands (
            _s_: a decimal String,
-         )
+         ): a Plural Rules Operands Record
        </h1>
        <dl class="header">
         <dt>description</dt>
@@ -300,8 +325,16 @@
          1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
          1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
          1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
-         1. Return a new Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
+         1. Return a new Plural Rules Operands Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
        </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-plural-rules-operands-records">
+      <h1>Plural Rules Operands Records</h1>
+
+      <p>
+        Each <dfn id="plural-operands-record">Plural Rules Operands Record</dfn> has the fields defined in <emu-xref href="#table-plural-operands"></emu-xref>.
+      </p>
 
        <emu-table id="table-plural-operands">
          <emu-caption>Plural Rules Operands Record Fields</emu-caption>
@@ -309,7 +342,7 @@
            <thead>
              <tr>
                <th>Field Name</th>
-               <th>Type</th>
+               <th>Value Type</th>
                <th>UTS #35 Operand</th>
                <th>Description</th>
              </tr>
@@ -358,66 +391,78 @@
       <h1>
         PluralRuleSelect (
           _locale_: a String,
-          _type_: a String,
+          _type_: *"cardinal"* or *"ordinal"*,
           _n_: a finite Number,
           _operands_: a Plural Rules Operands Record derived from formatting _n_,
-        )
+        ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the String from &laquo; *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, *"other"* &raquo; that best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
+        <dd>The returned String best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
       </dl>
     </emu-clause>
 
-    <emu-clause id="sec-resolveplural" aoid="ResolvePlural">
-      <h1>ResolvePlural ( _pluralRules_, _n_ )</h1>
-      <p>
-        When the ResolvePlural abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules) and _n_ (which must be a Number value), it returns a Record with two string-valued fields describing _n_ according to the effective locale and the options of _pluralRules_: [[PluralCategory]] characterizing its <emu-xref href="#sec-pluralruleselect">plural category</emu-xref>, and [[FormattedString]] containing its formatted representation. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-resolveplural" type="abstract operation">
+      <h1>
+        ResolvePlural (
+          _pluralRules_: an Intl.PluralRules,
+          _n_: a Number,
+        ): a Record with fields [[PluralCategory]] (*"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*) and [[FormattedString]] (a String)
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned Record contains two string-valued fields describing _n_ according to the effective locale and the options of _pluralRules_: [[PluralCategory]] characterizing its <emu-xref href="#sec-pluralruleselect">plural category</emu-xref>, and [[FormattedString]] containing its formatted representation.</dd>
+      </dl>
       <emu-alg>
-        1. Assert: Type(_pluralRules_) is Object.
-        1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
-        1. Assert: Type(_n_) is Number.
         1. If _n_ is not a finite Number, then
-          1. Return *"other"*.
+          1. Let _s_ be ! ToString(_n_).
+          1. Return the Record { [[PluralCategory]]: *"other"*, [[FormattedString]]: _s_ }.
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _res_ be ! FormatNumericToString(_pluralRules_, _n_).
+        1. Let _res_ be FormatNumericToString(_pluralRules_, ℝ(_n_)).
         1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _operands_ be ! GetOperands(_s_).
-        1. Let _p_ be ! PluralRuleSelect(_locale_, _type_, _n_, _operands_).
+        1. Let _operands_ be GetOperands(_s_).
+        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _n_, _operands_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-pluralruleselectrange" aoid="PluralRuleSelectRange">
-      <h1>PluralRuleSelectRange ( _locale_, _type_, _xp_, _yp_ )</h1>
-
-      <p>
-        When the PluralRuleSelectRange abstract operation is called with four arguments, it performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ (which must be *"cardinal"* or *"ordinal"*) for the corresponding _locale_, or the String value *"other"*.
-      </p>
+    <emu-clause id="sec-pluralruleselectrange" type="implementation-defined abstract operation">
+      <h1>
+        PluralRuleSelectRange (
+          _locale_: a String,
+          _type_: *"cardinal"* or *"ordinal"*,
+          _xp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
+          _yp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
+        ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ for the corresponding _locale_, or the String value *"other"*.</dd>
+      </dl>
     </emu-clause>
 
-    <emu-clause id="sec-resolvepluralrange" aoid="ResolvePluralRange">
-      <h1>ResolvePluralRange ( _pluralRules_, _x_, _y_ )</h1>
-      <p>
-        When the ResolvePluralRange abstract operation is called with arguments _pluralRules_ (which must be an object initialized as a PluralRules), _x_ (which must be a Number value), and _y_ (which must be a Number value), it returns a String value representing the plural form of the range starting from _x_ and ending at _y_ according to the effective locale and the options of _pluralRules_. The following steps are taken:
-      </p>
-
+    <emu-clause id="sec-resolvepluralrange" type="abstract operation">
+      <h1>
+        ResolvePluralRange (
+          _pluralRules_: an Intl.PluralRules,
+          _x_: a Number,
+          _y_: a Number,
+        ): either a normal completion containing either *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*, or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The returned String value represents the plural form of the range starting from _x_ and ending at _y_ according to the effective locale and the options of _pluralRules_.</dd>
+      </dl>
       <emu-alg>
-        1. Assert: Type(_pluralRules_) is Object.
-        1. Assert: _pluralRules_ has an [[InitializedPluralRules]] internal slot.
-        1. Assert: Type(_x_) is Number.
-        1. Assert: Type(_y_) is Number.
         1. If _x_ is *NaN* or _y_ is *NaN*, throw a *RangeError* exception.
-        1. Let _xp_ be ! ResolvePlural(_pluralRules_, _x_).
-        1. Let _yp_ be ! ResolvePlural(_pluralRules_, _y_).
+        1. Let _xp_ be ResolvePlural(_pluralRules_, _x_).
+        1. Let _yp_ be ResolvePlural(_pluralRules_, _y_).
         1. If _xp_.[[FormattedString]] is _yp_.[[FormattedString]], then
           1. Return _xp_.[[PluralCategory]].
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Return ! PluralRuleSelectRange(_locale_, _type_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
+        1. Return PluralRuleSelectRange(_locale_, _type_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
       </emu-alg>
     </emu-clause>
   </emu-clause>
