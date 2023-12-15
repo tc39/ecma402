@@ -86,15 +86,15 @@
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. If _hour12_ is *true*, then
-          1. Let _hc_ be _dataLocaleData_.[[hourCycle12]].
+          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then
-          1. Let _hc_ be _dataLocaleData_.[[hourCycle24]].
+          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle24]].
         1. Else,
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _r_.[[hc]].
-          1. If _hc_ is *null*, set _hc_ to _dataLocaleData_.[[hourCycle]].
+          1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
@@ -139,7 +139,7 @@
             1. Throw a *TypeError* exception.
           1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
             1. Throw a *TypeError* exception.
-          1. Let _styles_ be _dataLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
           1. Let _needDefaults_ be *true*.
@@ -157,7 +157,7 @@
           1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
             1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
               1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
-          1. Let _formats_ be _dataLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
           1. If _formatMatcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,

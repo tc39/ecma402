@@ -1461,8 +1461,8 @@
       <emu-alg>
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _patterns_ be _dataLocaleData_.[[patterns]].
+        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _patterns_ be _resolvedLocaleData_.[[patterns]].
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
@@ -1550,8 +1550,8 @@
       <emu-alg>
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
         1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _notationSubPatterns_ be _dataLocaleData_.[[notationSubPatterns]].
+        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _notationSubPatterns_ be _resolvedLocaleData_.[[notationSubPatterns]].
         1. Assert: _notationSubPatterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _notation_ be _numberFormat_.[[Notation]].
         1. If _notation_ is *"scientific"* or _notation_ is *"engineering"*, then
