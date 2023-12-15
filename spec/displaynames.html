@@ -5,7 +5,7 @@
     <h1>The Intl.DisplayNames Constructor</h1>
 
     <p>
-      The DisplayNames constructor is the <dfn>%DisplayNames%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The DisplayNames constructor is the <dfn>%Intl.DisplayNames%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-Intl.DisplayNames">
@@ -17,15 +17,15 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] &raquo;).
+        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, throw a *TypeError* exception.
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _localeData_ be %DisplayNames%.[[LocaleData]].
+        1. Let _localeData_ be %Intl.DisplayNames%.[[LocaleData]].
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _r_ be ResolveLocale(%DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %DisplayNames%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _r_ be ResolveLocale(%Intl.DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DisplayNames%.[[RelevantExtensionKeys]], _localeData_).
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
@@ -64,7 +64,7 @@
       <h1>Intl.DisplayNames.prototype</h1>
 
       <p>
-        The value of `Intl.DisplayNames.prototype` is %DisplayNames.prototype%.
+        The value of `Intl.DisplayNames.prototype` is %Intl.DisplayNames.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -79,7 +79,7 @@
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be %DisplayNames%.[[AvailableLocales]].
+        1. Let _availableLocales_ be %Intl.DisplayNames%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
@@ -123,14 +123,14 @@
     <h1>Properties of the Intl.DisplayNames Prototype Object</h1>
 
     <p>
-      The Intl.DisplayNames prototype object is itself an ordinary object. <dfn>%DisplayNames.prototype%</dfn> is not an Intl.DisplayNames instance and does not have an [[InitializedDisplayNames]] internal slot or any of the other internal slots of Intl.DisplayNames instance objects.
+      The Intl.DisplayNames prototype object is itself an ordinary object. <dfn>%Intl.DisplayNames.prototype%</dfn> is not an Intl.DisplayNames instance and does not have an [[InitializedDisplayNames]] internal slot or any of the other internal slots of Intl.DisplayNames instance objects.
     </p>
 
     <emu-clause id="sec-Intl.DisplayNames.prototype.constructor">
       <h1>Intl.DisplayNames.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.DisplayNames.prototype.constructor` is %DisplayNames%.
+        The initial value of `Intl.DisplayNames.prototype.constructor` is %Intl.DisplayNames%.
       </p>
     </emu-clause>
 
@@ -221,7 +221,7 @@
     <h1>Properties of Intl.DisplayNames Instances</h1>
 
     <p>
-      Intl.DisplayNames instances are ordinary objects that inherit properties from %DisplayNames.prototype%.
+      Intl.DisplayNames instances are ordinary objects that inherit properties from %Intl.DisplayNames.prototype%.
     </p>
 
     <p>

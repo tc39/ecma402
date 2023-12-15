@@ -5,7 +5,7 @@
     <h1>The Intl.PluralRules Constructor</h1>
 
     <p>
-      The PluralRules constructor is the <dfn>%PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The PluralRules constructor is the <dfn>%Intl.PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-intl.pluralrules">
@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] &raquo;).
         1. Return ? InitializePluralRules(_pluralRules_, _locales_, _options_).
       </emu-alg>
     </emu-clause>
@@ -43,8 +43,8 @@
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
-        1. Let _localeData_ be %PluralRules%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %PluralRules%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %Intl.PluralRules%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%Intl.PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.PluralRules%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _pluralRules_.[[Locale]] to _r_.[[locale]].
         1. Return _pluralRules_.
       </emu-alg>
@@ -62,7 +62,7 @@
       <h1>Intl.PluralRules.prototype</h1>
 
       <p>
-        The value of `Intl.PluralRules.prototype` is %PluralRules.prototype%.
+        The value of `Intl.PluralRules.prototype` is %Intl.PluralRules.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -77,7 +77,7 @@
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be %PluralRules%.[[AvailableLocales]].
+        1. Let _availableLocales_ be %Intl.PluralRules%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
@@ -112,14 +112,14 @@
     <h1>Properties of the Intl.PluralRules Prototype Object</h1>
 
     <p>
-      The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%PluralRules.prototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
+      The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%Intl.PluralRules.prototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
     </p>
 
     <emu-clause id="sec-intl.pluralrules.prototype.constructor">
       <h1>Intl.PluralRules.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.PluralRules.prototype.constructor` is %PluralRules%.
+        The initial value of `Intl.PluralRules.prototype.constructor` is %Intl.PluralRules%.
       </p>
     </emu-clause>
 
@@ -271,7 +271,7 @@
     <h1>Properties of Intl.PluralRules Instances</h1>
 
     <p>
-      Intl.PluralRules instances are ordinary objects that inherit properties from %PluralRules.prototype%.
+      Intl.PluralRules instances are ordinary objects that inherit properties from %Intl.PluralRules.prototype%.
     </p>
 
     <p>

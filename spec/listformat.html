@@ -5,7 +5,7 @@
     <h1>The Intl.ListFormat Constructor</h1>
 
     <p>
-      The ListFormat constructor is the <dfn>%ListFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
+      The ListFormat constructor is the <dfn>%Intl.ListFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
     </p>
 
     <emu-clause id="sec-Intl.ListFormat">
@@ -17,14 +17,14 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%ListFormat.prototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
+        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.ListFormat.prototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be %ListFormat%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %ListFormat%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _localeData_ be %Intl.ListFormat%.[[LocaleData]].
+        1. Let _r_ be ResolveLocale(%Intl.ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.ListFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _listFormat_.[[Locale]] to _r_.[[locale]].
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
@@ -50,7 +50,7 @@
       <h1>Intl.ListFormat.prototype</h1>
 
       <p>
-        The value of `Intl.ListFormat.prototype` is %ListFormat.prototype%.
+        The value of `Intl.ListFormat.prototype` is %Intl.ListFormat.prototype%.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
@@ -65,7 +65,7 @@
       </p>
 
       <emu-alg>
-        1. Let _availableLocales_ be %ListFormat%.[[AvailableLocales]].
+        1. Let _availableLocales_ be %Intl.ListFormat%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
@@ -87,7 +87,7 @@
       </emu-note>
 
       <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for each locale value _locale_ in %ListFormat%.[[AvailableLocales]]:
+        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for each locale value _locale_ in %Intl.ListFormat%.[[AvailableLocales]]:
       </p>
 
       <ul>
@@ -109,14 +109,14 @@
     <h1>Properties of the Intl.ListFormat Prototype Object</h1>
 
     <p>
-      The Intl.ListFormat prototype object is itself an ordinary object. <dfn>%ListFormat.prototype%</dfn> is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.
+      The Intl.ListFormat prototype object is itself an ordinary object. <dfn>%Intl.ListFormat.prototype%</dfn> is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.
     </p>
 
     <emu-clause id="sec-Intl.ListFormat.prototype.constructor">
       <h1>Intl.ListFormat.prototype.constructor</h1>
 
       <p>
-        The initial value of `Intl.ListFormat.prototype.constructor` is %ListFormat%.
+        The initial value of `Intl.ListFormat.prototype.constructor` is %Intl.ListFormat%.
       </p>
     </emu-clause>
 
@@ -210,7 +210,7 @@
     <h1>Properties of Intl.ListFormat Instances</h1>
 
     <p>
-      Intl.ListFormat instances inherit properties from %ListFormat.prototype%.
+      Intl.ListFormat instances inherit properties from %Intl.ListFormat.prototype%.
     </p>
 
     <p>
