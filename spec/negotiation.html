@@ -471,14 +471,13 @@
     <emu-clause id="sec-partitionpattern" type="abstract operation">
       <h1>
         PartitionPattern (
-          _pattern_: a String,
+          _pattern_: a Pattern String,
         ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String or *undefined*)
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
           The [[Value]] field will be a String value if [[Type]] is *"literal"*, and *undefined* otherwise.
-          The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
         </dd>
       </dl>
       <emu-alg>

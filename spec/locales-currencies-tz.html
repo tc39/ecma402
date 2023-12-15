@@ -2,7 +2,7 @@
   <h1>Identification of Locales, Currencies, Time Zones, Measurement Units, Numbering Systems, Collations, and Calendars</h1>
 
   <p>
-    This clause describes the String values used in this specification to identify locales, currencies, time zones, measurement units, numbering systems, collations, and calendars.
+    This clause describes the String values used in this specification to identify locales, currencies, time zones, measurement units, numbering systems, collations, calendars, and pattern strings.
   </p>
 
   <emu-clause id="sec-case-sensitivity-and-case-mapping">
@@ -413,5 +413,12 @@
         <dd>The returned List is ordered as if an Array of the same values had been sorted using %Array.prototype.sort% using *undefined* as _comparefn_, and contains unique canonical calendar types identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects. The list must include *"iso8601"*.</dd>
       </dl>
     </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-pattern-string-types">
+    <h1>Pattern String Types</h1>
+    <p>
+      <dfn>Pattern String</dfn> is a String value which contains zero or more substrings of the form *"{name}"*. The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.
+    </p>
   </emu-clause>
 </emu-clause>
