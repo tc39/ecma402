@@ -35,8 +35,8 @@
         1. Set _displayNames_.[[Fallback]] to _fallback_.
         1. Set _displayNames_.[[Locale]] to _r_.[[locale]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-        1. Let _types_ be _dataLocaleData_.[[types]].
+        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _types_ be _resolvedLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].

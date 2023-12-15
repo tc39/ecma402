@@ -70,15 +70,15 @@
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is *"sort"*, then
             1. Set _sensitivity_ to *"variant"*.
           1. Else,
-            1. Set _sensitivity_ to _dataLocaleData_.[[sensitivity]].
+            1. Set _sensitivity_ to _resolvedLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
-        1. Let _defaultIgnorePunctuation_ be _dataLocaleData_.[[ignorePunctuation]].
+        1. Let _defaultIgnorePunctuation_ be _resolvedLocaleData_.[[ignorePunctuation]].
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, _defaultIgnorePunctuation_).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
         1. Return _collator_.
