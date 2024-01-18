@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[DataLocale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
+        1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.NumberFormat.prototype%"*, &laquo; [[InitializedNumberFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] &raquo;).
         1. Perform ? InitializeNumberFormat(_numberFormat_, _locales_, _options_).
         1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
           1. Let _this_ be the *this* value.
@@ -71,7 +71,6 @@
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Intl.NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _numberFormat_.[[Locale]] to _r_.[[locale]].
-        1. Set _numberFormat_.[[DataLocale]] to _r_.[[dataLocale]].
         1. Set _numberFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Perform ? SetNumberFormatUnitOptions(_numberFormat_, _options_).
         1. Let _style_ be _numberFormat_.[[Style]].
@@ -572,7 +571,6 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[DataLocale]] is a String value with the language tag of the nearest locale for which the implementation has data to perform the formatting operation. It will be a parent locale of [[Locale]].</li>
       <li>[[NumberingSystem]] is a String value with the "type" given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the numbering system used for formatting.</li>
       <li>[[Style]] is one of the String values *"decimal"*, *"currency"*, *"percent"*, or *"unit"*, identifying the type of quantity being measured.</li>
       <li>[[Currency]] is a String value with the currency code identifying the currency to be used if formatting with the *"currency"* unit type. It is only used when [[Style]] has the value *"currency"*.</li>
@@ -1460,7 +1458,7 @@
       </dl>
       <emu-alg>
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
-        1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
+        1. Let _dataLocale_ be GetLocaleBaseName(_numberFormat_.[[Locale]]).
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _patterns_ be _dataLocaleData_.[[patterns]].
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
@@ -1549,7 +1547,7 @@
       </dl>
       <emu-alg>
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
-        1. Let _dataLocale_ be _numberFormat_.[[DataLocale]].
+        1. Let _dataLocale_ be GetLocaleBaseName(_numberFormat_.[[Locale]]).
         1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
         1. Let _notationSubPatterns_ be _dataLocaleData_.[[notationSubPatterns]].
         1. Assert: _notationSubPatterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
