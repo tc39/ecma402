@@ -308,8 +308,8 @@
         1. If _value_ is *NaN*, *+&infin;*<sub>𝔽</sub>, or *-&infin;*<sub>𝔽</sub>, throw a *RangeError* exception.
         1. Let _unit_ be ? SingularRelativeTimeUnit(_unit_).
         1. Let _localeData_ be %Intl.RelativeTimeFormat%.[[LocaleData]].
-        1. Let _dataLocale_ be GetLocaleBaseName(_relativeTimeFormat_.[[Locale]]).
-        1. Let _fields_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _resolvedLocaleBaseName_ be GetLocaleBaseName(_relativeTimeFormat_.[[Locale]]).
+        1. Let _fields_ be _localeData_.[[&lt;_resolvedLocaleBaseName_&gt;]].
         1. Let _style_ be _relativeTimeFormat_.[[Style]].
         1. If _style_ is equal to *"short"*, then
           1. Let _entry_ be the string-concatenation of _unit_ and *"-short"*.

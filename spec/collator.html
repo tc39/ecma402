@@ -74,9 +74,9 @@
           1. If _usage_ is *"sort"*, then
             1. Set _sensitivity_ to *"variant"*.
           1. Else,
-            1. Let _dataLocale_ be GetLocaleBaseName(_r_.[[locale]]).
-            1. Let _dataLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
-            1. Set _sensitivity_ to _dataLocaleData_.[[sensitivity]].
+            1. Let _resolvedLocaleBaseName_ be GetLocaleBaseName(_r_.[[locale]]).
+            1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_resolvedLocaleBaseName_&gt;]].
+            1. Set _sensitivity_ to _resolvedLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to _sensitivity_.
         1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, *false*).
         1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
