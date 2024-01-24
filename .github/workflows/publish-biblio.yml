@@ -1,0 +1,32 @@
+name: 'ecma-402-biblio'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: 'publish ecma402-biblio'
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'tc39/ecma402' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish biblio
+        run: scripts/publish-biblio.sh
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FOR_TC39_USER }}
