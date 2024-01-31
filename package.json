@@ -19,8 +19,6 @@
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
     "ecmarkup": "^18.0.0",
-    "@tc39/ecma262-biblio": "2.1.2638"
-  },
-  "devDependencies": {
+    "@tc39/ecma262-biblio": "2.1.2678"
   }
 }

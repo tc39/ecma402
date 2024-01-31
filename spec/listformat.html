@@ -383,16 +383,14 @@ Output (List of parts records):
           1. Return a new empty List.
         1. Let _iteratorRecord_ be ? GetIterator(_iterable_, ~sync~).
         1. Let _list_ be a new empty List.
-        1. Let _next_ be *true*.
-        1. Repeat, while _next_ is not *false*,
-          1. Set _next_ to ? IteratorStep(_iteratorRecord_).
-          1. If _next_ is not *false*, then
-            1. Let _nextValue_ be ? IteratorValue(_next_).
-            1. If Type(_nextValue_) is not String, then
-              1. Let _error_ be ThrowCompletion(a newly created *TypeError* object).
-              1. Return ? IteratorClose(_iteratorRecord_, _error_).
-            1. Append _nextValue_ to _list_.
-        1. Return _list_.
+        1. Repeat,
+          1. Let _next_ be ? IteratorStepValue(_iteratorRecord_).
+          1. If _next_ is ~done~, then
+            1. Return _list_.
+          1. If Type(_next_) is not String, then
+            1. Let _error_ be ThrowCompletion(a newly created *TypeError* object).
+            1. Return ? IteratorClose(_iteratorRecord_, _error_).
+          1. Append _next_ to _list_.
       </emu-alg>
       <emu-note>
         <p>This algorithm raises exceptions when it encounters values that are not Strings, because there is no obvious locale-aware coercion for arbitrary values.</p>
