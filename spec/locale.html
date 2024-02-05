@@ -136,8 +136,7 @@
           1. Let _optionsValue_ be _options_.[[&lt;_key_&gt;]].
           1. If _optionsValue_ is not *undefined*, then
             1. Assert: Type(_optionsValue_) is String.
-            1. Let _optionsUValue_ be the ASCII-lowercase of _optionsValue_.
-            1. Set _value_ to the String value resulting from canonicalizing _optionsUValue_ as a value of key _key_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
+            1. Set _value_ to _optionsValue_.
             1. If _entry_ is not ~empty~, then
               1. Set _entry_.[[Value]] to _value_.
             1. Else,
