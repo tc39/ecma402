@@ -11,9 +11,9 @@ This source is processed to obtain a human-readable version, which you can view 
 
 Proposals follow [the TC39 process](https://tc39.es/process-document/) and are tracked in the [proposals repository](https://github.com/tc39/proposals).
 
-* [Finished Proposals](https://github.com/tc39/proposals/blob/master/ecma402/finished-proposals.md)
-* [Active Proposals](https://github.com/tc39/proposals/blob/master/ecma402/README.md)
-* [Stage 0 Proposals](https://github.com/tc39/proposals/blob/master/ecma402/stage-0-proposals.md)
+* [Finished Proposals](https://github.com/tc39/proposals/blob/HEAD/ecma402/finished-proposals.md)
+* [Active Proposals](https://github.com/tc39/proposals/blob/HEAD/ecma402/README.md)
+* [Stage 0 Proposals](https://github.com/tc39/proposals/blob/HEAD/ecma402/stage-0-proposals.md)
 
 Information about status of tests, documentations and browser implementations of proposals can be found in [this wiki page](https://github.com/tc39/ecma402/wiki/Proposal-and-PR-Progress-Tracking).
 

@@ -33,4 +33,4 @@ $(npm bin)/update-branch --commands "npm run build-ci" \
                          --commit-message "Update gh-pages [skip ci]" \
                          --directory "out" \
                          --distribution-branch "gh-pages" \
-                         --source-branch "master"
+                         --source-branch "main"
