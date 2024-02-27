@@ -24,8 +24,7 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be %Intl.Segmenter%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%Intl.Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.Segmenter%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _r_ be ResolveLocale(%Intl.Segmenter%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.Segmenter%.[[RelevantExtensionKeys]], %Intl.Segmenter%.[[LocaleData]]).
         1. Set _segmenter_.[[Locale]] to _r_.[[Locale]].
         1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, ~string~, &laquo; *"grapheme"*, *"word"*, *"sentence"* &raquo;, *"grapheme"*).
         1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
