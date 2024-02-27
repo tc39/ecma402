@@ -227,7 +227,7 @@
         1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
         1. Assert: Type(_foundLocaleData_) is Record.
         1. Let _result_ be a new Record.
-        1. Set _result_.[[localeData]] to _foundLocaleData_.
+        1. Set _result_.[[LocaleData]] to _foundLocaleData_.
         1. If _r_.[[extension]] is not ~empty~, then
           1. Let _components_ be UnicodeExtensionComponents(_r_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
@@ -265,9 +265,9 @@
           1. Set _result_.[[&lt;_key_&gt;]] to _value_.
           1. Set _supportedExtension_ to the string-concatenation of _supportedExtension_ and _supportedExtensionAddition_.
         1. If _supportedExtension_ is *"-u"*, then
-          1. Set _result_.[[locale]] to _foundLocale_.
+          1. Set _result_.[[Locale]] to _foundLocale_.
         1. Else,
-          1. Set _result_.[[locale]] to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
+          1. Set _result_.[[Locale]] to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
         1. Return _result_.
       </emu-alg>
 

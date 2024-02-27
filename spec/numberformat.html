@@ -70,8 +70,8 @@
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _localeData_ be %Intl.NumberFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Intl.NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.NumberFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _numberFormat_.[[Locale]] to _r_.[[locale]].
-        1. Set _numberFormat_.[[LocaleData]] to _r_.[[localeData]].
+        1. Set _numberFormat_.[[Locale]] to _r_.[[Locale]].
+        1. Set _numberFormat_.[[LocaleData]] to _r_.[[LocaleData]].
         1. Set _numberFormat_.[[NumberingSystem]] to _r_.[[nu]].
         1. Perform ? SetNumberFormatUnitOptions(_numberFormat_, _options_).
         1. Let _style_ be _numberFormat_.[[Style]].
