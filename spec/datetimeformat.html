@@ -81,11 +81,11 @@
         1. Set _opt_.[[hc]] to _hourCycle_.
         1. Let _localeData_ be %Intl.DateTimeFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Intl.DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DateTimeFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedCalendar_ be _r_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _resolvedLocaleData_ be _r_.[[localeData]].
+        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. If _hour12_ is *true*, then
           1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then

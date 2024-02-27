@@ -25,12 +25,12 @@
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _localeData_ be %Intl.ListFormat%.[[LocaleData]].
         1. Let _r_ be ResolveLocale(%Intl.ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.ListFormat%.[[RelevantExtensionKeys]], _localeData_).
-        1. Set _listFormat_.[[Locale]] to _r_.[[locale]].
+        1. Set _listFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
         1. Set _listFormat_.[[Style]] to _style_.
-        1. Let _resolvedLocaleData_ be _r_.[[localeData]].
+        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. Let _dataLocaleTypes_ be _resolvedLocaleData_.[[&lt;_type_&gt;]].
         1. Set _listFormat_.[[Templates]] to _dataLocaleTypes_.[[&lt;_style_&gt;]].
         1. Return _listFormat_.
