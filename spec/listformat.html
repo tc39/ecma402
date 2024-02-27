@@ -23,8 +23,7 @@
         1. Let _opt_ be a new Record.
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _localeData_ be %Intl.ListFormat%.[[LocaleData]].
-        1. Let _r_ be ResolveLocale(%Intl.ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.ListFormat%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _r_ be ResolveLocale(%Intl.ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.ListFormat%.[[RelevantExtensionKeys]], %Intl.ListFormat%.[[LocaleData]]).
         1. Set _listFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
