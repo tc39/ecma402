@@ -69,8 +69,7 @@
           1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
-        1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _resolvedLocaleData_ be _r_.[[localeData]].
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is *"sort"*, then

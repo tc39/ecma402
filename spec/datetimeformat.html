@@ -85,8 +85,7 @@
         1. Let _resolvedCalendar_ be _r_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _dataLocale_ be _r_.[[dataLocale]].
-        1. Let _resolvedLocaleData_ be _localeData_.[[&lt;_dataLocale_&gt;]].
+        1. Let _resolvedLocaleData_ be _r_.[[localeData]].
         1. If _hour12_ is *true*, then
           1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then
