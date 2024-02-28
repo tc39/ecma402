@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf out",
     "build-to": "ecmarkup --verbose --load-biblio @tc39/ecma262-biblio spec/index.html",
+    "build-biblio": "ecmarkup --verbose --write-biblio biblio/biblio.json spec/index.html",
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
     "build-only": "npm run build-to -- out/index.html --assets-dir=out",
     "build": "npm run build-only -- --lint-spec --strict",
