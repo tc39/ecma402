@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 
-npx ecmarkup --verbose --load-biblio @tc39/ecma262-biblio spec/index.html --write-biblio biblio/biblio.json /dev/null
+npm run build-to -- --write-biblio biblio/biblio.json /dev/null
 
 cp LICENSE.md biblio/
 
