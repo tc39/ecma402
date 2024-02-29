@@ -116,24 +116,21 @@
         LookupMatcher (
           _availableLocales_: an Available Locales List,
           _requestedLocales_: a language priority list,
-        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
+        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request.</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_ using the Lookup algorithm defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3.4">RFC 4647 section 3.4</a>, ignoring Unicode locale extension sequences. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
       </dl>
       <emu-alg>
         1. For each element _locale_ of _requestedLocales_, do
-          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-          1. If _availableLocale_ is not *undefined*, then
-            1. If _locale_ and _noExtensionsLocale_ are not the same String value, then
-              1. Let _extension_ be the String value consisting of the substring of the Unicode locale extension sequence within _locale_.
-            1. Else,
-              1. Let _extension_ be ~empty~.
-            1. Return the Record { [[locale]]: _availableLocale_, [[extension]]: _extension_ }.
-        1. Let _defLocale_ be DefaultLocale().
-        1. Return the Record { [[locale]]: _defLocale_, [[extension]]: ~empty~ }.
+          1. Let _extension_ be ~empty~.
+          1. If _locale_ contains a Unicode locale extension sequence, then
+            1. Set _extension_ to the Unicode locale extension sequence of _locale_.
+            1. Set _locale_ to the String value that is _locale_ with any Unicode locale extension sequences removed.
+          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _locale_).
+          1. If _availableLocale_ is not *undefined*, return the Record { [[locale]]: _availableLocale_, [[extension]]: _extension_ }.
+        1. Return *undefined*.
       </emu-alg>
 
       <emu-note>
@@ -146,11 +143,11 @@
         BestFitMatcher (
           _availableLocales_: an Available Locales List,
           _requestedLocales_: a language priority list,
-        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
+        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It compares _requestedLocales_, which must be a List as returned by CanonicalizeLocaleList, against the locales in _availableLocales_ and determines the best available language to meet the request. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would perceive as at least as good as those produced by the LookupMatcher abstract operation. Options specified through Unicode locale extension sequences must be ignored by the algorithm. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record's [[extension]] field is set to the substring of the Unicode locale extension sequence within the request locale language tag. Otherwise the [[extension]] field is set to ~empty~.</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_, ignoring Unicode locale extension sequences. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would consider at least as good as those produced by the LookupMatcher algorithm. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
       </dl>
     </emu-clause>
 
@@ -229,7 +226,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_, ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present).</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_ using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
@@ -237,6 +234,7 @@
           1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
         1. Else,
           1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
+        1. If _r_ is *undefined*, set _r_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
         1. Assert: Type(_foundLocaleData_) is Record.
@@ -284,10 +282,6 @@
           1. Set _result_.[[Locale]] to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedExtension_).
         1. Return _result_.
       </emu-alg>
-
-      <emu-note>
-        Non-normative summary: Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Independent of the locale matching algorithm, options specified through Unicode locale extension sequences are negotiated separately, taking the caller's relevant extension keys and locale data into consideration as well as the client-provided options. The abstract operation returns a Record with a field for each key in _relevantExtensionKeys_, containing the selected values for those keys. This Record also contains a [[locale]] field which stores the language tag of the selected locale with Unicode locale extension sequence <code>key</code> subtags restricted to those in _relevantExtensionKeys_. If an extension's value is specified in the Unicode locale extension sequence and a different value for that extension is specified in an option, the value from the option is used to set the value of the corresponding field and the overridden extension keyword (the <code>key</code> subtag along with any immediately following <code>type</code> subtags and associated separators) is removed from the string stored in [[locale]].
-      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-lookupsupportedlocales" type="abstract operation">
