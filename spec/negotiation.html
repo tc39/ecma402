@@ -85,33 +85,7 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-bestavailablelocale" type="abstract operation">
-      <h1>
-        BestAvailableLocale (
-          _availableLocales_: an Available Locales List,
-          _locale_: a Unicode canonicalized locale identifier,
-        ): a Unicode canonicalized locale identifier or *undefined*
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It compares _locale_ against the locales in _availableLocales_ and returns either the longest non-empty prefix of _locale_ that is an element of _availableLocales_, or *undefined* if there is no such element. It uses the fallback mechanism of RFC 4647, section 3.4.</dd>
-      </dl>
-      <emu-alg>
-        1. Let _candidate_ be _locale_.
-        1. Repeat,
-          1. If _availableLocales_ contains _candidate_, return _candidate_.
-          1. Let _pos_ be the index into _candidate_ of the last occurrence of *"-"* (code unit 0x002D HYPHEN-MINUS). If that character does not occur, return *undefined*.
-          1. Repeat, while _pos_ &ge; 2 and the substring of _candidate_ from _pos_ - 2 to _pos_ - 1 is *"-"*,
-            1. Set _pos_ to _pos_ - 2.
-          1. Set _candidate_ to the substring of _candidate_ from 0 to _pos_.
-      </emu-alg>
-
-      <emu-note>
-        When _locale_ includes a <a href="https://unicode.org/reports/tr35/#BCP47_T_Extension">Unicode Technical Standard #35 Part 1 Core BCP 47 T Extension</a> subtag sequence, the truncation in this algorithm may temporarily generate invalid language tags. However, none of them will be returned because _availableLocales_ contains only valid language tags.
-      </emu-note>
-    </emu-clause>
-
-    <emu-clause id="sec-lookupmatcher" type="abstract operation">
+    <emu-clause id="sec-lookupmatcher" type="abstract operation" oldids="sec-bestavailablelocale">
       <h1>
         LookupMatcher (
           _availableLocales_: an Available Locales List,
@@ -128,13 +102,18 @@
           1. If _locale_ contains a Unicode locale extension sequence, then
             1. Set _extension_ to the Unicode locale extension sequence of _locale_.
             1. Set _locale_ to the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _locale_).
-          1. If _availableLocale_ is not *undefined*, return the Record { [[locale]]: _availableLocale_, [[extension]]: _extension_ }.
+          1. Let _prefix_ be _locale_.
+          1. Repeat, while _prefix_ is not the empty String,
+            1. If _availableLocales_ contains _prefix_, return the Record { [[locale]]: _prefix_, [[extension]]: _extension_ }.
+            1. If _prefix_ contains *"-"* (code unit 0x002D HYPHEN-MINUS), let _pos_ be the index into _prefix_ of the last occurrence of *"-"*; else let _pos_ be 0.
+            1. Repeat, while _pos_ &ge; 2 and the substring of _prefix_ from _pos_ - 2 to _pos_ - 1 is *"-"*,
+              1. Set _pos_ to _pos_ - 2.
+            1. Set _prefix_ to the substring of _prefix_ from 0 to _pos_.
         1. Return *undefined*.
       </emu-alg>
 
       <emu-note>
-        The algorithm is based on the Lookup algorithm described in RFC 4647 section 3.4, but options specified through Unicode locale extension sequences are ignored in the lookup. Information about such subsequences is returned separately. The abstract operation returns a record with a [[locale]] field, whose value is the language tag of the selected locale, which must be an element of _availableLocales_. If the language tag of the request locale that led to the selected locale contained a Unicode locale extension sequence, then the returned record also contains an [[extension]] field whose value is the substring of the Unicode locale extension sequence within the request locale language tag.
+        When a requested locale includes a <a href="https://unicode.org/reports/tr35/#BCP47_T_Extension">Unicode Technical Standard #35 Part 1 Core BCP 47 T Extension</a> subtag sequence, the truncation in this algorithm may temporarily generate invalid language tags. However, none of them will be returned because _availableLocales_ contains only valid language tags.
       </emu-note>
     </emu-clause>
 
@@ -299,8 +278,8 @@
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
-          1. If _availableLocale_ is not *undefined*, append _locale_ to _subset_.
+          1. Let _match_ be LookupMatcher(_availableLocales_, _noExtensionsLocale_).
+          1. If _match_ is not *undefined*, append _locale_ to _subset_.
         1. Return _subset_.
       </emu-alg>
     </emu-clause>
