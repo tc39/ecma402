@@ -2,7 +2,15 @@
   <h1>Locale and Parameter Negotiation</h1>
 
   <p>
-    <emu-xref href="#service-constructor">Service constructors</emu-xref> use a common pattern to negotiate the requests represented by their _locales_ and _options_ arguments against the actual capabilities of their implementations. That common behaviour is explained here in terms of internal slots describing the capabilities and abstract operations using these internal slots.
+    <emu-xref href="#service-constructor">Service constructors</emu-xref> use common patterns to negotiate the requests represented by _locales_ and _options_ arguments against the actual capabilities of an implementation. That common behaviour is explained here in terms of internal slots describing the capabilities, abstract operations using these internal slots, and specialized data types defined below.
+  </p>
+
+  <p>
+    An <dfn id="available-locales-list">Available Locales List</dfn> is an arbitrarily-ordered duplicate-free List of language tags, each of which is <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref>, <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref>, and lacks a Unicode locale extension sequence. It represents all locales for which the implementation provides functionality within a particular context.
+  </p>
+
+  <p>
+    A <dfn id="language-priority-list">language priority list</dfn> is a List of <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> and <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref> language tags representing a sequence of locale preferences by descending priority. It corresponds with the term of the same name defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-2.3">RFC 4647 section 2.3</a> but prohibits *"\*"* elements and contains only canonicalized contents.
   </p>
 
   <emu-clause id="sec-internal-slots">
@@ -13,30 +21,31 @@
     </p>
 
     <ul>
-      <li>[[AvailableLocales]] is a List that contains structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tags identifying the locales for which the implementation provides the functionality of the constructed objects. Language tags on the list must not have a Unicode locale extension sequence. The list must include the value returned by the DefaultLocale abstract operation (<emu-xref href="#sec-defaultlocale"></emu-xref>), and must not include duplicates. Implementations must include in [[AvailableLocales]] locales that can serve as fallbacks in the algorithm used to resolve locales (see <emu-xref href="#sec-resolvelocale"></emu-xref>). For example, implementations that provide a *"de-DE"* locale must include a *"de"* locale that can serve as a fallback for requests such as *"de-AT"* and *"de-CH"*. For locales that include a script subtag in addition to language and region, the corresponding locale without a script subtag must also be supported; that is, if an implementation recognizes *"zh-Hant-TW"*, it is also expected to recognize *"zh-TW"*. The ordering of the locales within [[AvailableLocales]] is irrelevant.</li>
+      <li>[[AvailableLocales]] is an Available Locales List. It must include the value returned by DefaultLocale. Additionally, each element with more than one subtag requires it to also include a less narrow language tag with the same language subtag and a strict subset of the same following subtags (i.e., omitting one or more), to serve as a potential fallback from <emu-xref href="#sec-resolvelocale">ResolveLocale</emu-xref> (and in particular, each element with a language subtag and a script subtag and a region subtag must be accompanied by another element consisting of only the same language subtag and region subtag but missing the script subtag). For example,
+        <ul>
+          <li>If [[AvailableLocales]] contains *"de-DE"*, then it must also contain *"de"* (which might be selected to satisfy requested locales such as *"de-AT"* and *"de-CH"*).</li>
+          <li>If [[AvailableLocales]] contains *"az-Latn-AZ"*, then it must also contain *"az-AZ"* (which might be selected to satisfy requested locales such as *"az-Cyrl-AZ"* if *"az-Cyrl"* is unavailable).</li>
+        </ul>
+      </li>
       <li>[[RelevantExtensionKeys]] is a List of Unicode locale extension sequence keys defined in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> that are relevant for the functionality of the constructed objects.</li>
-      <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for every other service constructor) are Records that have fields for each locale contained in [[AvailableLocales]]. The value of each of these fields must be a Record in which each element of [[RelevantExtensionKeys]] identifies the name of a field whose value is a non-empty List of Strings representing the type values that are supported by the implementation in the relevant locale for the corresponding Unicode locale extension sequence key, with the first element providing the default value for that key in the locale.</li>
+      <li>[[SortLocaleData]] and [[SearchLocaleData]] (for Intl.Collator) and [[LocaleData]] (for every other service constructor) are Records. In addition to fields specific to its service constructor, each such Record has a field for each locale contained in [[AvailableLocales]]. The value of each such locale-named field is a Record in which each element of [[RelevantExtensionKeys]] identifies the name of a field whose value is a non-empty List of Strings representing the type values that are supported by the implementation in the relevant locale for the corresponding Unicode locale extension sequence key, with the first element providing the default value for that key in the locale.</li>
     </ul>
 
     <emu-note>
       For example, an implementation of DateTimeFormat might include the language tag *"fa-IR"* in its [[AvailableLocales]] internal slot, and must (according to <emu-xref href="#sec-intl.datetimeformat-internal-slots"></emu-xref>) include the keys *"ca"*, *"hc"*, and *"nu"* in its [[RelevantExtensionKeys]] internal slot.
       The default calendar for that locale is usually *"persian"*, but an implementation might also support *"gregory"*, *"islamic"*, and *"islamic-civil"*.
-	  The Record in the DateTimeFormat [[LocaleData]] internal slot would therefore include a [[fa-IR]] field whose value is a Record like { [[ca]]: « *"persian"*, *"gregory"*, *"islamic"*, *"islamic-civil"* », [[hc]]: « … », [[nu]]: « … » }, along with other locale-named fields having the same value shape but different elements in their Lists.
+      The Record in the DateTimeFormat [[LocaleData]] internal slot would therefore include a [[fa-IR]] field whose value is a Record like { [[ca]]: « *"persian"*, *"gregory"*, *"islamic"*, *"islamic-civil"* », [[hc]]: « … », [[nu]]: « … » }, along with other locale-named fields having the same value shape but different elements in their Lists.
     </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-abstract-operations">
     <h1>Abstract Operations</h1>
 
-    <p>
-      Where the following abstract operations take an _availableLocales_ argument, it must be an [[AvailableLocales]] List as specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
-
     <emu-clause id="sec-canonicalizelocalelist" type="abstract operation">
       <h1>
         CanonicalizeLocaleList (
           _locales_: an ECMAScript language value,
-        ): either a normal completion containing a List of Unicode canonicalized locale identifiers or a throw completion
+        ): either a normal completion containing a language priority list or a throw completion
       </h1>
       <dl class="header">
       </dl>
@@ -79,7 +88,7 @@
     <emu-clause id="sec-bestavailablelocale" type="abstract operation">
       <h1>
         BestAvailableLocale (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
           _locale_: a Unicode canonicalized locale identifier,
         ): a Unicode canonicalized locale identifier or *undefined*
       </h1>
@@ -105,8 +114,8 @@
     <emu-clause id="sec-lookupmatcher" type="abstract operation">
       <h1>
         LookupMatcher (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
       </h1>
       <dl class="header">
@@ -135,8 +144,8 @@
     <emu-clause id="sec-bestfitmatcher" type="implementation-defined abstract operation">
       <h1>
         BestFitMatcher (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~)
       </h1>
       <dl class="header">
@@ -211,8 +220,8 @@
     <emu-clause id="sec-resolvelocale" type="abstract operation">
       <h1>
         ResolveLocale (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
           _options_: a Record,
           _relevantExtensionKeys_: a List of Strings,
           _localeData_: a Record,
@@ -220,7 +229,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It compares a BCP 47 language priority list _requestedLocales_ against the locales in _availableLocales_ and determines the best available language to meet the request.</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_, ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present).</dd>
       </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
@@ -284,13 +293,13 @@
     <emu-clause id="sec-lookupsupportedlocales" type="abstract operation">
       <h1>
         LookupSupportedLocales (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
         ): a List of Unicode canonicalized locale identifiers
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm, preserving their relative order.</dd>
       </dl>
       <emu-alg>
         1. Let _subset_ be a new empty List.
@@ -305,27 +314,27 @@
     <emu-clause id="sec-bestfitsupportedlocales" type="implementation-defined abstract operation">
       <h1>
         BestFitSupportedLocales (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
         ): a List of Unicode canonicalized locale identifiers
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale when using the Best Fit Matcher algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using the BestFitMatcher algorithm, preserving their relative order.</dd>
       </dl>
     </emu-clause>
 
     <emu-clause id="sec-supportedlocales" type="abstract operation">
       <h1>
         SupportedLocales (
-          _availableLocales_: a List of Unicode canonicalized locale identifiers,
-          _requestedLocales_: a List of Unicode canonicalized locale identifiers,
+          _availableLocales_: an Available Locales List,
+          _requestedLocales_: a language priority list,
           _options_: an ECMAScript language value,
         ): either a normal completion containing a List of Unicode canonicalized locale identifiers or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the subset of the provided BCP 47 language priority list _requestedLocales_ for which _availableLocales_ has a matching locale. Two algorithms are available to match the locales: the Lookup algorithm described in RFC 4647 section 3.4, and an implementation dependent best-fit algorithm. Locales appear in the same order in the returned list as in _requestedLocales_.</dd>
+        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using either the BestFitMatcher algorithm or another as specified in _options_, preserving their relative order.</dd>
       </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).

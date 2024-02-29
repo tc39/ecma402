@@ -80,7 +80,7 @@
           1. Else,
             1. Let _requestedLocale_ be DefaultLocale().
           1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences removed.
-          1. Let _availableLocales_ be a List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
+          1. Let _availableLocales_ be an Available Locales List with language tags that includes the languages for which the Unicode Character Database contains language sensitive case mappings. Implementations may add additional language tags if they support case mapping for additional locales.
           1. Let _locale_ be BestAvailableLocale(_availableLocales_, _noExtensionsLocale_).
           1. If _locale_ is *undefined*, set _locale_ to *"und"*.
           1. Let _codePoints_ be StringToCodePoints(_S_).
