@@ -92,7 +92,8 @@
         1. Repeat,
           1. If _availableLocales_ contains _candidate_, return _candidate_.
           1. Let _pos_ be the index into _candidate_ of the last occurrence of *"-"* (code unit 0x002D HYPHEN-MINUS). If that character does not occur, return *undefined*.
-          1. If _pos_ &ge; 2 and the substring of _candidate_ from _pos_ - 2 to _pos_ - 1 is *"-"*, set _pos_ to _pos_ - 2.
+          1. Repeat, while _pos_ &ge; 2 and the substring of _candidate_ from _pos_ - 2 to _pos_ - 1 is *"-"*,
+            1. Set _pos_ to _pos_ - 2.
           1. Set _candidate_ to the substring of _candidate_ from 0 to _pos_.
       </emu-alg>
 
