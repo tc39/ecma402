@@ -95,6 +95,10 @@
           1. If _pos_ &ge; 2 and the character *"-"* occurs at index _pos_ - 2 of candidate, set _pos_ to _pos_ - 2.
           1. Set _candidate_ to the substring of _candidate_ from position 0, inclusive, to position _pos_, exclusive.
       </emu-alg>
+
+      <emu-note>
+        When _locale_ includes a <a href="https://unicode.org/reports/tr35/#BCP47_T_Extension">Unicode Technical Standard #35 Part 1 Core BCP 47 T Extension</a> subtag sequence, the truncation in this algorithm may temporarily generate invalid language tags. However, none of them will be returned because _availableLocales_ contains only valid language tags.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-lookupmatcher" type="abstract operation">
