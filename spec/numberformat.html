@@ -135,14 +135,8 @@
         1. Set _intlObj_.[[RoundingIncrement]] to _roundingIncrement_.
         1. Set _intlObj_.[[RoundingMode]] to _roundingMode_.
         1. Set _intlObj_.[[TrailingZeroDisplay]] to _trailingZeroDisplay_.
-        1. If _mnsd_ is not *undefined* or _mxsd_ is not *undefined*, then
-          1. Let _hasSd_ be *true*.
-        1. Else,
-          1. Let _hasSd_ be *false*.
-        1. If _mnfd_ is not *undefined* or _mxfd_ is not *undefined*, then
-          1. Let _hasFd_ be *true*.
-        1. Else,
-          1. Let _hasFd_ be *false*.
+        1. If _mnsd_ is *undefined* and _mxsd_ is *undefined*, let _hasSd_ be *false*. Otherwise, let _hasSd_ be *true*.
+        1. If _mnfd_ is *undefined* and _mxsd_ is *undefined*, let _hasFd_ be *false*. Otherwise, let _hasFd_ be *true*.
         1. Let _needSd_ be *true*.
         1. Let _needFd_ be *true*.
         1. If _roundingPriority_ is *"auto"*, then
