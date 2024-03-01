@@ -85,9 +85,9 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-lookupmatcher" type="abstract operation" oldids="sec-bestavailablelocale">
+    <emu-clause id="sec-lookupmatchinglocalebyprefix" type="abstract operation" oldids="sec-bestavailablelocale,sec-lookupmatcher">
       <h1>
-        LookupMatcher (
+        LookupMatchingLocaleByPrefix (
           _availableLocales_: an Available Locales List,
           _requestedLocales_: a language priority list,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
@@ -117,16 +117,16 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-bestfitmatcher" type="implementation-defined abstract operation">
+    <emu-clause id="sec-lookupmatchinglocalebybestfit" type="implementation-defined abstract operation" oldids="sec-bestfitmatcher">
       <h1>
-        BestFitMatcher (
+        LookupMatchingLocaleByBestFit (
           _availableLocales_: an Available Locales List,
           _requestedLocales_: a language priority list,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_, ignoring Unicode locale extension sequences. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would consider at least as good as those produced by the LookupMatcher algorithm. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_, ignoring Unicode locale extension sequences. The algorithm is implementation dependent, but should produce results that a typical user of the requested locales would consider at least as good as those produced by the LookupMatchingLocaleByPrefix algorithm. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
       </dl>
     </emu-clause>
 
@@ -205,14 +205,14 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returning a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
+        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returning a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
-          1. Let _r_ be LookupMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be LookupMatchingLocaleByPrefix(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _r_ be BestFitMatcher(_availableLocales_, _requestedLocales_).
+          1. Let _r_ be LookupMatchingLocaleByBestFit(_availableLocales_, _requestedLocales_).
         1. If _r_ is *undefined*, set _r_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
@@ -273,7 +273,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs "filtering" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, returning the elements of _requestedLocales_ for which _availableLocales_ contains a matching locale when using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified in _options_, preserving their relative order.</dd>
+        <dd>It performs "filtering" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, returning the elements of _requestedLocales_ for which _availableLocales_ contains a matching locale when using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified in _options_, preserving their relative order.</dd>
       </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -282,9 +282,9 @@
         1. For each element _locale_ of _requestedLocales_, do
           1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. If _matcher_ is *"lookup"*, then
-            1. Let _match_ be LookupMatcher(_availableLocales_, _noExtensionsLocale_).
+            1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, _noExtensionsLocale_).
           1. Else,
-            1. Let _match_ be BestFitMatcher(_availableLocales_, _noExtensionsLocale_).
+            1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, _noExtensionsLocale_).
           1. If _match_ is not *undefined*, append _locale_ to _subset_.
         1. Return CreateArrayFromList(_subset_).
       </emu-alg>
