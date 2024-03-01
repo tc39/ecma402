@@ -205,7 +205,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_ using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
+        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returning a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
@@ -273,7 +273,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ contains a matching locale when using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified in _options_, preserving their relative order.</dd>
+        <dd>It performs "filtering" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, returning the elements of _requestedLocales_ for which _availableLocales_ contains a matching locale when using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified in _options_, preserving their relative order.</dd>
       </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
