@@ -130,16 +130,7 @@
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
         1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
-        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
-          1. If _hasExplicitFormatComponents_ is *true*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
-          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
-        1. Else,
+        1. If _dateStyle_ is *undefined* and _timeStyle_ is *undefined*, then
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
             1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
@@ -160,6 +151,15 @@
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
+        1. Else,
+            1. If _hasExplicitFormatComponents_ is *true*, then
+              1. Throw a *TypeError* exception.
+            1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
+              1. Throw a *TypeError* exception.
+            1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
+              1. Throw a *TypeError* exception.
+            1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
+            1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
           1. Let _prop_ be the name given in the Property column of the current row.
           1. If _bestFormat_ has a field [[&lt;_prop_&gt;]], then
