@@ -263,41 +263,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-lookupsupportedlocales" type="abstract operation">
-      <h1>
-        LookupSupportedLocales (
-          _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
-        ): a List of Unicode canonicalized locale identifiers
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using the BCP 47 Lookup algorithm, preserving their relative order.</dd>
-      </dl>
-      <emu-alg>
-        1. Let _subset_ be a new empty List.
-        1. For each element _locale_ of _requestedLocales_, do
-          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
-          1. Let _match_ be LookupMatcher(_availableLocales_, _noExtensionsLocale_).
-          1. If _match_ is not *undefined*, append _locale_ to _subset_.
-        1. Return _subset_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-bestfitsupportedlocales" type="implementation-defined abstract operation">
-      <h1>
-        BestFitSupportedLocales (
-          _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
-        ): a List of Unicode canonicalized locale identifiers
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using the BestFitMatcher algorithm, preserving their relative order.</dd>
-      </dl>
-    </emu-clause>
-
-    <emu-clause id="sec-supportedlocales" type="abstract operation">
+    <emu-clause id="sec-supportedlocales" type="abstract operation" oldids="sec-lookupsupportedlocales,sec-bestfitsupportedlocales">
       <h1>
         SupportedLocales (
           _availableLocales_: an Available Locales List,
@@ -307,16 +273,20 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ has a matching locale when using either the BestFitMatcher algorithm or another as specified in _options_, preserving their relative order.</dd>
+        <dd>It returns the elements of _requestedLocales_ for which _availableLocales_ contains a matching locale when using either the BestFitMatcher algorithm or LookupMatcher algorithm as specified in _options_, preserving their relative order.</dd>
       </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
-        1. If _matcher_ is *"best fit"*, then
-          1. Let _supportedLocales_ be BestFitSupportedLocales(_availableLocales_, _requestedLocales_).
-        1. Else,
-          1. Let _supportedLocales_ be LookupSupportedLocales(_availableLocales_, _requestedLocales_).
-        1. Return CreateArrayFromList(_supportedLocales_).
+        1. Let _subset_ be a new empty List.
+        1. For each element _locale_ of _requestedLocales_, do
+          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
+          1. If _matcher_ is *"lookup"*, then
+            1. Let _match_ be LookupMatcher(_availableLocales_, _noExtensionsLocale_).
+          1. Else,
+            1. Let _match_ be BestFitMatcher(_availableLocales_, _noExtensionsLocale_).
+          1. If _match_ is not *undefined*, append _locale_ to _subset_.
+        1. Return CreateArrayFromList(_subset_).
       </emu-alg>
     </emu-clause>
 
