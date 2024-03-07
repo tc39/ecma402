@@ -72,6 +72,13 @@
         <em>Subsets of Unicode:</em> Some operations, such as collation, operate on strings that can include characters from the entire Unicode character set. However, both the Unicode Standard and the ECMAScript standard allow implementations to limit their functionality to subsets of the Unicode character set. In addition, locale conventions typically don't specify the desired behaviour for the entire Unicode character set, but only for those characters that are relevant for the locale. While the Unicode Collation Algorithm combines a default collation order for the entire Unicode character set with the ability to tailor for local conventions, subsets and tailorings still result in differences in behaviour.
       </li>
     </ul>
+    <emu-note>
+      The set of locales, currencies, calendars, numbering systems, and other enumerable items made available by ECMAScript hosts must not change as the result of user behaviour, or otherwise result in two users using the same version of the same host on the same platform becoming distinguishable from each other. This constraint is imposed to reduce the fingerprinting risk inherent in internationalization, and may be relaxed in future revisions.
+    </emu-note>
+
+    <emu-note>
+      As a result of this constraint, browser implementations that allow on-demand installation of new locales should not disclose whether non-standard locales and locale components are already installed.
+    </emu-note>
 
     <emu-clause id="sec-compatibility">
       <h1>Compatibility across implementations</h1>
