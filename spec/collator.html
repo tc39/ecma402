@@ -118,7 +118,7 @@
       <emu-alg>
         1. Let _availableLocales_ be %Intl.Collator%.[[AvailableLocales]].
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Return ? SupportedLocales(_availableLocales_, _requestedLocales_, _options_).
+        1. Return ? FilterLocales(_availableLocales_, _requestedLocales_, _options_).
       </emu-alg>
     </emu-clause>
 
