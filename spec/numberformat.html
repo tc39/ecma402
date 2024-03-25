@@ -780,7 +780,7 @@
         1. Let _string_ be _result_.[[FormattedString]].
         1. If _intlObject_.[[TrailingZeroDisplay]] is *"stripIfInteger"* and <emu-eqn>_x_ modulo 1 = 0</emu-eqn>, then
           1. Let _i_ be StringIndexOf(_string_, *"."*, 0).
-          1. If _i_ &ne; -1, set _string_ to the substring of _string_ from 0 to _i_.
+          1. If _i_ is not ~not-found~, set _string_ to the substring of _string_ from 0 to _i_.
         1. Let _int_ be _result_.[[IntegerDigitsCount]].
         1. Let _minInteger_ be _intlObject_.[[MinimumIntegerDigits]].
         1. If _int_ &lt; _minInteger_, then
@@ -920,7 +920,7 @@
               1. Else,
                 1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
-              1. If _decimalSepIndex_ &gt; 0, then
+              1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ &gt; 0, then
                 1. Let _integer_ be the substring of _n_ from position 0, inclusive, to position _decimalSepIndex_, exclusive.
                 1. Let _fraction_ be the substring of _n_ from position _decimalSepIndex_, exclusive, to the end of _n_.
               1. Else,
