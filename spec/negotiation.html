@@ -21,7 +21,7 @@
     </p>
 
     <ul>
-      <li>[[AvailableLocales]] is an Available Locales List. It must include the value returned by DefaultLocale. Additionally, each element with more than one subtag requires it to also include a less narrow language tag with the same language subtag and a strict subset of the same following subtags (i.e., omitting one or more), to serve as a potential fallback from <emu-xref href="#sec-resolvelocale">ResolveLocale</emu-xref> (and in particular, each element with a language subtag and a script subtag and a region subtag must be accompanied by another element consisting of only the same language subtag and region subtag but missing the script subtag). For example,
+      <li>[[AvailableLocales]] is an Available Locales List. It must include the value returned by DefaultLocale. Additionally, for each element with more than one subtag, it must also include a less narrow language tag with the same language subtag and a strict subset of the same following subtags (i.e., omitting one or more) to serve as a potential fallback from <emu-xref href="#sec-resolvelocale">ResolveLocale</emu-xref>. In particular, each element with a language subtag and a script subtag and a region subtag must be accompanied by another element consisting of only the same language subtag and region subtag but missing the script subtag. For example,
         <ul>
           <li>If [[AvailableLocales]] contains *"de-DE"*, then it must also contain *"de"* (which might be selected to satisfy requested locales such as *"de-AT"* and *"de-CH"*).</li>
           <li>If [[AvailableLocales]] contains *"az-Latn-AZ"*, then it must also contain *"az-AZ"* (which might be selected to satisfy requested locales such as *"az-Cyrl-AZ"* if *"az-Cyrl"* is unavailable).</li>
@@ -94,7 +94,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_ using the Lookup algorithm defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3.4">RFC 4647 section 3.4</a>, ignoring Unicode locale extension sequences. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
+        <dd>It determines the best element of _availableLocales_ for satisfying _requestedLocales_ using the lookup algorithm defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3.4">RFC 4647 section 3.4</a>, ignoring Unicode locale extension sequences. If a non-default match is found, it returns a Record with a [[locale]] field containing the matching language tag from _availableLocales_ and an [[extension]] field containing the Unicode locale extension sequence of the corresponding element of _requestedLocales_ (or ~empty~ if requested language tag has no such sequence).</dd>
       </dl>
       <emu-alg>
         1. For each element _locale_ of _requestedLocales_, do
@@ -122,7 +122,7 @@
         LookupMatchingLocaleByBestFit (
           _availableLocales_: an Available Locales List,
           _requestedLocales_: a language priority list,
-        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
+        ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~), or *undefined*
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -205,7 +205,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returning a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
+        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
