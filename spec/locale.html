@@ -133,9 +133,7 @@
           1. Assert: _options_ has a field [[&lt;_key_&gt;]].
           1. Let _overrideValue_ be _options_.[[&lt;_key_&gt;]].
           1. If _overrideValue_ is not *undefined*, then
-            1. Assert: _overrideValue_ is a String.
-            1. Set _overrideValue_ to the ASCII-lowercase of _overrideValue_.
-            1. Set _value_ to the String value resulting from canonicalizing _overrideValue_ as a value of key _key_ per <a href="https://unicode.org/reports/tr35/#processing-localeids">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization Section 5 Canonicalizing Syntax, Processing LocaleIds</a>.
+            1. Set _value_ to CanonicalizeUValue(_key_, _overrideValue_).
             1. If _entry_ is not ~empty~, then
               1. Set _entry_.[[Value]] to _value_.
             1. Else,
