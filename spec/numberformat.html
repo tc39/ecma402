@@ -183,7 +183,7 @@
           1. Set _intlObj_.[[ComputedRoundingPriority]] to *"auto"*.
         1. If _roundingIncrement_ is not 1, then
           1. If _intlObj_.[[RoundingType]] is not ~fraction-digits~, throw a *TypeError* exception.
-          1. If _intlObj_.[[MaximumFractionDigits]] is not equal to _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
+          1. If _intlObj_.[[MaximumFractionDigits]] is not _intlObj_.[[MinimumFractionDigits]], throw a *RangeError* exception.
         1. Return ~unused~.
       </emu-alg>
     </emu-clause>
@@ -712,7 +712,7 @@
       </dl>
       <emu-alg>
         1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
-        1. Assert: _currency_ is equal to the ASCII-uppercase of _currency_.
+        1. Assert: _currency_ is the ASCII-uppercase of _currency_.
         1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, return the minor unit value corresponding to the _currency_ from the list; otherwise, return 2.
       </emu-alg>
     </emu-clause>
@@ -828,39 +828,39 @@
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
-          1. Else if _p_ is equal to *"number"*, then
+          1. Else if _p_ is *"number"*, then
             1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _n_, _exponent_).
             1. For each Record { [[Type]], [[Value]] } _subPart_ of _notationSubParts_, do
               1. Append _subPart_ to _result_.
-          1. Else if _p_ is equal to *"plusSign"*, then
+          1. Else if _p_ is *"plusSign"*, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
             1. Append the Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
-          1. Else if _p_ is equal to *"minusSign"*, then
+          1. Else if _p_ is *"minusSign"*, then
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
             1. Append the Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
-          1. Else if _p_ is equal to *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
+          1. Else if _p_ is *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
             1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
             1. Append the Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } to _result_.
-          1. Else if _p_ is equal to *"unitPrefix"* and _numberFormat_.[[Style]] is *"unit"*, then
+          1. Else if _p_ is *"unitPrefix"* and _numberFormat_.[[Style]] is *"unit"*, then
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
             1. Let _mu_ be an ILD String value representing _unit_ before _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
             1. Append the Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
-          1. Else if _p_ is equal to *"unitSuffix"* and _numberFormat_.[[Style]] is *"unit"*, then
+          1. Else if _p_ is *"unitSuffix"* and _numberFormat_.[[Style]] is *"unit"*, then
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
             1. Let _mu_ be an ILD String value representing _unit_ after _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
             1. Append the Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
-          1. Else if _p_ is equal to *"currencyCode"* and _numberFormat_.[[Style]] is *"currency"*, then
+          1. Else if _p_ is *"currencyCode"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _cd_ be _currency_.
             1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
-          1. Else if _p_ is equal to *"currencyPrefix"* and _numberFormat_.[[Style]] is *"currency"*, then
+          1. Else if _p_ is *"currencyPrefix"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
             1. Let _cd_ be an ILD String value representing _currency_ before _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms.
             1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _cd_ } to _result_.
-          1. Else if _p_ is equal to *"currencySuffix"* and _numberFormat_.[[Style]] is *"currency"*, then
+          1. Else if _p_ is *"currencySuffix"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
             1. Let _cd_ be an ILD String value representing _currency_ after _x_ in _currencyDisplay_ form, which may depend on _x_ in languages having different plural forms. If the implementation does not have such a representation of _currency_, use _currency_ itself.
@@ -901,7 +901,7 @@
             1. Let _p_ be _patternPart_.[[Type]].
             1. If _p_ is *"literal"*, then
               1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
-            1. Else if _p_ is equal to *"number"*, then
+            1. Else if _p_ is *"number"*, then
               1. If the _numberFormat_.[[NumberingSystem]] matches one of the values in the Numbering System column of <emu-xref href="#table-numbering-system-digits"></emu-xref> below, then
                 1. Let _digits_ be a List whose elements are the code points specified in the Digits column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Assert: The length of _digits_ is 10.
@@ -941,16 +941,16 @@
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append the Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } to _result_.
                 1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
-            1. Else if _p_ is equal to *"compactSymbol"*, then
+            1. Else if _p_ is *"compactSymbol"*, then
               1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
               1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
-            1. Else if _p_ is equal to *"compactName"*, then
+            1. Else if _p_ is *"compactName"*, then
               1. Let _compactName_ be an ILD string representing _exponent_ in long form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactName}"* placeholder.
               1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } to _result_.
-            1. Else if _p_ is equal to *"scientificSeparator"*, then
+            1. Else if _p_ is *"scientificSeparator"*, then
               1. Let _scientificSeparator_ be the ILND String representing the exponent separator.
               1. Append the Record { [[Type]]: *"exponentSeparator"*, [[Value]]: _scientificSeparator_ } to _result_.
-            1. Else if _p_ is equal to *"scientificExponent"*, then
+            1. Else if _p_ is *"scientificExponent"*, then
               1. If _exponent_ &lt; 0, then
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
                 1. Append the Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
@@ -1832,7 +1832,7 @@
         <dd>It considers _x_, bracketed below by _r1_ and above by _r2_, and returns either _r1_ or _r2_ according to _unsignedRoundingMode_.</dd>
       </dl>
       <emu-alg>
-        1. If _x_ is equal to _r1_, return _r1_.
+        1. If _x_ is _r1_, return _r1_.
         1. Assert: _r1_ &lt; _x_ &lt; _r2_.
         1. Assert: _unsignedRoundingMode_ is not *undefined*.
         1. If _unsignedRoundingMode_ is ~zero~, return _r1_.
@@ -1841,7 +1841,7 @@
         1. Let _d2_ be <emu-eqn>_r2_ – _x_</emu-eqn>.
         1. If _d1_ &lt; _d2_, return _r1_.
         1. If _d2_ &lt; _d1_, return _r2_.
-        1. Assert: _d1_ is equal to _d2_.
+        1. Assert: _d1_ is _d2_.
         1. If _unsignedRoundingMode_ is ~half-zero~, return _r1_.
         1. If _unsignedRoundingMode_ is ~half-infinity~, return _r2_.
         1. Assert: _unsignedRoundingMode_ is ~half-even~.
@@ -1868,7 +1868,7 @@
         1. Let _result_ be a new empty List.
         1. Let _xResult_ be PartitionNumberPattern(_numberFormat_, _x_).
         1. Let _yResult_ be PartitionNumberPattern(_numberFormat_, _y_).
-        1. If FormatNumeric(_numberFormat_, _x_) is equal to FormatNumeric(_numberFormat_, _y_), then
+        1. If FormatNumeric(_numberFormat_, _x_) is FormatNumeric(_numberFormat_, _y_), then
           1. Let _appxResult_ be FormatApproximately(_numberFormat_, _xResult_).
           1. For each element _r_ of _appxResult_, do
             1. Set _r_.[[Source]] to *"shared"*.

@@ -97,7 +97,7 @@
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Key]].
             1. If _keyword_.[[Value]] is not the empty String, then
               1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Value]].
-          1. Assert: _newExtension_ is not equal to *"-u"*.
+          1. Assert: _newExtension_ is not *"-u"*.
           1. Set _localeId_ to a copy of _localeId_ in which the first appearance of <emu-not-ref>substring</emu-not-ref> _extension_ has been replaced with _newExtension_.
         1. Return _localeId_.
       </emu-alg>
