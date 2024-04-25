@@ -260,13 +260,13 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be a String value equal to *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be one of the String values *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle12]] must be a String value equal to *"h11"* or *"h12"*.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle12]] must be one of the String values *"h11"* or *"h12"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle24]] must be a String value equal to *"h23"* or *"h24"*.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle24]] must be one of the String values *"h23"* or *"h24"*.
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
@@ -1010,17 +1010,17 @@
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
-          1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
+          1. Else if _p_ is *"fractionalSecondDigits"*, then
             1. Assert: _fractionalSecondDigits_ is not *undefined*.
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Set _v_ to floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"dayPeriod"*, then
+          1. Else if _p_ is *"dayPeriod"*, then
             1. Let _f_ be _dateTimeFormat_.[[DayPeriod]].
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"timeZoneName"*, then
+          1. Else if _p_ is *"timeZoneName"*, then
             1. Let _f_ be _dateTimeFormat_.[[TimeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
             1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _v_, then use the String value of _v_ itself.
@@ -1044,18 +1044,18 @@
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
               1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Day]] is *undefined*. If _p_ is *"month"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[day]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is *undefined*, then the String value may also depend on whether _dateTimeFormat_.[[Era]] is *undefined*. If _p_ is *"era"* and _rangeFormatOptions_ is not *undefined*, then the String value may also depend on whether _rangeFormatOptions_.[[era]] is *undefined*. If the implementation does not have such a localized representation of _v_, then use ! ToString(_v_).
             1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"ampm"*, then
+          1. Else if _p_ is *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
             1. If _v_ is greater than 11, then
               1. Let _fv_ be an implementation and locale dependent String value representing *"post meridiem"*.
             1. Else,
               1. Let _fv_ be an implementation and locale dependent String value representing *"ante meridiem"*.
             1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"relatedYear"*, then
+          1. Else if _p_ is *"relatedYear"*, then
             1. Let _v_ be _tm_.[[RelatedYear]].
             1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"yearName"*, then
+          1. Else if _p_ is *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
             1. Let _fv_ be an implementation and locale dependent String value representing _v_.
             1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
@@ -1160,13 +1160,13 @@
             1. Set _checkMoreFields_ to *false*.
           1. If _relevantFieldsEqual_ is *true* and _checkMoreFields_ is *true*, then
             1. Set _selectedRangePattern_ to _rangePattern_.
-            1. If _fieldName_ is equal to [[AmPm]], then
+            1. If _fieldName_ is [[AmPm]], then
               1. If _tm1_.[[Hour]] is less than 12, let _v1_ be *"am"*; else let _v1_ be *"pm"*.
               1. If _tm2_.[[Hour]] is less than 12, let _v2_ be *"am"*; else let _v2_ be *"pm"*.
-            1. Else if _fieldName_ is equal to [[DayPeriod]], then
+            1. Else if _fieldName_ is [[DayPeriod]], then
               1. Let _v1_ be a String value representing the day period of _tm1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
               1. Let _v2_ be a String value representing the day period of _tm2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
-            1. Else if _fieldName_ is equal to [[FractionalSecondDigits]], then
+            1. Else if _fieldName_ is [[FractionalSecondDigits]], then
               1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
               1. If _fractionalSecondDigits_ is *undefined*, then
                 1. Set _fractionalSecondDigits_ to 3.
@@ -1176,7 +1176,7 @@
             1. Else,
               1. Let _v1_ be _tm1_.[[&lt;_fieldName_&gt;]].
               1. Let _v2_ be _tm2_.[[&lt;_fieldName_&gt;]].
-            1. If _v1_ is not equal to _v2_, then
+            1. If _v1_ is not _v2_, then
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
