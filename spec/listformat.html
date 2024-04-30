@@ -240,9 +240,9 @@
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It deconstructs the pattern string into a list of parts.
+          It deconstructs the pattern string into a List of parts.
           <p>
-            _placeables_ is a Record whose keys are placeables tokens used in the pattern string, and values are parts records (as from PartitionPattern) which will be used in the result List to represent the token part.
+            _placeables_ is a Record whose keys are placeables tokens used in the pattern string, and values are parts Records (as from PartitionPattern) which will be used in the result List to represent the token part.
             Example:
           </p>
           <pre>
@@ -252,7 +252,7 @@ Input:
     [[yy]]: {[[Type]]: "minute", [[Value]]: "06"}
   })
 
-Output (List of parts records):
+Output (List of parts Records):
   &laquo;
     {[[Type]]: "literal", [[Value]]: "AA"},
     {[[Type]]: "hour", [[Value]]: "15"},
@@ -291,7 +291,7 @@ Output (List of parts records):
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It creates the corresponding list of parts according to the effective locale and the formatting options of _listFormat_.</dd>
+        <dd>It creates the corresponding List of parts according to the effective locale and the formatting options of _listFormat_.</dd>
       </dl>
       <emu-alg>
         1. Let _size_ be the number of elements of _list_.

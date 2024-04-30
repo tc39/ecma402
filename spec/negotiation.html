@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    A <dfn id="language-priority-list">language priority list</dfn> is a List of <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> and <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref> language tags representing a sequence of locale preferences by descending priority. It corresponds with the term of the same name defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-2.3">RFC 4647 section 2.3</a> but prohibits *"\*"* elements and contains only canonicalized contents.
+    A <dfn id="language-priority-list">Language Priority List</dfn> is a List of <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> and <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref> language tags representing a sequence of locale preferences by descending priority. It corresponds with the term of the same name defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-2.3">RFC 4647 section 2.3</a> but prohibits *"\*"* elements and contains only canonicalized contents.
   </p>
 
   <emu-clause id="sec-internal-slots">
@@ -45,7 +45,7 @@
       <h1>
         CanonicalizeLocaleList (
           _locales_: an ECMAScript language value,
-        ): either a normal completion containing a language priority list or a throw completion
+        ): either a normal completion containing a Language Priority List or a throw completion
       </h1>
       <dl class="header">
       </dl>
@@ -89,7 +89,7 @@
       <h1>
         LookupMatchingLocaleByPrefix (
           _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
+          _requestedLocales_: a Language Priority List,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~) or *undefined*
       </h1>
       <dl class="header">
@@ -121,7 +121,7 @@
       <h1>
         LookupMatchingLocaleByBestFit (
           _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
+          _requestedLocales_: a Language Priority List,
         ): a Record with fields [[locale]] (a Unicode canonicalized locale identifier) and [[extension]] (a Unicode locale extension sequence or ~empty~), or *undefined*
       </h1>
       <dl class="header">
@@ -197,7 +197,7 @@
       <h1>
         ResolveLocale (
           _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
+          _requestedLocales_: a Language Priority List,
           _options_: a Record,
           _relevantExtensionKeys_: a List of Strings,
           _localeData_: a Record,
@@ -267,7 +267,7 @@
       <h1>
         FilterLocales (
           _availableLocales_: an Available Locales List,
-          _requestedLocales_: a language priority list,
+          _requestedLocales_: a Language Priority List,
           _options_: an ECMAScript language value,
         ): either a normal completion containing a List of Unicode canonicalized locale identifiers or a throw completion
       </h1>

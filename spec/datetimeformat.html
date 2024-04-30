@@ -269,7 +269,7 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle24]] must be one of the String values *"h23"* or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a list of records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple records in a list may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. This [[formats]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The value of this field must be a List of Records, each of which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Multiple Records in a List may use the same subset of the fields as long as they have different values for the fields. The following subsets must be available for each locale:
           <ul>
             <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
             <li>weekday, year, month, day, hour, minute, second</li>
@@ -284,45 +284,45 @@
             <li>dayPeriod, hour, minute, second</li>
             <li>dayPeriod, hour, minute</li>
           </ul>
-          Each of the records must also have the following fields:
+          Each of the Records must also have the following fields:
           <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>If the record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the Record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the Record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the [[pattern]] field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>If the Record has a [[year]] field, the [[pattern]] and [[pattern12]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
             <li>
               A [[rangePatterns]] field with a Record value:
                 <ul>
-                  <li>The [[rangePatterns]] record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
+                  <li>The [[rangePatterns]] Record may have any of the fields in <emu-xref href="#table-datetimeformat-rangepatternfields"></emu-xref>, where each field represents a range pattern and its value is a Record.
                     <ul>
                       <li>The name of the field indicates the largest calendar element that must be different between the start and end dates in order to use this range pattern. For example, if the field name is [[Month]], it contains the range pattern that should be used to format a date range where the era and year values are the same, but the month value is different.</li>
-                      <li>The record will contain the following fields:</li>
+                      <li>The Record will contain the following fields:</li>
                         <ul>
-                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref>. All fields required to format a date for any of the [[PatternParts]] records must be present.</li>
-                          <li>A [[PatternParts]] field whose value is a list of Records each representing a part of the range pattern. Each record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field is one of the String values *"shared"*, *"startRange"*, or *"endRange"*. It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</li>
+                          <li>A subset of the fields shown in the Property column of <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for that field in the Values column of <emu-xref href="#table-datetimeformat-components"></emu-xref>. All fields required to format a date for any of the [[PatternParts]] Records must be present.</li>
+                          <li>A [[PatternParts]] field whose value is a List of Records each representing a part of the range pattern. Each Record contains a [[Pattern]] field and a [[Source]] field. The [[Pattern]] field's value is a String of the same format as the regular date pattern String. The [[Source]] field is one of the String values *"shared"*, *"startRange"*, or *"endRange"*. It indicates which of the range's dates should be formatted using the value of the [[Pattern]] field.</li>
                         </ul>
                     </ul>
                   </li>
-                  <li>The [[rangePatterns]] record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a list of records with the same structure as the other fields in the [[rangePatterns]] record.</li>
+                  <li>The [[rangePatterns]] Record must have a [[Default]] field which contains the default range pattern used when the specific range pattern is not available. Its value is a List of Records with the same structure as the other fields in the [[rangePatterns]] Record.</li>
                 </ul>
             </li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
-            <li>If the record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
+            <li>If the Record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]], but it uses a String similar to [[pattern12]] for each part of the range pattern.</li>
+            <li>If the Record has a [[year]] field, the [[rangePatterns]] and [[rangePatterns12]] fields may contain range patterns where the [[Pattern]] values may contain the substrings *"{yearName}"* and *"{relatedYear}"*.</li>
           </ol>
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the records must also have the following fields:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The [[styles]] field must be a Record with [[&lt;_calendar_&gt;]] fields for all calendar values _calendar_. The calendar Records must contain [[DateFormat]], [[TimeFormat]], [[DateTimeFormat]] and [[DateTimeRangeFormat]] fields, the value of these fields are Records, where each of which has [[full]], [[long]], [[medium]] and [[short]] fields. For [[DateFormat]] and [[TimeFormat]], the value of these fields must be a Record, which has a subset of the fields shown in <emu-xref href="#table-datetimeformat-components"></emu-xref>, where each field must have one of the values specified for the field in <emu-xref href="#table-datetimeformat-components"></emu-xref>. Each of the Records must also have the following fields:
           <ol>
-            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
-            <li>A [[rangePatterns]] field that contains a record similar to the one described in the [[formats]] field.</li>
-            <li>If the record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
+            <li>A [[pattern]] field, whose value is a String value that contains for each of the date and time format component fields of the Record a substring starting with *"{"*, followed by the name of the field, followed by *"}"*.</li>
+            <li>If the Record has an [[hour]] field, it must also have a [[pattern12]] field, whose value is a String value that, in addition to the substrings of the pattern field, contains at least one of the substrings *"{ampm}"* or *"{dayPeriod}"*.</li>
+            <li>A [[rangePatterns]] field that contains a Record similar to the one described in the [[formats]] field.</li>
+            <li>If the Record has an [[hour]] field, it must also have a [[rangePatterns12]] field. Its value is similar to the Record in [[rangePatterns]] but it uses a string similar to [[pattern12]] for each range pattern.</li>
           </ol>
           For [[DateTimeFormat]], the value for each of the fields [[full]], [[long]], [[medium]], and [[short]] must be a string pattern which contains the strings *"{0}"* and *"{1}"*. For [[DateTimeRangeFormat]] the value of these fields must be a nested Record which also has [[full]], [[long]], [[medium]] and [[short]] fields. The [[full]], [[long]], [[medium]] and [[short]] fields in the enclosing Record refer to the date style of the range pattern, while the fields in the nested Record refers to the time style of the range pattern. The value of these fields in the nested Record is a Record with a [[rangePatterns]] field and a [[rangePatterns12]] field which are similar to the [[rangePatterns]] and [rangePatterns12]] fields in [[DateFormat]] and [[TimeFormat]].
          </li>
       </ul>
 
       <emu-note>
-        For example, an implementation might include the following record as part of its English locale data:
+        For example, an implementation might include the following Record as part of its English locale data:
         <ul>
           <li>[[hour]]: *"numeric"*</li>
           <li>[[minute]]: *"numeric"*</li>
@@ -840,7 +840,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>_styles_ is a record from %Intl.DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format record for date time formatting based on the parameters.</dd>
+        <dd>_styles_ is a Record from %Intl.DateTimeFormat%.[[LocaleData]].[[&lt;_locale_&gt;]].[[styles]].[[&lt;_calendar_&gt;]] for some locale _locale_ and calendar _calendar_. It returns the appropriate format Record for date time formatting based on the parameters.</dd>
       </dl>
       <emu-alg>
         1. Assert: _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*.
