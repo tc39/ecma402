@@ -250,7 +250,7 @@
       <dl class="header">
         <dt>description</dt>
         <dd>
-          If _timeZoneIdentifier_ is an available named time zone identifier, then it returns one of the records in the List returned by AvailableNamedTimeZoneIdentifiers.
+          If _timeZoneIdentifier_ is an available named time zone identifier, then it returns one of the Records in the List returned by AvailableNamedTimeZoneIdentifiers.
           Otherwise, ~empty~ will be returned.
         </dd>
       </dl>
@@ -261,7 +261,7 @@
       </emu-alg>
       <emu-note>
         For any _timeZoneIdentifier_, or any value that is an ASCII-case-insensitive match for it, it is recommended that the resulting Time Zone Identifier Record contain the same field values for the lifetime of the surrounding agent.
-        Furthermore, it is recommended that time zone identifiers not dynamically change from primary to non-primary during the lifetime of the surrounding agent, meaning that if _timeZoneIdentifier_ is an ASCII-case-insensitive match for the [[PrimaryIdentifier]] field of the result of a previous call to GetAvailableNamedTimeZoneIdentifier, then GetAvailableNamedTimeZoneIdentifier(_timeZoneIdentifier_) must return a record where [[Identifier]] is [[PrimaryIdentifier]].
+        Furthermore, it is recommended that time zone identifiers not dynamically change from primary to non-primary during the lifetime of the surrounding agent, meaning that if _timeZoneIdentifier_ is an ASCII-case-insensitive match for the [[PrimaryIdentifier]] field of the result of a previous call to GetAvailableNamedTimeZoneIdentifier, then GetAvailableNamedTimeZoneIdentifier(_timeZoneIdentifier_) must return a Record where [[Identifier]] is [[PrimaryIdentifier]].
         Due to the complexity of supporting these recommendations, it is recommended that the result of AvailableNamedTimeZoneIdentifiers (and therefore GetAvailableNamedTimeZoneIdentifier too) remains the same for the lifetime of the surrounding agent.
       </emu-note>
     </emu-clause>
@@ -421,7 +421,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned List is sorted according to lexicographic code unit order, and contains unique canonical numbering systems identifiers identifying the numbering systems for which the implementation provides the functionality of Intl.DateTimeFormat, Intl.NumberFormat, and Intl.RelativeTimeFormat objects. The list must include the Numbering System value of every row of <emu-xref href="#table-numbering-system-digits"></emu-xref>, except the header row.</dd>
+        <dd>The returned List is sorted according to lexicographic code unit order, and contains unique canonical numbering systems identifiers identifying the numbering systems for which the implementation provides the functionality of Intl.DateTimeFormat, Intl.NumberFormat, and Intl.RelativeTimeFormat objects. The List must include the Numbering System value of every row of <emu-xref href="#table-numbering-system-digits"></emu-xref>, except the header row.</dd>
       </dl>
     </emu-clause>
   </emu-clause>
@@ -459,7 +459,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned List is sorted according to lexicographic code unit order, and contains unique canonical calendar types identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects. The list must include *"iso8601"*.</dd>
+        <dd>The returned List is sorted according to lexicographic code unit order, and contains unique canonical calendar types identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects. The List must include *"iso8601"*.</dd>
       </dl>
     </emu-clause>
   </emu-clause>
