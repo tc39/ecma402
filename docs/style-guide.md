@@ -217,7 +217,7 @@ For an example of when *not* to use lexicographic order, consider an array holdi
 
 ### `resolvedOptions`
 
-:star2: *The `resolvedOptions` of Intl objects should appear with `locale` first, followed by properties guaranteed to exist that can be set via extension keys, followed by properties guaranteed to exist that are not set by extension keys, and then finally all properties that exist conditionally. Elements in each of these categories should appear in lexicographical order.* :star2:
+:star2: *The `resolvedOptions` of `Intl` objects should appear with `locale` first, followed by properties guaranteed to exist that can be set via extension keys, followed by properties guaranteed to exist that are not set by extension keys, and then finally all properties that exist conditionally. Elements in each of these categories should appear in lexicographical order.* :star2:
 
 Order of `resolvedOptions`:
 1. `locale`
