@@ -150,7 +150,7 @@
         1. Let _k_ be 3.
         1. Repeat, while _k_ &lt; _size_,
           1. Let _e_ be StringIndexOf(_extension_, *"-"*, _k_).
-          1. If _e_ = -1, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
+          1. If _e_ is ~not-found~, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
           1. Let _subtag_ be the substring of _extension_ from _k_ to _k_ + _len_.
           1. NOTE: A <emu-not-ref>keyword</emu-not-ref> is a sequence of subtags in which the first is a key of length 2 and any subsequent ones (if present) have length in the inclusive interval from 3 to 8, collectively constituting a value along with their medial *"-"* separators. An attribute is a single subtag with length in the inclusive interval from 3 to 8 that precedes all <emu-not-ref>keywords</emu-not-ref>.
           1. Assert: _len_ &ge; 2.
@@ -182,7 +182,7 @@
       <emu-alg>
         1. Assert: _locale_ does not contain a Unicode locale extension sequence.
         1. Let _privateIndex_ be StringIndexOf(_locale_, *"-x-"*, 0).
-        1. If _privateIndex_ = -1, then
+        1. If _privateIndex_ is ~not-found~, then
           1. Let _newLocale_ be the string-concatenation of _locale_ and _extension_.
         1. Else,
           1. Let _preExtension_ be the substring of _locale_ from 0 to _privateIndex_.
@@ -443,12 +443,12 @@
         1. Let _result_ be a new empty List.
         1. Let _placeholderEnd_ be -1.
         1. Let _placeholderStart_ be StringIndexOf(_pattern_, *"{"*, 0).
-        1. Repeat, while _placeholderEnd_ < _placeholderStart_,
+        1. Repeat, while _placeholderStart_ is not ~not-found~,
           1. Let _literal_ be the substring of _pattern_ from _placeholderEnd_ + 1 to _placeholderStart_.
           1. If _literal_ is not the empty String, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _literal_ } to _result_.
           1. Set _placeholderEnd_ to StringIndexOf(_pattern_, *"}"*, _placeholderStart_).
-          1. Assert: _placeholderStart_ < _placeholderEnd_.
+          1. Assert: _placeholderEnd_ is not ~not-found~ and _placeholderStart_ < _placeholderEnd_.
           1. Let _placeholderName_ be the substring of _pattern_ from _placeholderStart_ + 1 to _placeholderEnd_.
           1. Append the Record { [[Type]]: _placeholderName_, [[Value]]: *undefined* } to _result_.
           1. Set _placeholderStart_ to StringIndexOf(_pattern_, *"{"*, _placeholderEnd_).

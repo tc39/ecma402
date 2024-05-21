@@ -313,7 +313,7 @@
         1. If IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
         1. Let _i_ be StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
-        1. If _i_ is -1 or StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not -1, then
+        1. If _i_ is ~not-found~ or StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not ~not-found~, then
           1. Return *false*.
         1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
         1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
