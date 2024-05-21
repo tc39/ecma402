@@ -205,11 +205,11 @@ We could enforce a camel case convention on these strings, such as the following
 
 ## Element Ordering
 
-This section concerns the order in which containers store elements. 
+This section concerns the observable order for elements of arrays and properties of objects.
 
 ### General Guidelines
 
-:star2: *ECMA-402 spec must provide a deterministic order for the contents of all containers. This order should be lexicographic except in cases wherein there is a clearly preferable semantic ordering. :star2:*
+:star2: *ECMA-402 must provide a deterministic order for the elements of all arrays and the properties of all objects. This order should be lexicographic except in cases for which there is a clearly preferable semantic ordering. :star2:*
 
 For example, an array holding the time zone identifiers "Asia/Tokyo", "Asia/Ho_Chi_Minh", and "Asia/Dubai" should use the order `["Asia/Dubai", "Asia/Ho_Chi_Minh", "Asia/Tokyo"]`
   
