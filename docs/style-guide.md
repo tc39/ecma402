@@ -211,7 +211,7 @@ This section concerns the order in which containers store elements.
 
 :star2: *ECMA-402 spec must provide a deterministic order for the contents of all containers. This order should be lexicographic except in cases wherein there is a clearly preferable semantic ordering. :star2:*
 
-For example, an array holding the time zone identifiers `Asia/Tokyo`, `Asia/Ho_Chi_Minh`, and `Asia/Dubai` should use the order `["Asia/Dubai", "Asia/Ho_Chi_Minh", "Asia/Tokyo"]`
+For example, an array holding the time zone identifiers "Asia/Tokyo", "Asia/Ho_Chi_Minh", and "Asia/Dubai" should use the order `["Asia/Dubai", "Asia/Ho_Chi_Minh", "Asia/Tokyo"]`
   
 For an example of when *not* to use lexicographic order, consider an array holding calendar time scale units. This array could be ordered by descending magnitude as `["years", "months", "weeks", "days"]` or its reverse ascending magnitude as `["days", "weeks", "months", "years"]`, but should not use the lexicographic `["days", "months", "weeks", "years"]` order.
 
