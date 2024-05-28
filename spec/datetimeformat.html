@@ -780,65 +780,71 @@
           <li>[[minute]]: *"numeric"*</li>
           <li>[[pattern]]: *"{hour}:{minute}"*</li>
           <li>[[pattern12]]: *"{hour}:{minute} {ampm}"*</li>
-          <li>[[rangePatterns]]:</li>
-          <ul>
-            <li>[[Hour]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-              </ul>
-            </ul></li>
-            <li>[[Minute]]:<ul>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-              </ul>
-            </ul></li>
-            <li>[[Default]]:<ul>
-              <li>[[year]]: *"2-digit"*</li>
-              <li>[[month]]: *"numeric"*</li>
-              <li>[[day]]: *"numeric"*</li>
-              <li>[[hour]]: *"numeric"*</li>
-              <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
-              </ul>
-            </ul></li>
-          </ul>
+          <li>[[rangePatterns]]:
+            <ul>
+              <li>[[Hour]]:<ul>
+                <li>[[hour]]: *"numeric"*</li>
+                <li>[[minute]]: *"numeric"*</li>
+                <li>[[PatternParts]]:
+                  <ul>
+                    <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                    <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                    <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  </ul>
+                </li>
+              </ul></li>
+              <li>[[Minute]]:<ul>
+                <li>[[hour]]: *"numeric"*</li>
+                <li>[[minute]]: *"numeric"*</li>
+                <li>[[PatternParts]]:
+                  <ul>
+                    <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                    <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                    <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  </ul>
+                </li>
+              </ul></li>
+              <li>[[Default]]:<ul>
+                <li>[[year]]: *"2-digit"*</li>
+                <li>[[month]]: *"numeric"*</li>
+                <li>[[day]]: *"numeric"*</li>
+                <li>[[hour]]: *"numeric"*</li>
+                <li>[[minute]]: *"numeric"*</li>
+                <li>[[PatternParts]]:
+                  <ul>
+                    <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
+                    <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                    <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute}"*}</li>
+                  </ul>
+                </li>
+              </ul></li>
+            </ul>
+          </li>
           <li>[[rangePatterns12]]:
           <ul>
             <li>[[Hour]]:<ul>
               <li>[[hour]]: *"numeric"*</li>
               <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
-              </ul>
+              <li>[[PatternParts]]:
+                <ul>
+                  <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                  <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
+                </ul>
+              </li>
             </ul></li>
             <li>[[Minute]]:<ul>
               <li>[[hour]]: *"numeric"*</li>
               <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
-              </ul>
+              <li>[[PatternParts]]:
+                <ul>
+                  <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                  <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{hour}:{minute}"*}</li>
+                  <li>{[[Source]]: *"shared"*, [[Pattern]]: *" {ampm}"*}</li>
+                </ul>
+              </li>
             </ul></li>
             <li>[[Default]]:<ul>
               <li>[[year]]: *"2-digit"*</li>
@@ -846,12 +852,13 @@
               <li>[[day]]: *"numeric"*</li>
               <li>[[hour]]: *"numeric"*</li>
               <li>[[minute]]: *"numeric"*</li>
-              <li>[[PatternParts]]:</li>
-              <ul>
-                <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
-                <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
-                <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
-              </ul>
+              <li>[[PatternParts]]:
+                <ul>
+                  <li>{[[Source]]: *"startRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
+                  <li>{[[Source]]: *"shared"*, [[Pattern]]: *" – "*}</li>
+                  <li>{[[Source]]: *"endRange"*, [[Pattern]]: *"{day}/{month}/{year}, {hour}:{minute} {ampm}"*}</li>
+                </ul>
+              </li>
             </ul></li>
           </ul></li>
         </ul>
