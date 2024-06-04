@@ -128,7 +128,11 @@
       <emu-alg>
         1. Let _key_ be ? ToString(_key_).
         1. If _key_ is *"calendar"*, then
-          1. Let _list_ be AvailableCanonicalCalendars( ).
+          1. Let _list_ be a new empty List.
+          1. For each element _identifier_ of AvailableCalendars(), do
+            1. Let _canonical_ be CanonicalizeUValue(*"ca"*, _identifier_).
+            1. If _identifier_ is _canonical_, then
+              1. Append _identifier_ to _list_.
         1. Else if _key_ is *"collation"*, then
           1. Let _list_ be AvailableCanonicalCollations( ).
         1. Else if _key_ is *"currency"*, then
