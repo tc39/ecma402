@@ -77,7 +77,7 @@
         <dl class="header">
         </dl>
         <emu-alg>
-          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%NumberFormat%, _this_) is *true*, then
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.NumberFormat%, _this_) is *true*, then
             1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
             1. Return _this_.
           1. Return _numberFormat_.
@@ -818,7 +818,7 @@
             1. Append the Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
           1. Else if _p_ is *"minusSign"*, then
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
-            1. Append a new Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
+            1. Append the Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
           1. Else if _p_ is *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
             1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
             1. Append the Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } to _result_.
@@ -826,7 +826,7 @@
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
             1. Let _mu_ be an ILD String value representing _unit_ before _x_ in _unitDisplay_ form, which may depend on _x_ in languages having different plural forms.
-            1. Append a new Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
+            1. Append the Record { [[Type]]: *"unit"*, [[Value]]: _mu_ } to _result_.
           1. Else if _p_ is *"unitSuffix"* and _numberFormat_.[[Style]] is *"unit"*, then
             1. Let _unit_ be _numberFormat_.[[Unit]].
             1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
@@ -919,6 +919,8 @@
                   1. If _groups_ List is not empty, then
                     1. Append the Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } to _result_.
               1. If _fraction_ is not *undefined*, then
+                1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
+                1. Append the Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } to _result_.
                 1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
             1. Else if _p_ is *"compactSymbol"*, then
               1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
@@ -1852,11 +1854,11 @@
             1. Set _r_.[[Source]] to *"shared"*.
           1. Return _appxResult_.
         1. Let _result_ be a new empty List.
-        1. For each element _r_ in _xResult_, do
+        1. For each element _r_ of _xResult_, do
           1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"startRange"* } to _result_.
         1. Let _rangeSeparator_ be an ILND String value used to separate two numbers.
         1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
-        1. For each element _r_ in _yResult_, do
+        1. For each element _r_ of _yResult_, do
           1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } to _result_.
         1. Return CollapseNumberRange(_result_).
       </emu-alg>
