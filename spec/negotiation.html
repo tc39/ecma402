@@ -73,6 +73,7 @@
             1. Let _canonicalizedTag_ be CanonicalizeUnicodeLocaleId(_tag_).
             1. If _seen_ does not contain _canonicalizedTag_, append _canonicalizedTag_ to _seen_.
           1. Set _k_ to _k_ + 1.
+        1. Return _seen_.
       </emu-alg>
 
       <emu-note>
@@ -283,7 +284,7 @@
         1. If _supportedKeywords_ is not empty, then
           1. Let _supportedAttributes_ be a new empty List.
           1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedAttributes_, _supportedKeywords_).
-        1. Set _result_.[[locale]] to _foundLocale_.
+        1. Set _result_.[[Locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -305,11 +306,10 @@
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
-          1. Let _noExtensionsLocale_ be the String value that is _locale_ with any Unicode locale extension sequences removed.
           1. If _matcher_ is *"lookup"*, then
-            1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, _noExtensionsLocale_).
+            1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, &laquo; _locale_ &raquo;).
           1. Else,
-            1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, _noExtensionsLocale_).
+            1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, &laquo; _locale_ &raquo;).
           1. If _match_ is not *undefined*, append _locale_ to _subset_.
         1. Return CreateArrayFromList(_subset_).
       </emu-alg>

@@ -60,7 +60,7 @@
       </dl>
 
       <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
@@ -129,7 +129,16 @@
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
         1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
-        1. If _dateStyle_ is *undefined* and _timeStyle_ is *undefined*, then
+        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
+          1. If _hasExplicitFormatComponents_ is *true*, then
+            1. Throw a *TypeError* exception.
+          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
+          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
+          1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
+        1. Else,
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
             1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
@@ -150,7 +159,7 @@
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
           1. Else,
             1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
-        1. Set _dateTimeFormat_.[[Patterns]] to _bestFormat_.
+        1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
         1. If _bestFormat_ has a field [[hour]], then
           1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Return _dateTimeFormat_.
@@ -247,7 +256,7 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle24]] must be one of the String values *"h23"* or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. The value of this [[formats]] field must be a Record with a [[&lt;_calendar_&gt;]] field for each calendar value _calendar_. The value of each [[&lt;_calendar_&gt;]] field must be a List of DateTimeFormat Patterns Record. Multiple Records in such a List may use the same subset of the fields as long as the corresponding values differ for at least one field. The following subsets must be available for each locale:
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[formats]] field. The value of this [[formats]] field must be a Record with a [[&lt;_calendar_&gt;]] field for each calendar value _calendar_. The value of each [[&lt;_calendar_&gt;]] field must be a List of DateTime Format Records. Multiple Records in such a List may use the same subset of the fields as long as the corresponding values differ for at least one field. The following subsets must be available for each locale:
           <ul>
             <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
             <li>weekday, year, month, day, hour, minute, second</li>
@@ -264,18 +273,18 @@
           </ul>
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The value of this [[styles]] field must be a Record with a [[&lt;_calendar_&gt;]] field for each calendar value _calendar_. The value of each [[&lt;_calendar_&gt;]] field must be a DateTimeFormat Styles Record.
+          [[LocaleData]].[[&lt;_locale_&gt;]] must have a [[styles]] field. The value of this [[styles]] field must be a Record with a [[&lt;_calendar_&gt;]] field for each calendar value _calendar_. The value of each [[&lt;_calendar_&gt;]] field must be a DateTime Styles Record.
          </li>
       </ul>
 
-      <emu-clause id="sec-datetimeformat-patterns-record">
-        <h1>DateTimeFormat Patterns Records</h1>
+      <emu-clause id="sec-datetimeformat-format-record">
+        <h1>DateTime Format Records</h1>
 
         <p>
-          Each <dfn id="datetimeformat-patterns-record" variants="DateTimeFormat Patterns Records">DateTimeFormat Patterns Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-patterns-record"></emu-xref>.
+          Each <dfn id="datetimeformat-format-record" variants="DateTime Format Records">DateTime Format Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-format-record"></emu-xref>.
         </p>
-        <emu-table id="table-datetimeformat-patterns-record">
-          <emu-caption>DateTimeFormat Patterns Record</emu-caption>
+        <emu-table id="table-datetimeformat-format-record">
+          <emu-caption>DateTime Format Record</emu-caption>
           <table class="real-table">
             <thead>
               <tr>
@@ -548,14 +557,14 @@
         </emu-table>
       </emu-clause>
 
-      <emu-clause id="sec-datetimeformat-calendar-style-record">
-        <h1>DateTime Calendar Style Records</h1>
+      <emu-clause id="sec-datetimeformat-styles-record">
+        <h1>DateTime Styles Records</h1>
 
         <p>
-          Each <dfn id="datetimeformat-calendar-style-record">DateTime Calendar Style Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-calendar-style-record"></emu-xref>.
+          Each <dfn id="datetimeformat-styles-record">DateTime Styles Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-styles-record"></emu-xref>.
         </p>
-        <emu-table id="table-datetimeformat-calendar-style-record">
-          <emu-caption>DateTime Calendar Style Record</emu-caption>
+        <emu-table id="table-datetimeformat-styles-record">
+          <emu-caption>DateTime Styles Record</emu-caption>
           <table class="real-table">
             <thead>
               <tr>
@@ -564,15 +573,15 @@
               </tr>
             </thead>
             <tr>
-              <td>[[DateFormat]]</td>
+              <td>[[Date]]</td>
               <td>a DateTime Style Record</td>
             </tr>
             <tr>
-              <td>[[TimeFormat]]</td>
+              <td>[[Time]]</td>
               <td>a DateTime Style Record</td>
             </tr>
             <tr>
-              <td>[[DateTimeFormat]]</td>
+              <td>[[Connector]]</td>
               <td>a DateTime Connector Record</td>
             </tr>
             <tr>
@@ -1241,7 +1250,7 @@
         DateTimeStyleFormat (
           _dateStyle_: *"full"*, *"long"*, *"medium"*, *"short"*, or *undefined*,
           _timeStyle_: *"full"*, *"long"*, *"medium"*, *"short"*, or *undefined*,
-          _styles_: a DateTime Calendar Style Record,
+          _styles_: a DateTime Styles Record,
         ): a DateTime Format Record
       </h1>
       <dl class="header">
@@ -1252,15 +1261,15 @@
         1. Assert: _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*.
         1. If _timeStyle_ is not *undefined*, then
           1. Assert: _timeStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _timeFormat_ be _styles_.[[TimeFormat]].[[&lt;_timeStyle_&gt;]].
+          1. Let _timeFormat_ be _styles_.[[Time]].[[&lt;_timeStyle_&gt;]].
         1. If _dateStyle_ is not *undefined*, then
           1. Assert: _dateStyle_ is one of *"full"*, *"long"*, *"medium"*, or *"short"*.
-          1. Let _dateFormat_ be _styles_.[[DateFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _dateFormat_ be _styles_.[[Date]].[[&lt;_dateStyle_&gt;]].
         1. If _dateStyle_ is not *undefined* and _timeStyle_ is not *undefined*, then
           1. Let _format_ be a new DateTime Format Record.
           1. Add to _format_ all fields from _dateFormat_ except [[pattern]] and [[rangePatterns]].
           1. Add to _format_ all fields from _timeFormat_ except [[pattern]], [[rangePatterns]], [[pattern12]], and [[rangePatterns12]], if present.
-          1. Let _connector_ be _styles_.[[DateTimeFormat]].[[&lt;_dateStyle_&gt;]].
+          1. Let _connector_ be _styles_.[[Connector]].[[&lt;_dateStyle_&gt;]].
           1. Let _pattern_ be the string _connector_ with the substring *"{0}"* replaced with _timeFormat_.[[pattern]] and the substring *"{1}"* replaced with _dateFormat_.[[pattern]].
           1. Set _format_.[[pattern]] to _pattern_.
           1. If _timeFormat_ has a [[pattern12]] field, then
@@ -1403,12 +1412,12 @@
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
         1. Let _nf2_ be ! Construct(%Intl.NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
-        1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
-        1. If _fractionalSecondDigits_ is *undefined*, set _fractionalSecondDigits_ to 1.
-        1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
-        1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
-        1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
-        1. Let _nf3_ be ! Construct(%NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
+        1. If _format_ has a field [[fractionalSecondDigits]], then
+          1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
+          1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
+          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
+          1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
+          1. Let _nf3_ be ! Construct(%Intl.NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
         1. Let _tm_ be ToLocalTime(ℤ(ℝ(_x_) &times; 10<sup>6</sup>), _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
@@ -1416,18 +1425,18 @@
           1. Let _p_ be _patternPart_.[[Type]].
           1. If _p_ is *"literal"*, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
-          1. Else if _p_ is equal to *"fractionalSecondDigits"*, then
+          1. Else if _p_ is *"fractionalSecondDigits"*, then
             1. Assert: _format_ has a field [[fractionalSecondDigits]].
             1. Let _v_ be _tm_.[[Millisecond]].
             1. Set _v_ to floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"dayPeriod"*, then
+          1. Else if _p_ is *"dayPeriod"*, then
             1. Assert: _format_ has a field [[dayPeriod]].
             1. Let _f_ be _format_.[[dayPeriod]].
             1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"timeZoneName"*, then
+          1. Else if _p_ is *"timeZoneName"*, then
             1. Assert: _format_ has a field [[timeZoneName]].
             1. Let _f_ be _format_.[[timeZoneName]].
             1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
@@ -1468,7 +1477,7 @@
             1. Let _v_ be _tm_.[[RelatedYear]].
             1. Let _fv_ be FormatNumeric(_nf_, _v_).
             1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is equal to *"yearName"*, then
+          1. Else if _p_ is *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
             1. Let _fv_ be an implementation and locale dependent String value representing _v_.
             1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
@@ -1590,9 +1599,10 @@
               1. Let _v1_ be a String value representing the day period of _tm1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
               1. Let _v2_ be a String value representing the day period of _tm2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Else if _fieldName_ is [[FractionalSecondDigits]], then
-              1. Let _fractionalSecondDigits_ be _dateTimeFormat_.[[FractionalSecondDigits]].
-              1. If _fractionalSecondDigits_ is *undefined*, then
-                1. Set _fractionalSecondDigits_ to 3.
+              1. If _format_ has a [[fractionalSecondDigits]] field, then
+                1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
+              1. Else,
+                1. Let _fractionalSecondDigits_ be 3.
               1. Let _exp_ be _fractionalSecondDigits_ - 3.
               1. Let _v1_ be floor(_tm1_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
               1. Let _v2_ be floor(_tm2_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
@@ -1604,7 +1614,7 @@
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _format_, _pattern_, _x_).
-          1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
+          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
           1. Return _collapsedResult_.
         1. Let _rangeResult_ be a new empty List.
@@ -1618,7 +1628,7 @@
           1. Else,
             1. Let _z_ be _y_.
           1. Let _resultParts_ be ! FormatDateTimePattern(_dateTimeFormat_, _selectedRangePattern_, _pattern_, _z_).
-          1. For each Record { [[Type]], [[Value]] } _r_ in _resultParts_, do
+          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
             1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
         1. Return _rangeResult_.
       </emu-alg>
