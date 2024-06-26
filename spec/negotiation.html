@@ -242,7 +242,7 @@
         1. If _r_ is *undefined*, set _r_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
         1. Let _foundLocale_ be _r_.[[locale]].
         1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
-        1. Assert: Type(_foundLocaleData_) is Record.
+        1. Assert: _foundLocaleData_ is a Record.
         1. Let _result_ be a new Record.
         1. Set _result_.[[LocaleData]] to _foundLocaleData_.
         1. If _r_.[[extension]] is not ~empty~, then
