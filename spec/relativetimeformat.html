@@ -17,7 +17,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[LocaleData]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
+        1. Let _relativeTimeFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.RelativeTimeFormat.prototype%"*, &laquo; [[InitializedRelativeTimeFormat]], [[Locale]], [[LocaleData]], [[Style]], [[Numeric]], [[NumberFormat]], [[NumberingSystem]], [[PluralRules]] &raquo;).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
@@ -332,7 +332,7 @@
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]], [[Unit]]: ~empty~ } to _result_.
           1. Else,
             1. Assert: _patternPart_.[[Type]] is *"0"*.
-            1. For each Record { [[Type]], [[Value]] } _part_ in _parts_, do
+            1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
               1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: _unit_ } to _result_.
         1. Return _result_.
       </emu-alg>
@@ -365,7 +365,7 @@
 
       <emu-alg>
         1. Let _parts_ be ? PartitionRelativeTimePattern(_relativeTimeFormat_, _value_, _unit_).
-        1. Let _result_ be an empty String.
+        1. Let _result_ be the empty String.
         1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.

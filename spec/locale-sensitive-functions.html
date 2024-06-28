@@ -83,9 +83,8 @@
             1. Let _requestedLocale_ be _requestedLocales_[0].
           1. Else,
             1. Let _requestedLocale_ be DefaultLocale().
-          1. Let _noExtensionsLocale_ be the String value that is _requestedLocale_ with any Unicode locale extension sequences removed.
           1. Let _availableLocales_ be an Available Locales List which includes the language tags for which the Unicode Character Database contains language-sensitive case mappings. If the implementation supports additional locale-sensitive case mappings, _availableLocales_ should also include their corresponding language tags.
-          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, _noExtensionsLocale_).
+          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, &laquo; _requestedLocale_ &raquo;).
           1. If _match_ is not *undefined*, let _locale_ be _match_.[[locale]]; else let _locale_ be *"und"*.
           1. Let _codePoints_ be StringToCodePoints(_S_).
           1. If _targetCase_ is ~lower~, then
