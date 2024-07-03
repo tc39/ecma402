@@ -100,11 +100,11 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.segmenter.prototype-@@tostringtag">
-      <h1>Intl.Segmenter.prototype [ @@toStringTag ]</h1>
+    <emu-clause id="sec-intl.segmenter.prototype-%symbol.tostringtag%" oldids="sec-intl.segmenter.prototype-@@tostringtag">
+      <h1>Intl.Segmenter.prototype [ %Symbol.toStringTag% ]</h1>
 
       <p>
-        The initial value of the @@toStringTag property is the String value *"Intl.Segmenter"*.
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Segmenter"*.
       </p>
       <p>
         This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
@@ -241,9 +241,9 @@
         </emu-alg>
       </emu-clause>
 
-      <emu-clause id="sec-%intlsegmentsprototype%-@@iterator" oldids="sec-%segmentsprototype%-@@iterator">
-        <h1>%IntlSegmentsPrototype% [ @@iterator ] ( )</h1>
-        <p>The `@@iterator` method is called on a Segments instance to create a Segment Iterator over its string using the locale and options of its constructing Intl.Segmenter instance. The following steps are taken:</p>
+      <emu-clause id="sec-%intlsegmentsprototype%-%symbol.iterator%" oldids="sec-%intlsegmentsprototype%-@@iterator,sec-%segmentsprototype%-@@iterator">
+        <h1>%IntlSegmentsPrototype% [ %Symbol.iterator% ] ( )</h1>
+        <p>The `%Symbol.iterator%` method is called on a Segments instance to create a Segment Iterator over its string using the locale and options of its constructing Intl.Segmenter instance. The following steps are taken:</p>
         <emu-alg>
           1. Let _segments_ be the *this* value.
           1. Perform ? RequireInternalSlot(_segments_, [[SegmentsSegmenter]]).
@@ -328,11 +328,11 @@
         </emu-alg>
       </emu-clause>
 
-      <emu-clause id="sec-%intlsegmentiteratorprototype%.@@tostringtag" oldids="sec-%segmentiteratorprototype%.@@tostringtag">
-        <h1>%IntlSegmentIteratorPrototype% [ @@toStringTag ]</h1>
+      <emu-clause id="sec-%intlsegmentiteratorprototype%.%symbol.tostringtag%" oldids="sec-%intlsegmentiteratorprototype%.@@tostringtag,sec-%segmentiteratorprototype%.@@tostringtag">
+        <h1>%IntlSegmentIteratorPrototype% [ %Symbol.toStringTag% ]</h1>
 
         <p>
-          The initial value of the @@toStringTag property is the String value *"Segmenter String Iterator"*.
+          The initial value of the %Symbol.toStringTag% property is the String value *"Segmenter String Iterator"*.
         </p>
         <p>
           This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
