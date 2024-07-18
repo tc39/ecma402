@@ -15,7 +15,7 @@
       </p>
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _internalSlotsList_ be &laquo; [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] &raquo;.
+        1. Let _internalSlotsList_ be « [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] ».
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
           1. Append [[Numeric]] to _internalSlotsList_.
         1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
@@ -23,14 +23,14 @@
         1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.Collator.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _usage_ be ? GetOption(_options_, *"usage"*, ~string~, &laquo; *"sort"*, *"search"* &raquo;, *"sort"*).
+        1. Let _usage_ be ? GetOption(_options_, *"usage"*, ~string~, « *"sort"*, *"search"* », *"sort"*).
         1. Set _collator_.[[Usage]] to _usage_.
         1. If _usage_ is *"sort"*, then
           1. Let _localeData_ be %Intl.Collator%.[[SortLocaleData]].
         1. Else,
           1. Let _localeData_ be %Intl.Collator%.[[SearchLocaleData]].
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
         1. If _collation_ is not *undefined*, then
@@ -40,7 +40,7 @@
         1. If _numeric_ is not *undefined*, then
           1. Set _numeric_ to ! ToString(_numeric_).
         1. Set _opt_.[[kn]] to _numeric_.
-        1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, ~string~, &laquo; *"upper"*, *"lower"*, *"false"* &raquo;, *undefined*).
+        1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, ~string~, « *"upper"*, *"lower"*, *"false"* », *undefined*).
         1. Set _opt_.[[kf]] to _caseFirst_.
         1. Let _relevantExtensionKeys_ be %Intl.Collator%.[[RelevantExtensionKeys]].
         1. Let _r_ be ResolveLocale(%Intl.Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
@@ -53,7 +53,7 @@
         1. If _relevantExtensionKeys_ contains *"kf"*, then
           1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
-        1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, &laquo; *"base"*, *"accent"*, *"case"*, *"variant"* &raquo;, *undefined*).
+        1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », *undefined*).
         1. If _sensitivity_ is *undefined*, then
           1. If _usage_ is *"sort"*, then
             1. Set _sensitivity_ to *"variant"*.

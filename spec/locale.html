@@ -18,7 +18,7 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _localeExtensionKeys_ be %Intl.Locale%.[[LocaleExtensionKeys]].
-        1. Let _internalSlotsList_ be &laquo; [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[HourCycle]], [[NumberingSystem]] &raquo;.
+        1. Let _internalSlotsList_ be « [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[HourCycle]], [[NumberingSystem]] ».
         1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Append [[CaseFirst]] to _internalSlotsList_.
         1. If _localeExtensionKeys_ contains *"kn"*, then
@@ -42,9 +42,9 @@
         1. If _collation_ is not *undefined*, then
           1. If _collation_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[co]] to _collation_.
-        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, ~string~, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
+        1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
         1. Set _opt_.[[hc]] to _hc_.
-        1. Let _kf_ be ? GetOption(_options_, *"caseFirst"*, ~string~, &laquo; *"upper"*, *"lower"*, *"false"* &raquo;, *undefined*).
+        1. Let _kf_ be ? GetOption(_options_, *"caseFirst"*, ~string~, « *"upper"*, *"lower"*, *"false"* », *undefined*).
         1. Set _opt_.[[kf]] to _kf_.
         1. Let _kn_ be ? GetOption(_options_, *"numeric"*, ~boolean~, ~empty~, *undefined*).
         1. If _kn_ is not *undefined*, set _kn_ to ! ToString(_kn_).
@@ -171,7 +171,7 @@
       <h1>Internal slots</h1>
 
       <p>
-        The value of the [[LocaleExtensionKeys]] internal slot is &laquo; *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* &raquo;. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].
+        The value of the [[LocaleExtensionKeys]] internal slot is « *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* ». If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].
       </p>
     </emu-clause>
   </emu-clause>

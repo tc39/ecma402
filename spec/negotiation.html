@@ -54,7 +54,7 @@
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
         1. If _locales_ is a String or _locales_ is an Object and _locales_ has an [[InitializedLocale]] internal slot, then
-          1. Let _O_ be CreateArrayFromList(&laquo; _locales_ &raquo;).
+          1. Let _O_ be CreateArrayFromList(« _locales_ »).
         1. Else,
           1. Let _O_ be ? ToObject(_locales_).
         1. Let _len_ be ? LengthOfArrayLike(_O_).
@@ -125,7 +125,7 @@
           1. Repeat, while _prefix_ is not the empty String,
             1. If _availableLocales_ contains _prefix_, return the Record { [[locale]]: _prefix_, [[extension]]: _extension_ }.
             1. If _prefix_ contains *"-"* (code unit 0x002D HYPHEN-MINUS), let _pos_ be the index into _prefix_ of the last occurrence of *"-"*; else let _pos_ be 0.
-            1. Repeat, while _pos_ &ge; 2 and the substring of _prefix_ from _pos_ - 2 to _pos_ - 1 is *"-"*,
+            1. Repeat, while _pos_ ≥ 2 and the substring of _prefix_ from _pos_ - 2 to _pos_ - 1 is *"-"*,
               1. Set _pos_ to _pos_ - 2.
             1. Set _prefix_ to the substring of _prefix_ from 0 to _pos_.
         1. Return *undefined*.
@@ -172,8 +172,8 @@
           1. If _e_ is ~not-found~, let _len_ be _size_ - _k_; else let _len_ be _e_ - _k_.
           1. Let _subtag_ be the substring of _extension_ from _k_ to _k_ + _len_.
           1. NOTE: A <emu-not-ref>keyword</emu-not-ref> is a sequence of subtags in which the first is a key of length 2 and any subsequent ones (if present) have length in the inclusive interval from 3 to 8, collectively constituting a value along with their medial *"-"* separators. An attribute is a single subtag with length in the inclusive interval from 3 to 8 that precedes all <emu-not-ref>keywords</emu-not-ref>.
-          1. Assert: _len_ &ge; 2.
-          1. If _keyword_ is *undefined* and _len_ &ne; 2, then
+          1. Assert: _len_ ≥ 2.
+          1. If _keyword_ is *undefined* and _len_ ≠ 2, then
             1. If _subtag_ is not an element of _attributes_, append _subtag_ to _attributes_.
           1. Else if _len_ = 2, then
             1. Set _keyword_ to the Record { [[Key]]: _subtag_, [[Value]]: *""* }.
@@ -303,13 +303,13 @@
       </dl>
       <emu-alg>
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Let _subset_ be a new empty List.
         1. For each element _locale_ of _requestedLocales_, do
           1. If _matcher_ is *"lookup"*, then
-            1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, &laquo; _locale_ &raquo;).
+            1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, « _locale_ »).
           1. Else,
-            1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, &laquo; _locale_ &raquo;).
+            1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, « _locale_ »).
           1. If _match_ is not *undefined*, append _locale_ to _subset_.
         1. Return CreateArrayFromList(_subset_).
       </emu-alg>
