@@ -60,11 +60,11 @@
       </dl>
 
       <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, &laquo; [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] &raquo;).
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
         1. If _calendar_ is not *undefined*, then
@@ -75,7 +75,7 @@
           1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
         1. Let _hour12_ be ? GetOption(_options_, *"hour12"*, ~boolean~, ~empty~, *undefined*).
-        1. Let _hourCycle_ be ? GetOption(_options_, *"hourCycle"*, ~string~, &laquo; *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;, *undefined*).
+        1. Let _hourCycle_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
         1. If _hour12_ is not *undefined*, then
           1. Set _hourCycle_ to *null*.
         1. Set _opt_.[[hc]] to _hourCycle_.
@@ -124,10 +124,10 @@
           1. Set _formatOptions_.[[&lt;_prop_&gt;]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
-        1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, &laquo; *"basic"*, *"best fit"* &raquo;, *"best fit"*).
-        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
+        1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
+        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
-        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, &laquo; *"full"*, *"long"*, *"medium"*, *"short"* &raquo;, *undefined*).
+        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
           1. If _hasExplicitFormatComponents_ is *true*, then
@@ -141,18 +141,18 @@
         1. Else,
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _prop_ of &laquo; *"weekday"*, *"year"*, *"month"*, *"day"* &raquo;, do
+            1. For each property name _prop_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _prop_ of &laquo; *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* &raquo;, do
+            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
-            1. For each property name _prop_ of &laquo; *"year"*, *"month"*, *"day"* &raquo;, do
+            1. For each property name _prop_ of « *"year"*, *"month"*, *"day"* », do
               1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
-            1. For each property name _prop_ of &laquo; *"hour"*, *"minute"*, *"second"* &raquo;, do
+            1. For each property name _prop_ of « *"hour"*, *"minute"*, *"second"* », do
               1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
           1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
           1. If _formatMatcher_ is *"basic"*, then
@@ -179,7 +179,7 @@
         </dd>
       </dl>
       <emu-alg>
-        1. If _offsetMinutes_ &ge; 0, let _sign_ be the code unit 0x002B (PLUS SIGN); otherwise, let _sign_ be the code unit 0x002D (HYPHEN-MINUS).
+        1. If _offsetMinutes_ ≥ 0, let _sign_ be the code unit 0x002B (PLUS SIGN); otherwise, let _sign_ be the code unit 0x002D (HYPHEN-MINUS).
         1. Let _absoluteMinutes_ be abs(_offsetMinutes_).
         1. Let _hours_ be floor(_absoluteMinutes_ / 60).
         1. Let _minutes_ be _absoluteMinutes_ modulo 60.
@@ -228,7 +228,7 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; *"ca"*, *"hc"*, *"nu"* &raquo;.
+        The value of the [[RelevantExtensionKeys]] internal slot is « *"ca"*, *"hc"*, *"nu"* ».
       </p>
 
       <emu-note>
@@ -244,7 +244,7 @@
           [[LocaleData]].[[&lt;_locale_&gt;]].[[nu]] must be a List that does not include the values *"native"*, *"traditio"*, or *"finance"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be &laquo; *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* &raquo;.
+          [[LocaleData]].[[&lt;_locale_&gt;]].[[hc]] must be « *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* ».
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_&gt;]].[[hourCycle]] must be one of the String values *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
@@ -1322,7 +1322,7 @@
                 1. Else if _formatProp_ is *"longOffset"*, set _score_ to _score_ - (_offsetPenalty_ + _shortMorePenalty_).
                 1. Else if _optionsProp_ is *"short"* and _formatProp_ is *"long"*, set _score_ to _score_ - _shortMorePenalty_.
                 1. Else if _optionsProp_ is *"shortGeneric"* and _formatProp_ is *"longGeneric"*, set _score_ to _score - _shortMorePenalty_.
-                1. Else if _optionsProp_ &ne; _formatProp_, set _score_ to _score_ - _removalPenalty_.
+                1. Else if _optionsProp_ ≠ _formatProp_, set _score_ to _score_ - _removalPenalty_.
               1. Else if _optionsProp_ is *"shortOffset"* and _formatProp_ is *"longOffset"*, then
                 1. Set _score_ to _score_ - _shortMorePenalty_.
               1. Else if _optionsProp_ is *"long"* or *"longGeneric"*, then
@@ -1330,16 +1330,16 @@
                 1. Else if _formatProp_ is *"shortOffset"*, set _score_ to _score_ - (_offsetPenalty_ + _longLessPenalty_).
                 1. Else if _optionsProp_ is *"long"* and _formatProp_ is *"short"*, set _score_ to _score_ - _longLessPenalty_.
                 1. Else if _optionsProp_ is *"longGeneric"* and _formatProp_ is *"shortGeneric"*, set _score_ to _score_ - _longLessPenalty_.
-                1. Else if _optionsProp_ &ne; _formatProp_, set _score_ to _score_ - _removalPenalty_.
+                1. Else if _optionsProp_ ≠ _formatProp_, set _score_ to _score_ - _removalPenalty_.
               1. Else if _optionsProp_ is *"longOffset"* and _formatProp_ is *"shortOffset"*, then
                 1. Set _score_ to _score_ - _longLessPenalty_.
-              1. Else if _optionsProp_ &ne; _formatProp_, then
+              1. Else if _optionsProp_ ≠ _formatProp_, then
                 1. Set _score_ to _score_ - _removalPenalty_.
-            1. Else if _optionsProp_ &ne; _formatProp_, then
+            1. Else if _optionsProp_ ≠ _formatProp_, then
               1. If _property_ is *"fractionalSecondDigits"*, then
-                1. Let _values_ be &laquo; 1, 2, 3 &raquo;.
+                1. Let _values_ be « 1, 2, 3 ».
               1. Else,
-                1. Let _values_ be &laquo; *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* &raquo;.
+                1. Let _values_ be « *"2-digit"*, *"numeric"*, *"narrow"*, *"short"*, *"long"* ».
               1. Let _optionsPropIndex_ be the index of _optionsProp_ within _values_.
               1. Let _formatPropIndex_ be the index of _formatProp_ within _values_.
               1. Let _delta_ be max(min(_formatPropIndex_ - _optionsPropIndex_, 2), -2).
@@ -1405,17 +1405,17 @@
         1. Let _locale_ be _dateTimeFormat_.[[Locale]].
         1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"useGrouping"*, *false*).
-        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, &laquo; _locale_, _nfOptions_ &raquo;).
+        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _locale_, _nfOptions_ »).
         1. Let _nf2Options_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. Perform ! CreateDataPropertyOrThrow(_nf2Options_, *"useGrouping"*, *false*).
-        1. Let _nf2_ be ! Construct(%Intl.NumberFormat%, &laquo; _locale_, _nf2Options_ &raquo;).
+        1. Let _nf2_ be ! Construct(%Intl.NumberFormat%, « _locale_, _nf2Options_ »).
         1. If _format_ has a field [[fractionalSecondDigits]], then
           1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
           1. Let _nf3Options_ be OrdinaryObjectCreate(*null*).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"minimumIntegerDigits"*, 𝔽(_fractionalSecondDigits_)).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
-          1. Let _nf3_ be ! Construct(%Intl.NumberFormat%, &laquo; _locale_, _nf3Options_ &raquo;).
+          1. Let _nf3_ be ! Construct(%Intl.NumberFormat%, « _locale_, _nf3Options_ »).
         1. Let _tm_ be ToLocalTime(_epochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
@@ -1426,7 +1426,7 @@
           1. Else if _p_ is *"fractionalSecondDigits"*, then
             1. Assert: _format_ has a field [[fractionalSecondDigits]].
             1. Let _v_ be _tm_.[[Millisecond]].
-            1. Set _v_ to floor(_v_ &times; 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
+            1. Set _v_ to floor(_v_ × 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
             1. Let _fv_ be FormatNumeric(_nf3_, _v_).
             1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is *"dayPeriod"*, then
@@ -1444,7 +1444,7 @@
             1. Assert: _format_ has a field [[&lt;_p_&gt;]].
             1. Let _f_ be _format_.[[&lt;_p_&gt;]].
             1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
-            1. If _p_ is *"year"* and _v_ &le; 0, set _v_ to 1 - _v_.
+            1. If _p_ is *"year"* and _v_ ≤ 0, set _v_ to 1 - _v_.
             1. If _p_ is *"month"*, set _v_ to _v_ + 1.
             1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
               1. Set _v_ to _v_ modulo 12.
@@ -1460,7 +1460,7 @@
               1. If _count_ > 2, then
                 1. Let _tens_ be _codePoints_[_count_ - 2].
                 1. Let _ones_ be _codePoints_[_count_ - 1].
-                1. Set _fv_ to CodePointsToString(&laquo; _tens_, _ones_ &raquo;).
+                1. Set _fv_ to CodePointsToString(« _tens_, _ones_ »).
             1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
               1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
             1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
@@ -1504,7 +1504,7 @@
       <emu-alg>
         1. Let _x_ be TimeClip(_x_).
         1. If _x_ is *NaN*, throw a *RangeError* exception.
-        1. Let _epochNanoseconds_ be ℤ(ℝ(_x_) &times; 10<sup>6</sup>).
+        1. Let _epochNanoseconds_ be ℤ(ℝ(_x_) × 10<sup>6</sup>).
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
         1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
           1. Let _pattern_ be _format_.[[pattern12]].
@@ -1573,8 +1573,8 @@
         1. If _x_ is *NaN*, throw a *RangeError* exception.
         1. Set _y_ to TimeClip(_y_).
         1. If _y_ is *NaN*, throw a *RangeError* exception.
-        1. Let _xEpochNanoseconds_ be ℤ(ℝ(_x_) &times; 10<sup>6</sup>).
-        1. Let _yEpochNanoseconds_ be ℤ(ℝ(_y_) &times; 10<sup>6</sup>).
+        1. Let _xEpochNanoseconds_ be ℤ(ℝ(_x_) × 10<sup>6</sup>).
+        1. Let _yEpochNanoseconds_ be ℤ(ℝ(_y_) × 10<sup>6</sup>).
         1. Let _tm1_ be ToLocalTime(_xEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _tm2_ be ToLocalTime(_yEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
@@ -1607,8 +1607,8 @@
               1. Else,
                 1. Let _fractionalSecondDigits_ be 3.
               1. Let _exp_ be _fractionalSecondDigits_ - 3.
-              1. Let _v1_ be floor(_tm1_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
-              1. Let _v2_ be floor(_tm2_.[[Millisecond]] &times; 10<sup>_exp_</sup>).
+              1. Let _v1_ be floor(_tm1_.[[Millisecond]] × 10<sup>_exp_</sup>).
+              1. Let _v2_ be floor(_tm2_.[[Millisecond]] × 10<sup>_exp_</sup>).
             1. Else,
               1. Let _v1_ be _tm1_'s field whose name is _fieldName_.
               1. Let _v2_ be _tm2_'s field whose name is _fieldName_.

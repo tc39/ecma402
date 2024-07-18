@@ -17,26 +17,26 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DisplayNames.prototype%"*, &laquo; [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] &raquo;).
+        1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DisplayNames.prototype%"*, « [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] »).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. If _options_ is *undefined*, throw a *TypeError* exception.
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _r_ be ResolveLocale(%Intl.DisplayNames%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DisplayNames%.[[RelevantExtensionKeys]], %Intl.DisplayNames%.[[LocaleData]]).
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"narrow"*, *"short"*, *"long"* &raquo;, *"long"*).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"narrow"*, *"short"*, *"long"* », *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
-        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* &raquo;, *undefined*).
+        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* », *undefined*).
         1. If _type_ is *undefined*, throw a *TypeError* exception.
         1. Set _displayNames_.[[Type]] to _type_.
-        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, ~string~, &laquo; *"code"*, *"none"* &raquo;, *"code"*).
+        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, ~string~, « *"code"*, *"none"* », *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
         1. Set _displayNames_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. Let _types_ be _resolvedLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
-        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, &laquo; *"dialect"*, *"standard"* &raquo;, *"dialect"*).
+        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, « *"dialect"*, *"standard"* », *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_&gt;]].
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then
@@ -91,7 +91,7 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+        The value of the [[RelevantExtensionKeys]] internal slot is « ».
       </p>
 
       <p>
