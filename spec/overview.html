@@ -73,10 +73,7 @@
       </li>
     </ul>
     <p>
-      In browser implementations the initial set of locales, currencies, calendars, numbering systems, and other enumerable items visible to a particular origin must be the same for all users sharing the same user agent string (engine and platform version). Furthermore, dynamic changes to these sets must not result in users becoming distinguishable from each other. This constraint is imposed to reduce the fingerprinting risk inherent in internationalization, and may be relaxed in future revisions.
-    </p>
-    <p>
-      As a result of this constraint, the first time a browser implementation that allows on-demand locale installation receives a request from a particular origin that could require installing a new locale, it must not reveal whether or not that locale is already installed.
+      In browser implementations the initial set of locales, currencies, calendars, numbering systems, and other enumerable items visible to a particular origin must be the same for all users sharing the same user agent string (engine and platform version). Furthermore, dynamic changes to these sets must not result in users becoming distinguishable from each other. This constraint is imposed to reduce the fingerprinting risk inherent in internationalization, and may be relaxed in future revisions. As a result of this constraint, the first time a browser implementation that allows on-demand locale installation receives a request from a particular origin that could require installing a new locale, it must not reveal whether or not that locale is already installed.
     </p>
 
     <emu-clause id="sec-compatibility">
