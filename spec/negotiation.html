@@ -426,7 +426,7 @@
       <emu-alg>
         1. If _value_ is *undefined*, return _fallback_.
         1. Set _value_ to ? ToNumber(_value_).
-        1. If _value_ is not finite or _value_ is *NaN*, throw a *RangeError* exception.
+        1. If _value_ is not finite, throw a *RangeError* exception.
         1. Set _value_ to truncate(ℝ(_value_)).
         1. If _value_ &lt; _minimum_ or _value_ &gt; _maximum_, throw a *RangeError* exception.
         1. Return _value_.
