@@ -27,7 +27,7 @@
         1. Let _O_ be ? RequireObjectCoercible(*this* value).
         1. Let _S_ be ? ToString(_O_).
         1. Let _thatValue_ be ? ToString(_that_).
-        1. Let _collator_ be ? Construct(%Intl.Collator%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _collator_ be ? Construct(%Intl.Collator%, « _locales_, _options_ »).
         1. Return CompareStrings(_collator_, _S_, _thatValue_).
       </emu-alg>
 
@@ -84,7 +84,7 @@
           1. Else,
             1. Let _requestedLocale_ be DefaultLocale().
           1. Let _availableLocales_ be an Available Locales List which includes the language tags for which the Unicode Character Database contains language-sensitive case mappings. If the implementation supports additional locale-sensitive case mappings, _availableLocales_ should also include their corresponding language tags.
-          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, &laquo; _requestedLocale_ &raquo;).
+          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, « _requestedLocale_ »).
           1. If _match_ is not *undefined*, let _locale_ be _match_.[[locale]]; else let _locale_ be *"und"*.
           1. Let _codePoints_ be StringToCodePoints(_S_).
           1. If _targetCase_ is ~lower~, then
@@ -148,7 +148,7 @@
 
       <emu-alg>
         1. Let _x_ be ? ThisNumberValue(*this* value).
-        1. Let _numberFormat_ be ? Construct(%Intl.NumberFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _numberFormat_ be ? Construct(%Intl.NumberFormat%, « _locales_, _options_ »).
         1. Return FormatNumeric(_numberFormat_, ! ToIntlMathematicalValue(_x_)).
       </emu-alg>
     </emu-clause>
@@ -174,7 +174,7 @@
 
       <emu-alg>
         1. Let _x_ be ? ThisBigIntValue(*this* value).
-        1. Let _numberFormat_ be ? Construct(%Intl.NumberFormat%, &laquo; _locales_, _options_ &raquo;).
+        1. Let _numberFormat_ be ? Construct(%Intl.NumberFormat%, « _locales_, _options_ »).
         1. Return FormatNumeric(_numberFormat_, ℝ(_x_)).
       </emu-alg>
     </emu-clause>
@@ -276,7 +276,7 @@
             1. Set _R_ to the string-concatenation of _R_ and _separator_.
           1. Let _nextElement_ be ? Get(_array_, ! ToString(𝔽(_k_))).
           1. If _nextElement_ is not *undefined* or *null*, then
-            1. Let _S_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, &laquo; _locales_, _options_ &raquo;)).
+            1. Let _S_ be ? ToString(? Invoke(_nextElement_, *"toLocaleString"*, « _locales_, _options_ »)).
             1. Set _R_ to the string-concatenation of _R_ and _S_.
           1. Set _k_ to _k_ + 1.
         1. Return _R_.
