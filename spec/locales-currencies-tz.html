@@ -57,11 +57,11 @@
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
         1. If _lowerLocale_ cannot be matched by the <code>unicode_locale_id</code> Unicode locale nonterminal, return *false*.
         1. If _lowerLocale_ uses any of the backwards compatibility syntax described in <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, return *false*.
-        1. Let _languageId_ be the longest prefix of _lowerLocale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Let _variants_ be GetLocaleVariants(_languageId_).
+        1. Let _baseName_ be GetLocaleBaseName(_lowerLocale_).
+        1. Let _variants_ be GetLocaleVariants(_baseName_).
         1. If _variants_ is not *undefined*, then
           1. If _variants_ contains any duplicate subtags, return *false*.
-        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _languageId_.
+        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _baseName_.
         1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
