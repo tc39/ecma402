@@ -17,11 +17,11 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _relevantExtensionKeys_ be %Intl.Locale%.[[RelevantExtensionKeys]].
+        1. Let _localeExtensionKeys_ be %Intl.Locale%.[[LocaleExtensionKeys]].
         1. Let _internalSlotsList_ be &laquo; [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[HourCycle]], [[NumberingSystem]] &raquo;.
-        1. If _relevantExtensionKeys_ contains *"kf"*, then
+        1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Append [[CaseFirst]] to _internalSlotsList_.
-        1. If _relevantExtensionKeys_ contains *"kn"*, then
+        1. If _localeExtensionKeys_ contains *"kn"*, then
           1. Append [[Numeric]] to _internalSlotsList_.
         1. Let _locale_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.Locale.prototype%"*, _internalSlotsList_).
         1. If _tag_ is not a String and _tag_ is not an Object, throw a *TypeError* exception.
@@ -53,14 +53,14 @@
         1. If _numberingSystem_ is not *undefined*, then
           1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _r_ be MakeLocaleRecord(_tag_, _opt_, _relevantExtensionKeys_).
+        1. Let _r_ be MakeLocaleRecord(_tag_, _opt_, _localeExtensionKeys_).
         1. Set _locale_.[[Locale]] to _r_.[[locale]].
         1. Set _locale_.[[Calendar]] to _r_.[[ca]].
         1. Set _locale_.[[Collation]] to _r_.[[co]].
         1. Set _locale_.[[HourCycle]] to _r_.[[hc]].
-        1. If _relevantExtensionKeys_ contains *"kf"*, then
+        1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _r_.[[kf]].
-        1. If _relevantExtensionKeys_ contains *"kn"*, then
+        1. If _localeExtensionKeys_ contains *"kn"*, then
           1. If SameValue(_r_.[[kn]], *"true"*) is *true* or _r_.[[kn]] is the empty String, then
             1. Set _locale_.[[Numeric]] to *true*.
           1. Else,
@@ -106,12 +106,12 @@
         MakeLocaleRecord (
           _tag_: a language tag,
           _options_: a Record,
-          _relevantExtensionKeys_: a List of Strings,
+          _localeExtensionKeys_: a List of Strings,
         ): a Record
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It constructs and returns a Record in which each element of _relevantExtensionKeys_ defines a corresponding field with data from any Unicode locale extension sequence of _tag_ as overridden by a corresponding field of _options_, and which additionally includes a [[locale]] field containing a Unicode canonicalized locale identifier resulting from incorporating those fields into _tag_.</dd>
+        <dd>It constructs and returns a Record in which each element of _localeExtensionKeys_ defines a corresponding field with data from any Unicode locale extension sequence of _tag_ as overridden by a corresponding field of _options_, and which additionally includes a [[locale]] field containing a Unicode canonicalized locale identifier resulting from incorporating those fields into _tag_.</dd>
       </dl>
       <emu-alg>
         1. If _tag_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
@@ -123,7 +123,7 @@
           1. Let _attributes_ be a new empty List.
           1. Let _keywords_ be a new empty List.
         1. Let _result_ be a new Record.
-        1. For each element _key_ of _relevantExtensionKeys_, do
+        1. For each element _key_ of _localeExtensionKeys_, do
           1. If _keywords_ contains an element whose [[Key]] is _key_, then
             1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
             1. Let _value_ be _entry_.[[Value]].
@@ -171,7 +171,7 @@
       <h1>Internal slots</h1>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* &raquo;. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[RelevantExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[RelevantExtensionKeys]].
+        The value of the [[LocaleExtensionKeys]] internal slot is &laquo; *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* &raquo;. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].
       </p>
     </emu-clause>
   </emu-clause>
@@ -258,7 +258,7 @@
 
     <emu-clause id="sec-Intl.Locale.prototype.caseFirst">
       <h1>get Intl.Locale.prototype.caseFirst</h1>
-      <p>This property only exists if %Intl.Locale%.[[RelevantExtensionKeys]] contains *"kf"*.</p>
+      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kf"*.</p>
       <p>`Intl.Locale.prototype.caseFirst` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
@@ -289,7 +289,7 @@
 
     <emu-clause id="sec-Intl.Locale.prototype.numeric">
       <h1>get Intl.Locale.prototype.numeric</h1>
-      <p>This property only exists if %Intl.Locale%.[[RelevantExtensionKeys]] contains *"kn"*.</p>
+      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kn"*.</p>
       <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
@@ -360,8 +360,8 @@
       <li>[[Collation]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
       <li>[[HourCycle]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
       <li>[[NumberingSystem]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
-      <li>[[CaseFirst]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
-      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[RelevantExtensionKeys]] internal slot of %Intl.Locale% contains *"kn"*.</li>
+      <li>[[CaseFirst]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
+      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kn"*.</li>
     </ul>
   </emu-clause>
 
