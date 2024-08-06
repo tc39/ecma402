@@ -237,7 +237,6 @@
     </p>
 
     <p>This section complements but does not supersede <emu-xref href="#sec-time-zone-identifiers"></emu-xref>.</p>
-    </emu-clause>
 
     <emu-clause id="sup-availablenamedtimezoneidentifiers" oldids="sec-availabletimezones" type="implementation-defined abstract operation">
       <h1>AvailableNamedTimeZoneIdentifiers ( ): a List of Time Zone Identifier Records</h1>
@@ -366,37 +365,37 @@
       </emu-alg>
     </emu-clause>
 
-      <emu-clause id="sec-string-split-to-list" type="abstract operation">
-        <h1>
-          StringSplitToList (
-            _S_: a String,
-            _separator_: a String,
-          ): a List of Strings
-        </h1>
-        <dl class="header">
-          <dt>description</dt>
-          <dd>
-            The returned List contains all disjoint substrings of _S_ that do not contain _separator_ but are immediately preceded and/or immediately followed by an occurrence of _separator_.
-            Each such <emu-not-ref>substring</emu-not-ref> will be the empty String between adjacent occurrences of _separator_, before a _separator_ at the very start of _S_, or after a _separator_ at the very end of _S_, but otherwise will not be empty.
-          </dd>
-        </dl>
-        <emu-alg>
-          1. Assert: _S_ is not the empty String.
-          1. Assert: _separator_ is not the empty String.
-          1. Let _separatorLength_ be the length of _separator_.
-          1. Let _substrings_ be a new empty List.
-          1. Let _i_ be 0.
-          1. Let _j_ be StringIndexOf(_S_, _separator_, 0).
-          1. Repeat, while _j_ is not ~not-found~,
-            1. Let _T_ be the substring of _S_ from _i_ to _j_.
-            1. Append _T_ to _substrings_.
-            1. Set _i_ to _j_ + _separatorLength_.
-            1. Set _j_ to StringIndexOf(_S_, _separator_, _i_).
-          1. Let _T_ be the substring of _S_ from _i_.
+    <emu-clause id="sec-string-split-to-list" type="abstract operation">
+      <h1>
+        StringSplitToList (
+          _S_: a String,
+          _separator_: a String,
+        ): a List of Strings
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          The returned List contains all disjoint substrings of _S_ that do not contain _separator_ but are immediately preceded and/or immediately followed by an occurrence of _separator_.
+          Each such <emu-not-ref>substring</emu-not-ref> will be the empty String between adjacent occurrences of _separator_, before a _separator_ at the very start of _S_, or after a _separator_ at the very end of _S_, but otherwise will not be empty.
+        </dd>
+      </dl>
+      <emu-alg>
+        1. Assert: _S_ is not the empty String.
+        1. Assert: _separator_ is not the empty String.
+        1. Let _separatorLength_ be the length of _separator_.
+        1. Let _substrings_ be a new empty List.
+        1. Let _i_ be 0.
+        1. Let _j_ be StringIndexOf(_S_, _separator_, 0).
+        1. Repeat, while _j_ is not ~not-found~,
+          1. Let _T_ be the substring of _S_ from _i_ to _j_.
           1. Append _T_ to _substrings_.
-          1. Return _substrings_.
-        </emu-alg>
-      </emu-clause>
+          1. Set _i_ to _j_ + _separatorLength_.
+          1. Set _j_ to StringIndexOf(_S_, _separator_, _i_).
+        1. Let _T_ be the substring of _S_ from _i_.
+        1. Append _T_ to _substrings_.
+        1. Return _substrings_.
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-measurement-unit-identifiers">
