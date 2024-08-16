@@ -17,15 +17,15 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, &laquo; [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] &raquo;).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _r_ be ResolveLocale(%Intl.PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.PluralRules%.[[RelevantExtensionKeys]], %Intl.PluralRules%.[[LocaleData]]).
         1. Set _pluralRules_.[[Locale]] to _r_.[[Locale]].
-        1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"cardinal"*, *"ordinal"* &raquo;, *"cardinal"*).
+        1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
         1. Return _pluralRules_.
@@ -73,7 +73,7 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+        The value of the [[RelevantExtensionKeys]] internal slot is « ».
       </p>
 
       <emu-note>

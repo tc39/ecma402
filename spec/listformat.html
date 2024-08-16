@@ -17,17 +17,17 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.ListFormat.prototype%"*, &laquo; [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] &raquo;).
+        1. Let _listFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.ListFormat.prototype%"*, « [[InitializedListFormat]], [[Locale]], [[Type]], [[Style]], [[Templates]] »).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? GetOptionsObject(_options_).
         1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, &laquo; *"lookup"*, *"best fit"* &raquo;, *"best fit"*).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Set _opt_.[[localeMatcher]] to _matcher_.
         1. Let _r_ be ResolveLocale(%Intl.ListFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.ListFormat%.[[RelevantExtensionKeys]], %Intl.ListFormat%.[[LocaleData]]).
         1. Set _listFormat_.[[Locale]] to _r_.[[Locale]].
-        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, &laquo; *"conjunction"*, *"disjunction"*, *"unit"* &raquo;, *"conjunction"*).
+        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"conjunction"*, *"disjunction"*, *"unit"* », *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, &laquo; *"long"*, *"short"*, *"narrow"* &raquo;, *"long"*).
+        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"long"*, *"short"*, *"narrow"* », *"long"*).
         1. Set _listFormat_.[[Style]] to _style_.
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. Let _dataLocaleTypes_ be _resolvedLocaleData_.[[&lt;_type_&gt;]].
@@ -77,7 +77,7 @@
       </p>
 
       <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is &laquo; &raquo;.
+        The value of the [[RelevantExtensionKeys]] internal slot is « ».
       </p>
 
       <emu-note>
@@ -253,13 +253,13 @@ Input:
   })
 
 Output (List of parts Records):
-  &laquo;
+  «
     {[[Type]]: "literal", [[Value]]: "AA"},
     {[[Type]]: "hour", [[Value]]: "15"},
     {[[Type]]: "literal", [[Value]]: "BB"},
     {[[Type]]: "minute", [[Value]]: "06"},
     {[[Type]]: "literal", [[Value]]: "CC"}
-  &raquo;
+  »
           </pre>
         </dd>
       </dl>
@@ -305,9 +305,9 @@ Output (List of parts Records):
           1. Let _placeables_ be the Record { [[0]]: _first_, [[1]]: _second_ }.
           1. Return DeconstructPattern(_pattern_, _placeables_).
         1. Let _last_ be the Record { [[Type]]: *"element"*, [[Value]]: _list_[_size_ - 1] }.
-        1. Let _parts_ be &laquo; _last_ &raquo;.
+        1. Let _parts_ be « _last_ ».
         1. Let _i_ be _size_ - 2.
-        1. Repeat, while _i_ &ge; 0,
+        1. Repeat, while _i_ ≥ 0,
           1. Let _head_ be the Record { [[Type]]: *"element"*, [[Value]]: _list_[_i_] }.
           1. Let _n_ be an implementation-defined index into _listFormat_.[[Templates]] based on _listFormat_.[[Locale]], _head_, and _parts_.
           1. If _i_ is 0, then
