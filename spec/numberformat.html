@@ -697,6 +697,11 @@
         1. Assert: _currency_ is the ASCII-uppercase of _currency_.
         1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, return the minor unit value corresponding to the _currency_ from the list; otherwise, return 2.
       </emu-alg>
+
+      <emu-note>
+        Implementations using the locale data provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>) should determine the number of minor units displayed using the value of the *"digits"* attribute rather than the value of the*"cashDigits"* attribute.
+        Likewise, implementations using CLDR should ignore the *"rounding"* and *"cashRounding"* attributes.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-number-format-functions">
