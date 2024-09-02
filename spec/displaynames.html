@@ -132,36 +132,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.displaynames.prototype-%symbol.tostringtag%" oldids="sec-Intl.DisplayNames.prototype-@@tostringtag">
-      <h1>Intl.DisplayNames.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DisplayNames"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.DisplayNames.prototype.of">
-      <h1>Intl.DisplayNames.prototype.of ( _code_ )</h1>
-
-      <p>
-        When the `Intl.DisplayNames.prototype.of` is called with an argument _code_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _displayNames_ be *this* value.
-        1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
-        1. Let _code_ be ? ToString(_code_).
-        1. Set _code_ to ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
-        1. Let _fields_ be _displayNames_.[[Fields]].
-        1. If _fields_ has a field [[&lt;_code_&gt;]], return _fields_.[[&lt;_code_&gt;]].
-        1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.
-        1. Return *undefined*.
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.DisplayNames.prototype.resolvedOptions">
       <h1>Intl.DisplayNames.prototype.resolvedOptions ( )</h1>
 
@@ -212,6 +182,36 @@
           </tr>
         </table>
       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.displaynames.prototype-%symbol.tostringtag%" oldids="sec-Intl.DisplayNames.prototype-@@tostringtag">
+      <h1>Intl.DisplayNames.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DisplayNames"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DisplayNames.prototype.of">
+      <h1>Intl.DisplayNames.prototype.of ( _code_ )</h1>
+
+      <p>
+        When the `Intl.DisplayNames.prototype.of` is called with an argument _code_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _displayNames_ be *this* value.
+        1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
+        1. Let _code_ be ? ToString(_code_).
+        1. Set _code_ to ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
+        1. Let _fields_ be _displayNames_.[[Fields]].
+        1. If _fields_ has a field [[&lt;_code_&gt;]], return _fields_.[[&lt;_code_&gt;]].
+        1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.
+        1. Return *undefined*.
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 

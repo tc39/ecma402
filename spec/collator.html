@@ -144,6 +144,78 @@
       </p>
     </emu-clause>
 
+    <emu-clause id="sec-intl.collator.prototype.resolvedoptions">
+      <h1>Intl.Collator.prototype.resolvedOptions ( )</h1>
+
+      <p>
+        This function provides access to the locale and options computed during initialization of the object.
+      </p>
+
+      <emu-alg>
+        1. Let _collator_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
+        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
+        1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
+          1. Let _p_ be the Property value of the current row.
+          1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If the current row has an Extension Key value, then
+            1. Let _extensionKey_ be the Extension Key value of the current row.
+            1. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain _extensionKey_, then
+              1. Set _v_ to *undefined*.
+          1. If _v_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+        1. Return _options_.
+      </emu-alg>
+
+      <emu-table id="table-collator-resolvedoptions-properties">
+        <emu-caption>Resolved Options of Collator Instances</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Internal Slot</th>
+              <th>Property</th>
+              <th>Extension Key</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[Locale]]</td>
+            <td>*"locale"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[Usage]]</td>
+            <td>*"usage"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[Sensitivity]]</td>
+            <td>*"sensitivity"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[IgnorePunctuation]]</td>
+            <td>*"ignorePunctuation"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[Collation]]</td>
+            <td>*"collation"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[Numeric]]</td>
+            <td>*"numeric"*</td>
+            <td>*"kn"*</td>
+          </tr>
+          <tr>
+            <td>[[CaseFirst]]</td>
+            <td>*"caseFirst"*</td>
+            <td>*"kf"*</td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+
     <emu-clause id="sec-intl.collator.prototype-%symbol.tostringtag%" oldids="sec-intl.collator.prototype-@@tostringtag">
       <h1>Intl.Collator.prototype [ %Symbol.toStringTag% ]</h1>
 
@@ -282,78 +354,6 @@
           Applications should not assume that the behaviour of the CompareStrings abstract operation for Collator instances with the same resolved options will remain the same for different versions of the same implementation.
         </emu-note>
       </emu-clause>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.collator.prototype.resolvedoptions">
-      <h1>Intl.Collator.prototype.resolvedOptions ( )</h1>
-
-      <p>
-        This function provides access to the locale and options computed during initialization of the object.
-      </p>
-
-      <emu-alg>
-        1. Let _collator_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
-        1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
-        1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _p_ be the Property value of the current row.
-          1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
-          1. If the current row has an Extension Key value, then
-            1. Let _extensionKey_ be the Extension Key value of the current row.
-            1. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain _extensionKey_, then
-              1. Set _v_ to *undefined*.
-          1. If _v_ is not *undefined*, then
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
-        1. Return _options_.
-      </emu-alg>
-
-      <emu-table id="table-collator-resolvedoptions-properties">
-        <emu-caption>Resolved Options of Collator Instances</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Internal Slot</th>
-              <th>Property</th>
-              <th>Extension Key</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>[[Locale]]</td>
-            <td>*"locale"*</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>[[Usage]]</td>
-            <td>*"usage"*</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>[[Sensitivity]]</td>
-            <td>*"sensitivity"*</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>[[IgnorePunctuation]]</td>
-            <td>*"ignorePunctuation"*</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>[[Collation]]</td>
-            <td>*"collation"*</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>[[Numeric]]</td>
-            <td>*"numeric"*</td>
-            <td>*"kn"*</td>
-          </tr>
-          <tr>
-            <td>[[CaseFirst]]</td>
-            <td>*"caseFirst"*</td>
-            <td>*"kf"*</td>
-          </tr>
-        </table>
-      </emu-table>
     </emu-clause>
   </emu-clause>
 

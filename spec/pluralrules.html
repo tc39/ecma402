@@ -105,49 +105,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
-      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.pluralrules.prototype.select">
-      <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
-
-      <p>
-        When the `select` method is called with an argument _value_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _pr_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. Let _n_ be ? ToNumber(_value_).
-        1. Return ResolvePlural(_pr_, _n_).[[PluralCategory]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.pluralrules.prototype.selectrange">
-      <h1>Intl.PluralRules.prototype.selectRange ( _start_, _end_ )</h1>
-
-      <p>
-        When the `selectRange` method is called with arguments _start_ and _end_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _pr_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumber(_start_).
-        1. Let _y_ be ? ToNumber(_end_).
-        1. Return ? ResolvePluralRange(_pr_, _x_, _y_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.pluralrules.prototype.resolvedoptions">
       <h1>Intl.PluralRules.prototype.resolvedOptions ( )</h1>
 
@@ -246,6 +203,49 @@
           </tr>
         </table>
       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
+      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype.select">
+      <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
+
+      <p>
+        When the `select` method is called with an argument _value_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _pr_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
+        1. Let _n_ be ? ToNumber(_value_).
+        1. Return ResolvePlural(_pr_, _n_).[[PluralCategory]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype.selectrange">
+      <h1>Intl.PluralRules.prototype.selectRange ( _start_, _end_ )</h1>
+
+      <p>
+        When the `selectRange` method is called with arguments _start_ and _end_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _pr_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
+        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToNumber(_start_).
+        1. Let _y_ be ? ToNumber(_end_).
+        1. Return ? ResolvePluralRange(_pr_, _x_, _y_).
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 
