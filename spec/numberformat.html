@@ -480,21 +480,6 @@
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
-      <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
-
-      <p>
-        When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _nf_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
-        1. Let _x_ be ? ToIntlMathematicalValue(_value_).
-        1. Return FormatNumericToParts(_nf_, _x_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.numberformat.prototype.formatrange">
       <h1>Intl.NumberFormat.prototype.formatRange ( _start_, _end_ )</h1>
 
@@ -526,6 +511,21 @@
         1. Let _x_ be ? ToIntlMathematicalValue(_start_).
         1. Let _y_ be ? ToIntlMathematicalValue(_end_).
         1. Return ? FormatNumericRangeToParts(_nf_, _x_, _y_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
+      <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _nf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_nf_, [[InitializedNumberFormat]]).
+        1. Let _x_ be ? ToIntlMathematicalValue(_value_).
+        1. Return FormatNumericToParts(_nf_, _x_).
       </emu-alg>
     </emu-clause>
   </emu-clause>
