@@ -129,49 +129,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype-toStringTag">
-      <h1>Intl.RelativeTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.RelativeTimeFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.format">
-      <h1>Intl.RelativeTimeFormat.prototype.format ( _value_, _unit_ )</h1>
-
-      <p>
-        When the `format` method is called with arguments _value_ and _unit_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _relativeTimeFormat_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
-        1. Let _value_ be ? ToNumber(_value_).
-        1. Let _unit_ be ? ToString(_unit_).
-        1. Return ? FormatRelativeTime(_relativeTimeFormat_, _value_, _unit_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.formatToParts">
-      <h1>Intl.RelativeTimeFormat.prototype.formatToParts ( _value_, _unit_ )</h1>
-
-      <p>
-        When the `formatToParts` method is called with arguments _value_ and _unit_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _relativeTimeFormat_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
-        1. Let _value_ be ? ToNumber(_value_).
-        1. Let _unit_ be ? ToString(_unit_).
-        1. Return ? FormatRelativeTimeToParts(_relativeTimeFormat_, _value_, _unit_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.relativetimeformat.prototype.resolvedoptions">
       <h1>Intl.RelativeTimeFormat.prototype.resolvedOptions ( )</h1>
 
@@ -218,6 +175,49 @@
           </tr>
         </table>
       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype-toStringTag">
+      <h1>Intl.RelativeTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.RelativeTimeFormat"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.format">
+      <h1>Intl.RelativeTimeFormat.prototype.format ( _value_, _unit_ )</h1>
+
+      <p>
+        When the `format` method is called with arguments _value_ and _unit_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _relativeTimeFormat_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
+        1. Let _value_ be ? ToNumber(_value_).
+        1. Let _unit_ be ? ToString(_unit_).
+        1. Return ? FormatRelativeTime(_relativeTimeFormat_, _value_, _unit_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.formatToParts">
+      <h1>Intl.RelativeTimeFormat.prototype.formatToParts ( _value_, _unit_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with arguments _value_ and _unit_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _relativeTimeFormat_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_relativeTimeFormat_, [[InitializedRelativeTimeFormat]]).
+        1. Let _value_ be ? ToNumber(_value_).
+        1. Let _unit_ be ? ToString(_unit_).
+        1. Return ? FormatRelativeTimeToParts(_relativeTimeFormat_, _value_, _unit_).
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 
