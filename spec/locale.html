@@ -69,84 +69,6 @@
         1. Return _locale_.
       </emu-alg>
     </emu-clause>
-
-    <emu-clause id="sec-updatelanguageid" type="abstract operation" oldids="sec-apply-options-to-tag">
-      <h1>
-        UpdateLanguageId (
-          _tag_: a Unicode canonicalized locale identifier,
-          _options_: an Object,
-        ): either a normal completion containing a language tag or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It updates the <code>unicode_language_id</code> subtags in _tag_ from the corresponding properties of _options_ and returns the <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> but non-canonicalized result.</dd>
-      </dl>
-      <emu-alg>
-        1. Let _languageId_ be the longest prefix of _tag_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-        1. Let _language_ be ? GetOption(_options_, *"language"*, ~string~, ~empty~, GetLocaleLanguage(_languageId_)).
-        1. If _language_ cannot be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Let _script_ be ? GetOption(_options_, *"script"*, ~string~, ~empty~, GetLocaleScript(_languageId_)).
-        1. If _script_ is not *undefined*, then
-          1. If _script_ cannot be matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Let _region_ be ? GetOption(_options_, *"region"*, ~string~, ~empty~, GetLocaleRegion(_languageId_)).
-        1. If _region_ is not *undefined*, then
-          1. If _region_ cannot be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Let _variants_ be GetLocaleVariants(_languageId_).
-        1. Let _newLanguageId_ be _language_.
-        1. If _script_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _script_.
-        1. If _region_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _region_.
-        1. If _variants_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _variants_.
-        1. Let _newTag_ be _tag_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_id</code> Unicode locale nonterminal replaced by the string _newLanguageId_.
-        1. Return _newTag_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-makelocalerecord" type="abstract operation" oldids="sec-apply-unicode-extension-to-tag">
-      <h1>
-        MakeLocaleRecord (
-          _tag_: a language tag,
-          _options_: a Record,
-          _localeExtensionKeys_: a List of Strings,
-        ): a Record
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It constructs and returns a Record in which each element of _localeExtensionKeys_ defines a corresponding field with data from any Unicode locale extension sequence of _tag_ as overridden by a corresponding field of _options_, and which additionally includes a [[locale]] field containing a Unicode canonicalized locale identifier resulting from incorporating those fields into _tag_.</dd>
-      </dl>
-      <emu-alg>
-        1. If _tag_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
-          1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _tag_.
-          1. Let _components_ be UnicodeExtensionComponents(_extension_).
-          1. Let _attributes_ be _components_.[[Attributes]].
-          1. Let _keywords_ be _components_.[[Keywords]].
-        1. Else,
-          1. Let _attributes_ be a new empty List.
-          1. Let _keywords_ be a new empty List.
-        1. Let _result_ be a new Record.
-        1. For each element _key_ of _localeExtensionKeys_, do
-          1. If _keywords_ contains an element whose [[Key]] is _key_, then
-            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
-            1. Let _value_ be _entry_.[[Value]].
-          1. Else,
-            1. Let _entry_ be ~empty~.
-            1. Let _value_ be *undefined*.
-          1. Assert: _options_ has a field [[&lt;_key_&gt;]].
-          1. Let _overrideValue_ be _options_.[[&lt;_key_&gt;]].
-          1. If _overrideValue_ is not *undefined*, then
-            1. Set _value_ to CanonicalizeUValue(_key_, _overrideValue_).
-            1. If _entry_ is not ~empty~, then
-              1. Set _entry_.[[Value]] to _value_.
-            1. Else,
-              1. Append the Record { [[Key]]: _key_, [[Value]]: _value_ } to _keywords_.
-          1. Set _result_.[[&lt;_key_&gt;]] to _value_.
-        1. Let _locale_ be the String value that is _tag_ with any Unicode locale extension sequences removed.
-        1. If _attributes_ is not empty or _keywords_ is not empty, then
-          1. Set _result_.[[locale]] to InsertUnicodeExtensionAndCanonicalize(_locale_, _attributes_, _keywords_).
-        1. Else,
-          1. Set _result_.[[locale]] to CanonicalizeUnicodeLocaleId(_locale_).
-        1. Return _result_.
-      </emu-alg>
-    </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-locale-constructor">
@@ -367,6 +289,84 @@
 
   <emu-clause id="sec-intl-locale-abstracts">
     <h1>Abstract Operations for Locale Objects</h1>
+
+    <emu-clause id="sec-updatelanguageid" type="abstract operation" oldids="sec-apply-options-to-tag">
+      <h1>
+        UpdateLanguageId (
+          _tag_: a Unicode canonicalized locale identifier,
+          _options_: an Object,
+        ): either a normal completion containing a language tag or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It updates the <code>unicode_language_id</code> subtags in _tag_ from the corresponding properties of _options_ and returns the <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> but non-canonicalized result.</dd>
+      </dl>
+      <emu-alg>
+        1. Let _languageId_ be the longest prefix of _tag_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+        1. Let _language_ be ? GetOption(_options_, *"language"*, ~string~, ~empty~, GetLocaleLanguage(_languageId_)).
+        1. If _language_ cannot be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Let _script_ be ? GetOption(_options_, *"script"*, ~string~, ~empty~, GetLocaleScript(_languageId_)).
+        1. If _script_ is not *undefined*, then
+          1. If _script_ cannot be matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Let _region_ be ? GetOption(_options_, *"region"*, ~string~, ~empty~, GetLocaleRegion(_languageId_)).
+        1. If _region_ is not *undefined*, then
+          1. If _region_ cannot be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Let _variants_ be GetLocaleVariants(_languageId_).
+        1. Let _newLanguageId_ be _language_.
+        1. If _script_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _script_.
+        1. If _region_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _region_.
+        1. If _variants_ is not *undefined*, set _newLanguageId_ to the string-concatenation of _newLanguageId_, *"-"*, and _variants_.
+        1. Let _newTag_ be _tag_ with the <emu-not-ref>substring</emu-not-ref> matched by the <code>unicode_language_id</code> Unicode locale nonterminal replaced by the string _newLanguageId_.
+        1. Return _newTag_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-makelocalerecord" type="abstract operation" oldids="sec-apply-unicode-extension-to-tag">
+      <h1>
+        MakeLocaleRecord (
+          _tag_: a language tag,
+          _options_: a Record,
+          _localeExtensionKeys_: a List of Strings,
+        ): a Record
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It constructs and returns a Record in which each element of _localeExtensionKeys_ defines a corresponding field with data from any Unicode locale extension sequence of _tag_ as overridden by a corresponding field of _options_, and which additionally includes a [[locale]] field containing a Unicode canonicalized locale identifier resulting from incorporating those fields into _tag_.</dd>
+      </dl>
+      <emu-alg>
+        1. If _tag_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
+          1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _tag_.
+          1. Let _components_ be UnicodeExtensionComponents(_extension_).
+          1. Let _attributes_ be _components_.[[Attributes]].
+          1. Let _keywords_ be _components_.[[Keywords]].
+        1. Else,
+          1. Let _attributes_ be a new empty List.
+          1. Let _keywords_ be a new empty List.
+        1. Let _result_ be a new Record.
+        1. For each element _key_ of _localeExtensionKeys_, do
+          1. If _keywords_ contains an element whose [[Key]] is _key_, then
+            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
+            1. Let _value_ be _entry_.[[Value]].
+          1. Else,
+            1. Let _entry_ be ~empty~.
+            1. Let _value_ be *undefined*.
+          1. Assert: _options_ has a field [[&lt;_key_&gt;]].
+          1. Let _overrideValue_ be _options_.[[&lt;_key_&gt;]].
+          1. If _overrideValue_ is not *undefined*, then
+            1. Set _value_ to CanonicalizeUValue(_key_, _overrideValue_).
+            1. If _entry_ is not ~empty~, then
+              1. Set _entry_.[[Value]] to _value_.
+            1. Else,
+              1. Append the Record { [[Key]]: _key_, [[Value]]: _value_ } to _keywords_.
+          1. Set _result_.[[&lt;_key_&gt;]] to _value_.
+        1. Let _locale_ be the String value that is _tag_ with any Unicode locale extension sequences removed.
+        1. If _attributes_ is not empty or _keywords_ is not empty, then
+          1. Set _result_.[[locale]] to InsertUnicodeExtensionAndCanonicalize(_locale_, _attributes_, _keywords_).
+        1. Else,
+          1. Set _result_.[[locale]] to CanonicalizeUnicodeLocaleId(_locale_).
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
 
     <emu-clause id="sec-getlocalelanguage" type="abstract operation">
       <h1>

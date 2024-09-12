@@ -23,168 +23,6 @@
           1. Return ? ChainDateTimeFormat(_dateTimeFormat_, NewTarget, _this_).
         1. Return _dateTimeFormat_.
       </emu-alg>
-
-      <emu-normative-optional>
-      <emu-clause id="sec-chaindatetimeformat" type="abstract operation">
-        <h1>
-          ChainDateTimeFormat (
-            _dateTimeFormat_: an Intl.DateTimeFormat,
-            _newTarget_: an ECMAScript language value,
-            _this_: an ECMAScript language value,
-          ): either a normal completion containing an Object or a throw completion
-        </h1>
-        <dl class="header">
-        </dl>
-        <emu-alg>
-          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _this_) is *true*, then
-            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-            1. Return _this_.
-          1. Return _dateTimeFormat_.
-        </emu-alg>
-      </emu-clause>
-      </emu-normative-optional>
-    </emu-clause>
-
-    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions">
-      <h1>
-        CreateDateTimeFormat (
-          _newTarget_: a constructor,
-          _locales_: an ECMAScript language value,
-          _options_: an ECMAScript language value,
-          _required_: ~date~, ~time~, or ~any~,
-          _defaults_: ~date~, ~time~, or ~all~,
-        ): either a normal completion containing a DateTimeFormat object or a throw completion
-      </h1>
-
-      <dl class="header">
-      </dl>
-
-      <emu-alg>
-        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
-        1. If _calendar_ is not *undefined*, then
-          1. If _calendar_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[ca]] to _calendar_.
-        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
-        1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _hour12_ be ? GetOption(_options_, *"hour12"*, ~boolean~, ~empty~, *undefined*).
-        1. Let _hourCycle_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
-        1. If _hour12_ is not *undefined*, then
-          1. Set _hourCycle_ to *null*.
-        1. Set _opt_.[[hc]] to _hourCycle_.
-        1. Let _r_ be ResolveLocale(%Intl.DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DateTimeFormat%.[[RelevantExtensionKeys]], %Intl.DateTimeFormat%.[[LocaleData]]).
-        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
-        1. Let _resolvedCalendar_ be _r_.[[ca]].
-        1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
-        1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
-        1. If _hour12_ is *true*, then
-          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
-        1. Else if _hour12_ is *false*, then
-          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle24]].
-        1. Else,
-          1. Assert: _hour12_ is *undefined*.
-          1. Let _hc_ be _r_.[[hc]].
-          1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
-        1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
-        1. If _timeZone_ is *undefined*, then
-          1. Set _timeZone_ to SystemTimeZoneIdentifier().
-        1. Else,
-          1. Set _timeZone_ to ? ToString(_timeZone_).
-        1. If IsTimeZoneOffsetString(_timeZone_) is *true*, then
-          1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
-          1. Assert: _parseResult_ is a Parse Node.
-          1. If _parseResult_ contains more than one |MinuteSecond| Parse Node, throw a *RangeError* exception.
-          1. Let _offsetNanoseconds_ be ParseTimeZoneOffsetString(_timeZone_).
-          1. Let _offsetMinutes_ be _offsetNanoseconds_ / (6 × 10<sup>10</sup>).
-          1. Assert: _offsetMinutes_ is an integer.
-          1. Set _timeZone_ to FormatOffsetTimeZoneIdentifier(_offsetMinutes_).
-        1. Else,
-          1. Let _timeZoneIdentifierRecord_ be GetAvailableNamedTimeZoneIdentifier(_timeZone_).
-          1. If _timeZoneIdentifierRecord_ is ~empty~, throw a *RangeError* exception.
-          1. Set _timeZone_ to _timeZoneIdentifierRecord_.[[PrimaryIdentifier]].
-        1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
-        1. Let _formatOptions_ be a new Record.
-        1. Set _formatOptions_.[[hourCycle]] to _hc_.
-        1. Let _hasExplicitFormatComponents_ be *false*.
-        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
-          1. Let _prop_ be the name given in the Property column of the current row.
-          1. If _prop_ is *"fractionalSecondDigits"*, then
-            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
-          1. Else,
-            1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
-            1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
-          1. Set _formatOptions_.[[&lt;_prop_&gt;]] to _value_.
-          1. If _value_ is not *undefined*, then
-            1. Set _hasExplicitFormatComponents_ to *true*.
-        1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
-        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
-        1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
-        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
-        1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
-        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
-          1. If _hasExplicitFormatComponents_ is *true*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
-          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
-        1. Else,
-          1. Let _needDefaults_ be *true*.
-          1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _prop_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
-              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
-          1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
-              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
-          1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
-            1. For each property name _prop_ of « *"year"*, *"month"*, *"day"* », do
-              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
-          1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
-            1. For each property name _prop_ of « *"hour"*, *"minute"*, *"second"* », do
-              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
-          1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
-          1. If _formatMatcher_ is *"basic"*, then
-            1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
-          1. Else,
-            1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
-        1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
-        1. If _bestFormat_ has a field [[hour]], then
-          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
-        1. Return _dateTimeFormat_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-formatoffsettimezoneidentifier" type="abstract operation">
-      <h1>
-        FormatOffsetTimeZoneIdentifier (
-          _offsetMinutes_: an integer,
-        ): a String
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>
-          It formats a UTC offset, in minutes, into a UTC offset string formatted like ±HH:MM.
-        </dd>
-      </dl>
-      <emu-alg>
-        1. If _offsetMinutes_ ≥ 0, let _sign_ be the code unit 0x002B (PLUS SIGN); otherwise, let _sign_ be the code unit 0x002D (HYPHEN-MINUS).
-        1. Let _absoluteMinutes_ be abs(_offsetMinutes_).
-        1. Let _hours_ be floor(_absoluteMinutes_ / 60).
-        1. Let _minutes_ be _absoluteMinutes_ modulo 60.
-        1. Return the string-concatenation of _sign_, ToZeroPaddedDecimalString(_hours_, 2), the code unit 0x003A (COLON), and ToZeroPaddedDecimalString(_minutes_, 2).
-      </emu-alg>
     </emu-clause>
   </emu-clause>
 
@@ -1244,6 +1082,168 @@
         </tr>
       </table>
     </emu-table>
+
+    <emu-normative-optional>
+    <emu-clause id="sec-chaindatetimeformat" type="abstract operation">
+      <h1>
+        ChainDateTimeFormat (
+          _dateTimeFormat_: an Intl.DateTimeFormat,
+          _newTarget_: an ECMAScript language value,
+          _this_: an ECMAScript language value,
+        ): either a normal completion containing an Object or a throw completion
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _this_) is *true*, then
+          1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+          1. Return _this_.
+        1. Return _dateTimeFormat_.
+      </emu-alg>
+    </emu-clause>
+    </emu-normative-optional>
+
+    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions">
+      <h1>
+        CreateDateTimeFormat (
+          _newTarget_: a constructor,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+          _required_: ~date~, ~time~, or ~any~,
+          _defaults_: ~date~, ~time~, or ~all~,
+        ): either a normal completion containing a DateTimeFormat object or a throw completion
+      </h1>
+
+      <dl class="header">
+      </dl>
+
+      <emu-alg>
+        1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. Set _options_ to ? CoerceOptionsToObject(_options_).
+        1. Let _opt_ be a new Record.
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
+        1. Set _opt_.[[localeMatcher]] to _matcher_.
+        1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
+        1. If _calendar_ is not *undefined*, then
+          1. If _calendar_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Set _opt_.[[ca]] to _calendar_.
+        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
+        1. If _numberingSystem_ is not *undefined*, then
+          1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Set _opt_.[[nu]] to _numberingSystem_.
+        1. Let _hour12_ be ? GetOption(_options_, *"hour12"*, ~boolean~, ~empty~, *undefined*).
+        1. Let _hourCycle_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
+        1. If _hour12_ is not *undefined*, then
+          1. Set _hourCycle_ to *null*.
+        1. Set _opt_.[[hc]] to _hourCycle_.
+        1. Let _r_ be ResolveLocale(%Intl.DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DateTimeFormat%.[[RelevantExtensionKeys]], %Intl.DateTimeFormat%.[[LocaleData]]).
+        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
+        1. Let _resolvedCalendar_ be _r_.[[ca]].
+        1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
+        1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
+        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
+        1. If _hour12_ is *true*, then
+          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
+        1. Else if _hour12_ is *false*, then
+          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle24]].
+        1. Else,
+          1. Assert: _hour12_ is *undefined*.
+          1. Let _hc_ be _r_.[[hc]].
+          1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
+        1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
+        1. If _timeZone_ is *undefined*, then
+          1. Set _timeZone_ to SystemTimeZoneIdentifier().
+        1. Else,
+          1. Set _timeZone_ to ? ToString(_timeZone_).
+        1. If IsTimeZoneOffsetString(_timeZone_) is *true*, then
+          1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
+          1. Assert: _parseResult_ is a Parse Node.
+          1. If _parseResult_ contains more than one |MinuteSecond| Parse Node, throw a *RangeError* exception.
+          1. Let _offsetNanoseconds_ be ParseTimeZoneOffsetString(_timeZone_).
+          1. Let _offsetMinutes_ be _offsetNanoseconds_ / (6 × 10<sup>10</sup>).
+          1. Assert: _offsetMinutes_ is an integer.
+          1. Set _timeZone_ to FormatOffsetTimeZoneIdentifier(_offsetMinutes_).
+        1. Else,
+          1. Let _timeZoneIdentifierRecord_ be GetAvailableNamedTimeZoneIdentifier(_timeZone_).
+          1. If _timeZoneIdentifierRecord_ is ~empty~, throw a *RangeError* exception.
+          1. Set _timeZone_ to _timeZoneIdentifierRecord_.[[PrimaryIdentifier]].
+        1. Set _dateTimeFormat_.[[TimeZone]] to _timeZone_.
+        1. Let _formatOptions_ be a new Record.
+        1. Set _formatOptions_.[[hourCycle]] to _hc_.
+        1. Let _hasExplicitFormatComponents_ be *false*.
+        1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
+          1. Let _prop_ be the name given in the Property column of the current row.
+          1. If _prop_ is *"fractionalSecondDigits"*, then
+            1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
+          1. Else,
+            1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
+            1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
+          1. Set _formatOptions_.[[&lt;_prop_&gt;]] to _value_.
+          1. If _value_ is not *undefined*, then
+            1. Set _hasExplicitFormatComponents_ to *true*.
+        1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
+        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
+        1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
+        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
+        1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
+        1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
+          1. If _hasExplicitFormatComponents_ is *true*, then
+            1. Throw a *TypeError* exception.
+          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
+          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
+            1. Throw a *TypeError* exception.
+          1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_&gt;]].
+          1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
+        1. Else,
+          1. Let _needDefaults_ be *true*.
+          1. If _required_ is ~date~ or ~any~, then
+            1. For each property name _prop_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
+              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
+          1. If _required_ is ~time~ or ~any~, then
+            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
+              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
+          1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
+            1. For each property name _prop_ of « *"year"*, *"month"*, *"day"* », do
+              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
+          1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
+            1. For each property name _prop_ of « *"hour"*, *"minute"*, *"second"* », do
+              1. Set _formatOptions_.[[&lt;_prop_&gt;]] to *"numeric"*.
+          1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_&gt;]].
+          1. If _formatMatcher_ is *"basic"*, then
+            1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
+          1. Else,
+            1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
+        1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
+        1. If _bestFormat_ has a field [[hour]], then
+          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
+        1. Return _dateTimeFormat_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-formatoffsettimezoneidentifier" type="abstract operation">
+      <h1>
+        FormatOffsetTimeZoneIdentifier (
+          _offsetMinutes_: an integer,
+        ): a String
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It formats a UTC offset, in minutes, into a UTC offset string formatted like ±HH:MM.
+        </dd>
+      </dl>
+      <emu-alg>
+        1. If _offsetMinutes_ ≥ 0, let _sign_ be the code unit 0x002B (PLUS SIGN); otherwise, let _sign_ be the code unit 0x002D (HYPHEN-MINUS).
+        1. Let _absoluteMinutes_ be abs(_offsetMinutes_).
+        1. Let _hours_ be floor(_absoluteMinutes_ / 60).
+        1. Let _minutes_ be _absoluteMinutes_ modulo 60.
+        1. Return the string-concatenation of _sign_, ToZeroPaddedDecimalString(_hours_, 2), the code unit 0x003A (COLON), and ToZeroPaddedDecimalString(_minutes_, 2).
+      </emu-alg>
+    </emu-clause>
 
     <emu-clause id="sec-date-time-style-format" type="abstract operation">
       <h1>
