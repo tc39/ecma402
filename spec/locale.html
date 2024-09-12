@@ -69,6 +69,226 @@
         1. Return _locale_.
       </emu-alg>
     </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-locale-constructor">
+    <h1>Properties of the Intl.Locale Constructor</h1>
+
+    <p>
+      The Intl.Locale constructor has the following properties:
+    </p>
+
+    <emu-clause id="sec-Intl.Locale.prototype">
+      <h1>Intl.Locale.prototype</h1>
+
+      <p>
+        The value of `Intl.Locale.prototype` is %Intl.Locale.prototype%.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.locale-internal-slots">
+      <h1>Internal slots</h1>
+
+      <p>
+        The value of the [[LocaleExtensionKeys]] internal slot is « *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* ». If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].
+      </p>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-locale-prototype-object">
+    <h1>Properties of the Intl.Locale Prototype Object</h1>
+
+    <p>
+      The Intl.Locale prototype object is itself an ordinary object. <dfn>%Intl.Locale.prototype%</dfn> is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.
+    </p>
+
+    <emu-clause id="sec-Intl.Locale.prototype.constructor">
+      <h1>Intl.Locale.prototype.constructor</h1>
+
+      <p>
+        The initial value of `Intl.Locale.prototype.constructor` is %Intl.Locale%.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.locale.prototype-%symbol.tostringtag%" oldids="sec-Intl.Locale.prototype-@@tostringtag">
+      <h1>Intl.Locale.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Locale"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.baseName">
+      <h1>get Intl.Locale.prototype.baseName</h1>
+      <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Return the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.calendar">
+      <h1>get Intl.Locale.prototype.calendar</h1>
+      <p>`Intl.Locale.prototype.calendar` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[Calendar]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.caseFirst">
+      <h1>get Intl.Locale.prototype.caseFirst</h1>
+      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kf"*.</p>
+      <p>`Intl.Locale.prototype.caseFirst` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[CaseFirst]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.collation">
+      <h1>get Intl.Locale.prototype.collation</h1>
+      <p>`Intl.Locale.prototype.collation` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[Collation]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.hourCycle">
+      <h1>get Intl.Locale.prototype.hourCycle</h1>
+      <p>`Intl.Locale.prototype.hourCycle` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[HourCycle]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.language">
+      <h1>get Intl.Locale.prototype.language</h1>
+      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return GetLocaleLanguage(_loc_.[[Locale]]).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.maximize">
+      <h1>Intl.Locale.prototype.maximize ( )</h1>
+
+      <emu-alg>
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
+      1. Return ! Construct(%Intl.Locale%, _maximal_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.minimize">
+      <h1>Intl.Locale.prototype.minimize ( )</h1>
+
+      <emu-alg>
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Let _minimal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
+      1. Return ! Construct(%Intl.Locale%, _minimal_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.numberingSystem">
+      <h1>get Intl.Locale.prototype.numberingSystem</h1>
+      <p>`Intl.Locale.prototype.numberingSystem` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[NumberingSystem]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.numeric">
+      <h1>get Intl.Locale.prototype.numeric</h1>
+      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kn"*.</p>
+      <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[Numeric]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.region">
+      <h1>get Intl.Locale.prototype.region</h1>
+      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return GetLocaleRegion(_loc_.[[Locale]]).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.script">
+      <h1>get Intl.Locale.prototype.script</h1>
+      <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return GetLocaleScript(_loc_.[[Locale]]).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.toString">
+      <h1>Intl.Locale.prototype.toString ( )</h1>
+
+      <emu-alg>
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Return _loc_.[[Locale]].
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-properties-of-intl-locale-instances">
+    <h1>Properties of Intl.Locale Instances</h1>
+
+    <p>
+      Intl.Locale instances are ordinary objects that inherit properties from %Intl.Locale.prototype%.
+    </p>
+
+    <p>
+      Intl.Locale instances have an [[InitializedLocale]] internal slot.
+    </p>
+
+    <p>
+      Intl.Locale instances also have several internal slots that are computed by the constructor:
+    </p>
+
+    <ul>
+      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[Calendar]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
+      <li>[[Collation]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
+      <li>[[HourCycle]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
+      <li>[[NumberingSystem]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
+      <li>[[CaseFirst]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
+      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kn"*.</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-intl-locale-abstracts">
+    <h1>Abstract Operations for Locale Objects</h1>
 
     <emu-clause id="sec-updatelanguageid" type="abstract operation" oldids="sec-apply-options-to-tag">
       <h1>
@@ -147,226 +367,6 @@
         1. Return _result_.
       </emu-alg>
     </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-properties-of-intl-locale-constructor">
-    <h1>Properties of the Intl.Locale Constructor</h1>
-
-    <p>
-      The Intl.Locale constructor has the following properties:
-    </p>
-
-    <emu-clause id="sec-Intl.Locale.prototype">
-      <h1>Intl.Locale.prototype</h1>
-
-      <p>
-        The value of `Intl.Locale.prototype` is %Intl.Locale.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.locale-internal-slots">
-      <h1>Internal slots</h1>
-
-      <p>
-        The value of the [[LocaleExtensionKeys]] internal slot is « *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* ». If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].
-      </p>
-    </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-properties-of-intl-locale-prototype-object">
-    <h1>Properties of the Intl.Locale Prototype Object</h1>
-
-    <p>
-      The Intl.Locale prototype object is itself an ordinary object. <dfn>%Intl.Locale.prototype%</dfn> is not an Intl.Locale instance and does not have an [[InitializedLocale]] internal slot or any of the other internal slots of Intl.Locale instance objects.
-    </p>
-
-    <emu-clause id="sec-Intl.Locale.prototype.constructor">
-      <h1>Intl.Locale.prototype.constructor</h1>
-
-      <p>
-        The initial value of `Intl.Locale.prototype.constructor` is %Intl.Locale%.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.locale.prototype-%symbol.tostringtag%" oldids="sec-Intl.Locale.prototype-@@tostringtag">
-      <h1>Intl.Locale.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Locale"*.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.maximize">
-      <h1>Intl.Locale.prototype.maximize ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
-      1. Return ! Construct(%Intl.Locale%, _maximal_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.minimize">
-      <h1>Intl.Locale.prototype.minimize ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Let _minimal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
-      1. Return ! Construct(%Intl.Locale%, _minimal_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.toString">
-      <h1>Intl.Locale.prototype.toString ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Return _loc_.[[Locale]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.baseName">
-      <h1>get Intl.Locale.prototype.baseName</h1>
-      <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Return the longest prefix of _locale_ matched by the <code>unicode_language_id</code> Unicode locale nonterminal.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.calendar">
-      <h1>get Intl.Locale.prototype.calendar</h1>
-      <p>`Intl.Locale.prototype.calendar` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[Calendar]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.caseFirst">
-      <h1>get Intl.Locale.prototype.caseFirst</h1>
-      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kf"*.</p>
-      <p>`Intl.Locale.prototype.caseFirst` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[CaseFirst]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.collation">
-      <h1>get Intl.Locale.prototype.collation</h1>
-      <p>`Intl.Locale.prototype.collation` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[Collation]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.hourCycle">
-      <h1>get Intl.Locale.prototype.hourCycle</h1>
-      <p>`Intl.Locale.prototype.hourCycle` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[HourCycle]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.numeric">
-      <h1>get Intl.Locale.prototype.numeric</h1>
-      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kn"*.</p>
-      <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[Numeric]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.numberingSystem">
-      <h1>get Intl.Locale.prototype.numberingSystem</h1>
-      <p>`Intl.Locale.prototype.numberingSystem` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[NumberingSystem]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.language">
-      <h1>get Intl.Locale.prototype.language</h1>
-      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return GetLocaleLanguage(_loc_.[[Locale]]).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.script">
-      <h1>get Intl.Locale.prototype.script</h1>
-      <p>`Intl.Locale.prototype.script` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return GetLocaleScript(_loc_.[[Locale]]).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.region">
-      <h1>get Intl.Locale.prototype.region</h1>
-      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return GetLocaleRegion(_loc_.[[Locale]]).
-      </emu-alg>
-    </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-properties-of-intl-locale-instances">
-    <h1>Properties of Intl.Locale Instances</h1>
-
-    <p>
-      Intl.Locale instances are ordinary objects that inherit properties from %Intl.Locale.prototype%.
-    </p>
-
-    <p>
-      Intl.Locale instances have an [[InitializedLocale]] internal slot.
-    </p>
-
-    <p>
-      Intl.Locale instances also have several internal slots that are computed by the constructor:
-    </p>
-
-    <ul>
-      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[Calendar]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
-      <li>[[Collation]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
-      <li>[[HourCycle]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
-      <li>[[NumberingSystem]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*.</li>
-      <li>[[CaseFirst]] is a String value that is a syntactically valid type value as given in <a href="https://unicode.org/reports/tr35/#Unicode_locale_identifier">Unicode Technical Standard #35 Part 1 Core, Section 3.2 Unicode Locale Identifier</a>, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
-      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used by the locale, or is *undefined*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kn"*.</li>
-    </ul>
-  </emu-clause>
-
-  <emu-clause id="sec-intl-locale-abstracts">
-    <h1>Abstract Operations for Locale Objects</h1>
 
     <emu-clause id="sec-getlocalelanguage" type="abstract operation">
       <h1>
