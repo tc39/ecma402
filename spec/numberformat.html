@@ -35,6 +35,9 @@
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
+        1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
+        1. Set _numberFormat_.[[Notation]] to _notation_.
+        1. If _style_ is *"currency"* and *"notation"* is *"standard"*, then
           1. Let _cDigits_ be CurrencyDigits(_currency_).
           1. Let _mnfdDefault_ be _cDigits_.
           1. Let _mxfdDefault_ be _cDigits_.
@@ -44,8 +47,6 @@
             1. Let _mxfdDefault_ be 0.
           1. Else,
             1. Let _mxfdDefault_ be 3.
-        1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
-        1. Set _numberFormat_.[[Notation]] to _notation_.
         1. Perform ? SetNumberFormatDigitOptions(_numberFormat_, _options_, _mnfdDefault_, _mxfdDefault_, _notation_).
         1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, ~string~, « *"short"*, *"long"* », *"short"*).
         1. Let _defaultUseGrouping_ be *"auto"*.
