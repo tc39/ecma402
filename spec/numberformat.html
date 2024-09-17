@@ -789,7 +789,7 @@
       <emu-alg>
         1. Let _exponent_ be 0.
         1. If _x_ is ~not-a-number~, then
-          1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
+          1. Let _n_ be an ILD String value indicating the *NaN* value.
         1. Else if _x_ is ~positive-infinity~, then
           1. Let _n_ be an ILD String value indicating positive infinity.
         1. Else if _x_ is ~negative-infinity~, then
@@ -910,7 +910,7 @@
               1. If the _numberFormat_.[[UseGrouping]] is *false*, then
                 1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } to _result_.
               1. Else,
-                1. Let _groupSepSymbol_ be the implementation-, locale-, and numbering system-dependent (ILND) String representing the grouping separator.
+                1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_, which may depend on the value of _numberFormat_.[[UseGrouping]].
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty,
@@ -1233,7 +1233,7 @@
       </emu-table>
 
       <emu-note>
-        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ ("ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ ("ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
+        The computations rely on ILD and ILND String values and locations within numeric strings that depend on the effective locale of _numberFormat_, or upon the effective locale and numbering system of _numberFormat_. The ILD and ILND String values mentioned, other than those for currency names, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
       </emu-note>
 
       <emu-note>
@@ -1592,7 +1592,7 @@
           1. Return _thousands_ × 3.
         1. Else,
           1. Assert: _notation_ is *"compact"*.
-          1. Let _exponent_ be an implementation- and locale-dependent (ILD) integer by which to scale a number of the given magnitude in compact notation for the current locale.
+          1. Let _exponent_ be an ILD integer by which to scale a number of the given magnitude in compact notation for the current locale.
           1. Return _exponent_.
       </emu-alg>
     </emu-clause>
