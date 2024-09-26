@@ -1467,9 +1467,9 @@
           1. Else if _p_ is *"ampm"*, then
             1. Let _v_ be _tm_.[[Hour]].
             1. If _v_ is greater than 11, then
-              1. Let _fv_ be an implementation and locale dependent String value representing *"post meridiem"*.
+              1. Let _fv_ be an ILD String value representing *"post meridiem"*.
             1. Else,
-              1. Let _fv_ be an implementation and locale dependent String value representing *"ante meridiem"*.
+              1. Let _fv_ be an ILD String value representing *"ante meridiem"*.
             1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is *"relatedYear"*, then
             1. Let _v_ be _tm_.[[RelatedYear]].
@@ -1477,7 +1477,7 @@
             1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
           1. Else if _p_ is *"yearName"*, then
             1. Let _v_ be _tm_.[[YearName]].
-            1. Let _fv_ be an implementation and locale dependent String value representing _v_.
+            1. Let _fv_ be an ILD String value representing _v_.
             1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
           1. Else,
             1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _epochNanoseconds_ and _p_.

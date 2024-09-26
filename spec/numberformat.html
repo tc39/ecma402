@@ -561,7 +561,7 @@
       <li>[[UseGrouping]] is a Boolean or String value indicating the conditions under which a grouping separator should be used. The positions of grouping separators, and whether to display grouping separators for a formatted number, is implementation-defined. A value *"always"* hints the implementation to display grouping separators if possible; *"min2"*, if there are at least 2 digits in a group; *"auto"*, if the locale prefers to use grouping separators for the formatted number. A value *false* disables grouping separators.</li>
       <li>[[RoundingType]] is one of the values ~fraction-digits~, ~significant-digits~, ~more-precision~, or ~less-precision~, indicating which rounding strategy to use. If ~fraction-digits~, formatted numbers are rounded according to [[MinimumFractionDigits]] and [[MaximumFractionDigits]], as described above. If ~significant-digits~, formatted numbers are rounded according to [[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] as described above. If ~more-precision~ or ~less-precision~, all four of those settings are used, with specific rules for disambiguating when to use one set versus the other. [[RoundingType]] is derived from the *"roundingPriority"* option.</li>
       <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"morePrecision"*, or *"lessPrecision"*. It is only used in <emu-xref href="#sec-intl.numberformat.prototype.resolvedoptions"></emu-xref> to convert [[RoundingType]] back to a valid *"roundingPriority"* option.</li>
-      <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the formatted number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest locale-dependent compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
+      <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, specifying whether the formatted number should be displayed without scaling, scaled to the units place with the power of ten in scientific notation, scaled to the nearest thousand with the power of ten in scientific notation, or scaled to the nearest ILD compact decimal notation power of ten with the corresponding compact decimal notation affix.</li>
       <li>[[CompactDisplay]] is one of the String values *"short"* or *"long"*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation. It is only used when [[Notation]] has the value *"compact"*.</li>
       <li>
         [[SignDisplay]] is one of the String values *"auto"*, *"always"*, *"never"*, *"exceptZero"*, or *"negative"*, specifying when to include a sign (with non-*"auto"* options respectively corresponding with inclusion always, never, only for non-zero numbers, or only for non-zero negative numbers).
@@ -789,7 +789,7 @@
       <emu-alg>
         1. Let _exponent_ be 0.
         1. If _x_ is ~not-a-number~, then
-          1. Let _n_ be an implementation- and locale-dependent (ILD) String value indicating the *NaN* value.
+          1. Let _n_ be an ILD String value indicating the *NaN* value.
         1. Else if _x_ is ~positive-infinity~, then
           1. Let _n_ be an ILD String value indicating positive infinity.
         1. Else if _x_ is ~negative-infinity~, then
@@ -910,7 +910,7 @@
               1. If the _numberFormat_.[[UseGrouping]] is *false*, then
                 1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _integer_ } to _result_.
               1. Else,
-                1. Let _groupSepSymbol_ be the implementation-, locale-, and numbering system-dependent (ILND) String representing the grouping separator.
+                1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
                 1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _integer_, which may depend on the value of _numberFormat_.[[UseGrouping]].
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty,
@@ -1233,7 +1233,7 @@
       </emu-table>
 
       <emu-note>
-        The computations rely on String values and locations within numeric strings that are dependent upon the implementation and the effective locale of _numberFormat_ ("ILD") or upon the implementation, the effective locale, and the numbering system of _numberFormat_ ("ILND"). The ILD and ILND Strings mentioned, other than those for currency names, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
+        The computations rely on ILD and ILND String values and locations within numeric strings that depend on the effective locale of _numberFormat_, or upon the effective locale and numbering system of _numberFormat_. The ILD and ILND String values mentioned, other than those for currency names, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
       </emu-note>
 
       <emu-note>
@@ -1592,7 +1592,7 @@
           1. Return _thousands_ × 3.
         1. Else,
           1. Assert: _notation_ is *"compact"*.
-          1. Let _exponent_ be an implementation- and locale-dependent (ILD) integer by which to scale a number of the given magnitude in compact notation for the current locale.
+          1. Let _exponent_ be an ILD integer by which to scale a number of the given magnitude in compact notation for the current locale.
           1. Return _exponent_.
       </emu-alg>
     </emu-clause>
