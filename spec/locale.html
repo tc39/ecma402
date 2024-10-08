@@ -442,10 +442,9 @@
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
-        1. If there is a non-empty suffix of _baseName_ that is a consecutive sequence of <emu-not-ref>substrings</emu-not-ref> in which each element is a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, then
-          1. Let _variants_ be the longest such suffix.
-          1. Return the substring of _variants_ from 1.
-        1. Return *undefined*.
+        1. NOTE: Each subtag in _baseName_ that is preceded by *"-"* is either a <code>unicode_script_subtag</code>, <code>unicode_region_subtag</code>, or <code>unicode_variant_subtag</code>, but any <emu-not-ref>substring</emu-not-ref> matched by <code>unicode_variant_subtag</code> is strictly longer than any prefix thereof which could also be matched by one of the other productions.
+        1. Let _variants_ be the longest suffix of _baseName_ that starts with a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal. If there is no such suffix, return *undefined*.
+        1. Return the substring of _variants_ from 1.
       </emu-alg>
     </emu-clause>
   </emu-clause>
