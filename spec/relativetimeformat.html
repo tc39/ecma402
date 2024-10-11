@@ -36,7 +36,9 @@
         1. Set _relativeTimeFormat_.[[Style]] to _style_.
         1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~string~, « *"always"*, *"auto"* », *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
-        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%Intl.NumberFormat%, « _locale_ »).
+        1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _relativeTimeFormat_.[[NumberingSystem]]).
+        1. Let _relativeTimeFormat_.[[NumberFormat]] be ! Construct(%Intl.NumberFormat%, « _locale_, _nfOptions_ »).
         1. Let _relativeTimeFormat_.[[PluralRules]] be ! Construct(%Intl.PluralRules%, « _locale_ »).
         1. Return _relativeTimeFormat_.
       </emu-alg>
