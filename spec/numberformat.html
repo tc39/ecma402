@@ -684,18 +684,20 @@
   <emu-clause id="sec-numberformat-abstracts">
     <h1>Abstract Operations for NumberFormat Objects</h1>
 
-    <emu-clause id="sec-currencydigits" type="abstract operation">
+    <emu-clause id="sec-currencydigits" type="implementation-defined abstract operation">
       <h1>
         CurrencyDigits (
           _currency_: a String,
         ): a non-negative integer
       </h1>
       <dl class="header">
+        <dt>description</dt>
+        <dd></dd>
       </dl>
+
       <emu-alg>
         1. Assert: IsWellFormedCurrencyCode(_currency_) is *true*.
-        1. Assert: _currency_ is the ASCII-uppercase of _currency_.
-        1. If the ISO 4217 currency and funds code list contains _currency_ as an alphabetic code, return the minor unit value corresponding to the _currency_ from the list; otherwise, return 2.
+        1. Return a non-negative integer indicating the number of fractional digits used when formatting quantities of the currency corresponding to _currency_. If there is no available information on the number of digits to be used, return 2.
       </emu-alg>
     </emu-clause>
 
