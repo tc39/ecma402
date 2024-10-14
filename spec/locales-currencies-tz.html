@@ -61,16 +61,18 @@
         1. Let _variants_ be GetLocaleVariants(_baseName_).
         1. If _variants_ is not *undefined*, then
           1. If _variants_ contains any duplicate subtags, return *false*.
-        1. Let _allExtensions_ be the suffix of _lowerLocale_ following _baseName_.
-        1. If _allExtensions_ contains a <emu-not-ref>substring</emu-not-ref> matched by the <code>pu_extensions</code> Unicode locale nonterminal, let _extensions_ be the prefix of _allExtensions_ preceding the longest such <emu-not-ref>substring</emu-not-ref>. Otherwise, let _extensions_ be _allExtensions_.
+        1. Let _extensions_ be the suffix of _lowerLocale_ following _baseName_.
+        1. NOTE: A *"-x-…"* private use subtag sequence matched by the <code>pu_extensions</code> Unicode locale nonterminal must be ignored, but an isolated final *"x"* subtag with no following content does not affect any of the below checks.
+        1. Let _puIndex_ be StringIndexOf(_extensions_, *"-x-"*, 0).
+        1. If _puIndex_ is not ~not-found~, set _extensions_ to the substring of _extensions_ from 0 to _puIndex_.
         1. If _extensions_ is not the empty String, then
           1. If _extensions_ contains any duplicate singleton subtags, return *false*.
           1. Let _transformExtension_ be the longest <emu-not-ref>substring</emu-not-ref> of _extensions_ matched by the <code>transformed_extensions</code> Unicode locale nonterminal. If there is no such <emu-not-ref>substring</emu-not-ref>, return *true*.
           1. Assert: The substring of _transformExtension_ from 0 to 3 is *"-t-"*.
           1. Let _tPrefix_ be the substring of _transformExtension_ from 3.
           1. Let _tlang_ be the longest prefix of _tPrefix_ matched by the <code>tlang</code> Unicode locale nonterminal. If there is no such prefix, return *true*.
-          1. Let _tlangRefinements_ be the longest suffix of _tlang_ following a non-empty prefix matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
-          1. If _tlangRefinements_ contains any duplicate <emu-not-ref>substrings</emu-not-ref> matched greedily by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, return *false*.
+          1. Let _tlangVariants_ be GetLocaleVariants(_tlang_).
+          1. If _tlangVariants_ contains any duplicate subtags, return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
