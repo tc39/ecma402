@@ -281,106 +281,16 @@
   <emu-clause id="sec-intl-pluralrules-abstracts">
     <h1>Abstract Operations for PluralRules Objects</h1>
 
-    <emu-clause id="sec-getoperands" type="abstract operation">
-       <h1>
-         GetOperands (
-           _s_: a decimal String,
-         ): a Plural Rules Operands Record
-       </h1>
-       <dl class="header">
-        <dt>description</dt>
-        <dd>It extracts numeric features from _s_ that correspond with the operands of <a href="https://unicode.org/reports/tr35/tr35-numbers.html#Operands">Unicode Technical Standard #35 Part 3 Numbers, Section 5.1.1 Operands</a>.</dd>
-       </dl>
-       <emu-alg>
-         1. Let _n_ be ! ToNumber(_s_).
-         1. Assert: _n_ is finite.
-         1. Let _dp_ be StringIndexOf(_s_, *"."*, 0).
-         1. If _dp_ is ~not-found~, then
-           1. Let _intPart_ be _n_.
-           1. Let _fracSlice_ be *""*.
-         1. Else,
-           1. Let _intPart_ be the substring of _s_ from 0 to _dp_.
-           1. Let _fracSlice_ be the substring of _s_ from _dp_ + 1.
-         1. Let _i_ be abs(! ToNumber(_intPart_)).
-         1. Let _fracDigitCount_ be the length of _fracSlice_.
-         1. Let _f_ be ! ToNumber(_fracSlice_).
-         1. Let _significantFracSlice_ be the value of _fracSlice_ stripped of trailing *"0"*.
-         1. Let _significantFracDigitCount_ be the length of _significantFracSlice_.
-         1. Let _significantFrac_ be ! ToNumber(_significantFracSlice_).
-         1. Return a new Plural Rules Operands Record { [[Number]]: abs(_n_), [[IntegerDigits]]: _i_, [[FractionDigits]]: _f_, [[NumberOfFractionDigits]]: _fracDigitCount_, [[FractionDigitsWithoutTrailing]]: _significantFrac_, [[NumberOfFractionDigitsWithoutTrailing]]: _significantFracDigitCount_ }.
-       </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-plural-rules-operands-records">
-      <h1>Plural Rules Operands Records</h1>
-
-      <p>
-        Each <dfn id="plural-operands-record">Plural Rules Operands Record</dfn> has the fields defined in <emu-xref href="#table-plural-operands"></emu-xref>.
-      </p>
-
-       <emu-table id="table-plural-operands">
-         <emu-caption>Plural Rules Operands Record Fields</emu-caption>
-         <table class="real-table">
-           <thead>
-             <tr>
-               <th>Field Name</th>
-               <th>Value Type</th>
-               <th>UTS #35 Operand</th>
-               <th>Description</th>
-             </tr>
-           </thead>
-           <tr>
-             <td>[[Number]]</td>
-             <td>Number</td>
-             <td>n</td>
-             <td>Absolute value of the source number</td>
-           </tr>
-           <tr>
-             <td>[[IntegerDigits]]</td>
-             <td>Number</td>
-             <td>i</td>
-             <td>Integer part of [[Number]].</td>
-           </tr>
-           <tr>
-             <td>[[FractionDigits]]</td>
-             <td>Number</td>
-             <td>f</td>
-             <td>Visible fraction digits in [[Number]], <em>with</em> trailing zeroes, as an integer having [[NumberOfFractionDigits]] digits.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigits]]</td>
-             <td>Number</td>
-             <td>v</td>
-             <td>Number of visible fraction digits in [[Number]], <em>with</em> trailing zeroes.</td>
-           </tr>
-           <tr>
-             <td>[[FractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>t</td>
-             <td>Visible fraction digits in [[Number]], <em>without</em> trailing zeroes, as an integer having [[NumberOfFractionDigitsWithoutTrailing]] digits.</td>
-           </tr>
-           <tr>
-             <td>[[NumberOfFractionDigitsWithoutTrailing]]</td>
-             <td>Number</td>
-             <td>w</td>
-             <td>Number of visible fraction digits in [[Number]], <em>without</em> trailing zeroes.</td>
-           </tr>
-         </table>
-       </emu-table>
-    </emu-clause>
-
     <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
       <h1>
         PluralRuleSelect (
-          _locale_: a String,
-          _type_: *"cardinal"* or *"ordinal"*,
-          _n_: a finite Number,
-          _operands_: a Plural Rules Operands Record derived from formatting _n_,
+          _pluralRules_: an Intl.PluralRules,
+          _s_: a decimal String,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String best categorizes the _operands_ representation of _n_ according to the rules for _locale_ and _type_.</dd>
+        <dd>The returned String characterizes the plural category of _s_ according to the effective locale and the options of _pluralRules_.</dd>
       </dl>
     </emu-clause>
 
@@ -399,12 +309,9 @@
         1. If _n_ is not a finite Number, then
           1. Let _s_ be ! ToString(_n_).
           1. Return the Record { [[PluralCategory]]: *"other"*, [[FormattedString]]: _s_ }.
-        1. Let _locale_ be _pluralRules_.[[Locale]].
-        1. Let _type_ be _pluralRules_.[[Type]].
         1. Let _res_ be FormatNumericToString(_pluralRules_, ℝ(_n_)).
         1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _operands_ be GetOperands(_s_).
-        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _n_, _operands_).
+        1. Let _p_ be PluralRuleSelect(_pluralRules_, _s_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
