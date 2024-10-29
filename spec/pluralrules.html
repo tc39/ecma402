@@ -312,7 +312,9 @@
           1. Return the Record { [[PluralCategory]]: *"other"*, [[FormattedString]]: _s_ }.
         1. Let _res_ be FormatNumericToString(_pluralRules_, ℝ(_n_)).
         1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _p_ be PluralRuleSelect(_pluralRules_, _s_).
+        1. Let _locale_ be _pluralRules_.[[Locale]].
+        1. Let _type_ be _pluralRules_.[[Type]].
+        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _s_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
