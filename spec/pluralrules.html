@@ -284,7 +284,8 @@
     <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
       <h1>
         PluralRuleSelect (
-          _pluralRules_: an Intl.PluralRules,
+          _locale_: a language tag,
+          _type_: *"cardinal"* or *"ordinal"*,
           _s_: a decimal String,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
