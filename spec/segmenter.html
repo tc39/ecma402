@@ -320,11 +320,11 @@
           1. Let _startIndex_ be _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]].
           1. Let _len_ be the length of _string_.
           1. If _startIndex_ ≥ _len_, then
-            1. Return CreateIterResultObject(*undefined*, *true*).
+            1. Return CreateIteratorResultObject(*undefined*, *true*).
           1. Let _endIndex_ be FindBoundary(_segmenter_, _string_, _startIndex_, ~after~).
           1. Set _iterator_.[[IteratedStringNextSegmentCodeUnitIndex]] to _endIndex_.
           1. Let _segmentData_ be CreateSegmentDataObject(_segmenter_, _string_, _startIndex_, _endIndex_).
-          1. Return CreateIterResultObject(_segmentData_, *false*).
+          1. Return CreateIteratorResultObject(_segmentData_, *false*).
         </emu-alg>
       </emu-clause>
 
