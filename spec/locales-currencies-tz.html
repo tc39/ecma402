@@ -282,8 +282,8 @@
                     1. If _backzoneAndLink_[1] is _identifier_, then
                       1. Assert: _backzone_ is *undefined*.
                       1. Set _backzone_ to _backzoneAndLink_[0].
-                  1. Assert: _backzone_ is not *undefined*.
-                  1. Set _primary_ to _backzone_.
+                  1. If _backzone_ is not *undefined*, then
+                    1. Set _primary_ to _backzone_.
           1. If _primary_ is one of *"Etc/UTC"*, *"Etc/GMT"*, or *"GMT"*, set _primary_ to *"UTC"*.
           1. If _primary_ is a replacement time zone identifier and its rename waiting period has not concluded, then
             1. Let _renamedIdentifier_ be the renamed time zone identifier that _primary_ replaced.
