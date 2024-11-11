@@ -1862,7 +1862,7 @@
         1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _rangeSeparator_, [[Source]]: *"shared"* } to _result_.
         1. For each element _r_ of _yResult_, do
           1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"endRange"* } to _result_.
-        1. Return CollapseNumberRange(_result_).
+        1. Return CollapseNumberRange(_numberFormat_, _result_).
       </emu-alg>
     </emu-clause>
 
@@ -1887,12 +1887,13 @@
     <emu-clause id="sec-collapsenumberrange" type="implementation-defined abstract operation">
       <h1>
         CollapseNumberRange (
+          _numberFormat_: an Intl.NumberFormat,
           _result_: a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Source]] (a String),
         ): a List of Records with fields [[Type]] (a String), [[Value]] (a String), and [[Source]] (a String)
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It modifies _result_ (which must be a List of Records as constructed within PartitionNumberRangePattern) by removing redundant information and resolving internal inconsistency, and returns the resulting List. The algorithm is implementation dependent, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.</dd>
+        <dd>It modifies _result_ (which must be a List of Records as constructed within PartitionNumberRangePattern) according to the effective locale and the formatting options of _numberFormat_ by removing redundant information, resolving internal inconsistency, replacing characters when necessary, and inserting spacing when necessary. It then returns the resulting List. The algorithm is ILND, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.</dd>
       </dl>
       <p>
         For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.
