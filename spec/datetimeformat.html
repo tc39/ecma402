@@ -894,95 +894,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.datetimeformat.prototype-%symbol.tostringtag%" oldids="sec-intl.datetimeformat.prototype-@@tostringtag">
-      <h1>Intl.DateTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DateTimeFormat"*.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.datetimeformat.prototype.format">
-      <h1>get Intl.DateTimeFormat.prototype.format</h1>
-
-      <p>
-        Intl.DateTimeFormat.prototype.format is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:
-      </p>
-
-      <emu-alg>
-        1. Let _dtf_ be the *this* value.
-        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
-          1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
-        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
-        1. If _dtf_.[[BoundFormat]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Set _F_.[[DateTimeFormat]] to _dtf_.
-          1. Set _dtf_.[[BoundFormat]] to _F_.
-        1. Return _dtf_.[[BoundFormat]].
-      </emu-alg>
-
-      <emu-note>
-        The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.
-        This is considered a historical artefact, as part of a convention which is no longer followed for new features, but is preserved to maintain compatibility with existing programs.
-      </emu-note>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
-      <h1>Intl.DateTimeFormat.prototype.formatToParts ( _date_ )</h1>
-
-      <p>
-        When the `formatToParts` method is called with an argument _date_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _dtf_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
-        1. If _date_ is *undefined*, then
-          1. Let _x_ be ! Call(%Date.now%, *undefined*).
-        1. Else,
-          1. Let _x_ be ? ToNumber(_date_).
-        1. Return ? FormatDateTimeToParts(_dtf_, _x_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.datetimeformat.prototype.formatRange">
-      <h1>Intl.DateTimeFormat.prototype.formatRange ( _startDate_, _endDate_ )</h1>
-
-      <p>
-        When the `formatRange` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _dtf_ be *this* value.
-        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
-        1. If _startDate_ is *undefined* or _endDate_ is *undefined*, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumber(_startDate_).
-        1. Let _y_ be ? ToNumber(_endDate_).
-        1. Return ? FormatDateTimeRange(_dtf_, _x_, _y_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatRangeToParts">
-      <h1>Intl.DateTimeFormat.prototype.formatRangeToParts ( _startDate_, _endDate_ )</h1>
-
-      <p>
-        When the `formatRangeToParts` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _dtf_ be *this* value.
-        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
-        1. If _startDate_ is *undefined* or _endDate_ is *undefined*, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumber(_startDate_).
-        1. Let _y_ be ? ToNumber(_endDate_).
-        1. Return ? FormatDateTimeRangeToParts(_dtf_, _x_, _y_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.datetimeformat.prototype.resolvedoptions">
       <h1>Intl.DateTimeFormat.prototype.resolvedOptions ( )</h1>
 
@@ -1137,6 +1048,95 @@
       <emu-note>
         For compatibility with versions prior to the fifth edition, the *"hour12"* property is set in addition to the *"hourCycle"* property.
       </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.datetimeformat.prototype-%symbol.tostringtag%" oldids="sec-intl.datetimeformat.prototype-@@tostringtag">
+      <h1>Intl.DateTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DateTimeFormat"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.datetimeformat.prototype.format">
+      <h1>get Intl.DateTimeFormat.prototype.format</h1>
+
+      <p>
+        Intl.DateTimeFormat.prototype.format is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be the *this* value.
+        1. If the implementation supports the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>, then
+          1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
+        1. If _dtf_.[[BoundFormat]] is *undefined*, then
+          1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
+          1. Set _F_.[[DateTimeFormat]] to _dtf_.
+          1. Set _dtf_.[[BoundFormat]] to _F_.
+        1. Return _dtf_.[[BoundFormat]].
+      </emu-alg>
+
+      <emu-note>
+        The returned function is bound to _dtf_ so that it can be passed directly to `Array.prototype.map` or other functions.
+        This is considered a historical artefact, as part of a convention which is no longer followed for new features, but is preserved to maintain compatibility with existing programs.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.datetimeformat.prototype.formatRange">
+      <h1>Intl.DateTimeFormat.prototype.formatRange ( _startDate_, _endDate_ )</h1>
+
+      <p>
+        When the `formatRange` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be *this* value.
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
+        1. If _startDate_ is *undefined* or _endDate_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToNumber(_startDate_).
+        1. Let _y_ be ? ToNumber(_endDate_).
+        1. Return ? FormatDateTimeRange(_dtf_, _x_, _y_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatRangeToParts">
+      <h1>Intl.DateTimeFormat.prototype.formatRangeToParts ( _startDate_, _endDate_ )</h1>
+
+      <p>
+        When the `formatRangeToParts` method is called with arguments _startDate_ and _endDate_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be *this* value.
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
+        1. If _startDate_ is *undefined* or _endDate_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToNumber(_startDate_).
+        1. Let _y_ be ? ToNumber(_endDate_).
+        1. Return ? FormatDateTimeRangeToParts(_dtf_, _x_, _y_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.DateTimeFormat.prototype.formatToParts">
+      <h1>Intl.DateTimeFormat.prototype.formatToParts ( _date_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an argument _date_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _dtf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
+        1. If _date_ is *undefined*, then
+          1. Let _x_ be ! Call(%Date.now%, *undefined*).
+        1. Else,
+          1. Let _x_ be ? ToNumber(_date_).
+        1. Return ? FormatDateTimeToParts(_dtf_, _x_).
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 

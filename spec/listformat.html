@@ -118,47 +118,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.ListFormat.prototype-toStringTag">
-      <h1>Intl.ListFormat.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.ListFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.ListFormat.prototype.format">
-      <h1>Intl.ListFormat.prototype.format ( _list_ )</h1>
-
-      <p>
-        When the `format` method is called with an argument _list_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _lf_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
-        1. Let _stringList_ be ? StringListFromIterable(_list_).
-        1. Return FormatList(_lf_, _stringList_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.ListFormat.prototype.formatToParts">
-      <h1>Intl.ListFormat.prototype.formatToParts ( _list_ )</h1>
-
-      <p>
-        When the `formatToParts` method is called with an argument _list_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _lf_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
-        1. Let _stringList_ be ? StringListFromIterable(_list_).
-        1. Return FormatListToParts(_lf_, _stringList_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.ListFormat.prototype.resolvedoptions">
       <h1>Intl.ListFormat.prototype.resolvedOptions ( )</h1>
 
@@ -201,6 +160,47 @@
           </tr>
         </table>
       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype-toStringTag">
+      <h1>Intl.ListFormat.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.ListFormat"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.format">
+      <h1>Intl.ListFormat.prototype.format ( _list_ )</h1>
+
+      <p>
+        When the `format` method is called with an argument _list_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _lf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
+        1. Let _stringList_ be ? StringListFromIterable(_list_).
+        1. Return FormatList(_lf_, _stringList_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.ListFormat.prototype.formatToParts">
+      <h1>Intl.ListFormat.prototype.formatToParts ( _list_ )</h1>
+
+      <p>
+        When the `formatToParts` method is called with an argument _list_, the following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _lf_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_lf_, [[InitializedListFormat]]).
+        1. Let _stringList_ be ? StringListFromIterable(_list_).
+        1. Return FormatListToParts(_lf_, _stringList_).
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 
