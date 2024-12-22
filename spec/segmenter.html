@@ -100,32 +100,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.segmenter.prototype-%symbol.tostringtag%" oldids="sec-intl.segmenter.prototype-@@tostringtag">
-      <h1>Intl.Segmenter.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Segmenter"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.segmenter.prototype.segment">
-      <h1>Intl.Segmenter.prototype.segment ( _string_ )</h1>
-
-      <p>
-        The `Intl.Segmenter.prototype.segment` method is called on an Intl.Segmenter instance with argument _string_ to create a Segments instance for the string using the locale and options of the Intl.Segmenter instance. The following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _segmenter_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
-        1. Let _string_ be ? ToString(_string_).
-        1. Return CreateSegmentsObject(_segmenter_, _string_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-intl.segmenter.prototype.resolvedoptions">
       <h1>Intl.Segmenter.prototype.resolvedOptions ( )</h1>
 
@@ -164,6 +138,32 @@
           </tr>
         </table>
       </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.prototype-%symbol.tostringtag%" oldids="sec-intl.segmenter.prototype-@@tostringtag">
+      <h1>Intl.Segmenter.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Segmenter"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.segmenter.prototype.segment">
+      <h1>Intl.Segmenter.prototype.segment ( _string_ )</h1>
+
+      <p>
+        The `Intl.Segmenter.prototype.segment` method is called on an Intl.Segmenter instance with argument _string_ to create a Segments instance for the string using the locale and options of the Intl.Segmenter instance. The following steps are taken:
+      </p>
+
+      <emu-alg>
+        1. Let _segmenter_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_segmenter_, [[InitializedSegmenter]]).
+        1. Let _string_ be ? ToString(_string_).
+        1. Return CreateSegmentsObject(_segmenter_, _string_).
+      </emu-alg>
     </emu-clause>
   </emu-clause>
 
