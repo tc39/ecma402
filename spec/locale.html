@@ -204,38 +204,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Locale.prototype.maximize">
-      <h1>Intl.Locale.prototype.maximize ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
-      1. Return ! Construct(%Intl.Locale%, _maximal_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.minimize">
-      <h1>Intl.Locale.prototype.minimize ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Let _minimal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
-      1. Return ! Construct(%Intl.Locale%, _minimal_).
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-Intl.Locale.prototype.toString">
-      <h1>Intl.Locale.prototype.toString ( )</h1>
-
-      <emu-alg>
-      1. Let _loc_ be the *this* value.
-      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-      1. Return _loc_.[[Locale]].
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.Locale.prototype.baseName">
       <h1>get Intl.Locale.prototype.baseName</h1>
       <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
@@ -287,14 +255,35 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Locale.prototype.numeric">
-      <h1>get Intl.Locale.prototype.numeric</h1>
-      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kn"*.</p>
-      <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+    <emu-clause id="sec-Intl.Locale.prototype.language">
+      <h1>get Intl.Locale.prototype.language</h1>
+      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return _loc_.[[Numeric]].
+        1. Return GetLocaleLanguage(_loc_.[[Locale]]).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.maximize">
+      <h1>Intl.Locale.prototype.maximize ( )</h1>
+
+      <emu-alg>
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _maximal_ to _loc_.[[Locale]].
+      1. Return ! Construct(%Intl.Locale%, _maximal_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.minimize">
+      <h1>Intl.Locale.prototype.minimize ( )</h1>
+
+      <emu-alg>
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Let _minimal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Remove Likely Subtags</a> algorithm applied to _loc_.[[Locale]]. If an error is signaled, set _minimal_ to _loc_.[[Locale]].
+      1. Return ! Construct(%Intl.Locale%, _minimal_).
       </emu-alg>
     </emu-clause>
 
@@ -308,13 +297,24 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Locale.prototype.language">
-      <h1>get Intl.Locale.prototype.language</h1>
-      <p>`Intl.Locale.prototype.language` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+    <emu-clause id="sec-Intl.Locale.prototype.numeric">
+      <h1>get Intl.Locale.prototype.numeric</h1>
+      <p>This property only exists if %Intl.Locale%.[[LocaleExtensionKeys]] contains *"kn"*.</p>
+      <p>`Intl.Locale.prototype.numeric` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return GetLocaleLanguage(_loc_.[[Locale]]).
+        1. Return _loc_.[[Numeric]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.region">
+      <h1>get Intl.Locale.prototype.region</h1>
+      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return GetLocaleRegion(_loc_.[[Locale]]).
       </emu-alg>
     </emu-clause>
 
@@ -328,13 +328,13 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Locale.prototype.region">
-      <h1>get Intl.Locale.prototype.region</h1>
-      <p>`Intl.Locale.prototype.region` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+    <emu-clause id="sec-Intl.Locale.prototype.toString">
+      <h1>Intl.Locale.prototype.toString ( )</h1>
+
       <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Return GetLocaleRegion(_loc_.[[Locale]]).
+      1. Let _loc_ be the *this* value.
+      1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+      1. Return _loc_.[[Locale]].
       </emu-alg>
     </emu-clause>
   </emu-clause>
