@@ -227,7 +227,7 @@
           _requestedLocales_: a Language Priority List,
           _options_: a Record,
           _relevantExtensionKeys_: a List of Strings,
-          _localeData_: a Record,
+          optional _localeData_: a Record,
         ): a Record
       </h1>
       <dl class="header">
@@ -235,6 +235,7 @@
         <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
+        1. Assert: If _relevantExtensionKeys_ is not empty, then _localeData_ is present.
         1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
           1. Let _r_ be LookupMatchingLocaleByPrefix(_availableLocales_, _requestedLocales_).
@@ -242,8 +243,11 @@
           1. Let _r_ be LookupMatchingLocaleByBestFit(_availableLocales_, _requestedLocales_).
         1. If _r_ is *undefined*, set _r_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
         1. Let _foundLocale_ be _r_.[[locale]].
-        1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
-        1. Assert: _foundLocaleData_ is a Record.
+        1. If _localeData_ is present, then
+          1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_&gt;]].
+          1. Assert: _foundLocaleData_ is a Record.
+        1. Else,
+          1. Let _foundLocaleData_ be ~empty~.
         1. Let _result_ be a new Record.
         1. Set _result_.[[LocaleData]] to _foundLocaleData_.
         1. If _r_.[[extension]] is not ~empty~, then
