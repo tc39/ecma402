@@ -141,7 +141,7 @@
         1. Else,
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _prop_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
+            1. For each property name _prop_ of « *"weekday"*, *"era"*, *"year"*, *"month"*, *"day"* », do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _required_ is ~time~ or ~any~, then
@@ -261,6 +261,8 @@
             <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
             <li>weekday, year, month, day, hour, minute, second</li>
             <li>weekday, year, month, day</li>
+            <li>era, year, month, day</li>
+            <li>era, year, month</li>
             <li>year, month, day</li>
             <li>year, month</li>
             <li>month, day</li>
