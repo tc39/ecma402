@@ -145,7 +145,7 @@
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
+            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"*, *"timeZoneName"* », do
               1. Let _value_ be _formatOptions_.[[&lt;_prop_&gt;]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
@@ -261,6 +261,7 @@
             <li>weekday, year, month, day, hour, minute, second, fractionalSecondDigits</li>
             <li>weekday, year, month, day, hour, minute, second</li>
             <li>weekday, year, month, day</li>
+            <li>year, month, day, hour, minute, second, timeZoneName</li>
             <li>year, month, day</li>
             <li>year, month</li>
             <li>month, day</li>
