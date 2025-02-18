@@ -184,17 +184,6 @@
       </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-intl.displaynames.prototype-%symbol.tostringtag%" oldids="sec-Intl.DisplayNames.prototype-@@tostringtag">
-      <h1>Intl.DisplayNames.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DisplayNames"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.DisplayNames.prototype.of">
       <h1>Intl.DisplayNames.prototype.of ( _code_ )</h1>
 
@@ -212,6 +201,17 @@
         1. If _displayNames_.[[Fallback]] is *"code"*, return _code_.
         1. Return *undefined*.
       </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.displaynames.prototype-%symbol.tostringtag%" oldids="sec-Intl.DisplayNames.prototype-@@tostringtag">
+      <h1>Intl.DisplayNames.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DisplayNames"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
     </emu-clause>
   </emu-clause>
 

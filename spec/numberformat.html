@@ -444,17 +444,6 @@
       </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-intl.numberformat.prototype-%symbol.tostringtag%" oldids="sec-intl.numberformat.prototype-@@tostringtag">
-      <h1>Intl.NumberFormat.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.NumberFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-intl.numberformat.prototype.format">
       <h1>get Intl.NumberFormat.prototype.format</h1>
 
@@ -527,6 +516,17 @@
         1. Let _x_ be ? ToIntlMathematicalValue(_value_).
         1. Return FormatNumericToParts(_nf_, _x_).
       </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.numberformat.prototype-%symbol.tostringtag%" oldids="sec-intl.numberformat.prototype-@@tostringtag">
+      <h1>Intl.NumberFormat.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.NumberFormat"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
     </emu-clause>
   </emu-clause>
 
