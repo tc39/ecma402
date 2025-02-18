@@ -79,7 +79,7 @@
         </dl>
         <emu-alg>
           1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-          1. Let _availableLocales_ be an Available Locales List which includes the language tags for which the Unicode Character Database contains language-sensitive case mappings. If the implementation supports additional locale-sensitive case mappings, _availableLocales_ should also include their corresponding language tags.
+          1. Let _availableLocales_ be an Available Locales List which includes all language tags for which the implementation supports at least one case mapping transformation (even if that transformation applies to all known locales).
           1. Let _opt_ be the Record { [[localeMatcher]]: *"best fit"* }.
           1. Let _relevantExtensionKeys_ be a new empty List.
           1. Let _r_ be ResolveLocale(_availableLocales_, _requestedLocales_, _opt_, _relevantExtensionKeys_).
@@ -94,7 +94,7 @@
         </emu-alg>
 
         <p>
-          Code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale-sensitive tailoring defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database and/or CLDR and/or any other custom tailoring. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
+          Implementations are required to support case transformation for each language tag that appears in the <code>condition_list</code> of an entry defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database. Code point mappings from the Default Case Conversion Algorithms of the Unicode Standard may be tailored according to CLDR and/or any other custom adjustments. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
         </p>
 
         <emu-note>
