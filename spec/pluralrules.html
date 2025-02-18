@@ -205,17 +205,6 @@
       </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
-      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-intl.pluralrules.prototype.select">
       <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
 
@@ -246,6 +235,17 @@
         1. Let _y_ be ? ToNumber(_end_).
         1. Return ? ResolvePluralRange(_pr_, _x_, _y_).
       </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
+      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.
+      </p>
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
     </emu-clause>
   </emu-clause>
 
