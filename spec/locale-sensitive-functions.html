@@ -98,6 +98,10 @@
         </p>
 
         <emu-note>
+          Locale-sensitive case transformations have been rare in practice—the Unicode Character Database has historically defined only two sets, one for Lithuanian and one for Turkic languages (specifically Turkish and Azeri). This algorithm is defined to remain valid even if that changes, but <emu-xref href="#sec-algorithm-conventions" title></emu-xref> permits conforming implementations to use more efficient approaches that preserve the specified semantics. For example, an implementation might scan for the first “known” locale in _requestedLocales_ (or ultimately DefaultLocale()) and check it against a static collection of prefixes encompassing all locales subject to locale-sensitive case transformation.
+        </emu-note>
+
+        <emu-note>
           The case mapping of some code points may produce multiple code points, and therefore the result may not be the same length as the input. Because both `toLocaleUpperCase` and `toLocaleLowerCase` have context-sensitive behaviour, the functions are not symmetrical. In other words, `s.toLocaleUpperCase().toLocaleLowerCase()` is not necessarily equal to `s.toLocaleLowerCase()` and `s.toLocaleLowerCase().toLocaleUpperCase()` is not necessarily equal to `s.toLocaleUpperCase()`.
         </emu-note>
       </emu-clause>
