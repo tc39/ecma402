@@ -192,18 +192,6 @@
       </p>
     </emu-clause>
 
-    <emu-clause id="sec-intl.locale.prototype-%symbol.tostringtag%" oldids="sec-Intl.Locale.prototype-@@tostringtag">
-      <h1>Intl.Locale.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Locale"*.
-      </p>
-
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.Locale.prototype.baseName">
       <h1>get Intl.Locale.prototype.baseName</h1>
       <p>`Intl.Locale.prototype.baseName` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
@@ -336,6 +324,18 @@
       1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
       1. Return _loc_.[[Locale]].
       </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.locale.prototype-%symbol.tostringtag%" oldids="sec-Intl.Locale.prototype-@@tostringtag">
+      <h1>Intl.Locale.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>
+        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Locale"*.
+      </p>
+
+      <p>
+        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
+      </p>
     </emu-clause>
   </emu-clause>
 
