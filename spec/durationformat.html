@@ -206,13 +206,12 @@
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _df_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _p_ is *"fractionalDigits"*, then
-            1. If _v_ is not *undefined*, set _v_ to 𝔽(_v_).
+            1. If _v_ is not *undefined*, perform ! CreateDataPropertyOrThrow(_options_, _p_, 𝔽(_v_)).
           1. Else,
             1. Assert: _v_ is not *undefined*.
-          1. If _v_ is *"fractional"*, then
-            1. Assert: The Internal Slot value of the current row is [[MillisecondsStyle]], [[MicrosecondsStyle]], or [[NanosecondsStyle]] .
-            1. Set _v_ to *"numeric"*.
-          1. If _v_ is not *undefined*, then
+            1. If _v_ is *"fractional"*, then
+              1. Assert: The Internal Slot value of the current row is [[MillisecondsStyle]], [[MicrosecondsStyle]], or [[NanosecondsStyle]] .
+              1. Set _v_ to *"numeric"*.
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
       </emu-alg>
