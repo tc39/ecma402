@@ -626,40 +626,46 @@
         1. Let _displayDefault_ be *"always"*.
         1. If _style_ is *undefined*, then
           1. If _baseStyle_ is *"digital"*, then
-            1. If _unit_ is not one of *"hours"*, *"minutes"*, or *"seconds"*, then
-              1. Set _displayDefault_ to *"auto"*.
             1. Set _style_ to _digitalBase_.
+            1. If _unit_ is not one of *"hours"*, *"minutes"*, or *"seconds"*, set _displayDefault_ to *"auto"*.
+          1. Else if _prevStyle_ is one of *"fractional"*, *"numeric"* or *"2-digit"*, then
+            1. Set _style_ to *"numeric"*.
+            1. If _unit_ is not *"minutes"* or *"seconds"*, set _displayDefault_ to *"auto"*.
           1. Else,
-            1. If _prevStyle_ is *"fractional"*, *"numeric"* or *"2-digit"*, then
-              1. If _unit_ is not one of *"minutes"* or *"seconds"*, then
-                1. Set _displayDefault_ to *"auto"*.
-              1. Set _style_ to *"numeric"*.
-            1. Else,
-              1. Set _displayDefault_ to *"auto"*.
-              1. Set _style_ to _baseStyle_.
-        1. If _style_ is *"numeric"*, then
-          1. If _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, then
-            1. Set _style_ to *"fractional"*.
+            1. Set _style_ to _baseStyle_.
             1. Set _displayDefault_ to *"auto"*.
+        1. If _style_ is *"numeric"* and _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, then
+          1. Set _style_ to *"fractional"*.
+          1. Set _displayDefault_ to *"auto"*.
         1. Let _displayField_ be the string-concatenation of _unit_ and *"Display"*.
         1. Let _display_ be ? GetOption(_options_, _displayField_, ~string~, « *"auto"*, *"always"* », _displayDefault_).
-        1. If _display_ is *"always"* and _style_ is *"fractional"*, then
-          1. Throw a *RangeError* exception.
-        1. If _prevStyle_ is *"fractional"*, then
-          1. If _style_ is not *"fractional"*, then
-            1. Throw a *RangeError* exception.
-        1. If _prevStyle_ is *"numeric"* or *"2-digit"*, then
-          1. If _style_ is not *"fractional"*, *"numeric"* or *"2-digit"*, then
-            1. Throw a *RangeError* exception.
-          1. If _unit_ is *"minutes"* or *"seconds"*, then
-            1. Set _style_ to *"2-digit"*.
-        1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, then
-          1. Set _style_ to *"2-digit"*.
+        1. Perform ? ValidateDurationUnitStyle(_unit_, _style_, _display_, _prevStyle_).
+        1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, set _style_ to *"2-digit"*.
+        1. If _unit_ is *"minutes"* or *"seconds"* and _prevStyle_ is *"numeric"* or *"2-digit"*, set _style_ to *"2-digit"*.
         1. Return the Record {
             [[Style]]: _style_,
             [[Display]]: _display_
           }.
       </emu-alg>
+
+      <emu-clause id="sec-stringpaddingbuiltinsimpl" type="abstract operation">
+        <h1>
+          ValidateDurationUnitStyle (
+            _unit_: a String,
+            _style_: a String,
+            _display_: a String,
+            _prevStyle_: a String,
+          ): either a normal completion containing ~unused~ or a throw completion
+        </h1>
+        <dl class="header">
+        </dl>
+        <emu-alg>
+          1. If _display_ is *"always"* and _style_ is *"fractional"*, throw a *RangeError* exception.
+          1. If _prevStyle_ is *"fractional"* and _style_ is not *"fractional"*, throw a *RangeError* exception.
+          1. If _prevStyle_ is *"numeric"* or *"2-digit"* and _style_ is not one of *"fractional"*, *"numeric"* or *"2-digit"*, throw a *RangeError* exception.
+          1. Return ~unused~.
+        </emu-alg>
+      </emu-clause>
     </emu-clause>
 
     <emu-clause id="sec-computefractionaldigits" oldids="sec-addfractionaldigits" type="abstract operation">
