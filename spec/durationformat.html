@@ -815,14 +815,13 @@
         1. If _signDisplayed_ is *false*, then
           1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"useGrouping"*, *false*).
-        1. If _durationFormat_.[[FractionalDigits]] is *undefined*, then
-          1. Let _maximumFractionDigits_ be *9*<sub>𝔽</sub>.
-          1. Let _minimumFractionDigits_ be *+0*<sub>𝔽</sub>.
+        1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
+        1. If _fractionDigits_ is *undefined*, then
+          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
         1. Else,
-          1. Let _maximumFractionDigits_ be _durationFormat_.[[FractionalDigits]].
-          1. Let _minimumFractionDigits_ be _durationFormat_.[[FractionalDigits]].
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _maximumFractionDigits_).
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _minimumFractionDigits_).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
         1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
         1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOpts_ »).
         1. Let _secondsParts_ be PartitionNumberPattern(_nf_, _secondsValue_).
@@ -965,23 +964,20 @@
             1. If _unit_ is *"seconds"*, *"milliseconds"*, or *"microseconds"*, then
               1. If NextUnitFractional(_durationFormat_, _unit_) is *true*, then
                 1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
-                1. If _durationFormat_.[[FractionalDigits]] is *undefined*, then
-                  1. Let _maximumFractionDigits_ be *9*<sub>𝔽</sub>.
-                  1. Let _minimumFractionDigits_ be *+0*<sub>𝔽</sub>.
+                1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
+                1. If _fractionDigits_ is *undefined*, then
+                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
+                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
                 1. Else,
-                  1. Let _maximumFractionDigits_ be _durationFormat_.[[FractionalDigits]].
-                  1. Let _minimumFractionDigits_ be _durationFormat_.[[FractionalDigits]].
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _maximumFractionDigits_).
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _minimumFractionDigits_).
+                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
+                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
                 1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
                 1. Set _numericUnitFound_ to *true*.
-            1. If _value_ is not 0 or _display_ is *"always"*, then
-              1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _numberingSystem_).
+            1. If _display_ is *"always"* or _value_ is not 0, then
+              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _durationFormat_.[[NumberingSystem]]).
               1. If _signDisplayed_ is *true*, then
                 1. Set _signDisplayed_ to *false*.
-                1. If _value_ is 0 and DurationSign(_duration_) is -1, then
-                  1. Set _value_ to ~negative-zero~.
+                1. If _value_ is 0 and DurationSign(_duration_) is -1, set _value_ to ~negative-zero~.
               1. Else,
                 1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
               1. Let _numberFormatUnit_ be the NumberFormat Unit value of the current row.
