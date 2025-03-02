@@ -961,18 +961,17 @@
             1. Set _numericUnitFound_ to *true*.
           1. Else,
             1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
-            1. If _unit_ is *"seconds"*, *"milliseconds"*, or *"microseconds"*, then
-              1. If NextUnitFractional(_durationFormat_, _unit_) is *true*, then
-                1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
-                1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
-                1. If _fractionDigits_ is *undefined*, then
-                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
-                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
-                1. Else,
-                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
-                  1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
-                1. Set _numericUnitFound_ to *true*.
+            1. If _unit_ is one of *"seconds"*, *"milliseconds"*, or *"microseconds"*, and NextUnitFractional(_durationFormat_, _unit_) is *true*, then
+              1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
+              1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
+              1. If _fractionDigits_ is *undefined*, then
+                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
+              1. Else,
+                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
+              1. Set _numericUnitFound_ to *true*.
             1. If _display_ is *"always"* or _value_ is not 0, then
               1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _durationFormat_.[[NumberingSystem]]).
               1. If _signDisplayed_ is *true*, then
