@@ -4,16 +4,12 @@
   <emu-clause id="sec-intl-segmenter-constructor">
     <h1>The Intl.Segmenter Constructor</h1>
 
-    <p>
-      The Segmenter constructor is the <dfn>%Intl.Segmenter%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Segmenter constructor is the <dfn>%Intl.Segmenter%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.segmenter">
       <h1>Intl.Segmenter ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        When the `Intl.Segmenter` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `Intl.Segmenter` function is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
@@ -36,27 +32,19 @@
   <emu-clause id="sec-properties-of-intl-segmenter-constructor">
     <h1>Properties of the Intl.Segmenter Constructor</h1>
 
-    <p>
-      The Intl.Segmenter constructor has the following properties:
-    </p>
+    <p>The Intl.Segmenter constructor has the following properties:</p>
 
     <emu-clause id="sec-intl.segmenter.prototype">
       <h1>Intl.Segmenter.prototype</h1>
 
-      <p>
-        The value of `Intl.Segmenter.prototype` is %Intl.Segmenter.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.Segmenter.prototype` is %Intl.Segmenter.prototype%.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.segmenter.supportedlocalesof">
       <h1>Intl.Segmenter.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
-      <p>
-        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _availableLocales_ be %Intl.Segmenter%.[[AvailableLocales]].
@@ -68,44 +56,32 @@
     <emu-clause id="sec-intl.segmenter-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>
-        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
-      <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is « ».
-      </p>
+      <p>The value of the [[RelevantExtensionKeys]] internal slot is « ».</p>
       <emu-note>
         Intl.Segmenter does not have any relevant extension keys.
       </emu-note>
 
-      <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-segmenter-prototype-object">
     <h1>Properties of the Intl.Segmenter Prototype Object</h1>
 
-    <p>
-      The Intl.Segmenter prototype object is itself an ordinary object. <dfn>%Intl.Segmenter.prototype%</dfn> is not an Intl.Segmenter instance and does not have an [[InitializedSegmenter]] internal slot or any of the other internal slots of Intl.Segmenter instance objects.
-    </p>
+    <p>The Intl.Segmenter prototype object is itself an ordinary object. <dfn>%Intl.Segmenter.prototype%</dfn> is not an Intl.Segmenter instance and does not have an [[InitializedSegmenter]] internal slot or any of the other internal slots of Intl.Segmenter instance objects.</p>
 
     <emu-clause id="sec-intl.segmenter.prototype.constructor">
       <h1>Intl.Segmenter.prototype.constructor</h1>
 
-      <p>
-        The initial value of `Intl.Segmenter.prototype.constructor` is %Intl.Segmenter%.
-      </p>
+      <p>The initial value of `Intl.Segmenter.prototype.constructor` is %Intl.Segmenter%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.segmenter.prototype.resolvedoptions">
       <h1>Intl.Segmenter.prototype.resolvedOptions ( )</h1>
 
-      <p>
-        This function provides access to the locale and options computed during initialization of the object.
-      </p>
+      <p>This function provides access to the locale and options computed during initialization of the object.</p>
 
       <emu-alg>
         1. Let _segmenter_ be the *this* value.
@@ -143,9 +119,7 @@
     <emu-clause id="sec-intl.segmenter.prototype.segment">
       <h1>Intl.Segmenter.prototype.segment ( _string_ )</h1>
 
-      <p>
-        The `Intl.Segmenter.prototype.segment` method is called on an Intl.Segmenter instance with argument _string_ to create a Segments instance for the string using the locale and options of the Intl.Segmenter instance. The following steps are taken:
-      </p>
+      <p>The `Intl.Segmenter.prototype.segment` method is called on an Intl.Segmenter instance with argument _string_ to create a Segments instance for the string using the locale and options of the Intl.Segmenter instance. The following steps are taken:</p>
 
       <emu-alg>
         1. Let _segmenter_ be the *this* value.
@@ -158,29 +132,19 @@
     <emu-clause id="sec-intl.segmenter.prototype-%symbol.tostringtag%" oldids="sec-intl.segmenter.prototype-@@tostringtag">
       <h1>Intl.Segmenter.prototype [ %Symbol.toStringTag% ]</h1>
 
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Segmenter"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl.Segmenter"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-segmenter-instances">
     <h1>Properties of Intl.Segmenter Instances</h1>
 
-    <p>
-      Intl.Segmenter instances are ordinary objects that inherit properties from %Intl.Segmenter.prototype%.
-    </p>
+    <p>Intl.Segmenter instances are ordinary objects that inherit properties from %Intl.Segmenter.prototype%.</p>
 
-    <p>
-      Intl.Segmenter instances have an [[InitializedSegmenter]] internal slot.
-    </p>
+    <p>Intl.Segmenter instances have an [[InitializedSegmenter]] internal slot.</p>
 
-    <p>
-      Intl.Segmenter instances also have internal slots that are computed by the constructor:
-    </p>
+    <p>Intl.Segmenter instances also have internal slots that are computed by the constructor:</p>
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for segmentation.</li>
@@ -191,9 +155,7 @@
   <emu-clause id="sec-segments-objects">
     <h1>Segments Objects</h1>
 
-    <p>
-      A <dfn>Segments instance</dfn> is an object that represents the segments of a specific string, subject to the locale and options of its constructing Intl.Segmenter instance.
-    </p>
+    <p>A <dfn>Segments instance</dfn> is an object that represents the segments of a specific string, subject to the locale and options of its constructing Intl.Segmenter instance.</p>
 
     <emu-clause id="sec-createsegmentsobject" type="abstract operation">
       <h1>
@@ -257,26 +219,18 @@
     <emu-clause id="sec-properties-of-segments-instances">
       <h1>Properties of Segments Instances</h1>
 
-      <p>
-        Segments instances are ordinary objects that inherit properties from %IntlSegmentsPrototype%.
-      </p>
+      <p>Segments instances are ordinary objects that inherit properties from %IntlSegmentsPrototype%.</p>
 
-      <p>
-        Segments instances have a [[SegmentsSegmenter]] internal slot that references the constructing Intl.Segmenter instance.
-      </p>
+      <p>Segments instances have a [[SegmentsSegmenter]] internal slot that references the constructing Intl.Segmenter instance.</p>
 
-      <p>
-        Segments instances have a [[SegmentsString]] internal slot that references the String value whose segments they expose.
-      </p>
+      <p>Segments instances have a [[SegmentsString]] internal slot that references the String value whose segments they expose.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-segment-iterator-objects">
     <h1>Segment Iterator Objects</h1>
 
-    <p>
-      A <dfn>Segment Iterator</dfn> is an object that represents a particular iteration over the segments of a specific string.
-    </p>
+    <p>A <dfn>Segment Iterator</dfn> is an object that represents a particular iteration over the segments of a specific string.</p>
 
     <emu-clause id="sec-createsegmentiterator" type="abstract operation">
       <h1>
@@ -331,12 +285,8 @@
       <emu-clause id="sec-%intlsegmentiteratorprototype%.%symbol.tostringtag%" oldids="sec-%intlsegmentiteratorprototype%.@@tostringtag,sec-%segmentiteratorprototype%.@@tostringtag">
         <h1>%IntlSegmentIteratorPrototype% [ %Symbol.toStringTag% ]</h1>
 
-        <p>
-          The initial value of the %Symbol.toStringTag% property is the String value *"Segmenter String Iterator"*.
-        </p>
-        <p>
-          This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-        </p>
+        <p>The initial value of the %Symbol.toStringTag% property is the String value *"Segmenter String Iterator"*.</p>
+        <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
       </emu-clause>
     </emu-clause>
 
@@ -352,20 +302,18 @@
               <th>Description</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>[[IteratingSegmenter]]</td>
-              <td>The Intl.Segmenter instance used for iteration.</td>
-            </tr>
-            <tr>
-              <td>[[IteratedString]]</td>
-              <td>The String value being iterated upon.</td>
-            </tr>
-            <tr>
-              <td>[[IteratedStringNextSegmentCodeUnitIndex]]</td>
-              <td>The code unit index in the String value being iterated upon at the start of the next segment.</td>
-            </tr>
-          </tbody>
+          <tr>
+            <td>[[IteratingSegmenter]]</td>
+            <td>The Intl.Segmenter instance used for iteration.</td>
+          </tr>
+          <tr>
+            <td>[[IteratedString]]</td>
+            <td>The String value being iterated upon.</td>
+          </tr>
+          <tr>
+            <td>[[IteratedStringNextSegmentCodeUnitIndex]]</td>
+            <td>The code unit index in the String value being iterated upon at the start of the next segment.</td>
+          </tr>
         </table>
       </emu-table>
     </emu-clause>
@@ -374,9 +322,7 @@
   <emu-clause id="sec-segment-data-objects">
     <h1>Segment Data Objects</h1>
 
-    <p>
-      A <dfn>Segment Data object</dfn> is an object that represents a particular segment from a string.
-    </p>
+    <p>A <dfn>Segment Data object</dfn> is an object that represents a particular segment from a string.</p>
 
     <emu-clause id="sec-createsegmentdataobject" type="abstract operation">
       <h1>

@@ -1,9 +1,7 @@
 <emu-clause id="locale-sensitive-functions">
   <h1>Locale Sensitive Functions of the ECMAScript Language Specification</h1>
 
-  <p>
-    The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this specification shall implement these functions as described here.
-  </p>
+  <p>The ECMAScript Language Specification, edition 10 or successor, describes several locale-sensitive functions. An ECMAScript implementation that implements this specification shall implement these functions as described here.</p>
 
   <emu-note>
     The Collator, NumberFormat, or DateTimeFormat objects created in the algorithms in this clause are only used within these algorithms. They are never directly accessed by ECMAScript code and need not actually exist within an implementation.
@@ -15,13 +13,9 @@
     <emu-clause id="sup-String.prototype.localeCompare">
       <h1>String.prototype.localeCompare ( _that_ [ , _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.localecompare"></emu-xref>.</p>
 
-      <p>
-        When the `localeCompare` method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:
-      </p>
+      <p>When the `localeCompare` method is called with argument _that_ and optional arguments _locales_, and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _O_ be ? RequireObjectCoercible(*this* value).
@@ -31,9 +25,7 @@
         1. Return CompareStrings(_collator_, _S_, _thatValue_).
       </emu-alg>
 
-      <p>
-        The *"length"* property of this function is *1*<sub>𝔽</sub>.
-      </p>
+      <p>The *"length"* property of this function is *1*<sub>𝔽</sub>.</p>
 
       <emu-note>
         The `localeCompare` method itself is not directly suitable as an argument to `Array.prototype.sort` because the latter requires a function of two arguments.
@@ -47,13 +39,9 @@
     <emu-clause id="sup-string.prototype.tolocalelowercase">
       <h1>String.prototype.toLocaleLowerCase ( [ _locales_ ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.tolocalelowercase"></emu-xref>.</p>
 
-      <p>
-        This function interprets a String value as a sequence of code points, as described in es2025, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
-      </p>
+      <p>This function interprets a String value as a sequence of code points, as described in es2025, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:</p>
 
       <emu-alg>
         1. Let _O_ be ? RequireObjectCoercible(*this* value).
@@ -95,9 +83,7 @@
           1. Return CodePointsToString(_newCodePoints_).
         </emu-alg>
 
-        <p>
-          Code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale-sensitive tailoring defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database and/or CLDR and/or any other custom tailoring. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
-        </p>
+        <p>Code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale-sensitive tailoring defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database and/or CLDR and/or any other custom tailoring. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.</p>
 
         <emu-note>
           The case mapping of some code points may produce multiple code points, and therefore the result may not be the same length as the input. Because both `toLocaleUpperCase` and `toLocaleLowerCase` have context-sensitive behaviour, the functions are not symmetrical. In other words, `s.toLocaleUpperCase().toLocaleLowerCase()` is not necessarily equal to `s.toLocaleLowerCase()` and `s.toLocaleLowerCase().toLocaleUpperCase()` is not necessarily equal to `s.toLocaleUpperCase()`.
@@ -108,13 +94,9 @@
     <emu-clause id="sup-string.prototype.tolocaleuppercase">
       <h1>String.prototype.toLocaleUpperCase ( [ _locales_ ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-string.prototype.tolocaleuppercase"></emu-xref>.</p>
 
-      <p>
-        This function interprets a String value as a sequence of code points, as described in es2025, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:
-      </p>
+      <p>This function interprets a String value as a sequence of code points, as described in es2025, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>. The following steps are taken:</p>
 
       <emu-alg>
         1. Let _O_ be ? RequireObjectCoercible(*this* value).
@@ -131,20 +113,14 @@
   <emu-clause id="sup-properties-of-the-number-prototype-object">
     <h1>Properties of the Number Prototype Object</h1>
 
-    <p>
-      The following definition(s) refer to the abstract operation thisNumberValue as defined in es2025, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.
-    </p>
+    <p>The following definition(s) refer to the abstract operation thisNumberValue as defined in es2025, <emu-xref href="#sec-properties-of-the-number-prototype-object"></emu-xref>.</p>
 
     <emu-clause id="sup-number.prototype.tolocalestring">
       <h1>Number.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-number.prototype.tolocalestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _x_ be ? ThisNumberValue(*this* value).
@@ -157,20 +133,14 @@
   <emu-clause id="sup-properties-of-the-bigint-prototype-object">
     <h1>Properties of the BigInt Prototype Object</h1>
 
-    <p>
-      The following definition(s) refer to the abstract operation thisBigIntValue as defined in es2025, <emu-xref href="#sec-properties-of-the-bigint-prototype-object"></emu-xref>.
-    </p>
+    <p>The following definition(s) refer to the abstract operation thisBigIntValue as defined in es2025, <emu-xref href="#sec-properties-of-the-bigint-prototype-object"></emu-xref>.</p>
 
     <emu-clause id="sup-bigint.prototype.tolocalestring">
       <h1>BigInt.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-bigint.prototype.tolocalestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-bigint.prototype.tolocalestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _x_ be ? ThisBigIntValue(*this* value).
@@ -183,20 +153,14 @@
   <emu-clause id="sup-properties-of-the-date-prototype-object">
     <h1>Properties of the Date Prototype Object</h1>
 
-    <p>
-      The following definition(s) refer to the abstract operation thisTimeValue as defined in es2025, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.
-    </p>
+    <p>The following definition(s) refer to the abstract operation thisTimeValue as defined in es2025, <emu-xref href="#sec-properties-of-the-date-prototype-object"></emu-xref>.</p>
 
     <emu-clause id="sup-date.prototype.tolocalestring">
       <h1>Date.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocalestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _dateObject_ be the *this* value.
@@ -211,13 +175,9 @@
     <emu-clause id="sup-date.prototype.tolocaledatestring">
       <h1>Date.prototype.toLocaleDateString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocaledatestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleDateString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleDateString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _dateObject_ be the *this* value.
@@ -232,13 +192,9 @@
     <emu-clause id="sup-date.prototype.tolocaletimestring">
       <h1>Date.prototype.toLocaleTimeString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-date.prototype.tolocaletimestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleTimeString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleTimeString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _dateObject_ be the *this* value.
@@ -257,13 +213,9 @@
     <emu-clause id="sup-array.prototype.tolocalestring">
       <h1>Array.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        This definition supersedes the definition provided in es2025, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.
-      </p>
+      <p>This definition supersedes the definition provided in es2025, <emu-xref href="#sec-array.prototype.tolocalestring"></emu-xref>.</p>
 
-      <p>
-        When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _array_ be ? ToObject(*this* value).
@@ -272,7 +224,7 @@
         1. Let _R_ be the empty String.
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
-          1. If _k_ &gt; 0, then
+          1. If _k_ > 0, then
             1. Set _R_ to the string-concatenation of _R_ and _separator_.
           1. Let _nextElement_ be ? Get(_array_, ! ToString(𝔽(_k_))).
           1. If _nextElement_ is not *undefined* or *null*, then

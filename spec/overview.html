@@ -1,30 +1,20 @@
 <emu-clause id="overview">
   <h1>Overview</h1>
 
-  <p>
-    This section contains a non-normative overview of the ECMAScript 2025 Internationalization API Specification.
-  </p>
+  <p>This section contains a non-normative overview of the ECMAScript 2025 Internationalization API Specification.</p>
 
   <emu-clause id="sec-internationalization-localization-globalization">
     <h1>Internationalization, Localization, and Globalization</h1>
 
-    <p>
-      Internationalization of software means designing it such that it supports or can be easily adapted to support the needs of users speaking different languages and having different cultural expectations, and enables worldwide communication between them. Localization then is the actual adaptation to a specific language and culture. Globalization of software is commonly understood to be the combination of internationalization and localization. Globalization starts at the lowest level by using a text representation that supports all languages in the world, and using standard identifiers to identify languages, countries, time zones, and other relevant parameters. It continues with using a user interface language and data presentation that the user understands, and finally often requires product-specific adaptations to the user's language, culture, and environment.
-    </p>
-    <p>
-      The ECMAScript 2025 Language Specification lays the foundation by using Unicode for text representation and by providing a few language-sensitive functions, but gives applications little control over the behaviour of these functions. This specification builds on that foundation by providing a set of customizable language-sensitive functionality. The API is useful even for applications that themselves are not internationalized, as even applications targeting only one language and one region need to properly support that one language and region. However, the API also enables applications that support multiple languages and regions, even concurrently, as may be needed in server environments.
-    </p>
+    <p>Internationalization of software means designing it such that it supports or can be easily adapted to support the needs of users speaking different languages and having different cultural expectations, and enables worldwide communication between them. Localization then is the actual adaptation to a specific language and culture. Globalization of software is commonly understood to be the combination of internationalization and localization. Globalization starts at the lowest level by using a text representation that supports all languages in the world, and using standard identifiers to identify languages, countries, time zones, and other relevant parameters. It continues with using a user interface language and data presentation that the user understands, and finally often requires product-specific adaptations to the user's language, culture, and environment.</p>
+    <p>The ECMAScript 2025 Language Specification lays the foundation by using Unicode for text representation and by providing a few language-sensitive functions, but gives applications little control over the behaviour of these functions. This specification builds on that foundation by providing a set of customizable language-sensitive functionality. The API is useful even for applications that themselves are not internationalized, as even applications targeting only one language and one region need to properly support that one language and region. However, the API also enables applications that support multiple languages and regions, even concurrently, as may be needed in server environments.</p>
   </emu-clause>
 
   <emu-clause id="sec-api-overview">
     <h1>API Overview</h1>
 
-    <p>
-      This specification is designed to complement the ECMAScript 2025 Language Specification by providing key language-sensitive functionality. The API can be added to an implementation of the ECMAScript 2025 Language Specification (ECMA-262 16<sup>th</sup> Edition, or successor) in whole or in part. This specification introduces new language values observable to ECMAScript code (such as the value of a [[FallbackSymbol]] internal slot and the set of values transitively reachable from %Intl% by <emu-xref href="#sec-property-accessors">property access</emu-xref>), and also refines the definition of some functions specified in ECMA-262 (as described below). Neither category prohibits behaviour that is otherwise permitted for values and interfaces defined in ECMA-262, in order to support adoption of this specification by any implementation of ECMA-262.
-    </p>
-    <p>
-      This specification provides several key pieces of language-sensitive functionality that are required in most applications: locale selection and inspection, string comparison (collation) and case conversion, pluralization rules, text segmentation, and formatting of numbers, absolute and relative dates and times, durations, and lists. While the ECMAScript 2025 Language Specification provides functions for this basic functionality (on <emu-xref href="#sec-array.prototype">Array.prototype</emu-xref>: `toLocaleString`; on <emu-xref href="#sec-string.prototype">String.prototype</emu-xref>: `localeCompare`, `toLocaleLowerCase`, `toLocaleUpperCase`; on <emu-xref href="#sec-number.prototype">Number.prototype</emu-xref>: `toLocaleString`; on <emu-xref href="#sec-date.prototype">Date.prototype</emu-xref>: `toLocaleString`, `toLocaleDateString`, and `toLocaleTimeString`), their actual behaviour is left largely implemenation-defined. This specification provides additional functionality, control over the language and over details of the behaviour to be used, and a more complete specification of required functionality.
-    </p>
+    <p>This specification is designed to complement the ECMAScript 2025 Language Specification by providing key language-sensitive functionality. The API can be added to an implementation of the ECMAScript 2025 Language Specification (ECMA-262 16<sup>th</sup> Edition, or successor) in whole or in part. This specification introduces new language values observable to ECMAScript code (such as the value of a [[FallbackSymbol]] internal slot and the set of values transitively reachable from %Intl% by <emu-xref href="#sec-property-accessors">property access</emu-xref>), and also refines the definition of some functions specified in ECMA-262 (as described below). Neither category prohibits behaviour that is otherwise permitted for values and interfaces defined in ECMA-262, in order to support adoption of this specification by any implementation of ECMA-262.</p>
+    <p>This specification provides several key pieces of language-sensitive functionality that are required in most applications: locale selection and inspection, string comparison (collation) and case conversion, pluralization rules, text segmentation, and formatting of numbers, absolute and relative dates and times, durations, and lists. While the ECMAScript 2025 Language Specification provides functions for this basic functionality (on <emu-xref href="#sec-array.prototype">Array.prototype</emu-xref>: `toLocaleString`; on <emu-xref href="#sec-string.prototype">String.prototype</emu-xref>: `localeCompare`, `toLocaleLowerCase`, `toLocaleUpperCase`; on <emu-xref href="#sec-number.prototype">Number.prototype</emu-xref>: `toLocaleString`; on <emu-xref href="#sec-date.prototype">Date.prototype</emu-xref>: `toLocaleString`, `toLocaleDateString`, and `toLocaleTimeString`), their actual behaviour is left largely implemenation-defined. This specification provides additional functionality, control over the language and over details of the behaviour to be used, and a more complete specification of required functionality.</p>
 
     <p>Applications can use the API in two ways:</p>
     <ol>
@@ -36,9 +26,7 @@
       </li>
     </ol>
 
-    <p>
-      The Intl object is used to package all functionality defined in this specification in order to avoid name collisions.
-    </p>
+    <p>The Intl object is used to package all functionality defined in this specification in order to avoid name collisions.</p>
 
     <emu-note>While the API includes a variety of formatters, it does not provide any parsing facilities. This is intentional, has been discussed extensively, and concluded after weighing in all the benefits and drawbacks of including said functionality. See the discussion on the <a href="https://github.com/tc39/ecma402/issues/424">issue tracker</a>.</emu-note>
   </emu-clause>
@@ -46,9 +34,7 @@
   <emu-clause id="sec-api-conventions">
     <h1>API Conventions</h1>
 
-    <p>
-      Every <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructor</emu-xref> should behave as if defined by a class, throwing a *TypeError* exception when called as a function (without NewTarget). For backwards compatibility with past editions, this does not apply to %Intl.Collator%, %Intl.DateTimeFormat%, or %Intl.NumberFormat%, each of which construct and return a new object when called as a function.
-    </p>
+    <p>Every <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructor</emu-xref> should behave as if defined by a class, throwing a *TypeError* exception when called as a function (without NewTarget). For backwards compatibility with past editions, this does not apply to %Intl.Collator%, %Intl.DateTimeFormat%, or %Intl.NumberFormat%, each of which construct and return a new object when called as a function.</p>
 
     <emu-note id="legacy-constructor">
       In ECMA 402 v1, Intl constructors supported a mode of operation where calling them with an existing object as a receiver would add relevant internal slots to the receiver, effectively transforming it into an instance of the class. In ECMA 402 v2, this capability was removed, to avoid adding internal slots to existing objects. In ECMA 402 v3, the capability was re-added as "normative optional" in a mode which chains the underlying Intl instance on any object, when the constructor is called. See <a href="https://github.com/tc39/ecma402/issues/57">Issue 57</a> for details.
@@ -58,9 +44,7 @@
   <emu-clause id="sec-implementation-dependencies">
     <h1>Implementation Dependencies</h1>
 
-    <p>
-      Due to the nature of internationalization, this specification has to leave several details implementation dependent:
-    </p>
+    <p>Due to the nature of internationalization, this specification has to leave several details implementation dependent:</p>
     <ul>
       <li>
         <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists estimate the number of human languages to around 6000, and the more widely spoken ones have variations based on regions or other parameters. Even large locale data collections, such as the Common Locale Data Repository, cover only a subset of this large set. Implementations targeting resource-constrained devices may have to further reduce the subset.
@@ -73,9 +57,7 @@
       </li>
     </ul>
 
-    <p>
-    Throughout this specification, implementation- and locale-dependent behaviour is referred to as <dfn>ILD</dfn>, and implementation-, locale-, and numbering system-dependent behaviour is referred to as <dfn>ILND</dfn>.
-    </p>
+    <p>Throughout this specification, implementation- and locale-dependent behaviour is referred to as <dfn>ILD</dfn>, and implementation-, locale-, and numbering system-dependent behaviour is referred to as <dfn>ILND</dfn>.</p>
 
     <emu-clause id="sec-compatibility">
       <h1>Compatibility across implementations</h1>

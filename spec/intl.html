@@ -1,20 +1,12 @@
 <emu-clause id="intl-object">
   <h1>The Intl Object</h1>
-  <p>
-    The Intl object is the <dfn>%Intl%</dfn> intrinsic object and the initial value of the *"Intl"* property of the global object. The Intl object is a single ordinary object.
-  </p>
+  <p>The Intl object is the <dfn>%Intl%</dfn> intrinsic object and the initial value of the *"Intl"* property of the global object. The Intl object is a single ordinary object.</p>
 
-  <p>
-    The value of the [[Prototype]] internal slot of the Intl object is the intrinsic object %Object.prototype%.
-  </p>
+  <p>The value of the [[Prototype]] internal slot of the Intl object is the intrinsic object %Object.prototype%.</p>
 
-  <p>
-    The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the `new` operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.
-  </p>
+  <p>The Intl object is not a function object. It does not have a [[Construct]] internal method; it is not possible to use the Intl object as a constructor with the `new` operator. The Intl object does not have a [[Call]] internal method; it is not possible to invoke the Intl object as a function.</p>
 
-  <p>
-    The Intl object has an internal slot, [[FallbackSymbol]], which is a new %Symbol% in the current realm with the [[Description]] *"IntlLegacyConstructedSymbol"*.
-  </p>
+  <p>The Intl object has an internal slot, [[FallbackSymbol]], which is a new %Symbol% in the current realm with the [[Description]] *"IntlLegacyConstructedSymbol"*.</p>
 
   <emu-clause id="sec-value-properties-of-the-intl-object">
     <h1>Value Properties of the Intl Object</h1>
@@ -22,83 +14,59 @@
     <emu-clause id="sec-intl-%symbol.tostringtag%" oldids="sec-Intl-toStringTag">
       <h1>Intl [ %Symbol.toStringTag% ]</h1>
 
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-constructor-properties-of-the-intl-object">
     <h1>Constructor Properties of the Intl Object</h1>
 
-    <p>
-      With the exception of Intl.Locale, each of the following constructors is a <dfn id="service-constructor">service constructor</dfn> that creates objects providing locale-sensitive services.
-    </p>
+    <p>With the exception of Intl.Locale, each of the following constructors is a <dfn id="service-constructor">service constructor</dfn> that creates objects providing locale-sensitive services.</p>
 
     <emu-clause id="sec-intl.collator-intro">
       <h1>Intl.Collator ( . . . )</h1>
-      <p>
-        See <emu-xref href="#collator-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#collator-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.datetimeformat-intro">
       <h1>Intl.DateTimeFormat ( . . . )</h1>
-      <p>
-        See <emu-xref href="#datetimeformat-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#datetimeformat-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.displaynames-intro">
       <h1>Intl.DisplayNames ( . . . )</h1>
-      <p>
-        See <emu-xref href="#intl-displaynames-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#intl-displaynames-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.listformat-intro">
       <h1>Intl.ListFormat ( . . . )</h1>
-      <p>
-        See <emu-xref href="#listformat-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#listformat-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.locale-intro">
       <h1>Intl.Locale ( . . . )</h1>
-      <p>
-        See <emu-xref href="#locale-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#locale-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat-intro">
       <h1>Intl.NumberFormat ( . . . )</h1>
-      <p>
-        See <emu-xref href="#numberformat-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#numberformat-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules-intro">
       <h1>Intl.PluralRules ( . . . )</h1>
-      <p>
-        See <emu-xref href="#pluralrules-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#pluralrules-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.relativetimeformat-intro">
       <h1>Intl.RelativeTimeFormat ( . . . )</h1>
-      <p>
-        See <emu-xref href="#relativetimeformat-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#relativetimeformat-objects"></emu-xref>.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.segmenter-intro">
       <h1>Intl.Segmenter ( . . . )</h1>
-      <p>
-        See <emu-xref href="#segmenter-objects"></emu-xref>.
-      </p>
+      <p>See <emu-xref href="#segmenter-objects"></emu-xref>.</p>
     </emu-clause>
   </emu-clause>
 
@@ -108,9 +76,7 @@
     <emu-clause id="sec-intl.getcanonicallocales">
       <h1>Intl.getCanonicalLocales ( _locales_ )</h1>
 
-      <p>
-        When the `getCanonicalLocales` method is called with argument _locales_, the following steps are taken:
-      </p>
+      <p>When the `getCanonicalLocales` method is called with argument _locales_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _ll_ be ? CanonicalizeLocaleList(_locales_).
@@ -121,9 +87,7 @@
     <emu-clause id="sec-intl.supportedvaluesof">
       <h1>Intl.supportedValuesOf ( _key_ )</h1>
 
-      <p>
-      When the `supportedValuesOf` method is called with argument _key_ , the following steps are taken:
-      </p>
+      <p>When the `supportedValuesOf` method is called with argument _key_ , the following steps are taken:</p>
 
       <emu-alg>
         1. Let _key_ be ? ToString(_key_).

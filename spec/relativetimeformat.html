@@ -4,16 +4,12 @@
   <emu-clause id="sec-intl-relativetimeformat-constructor">
     <h1>The Intl.RelativeTimeFormat Constructor</h1>
 
-    <p>
-      The RelativeTimeFormat constructor is the <dfn>%Intl.RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The RelativeTimeFormat constructor is the <dfn>%Intl.RelativeTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat" oldids="sec-InitializeRelativeTimeFormat">
       <h1>Intl.RelativeTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        When the `Intl.RelativeTimeFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `Intl.RelativeTimeFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
@@ -48,27 +44,19 @@
   <emu-clause id="sec-properties-of-intl-relativetimeformat-constructor">
     <h1>Properties of the Intl.RelativeTimeFormat Constructor</h1>
 
-    <p>
-      The Intl.RelativeTimeFormat constructor has the following properties:
-    </p>
+    <p>The Intl.RelativeTimeFormat constructor has the following properties:</p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype">
       <h1>Intl.RelativeTimeFormat.prototype</h1>
 
-      <p>
-        The value of `Intl.RelativeTimeFormat.prototype` is %Intl.RelativeTimeFormat.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.RelativeTimeFormat.prototype` is %Intl.RelativeTimeFormat.prototype%.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.supportedLocalesOf">
       <h1>Intl.RelativeTimeFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
-      <p>
-        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _availableLocales_ be %Intl.RelativeTimeFormat%.[[AvailableLocales]].
@@ -80,28 +68,22 @@
     <emu-clause id="sec-Intl.RelativeTimeFormat-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>
-        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
-      <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is « *"nu"* ».
-      </p>
+      <p>The value of the [[RelevantExtensionKeys]] internal slot is « *"nu"* ».</p>
 
       <emu-note>
-       <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes one locale extension key that is relevant to relative time formatting: *"nu"* for numbering system (of formatted numbers).
+        <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes one locale extension key that is relevant to relative time formatting: *"nu"* for numbering system (of formatted numbers).
       </emu-note>
 
-      <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:
-      </p>
+      <p>The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:</p>
 
       <ul>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] has fields *"second"*, *"minute"*, *"hour"*, *"day"*, *"week"*, *"month"*, *"quarter"*, and *"year"*. Additional fields may exist with the previous names concatenated with the strings *"-narrow"* or *"-short"*. The values corresponding to these fields are Records which contain these two categories of fields:
-        <ul>
-        <li>*"future"* and *"past"* fields, which are Records with a field for each of the plural categories relevant for _locale_. The value corresponding to those fields is a pattern which may contain *"{0}"* to be replaced by a formatted number.</li>
-        <li>Optionally, additional fields whose key is the result of ToString of a Number, and whose values are literal Strings which are not treated as templates.</li>
-        </ul>
+        <li>[[LocaleData]].[[&lt;_locale_>]] has fields *"second"*, *"minute"*, *"hour"*, *"day"*, *"week"*, *"month"*, *"quarter"*, and *"year"*. Additional fields may exist with the previous names concatenated with the strings *"-narrow"* or *"-short"*. The values corresponding to these fields are Records which contain these two categories of fields:
+          <ul>
+            <li>*"future"* and *"past"* fields, which are Records with a field for each of the plural categories relevant for _locale_. The value corresponding to those fields is a pattern which may contain *"{0}"* to be replaced by a formatted number.</li>
+            <li>Optionally, additional fields whose key is the result of ToString of a Number, and whose values are literal Strings which are not treated as templates.</li>
+          </ul>
         </li>
         <li>
           The List that is the value of the *"nu"* field of any locale field of [[LocaleData]] must not include the values *"native"*, *"traditio"*, or *"finance"*.
@@ -117,24 +99,18 @@
   <emu-clause id="sec-properties-of-intl-relativetimeformat-prototype-object">
     <h1>Properties of the Intl.RelativeTimeFormat Prototype Object</h1>
 
-    <p>
-      The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%Intl.RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.
-    </p>
+    <p>The Intl.RelativeTimeFormat prototype object is itself an ordinary object. <dfn>%Intl.RelativeTimeFormat.prototype%</dfn> is not an Intl.RelativeTimeFormat instance and does not have an [[InitializedRelativeTimeFormat]] internal slot or any of the other internal slots of Intl.RelativeTimeFormat instance objects.</p>
 
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.constructor">
       <h1>Intl.RelativeTimeFormat.prototype.constructor</h1>
 
-      <p>
-        The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %Intl.RelativeTimeFormat%.
-      </p>
+      <p>The initial value of `Intl.RelativeTimeFormat.prototype.constructor` is %Intl.RelativeTimeFormat%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.relativetimeformat.prototype.resolvedoptions">
       <h1>Intl.RelativeTimeFormat.prototype.resolvedOptions ( )</h1>
 
-      <p>
-        This function provides access to the locale and options computed during initialization of the object.
-      </p>
+      <p>This function provides access to the locale and options computed during initialization of the object.</p>
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
@@ -180,9 +156,7 @@
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.format">
       <h1>Intl.RelativeTimeFormat.prototype.format ( _value_, _unit_ )</h1>
 
-      <p>
-        When the `format` method is called with arguments _value_ and _unit_, the following steps are taken:
-      </p>
+      <p>When the `format` method is called with arguments _value_ and _unit_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
@@ -196,9 +170,7 @@
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype.formatToParts">
       <h1>Intl.RelativeTimeFormat.prototype.formatToParts ( _value_, _unit_ )</h1>
 
-      <p>
-        When the `formatToParts` method is called with arguments _value_ and _unit_, the following steps are taken:
-      </p>
+      <p>When the `formatToParts` method is called with arguments _value_ and _unit_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _relativeTimeFormat_ be the *this* value.
@@ -212,29 +184,19 @@
     <emu-clause id="sec-Intl.RelativeTimeFormat.prototype-toStringTag">
       <h1>Intl.RelativeTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
 
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.RelativeTimeFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl.RelativeTimeFormat"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-relativetimeformat-instances">
     <h1>Properties of Intl.RelativeTimeFormat Instances</h1>
 
-    <p>
-      Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %Intl.RelativeTimeFormat.prototype%.
-    </p>
+    <p>Intl.RelativeTimeFormat instances are ordinary objects that inherit properties from %Intl.RelativeTimeFormat.prototype%.</p>
 
-    <p>
-      Intl.RelativeTimeFormat instances have an [[InitializedRelativeTimeFormat]] internal slot.
-    </p>
+    <p>Intl.RelativeTimeFormat instances have an [[InitializedRelativeTimeFormat]] internal slot.</p>
 
-    <p>
-      Intl.RelativeTimeFormat instances also have several internal slots that are computed by the constructor:
-    </p>
+    <p>Intl.RelativeTimeFormat instances also have several internal slots that are computed by the constructor:</p>
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
@@ -292,24 +254,24 @@
         1. If _value_ is *NaN*, *+∞*<sub>𝔽</sub>, or *-∞*<sub>𝔽</sub>, throw a *RangeError* exception.
         1. Let _unit_ be ? SingularRelativeTimeUnit(_unit_).
         1. Let _fields_ be _relativeTimeFormat_.[[LocaleData]].
-        1. Let _patterns_ be _fields_.[[&lt;_unit_&gt;]].
+        1. Let _patterns_ be _fields_.[[&lt;_unit_>]].
         1. Let _style_ be _relativeTimeFormat_.[[Style]].
         1. If _style_ is *"short"* or *"narrow"*, then
           1. Let _key_ be the string-concatenation of _unit_, *"-"*, and _style_.
-          1. If _fields_ has a field [[&lt;_key_&gt;]], set _patterns_ to _fields_.[[&lt;_key_&gt;]].
+          1. If _fields_ has a field [[&lt;_key_>]], set _patterns_ to _fields_.[[&lt;_key_>]].
         1. If _relativeTimeFormat_.[[Numeric]] is *"auto"*, then
           1. Let _valueString_ be ! ToString(_value_).
-          1. If _patterns_ has a field [[&lt;_valueString_&gt;]], then
-            1. Let _result_ be _patterns_.[[&lt;_valueString_&gt;]].
+          1. If _patterns_ has a field [[&lt;_valueString_>]], then
+            1. Let _result_ be _patterns_.[[&lt;_valueString_>]].
             1. Return a List containing the Record { [[Type]]: *"literal"*, [[Value]]: _result_, [[Unit]]: ~empty~ }.
         1. If _value_ is *-0*<sub>𝔽</sub> or _value_ &lt; *-0*<sub>𝔽</sub>, then
           1. Let _tl_ be *"past"*.
         1. Else,
           1. Let _tl_ be *"future"*.
-        1. Let _po_ be _patterns_.[[&lt;_tl_&gt;]].
+        1. Let _po_ be _patterns_.[[&lt;_tl_>]].
         1. Let _fv_ be PartitionNumberPattern(_relativeTimeFormat_.[[NumberFormat]], ℝ(_value_)).
         1. Let _pr_ be ResolvePlural(_relativeTimeFormat_.[[PluralRules]], _value_).[[PluralCategory]].
-        1. Let _pattern_ be _po_.[[&lt;_pr_&gt;]].
+        1. Let _pattern_ be _po_.[[&lt;_pr_>]].
         1. Return MakePartsList(_pattern_, _unit_, _fv_).
       </emu-alg>
     </emu-clause>
@@ -341,13 +303,15 @@
 
       <emu-note>
         Example:
-        <emu-alg>1. Return MakePartsList(*"AA{0}BB"*, *"hour"*, « Record { [[Type]]: *"integer"*, [[Value]]: *"15"* } »).</emu-alg>
+        <emu-alg>
+          1. Return MakePartsList(*"AA{0}BB"*, *"hour"*, « Record { [[Type]]: *"integer"*, [[Value]]: *"15"* } »).
+        </emu-alg>
         will return a List of Records like
         <kbd style="font: inherit; white-space: pre-wrap">
           «
-            { [[Type]]: *"literal"*, [[Value]]: *"AA"*, [[Unit]]: ~empty~},
-            { [[Type]]: *"integer"*, [[Value]]: *"15"*, [[Unit]]: *"hour"*},
-            { [[Type]]: *"literal"*, [[Value]]: *"BB"*, [[Unit]]: ~empty~}
+          { [[Type]]: *"literal"*, [[Value]]: *"AA"*, [[Unit]]: ~empty~},
+          { [[Type]]: *"integer"*, [[Value]]: *"15"*, [[Unit]]: *"hour"*},
+          { [[Type]]: *"literal"*, [[Value]]: *"BB"*, [[Unit]]: ~empty~}
           »
         </kbd>
       </emu-note>
