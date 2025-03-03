@@ -491,7 +491,7 @@ emu-normative-optional:before {
 
     <emu-clause id="sec-iswellformedcurrencycode" type="abstract operation" aoid="IsWellFormedCurrencyCode">
       <h1><span class="secnum">6.3.1</span> IsWellFormedCurrencyCode ( <var>currency</var> )</h1>
-      <p>The abstract operation IsWellFormedCurrencyCode takes argument <var>currency</var> (a String) and returns a Boolean. It verifies that the <var>currency</var> argument represents a well-formed 3-letter ISO currency code. It performs the following steps when called:</p>
+      <p>The abstract operation IsWellFormedCurrencyCode takes argument <var>currency</var> (a String) and returns a Boolean. It verifies that the <var>currency</var> argument represents a well-formed 3-letter ISO 4217 currency code. It performs the following steps when called:</p>
       <emu-alg><ol><li>If the length of <var>currency</var> is not 3, return <emu-val>false</emu-val>.</li><li>Let <var>normalized</var> be the <emu-xref href="#sec-case-sensitivity-and-case-mapping" id="_ref_267"><a href="#sec-case-sensitivity-and-case-mapping">ASCII-uppercase</a></emu-xref> of <var>currency</var>.</li><li>If <var>normalized</var> contains any code unit outside of 0x0041 through 0x005A (corresponding to Unicode characters LATIN CAPITAL LETTER A through LATIN CAPITAL LETTER Z), return <emu-val>false</emu-val>.</li><li>Return <emu-val>true</emu-val>.</li></ol></emu-alg>
     </emu-clause>
   </emu-clause>
