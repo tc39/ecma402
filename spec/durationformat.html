@@ -35,9 +35,9 @@
           1. Let _styleSlot_ be the Style Slot value of the current row.
           1. Let _displaySlot_ be the Display Slot value of the current row.
           1. Let _unit_ be the Unit value of the current row.
-          1. Let _valueList_ be the Values value of the current row.
+          1. Let _styles_ be the Styles value of the current row.
           1. Let _digitalBase_ be the Digital Default value of the current row.
-          1. Let _unitOptions_ be ? GetDurationUnitOptions(_unit_, _options_, _style_, _valueList_, _digitalBase_, _prevStyle_, _digitalFormat_.[[TwoDigitHours]]).
+          1. Let _unitOptions_ be ? GetDurationUnitOptions(_unit_, _options_, _style_, _styles_, _digitalBase_, _prevStyle_, _digitalFormat_.[[TwoDigitHours]]).
           1. Set the value of the _styleSlot_ slot of _durationFormat_ to _unitOptions_.[[Style]].
           1. Set the value of the _displaySlot_ slot of _durationFormat_ to _unitOptions_.[[Display]].
           1. If _unit_ is one of *"hours"*, *"minutes"*, *"seconds"*, *"milliseconds"*, or *"microseconds"*, then
@@ -46,14 +46,14 @@
         1. Return _durationFormat_.
       </emu-alg>
       <emu-table id="table-durationformat">
-        <emu-caption>Internal slots and property names of DurationFormat instances relevant to Intl.DurationFormat constructor</emu-caption>
+        <emu-caption>Internal slots and property names of DurationFormat instances</emu-caption>
         <table class="real-table">
           <thead>
             <tr>
               <th>Style Slot</th>
               <th>Display Slot</th>
               <th>Unit</th>
-              <th>Values</th>
+              <th>Styles</th>
               <th>Digital Default</th>
             </tr>
           </thead>
