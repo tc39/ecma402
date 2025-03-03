@@ -614,7 +614,7 @@
           _digitalBase_: a String,
           _prevStyle_: a String,
           _twoDigitHours_: a Boolean,
-        ): either a normal completion containing a Record with [[Style]] and [[Display]] fields, or a throw completion
+        ): either a normal completion containing a Duration Unit Options Record, or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -642,11 +642,33 @@
         1. Perform ? ValidateDurationUnitStyle(_unit_, _style_, _display_, _prevStyle_).
         1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, set _style_ to *"2-digit"*.
         1. If _unit_ is *"minutes"* or *"seconds"* and _prevStyle_ is *"numeric"* or *"2-digit"*, set _style_ to *"2-digit"*.
-        1. Return the Record {
-            [[Style]]: _style_,
-            [[Display]]: _display_
-          }.
+        1. Return the Duration Unit Options Record { [[Style]]: _style_, [[Display]]: _display_ }.
       </emu-alg>
+
+      <emu-clause id="sec-durationformat-unit-options-record">
+        <h1>Duration Unit Options Records</h1>
+
+        <p>Each <dfn id="durationformat-unit-options-record">Duration Unit Options Record</dfn> has the fields defined in <emu-xref href="#table-durationformat-unit-options-record"></emu-xref>.</p>
+        <emu-table id="table-durationformat-unit-options-record">
+          <emu-caption>Duration Unit Options Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[Style]]</td>
+              <td>a String from the Styles column of <emu-xref href="#table-durationformat"></emu-xref></td>
+            </tr>
+            <tr>
+              <td>[[Display]]</td>
+              <td>*"auto"* or *"always"*</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
 
       <emu-clause id="sec-validatedurationunitstyle" type="abstract operation">
         <h1>
