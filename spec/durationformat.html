@@ -639,7 +639,7 @@
           1. Set _displayDefault_ to *"auto"*.
         1. Let _displayField_ be the string-concatenation of _unit_ and *"Display"*.
         1. Let _display_ be ? GetOption(_options_, _displayField_, ~string~, « *"auto"*, *"always"* », _displayDefault_).
-        1. Perform ? ValidateDurationUnitStyle(_unit_, _style_, _display_, _prevStyle_).
+        1. Perform ? ValidateDurationUnitStyle(_style_, _display_, _prevStyle_).
         1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, set _style_ to *"2-digit"*.
         1. If _unit_ is *"minutes"* or *"seconds"* and _prevStyle_ is *"numeric"* or *"2-digit"*, set _style_ to *"2-digit"*.
         1. Return the Record {
@@ -651,7 +651,6 @@
       <emu-clause id="sec-validatedurationunitstyle" type="abstract operation">
         <h1>
           ValidateDurationUnitStyle (
-            _unit_: a String,
             _style_: a String,
             _display_: a String,
             _prevStyle_: a String,
