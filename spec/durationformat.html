@@ -201,7 +201,7 @@
               1. NOTE: _v_.[[Style]] will be represented with a property named _p_ (a plural Temporal unit), then _v_.[[Display]] will be represented with a property whose name suffixes _p_ with *"Display"*.
               1. Let _style_ be _v_.[[Style]].
               1. If _style_ is *"fractional"*, then
-                1. Assert: _p_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*.
+                1. Assert: IsFractionalSecondUnitName(_p_) is *true*.
                 1. Set _style_ to *"numeric"*.
               1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _style_).
               1. Set _p_ to the string-concatenation of _p_ and *"Display"*.
@@ -593,7 +593,7 @@
           1. Else,
             1. Set _style_ to _baseStyle_.
             1. Set _displayDefault_ to *"auto"*.
-        1. If _style_ is *"numeric"* and _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, then
+        1. If _style_ is *"numeric"* and IsFractionalSecondUnitName(_unit_) is *true*, then
           1. Set _style_ to *"fractional"*.
           1. Set _displayDefault_ to *"auto"*.
         1. Let _displayField_ be the string-concatenation of _unit_ and *"Display"*.
@@ -667,10 +667,10 @@
         1. For each row of <emu-xref href="#table-partition-duration-format-pattern"></emu-xref>, except the header row, in table order, do
           1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the Internal Slot value of the current row.
           1. If _unitOptions_.[[Style]] is *"fractional"*, then
-            1. Assert: The Unit value of the current row is *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*.
+            1. Let _unit_ be the Unit value of the current row.
+            1. Assert: IsFractionalSecondUnitName(_unit_) is *true*.
             1. Let _value_ be the value of _duration_'s field whose name is the Value Field value of the current row.
-            1. Set _value_ to _value_ / 10<sup>_exponent_</sup>.
-            1. Set _result_ to _result_ + _value_.
+            1. Set _result_ to _result_ + (_value_ / 10<sup>_exponent_</sup>).
             1. Set _exponent_ to _exponent_ + 3.
         1. Return _result_.
       </emu-alg>
@@ -689,10 +689,9 @@
       </dl>
 
       <emu-alg>
-        1. Assert: _unit_ is *"seconds"*, *"milliseconds"*, or *"microseconds"*.
         1. If _unit_ is *"seconds"* and _durationFormat_.[[MillisecondsOptions]].[[Style]] is *"fractional"*, return *true*.
-        1. Else if _unit_ is *"milliseconds"* and _durationFormat_.[[MicrosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
-        1. Else if _unit_ is *"microseconds"* and _durationFormat_.[[NanosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
+        1. If _unit_ is *"milliseconds"* and _durationFormat_.[[MicrosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
+        1. If _unit_ is *"microseconds"* and _durationFormat_.[[NanosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
@@ -872,6 +871,20 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-clause id="sec-isfractionalsecondunitname" type="abstract operation">
+      <h1>
+        IsFractionalSecondUnitName (
+          _unit_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, return *true*.
+        1. Return *false*.
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-listformatparts" type="abstract operation">
       <h1>
         ListFormatParts (
@@ -944,7 +957,7 @@
             1. Set _numericUnitFound_ to *true*.
           1. Else,
             1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
-            1. If _unit_ is one of *"seconds"*, *"milliseconds"*, or *"microseconds"*, and NextUnitFractional(_durationFormat_, _unit_) is *true*, then
+            1. If NextUnitFractional(_durationFormat_, _unit_) is *true*, then
               1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
               1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
               1. If _fractionDigits_ is *undefined*, then
