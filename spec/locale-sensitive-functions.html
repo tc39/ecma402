@@ -79,13 +79,11 @@
         </dl>
         <emu-alg>
           1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-          1. If _requestedLocales_ is not an empty List, then
-            1. Let _requestedLocale_ be _requestedLocales_[0].
-          1. Else,
-            1. Let _requestedLocale_ be DefaultLocale().
-          1. Let _availableLocales_ be an Available Locales List which includes the language tags for which the Unicode Character Database contains language-sensitive case mappings. If the implementation supports additional locale-sensitive case mappings, _availableLocales_ should also include their corresponding language tags.
-          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, « _requestedLocale_ »).
-          1. If _match_ is not *undefined*, let _locale_ be _match_.[[locale]]; else let _locale_ be *"und"*.
+          1. Let _availableLocales_ be an Available Locales List which includes all language tags for which the implementation supports at least one case mapping transformation (even if that transformation applies to all known locales).
+          1. Let _opt_ be the Record { [[localeMatcher]]: *"best fit"* }.
+          1. Let _relevantExtensionKeys_ be a new empty List.
+          1. Let _r_ be ResolveLocale(_availableLocales_, _requestedLocales_, _opt_, _relevantExtensionKeys_).
+          1. Let _locale_ be _r_.[[Locale]].
           1. Let _codePoints_ be StringToCodePoints(_S_).
           1. If _targetCase_ is ~lower~, then
             1. Let _newCodePoints_ be a List whose elements are the result of a lowercase transformation of _codePoints_ according to an implementation-derived algorithm using _locale_ or the Unicode Default Case Conversion algorithm.
@@ -96,8 +94,12 @@
         </emu-alg>
 
         <p>
-          Code point mappings may be derived according to a tailored version of the Default Case Conversion Algorithms of the Unicode Standard. Implementations may use locale-sensitive tailoring defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database and/or CLDR and/or any other custom tailoring. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
+          Implementations are required to support case transformation for each language tag that appears in the <code>condition_list</code> of an entry defined in the file <a href="https://unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt"><code>SpecialCasing.txt</code></a> of the Unicode Character Database. Code point mappings from the Default Case Conversion Algorithms of the Unicode Standard may be tailored according to CLDR and/or any other custom adjustments. Regardless of tailoring, a conforming implementation's case transformation algorithm must always yield the same result given the same input code points, locale, and target case.
         </p>
+
+        <emu-note>
+          Locale-sensitive case transformations have been rare in practice—the Unicode Character Database has historically defined only two sets, one for Lithuanian and one for Turkic languages (specifically Turkish and Azeri). This algorithm is defined to remain valid even if that changes, but <emu-xref href="#sec-algorithm-conventions" title></emu-xref> permits conforming implementations to use more efficient approaches that preserve the specified semantics. For example, an implementation might scan for the first “known” locale in _requestedLocales_ (or ultimately DefaultLocale()) and check it against a static collection of prefixes encompassing all locales subject to locale-sensitive case transformation.
+        </emu-note>
 
         <emu-note>
           The case mapping of some code points may produce multiple code points, and therefore the result may not be the same length as the input. Because both `toLocaleUpperCase` and `toLocaleLowerCase` have context-sensitive behaviour, the functions are not symmetrical. In other words, `s.toLocaleUpperCase().toLocaleLowerCase()` is not necessarily equal to `s.toLocaleLowerCase()` and `s.toLocaleLowerCase().toLocaleUpperCase()` is not necessarily equal to `s.toLocaleUpperCase()`.
