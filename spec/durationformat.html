@@ -205,13 +205,12 @@
         1. For each row of <emu-xref href="#table-durationformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _df_'s internal slot whose name is the Internal Slot value of the current row.
-          1. If _p_ is *"fractionalDigits"*, then
-            1. If _v_ is not *undefined*, perform ! CreateDataPropertyOrThrow(_options_, _p_, 𝔽(_v_)).
-          1. Else,
-            1. Assert: _v_ is not *undefined*.
-            1. If _v_ is *"fractional"*, then
-              1. Assert: _p_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*.
-              1. Set _v_ to *"numeric"*.
+          1. If _v_ is not *undefined*, then
+            1. If there is a Conversion value in the current row, let _conversion_ be that value; else let _conversion_ be ~empty~.
+            1. If _conversion_ is ~number~, then
+              1. Set _v_ to 𝔽(_v_).
+            1. Else,
+              1. Assert: _conversion_ is ~empty~.
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
       </emu-alg>
@@ -223,103 +222,128 @@
             <tr>
               <th>Internal Slot</th>
               <th>Property</th>
+              <th>Conversion</th>
             </tr>
           </thead>
           <tr>
             <td>[[Locale]]</td>
             <td>*"locale"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[NumberingSystem]]</td>
             <td>*"numberingSystem"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Style]]</td>
             <td>*"style"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[YearsStyle]]</td>
             <td>*"years"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[YearsDisplay]]</td>
             <td>*"yearsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MonthsStyle]]</td>
             <td>*"months"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MonthsDisplay]]</td>
             <td>*"monthsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[WeeksStyle]]</td>
             <td>*"weeks"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[WeeksDisplay]]</td>
             <td>*"weeksDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[DaysStyle]]</td>
             <td>*"days"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[DaysDisplay]]</td>
             <td>*"daysDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[HoursStyle]]</td>
             <td>*"hours"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[HoursDisplay]]</td>
             <td>*"hoursDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MinutesStyle]]</td>
             <td>*"minutes"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MinutesDisplay]]</td>
             <td>*"minutesDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[SecondsStyle]]</td>
             <td>*"seconds"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[SecondsDisplay]]</td>
             <td>*"secondsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MillisecondsStyle]]</td>
             <td>*"milliseconds"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MillisecondsDisplay]]</td>
             <td>*"millisecondsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MicrosecondsStyle]]</td>
             <td>*"microseconds"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[MicrosecondsDisplay]]</td>
             <td>*"microsecondsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[NanosecondsStyle]]</td>
             <td>*"nanoseconds"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[NanosecondsDisplay]]</td>
             <td>*"nanosecondsDisplay"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[FractionalDigits]]</td>
             <td>*"fractionalDigits"*</td>
+            <td>~number~</td>
           </tr>
         </table>
       </emu-table>
