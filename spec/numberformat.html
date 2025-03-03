@@ -4,16 +4,12 @@
   <emu-clause id="sec-intl-numberformat-constructor">
     <h1>The Intl.NumberFormat Constructor</h1>
 
-    <p>
-      The NumberFormat constructor is the <dfn>%Intl.NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The NumberFormat constructor is the <dfn>%Intl.NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.numberformat" oldids="sec-initializenumberformat">
       <h1>Intl.NumberFormat ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        When the `Intl.NumberFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `Intl.NumberFormat` function is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
@@ -66,23 +62,24 @@
       </emu-alg>
 
       <emu-normative-optional>
-      <emu-clause id="sec-chainnumberformat" type="abstract operation">
-        <h1>
-          ChainNumberFormat (
-            _numberFormat_: an Intl.NumberFormat,
-            _newTarget_: an ECMAScript language value,
-            _this_: an ECMAScript language value,
-          ): either a normal completion containing an Object or a throw completion
-        </h1>
-        <dl class="header">
-        </dl>
-        <emu-alg>
-          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.NumberFormat%, _this_) is *true*, then
-            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-            1. Return _this_.
-          1. Return _numberFormat_.
-        </emu-alg>
-      </emu-clause>
+
+        <emu-clause id="sec-chainnumberformat" type="abstract operation">
+          <h1>
+            ChainNumberFormat (
+              _numberFormat_: an Intl.NumberFormat,
+              _newTarget_: an ECMAScript language value,
+              _this_: an ECMAScript language value,
+            ): either a normal completion containing an Object or a throw completion
+          </h1>
+          <dl class="header">
+          </dl>
+          <emu-alg>
+            1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.NumberFormat%, _this_) is *true*, then
+              1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+              1. Return _this_.
+            1. Return _numberFormat_.
+          </emu-alg>
+        </emu-clause>
       </emu-normative-optional>
     </emu-clause>
 
@@ -212,27 +209,19 @@
   <emu-clause id="sec-properties-of-intl-numberformat-constructor">
     <h1>Properties of the Intl.NumberFormat Constructor</h1>
 
-    <p>
-      The Intl.NumberFormat constructor has the following properties:
-    </p>
+    <p>The Intl.NumberFormat constructor has the following properties:</p>
 
     <emu-clause id="sec-intl.numberformat.prototype">
       <h1>Intl.NumberFormat.prototype</h1>
 
-      <p>
-        The value of `Intl.NumberFormat.prototype` is %Intl.NumberFormat.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.NumberFormat.prototype` is %Intl.NumberFormat.prototype%.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.supportedlocalesof">
       <h1>Intl.NumberFormat.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
-      <p>
-        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _availableLocales_ be %Intl.NumberFormat%.[[AvailableLocales]].
@@ -244,30 +233,24 @@
     <emu-clause id="sec-intl.numberformat-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>
-        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
-      <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is « *"nu"* ».
-      </p>
+      <p>The value of the [[RelevantExtensionKeys]] internal slot is « *"nu"* ».</p>
 
       <emu-note>
-         <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes three locale extension keys that are relevant to number formatting: *"cu"* for currency, *"cf"* for currency format style, and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects, and the currency format style of a currency format is specified through the currencySign property in the options objects.
+        <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes three locale extension keys that are relevant to number formatting: *"cu"* for currency, *"cf"* for currency format style, and *"nu"* for numbering system. Intl.NumberFormat, however, requires that the currency of a currency format is specified through the currency property in the options objects, and the currency format style of a currency format is specified through the currencySign property in the options objects.
       </emu-note>
 
-      <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:
-      </p>
+      <p>The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints:</p>
 
       <ul>
         <li>The List that is the value of the *"nu"* field of any locale field of [[LocaleData]] must not include the values *"native"*, *"traditio"*, or *"finance"*.</li>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must have a [[patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_>]] must have a [[patterns]] field for all locale values _locale_. The value of this field must be a Record, which must have fields with the names of the four number format styles: *"decimal"*, *"percent"*, *"currency"*, and *"unit"*.</li>
         <li>
           The two fields *"currency"* and *"unit"* noted above must be Records with at least one field, *"fallback"*.
           The *"currency"* may have additional fields with keys corresponding to currency codes according to <emu-xref href="#sec-currency-codes"></emu-xref>.
           Each field of *"currency"* must be a Record with fields corresponding to the possible currencyDisplay values: *"code"*, *"symbol"*, *"narrowSymbol"*, and *"name"*.
-          Each of those fields must contain a Record with fields corresponding to the possible currencySign values: *"standard"* or *"accounting"*. The *"unit"* field (of [[LocaleData]].[[&lt;_locale_&gt;]]) may have additional fields beyond the required field *"fallback"* with keys corresponding to core measurement unit identifiers corresponding to <emu-xref href="#sec-measurement-unit-identifiers"></emu-xref>.
+          Each of those fields must contain a Record with fields corresponding to the possible currencySign values: *"standard"* or *"accounting"*. The *"unit"* field (of [[LocaleData]].[[&lt;_locale_>]]) may have additional fields beyond the required field *"fallback"* with keys corresponding to core measurement unit identifiers corresponding to <emu-xref href="#sec-measurement-unit-identifiers"></emu-xref>.
           Each field of *"unit"* must be a Record with fields corresponding to the possible unitDisplay values: *"narrow"*, *"short"*, and *"long"*.
         </li>
         <li>All of the leaf fields so far described for the patterns tree (*"decimal"*, *"percent"*, great-grandchildren of *"currency"*, and grandchildren of *"unit"*) must be Records with the keys *"positivePattern"*, *"zeroPattern"*, and *"negativePattern"*.</li>
@@ -277,7 +260,7 @@
           Additionally, the values within the *"percent"* field must also contain the substring *"{percentSign}"*; the values within the *"currency"* field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the *"unit"* field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*.
           The pattern strings, when interpreted as a sequence of UTF-16 encoded code points as described in es2025, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
         </li>
-        <li>[[LocaleData]].[[&lt;_locale_&gt;]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
+        <li>[[LocaleData]].[[&lt;_locale_>]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
       </ul>
 
       <emu-note>
@@ -289,24 +272,18 @@
   <emu-clause id="sec-properties-of-intl-numberformat-prototype-object">
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
-    <p>
-      The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%Intl.NumberFormat.prototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.
-    </p>
+    <p>The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%Intl.NumberFormat.prototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.</p>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
 
-      <p>
-        The initial value of `Intl.NumberFormat.prototype.constructor` is %Intl.NumberFormat%.
-      </p>
+      <p>The initial value of `Intl.NumberFormat.prototype.constructor` is %Intl.NumberFormat%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.numberformat.prototype.resolvedoptions">
       <h1>Intl.NumberFormat.prototype.resolvedOptions ( )</h1>
 
-      <p>
-        This function provides access to the locale and options computed during initialization of the object.
-      </p>
+      <p>This function provides access to the locale and options computed during initialization of the object.</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -447,9 +424,7 @@
     <emu-clause id="sec-intl.numberformat.prototype.format">
       <h1>get Intl.NumberFormat.prototype.format</h1>
 
-      <p>
-        Intl.NumberFormat.prototype.format is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:
-      </p>
+      <p>Intl.NumberFormat.prototype.format is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -472,9 +447,7 @@
     <emu-clause id="sec-intl.numberformat.prototype.formatrange">
       <h1>Intl.NumberFormat.prototype.formatRange ( _start_, _end_ )</h1>
 
-      <p>
-        When the `formatRange` method is called with arguments _start_ and _end_, the following steps are taken:
-      </p>
+      <p>When the `formatRange` method is called with arguments _start_ and _end_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -489,9 +462,7 @@
     <emu-clause id="sec-intl.numberformat.prototype.formatrangetoparts">
       <h1>Intl.NumberFormat.prototype.formatRangeToParts ( _start_, _end_ )</h1>
 
-      <p>
-        When the `formatRangeToParts` method is called with arguments _start_ and _end_, the following steps are taken:
-      </p>
+      <p>When the `formatRangeToParts` method is called with arguments _start_ and _end_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -506,9 +477,7 @@
     <emu-clause id="sec-intl.numberformat.prototype.formattoparts">
       <h1>Intl.NumberFormat.prototype.formatToParts ( _value_ )</h1>
 
-      <p>
-        When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:
-      </p>
+      <p>When the `formatToParts` method is called with an optional argument _value_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _nf_ be the *this* value.
@@ -521,29 +490,19 @@
     <emu-clause id="sec-intl.numberformat.prototype-%symbol.tostringtag%" oldids="sec-intl.numberformat.prototype-@@tostringtag">
       <h1>Intl.NumberFormat.prototype [ %Symbol.toStringTag% ]</h1>
 
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.NumberFormat"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
+      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl.NumberFormat"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-numberformat-instances">
     <h1>Properties of Intl.NumberFormat Instances</h1>
 
-    <p>
-      Intl.NumberFormat instances are ordinary objects that inherit properties from %Intl.NumberFormat.prototype%.
-    </p>
+    <p>Intl.NumberFormat instances are ordinary objects that inherit properties from %Intl.NumberFormat.prototype%.</p>
 
-    <p>
-      Intl.NumberFormat instances have an [[InitializedNumberFormat]] internal slot.
-    </p>
+    <p>Intl.NumberFormat instances have an [[InitializedNumberFormat]] internal slot.</p>
 
-    <p>
-      Intl.NumberFormat instances also have several internal slots that are computed by the constructor:
-    </p>
+    <p>Intl.NumberFormat instances also have several internal slots that are computed by the constructor:</p>
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
@@ -589,96 +548,92 @@
             <th>1.5</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>*"ceil"*</td>
-            <td>Toward positive infinity</td>
-            <td>⬆️ [-1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [2]</td>
-          </tr>
-          <tr>
-            <td>*"floor"*</td>
-            <td>Toward negative infinity</td>
-            <td>⬇️ [-2]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [1]</td>
-          </tr>
-          <tr>
-            <td>*"expand"*</td>
-            <td>Away from zero</td>
-            <td>⬇️ [-2]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [2]</td>
-          </tr>
-          <tr>
-            <td>*"trunc"*</td>
-            <td>Toward zero</td>
-            <td>⬆️ [-1]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [1]</td>
-          </tr>
-          <tr>
-            <td>*"halfCeil"*</td>
-            <td>Ties toward positive infinity</td>
-            <td>⬆️ [-1]</td>
-            <td>⬇️ [0]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [2]</td>
-          </tr>
-          <tr>
-            <td>*"halfFloor"*</td>
-            <td>Ties toward negative infinity</td>
-            <td>⬇️ [-2]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬆️ [1]</td>
-            <td>⬇️ [1]</td>
-          </tr>
-          <tr>
-            <td>*"halfExpand"*</td>
-            <td>Ties away from zero</td>
-            <td>⬇️ [-2]</td>
-            <td>⬇️ [0]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [2]</td>
-          </tr>
-          <tr>
-            <td>*"halfTrunc"*</td>
-            <td>Ties toward zero</td>
-            <td>⬆️ [-1]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬆️ [1]</td>
-            <td>⬇️ [1]</td>
-          </tr>
-          <tr>
-            <td>*"halfEven"*</td>
-            <td>Ties toward an even rounding increment multiple</td>
-            <td>⬇️ [-2]</td>
-            <td>⬇️ [0]</td>
-            <td>⬇️ [0]</td>
-            <td>⬆️ [1]</td>
-            <td>⬆️ [2]</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>*"ceil"*</td>
+          <td>Toward positive infinity</td>
+          <td>⬆️ [-1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [2]</td>
+        </tr>
+        <tr>
+          <td>*"floor"*</td>
+          <td>Toward negative infinity</td>
+          <td>⬇️ [-2]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [1]</td>
+        </tr>
+        <tr>
+          <td>*"expand"*</td>
+          <td>Away from zero</td>
+          <td>⬇️ [-2]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [2]</td>
+        </tr>
+        <tr>
+          <td>*"trunc"*</td>
+          <td>Toward zero</td>
+          <td>⬆️ [-1]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [1]</td>
+        </tr>
+        <tr>
+          <td>*"halfCeil"*</td>
+          <td>Ties toward positive infinity</td>
+          <td>⬆️ [-1]</td>
+          <td>⬇️ [0]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [2]</td>
+        </tr>
+        <tr>
+          <td>*"halfFloor"*</td>
+          <td>Ties toward negative infinity</td>
+          <td>⬇️ [-2]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬆️ [1]</td>
+          <td>⬇️ [1]</td>
+        </tr>
+        <tr>
+          <td>*"halfExpand"*</td>
+          <td>Ties away from zero</td>
+          <td>⬇️ [-2]</td>
+          <td>⬇️ [0]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [2]</td>
+        </tr>
+        <tr>
+          <td>*"halfTrunc"*</td>
+          <td>Ties toward zero</td>
+          <td>⬆️ [-1]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬆️ [1]</td>
+          <td>⬇️ [1]</td>
+        </tr>
+        <tr>
+          <td>*"halfEven"*</td>
+          <td>Ties toward an even rounding increment multiple</td>
+          <td>⬇️ [-2]</td>
+          <td>⬇️ [0]</td>
+          <td>⬇️ [0]</td>
+          <td>⬆️ [1]</td>
+          <td>⬆️ [2]</td>
+        </tr>
       </table>
       <emu-note>The examples are illustrative of the unique behaviour of each option. ⬆️ means "resolves toward positive infinity"; ⬇️ means "resolves toward negative infinity".</emu-note>
     </emu-table>
 
-    <p>
-      Finally, Intl.NumberFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).
-    </p>
+    <p>Finally, Intl.NumberFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).</p>
   </emu-clause>
 
   <emu-clause id="sec-numberformat-abstracts">
@@ -715,9 +670,7 @@
         1. Return FormatNumeric(_nf_, _x_).
       </emu-alg>
 
-      <p>
-        The *"length"* property of a Number format function is *1*<sub>𝔽</sub>.
-      </p>
+      <p>The *"length"* property of a Number format function is *1*<sub>𝔽</sub>.</p>
     </emu-clause>
 
     <emu-clause id="sec-formatnumberstring" type="abstract operation">
@@ -903,7 +856,7 @@
               1. Else,
                 1. Use an implementation dependent algorithm to map _n_ to the appropriate representation of _n_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_n_, *"."*, 0).
-              1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ &gt; 0, then
+              1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ > 0, then
                 1. Let _integer_ be the substring of _n_ from 0 to _decimalSepIndex_.
                 1. Let _fraction_ be the substring of _n_ from _decimalSepIndex_ + 1.
               1. Else,
@@ -1279,7 +1232,7 @@
       <h1>
         FormatNumeric (
           _numberFormat_: an Intl.NumberFormat,
-          _x_: an Intl mathematical value
+          _x_: an Intl mathematical value,
         ): a String
       </h1>
       <dl class="header">
@@ -1297,7 +1250,7 @@
       <h1>
         FormatNumericToParts (
           _numberFormat_: an Intl.NumberFormat,
-          _x_: an Intl mathematical value
+          _x_: an Intl mathematical value,
         ): an Array
       </h1>
       <dl class="header">
@@ -1328,12 +1281,10 @@
       <dl class="header">
         <dt>description</dt>
         <dd>
-          <p>
-            It involves solving the following equation, which returns a valid mathematical value given integer inputs:
-          </p>
+          <p>It involves solving the following equation, which returns a valid mathematical value given integer inputs:</p>
           <emu-eqn id="eqn-ToRawPrecisionFn" aoid="ToRawPrecisionFn">
             ToRawPrecisionFn(_n_, _e_, _p_) = _n_ × 10<sup>_e_–_p_+1</sup>
-            where 10<sup>_p_–1</sup> ≤ _n_ &lt; 10<sup>_p_</sup>
+              where 10<sup>_p_–1</sup> ≤ _n_ &lt; 10<sup>_p_</sup>
           </emu-eqn>
         </dd>
       </dl>
@@ -1366,9 +1317,9 @@
           1. Assert: _e_ &lt; 0.
           1. Set _m_ to the string-concatenation of *"0."*, -(_e_ + 1) occurrences of the code unit 0x0030 (DIGIT ZERO), and _m_.
           1. Let _int_ be 1.
-        1. If _m_ contains the code unit 0x002E (FULL STOP) and _maxPrecision_ &gt; _minPrecision_, then
+        1. If _m_ contains the code unit 0x002E (FULL STOP) and _maxPrecision_ > _minPrecision_, then
           1. Let _cut_ be _maxPrecision_ - _minPrecision_.
-          1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
+          1. Repeat, while _cut_ > 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
             1. Remove the last code unit from _m_.
             1. Set _cut_ to _cut_ - 1.
           1. If the last code unit of _m_ is 0x002E (FULL STOP), then
@@ -1390,9 +1341,7 @@
       <dl class="header">
         <dt>description</dt>
         <dd>
-          <p>
-            It involves solving the following equation, which returns a valid mathematical value given integer inputs:
-          </p>
+          <p>It involves solving the following equation, which returns a valid mathematical value given integer inputs:</p>
           <emu-eqn id="eqn-ToRawFixedFn" aoid="ToRawFixedFn">
             ToRawFixedFn(_n_, _f_) = _n_ × 10<sup>–_f_</sup>
           </emu-eqn>
@@ -1422,7 +1371,7 @@
         1. Else,
           1. Let _int_ be the length of _m_.
         1. Let _cut_ be _maxFraction_ - _minFraction_.
-        1. Repeat, while _cut_ &gt; 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
+        1. Repeat, while _cut_ > 0 and the last code unit of _m_ is 0x0030 (DIGIT ZERO),
           1. Remove the last code unit from _m_.
           1. Set _cut_ to _cut_ - 1.
         1. If the last code unit of _m_ is 0x002E (FULL STOP), then
@@ -1432,25 +1381,26 @@
     </emu-clause>
 
     <emu-normative-optional>
-    <emu-clause id="sec-unwrapnumberformat" type="abstract operation">
-      <h1>
-        UnwrapNumberFormat (
-          _nf_: an ECMAScript language value,
-        ): either a normal completion containing an ECMAScript language value or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>
-          It returns the NumberFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.NumberFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
-        </dd>
-      </dl>
-      <emu-alg>
-        1. If _nf_ is not an Object, throw a *TypeError* exception.
-        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%Intl.NumberFormat%, _nf_) is *true*, then
-          1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
-        1. Return _nf_.
-      </emu-alg>
-    </emu-clause>
+
+      <emu-clause id="sec-unwrapnumberformat" type="abstract operation">
+        <h1>
+          UnwrapNumberFormat (
+            _nf_: an ECMAScript language value,
+          ): either a normal completion containing an ECMAScript language value or a throw completion
+        </h1>
+        <dl class="header">
+          <dt>description</dt>
+          <dd>
+            It returns the NumberFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.NumberFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
+          </dd>
+        </dl>
+        <emu-alg>
+          1. If _nf_ is not an Object, throw a *TypeError* exception.
+          1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%Intl.NumberFormat%, _nf_) is *true*, then
+            1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
+          1. Return _nf_.
+        </emu-alg>
+      </emu-clause>
     </emu-normative-optional>
 
     <emu-clause id="sec-getnumberformatpattern" type="abstract operation">
@@ -1477,20 +1427,20 @@
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
           1. Set _patterns_ to _patterns_.[[unit]].
-          1. If _patterns_ doesn't have a field [[&lt;_unit_&gt;]], then
+          1. If _patterns_ doesn't have a field [[&lt;_unit_>]], then
             1. Set _unit_ to *"fallback"*.
-          1. Set _patterns_ to _patterns_.[[&lt;_unit_&gt;]].
-          1. Set _patterns_ to _patterns_.[[&lt;_unitDisplay_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_unit_>]].
+          1. Set _patterns_ to _patterns_.[[&lt;_unitDisplay_>]].
         1. Else if _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
           1. Set _patterns_ to _patterns_.[[currency]].
-          1. If _patterns_ doesn't have a field [[&lt;_currency_&gt;]], then
+          1. If _patterns_ doesn't have a field [[&lt;_currency_>]], then
             1. Set _currency_ to *"fallback"*.
-          1. Set _patterns_ to _patterns_.[[&lt;_currency_&gt;]].
-          1. Set _patterns_ to _patterns_.[[&lt;_currencyDisplay_&gt;]].
-          1. Set _patterns_ to _patterns_.[[&lt;_currencySign_&gt;]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currency_>]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencyDisplay_>]].
+          1. Set _patterns_ to _patterns_.[[&lt;_currencySign_>]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
           1. Set _patterns_ to _patterns_.[[decimal]].
@@ -1506,7 +1456,7 @@
           1. Assert: _x_ is a mathematical value.
           1. If _x_ &lt; 0, then
             1. Let _category_ be ~negative-non-zero~.
-          1. Else if _x_ &gt; 0, then
+          1. Else if _x_ > 0, then
             1. Let _category_ be ~positive-non-zero~.
           1. Else,
             1. Let _category_ be ~positive-zero~.
@@ -1563,8 +1513,8 @@
         1. Else if _exponent_ is not 0, then
           1. Assert: _notation_ is *"compact"*.
           1. Let _compactDisplay_ be _numberFormat_.[[CompactDisplay]].
-          1. Let _compactPatterns_ be _notationSubPatterns_.[[compact]].[[&lt;_compactDisplay_&gt;]].
-          1. Return _compactPatterns_.[[&lt;_exponent_&gt;]].
+          1. Let _compactPatterns_ be _notationSubPatterns_.[[compact]].[[&lt;_compactDisplay_>]].
+          1. Return _compactPatterns_.[[&lt;_exponent_>]].
         1. Else,
           1. Return *"{number}"*.
       </emu-alg>
@@ -1927,15 +1877,9 @@
         <dt>description</dt>
         <dd>It modifies _result_ (which must be a List of Records as constructed within PartitionNumberRangePattern) according to the effective locale and the formatting options of _numberFormat_ by removing redundant information, resolving internal inconsistency, replacing characters when necessary, and inserting spacing when necessary. It then returns the resulting List. The algorithm is ILND, but must not introduce ambiguity that would cause the result of <emu-xref href="#sec-intl.numberformat.prototype.formatrange" title></emu-xref> with arguments List « _start1_, _end1_ » to equal the result with arguments List « _start2_, _end2_ » if the results for those same arguments Lists would not be equal with a trivial implementation of CollapseNumberRange that always returns _result_ unmodified.</dd>
       </dl>
-      <p>
-        For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.
-      </p>
-      <p>
-        An implementation may also modify Record [[Value]] fields for grammatical correctness; for example, converting a _results_ List representing *"0.5 miles–1 mile"* into one representing *"0.5–1 miles"*.
-      </p>
-      <p>
-        Returning _result_ unmodified is guaranteed to be a correct implementation of CollapseNumberRange.
-      </p>
+      <p>For example, an implementation may remove the Record representing a currency symbol after a range separator to convert a _results_ List representing *"$3–$5"* into one representing *"$3–5"*.</p>
+      <p>An implementation may also modify Record [[Value]] fields for grammatical correctness; for example, converting a _results_ List representing *"0.5 miles–1 mile"* into one representing *"0.5–1 miles"*.</p>
+      <p>Returning _result_ unmodified is guaranteed to be a correct implementation of CollapseNumberRange.</p>
     </emu-clause>
 
     <emu-clause id="sec-formatnumericrange" type="abstract operation">

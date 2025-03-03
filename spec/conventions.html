@@ -1,9 +1,7 @@
 <emu-clause id="conventions">
   <h1>Notational Conventions</h1>
 
-  <p>
-    This standard uses a subset of the notational conventions of the ECMAScript 2025 Language Specification (ECMA-262 16<sup>th</sup> Edition), as es2025:
-  </p>
+  <p>This standard uses a subset of the notational conventions of the ECMAScript 2025 Language Specification (ECMA-262 16<sup>th</sup> Edition), as es2025:</p>
 
   <ul>
     <li>Object Internal Methods and Internal Slots, as described in es2025, <emu-xref href="#sec-object-internal-methods-and-internal-slots"></emu-xref>.</li>
@@ -16,20 +14,14 @@
     As described in the ECMAScript Language Specification, algorithms are used to precisely specify the required semantics of ECMAScript constructs, but are not intended to imply the use of any specific implementation technique. Internal slots are used to define the semantics of object values, but are not part of the API. They are defined purely for expository purposes. An implementation of the API must behave as if it produced and operated upon internal slots in the manner described here.
   </emu-note>
 
-  <p>
-    As an extension to the Record Specification Type, the notation “[[&lt;_name_&gt;]]” denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_&gt;]] denotes the field [[a]].
-  </p>
+  <p>As an extension to the Record Specification Type, the notation “[[&lt;_name_>]]” denotes a field whose name is given by the variable _name_, which must have a String value. For example, if a variable _s_ has the value *"a"*, then [[&lt;_s_>]] denotes the field [[a]].</p>
 
-  <p>
-    This specification uses blocks demarcated as <span class="normative-optional">Normative Optional</span> to denote the sense of <a href="https://tc39.es/ecma262/#sec-additional-ecmascript-features-for-web-browsers">Annex B</a> in ECMA 262. That is, normative optional sections are required when the ECMAScript host is a web browser. The content of the section is normative but optional if the ECMAScript host is not a web browser.
-  </p>
+  <p>This specification uses blocks demarcated as <span class="normative-optional">Normative Optional</span> to denote the sense of <a href="https://tc39.es/ecma262/#sec-additional-ecmascript-features-for-web-browsers">Annex B</a> in ECMA 262. That is, normative optional sections are required when the ECMAScript host is a web browser. The content of the section is normative but optional if the ECMAScript host is not a web browser.</p>
 
   <emu-clause id="sec-402-well-known-intrinsic-objects">
     <h1>Well-Known Intrinsic Objects</h1>
 
-    <p>
-      The following table extends the Well-Known Intrinsic Objects table defined in es2025, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.
-    </p>
+    <p>The following table extends the Well-Known Intrinsic Objects table defined in es2025, <emu-xref href="#sec-well-known-intrinsic-objects"></emu-xref>.</p>
 
     <emu-table id="table-402-well-known-intrinsic-objects">
       <emu-caption>Well-known Intrinsic Objects (Extensions)</emu-caption>
