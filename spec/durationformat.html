@@ -210,7 +210,7 @@
           1. Else,
             1. Assert: _v_ is not *undefined*.
             1. If _v_ is *"fractional"*, then
-              1. Assert: The Internal Slot value of the current row is [[MillisecondsStyle]], [[MicrosecondsStyle]], or [[NanosecondsStyle]] .
+              1. Assert: _p_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*.
               1. Set _v_ to *"numeric"*.
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
