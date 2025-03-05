@@ -95,7 +95,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref>).</dd>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumerictostring"></emu-xref>).</dd>
       </dl>
       <emu-alg>
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
@@ -673,7 +673,7 @@
       <p>The *"length"* property of a Number format function is *1*<sub>𝔽</sub>.</p>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumberstring" type="abstract operation">
+    <emu-clause id="sec-formatnumerictostring" oldids="sec-formatnumberstring" type="abstract operation">
       <h1>
         FormatNumericToString (
           _intlObject_: an Object,
@@ -702,17 +702,13 @@
         1. Else,
           1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
           1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
-          1. If _intlObject_.[[RoundingType]] is ~more-precision~, then
-            1. If _sResult_.[[RoundingMagnitude]] ≤ _fResult_.[[RoundingMagnitude]], then
-              1. Let _result_ be _sResult_.
-            1. Else,
-              1. Let _result_ be _fResult_.
+          1. If _fResult_.[[RoundingMagnitude]] &lt; _sResult_.[[RoundingMagnitude]], let _fixedIsMorePrecise_ be *true*; else let _fixedIsMorePrecise_ be *false*.
+          1. If _intlObject_.[[RoundingType]] is ~more-precision~ and _fixedIsMorePrecise_ is *true*, then
+            1. Let _result_ be _fResult_.
+          1. Else if _intlObject_.[[RoundingType]] is ~less-precision~ and _fixedIsMorePrecise_ is *false*, then
+            1. Let _result_ be _fResult_.
           1. Else,
-            1. Assert: _intlObject_.[[RoundingType]] is ~less-precision~.
-            1. If _sResult_.[[RoundingMagnitude]] ≤ _fResult_.[[RoundingMagnitude]], then
-              1. Let _result_ be _fResult_.
-            1. Else,
-              1. Let _result_ be _sResult_.
+            1. Let _result_ be _sResult_.
         1. Set _x_ to _result_.[[RoundedNumber]].
         1. Let _string_ be _result_.[[FormattedString]].
         1. If _intlObject_.[[TrailingZeroDisplay]] is *"stripIfInteger"* and <emu-eqn>_x_ modulo 1 = 0</emu-eqn>, then
