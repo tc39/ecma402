@@ -1272,7 +1272,7 @@
     <emu-clause id="sec-torawprecision" type="abstract operation">
       <h1>
         ToRawPrecision (
-          _x_: non-negative mathematical value,
+          _x_: a non-negative mathematical value,
           _minPrecision_: an integer in the inclusive interval from 1 to 21,
           _maxPrecision_: an integer in the inclusive interval from 1 to 21,
           _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
@@ -1297,15 +1297,13 @@
         1. Else,
           1. [declared="n1,e1,r1"] Let _n1_ and _e1_ each be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawPrecisionFn(_n1_, _e1_, _p_)</emu-eqn>, such that <emu-eqn>_r1_ ≤ _x_</emu-eqn> and _r1_ is maximized.
           1. [declared="n2,e2,r2"] Let _n2_ and _e2_ each be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawPrecisionFn(_n2_, _e2_, _p_)</emu-eqn>, such that <emu-eqn>_r2_ ≥ _x_</emu-eqn> and _r2_ is minimized.
-          1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
-          1. If _r_ is _r1_, then
+          1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+          1. If _xFinal_ is _r1_, then
             1. Let _n_ be _n1_.
             1. Let _e_ be _e1_.
-            1. Let _xFinal_ be _r1_.
           1. Else,
             1. Let _n_ be _n2_.
             1. Let _e_ be _e2_.
-            1. Let _xFinal_ be _r2_.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _e_ ≥ (_p_ - 1), then
           1. Set _m_ to the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
@@ -1331,7 +1329,7 @@
     <emu-clause id="sec-torawfixed" type="abstract operation">
       <h1>
         ToRawFixed (
-          _x_: non-negative mathematical value,
+          _x_: a non-negative mathematical value,
           _minFraction_: an integer in the inclusive interval from 0 to 100,
           _maxFraction_: an integer in the inclusive interval from 0 to 100,
           _roundingIncrement_: an integer,
@@ -1351,13 +1349,8 @@
         1. Let _f_ be _maxFraction_.
         1. [declared="n1,r1"] Let _n1_ be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawFixedFn(_n1_, _f_)</emu-eqn>, such that <emu-eqn>_n1_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r1_ ≤ _x_</emu-eqn>, and _r1_ is maximized.
         1. [declared="n2,r2"] Let _n2_ be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawFixedFn(_n2_, _f_)</emu-eqn>, such that <emu-eqn>_n2_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r2_ ≥ _x_</emu-eqn>, and _r2_ is minimized.
-        1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
-        1. If _r_ is _r1_, then
-          1. Let _n_ be _n1_.
-          1. Let _xFinal_ be _r1_.
-        1. Else,
-          1. Let _n_ be _n2_.
-          1. Let _xFinal_ be _r2_.
+        1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+        1. If _xFinal_ is _r1_, let _n_ be _n1_. Otherwise, let _n_ be _n2_.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ ≠ 0, then
           1. Let _k_ be the length of _m_.
