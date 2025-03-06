@@ -36,6 +36,14 @@ emu-normative-optional:before {
 #ecma-logo {
   width: 500px;
 }
+#spec-container {
+  container: spec-container / inline-size;
+}
+@container spec-container (width >= 768px) {
+  .c-md-width {
+    width: var(--c-md-width);
+  }
+}
 </style>
 <pre class="metadata">
   title: ECMAScript&reg; 2025 Internationalization API Specification
