@@ -1,7 +1,7 @@
 <emu-clause id="collator-objects">
   <h1>Collator Objects</h1>
 
-  <emu-clause id="sec-the-intl-collator-constructor">
+  <emu-clause id="sec-intl-collator-constructor" oldids="sec-the-intl-collator-constructor">
     <h1>The Intl.Collator Constructor</h1>
     <p>The Intl.Collator constructor is the <dfn>%Intl.Collator%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
@@ -326,14 +326,14 @@
 
     <p>Intl.Collator instances have an [[InitializedCollator]] internal slot.</p>
 
-    <p>Intl.Collator instances also have several internal slots that are computed by the constructor:</p>
+    <p>Intl.Collator instances also have several internal slots that are computed by <emu-xref href="#sec-intl-collator-constructor" title></emu-xref>:</p>
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for collation.</li>
       <li>[[Usage]] is one of the String values *"sort"* or *"search"*, identifying the collator usage.</li>
       <li>[[Sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator's sensitivity.</li>
       <li>[[IgnorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
-      <li>[[Collation]] is a String value with the *"type"* given in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> for the collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
+      <li>[[Collation]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Collation Identifier</a> used for collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
     </ul>
 
     <p>Intl.Collator instances also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:</p>
