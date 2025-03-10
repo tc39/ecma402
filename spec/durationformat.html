@@ -13,7 +13,7 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _durationFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DurationFormatPrototype%"*, « [[InitializedDurationFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[YearsStyle]], [[YearsDisplay]], [[MonthsStyle]], [[MonthsDisplay]], [[WeeksStyle]], [[WeeksDisplay]], [[DaysStyle]], [[DaysDisplay]], [[HoursStyle]], [[HoursDisplay]], [[MinutesStyle]], [[MinutesDisplay]], [[SecondsStyle]], [[SecondsDisplay]], [[MillisecondsStyle]], [[MillisecondsDisplay]], [[MicrosecondsStyle]], [[MicrosecondsDisplay]], [[NanosecondsStyle]], [[NanosecondsDisplay]], [[HourMinuteSeparator]], [[MinuteSecondSeparator]], [[FractionalDigits]] »).
+        1. Let _durationFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DurationFormatPrototype%"*, « [[InitializedDurationFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[YearsOptions]], [[MonthsOptions]], [[WeeksOptions]], [[DaysOptions]], [[HoursOptions]], [[MinutesOptions]], [[SecondsOptions]], [[MillisecondsOptions]], [[MicrosecondsOptions]], [[NanosecondsOptions]], [[HourMinuteSeparator]], [[MinuteSecondSeparator]], [[FractionalDigits]] »).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Let _options_ be ? GetOptionsObject(_options_).
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
@@ -32,97 +32,84 @@
         1. Set _durationFormat_.[[Style]] to _style_.
         1. Let _prevStyle_ be the empty String.
         1. For each row of <emu-xref href="#table-durationformat"></emu-xref>, except the header row, in table order, do
-          1. Let _styleSlot_ be the Style Slot value of the current row.
-          1. Let _displaySlot_ be the Display Slot value of the current row.
+          1. Let _slot_ be the Internal Slot value of the current row.
           1. Let _unit_ be the Unit value of the current row.
-          1. Let _valueList_ be the Values value of the current row.
+          1. Let _styles_ be the Styles value of the current row.
           1. Let _digitalBase_ be the Digital Default value of the current row.
-          1. Let _unitOptions_ be ? GetDurationUnitOptions(_unit_, _options_, _style_, _valueList_, _digitalBase_, _prevStyle_, _digitalFormat_.[[TwoDigitHours]]).
-          1. Set the value of the _styleSlot_ slot of _durationFormat_ to _unitOptions_.[[Style]].
-          1. Set the value of the _displaySlot_ slot of _durationFormat_ to _unitOptions_.[[Display]].
+          1. Let _unitOptions_ be ? GetDurationUnitOptions(_unit_, _options_, _style_, _styles_, _digitalBase_, _prevStyle_, _digitalFormat_.[[TwoDigitHours]]).
+          1. Set the value of _durationFormat_'s internal slot whose name is _slot_ to _unitOptions_.
           1. If _unit_ is one of *"hours"*, *"minutes"*, *"seconds"*, *"milliseconds"*, or *"microseconds"*, then
             1. Set _prevStyle_ to _unitOptions_.[[Style]].
         1. Set _durationFormat_.[[FractionalDigits]] to ? GetNumberOption(_options_, *"fractionalDigits"*, 0, 9, *undefined*).
         1. Return _durationFormat_.
       </emu-alg>
       <emu-table id="table-durationformat">
-        <emu-caption>Internal slots and property names of DurationFormat instances relevant to Intl.DurationFormat constructor</emu-caption>
+        <emu-caption>Internal slots and property names of DurationFormat instances</emu-caption>
         <table class="real-table">
           <thead>
             <tr>
-              <th>Style Slot</th>
-              <th>Display Slot</th>
+              <th>Internal Slot</th>
               <th>Unit</th>
-              <th>Values</th>
+              <th>Styles</th>
               <th>Digital Default</th>
             </tr>
           </thead>
           <tr>
-            <td>[[YearsStyle]]</td>
-            <td>[[YearsDisplay]]</td>
+            <td>[[YearsOptions]]</td>
             <td>*"years"*</td>
             <td>« *"long"*, *"short"*, *"narrow"* »</td>
             <td>*"short"*</td>
           </tr>
           <tr>
-            <td>[[MonthsStyle]]</td>
-            <td>[[MonthsDisplay]]</td>
+            <td>[[MonthsOptions]]</td>
             <td>*"months"*</td>
             <td>« *"long"*, *"short"*, *"narrow"* »</td>
             <td>*"short"*</td>
           </tr>
           <tr>
-            <td>[[WeeksStyle]]</td>
-            <td>[[WeeksDisplay]]</td>
+            <td>[[WeeksOptions]]</td>
             <td>*"weeks"*</td>
             <td>« *"long"*, *"short"*, *"narrow"* »</td>
             <td>*"short"*</td>
           </tr>
           <tr>
-            <td>[[DaysStyle]]</td>
-            <td>[[DaysDisplay]]</td>
+            <td>[[DaysOptions]]</td>
             <td>*"days"*</td>
             <td>« *"long"*, *"short"*, *"narrow"* »</td>
             <td>*"short"*</td>
           </tr>
           <tr>
-            <td>[[HoursStyle]]</td>
-            <td>[[HoursDisplay]]</td>
+            <td>[[HoursOptions]]</td>
             <td>*"hours"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"*, *"2-digit"* »</td>
             <td>*"numeric"*</td>
           </tr>
           <tr>
-            <td>[[MinutesStyle]]</td>
-            <td>[[MinutesDisplay]]</td>
+            <td>[[MinutesOptions]]</td>
             <td>*"minutes"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"*, *"2-digit"* »</td>
             <td>*"numeric"*</td>
           </tr>
           <tr>
-            <td>[[SecondsStyle]]</td>
-            <td>[[SecondsDisplay]]</td>
+            <td>[[SecondsOptions]]</td>
             <td>*"seconds"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"*, *"2-digit"* »</td>
             <td>*"numeric"*</td>
           </tr>
           <tr>
-            <td>[[MillisecondsStyle]]</td>
-            <td>[[MillisecondsDisplay]]</td>
+            <td>[[MillisecondsOptions]]</td>
             <td>*"milliseconds"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"* »</td>
             <td>*"numeric"*</td>
           </tr>
           <tr>
-            <td>[[MicrosecondsStyle]]</td>
-            <td>[[MicrosecondsDisplay]]</td>
+            <td>[[MicrosecondsOptions]]</td>
             <td>*"microseconds"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"* »</td>
             <td>*"numeric"*</td>
           </tr>
           <tr>
-            <td>[[NanosecondsStyle]]</td>
-            <td>[[NanosecondsDisplay]]</td>
+            <td>[[NanosecondsOptions]]</td>
             <td>*"nanoseconds"*</td>
             <td>« *"long"*, *"short"*, *"narrow"*, *"numeric"* »</td>
             <td>*"numeric"*</td>
@@ -205,13 +192,20 @@
         1. For each row of <emu-xref href="#table-durationformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
           1. Let _p_ be the Property value of the current row.
           1. Let _v_ be the value of _df_'s internal slot whose name is the Internal Slot value of the current row.
-          1. If _p_ is *"fractionalDigits"*, then
-            1. If _v_ is not *undefined*, perform ! CreateDataPropertyOrThrow(_options_, _p_, 𝔽(_v_)).
-          1. Else,
-            1. Assert: _v_ is not *undefined*.
-            1. If _v_ is *"fractional"*, then
-              1. Assert: The Internal Slot value of the current row is [[MillisecondsStyle]], [[MicrosecondsStyle]], or [[NanosecondsStyle]] .
-              1. Set _v_ to *"numeric"*.
+          1. If _v_ is not *undefined*, then
+            1. If there is a Conversion value in the current row, let _conversion_ be that value; else let _conversion_ be ~empty~.
+            1. If _conversion_ is ~number~, then
+              1. Set _v_ to 𝔽(_v_).
+            1. Else if _conversion_ is not ~empty~, then
+              1. Assert: _conversion_ is ~style+display~ and _v_ is a Duration Unit Options Record.
+              1. NOTE: _v_.[[Style]] will be represented with a property named _p_ (a plural Temporal unit), then _v_.[[Display]] will be represented with a property whose name suffixes _p_ with *"Display"*.
+              1. Let _style_ be _v_.[[Style]].
+              1. If _style_ is *"fractional"*, then
+                1. Assert: IsFractionalSecondUnitName(_p_) is *true*.
+                1. Set _style_ to *"numeric"*.
+              1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _style_).
+              1. Set _p_ to the string-concatenation of _p_ and *"Display"*.
+              1. Set _v_ to _v_.[[Display]].
             1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
         1. Return _options_.
       </emu-alg>
@@ -223,103 +217,78 @@
             <tr>
               <th>Internal Slot</th>
               <th>Property</th>
+              <th>Conversion</th>
             </tr>
           </thead>
           <tr>
             <td>[[Locale]]</td>
             <td>*"locale"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[NumberingSystem]]</td>
             <td>*"numberingSystem"*</td>
+            <td></td>
           </tr>
           <tr>
             <td>[[Style]]</td>
             <td>*"style"*</td>
+            <td></td>
           </tr>
           <tr>
-            <td>[[YearsStyle]]</td>
+            <td>[[YearsOptions]]</td>
             <td>*"years"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[YearsDisplay]]</td>
-            <td>*"yearsDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[MonthsStyle]]</td>
+            <td>[[MonthsOptions]]</td>
             <td>*"months"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[MonthsDisplay]]</td>
-            <td>*"monthsDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[WeeksStyle]]</td>
+            <td>[[WeeksOptions]]</td>
             <td>*"weeks"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[WeeksDisplay]]</td>
-            <td>*"weeksDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[DaysStyle]]</td>
+            <td>[[DaysOptions]]</td>
             <td>*"days"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[DaysDisplay]]</td>
-            <td>*"daysDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[HoursStyle]]</td>
+            <td>[[HoursOptions]]</td>
             <td>*"hours"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[HoursDisplay]]</td>
-            <td>*"hoursDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[MinutesStyle]]</td>
+            <td>[[MinutesOptions]]</td>
             <td>*"minutes"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[MinutesDisplay]]</td>
-            <td>*"minutesDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[SecondsStyle]]</td>
+            <td>[[SecondsOptions]]</td>
             <td>*"seconds"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[SecondsDisplay]]</td>
-            <td>*"secondsDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[MillisecondsStyle]]</td>
+            <td>[[MillisecondsOptions]]</td>
             <td>*"milliseconds"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[MillisecondsDisplay]]</td>
-            <td>*"millisecondsDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[MicrosecondsStyle]]</td>
+            <td>[[MicrosecondsOptions]]</td>
             <td>*"microseconds"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
-            <td>[[MicrosecondsDisplay]]</td>
-            <td>*"microsecondsDisplay"*</td>
-          </tr>
-          <tr>
-            <td>[[NanosecondsStyle]]</td>
+            <td>[[NanosecondsOptions]]</td>
             <td>*"nanoseconds"*</td>
-          </tr>
-          <tr>
-            <td>[[NanosecondsDisplay]]</td>
-            <td>*"nanosecondsDisplay"*</td>
+            <td>~style+display~</td>
           </tr>
           <tr>
             <td>[[FractionalDigits]]</td>
             <td>*"fractionalDigits"*</td>
+            <td>~number~</td>
           </tr>
         </table>
       </emu-table>
@@ -384,29 +353,19 @@
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
       <li>[[NumberingSystem]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
       <li>[[Style]] is one of the String values *"long"*, *"short"*, *"narrow"*, or *"digital"* identifying the duration formatting style used.</li>
-      <li>[[YearsStyle]] is one of the String values *"long"*, *"short"*, or *"narrow"* identifying the formatting style used for the years field.</li>
-      <li>[[YearsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the years field.</li>
-      <li>[[MonthsStyle]] is one of the String values *"long"*, *"short"*, or *"narrow"* identifying the formatting style used for the months field.</li>
-      <li>[[MonthsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the months field.</li>
-      <li>[[WeeksStyle]] is one of the String values *"long"*, *"short"*, or *"narrow"* identifying the formatting style used for the weeks field.</li>
-      <li>[[WeeksDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the weeks field.</li>
-      <li>[[DaysStyle]] is one of the String values *"long"*, *"short"*, or *"narrow"* identifying the formatting style used for the days field.</li>
-      <li>[[DaysDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the days field.</li>
-      <li>[[HoursStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, *"2-digit"*, or *"numeric"* identifying the formatting style used for the hours field.</li>
-      <li>[[HoursDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the hours field.</li>
-      <li>[[MinutesStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, *"2-digit"*, or *"numeric"* identifying the formatting style used for the minutes field.</li>
-      <li>[[MinutesDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the minutes field.</li>
-      <li>[[SecondsStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, *"2-digit"*, or *"numeric"* identifying the formatting style used for the seconds field.</li>
-      <li>[[SecondsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the seconds field.</li>
-      <li>[[MillisecondsStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, or *"fractional"* identifying the formatting style used for the milliseconds field.</li>
-      <li>[[MillisecondsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the milliseconds field.</li>
-      <li>[[MicrosecondsStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, or *"fractional"* identifying the formatting style used for the microseconds field.</li>
-      <li>[[MicrosecondsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the microseconds field.</li>
-      <li>[[NanosecondsStyle]] is one of the String values *"long"*, *"short"*, *"narrow"*, or *"fractional"* identifying the formatting style used for the nanoseconds field.</li>
-      <li>[[NanosecondsDisplay]] is one of the String values *"auto"* or *"always"* identifying when to display the nanoseconds field.</li>
+      <li>[[YearsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Years]] field.</li>
+      <li>[[MonthsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Months]] field.</li>
+      <li>[[WeeksOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Weeks]] field.</li>
+      <li>[[DaysOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Days]] field.</li>
+      <li>[[HoursOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Hours]] field.</li>
+      <li>[[MinutesOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Minutes]] field.</li>
+      <li>[[SecondsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Seconds]] field.</li>
+      <li>[[MillisecondsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Milliseconds]] field.</li>
+      <li>[[MicrosecondsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Microseconds]] field.</li>
+      <li>[[NanosecondsOptions]] is a Duration Unit Options Record identifying the formatting style and display criteria for a Duration Record's [[Nanoseconds]] field.</li>
       <li>[[HourMinuteSeparator]] is a String value identifying the separator to be used between hours and minutes when both fields are displayed and both fields are formatted using numeric styles.</li>
       <li>[[MinuteSecondSeparator]] is a String value identifying the separator to be used between minutes and seconds when both fields are displayed and both fields are formatted using numeric styles.</li>
-      <li>[[FractionalDigits]] is a non-negative integer, identifying the number of fractional digits to be used with numeric styles, or is *undefined*.</li>
+      <li>[[FractionalDigits]] is either *undefined* or a non-negative integer identifying the number of fractional digits to be used with numeric styles.</li>
     </ul>
   </emu-clause>
 
@@ -614,7 +573,7 @@
           _digitalBase_: a String,
           _prevStyle_: a String,
           _twoDigitHours_: a Boolean,
-        ): either a normal completion containing a Record with [[Style]] and [[Display]] fields, or a throw completion
+        ): either a normal completion containing a Duration Unit Options Record, or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -634,7 +593,7 @@
           1. Else,
             1. Set _style_ to _baseStyle_.
             1. Set _displayDefault_ to *"auto"*.
-        1. If _style_ is *"numeric"* and _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, then
+        1. If _style_ is *"numeric"* and IsFractionalSecondUnitName(_unit_) is *true*, then
           1. Set _style_ to *"fractional"*.
           1. Set _displayDefault_ to *"auto"*.
         1. Let _displayField_ be the string-concatenation of _unit_ and *"Display"*.
@@ -642,11 +601,33 @@
         1. Perform ? ValidateDurationUnitStyle(_unit_, _style_, _display_, _prevStyle_).
         1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, set _style_ to *"2-digit"*.
         1. If _unit_ is *"minutes"* or *"seconds"* and _prevStyle_ is *"numeric"* or *"2-digit"*, set _style_ to *"2-digit"*.
-        1. Return the Record {
-            [[Style]]: _style_,
-            [[Display]]: _display_
-          }.
+        1. Return the Duration Unit Options Record { [[Style]]: _style_, [[Display]]: _display_ }.
       </emu-alg>
+
+      <emu-clause id="sec-durationformat-unit-options-record">
+        <h1>Duration Unit Options Records</h1>
+
+        <p>Each <dfn id="durationformat-unit-options-record">Duration Unit Options Record</dfn> has the fields defined in <emu-xref href="#table-durationformat-unit-options-record"></emu-xref>.</p>
+        <emu-table id="table-durationformat-unit-options-record">
+          <emu-caption>Duration Unit Options Record</emu-caption>
+          <table class="real-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Value Type</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>[[Style]]</td>
+              <td>a String from the Styles column of <emu-xref href="#table-durationformat"></emu-xref></td>
+            </tr>
+            <tr>
+              <td>[[Display]]</td>
+              <td>*"auto"* or *"always"*</td>
+            </tr>
+          </table>
+        </emu-table>
+      </emu-clause>
 
       <emu-clause id="sec-validatedurationunitstyle" type="abstract operation">
         <h1>
@@ -685,12 +666,12 @@
         1. Let _result_ be 0.
         1. Let _exponent_ be 3.
         1. For each row of <emu-xref href="#table-partition-duration-format-pattern"></emu-xref>, except the header row, in table order, do
-          1. Let _style_ be the value of _durationFormat_'s internal slot whose name is the Style Slot value of the current row.
-          1. If _style_ is *"fractional"*, then
-            1. Assert: The Unit value of the current row is *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*.
+          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _unitOptions_.[[Style]] is *"fractional"*, then
+            1. Let _unit_ be the Unit value of the current row.
+            1. Assert: IsFractionalSecondUnitName(_unit_) is *true*.
             1. Let _value_ be the value of _duration_'s field whose name is the Value Field value of the current row.
-            1. Set _value_ to _value_ / 10<sup>_exponent_</sup>.
-            1. Set _result_ to _result_ + _value_.
+            1. Set _result_ to _result_ + (_value_ / 10<sup>_exponent_</sup>).
             1. Set _exponent_ to _exponent_ + 3.
         1. Return _result_.
       </emu-alg>
@@ -709,10 +690,9 @@
       </dl>
 
       <emu-alg>
-        1. Assert: _unit_ is *"seconds"*, *"milliseconds"*, or *"microseconds"*.
-        1. If _unit_ is *"seconds"* and _durationFormat_.[[MillisecondsStyle]] is *"fractional"*, return *true*.
-        1. Else if _unit_ is *"milliseconds"* and _durationFormat_.[[MicrosecondsStyle]] is *"fractional"*, return *true*.
-        1. Else if _unit_ is *"microseconds"* and _durationFormat_.[[NanosecondsStyle]] is *"fractional"*, return *true*.
+        1. If _unit_ is *"seconds"* and _durationFormat_.[[MillisecondsOptions]].[[Style]] is *"fractional"*, return *true*.
+        1. If _unit_ is *"milliseconds"* and _durationFormat_.[[MicrosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
+        1. If _unit_ is *"microseconds"* and _durationFormat_.[[NanosecondsOptions]].[[Style]] is *"fractional"*, return *true*.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
@@ -732,7 +712,7 @@
 
       <emu-alg>
         1. Let _result_ be a new empty List.
-        1. Let _hoursStyle_ be _durationFormat_.[[HoursStyle]].
+        1. Let _hoursStyle_ be _durationFormat_.[[HoursOptions]].[[Style]].
         1. Assert: _hoursStyle_ is *"numeric"* or _hoursStyle_ is *"2-digit"*.
         1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
@@ -769,7 +749,7 @@
         1. If _hoursDisplayed_ is *true*, then
           1. Let _separator_ be _durationFormat_.[[HourMinuteSeparator]].
           1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _separator_, [[Unit]]: ~empty~ } to _result_.
-        1. Let _minutesStyle_ be _durationFormat_.[[MinutesStyle]].
+        1. Let _minutesStyle_ be _durationFormat_.[[MinutesOptions]].[[Style]].
         1. Assert: _minutesStyle_ is *"numeric"* or _minutesStyle_ is *"2-digit"*.
         1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
@@ -806,7 +786,7 @@
         1. If _minutesDisplayed_ is *true*, then
           1. Let _separator_ be _durationFormat_.[[MinuteSecondSeparator]].
           1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _separator_, [[Unit]]: ~empty~ } to _result_.
-        1. Let _secondsStyle_ be _durationFormat_.[[SecondsStyle]].
+        1. Let _secondsStyle_ be _durationFormat_.[[SecondsOptions]].[[Style]].
         1. Assert: _secondsStyle_ is *"numeric"* or _secondsStyle_ is *"2-digit"*.
         1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
@@ -850,13 +830,13 @@
         1. Assert: _firstNumericUnit_ is *"hours"*, *"minutes"*, or *"seconds"*.
         1. Let _numericPartsList_ be a new empty List.
         1. Let _hoursValue_ be _duration_.[[Hours]].
-        1. Let _hoursDisplay_ be _durationFormat_.[[HoursDisplay]].
+        1. Let _hoursDisplay_ be _durationFormat_.[[HoursOptions]].[[Display]].
         1. Let _minutesValue_ be _duration_.[[Minutes]].
-        1. Let _minutesDisplay_ be _durationFormat_.[[MinutesDisplay]].
+        1. Let _minutesDisplay_ be _durationFormat_.[[MinutesOptions]].[[Display]].
         1. Let _secondsValue_ be _duration_.[[Seconds]].
         1. If _duration_.[[Milliseconds]] is not 0 or _duration_.[[Microseconds]] is not 0 or _duration_.[[Nanoseconds]] is not 0, then
           1. Set _secondsValue_ to _secondsValue_ + ComputeFractionalDigits(_durationFormat_, _duration_).
-        1. Let _secondsDisplay_ be _durationFormat_.[[SecondsDisplay]].
+        1. Let _secondsDisplay_ be _durationFormat_.[[SecondsOptions]].[[Display]].
         1. Let _hoursFormatted_ be *false*.
         1. If _firstNumericUnit_ is *"hours"*, then
           1. If _hoursValue_ is not 0 or _hoursDisplay_ is *"always"*, then
@@ -889,6 +869,20 @@
           1. Let _secondsParts_ be FormatNumericSeconds(_durationFormat_, _secondsValue_, _minutesFormatted_, _signDisplayed_).
           1. Set _numericPartsList_ to the list-concatenation of _numericPartsList_ and _secondsParts_.
         1. Return _numericPartsList_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-isfractionalsecondunitname" type="abstract operation">
+      <h1>
+        IsFractionalSecondUnitName (
+          _unit_: a String,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _unit_ is one of *"milliseconds"*, *"microseconds"*, or *"nanoseconds"*, return *true*.
+        1. Return *false*.
       </emu-alg>
     </emu-clause>
 
@@ -953,16 +947,18 @@
         1. Let _numericUnitFound_ be *false*.
         1. While _numericUnitFound_ is *false*, repeat for each row in <emu-xref href="#table-partition-duration-format-pattern"></emu-xref> in table order, except the header row:
           1. Let _value_ be the value of _duration_'s field whose name is the Value Field value of the current row.
-          1. Let _style_ be the value of _durationFormat_'s internal slot whose name is the Style Slot value of the current row.
-          1. Let _display_ be the value of _durationFormat_'s internal slot whose name is the Display Slot value of the current row.
+          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Let _style_ be _unitOptions_.[[Style]].
+          1. Let _display_ be _unitOptions_.[[Display]].
           1. Let _unit_ be the Unit value of the current row.
+          1. Let _numberFormatUnit_ be the NumberFormat Unit value of the current row.
           1. If _style_ is *"numeric"* or *"2-digit"*, then
             1. Let _numericPartsList_ be FormatNumericUnits(_durationFormat_, _duration_, _unit_, _signDisplayed_).
             1. If _numericPartsList_ is not empty, append _numericPartsList_ to _result_.
             1. Set _numericUnitFound_ to *true*.
           1. Else,
             1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
-            1. If _unit_ is one of *"seconds"*, *"milliseconds"*, or *"microseconds"*, and NextUnitFractional(_durationFormat_, _unit_) is *true*, then
+            1. If NextUnitFractional(_durationFormat_, _unit_) is *true*, then
               1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
               1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
               1. If _fractionDigits_ is *undefined*, then
@@ -980,7 +976,6 @@
                 1. If _value_ is 0 and DurationSign(_duration_) is -1, set _value_ to ~negative-zero~.
               1. Else,
                 1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
-              1. Let _numberFormatUnit_ be the NumberFormat Unit value of the current row.
               1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"style"*, *"unit"*).
               1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"unit"*, _numberFormatUnit_).
               1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"unitDisplay"*, _style_).
@@ -999,79 +994,68 @@
           <thead>
             <tr>
               <th>Value Field</th>
-              <th>Style Slot</th>
-              <th>Display Slot</th>
+              <th>Internal Slot</th>
               <th>Unit</th>
               <th>NumberFormat Unit</th>
             </tr>
           </thead>
           <tr>
             <td>[[Years]]</td>
-            <td>[[YearsStyle]]</td>
-            <td>[[YearsDisplay]]</td>
+            <td>[[YearsOptions]]</td>
             <td>*"years"*</td>
             <td>*"year"*</td>
           </tr>
           <tr>
             <td>[[Months]]</td>
-            <td>[[MonthsStyle]]</td>
-            <td>[[MonthsDisplay]]</td>
+            <td>[[MonthsOptions]]</td>
             <td>*"months"*</td>
             <td>*"month"*</td>
           </tr>
           <tr>
             <td>[[Weeks]]</td>
-            <td>[[WeeksStyle]]</td>
-            <td>[[WeeksDisplay]]</td>
+            <td>[[WeeksOptions]]</td>
             <td>*"weeks"*</td>
             <td>*"week"*</td>
           </tr>
           <tr>
             <td>[[Days]]</td>
-            <td>[[DaysStyle]]</td>
-            <td>[[DaysDisplay]]</td>
+            <td>[[DaysOptions]]</td>
             <td>*"days"*</td>
             <td>*"day"*</td>
           </tr>
           <tr>
             <td>[[Hours]]</td>
-            <td>[[HoursStyle]]</td>
-            <td>[[HoursDisplay]]</td>
+            <td>[[HoursOptions]]</td>
             <td>*"hours"*</td>
             <td>*"hour"*</td>
           </tr>
           <tr>
             <td>[[Minutes]]</td>
-            <td>[[MinutesStyle]]</td>
-            <td>[[MinutesDisplay]]</td>
+            <td>[[MinutesOptions]]</td>
             <td>*"minutes"*</td>
             <td>*"minute"*</td>
           </tr>
           <tr>
             <td>[[Seconds]]</td>
-            <td>[[SecondsStyle]]</td>
-            <td>[[SecondsDisplay]]</td>
+            <td>[[SecondsOptions]]</td>
             <td>*"seconds"*</td>
             <td>*"second"*</td>
           </tr>
           <tr>
             <td>[[Milliseconds]]</td>
-            <td>[[MillisecondsStyle]]</td>
-            <td>[[MillisecondsDisplay]]</td>
+            <td>[[MillisecondsOptions]]</td>
             <td>*"milliseconds"*</td>
             <td>*"millisecond"*</td>
           </tr>
           <tr>
             <td>[[Microseconds]]</td>
-            <td>[[MicrosecondsStyle]]</td>
-            <td>[[MicrosecondsDisplay]]</td>
+            <td>[[MicrosecondsOptions]]</td>
             <td>*"microseconds"*</td>
             <td>*"microsecond"*</td>
           </tr>
           <tr>
             <td>[[Nanoseconds]]</td>
-            <td>[[NanosecondsStyle]]</td>
-            <td>[[NanosecondsDisplay]]</td>
+            <td>[[NanosecondsOptions]]</td>
             <td>*"nanoseconds"*</td>
             <td>*"nanosecond"*</td>
           </tr>
