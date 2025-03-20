@@ -148,7 +148,7 @@
     <h1>Use of the IANA Time Zone Database</h1>
 
     <p>
-      Implementations that adopt this specification must be time zone aware: they must use the IANA Time Zone Database <a href="https://www.iana.org/time-zones/">https://www.iana.org/time-zones/</a> to supply time zone identifiers and data used in ECMAScript calculations and formatting.
+      Implementations that adopt this specification must be time zone aware: they must use the IANA Time Zone Database <a href="https://www.iana.org/time-zones/">https://www.iana.org/time-zones/</a> to supply available named time zone identifiers and data used in ECMAScript calculations and formatting.
       This section defines how the IANA Time Zone Database should be used by time zone aware implementations.
       No String may be an available named time zone identifier unless it is a Zone name or a Link name in the IANA Time Zone Database.
       Available named time zone identifiers returned by ECMAScript built-in objects must use the casing found in the IANA Time Zone Database.
@@ -172,7 +172,7 @@
 
     <emu-note>
       <p>
-        The IANA Time Zone Database offers build options that affect which time zone identifiers are primary.
+        The IANA Time Zone Database offers build options that affect which available named time zone identifiers are primary.
         The default build options merge different countries' time zones, for example *"Atlantic/Reykjavik"* is built as a Link to the Zone *"Africa/Abidjan"*.
         Geographically and politically distinct locations are likely to introduce divergent time zone rules in a future version of the IANA Time Zone Database.
         The exceptions above serve to mitigate these future-compatibility issues.
