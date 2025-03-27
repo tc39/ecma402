@@ -83,7 +83,7 @@
       </emu-normative-optional>
     </emu-clause>
 
-    <emu-clause id="sec-setnfdigitoptions" type="abstract operation">
+    <emu-clause id="sec-setnumberformatdigitoptions" oldids="sec-setnfdigitoptions" type="abstract operation">
       <h1>
         SetNumberFormatDigitOptions (
           _intlObj_: an Object,
@@ -95,7 +95,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumberstring"></emu-xref>).</dd>
+        <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumerictostring"></emu-xref>).</dd>
       </dl>
       <emu-alg>
         1. Let _mnid_ be ? GetNumberOption(_options_, *"minimumIntegerDigits,"*, 1, 21, 1).
@@ -527,7 +527,7 @@
         In scientific notation, this slot affects the sign display of the mantissa but not the exponent.
       </li>
       <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
-      <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
+      <li>[[RoundingMode]] is a <dfn id="rounding-mode">rounding mode</dfn>, one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>.</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
 
@@ -673,7 +673,7 @@
       <p>The *"length"* property of a Number format function is *1*<sub>𝔽</sub>.</p>
     </emu-clause>
 
-    <emu-clause id="sec-formatnumberstring" type="abstract operation">
+    <emu-clause id="sec-formatnumerictostring" oldids="sec-formatnumberstring" type="abstract operation">
       <h1>
         FormatNumericToString (
           _intlObject_: an Object,
@@ -702,17 +702,13 @@
         1. Else,
           1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
           1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
-          1. If _intlObject_.[[RoundingType]] is ~more-precision~, then
-            1. If _sResult_.[[RoundingMagnitude]] ≤ _fResult_.[[RoundingMagnitude]], then
-              1. Let _result_ be _sResult_.
-            1. Else,
-              1. Let _result_ be _fResult_.
+          1. If _fResult_.[[RoundingMagnitude]] &lt; _sResult_.[[RoundingMagnitude]], let _fixedIsMorePrecise_ be *true*; else let _fixedIsMorePrecise_ be *false*.
+          1. If _intlObject_.[[RoundingType]] is ~more-precision~ and _fixedIsMorePrecise_ is *true*, then
+            1. Let _result_ be _fResult_.
+          1. Else if _intlObject_.[[RoundingType]] is ~less-precision~ and _fixedIsMorePrecise_ is *false*, then
+            1. Let _result_ be _fResult_.
           1. Else,
-            1. Assert: _intlObject_.[[RoundingType]] is ~less-precision~.
-            1. If _sResult_.[[RoundingMagnitude]] ≤ _fResult_.[[RoundingMagnitude]], then
-              1. Let _result_ be _fResult_.
-            1. Else,
-              1. Let _result_ be _sResult_.
+            1. Let _result_ be _sResult_.
         1. Set _x_ to _result_.[[RoundedNumber]].
         1. Let _string_ be _result_.[[FormattedString]].
         1. If _intlObject_.[[TrailingZeroDisplay]] is *"stripIfInteger"* and <emu-eqn>_x_ modulo 1 = 0</emu-eqn>, then
@@ -1272,7 +1268,7 @@
     <emu-clause id="sec-torawprecision" type="abstract operation">
       <h1>
         ToRawPrecision (
-          _x_: non-negative mathematical value,
+          _x_: a non-negative mathematical value,
           _minPrecision_: an integer in the inclusive interval from 1 to 21,
           _maxPrecision_: an integer in the inclusive interval from 1 to 21,
           _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
@@ -1297,15 +1293,13 @@
         1. Else,
           1. [declared="n1,e1,r1"] Let _n1_ and _e1_ each be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawPrecisionFn(_n1_, _e1_, _p_)</emu-eqn>, such that <emu-eqn>_r1_ ≤ _x_</emu-eqn> and _r1_ is maximized.
           1. [declared="n2,e2,r2"] Let _n2_ and _e2_ each be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawPrecisionFn(_n2_, _e2_, _p_)</emu-eqn>, such that <emu-eqn>_r2_ ≥ _x_</emu-eqn> and _r2_ is minimized.
-          1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
-          1. If _r_ is _r1_, then
+          1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+          1. If _xFinal_ is _r1_, then
             1. Let _n_ be _n1_.
             1. Let _e_ be _e1_.
-            1. Let _xFinal_ be _r1_.
           1. Else,
             1. Let _n_ be _n2_.
             1. Let _e_ be _e2_.
-            1. Let _xFinal_ be _r2_.
           1. Let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _e_ ≥ (_p_ - 1), then
           1. Set _m_ to the string-concatenation of _m_ and _e_ - _p_ + 1 occurrences of the code unit 0x0030 (DIGIT ZERO).
@@ -1331,7 +1325,7 @@
     <emu-clause id="sec-torawfixed" type="abstract operation">
       <h1>
         ToRawFixed (
-          _x_: non-negative mathematical value,
+          _x_: a non-negative mathematical value,
           _minFraction_: an integer in the inclusive interval from 0 to 100,
           _maxFraction_: an integer in the inclusive interval from 0 to 100,
           _roundingIncrement_: an integer,
@@ -1351,13 +1345,8 @@
         1. Let _f_ be _maxFraction_.
         1. [declared="n1,r1"] Let _n1_ be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawFixedFn(_n1_, _f_)</emu-eqn>, such that <emu-eqn>_n1_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r1_ ≤ _x_</emu-eqn>, and _r1_ is maximized.
         1. [declared="n2,r2"] Let _n2_ be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawFixedFn(_n2_, _f_)</emu-eqn>, such that <emu-eqn>_n2_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r2_ ≥ _x_</emu-eqn>, and _r2_ is minimized.
-        1. Let _r_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
-        1. If _r_ is _r1_, then
-          1. Let _n_ be _n1_.
-          1. Let _xFinal_ be _r1_.
-        1. Else,
-          1. Let _n_ be _n2_.
-          1. Let _xFinal_ be _r2_.
+        1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+        1. If _xFinal_ is _r1_, let _n_ be _n1_. Otherwise, let _n_ be _n2_.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ ≠ 0, then
           1. Let _k_ be the length of _m_.
@@ -1677,13 +1666,13 @@
     <emu-clause id="sec-getunsignedroundingmode" type="abstract operation">
       <h1>
         GetUnsignedRoundingMode (
-          _roundingMode_: a String,
+          _roundingMode_: a rounding mode,
           _sign_: ~negative~ or ~positive~,
         ): a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It returns the rounding mode that should be applied to the absolute value of a number to produce the same result as if _roundingMode_, one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, were applied to the signed value of the number (negative if _sign_ is ~negative~, or positive otherwise).</dd>
+        <dd>It returns the <emu-not-ref>rounding mode</emu-not-ref> that should be applied to the absolute value of a number to produce the same result as if _roundingMode_ were applied to the signed value of the number (negative if _sign_ is ~negative~, or positive otherwise).</dd>
       </dl>
       <emu-alg>
         1. Return the specification type in the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> for the row where the value in the Identifier column is _roundingMode_ and the value in the Sign column is _sign_.
