@@ -58,25 +58,14 @@
 
       <emu-alg>
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _calendar_ be ? GetOption(_options_, *"calendar"*, ~string~, ~empty~, *undefined*).
-        1. If _calendar_ is not *undefined*, then
-          1. If _calendar_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[ca]] to _calendar_.
-        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
-        1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _hour12_ be ? GetOption(_options_, *"hour12"*, ~boolean~, ~empty~, *undefined*).
-        1. Let _hourCycle_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
-        1. If _hour12_ is not *undefined*, then
-          1. Set _hourCycle_ to *null*.
-        1. Set _opt_.[[hc]] to _hourCycle_.
-        1. Let _r_ be ResolveLocale(%Intl.DateTimeFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DateTimeFormat%.[[RelevantExtensionKeys]], %Intl.DateTimeFormat%.[[LocaleData]]).
+        1. Let _hour12_ be *undefined*.
+        1. Let _modifyResolutionOptions_ be a new Abstract Closure with parameters (_options_) that captures _hour12_ and performs the following steps when called:
+          1. Set _hour12_ to _options_.[[hour12]].
+          1. Remove field [[hour12]] from _options_.
+          1. If _hour12_ is not *undefined*, set _options_.[[hc]] to *null*.
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DateTimeFormat%, %Intl.DateTimeFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ », _modifyResolutionOptions_).
+        1. Set _options_ to _optionsResolution_.[[Options]].
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedCalendar_ be _r_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.

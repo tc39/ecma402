@@ -284,6 +284,41 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-clause id="sec-resolveoptions" type="abstract operation">
+      <h1>
+        ResolveOptions (
+          _constructor_: a service constructor,
+          _localeData_: a Record,
+          _locales_: an ECMAScript language value,
+          _options_: an ECMAScript language value,
+          optional _legacyBehaviors_: a List of enums,
+          optional _modifyResolutionOptions_: an Abstract Closure with one parameter,
+        ): either a normal completion containing a Record with fields [[Options]] (an Object), [[ResolvedLocale]] (a Record), and [[ResolutionOptions]] (a Record), or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It reads the inputs for _constructor_ and resolves them into a locale.</dd>
+      </dl>
+      <emu-alg>
+        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
+        1. If _legacyBehaviors_ is present and contains ~coerce-options~, set _options_ to ? CoerceOptionsToObject(_options_). Otherwise, set _options_ to ? GetOptionsObject(_options_).
+        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
+        1. Let _opt_ be the Record { [[localeMatcher]]: _matcher_ }.
+        1. For each Resolution Option Descriptor _desc_ of _constructor_.[[ResolutionOptionDescriptors]], do
+          1. If _desc_ has a [[Type]] field, let _type_ be _desc_.[[Type]]. Otherwise, let _type_ be ~string~.
+          1. If _desc_ has a [[Values]] field, let _values_ be _desc_.[[Values]]. Otherwise, let _values_ be ~empty~.
+          1. Let _value_ be ? GetOption(_options_, _desc_.[[Property]], _type_, _values_, *undefined*).
+          1. If _value_ is not *undefined*, then
+            1. Set _value_ to ! ToString(_value_).
+            1. If _value_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
+          1. Let _key_ be _desc_.[[Key]].
+          1. Set _opt_.[[&lt;_key_>]] to _value_.
+        1. If _modifyResolutionOptions_ is present, perform ! _modifyResolutionOptions_(_opt_).
+        1. Let _resolution_ be ResolveLocale(_constructor_.[[AvailableLocales]], _requestedLocales_, _opt_, _constructor_.[[RelevantExtensionKeys]], _localeData_).
+        1. Return the Record { [[Options]]: _options_, [[ResolvedLocale]]: _resolution_, [[ResolutionOptions]]: _opt_ }.
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-filterlocales" type="abstract operation" oldids="sec-lookupsupportedlocales,sec-bestfitsupportedlocales,sec-supportedlocales">
       <h1>
         FilterLocales (
