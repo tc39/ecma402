@@ -14,14 +14,9 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _durationFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DurationFormatPrototype%"*, « [[InitializedDurationFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[YearsOptions]], [[MonthsOptions]], [[WeeksOptions]], [[DaysOptions]], [[HoursOptions]], [[MinutesOptions]], [[SecondsOptions]], [[MillisecondsOptions]], [[MicrosecondsOptions]], [[NanosecondsOptions]], [[HourMinuteSeparator]], [[MinuteSecondSeparator]], [[FractionalDigits]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Let _options_ be ? GetOptionsObject(_options_).
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
-        1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Let _opt_ be the Record { [[localeMatcher]]: _matcher_, [[nu]]: _numberingSystem_ }.
-        1. Let _r_ be ResolveLocale(%Intl.DurationFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.DurationFormat%.[[RelevantExtensionKeys]], %Intl.DurationFormat%.[[LocaleData]]).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DurationFormat%, %Intl.DurationFormat%.[[LocaleData]], _locales_, _options_).
+        1. Set _options_ to _optionsResolution_.[[Options]].
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _durationFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. Let _digitalFormat_ be _resolvedLocaleData_.[[DigitalFormat]].
