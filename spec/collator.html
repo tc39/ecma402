@@ -42,16 +42,10 @@
         1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
         1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
-        1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », *undefined*).
-        1. If _sensitivity_ is *undefined*, then
-          1. If _usage_ is *"sort"*, then
-            1. Set _sensitivity_ to *"variant"*.
-          1. Else,
-            1. Set _sensitivity_ to _resolvedLocaleData_.[[sensitivity]].
-        1. Set _collator_.[[Sensitivity]] to _sensitivity_.
+        1. If _usage_ is *"sort"*, let _defaultSensitivity_ be *"variant"*. Otherwise, let _defaultSensitivity_ be _resolvedLocaleData_.[[sensitivity]].
+        1. Set _collator_.[[Sensitivity]] to ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », _defaultSensitivity_).
         1. Let _defaultIgnorePunctuation_ be _resolvedLocaleData_.[[ignorePunctuation]].
-        1. Let _ignorePunctuation_ be ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, _defaultIgnorePunctuation_).
-        1. Set _collator_.[[IgnorePunctuation]] to _ignorePunctuation_.
+        1. Set _collator_.[[IgnorePunctuation]] to ? GetOption(_options_, *"ignorePunctuation"*, ~boolean~, ~empty~, _defaultIgnorePunctuation_).
         1. Return _collator_.
       </emu-alg>
     </emu-clause>
