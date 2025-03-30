@@ -161,7 +161,7 @@
     <emu-clause id="sec-intl.locale-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>The value of the [[LocaleExtensionKeys]] internal slot is « *"ca"*, *"co"*, *"hc"*, *"kf"*, *"kn"*, *"nu"* ». If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kf"*, then remove *"kf"* from %Intl.Locale%.[[LocaleExtensionKeys]]. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain *"kn"*, then remove *"kn"* from %Intl.Locale%.[[LocaleExtensionKeys]].</p>
+      <p>The value of the [[LocaleExtensionKeys]] internal slot is a List that must include all elements of « *"ca"*, *"co"*, *"hc"*, *"nu"* », must additionally include any element of « *"kf"*, *"kn"* » that is also an element of %Intl.Collator%.[[RelevantExtensionKeys]], and must not include any other elements.</p>
     </emu-clause>
   </emu-clause>
 
