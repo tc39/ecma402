@@ -14,16 +14,9 @@
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _numberFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.NumberFormat.prototype%"*, « [[InitializedNumberFormat]], [[Locale]], [[LocaleData]], [[NumberingSystem]], [[Style]], [[Unit]], [[UnitDisplay]], [[Currency]], [[CurrencyDisplay]], [[CurrencySign]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[Notation]], [[CompactDisplay]], [[UseGrouping]], [[SignDisplay]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]], [[BoundFormat]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _numberingSystem_ be ? GetOption(_options_, *"numberingSystem"*, ~string~, ~empty~, *undefined*).
-        1. If _numberingSystem_ is not *undefined*, then
-          1. If _numberingSystem_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[nu]] to _numberingSystem_.
-        1. Let _r_ be ResolveLocale(%Intl.NumberFormat%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.NumberFormat%.[[RelevantExtensionKeys]], %Intl.NumberFormat%.[[LocaleData]]).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.NumberFormat%, %Intl.NumberFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ »).
+        1. Set _options_ to _optionsResolution_.[[Options]].
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _numberFormat_.[[Locale]] to _r_.[[Locale]].
         1. Set _numberFormat_.[[LocaleData]] to _r_.[[LocaleData]].
         1. Set _numberFormat_.[[NumberingSystem]] to _r_.[[nu]].

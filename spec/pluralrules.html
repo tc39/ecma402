@@ -14,12 +14,9 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _r_ be ResolveLocale(%Intl.PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.PluralRules%.[[RelevantExtensionKeys]], %Intl.PluralRules%.[[LocaleData]]).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.PluralRules%, %Intl.PluralRules%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ »).
+        1. Set _options_ to _optionsResolution_.[[Options]].
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _pluralRules_.[[Locale]] to _r_.[[Locale]].
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
