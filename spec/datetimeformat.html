@@ -220,6 +220,8 @@
         <a href="https://unicode.org/reports/tr35/#Key_Type_Definitions">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes four locale extension keys that are relevant to date and time formatting: *"ca"* for calendar, *"hc"* for hour cycle, *"nu"* for numbering system (of formatted numbers), and *"tz"* for time zone. DateTimeFormat, however, requires that the time zone is specified through the *"timeZone"* property in the options objects.
       </emu-note>
 
+      <p>The value of the [[ResolutionOptionDescriptors]] internal slot is « { [[Key]]: *"ca"*, [[Property]]: *"calendar"* }, { [[Key]]: *"nu"*, [[Property]]: *"numberingSystem"* }, { [[Key]]: *"hour12"*, [[Property]]: *"hour12"*, [[Type]]: ~boolean~ }, { [[Key]]: *"hc"*, [[Property]]: *"hourCycle"*, [[Values]]: « *"h11"*, *"h12"*, *"h23"*, *"h24"* » } ».</p>
+
       <p>The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:</p>
 
       <ul>
