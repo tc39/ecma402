@@ -291,7 +291,7 @@
           _localeData_: a Record,
           _locales_: an ECMAScript language value,
           _options_: an ECMAScript language value,
-          optional _legacyBehaviors_: a List of enums,
+          optional _specialBehaviours_: a List of enums,
           optional _modifyResolutionOptions_: an Abstract Closure with one parameter,
         ): either a normal completion containing a Record with fields [[Options]] (an Object), [[ResolvedLocale]] (a Record), and [[ResolutionOptions]] (a Record), or a throw completion
       </h1>
@@ -301,7 +301,8 @@
       </dl>
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. If _legacyBehaviors_ is present and contains ~coerce-options~, set _options_ to ? CoerceOptionsToObject(_options_). Otherwise, set _options_ to ? GetOptionsObject(_options_).
+        1. If _specialBehaviours_ is present and contains ~require-options~ and _options_ is *undefined*, throw a *TypeError* exception.
+        1. If _specialBehaviours_ is present and contains ~coerce-options~, set _options_ to ? CoerceOptionsToObject(_options_). Otherwise, set _options_ to ? GetOptionsObject(_options_).
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Let _opt_ be the Record { [[localeMatcher]]: _matcher_ }.
         1. For each Resolution Option Descriptor _desc_ of _constructor_.[[ResolutionOptionDescriptors]], do
