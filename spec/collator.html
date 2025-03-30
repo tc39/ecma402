@@ -13,6 +13,7 @@
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
         1. Let _internalSlotsList_ be « [[InitializedCollator]], [[Locale]], [[Usage]], [[Collation]], [[Numeric]], [[CaseFirst]], [[Sensitivity]], [[IgnorePunctuation]], [[BoundCompare]] ».
         1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.Collator.prototype%"*, _internalSlotsList_).
+        1. NOTE: The source of locale data for ResolveOptions depends upon the *"usage"* property of _options_, but the following two steps must observably precede that lookup (and must not observably repeat inside ResolveOptions).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
         1. Let _usage_ be ? GetOption(_options_, *"usage"*, ~string~, « *"sort"*, *"search"* », *"sort"*).
@@ -21,23 +22,10 @@
           1. Let _localeData_ be %Intl.Collator%.[[SortLocaleData]].
         1. Else,
           1. Let _localeData_ be %Intl.Collator%.[[SearchLocaleData]].
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _collation_ be ? GetOption(_options_, *"collation"*, ~string~, ~empty~, *undefined*).
-        1. If _collation_ is not *undefined*, then
-          1. If _collation_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
-        1. Set _opt_.[[co]] to _collation_.
-        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~boolean~, ~empty~, *undefined*).
-        1. If _numeric_ is not *undefined*, then
-          1. Set _numeric_ to ! ToString(_numeric_).
-        1. Set _opt_.[[kn]] to _numeric_.
-        1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, ~string~, « *"upper"*, *"lower"*, *"false"* », *undefined*).
-        1. Set _opt_.[[kf]] to _caseFirst_.
-        1. Let _r_ be ResolveLocale(%Intl.Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.Collator%.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.Collator%, _localeData_, CreateArrayFromList(_requestedLocales_), _options_).
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _collator_.[[Locale]] to _r_.[[Locale]].
-        1. Set _collation_ to _r_.[[co]].
-        1. If _collation_ is *null*, set _collation_ to *"default"*.
+        1. If _r_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _r_.[[co]].
         1. Set _collator_.[[Collation]] to _collation_.
         1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
         1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
