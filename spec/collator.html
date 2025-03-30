@@ -11,11 +11,7 @@
       <p>When the `Intl.Collator` function is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
       <emu-alg>
         1. If NewTarget is *undefined*, let _newTarget_ be the active function object, else let _newTarget_ be NewTarget.
-        1. Let _internalSlotsList_ be « [[InitializedCollator]], [[Locale]], [[Usage]], [[Sensitivity]], [[IgnorePunctuation]], [[Collation]], [[BoundCompare]] ».
-        1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kn"*, then
-          1. Append [[Numeric]] to _internalSlotsList_.
-        1. If %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kf"*, then
-          1. Append [[CaseFirst]] to _internalSlotsList_.
+        1. Let _internalSlotsList_ be « [[InitializedCollator]], [[Locale]], [[Usage]], [[Collation]], [[Numeric]], [[CaseFirst]], [[Sensitivity]], [[IgnorePunctuation]], [[BoundCompare]] ».
         1. Let _collator_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.Collator.prototype%"*, _internalSlotsList_).
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
@@ -38,16 +34,13 @@
         1. Set _opt_.[[kn]] to _numeric_.
         1. Let _caseFirst_ be ? GetOption(_options_, *"caseFirst"*, ~string~, « *"upper"*, *"lower"*, *"false"* », *undefined*).
         1. Set _opt_.[[kf]] to _caseFirst_.
-        1. Let _relevantExtensionKeys_ be %Intl.Collator%.[[RelevantExtensionKeys]].
-        1. Let _r_ be ResolveLocale(%Intl.Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, _relevantExtensionKeys_, _localeData_).
+        1. Let _r_ be ResolveLocale(%Intl.Collator%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.Collator%.[[RelevantExtensionKeys]], _localeData_).
         1. Set _collator_.[[Locale]] to _r_.[[Locale]].
         1. Set _collation_ to _r_.[[co]].
         1. If _collation_ is *null*, set _collation_ to *"default"*.
         1. Set _collator_.[[Collation]] to _collation_.
-        1. If _relevantExtensionKeys_ contains *"kn"*, then
-          1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
-        1. If _relevantExtensionKeys_ contains *"kf"*, then
-          1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
+        1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
+        1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
         1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
         1. Let _sensitivity_ be ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », *undefined*).
         1. If _sensitivity_ is *undefined*, then
