@@ -11,7 +11,7 @@
     "build": "npm run build-only -- --lint-spec --strict",
     "build-for-pdf": "npm run build -- --old-toc",
     "test": "npm run build-to -- --lint-spec /dev/null",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build-only -- --lint-spec --watch"
   },
   "repository": "tc39/ecma402",
   "author": "ECMA TC39",
