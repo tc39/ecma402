@@ -10,7 +10,7 @@
     "build-only": "npm run build-to -- out/index.html --assets-dir=out",
     "build": "npm run build-only -- --lint-spec --strict",
     "build-for-pdf": "npm run build -- --old-toc",
-    "test": "npm run build-to -- --lint-spec /dev/null",
+    "test": "npm run build-to -- /dev/null --lint-spec --strict",
     "watch": "npm run build-only -- --lint-spec --watch"
   },
   "repository": "tc39/ecma402",
