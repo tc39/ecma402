@@ -15,7 +15,7 @@
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _internalSlotsList_ be « [[InitializedSegmenter]], [[Locale]], [[SegmenterGranularity]] ».
         1. Let _segmenter_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.Segmenter.prototype%"*, _internalSlotsList_).
-        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.NumberFormat%, %Intl.NumberFormat%.[[LocaleData]], _locales_, _options_).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.Segmenter%, %Intl.Segmenter%.[[LocaleData]], _locales_, _options_).
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _segmenter_.[[Locale]] to _r_.[[Locale]].
