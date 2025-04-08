@@ -13,14 +13,16 @@
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[Notation]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.PluralRules%, %Intl.PluralRules%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ »).
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _pluralRules_.[[Locale]] to _r_.[[Locale]].
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
+        1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
+        1. Set _pluralRules_.[[Notation]] to _notation_.
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
         1. Return _pluralRules_.
       </emu-alg>
     </emu-clause>
@@ -127,6 +129,11 @@
             <td></td>
           </tr>
           <tr>
+            <td>[[Notation]]</td>
+            <td>*"notation"*</td>
+            <td></td>
+          </tr>
+          <tr>
             <td>[[MinimumIntegerDigits]]</td>
             <td>*"minimumIntegerDigits"*</td>
             <td>~number~</td>
@@ -228,6 +235,7 @@
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
+      <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, identifying the notation used.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
@@ -247,12 +255,13 @@
         PluralRuleSelect (
           _locale_: a language tag,
           _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
           _s_: a decimal String,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String characterizes the plural category of _s_ according to the effective locale and the options of _pluralRules_.</dd>
+        <dd>The returned String characterizes the plural category of _s_ according to _locale_, _type_ and _notation_.</dd>
       </dl>
     </emu-clause>
 
@@ -275,7 +284,8 @@
         1. Let _s_ be _res_.[[FormattedString]].
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _s_).
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _notation_, _s_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
@@ -285,13 +295,14 @@
         PluralRuleSelectRange (
           _locale_: a String,
           _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
           _xp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
           _yp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ for the corresponding _locale_, or the String value *"other"*.</dd>
+        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ and _notation_ for the corresponding _locale_, or the String value *"other"*.</dd>
       </dl>
     </emu-clause>
 
@@ -315,7 +326,8 @@
           1. Return _xp_.[[PluralCategory]].
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Return PluralRuleSelectRange(_locale_, _type_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Return PluralRuleSelectRange(_locale_, _type_, _notation_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
       </emu-alg>
     </emu-clause>
   </emu-clause>
