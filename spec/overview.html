@@ -56,6 +56,9 @@
         <em>Subsets of Unicode:</em> Some operations, such as collation, operate on strings that can include characters from the entire Unicode character set. However, both the Unicode Standard and the ECMAScript standard allow implementations to limit their functionality to subsets of the Unicode character set. In addition, locale conventions typically don't specify the desired behaviour for the entire Unicode character set, but only for those characters that are relevant for the locale. While the Unicode Collation Algorithm combines a default collation order for the entire Unicode character set with the ability to tailor for local conventions, subsets and tailorings still result in differences in behaviour.
       </li>
     </ul>
+    <p>
+      In browser implementations the initial set of locales, currencies, calendars, numbering systems, and other enumerable items visible to a particular origin must be the same for all users sharing the same user agent string (engine and platform version). Furthermore, dynamic changes to these sets must not result in users becoming distinguishable from each other. This constraint is imposed to reduce the fingerprinting risk inherent in internationalization, and may be relaxed in future revisions. As a result of this constraint, the first time a browser implementation that allows on-demand locale installation receives a request from a particular origin that could require installing a new locale, it must not reveal whether or not that locale is already installed.
+    </p>
 
     <p>Throughout this specification, implementation- and locale-dependent behaviour is referred to as <dfn>ILD</dfn>, and implementation-, locale-, and numbering system-dependent behaviour is referred to as <dfn>ILND</dfn>.</p>
 
