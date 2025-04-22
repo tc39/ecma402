@@ -28,9 +28,15 @@ This document contains background on how the style decisions were reached.  The 
             - [Pros](#pros-3)
             - [Cons](#cons-3)
             - [Decision](#decision-3)
-    - [Element Ordering](#element-ordering)
-	    - [General Guidelines](#general-guidelines)
-	    - [resolvedOptions](#resolvedoptions)
+- [Naming Conventions](#naming-conventions)
+    - [Avoiding Abbreviations in Property Names and Values](#avoiding-abbreviations-in-property-names-and-values)
+        - [Guidelines](#guidelines)
+        - [Rationale](#rationale)
+        - [Exceptions](#exceptions)
+    - [Compound Words in Property Names and Values](#compound-words-in-property-names-and-values)
+        - [Guidelines](#guidelines-1)
+        - [Rationale](#rationale-1)
+    - [Open Question: "[...]style" vs. "[...]display" for High-Level Configuration Properties](#open-question-style-vs-display-for-high-level-configuration-properties)
 
 *Table of Contents generated using https://magnetikonline.github.io/markdown-toc-generate/*
 
@@ -221,3 +227,47 @@ For an example of when *not* to use lexicographic order, consider an array holdi
 Spec changes that add properties should do so in accordance with this recommendation, rather than automatically placing them at the end—relative enumeration order of properties should remain stable over time, but there is no such expectation regarding adjacency.
 #### Examples
 `Object.keys(new Intl.Segmenter().resolvedOptions())` returns `[ 'locale', 'granularity' ]`. If support for the [Unicode BCP 47 U Extension "dx" key](https://unicode.org/reports/tr35/#UnicodeDictionaryBreakExclusionIdentifier) were added and exposed as `dictionaryBreakExcludedScripts`, that property would belong before `granularity`.
+
+## Naming Conventions
+
+This section provides guidelines for naming conventions in ECMA-402, focusing on clarity, consistency, and adherence to established practices.
+
+### Avoiding Abbreviations in Property Names and Values
+
+:star2: *Property names and values in ECMA-402 should avoid abbreviations to ensure clarity and readability. Use descriptive names that clearly convey their purpose.* :star2:
+
+#### Guidelines
+
+- Use full, descriptive names for properties and values, even if they are longer.
+- Avoid cryptic abbreviations or shortened forms that may confuse readers or developers unfamiliar with the context.
+- Prioritize clarity over brevity, especially for properties that are frequently used or have significant impact.
+
+#### Rationale
+
+- Descriptive names improve code readability and maintainability.
+- They reduce the cognitive load for developers, especially those new to the specification.
+- Avoiding abbreviations aligns with the principle of self-documenting code, making the API easier to understand and use.
+
+#### Exceptions
+
+- Abbreviations may be acceptable if they are widely recognized and standardized (e.g., `UTC`, `ISO`).
+- When abbreviations are used, they should be documented thoroughly to avoid confusion.
+
+### Compound Words in Property Names and Values
+
+:star2: *Combine compound words in property names and values using camelCase.* :star2:
+
+#### Guidelines
+
+- Use camelCase for property names and values that are compound words.
+- Avoid separating words with underscores, hyphens, or other delimiters.
+- For values only, nonzero numbers should be expressed as digits (as in `"h23"`).
+
+#### Rationale
+
+- camelCase is a widely accepted convention in JavaScript and aligns with existing ECMA-402 practices.
+- Using digits for nonzero numbers in values ensures brevity and consistency with historical conventions.
+
+### Open Question: "[...]style" vs. "[...]display" for High-Level Configuration Properties
+
+There is an open question regarding the naming of high-level configuration properties: should we prefer the suffix `[...]style` or `[...]display`? They're both used relatively interchangably. We must analyze this problem space in TG2 and come up with a convention.
