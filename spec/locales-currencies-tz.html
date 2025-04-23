@@ -107,6 +107,9 @@
         <dt>description</dt>
         <dd>The returned String value represents the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale. It must not contain a Unicode locale extension sequence.</dd>
       </dl>
+      <emu-note>
+        The returned value is is a potential fingerprinting vector. In browser environments, it should match <a href="https://html.spec.whatwg.org/#language-preferences"><code>navigator.language</code></a> to avoid providing any additional distinguishing information.
+      </emu-note>
     </emu-clause>
   </emu-clause>
 
