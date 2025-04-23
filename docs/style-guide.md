@@ -242,7 +242,7 @@ This section provides guidelines for naming conventions in ECMA-402, focusing on
 
 #### Guidelines
 
-- Use full, descriptive names for properties and values, even if they are longer.
+- Use full, descriptive names for properties and values, even if they are longer (good examples: `fractionalSecondDigits`, `minimumSignificantDigits`).
 - Avoid cryptic abbreviations or shortened forms that may confuse readers or developers unfamiliar with the context.
 - Prioritize clarity over brevity, especially for properties that are frequently used or have significant impact.
 
@@ -263,15 +263,15 @@ This section provides guidelines for naming conventions in ECMA-402, focusing on
 
 #### Guidelines
 
-- Use camelCase for property names and values that are compound words.
-- Avoid separating words with underscores, hyphens, or other delimiters.
-- For values only, nonzero numbers should be expressed as digits (as in `"h23"`).
+- Use camelCase for property names and values that are compound words (good examples: `signDisplay`, `"exceptZero"`).
+- Avoid separating words with underscores, hyphens, or other delimiters (historical exceptions: "2-digit", "best fit").
+- For values only, nonzero numbers should be expressed as digits (as in `"min2"`). Note that some terms, such as `"h23"`, originate from external specifications like UTS 35.
 
 #### Rationale
 
 - camelCase is a widely accepted convention in JavaScript and aligns with existing ECMA-402 practices.
 - Using digits for nonzero numbers in values ensures brevity and consistency with historical conventions.
 
-### Open Question: "[...]style" vs. "[...]display" for High-Level Configuration Properties
+### Open Question: `Style` vs. `Display` for High-Level Configuration Properties
 
-There is an open question regarding the naming of high-level configuration properties: should we prefer the suffix `[...]style` or `[...]display`? They're both used relatively interchangably. We must analyze this problem space in TG2 and come up with a convention.
+There is an open question regarding the naming of high-level configuration properties: should we prefer to name them like `…Style` or `…Display`? They're both used relatively interchangably (e.g., `style`/`dateStyle`/`timeStyle` vs. `compactDisplay`/ `signDisplay`/`unitDisplay`). We must analyze this problem space in TG2 and come up with a convention.
