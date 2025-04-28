@@ -20,26 +20,23 @@
         1. Return _dateTimeFormat_.
       </emu-alg>
 
-      <emu-normative-optional>
-
-        <emu-clause id="sec-chaindatetimeformat" type="abstract operation">
-          <h1>
-            ChainDateTimeFormat (
-              _dateTimeFormat_: an Intl.DateTimeFormat,
-              _newTarget_: an ECMAScript language value,
-              _this_: an ECMAScript language value,
-            ): either a normal completion containing an Object or a throw completion
-          </h1>
-          <dl class="header">
-          </dl>
-          <emu-alg>
-            1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _this_) is *true*, then
-              1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-              1. Return _this_.
-            1. Return _dateTimeFormat_.
-          </emu-alg>
-        </emu-clause>
-      </emu-normative-optional>
+      <emu-clause id="sec-chaindatetimeformat" type="abstract operation" normative-optional>
+        <h1>
+          ChainDateTimeFormat (
+            _dateTimeFormat_: an Intl.DateTimeFormat,
+            _newTarget_: an ECMAScript language value,
+            _this_: an ECMAScript language value,
+          ): either a normal completion containing an Object or a throw completion
+        </h1>
+        <dl class="header">
+        </dl>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _dateTimeFormat_.
+        </emu-alg>
+      </emu-clause>
     </emu-clause>
 
     <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions">
@@ -1728,27 +1725,24 @@
       </emu-table>
     </emu-clause>
 
-    <emu-normative-optional>
-
-      <emu-clause id="sec-unwrapdatetimeformat" type="abstract operation">
-        <h1>
-          UnwrapDateTimeFormat (
-            _dtf_: an ECMAScript language value,
-          ): either a normal completion containing an ECMAScript language value or a throw completion
-        </h1>
-        <dl class="header">
-          <dt>description</dt>
-          <dd>
-            It returns the DateTimeFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.DateTimeFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
-          </dd>
-        </dl>
-        <emu-alg>
-          1. If _dtf_ is not an Object, throw a *TypeError* exception.
-          1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _dtf_) is *true*, then
-            1. Return ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
-          1. Return _dtf_.
-        </emu-alg>
-      </emu-clause>
-    </emu-normative-optional>
+    <emu-clause id="sec-unwrapdatetimeformat" type="abstract operation" normative-optional>
+      <h1>
+        UnwrapDateTimeFormat (
+          _dtf_: an ECMAScript language value,
+        ): either a normal completion containing an ECMAScript language value or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It returns the DateTimeFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.DateTimeFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
+        </dd>
+      </dl>
+      <emu-alg>
+        1. If _dtf_ is not an Object, throw a *TypeError* exception.
+        1. If _dtf_ does not have an [[InitializedDateTimeFormat]] internal slot and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _dtf_) is *true*, then
+          1. Return ? Get(_dtf_, %Intl%.[[FallbackSymbol]]).
+        1. Return _dtf_.
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 </emu-clause>

@@ -54,26 +54,23 @@
         1. Return _numberFormat_.
       </emu-alg>
 
-      <emu-normative-optional>
-
-        <emu-clause id="sec-chainnumberformat" type="abstract operation">
-          <h1>
-            ChainNumberFormat (
-              _numberFormat_: an Intl.NumberFormat,
-              _newTarget_: an ECMAScript language value,
-              _this_: an ECMAScript language value,
-            ): either a normal completion containing an Object or a throw completion
-          </h1>
-          <dl class="header">
-          </dl>
-          <emu-alg>
-            1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.NumberFormat%, _this_) is *true*, then
-              1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
-              1. Return _this_.
-            1. Return _numberFormat_.
-          </emu-alg>
-        </emu-clause>
-      </emu-normative-optional>
+      <emu-clause id="sec-chainnumberformat" type="abstract operation" normative-optional>
+        <h1>
+          ChainNumberFormat (
+            _numberFormat_: an Intl.NumberFormat,
+            _newTarget_: an ECMAScript language value,
+            _this_: an ECMAScript language value,
+          ): either a normal completion containing an Object or a throw completion
+        </h1>
+        <dl class="header">
+        </dl>
+        <emu-alg>
+          1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.NumberFormat%, _this_) is *true*, then
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _numberFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Return _this_.
+          1. Return _numberFormat_.
+        </emu-alg>
+      </emu-clause>
     </emu-clause>
 
     <emu-clause id="sec-setnumberformatdigitoptions" oldids="sec-setnfdigitoptions" type="abstract operation">
@@ -1364,28 +1361,25 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-normative-optional>
-
-      <emu-clause id="sec-unwrapnumberformat" type="abstract operation">
-        <h1>
-          UnwrapNumberFormat (
-            _nf_: an ECMAScript language value,
-          ): either a normal completion containing an ECMAScript language value or a throw completion
-        </h1>
-        <dl class="header">
-          <dt>description</dt>
-          <dd>
-            It returns the NumberFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.NumberFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
-          </dd>
-        </dl>
-        <emu-alg>
-          1. If _nf_ is not an Object, throw a *TypeError* exception.
-          1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%Intl.NumberFormat%, _nf_) is *true*, then
-            1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
-          1. Return _nf_.
-        </emu-alg>
-      </emu-clause>
-    </emu-normative-optional>
+    <emu-clause id="sec-unwrapnumberformat" type="abstract operation" normative-optional>
+      <h1>
+        UnwrapNumberFormat (
+          _nf_: an ECMAScript language value,
+        ): either a normal completion containing an ECMAScript language value or a throw completion
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>
+          It returns the NumberFormat instance of its input object, which is either the value itself or a value associated with it by %Intl.NumberFormat% according to the normative optional constructor mode of <emu-xref href="#legacy-constructor"></emu-xref>.
+        </dd>
+      </dl>
+      <emu-alg>
+        1. If _nf_ is not an Object, throw a *TypeError* exception.
+        1. If _nf_ does not have an [[InitializedNumberFormat]] internal slot and ? OrdinaryHasInstance(%Intl.NumberFormat%, _nf_) is *true*, then
+          1. Return ? Get(_nf_, %Intl%.[[FallbackSymbol]]).
+        1. Return _nf_.
+      </emu-alg>
+    </emu-clause>
 
     <emu-clause id="sec-getnumberformatpattern" type="abstract operation">
       <h1>
