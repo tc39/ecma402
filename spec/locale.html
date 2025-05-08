@@ -217,20 +217,6 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-Intl.Locale.prototype.getVariants">
-      <h1>Intl.Locale.prototype.getVariants ( )</h1>
-
-      <emu-alg>
-        1. Let _loc_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _variantsString_ be GetLocaleVariants(_loc_.[[Locale]]).
-        1. If _variantsString_ is *undefined*, then
-          1. Return ! ArrayCreate(0).
-        1. Let _variantsList_ be StringSplitToList(_variantsString_, *"-"*).
-        1. Return CreateArrayFromList(_variantsList_).
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-Intl.Locale.prototype.hourCycle">
       <h1>get Intl.Locale.prototype.hourCycle</h1>
       <p>`Intl.Locale.prototype.hourCycle` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
@@ -321,6 +307,16 @@
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Locale]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.variants">
+      <h1>get Intl.Locale.prototype.variants</h1>
+      <p>`Intl.Locale.prototype.variants` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return GetLocaleVariants(_loc_.[[Locale]]).
       </emu-alg>
     </emu-clause>
 
