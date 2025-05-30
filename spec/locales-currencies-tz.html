@@ -29,7 +29,7 @@
       <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> Unicode locale nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>. It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators. For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
     </p>
 
-    <p>All <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid language tags</emu-xref> are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
+    <p>All structurally valid language tags are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
 
     <emu-clause id="sec-isstructurallyvalidlanguagetag" type="abstract operation">
       <h1>
@@ -39,7 +39,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines whether _locale_ is a syntactically well-formed language tag. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
+        <dd>It determines whether _locale_ is a <dfn variants="structurally valid language tags">structurally valid language tag</dfn> conforming with the well-formedness constraints of a <a href="https://unicode.org/reports/tr35/#unicode_bcp47_locale_id"><code>unicode_bcp47_locale_id</code></a>. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
       </dl>
       <emu-alg>
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
