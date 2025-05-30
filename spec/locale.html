@@ -89,7 +89,10 @@
           1. If _region_ cannot be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Let _variants_ be ? GetOption(_options_, *"variants"*, ~string~, ~empty~, GetLocaleVariants(_baseName_)).
         1. If _variants_ is not *undefined*, then
-          1. If _variants_ cannot be matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
+          1. If _variants_ is the empty String, throw a *RangeError* exception.
+          1. For each element _variant_ of StringSplitToList(_variants_, *"-"*), do
+            1. If _variant_ cannot be matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.
+          1. If _variants_ contains any duplicate subtags, throw a *RangeError* exception.
         1. Let _allExtensions_ be the suffix of _tag_ following _baseName_.
         1. Let _newTag_ be _language_.
         1. If _script_ is not *undefined*, set _newTag_ to the string-concatenation of _newTag_, *"-"*, and _script_.
