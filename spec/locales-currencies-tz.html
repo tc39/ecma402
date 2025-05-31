@@ -76,7 +76,7 @@
         <dd>It returns the canonical and case-regularized form of _locale_.</dd>
       </dl>
       <emu-alg>
-        1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
+        1. Let _localeId_ be the String value resulting from performing the <a href="https://unicode.org/reports/tr35/#processing-localeids">Processing LocaleIds</a> algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a>.
         1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
           1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _localeId_.
           1. Let _newExtension_ be *"-u"*.
