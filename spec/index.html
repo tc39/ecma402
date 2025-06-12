@@ -26,11 +26,39 @@
   width: 500px;
 }
 </style>
+
+<style media="print">
+/** ECMA-402-specific print hacks */
+emu-normative-optional {
+  break-inside: avoid-page;
+}
+
+/* These tables are too narrow for their captions */
+#table-sanctioned-single-unit-identifiers table,
+#table-listformat-resolvedoptions-properties table {
+  width: 102mm;
+}
+
+#table-intl-unsigned-rounding-modes table,
+#table-displaynames-resolvedoptions-properties table {
+  width: 130mm;
+}
+
+/**
+* This note is so long it takes up several pages anyway, let it break
+* Note for future publishers: this note doesn't have an ID, check each
+* year that it's still the second note in the section
+*/
+#sec-intl\.datetimeformat-internal-slots emu-note:nth-of-type(2) {
+  break-inside: initial;
+}
+</style>
 <pre class="metadata">
   title: ECMAScript&reg; 2026 Internationalization API Specification
   shortname: ECMA-402
   status: draft
   location: https://tc39.es/ecma402/
+  version: 13th Edition
 </pre>
 <p><img src="img/ecma-logo.svg" id="ecma-logo"></p>
 <emu-import href="metablock.html"></emu-import>
