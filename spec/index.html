@@ -28,7 +28,7 @@
 </style>
 
 <style media="print">
-/** ECMA-402-specific print hacks */
+/** ECMA-402-specific print styles */
 emu-normative-optional {
   break-inside: avoid-page;
 }
@@ -44,13 +44,17 @@ emu-normative-optional {
   width: 130mm;
 }
 
-/**
-* This note is so long it takes up several pages anyway, let it break
-* Note for future publishers: this note doesn't have an ID, check each
-* year that it's still the second note in the section
-*/
-#sec-intl\.datetimeformat-internal-slots emu-note:nth-of-type(2) {
+/* This note is so long it takes up several pages anyway, let it break. */
+#note-example-datetime-format-record {
   break-inside: initial;
+}
+
+/**
+ * Prevent line wrapping in print
+ * (for future publishing, this keeps the thead in #table-numbering-system-digits from wrapping unexpectedly)
+ */
+.print-no-break {
+  white-space: nowrap;
 }
 </style>
 <pre class="metadata">
