@@ -8,30 +8,9 @@
     location.protocol = 'https:';
   }
 </script>
-<style>
-#metadata-block {
-  margin: 4em 0;
-  padding: 10px;
-  border: 1px solid #ee8421;
-}
-#metadata-block h1 {
-  font-size: 1.5em;
-  margin-top: 0;
-}
-#metadata-block > ul {
-  list-style-type: none;
-  margin: 0; padding: 0;
-}
-#ecma-logo {
-  width: 500px;
-}
-</style>
 
 <style media="print">
 /** ECMA-402-specific print styles */
-emu-normative-optional {
-  break-inside: avoid-page;
-}
 
 /* These tables are too narrow for their captions */
 #table-sanctioned-single-unit-identifiers table,
@@ -43,6 +22,23 @@ emu-normative-optional {
 #table-displaynames-resolvedoptions-properties table,
 #table-relativetimeformat-resolvedoptions-properties table {
   width: 130mm;
+}
+
+/**
+ * DateTime Formats > Properties of the Intl.DateTimeFormat Constructor > Internal Slots
+ *
+ * This section includes several smaller tables that shouldn't be breaking across pages. Each of the tables in the
+ * Internal Slots section has a one-line section title and one-sentence intro paragraph. Because it's all so small,
+ * we try to keep them together. Which sections should break-before will not be consistent from publication to
+ * publication—these are 2025-specific rules
+ */
+#sec-datetimeformat-range-pattern-record, /* 11.2.3.2 in 2025 edition */
+#sec-datetimeformat-range-pattern-format-record, /* 11.2.3.3 in 2025 edition */
+#sec-datetimeformat-range-pattern-part-record, /* 11.2.3.4 in 2025 edition */
+#sec-datetimeformat-connector-record, /* 11.2.3.7 in 2025 edition */
+#sec-datetimeformat-style-range-record /* 11.2.3.10 in 2025 edition */
+{
+  break-before: page;
 }
 
 /* This note is so long it takes up several pages anyway, let it break. */
