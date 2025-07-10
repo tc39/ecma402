@@ -4,7 +4,13 @@
   <emu-clause id="sec-intl-pluralrules-constructor">
     <h1>The Intl.PluralRules Constructor</h1>
 
-    <p>The PluralRules constructor is the <dfn>%Intl.PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
+    <p>The Intl.PluralRules constructor:</p>
+    <ul>
+      <li>is <dfn>%Intl.PluralRules%</dfn>.</li>
+      <li>is the initial value of the *"PluralRules"* property of the Intl object.</li>
+    </ul>
+
+    <p>Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.pluralrules" oldids="sec-initializepluralrules">
       <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -31,7 +37,11 @@
   <emu-clause id="sec-properties-of-intl-pluralrules-constructor">
     <h1>Properties of the Intl.PluralRules Constructor</h1>
 
-    <p>The Intl.PluralRules constructor has the following properties:</p>
+    <p>The Intl.PluralRules constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.pluralrules.prototype">
       <h1>Intl.PluralRules.prototype</h1>
@@ -76,7 +86,13 @@
   <emu-clause id="sec-properties-of-intl-pluralrules-prototype-object">
     <h1>Properties of the Intl.PluralRules Prototype Object</h1>
 
-    <p>The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%Intl.PluralRules.prototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.</p>
+    <p>The <dfn>Intl.PluralRules prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Intl.PluralRules.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.</li>
+      <li>has a [[Prototype]] internal slot whose value is %Object.prototype%.</li>
+    </ul>
 
     <emu-clause id="sec-intl.pluralrules.prototype.constructor">
       <h1>Intl.PluralRules.prototype.constructor</h1>
