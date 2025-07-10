@@ -4,7 +4,13 @@
   <emu-clause id="sec-intl-listformat-constructor">
     <h1>The Intl.ListFormat Constructor</h1>
 
-    <p>The ListFormat constructor is the <dfn>%Intl.ListFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
+    <p>The Intl.ListFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%Intl.ListFormat%</dfn>.</li>
+      <li>is the initial value of the *"ListFormat"* property of the Intl object.</li>
+    </ul>
+
+    <p>Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-Intl.ListFormat">
       <h1>Intl.ListFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -33,7 +39,11 @@
   <emu-clause id="sec-properties-of-intl-listformat-constructor">
     <h1>Properties of the Intl.ListFormat Constructor</h1>
 
-    <p>The Intl.ListFormat constructor has the following properties:</p>
+    <p>The Intl.ListFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-Intl.ListFormat.prototype">
       <h1>Intl.ListFormat.prototype</h1>
@@ -87,7 +97,13 @@
   <emu-clause id="sec-properties-of-intl-listformat-prototype-object">
     <h1>Properties of the Intl.ListFormat Prototype Object</h1>
 
-    <p>The Intl.ListFormat prototype object is itself an ordinary object. <dfn>%Intl.ListFormat.prototype%</dfn> is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.</p>
+    <p>The <dfn>Intl.ListFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Intl.ListFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.ListFormat instance and does not have an [[InitializedListFormat]] internal slot or any of the other internal slots of Intl.ListFormat instance objects.</li>
+      <li>has a [[Prototype]] internal slot whose value is %Object.prototype%.</li>
+    </ul>
 
     <emu-clause id="sec-Intl.ListFormat.prototype.constructor">
       <h1>Intl.ListFormat.prototype.constructor</h1>
