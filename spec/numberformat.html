@@ -4,7 +4,13 @@
   <emu-clause id="sec-intl-numberformat-constructor">
     <h1>The Intl.NumberFormat Constructor</h1>
 
-    <p>The NumberFormat constructor is the <dfn>%Intl.NumberFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
+    <p>The Intl.NumberFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%Intl.NumberFormat%</dfn>.</li>
+      <li>is the initial value of the *"NumberFormat"* property of the Intl object.</li>
+    </ul>
+
+    <p>Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.numberformat" oldids="sec-initializenumberformat">
       <h1>Intl.NumberFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -199,7 +205,11 @@
   <emu-clause id="sec-properties-of-intl-numberformat-constructor">
     <h1>Properties of the Intl.NumberFormat Constructor</h1>
 
-    <p>The Intl.NumberFormat constructor has the following properties:</p>
+    <p>The Intl.NumberFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.numberformat.prototype">
       <h1>Intl.NumberFormat.prototype</h1>
@@ -264,7 +274,13 @@
   <emu-clause id="sec-properties-of-intl-numberformat-prototype-object">
     <h1>Properties of the Intl.NumberFormat Prototype Object</h1>
 
-    <p>The Intl.NumberFormat prototype object is itself an ordinary object. <dfn>%Intl.NumberFormat.prototype%</dfn> is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.</p>
+    <p>The <dfn>Intl.NumberFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Intl.NumberFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.NumberFormat instance and does not have an [[InitializedNumberFormat]] internal slot or any of the other internal slots of Intl.NumberFormat instance objects.</li>
+      <li>has a [[Prototype]] internal slot whose value is %Object.prototype%.</li>
+    </ul>
 
     <emu-clause id="sec-intl.numberformat.prototype.constructor">
       <h1>Intl.NumberFormat.prototype.constructor</h1>
