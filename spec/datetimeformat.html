@@ -4,7 +4,13 @@
   <emu-clause id="sec-intl-datetimeformat-constructor">
     <h1>The Intl.DateTimeFormat Constructor</h1>
 
-    <p>The Intl.DateTimeFormat constructor is the <dfn>%Intl.DateTimeFormat%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
+    <p>The Intl.DateTimeFormat constructor:</p>
+    <ul>
+      <li>is <dfn>%Intl.DateTimeFormat%</dfn>.</li>
+      <li>is the initial value of the *"DateTimeFormat"* property of the Intl object.</li>
+    </ul>
+
+    <p>Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.datetimeformat">
       <h1>Intl.DateTimeFormat ( [ _locales_ [ , _options_ ] ] )</h1>
@@ -174,7 +180,11 @@
   <emu-clause id="sec-properties-of-intl-datetimeformat-constructor">
     <h1>Properties of the Intl.DateTimeFormat Constructor</h1>
 
-    <p>The Intl.DateTimeFormat constructor has the following properties:</p>
+    <p>The Intl.DateTimeFormat constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.datetimeformat.prototype">
       <h1>Intl.DateTimeFormat.prototype</h1>
@@ -848,7 +858,13 @@
   <emu-clause id="sec-properties-of-intl-datetimeformat-prototype-object">
     <h1>Properties of the Intl.DateTimeFormat Prototype Object</h1>
 
-    <p>The Intl.DateTimeFormat prototype object is itself an ordinary object. <dfn>%Intl.DateTimeFormat.prototype%</dfn> is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.</p>
+    <p>The <dfn>Intl.DateTimeFormat prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Intl.DateTimeFormat.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.DateTimeFormat instance and does not have an [[InitializedDateTimeFormat]] internal slot or any of the other internal slots of Intl.DateTimeFormat instance objects.</li>
+      <li>has a [[Prototype]] internal slot whose value is %Object.prototype%.</li>
+    </ul>
 
     <emu-clause id="sec-intl.datetimeformat.prototype.constructor">
       <h1>Intl.DateTimeFormat.prototype.constructor</h1>
