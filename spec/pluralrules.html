@@ -290,7 +290,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned Record contains two string-valued fields describing _n_ according to the effective locale and the options of _pluralRules_: [[PluralCategory]] characterizing its <emu-xref href="#sec-pluralruleselect">plural category</emu-xref>, and [[FormattedString]] containing its formatted representation.</dd>
+        <dd>The returned Record contains two string-valued fields describing _n_ according to the effective locale and the internal slots of _pluralRules_: [[PluralCategory]] characterizing its <emu-xref href="#sec-pluralruleselect">plural category</emu-xref>, and [[FormattedString]] containing its formatted representation.</dd>
       </dl>
       <emu-alg>
         1. If _n_ is not a finite Number, then
@@ -332,7 +332,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String value represents the plural form of the range starting from _x_ and ending at _y_ according to the effective locale and the options of _pluralRules_.</dd>
+        <dd>The returned String value represents the plural form of the range starting from _x_ and ending at _y_ according to the effective locale and the internal slots of _pluralRules_.</dd>
       </dl>
       <emu-alg>
         1. If _x_ is *NaN* or _y_ is *NaN*, throw a *RangeError* exception.
