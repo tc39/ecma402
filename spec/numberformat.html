@@ -1659,11 +1659,13 @@
         1. If _literal_ is a List of errors, return ~not-a-number~.
         1. Let _intlMV_ be the StringIntlMV of _literal_.
         1. If _intlMV_ is a mathematical value, then
-          1. Let _rounded_ be RoundMVResult(abs(_intlMV_)).
-          1. If _rounded_ is *+∞*<sub>𝔽</sub> and _intlMV_ &lt; 0, return ~negative-infinity~.
-          1. If _rounded_ is *+∞*<sub>𝔽</sub>, return ~positive-infinity~.
-          1. If _rounded_ is *+0*<sub>𝔽</sub> and _intlMV_ &lt; 0, return ~negative-zero~.
-          1. If _rounded_ is *+0*<sub>𝔽</sub>, return 0.
+          1. Let _e_ be the integer such that 10<sup>_e_</sup> ≤ abs(_intlMV_) &lt; 10<sup>_e_ + 1</sup>.
+          1. If _e_ ≥ 10000, then
+            1. If _intlMV_ &lt; 0, return ~negative-infinity~.
+            1. Else, return ~positive-infinity~.
+          1. If _e_ &lt; -10000, then
+            1. If _intlMV_ &lt; 0, return ~negative-zero~.
+            1. Else, return 0.
         1. Return _intlMV_.
       </emu-alg>
     </emu-clause>
