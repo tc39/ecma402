@@ -1666,6 +1666,11 @@
           1. If _e_ &lt; -10000, then
             1. If _intlMV_ &lt; 0, return ~negative-zero~.
             1. Else, return 0.
+          1. Let _q_ be the largest integer such that _intlMV_ × 10<sup>-_q_</sup> is an integer.
+          1. If _q_ &lt; -10000, then
+            1. Let _truncated_ be the largest mathematical value such that _truncated_ × 10<sup>10000</sup> is an integer and _truncated_ &lt; abs(_intlMV_).
+            1. If _intlMV_ &lt; 0, return -_truncated_.
+            1. Else, return _truncated_.
         1. Return _intlMV_.
       </emu-alg>
     </emu-clause>
