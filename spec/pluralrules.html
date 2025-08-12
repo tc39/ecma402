@@ -29,8 +29,7 @@
         1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
         1. Set _pluralRules_.[[Notation]] to _notation_.
         1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, ~string~, « *"short"*, *"long"* », *"short"*).
-        1. If _notation_ is *"compact"*, then
-          1. Set _pluralRules_.[[CompactDisplay]] to _compactDisplay_.
+        1. Set _pluralRules_.[[CompactDisplay]] to _compactDisplay_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
         1. Return _pluralRules_.
       </emu-alg>
@@ -278,13 +277,16 @@
     <emu-clause id="sec-pluralruleselect" type="implementation-defined abstract operation">
       <h1>
         PluralRuleSelect (
-          _pluralRules_: an Intl.PluralRules,
+          _locale_: a language tag,
+          _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
+          _compactDisplay_: *"short"* or *"long"*,
           _s_: a decimal String,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String characterizes the plural category of _s_ according to the effective locale and the internal slots of _pluralRules_: [[Type]], one of the String values *"cardinal"* or *"ordinal"*, [[Notation]], specifying the notation used, and [[CompactDisplay]], specifying whether compact notation affixes are to be displayed in short form or long form.</dd>
+        <dd>The returned String characterizes the plural category of _s_ according to _type_, _notation_, and _compactDisplay_ for the corresponding _locale_.</dd>
       </dl>
     </emu-clause>
 
@@ -305,7 +307,11 @@
           1. Return the Record { [[PluralCategory]]: *"other"*, [[FormattedString]]: _s_ }.
         1. Let _res_ be FormatNumericToString(_pluralRules_, ℝ(_n_)).
         1. Let _s_ be _res_.[[FormattedString]].
-        1. Let _p_ be PluralRuleSelect(_pluralRules_, _s_).
+        1. Let _locale_ be _pluralRules_.[[Locale]].
+        1. Let _type_ be _pluralRules_.[[Type]].
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Let _compactDisplay_ be _pluralRules_.[[CompactDisplay]].
+        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _notation_, _compactDisplay_, _s_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
@@ -313,14 +319,17 @@
     <emu-clause id="sec-pluralruleselectrange" type="implementation-defined abstract operation">
       <h1>
         PluralRuleSelectRange (
-          _pluralRules_: an Intl.PluralRules,
+          _locale_: a language tag,
+          _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
+          _compactDisplay_: *"short"* or *"long"*,
           _xp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
           _yp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole, according to the effective locale and the internal slots of _pluralRules_: [[Type]], one of the String values *"cardinal"* or *"ordinal"*, [[Notation]], specifying the notation used, and [[CompactDisplay]], specifying whether compact notation affixes are displayed in short form or long form. If no such mapping is possible, it returns the String value *"other"*.</dd>
+        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_, _notation_, and _compactDisplay_ for the corresponding _locale_, or the String value *"other"*.</dd>
       </dl>
     </emu-clause>
 
@@ -342,7 +351,11 @@
         1. Let _yp_ be ResolvePlural(_pluralRules_, _y_).
         1. If _xp_.[[FormattedString]] is _yp_.[[FormattedString]], then
           1. Return _xp_.[[PluralCategory]].
-        1. Return PluralRuleSelectRange(_pluralRules_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
+        1. Let _locale_ be _pluralRules_.[[Locale]].
+        1. Let _type_ be _pluralRules_.[[Type]].
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Let _compactDisplay_ be _pluralRules_.[[CompactDisplay]].
+        1. Return PluralRuleSelectRange(_locale_, _type_, _notation_, _compactDisplay_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
       </emu-alg>
     </emu-clause>
   </emu-clause>
