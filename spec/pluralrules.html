@@ -28,10 +28,10 @@
         1. Set _pluralRules_.[[Type]] to _t_.
         1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
         1. Set _pluralRules_.[[Notation]] to _notation_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
         1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, ~string~, « *"short"*, *"long"* », *"short"*).
         1. If _notation_ is *"compact"*, then
           1. Set _pluralRules_.[[CompactDisplay]] to _compactDisplay_.
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
         1. Return _pluralRules_.
       </emu-alg>
     </emu-clause>
