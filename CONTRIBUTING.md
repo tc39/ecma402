@@ -43,7 +43,7 @@ When the [ECMA-402 task group (TC39-TG2)](https://www.ecma-international.org/tas
 
 The ECMA-402 task group will also review proposals to *improve existing features*.  We will consider such proposals so long as the champion can demonstrate that their request will not make an ECMA-402 implementation substantially more complex.  If the request requires a nontrivial increase in locale data size, we will hold the request against the criteria for new features listed above.
 
-In addition to these requirements, all proposals passing through TC39-TG2 must have a complete [W3C i18n Review](https://www.w3.org/International/review-request) upon entering Stage 2.
+In addition to these requirements, a proposal must have an associated request for a [W3C i18n Review](https://www.w3.org/International/review-request) opened at least 3 weeks prior to the TG2 meeting at which it is seeking approval for Stage 2.
 
 ### ECMA-402 Stage 3 Requirements
 
