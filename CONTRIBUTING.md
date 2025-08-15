@@ -30,7 +30,7 @@ In addition to the usual TC39 (ECMA-262) stage advancement requirements, ECMA-40
 
 ### ECMA-402 Stage 2 Requirements
 
-When the [ECMA-402 task group](https://www.ecma-international.org/task-groups/tc39-tg2/) reviews proposals for *new features*, we hold them against the following list of criteria.  It is the reponsibility of the proposal champion to provide a compelling case that their feature request meets these criteria.
+When the [ECMA-402 task group (TC39-TG2)](https://www.ecma-international.org/task-groups/tc39-tg2/) reviews proposals for *new features*, we hold them against the following list of criteria.  It is the reponsibility of the proposal champion to provide a compelling case that their feature request meets these criteria.
 
 1. **Prior Art**
     1. Our job is bringing to JavaScript developers solutions that <abbr>i18n</abbr> (internationalization) experts have already described, not inventing new solutions. We often reference [Unicode](https://unicode.org/), [CLDR](https://cldr.unicode.org/), and [ICU](https://icu.unicode.org/) as prior art.
@@ -43,12 +43,16 @@ When the [ECMA-402 task group](https://www.ecma-international.org/task-groups/tc
 
 The ECMA-402 task group will also review proposals to *improve existing features*.  We will consider such proposals so long as the champion can demonstrate that their request will not make an ECMA-402 implementation substantially more complex.  If the request requires a nontrivial increase in locale data size, we will hold the request against the criteria for new features listed above.
 
+In addition to these requirements, a proposal must have an associated request for a [W3C i18n Review](https://www.w3.org/International/review-request) opened at least 3 weeks prior to the TG2 meeting at which it is seeking approval for Stage 2.
+
 ### ECMA-402 Stage 3 Requirements
 
 The ECMA-402 task group does not want to substantially raise the bar for current and future implementations. In order for a proposal to be accepted as Stage 3, the proposal champion must demonstrate:
 
 1. **Payload Mitigation**
     1. Not all proposals are equal; some may require large amounts of locale data. The proposal champion must verify with browser vendors that the proposal meets their standard for payload size increase. The proposal may need to be modified to reduce payload size increases if requested by browser vendors.
+
+If the proposal has seen substantive changes since Stage 2, there should be a new request for W3C i18n Review opened at least 3 weeks prior to the TG2 meeting at which the proposal is seeking approval for Stage 3.
 
 ## Patent Policy and CLA
 
