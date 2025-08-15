@@ -52,7 +52,7 @@ The ECMA-402 task group does not want to substantially raise the bar for current
 1. **Payload Mitigation**
     1. Not all proposals are equal; some may require large amounts of locale data. The proposal champion must verify with browser vendors that the proposal meets their standard for payload size increase. The proposal may need to be modified to reduce payload size increases if requested by browser vendors.
 
-If the proposal has seen substantive changes since Stage 2, the aforementioned W3C i18n Review should also be updated to reflect those changes.
+If the proposal has seen substantive changes since Stage 2, there should be a new request for W3C i18n Review opened at least 3 weeks prior to the TG2 meeting at which the proposal is seeking approval for Stage 3.
 
 ## Patent Policy and CLA
 
