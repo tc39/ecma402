@@ -9,7 +9,8 @@
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
     "build-only": "npm run build-to -- out/index.html --assets-dir=out",
     "build": "npm run build-only -- --lint-spec --strict",
-    "build-for-pdf": "npm run build -- --old-toc",
+    "build-for-pdf": "npm run build -- --printable",
+    "pdf": "npm run build-for-pdf && prince-books --script ./node_modules/ecmarkup/js/print.js out/index.html -o out/ECMA-402.pdf",
     "test": "npm run build-to -- /dev/null --lint-spec --strict",
     "watch": "npm run build-only -- --lint-spec --watch"
   },
@@ -18,7 +19,7 @@
   "license": "SEE LICENSE IN https://tc39.es/ecma402/#sec-copyright-and-software-license",
   "homepage": "https://tc39.es/ecma402/",
   "dependencies": {
-    "ecmarkup": "^21.2.0",
+    "ecmarkup": "^21.3.0",
     "@tc39/ecma262-biblio": "=2.1.2799"
   }
 }
