@@ -47,7 +47,7 @@
     <p>Due to the nature of internationalization, this specification has to leave several details implementation dependent:</p>
     <ul>
       <li>
-        <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists estimate the number of human languages to around 6000, and the more widely spoken ones have variations based on regions or other parameters. Even large locale data collections, such as the Common Locale Data Repository, cover only a subset of this large set. Implementations targeting resource-constrained devices may have to further reduce the subset.
+        <em>The set of locales that an implementation supports with adequate localizations:</em> Linguists have described thousands of human languages, with the IANA Language Subtag Registry containing over 7000 primary language subtags (used as the base for locale identifiers). Even large locale data collections, such as the Common Locale Data Repository, cover only a tiny subset of all languages and their regional or dialectical variations. Implementations targeting resource-constrained devices may have to further reduce the subset.
       </li>
       <li>
         <em>The exact form of localizations such as format patterns:</em> In many cases locale-dependent conventions are not standardized, so different forms may exist side by side, or they vary over time. Different internationalization libraries may have implemented different forms, without any of them being actually wrong. In order to allow this API to be implemented on top of existing libraries, such variations have to be permitted.
