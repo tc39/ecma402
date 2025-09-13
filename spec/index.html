@@ -8,22 +8,50 @@
     location.protocol = 'https:';
   }
 </script>
-<style>
-#metadata-block {
-  margin: 4em 0;
-  padding: 10px;
-  border: 1px solid #ee8421;
+
+<style media="print">
+/** ECMA-402-specific print styles */
+
+/* These tables are too narrow for their captions */
+#table-sanctioned-single-unit-identifiers table,
+#table-listformat-resolvedoptions-properties table,
+#table-segmenter-resolvedoptions-properties table {
+  width: 102mm;
 }
-#metadata-block h1 {
-  font-size: 1.5em;
-  margin-top: 0;
+#table-intl-unsigned-rounding-modes table,
+#table-displaynames-resolvedoptions-properties table,
+#table-relativetimeformat-resolvedoptions-properties table {
+  width: 130mm;
 }
-#metadata-block > ul {
-  list-style-type: none;
-  margin: 0; padding: 0;
+
+/**
+ * DateTime Formats > Properties of the Intl.DateTimeFormat Constructor > Internal Slots
+ *
+ * This section includes several smaller tables that shouldn't be breaking across pages. Each of the tables in the
+ * Internal Slots section has a one-line section title and one-sentence intro paragraph. Because it's all so small,
+ * we try to keep them together. Which sections should break-before will not be consistent from publication to
+ * publication—these are 2025-specific rules
+ */
+#sec-datetimeformat-range-pattern-record, /* 11.2.3.2 in 2025 edition */
+#sec-datetimeformat-range-pattern-format-record, /* 11.2.3.3 in 2025 edition */
+#sec-datetimeformat-range-pattern-part-record, /* 11.2.3.4 in 2025 edition */
+#sec-datetimeformat-connector-record, /* 11.2.3.7 in 2025 edition */
+#sec-datetimeformat-style-range-record /* 11.2.3.10 in 2025 edition */
+{
+  break-before: page;
 }
-#ecma-logo {
-  width: 500px;
+
+/* This note is so long it takes up several pages anyway, let it break. */
+#note-example-datetime-format-record {
+  break-inside: initial;
+}
+
+/**
+ * Prevent line wrapping in print
+ * (for future publishing, this keeps the thead in #table-numbering-system-digits from wrapping unexpectedly)
+ */
+.print-no-break {
+  white-space: nowrap;
 }
 </style>
 <pre class="metadata">
@@ -31,6 +59,7 @@
   shortname: ECMA-402
   status: draft
   location: https://tc39.es/ecma402/
+  version: 13th Edition
 </pre>
 <p><img src="img/ecma-logo.svg" id="ecma-logo"></p>
 <emu-import href="metablock.html"></emu-import>
