@@ -4,30 +4,31 @@
   <emu-clause id="sec-intl-pluralrules-constructor">
     <h1>The Intl.PluralRules Constructor</h1>
 
-    <p>
-      The PluralRules constructor is the <dfn>%Intl.PluralRules%</dfn> intrinsic object and a standard built-in property of the Intl object. Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.
-    </p>
+    <p>The Intl.PluralRules constructor:</p>
+    <ul>
+      <li>is <dfn>%Intl.PluralRules%</dfn>.</li>
+      <li>is the initial value of the *"PluralRules"* property of the Intl object.</li>
+    </ul>
+
+    <p>Behaviour common to all service constructor properties of the Intl object is specified in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
     <emu-clause id="sec-intl.pluralrules" oldids="sec-initializepluralrules">
       <h1>Intl.PluralRules ( [ _locales_ [ , _options_ ] ] )</h1>
 
-      <p>
-        When the `Intl.PluralRules` function is called with optional arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `Intl.PluralRules` function is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
-        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
-        1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
-        1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. Let _opt_ be a new Record.
-        1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
-        1. Set _opt_.[[localeMatcher]] to _matcher_.
-        1. Let _r_ be ResolveLocale(%Intl.PluralRules%.[[AvailableLocales]], _requestedLocales_, _opt_, %Intl.PluralRules%.[[RelevantExtensionKeys]], %Intl.PluralRules%.[[LocaleData]]).
+        1. Let _pluralRules_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.PluralRules.prototype%"*, « [[InitializedPluralRules]], [[Locale]], [[Type]], [[Notation]], [[MinimumIntegerDigits]], [[MinimumFractionDigits]], [[MaximumFractionDigits]], [[MinimumSignificantDigits]], [[MaximumSignificantDigits]], [[RoundingType]], [[RoundingIncrement]], [[RoundingMode]], [[ComputedRoundingPriority]], [[TrailingZeroDisplay]] »).
+        1. Let _optionsResolution_ be ? ResolveOptions(%Intl.PluralRules%, %Intl.PluralRules%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ »).
+        1. Set _options_ to _optionsResolution_.[[Options]].
+        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _pluralRules_.[[Locale]] to _r_.[[Locale]].
         1. Let _t_ be ? GetOption(_options_, *"type"*, ~string~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _t_.
-        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, *"standard"*).
+        1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
+        1. Set _pluralRules_.[[Notation]] to _notation_.
+        1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
         1. Return _pluralRules_.
       </emu-alg>
     </emu-clause>
@@ -36,27 +37,23 @@
   <emu-clause id="sec-properties-of-intl-pluralrules-constructor">
     <h1>Properties of the Intl.PluralRules Constructor</h1>
 
-    <p>
-      The Intl.PluralRules constructor has the following properties:
-    </p>
+    <p>The Intl.PluralRules constructor:</p>
+    <ul>
+      <li>has a [[Prototype]] internal slot whose value is %Function.prototype%.</li>
+      <li>has the following properties:</li>
+    </ul>
 
     <emu-clause id="sec-intl.pluralrules.prototype">
       <h1>Intl.PluralRules.prototype</h1>
 
-      <p>
-        The value of `Intl.PluralRules.prototype` is %Intl.PluralRules.prototype%.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.
-      </p>
+      <p>The value of `Intl.PluralRules.prototype` is %Intl.PluralRules.prototype%.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules.supportedlocalesof">
       <h1>Intl.PluralRules.supportedLocalesOf ( _locales_ [ , _options_ ] )</h1>
 
-      <p>
-        When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:
-      </p>
+      <p>When the `supportedLocalesOf` method is called with arguments _locales_ and _options_, the following steps are taken:</p>
 
       <emu-alg>
         1. Let _availableLocales_ be %Intl.PluralRules%.[[AvailableLocales]].
@@ -68,21 +65,17 @@
     <emu-clause id="sec-intl.pluralrules-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>
-        The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[AvailableLocales]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
-      <p>
-        The value of the [[RelevantExtensionKeys]] internal slot is « ».
-      </p>
+      <p>The value of the [[RelevantExtensionKeys]] internal slot is « ».</p>
+
+      <p>The value of the [[ResolutionOptionDescriptors]] internal slot is « ».</p>
 
       <emu-note>
         <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core, Section 3.6.1 Key and Type Definitions</a> describes no locale extension keys that are relevant to the pluralization process.
       </emu-note>
 
-      <p>
-        The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.
-      </p>
+      <p>The value of the [[LocaleData]] internal slot is implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref>.</p>
 
       <emu-note>
         It is recommended that implementations use the locale data provided by the Common Locale Data Repository (available at <a href="https://cldr.unicode.org/">https://cldr.unicode.org/</a>).
@@ -93,67 +86,24 @@
   <emu-clause id="sec-properties-of-intl-pluralrules-prototype-object">
     <h1>Properties of the Intl.PluralRules Prototype Object</h1>
 
-    <p>
-      The Intl.PluralRules prototype object is itself an ordinary object. <dfn>%Intl.PluralRules.prototype%</dfn> is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.
-    </p>
+    <p>The <dfn>Intl.PluralRules prototype object</dfn>:</p>
+    <ul>
+      <li>is <dfn>%Intl.PluralRules.prototype%</dfn>.</li>
+      <li>is an ordinary object.</li>
+      <li>is not an Intl.PluralRules instance and does not have an [[InitializedPluralRules]] internal slot or any of the other internal slots of Intl.PluralRules instance objects.</li>
+      <li>has a [[Prototype]] internal slot whose value is %Object.prototype%.</li>
+    </ul>
 
     <emu-clause id="sec-intl.pluralrules.prototype.constructor">
       <h1>Intl.PluralRules.prototype.constructor</h1>
 
-      <p>
-        The initial value of `Intl.PluralRules.prototype.constructor` is %Intl.PluralRules%.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
-      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
-
-      <p>
-        The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.
-      </p>
-      <p>
-        This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.
-      </p>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.pluralrules.prototype.select">
-      <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
-
-      <p>
-        When the `select` method is called with an argument _value_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _pr_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. Let _n_ be ? ToNumber(_value_).
-        1. Return ResolvePlural(_pr_, _n_).[[PluralCategory]].
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-intl.pluralrules.prototype.selectrange">
-      <h1>Intl.PluralRules.prototype.selectRange ( _start_, _end_ )</h1>
-
-      <p>
-        When the `selectRange` method is called with arguments _start_ and _end_, the following steps are taken:
-      </p>
-
-      <emu-alg>
-        1. Let _pr_ be the *this* value.
-        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
-        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
-        1. Let _x_ be ? ToNumber(_start_).
-        1. Let _y_ be ? ToNumber(_end_).
-        1. Return ? ResolvePluralRange(_pr_, _x_, _y_).
-      </emu-alg>
+      <p>The initial value of `Intl.PluralRules.prototype.constructor` is %Intl.PluralRules%.</p>
     </emu-clause>
 
     <emu-clause id="sec-intl.pluralrules.prototype.resolvedoptions">
       <h1>Intl.PluralRules.prototype.resolvedOptions ( )</h1>
 
-      <p>
-        This function provides access to the locale and options computed during initialization of the object.
-      </p>
+      <p>This function provides access to the locale and options computed during initialization of the object.</p>
 
       <emu-alg>
         1. Let _pr_ be the *this* value.
@@ -192,6 +142,11 @@
           <tr>
             <td>[[Type]]</td>
             <td>*"type"*</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>[[Notation]]</td>
+            <td>*"notation"*</td>
             <td></td>
           </tr>
           <tr>
@@ -247,33 +202,63 @@
         </table>
       </emu-table>
     </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype.select">
+      <h1>Intl.PluralRules.prototype.select ( _value_ )</h1>
+
+      <p>When the `select` method is called with an argument _value_, the following steps are taken:</p>
+
+      <emu-alg>
+        1. Let _pr_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
+        1. Let _n_ be ? ToNumber(_value_).
+        1. Return ResolvePlural(_pr_, _n_).[[PluralCategory]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype.selectrange">
+      <h1>Intl.PluralRules.prototype.selectRange ( _start_, _end_ )</h1>
+
+      <p>When the `selectRange` method is called with arguments _start_ and _end_, the following steps are taken:</p>
+
+      <emu-alg>
+        1. Let _pr_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_pr_, [[InitializedPluralRules]]).
+        1. If _start_ is *undefined* or _end_ is *undefined*, throw a *TypeError* exception.
+        1. Let _x_ be ? ToNumber(_start_).
+        1. Let _y_ be ? ToNumber(_end_).
+        1. Return ? ResolvePluralRange(_pr_, _x_, _y_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-intl.pluralrules.prototype-%symbol.tostringtag%" oldids="sec-intl.pluralrules.prototype-tostringtag">
+      <h1>Intl.PluralRules.prototype [ %Symbol.toStringTag% ]</h1>
+
+      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl.PluralRules"*.</p>
+      <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
+    </emu-clause>
   </emu-clause>
 
   <emu-clause id="sec-properties-of-intl-pluralrules-instances">
     <h1>Properties of Intl.PluralRules Instances</h1>
 
-    <p>
-      Intl.PluralRules instances are ordinary objects that inherit properties from %Intl.PluralRules.prototype%.
-    </p>
+    <p>Intl.PluralRules instances are ordinary objects that inherit properties from %Intl.PluralRules.prototype%.</p>
 
-    <p>
-      Intl.PluralRules instances have an [[InitializedPluralRules]] internal slot.
-    </p>
+    <p>Intl.PluralRules instances have an [[InitializedPluralRules]] internal slot.</p>
 
-    <p>
-      Intl.PluralRules instances also have several internal slots that are computed by the constructor:
-    </p>
+    <p>Intl.PluralRules instances also have several internal slots that are computed by <emu-xref href="#sec-intl-pluralrules-constructor" title></emu-xref>:</p>
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
+      <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, identifying the notation used.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
       <li>[[RoundingType]] is one of the values ~fraction-digits~, ~significant-digits~, ~more-precision~, or ~less-precision~, indicating which rounding strategy to use, as discussed in <emu-xref href="#sec-properties-of-intl-numberformat-instances"></emu-xref>.</li>
       <li>[[ComputedRoundingPriority]] is one of the String values *"auto"*, *"morePrecision"*, or *"lessPrecision"*. It is only used in <emu-xref href="#sec-intl.pluralrules.prototype.resolvedoptions"></emu-xref> to convert [[RoundingType]] back to a valid *"roundingPriority"* option.</li>
       <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
-      <li>[[RoundingMode]] is one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>, specifying which rounding mode to use.</li>
+      <li>[[RoundingMode]] identifies the rounding mode to use.</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
   </emu-clause>
@@ -286,12 +271,13 @@
         PluralRuleSelect (
           _locale_: a language tag,
           _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
           _s_: a decimal String,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String characterizes the plural category of _s_ according to the effective locale and the options of _pluralRules_.</dd>
+        <dd>The returned String characterizes the plural category of _s_ according to _locale_, _type_, and _notation_.</dd>
       </dl>
     </emu-clause>
 
@@ -314,7 +300,8 @@
         1. Let _s_ be _res_.[[FormattedString]].
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _s_).
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Let _p_ be PluralRuleSelect(_locale_, _type_, _notation_, _s_).
         1. Return the Record { [[PluralCategory]]: _p_, [[FormattedString]]: _s_ }.
       </emu-alg>
     </emu-clause>
@@ -324,13 +311,14 @@
         PluralRuleSelectRange (
           _locale_: a String,
           _type_: *"cardinal"* or *"ordinal"*,
+          _notation_: a String,
           _xp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
           _yp_: *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*,
         ): *"zero"*, *"one"*, *"two"*, *"few"*, *"many"*, or *"other"*
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ for the corresponding _locale_, or the String value *"other"*.</dd>
+        <dd>It performs an implementation-dependent algorithm to map the <emu-xref href="#sec-pluralruleselect">plural category</emu-xref> String values _xp_ and _yp_, respectively characterizing the start and end of a range, to a resolved String value for the plural form of the range as a whole denoted by _type_ and _notation_ for the corresponding _locale_, or the String value *"other"*.</dd>
       </dl>
     </emu-clause>
 
@@ -354,7 +342,8 @@
           1. Return _xp_.[[PluralCategory]].
         1. Let _locale_ be _pluralRules_.[[Locale]].
         1. Let _type_ be _pluralRules_.[[Type]].
-        1. Return PluralRuleSelectRange(_locale_, _type_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
+        1. Let _notation_ be _pluralRules_.[[Notation]].
+        1. Return PluralRuleSelectRange(_locale_, _type_, _notation_, _xp_.[[PluralCategory]], _yp_.[[PluralCategory]]).
       </emu-alg>
     </emu-clause>
   </emu-clause>
