@@ -646,11 +646,11 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-character-direction-of-locale" type="abstract operation">
+    <emu-clause id="sec-locale-direction" type="abstract operation">
       <h1>
-        CharacterDirectionOfLocale (
+        LocaleDirection (
           _loc_: an Intl.Locale,
-        ): *"ltr"* or *"rtl"*
+        ): a String or *undefined*
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -658,9 +658,21 @@
       </dl>
       <emu-alg>
         1. Let _locale_ be _loc_.[[Locale]].
-        1. If the default general ordering of characters (characterOrder) within a line in _locale_ is right-to-left, return *"rtl"*.
-        1. Return *"ltr"*.
+        1. Let _script_ be GetLocaleScript(_locale_).
+        1. If _script_ is *undefined*, then
+          1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, return *undefined*.
+          1. Set _script_ to GetLocaleScript(_maximal_).
+          1. If _script_ is *undefined*, return *undefined*.
+        1. If the default general ordering of characters within a line in _script_ is right-to-left, return "rtl".
+        1. If the default general ordering of characters within a line in _script_ is left-to-right, return "ltr".
+        1. Return *undefined*.
       </emu-alg>
+      <emu-note>
+        When the direction of default general ordering of characters within a line in the _script_ cannot be determined, or the direction is neither right-to-left nor left-to-right, then *undefined* will be returned.
+      </emu-note>
+      <emu-note>
+        Text in a language may have more than one possible direction. Text in a language written in one script may also have more than one possible direction. Therefore, if there is direction information included in the metadata associated with a piece of text, that direction information should be considered as the primary source of truth. The information returned by LocaleDirection should only be used as a fallback mechanism while there is no metadata associated with the text to provide the direction information of the text. It should only be used while the direction information is not present but language information is known. Web developers should not rely too much on this API to decide the direction of the text.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-weekday-to-string" type="abstract operation">
@@ -794,13 +806,8 @@
             <td>A List of one or more integral Number values, in ascending order, between *1*<sub>𝔽</sub> and *7*<sub>𝔽</sub>: *1*<sub>𝔽</sub> specifies Monday; *2*<sub>𝔽</sub> specifies Tuesday; *3*<sub>𝔽</sub> specifies Wednesday; *4*<sub>𝔽</sub> specifies Thursday; *5*<sub>𝔽</sub> specifies Friday; *6*<sub>𝔽</sub> specifies Saturday; and *7*<sub>𝔽</sub> specifies Sunday.</td>
             <td>The list of weekday values indicating which days of the week are considered as part of the 'weekend', for calendar purposes. Notice that the number of days in the weekend are different in each locale and may not be contiguous.</td>
           </tr>
-          <tr>
-            <td>[[MinimalDays]]</td>
-            <td>Integral Number value between *1*<sub>𝔽</sub> and *7*<sub>𝔽</sub>.</td>
-            <td>The minimal days required in the first week of a month or year, for calendar purposes.</td>
-          </tr>
         </table>
       </emu-table>
-    </emu-clause>
+    </emu-clause> 
   </emu-clause>
 </emu-clause>
