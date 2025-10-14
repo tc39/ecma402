@@ -405,8 +405,9 @@
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _info_ be OrdinaryObjectCreate(%Object.prototype%).
-        1. Let _dir_ be CharacterDirectionOfLocale(_loc_).
-        1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
+        1. Let _dir_ be LocaleDirection(_loc_).
+        1. If _dir_ is not *undefined*, then
+          1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
         1. Return _info_.
       </emu-alg>
     </emu-clause>
@@ -422,10 +423,10 @@
         1. Let _we_ be CreateArrayFromList(_wi_.[[Weekend]]).
         1. Perform ! CreateDataPropertyOrThrow(_info_, *"firstDay"*, _wi_.[[FirstDay]]).
         1. Perform ! CreateDataPropertyOrThrow(_info_, *"weekend"*, _we_).
-        1. Perform ! CreateDataPropertyOrThrow(_info_, *"minimalDays"*, _wi_.[[MinimalDays]]).
         1. Return _info_.
       </emu-alg>
-    </emu-clause>
+    </emu-clause>    
+
     <emu-clause id="sec-Intl.Locale.prototype.variants">
       <h1>get Intl.Locale.prototype.variants</h1>
       <p>`Intl.Locale.prototype.variants` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
