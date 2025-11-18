@@ -564,6 +564,70 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-clause id="sec-unicode-extension-value" type="abstract operation">
+      <h1>
+        UnicodeExtensionValue (
+          _locale_: a Unicode canonicalized locale identifier,
+          _key_: a String,
+        ): a String or ~empty~
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _locale_ contains a Unicode locale extension sequence, then
+          1. Let _extension_ be the Unicode locale extension sequence of _locale_.
+          1. Let _components_ be UnicodeExtensionComponents(_extension_).
+          1. Let _keywords_ be _components_.[[Keywords]].
+          1. If _keywords_ contains an element whose [[Key]] is _key_, then
+            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
+            1. Return _entry_.[[Value]].
+        1. Return ~empty~.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-canonical-unicode-subdivision" type="abstract operation">
+      <h1>
+        CanonicalUnicodeSubdivision (
+          _locale_: a Unicode canonicalized locale identifier,
+          _key_: *"rg"* or *"sd"*,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Let _subdivision_ be UnicodeExtensionValue(_locale_, _key_).
+        1. If _subdivision_ is ~empty~, return *undefined*.
+        1. If _subdivision_ cannot be matched by the `unicode_subdivision_id` Unicode locale nonterminal, return *undefined*.
+        1. Let _region_ be the longest prefix of _subdivision_ matched by the `unicode_region_subtag` Unicode locale nonterminal.
+        1. Let _regionLocale_ be the string-concatenation of *"und-"* and _region_.
+        1. Set _regionLocale_ to CanonicalizeUnicodeLocaleId(_regionLocale_).
+        1. Return GetLocaleRegion(_regionLocale_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-region-preference" type="abstract operation">
+      <h1>
+        RegionPreference (
+          _locale_: a Unicode canonicalized locale identifier,
+        ): a Record with fields [[Region]] (a String) and [[RegionOverride]] (a String or *undefined*)
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Let _region_ be GetLocaleRegion(_locale_).
+        1. If _region_ is *undefined*, then
+          1. Set _region_ to CanonicalUnicodeSubdivision(_locale_, *"sd"*).
+          1. If _region_ is *undefined*, then
+            1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, set _maximal_ to _locale_.
+            1. Set _maximal_ to CanonicalizeUnicodeLocaleId(_maximal_).
+            1. Set _region_ to GetLocaleRegion(_maximal_).
+            1. If _region_ is *undefined*, then
+              1. Set _region_ to *"001"*.
+        1. Let _regionOverride_ be CanonicalUnicodeSubdivision(_locale_, *"rg"*).
+        1. Return {[[Region]]: _region_, [[RegionOverride]]: _regionOverride_}.
+      </emu-alg>
+    </emu-clause>
+    
     <emu-clause id="sec-calendars-of-locale" type="abstract operation">
       <h1>
         CalendarsOfLocale (
@@ -571,12 +635,21 @@
         ): an Array
       </h1>
       <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35-dates.html#Calendar_Preference_Data">UTS 35's Calendar Preference Data</a>.
       </dl>
       <emu-alg>
         1. Let _restricted_ be _loc_.[[Calendar]].
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Let _list_ be a List of one or more unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _locale_.
-        1. Return CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _region_ be _preference_.[[Region]].
+        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
+        1. If _regionOverride_ is not *undefined* and calendar preference data for _regionOverride_ are available, then
+          1. Let _lookupRegion_ be _regionOverride_.
+        1. Else,
+          1. Let _lookupRegion_ be _region_.
+        1. Let _list_ be a List of unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
+        1. If _list_ is empty, set _list_ to &laquo; *"gregory"* &raquo;.
+        1. Return CreateArrayFromListOrRestricted(_list_, _restricted_).
       </emu-alg>
     </emu-clause>
 
@@ -590,9 +663,21 @@
       </dl>
       <emu-alg>
         1. Let _restricted_ be _loc_.[[Collation]].
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Let _list_ be a List of one or more unique collation types in canonical form (<emu-xref href="#sec-collation-types"></emu-xref>), of those in common use for string comparison in _locale_. The values *"standard"* and *"search"* must be excluded from _list_. The list is sorted according to lexicographic code unit order.
-        1. Return CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+        1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
+        1. If _language_ is not *"und"*, then
+          1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], &laquo; _loc_.[[Locale]] &raquo;).
+          1. If _r_ is not *undefined*, then
+            1. Let _foundLocale_ be _r_.[[locale]].
+          1. Else,
+            1. Let _foundLocale_ be DefaultLocale().
+          1. Let _foundLocaleData_ be %Intl.Collator%.[[SortLocaleData]].[[&lt;_foundLocale_&gt;]].
+          1. Let _list_ be a copy of _foundLocaleData_.[[co]].
+          1. Assert: _list_[0] is *null*.
+          1. Remove the first element from _list_.
+        1. Else,
+          1. Let _list_ be &laquo; *"emoji"*, *"eor"* &raquo;.
+        1. Let _sorted_ be a copy of _list_, sorted according to lexicographic code unit order.
+        1. Return CreateArrayFromListOrRestricted(_sorted_, _restricted_).
       </emu-alg>
     </emu-clause>
 
@@ -603,12 +688,21 @@
         ): an Array
       </h1>
       <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35-dates.html#Time_Data">UTS 35's Time Data</a>.</dd>
       </dl>
       <emu-alg>
         1. Let _restricted_ be _loc_.[[HourCycle]].
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Let _list_ be a List of one or more unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _locale_.
-        1. Return CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _region_ be _preference_.[[Region]].
+        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
+        1. If _regionOverride_ is not *undefined* and time data for _regionOverride_ are available, then
+          1. Let _lookupRegion_ be _regionOverride_.
+        1. Else,
+          1. Let _lookupRegion_ be _region_.
+        1. Let _list_ be a List of unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no time data for _lookupRegion_ is available.
+        1. If _list_ is empty, set _list_ to &laquo; *"h23"* &raquo;.
+        1. Return CreateArrayFromListOrRestricted(_list_, _restricted_).
       </emu-alg>
     </emu-clause>
 
@@ -622,9 +716,15 @@
       </dl>
       <emu-alg>
         1. Let _restricted_ be _loc_.[[NumberingSystem]].
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Let _list_ be a List of one or more unique numbering system identifiers in canonical form (<emu-xref href="#sec-numberingsystem-identifiers"></emu-xref>), sorted in descending preference of those in common use for formatting numeric values in _locale_.
-        1. Return CreateArrayFromListOrRestricted( _list_, _restricted_ ).
+        1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.NumberFormat%.[[AvailableLocales]], &laquo; _loc_.[[Locale]] &raquo;).
+        1. If _r_ is not *undefined*, then
+          1. Let _foundLocale_ be _r_.[[locale]].
+          1. Let _foundLocaleData_ be %Intl.NumberFormat%.[[LocaleData]].[[&lt;_foundLocale_&gt;]].
+          1. Let _numberingSystems_ be _foundLocaleData_.[[nu]].
+          1. Let _list_ be &laquo; _numberingSystems_[0] &raquo;.
+        1. Else,
+          1. Let _list_ be &laquo; *"latn"* &raquo;.
+        1. Return CreateArrayFromListOrRestricted(_list_, _restricted_).
       </emu-alg>
     </emu-clause>
 
@@ -652,7 +752,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The following algorithm refers to Locale data specified in <a href="https://www.unicode.org/reports/tr35/tr35-general.html#Layout_Elements">UTS 35's Layouts Elements</a>.</dd>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35.html#Script_Metadata">UTS 35's Script Metadata</a>.</dd>
       </dl>
       <emu-alg>
         1. Let _locale_ be _loc_.[[Locale]].
