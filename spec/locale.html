@@ -661,8 +661,8 @@
           1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, return *undefined*.
           1. Set _script_ to GetLocaleScript(_maximal_).
           1. If _script_ is *undefined*, return *undefined*.
-        1. If the default general ordering of characters within a line in _script_ is right-to-left, return "rtl".
-        1. If the default general ordering of characters within a line in _script_ is left-to-right, return "ltr".
+        1. If the default general ordering of characters within a line in _script_ is right-to-left, return *"rtl"*.
+        1. If the default general ordering of characters within a line in _script_ is left-to-right, return *"ltr"*.
         1. Return *undefined*.
       </emu-alg>
       <emu-note>
