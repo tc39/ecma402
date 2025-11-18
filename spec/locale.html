@@ -404,7 +404,7 @@
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _info_ be OrdinaryObjectCreate(%Object.prototype%).
-        1. Let _dir_ be LocaleDirection(_loc_).
+        1. Let _dir_ be TextDirectionOfLocale(_loc_).
         1. If _dir_ is not *undefined*, then
           1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
         1. Return _info_.
@@ -548,7 +548,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-unicode-extension-value" type="abstract operation">
+    <emu-clause id="sec-unicodeextensionvalue" type="abstract operation">
       <h1>
         UnicodeExtensionValue (
           _locale_: a Unicode canonicalized locale identifier,
@@ -569,7 +569,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-canonical-unicode-subdivision" type="abstract operation">
+    <emu-clause id="sec-canonicalunicodesubdivision" type="abstract operation">
       <h1>
         CanonicalUnicodeSubdivision (
           _locale_: a Unicode canonicalized locale identifier,
@@ -589,7 +589,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-region-preference" type="abstract operation">
+    <emu-clause id="sec-regionpreference" type="abstract operation">
       <h1>
         RegionPreference (
           _locale_: a Unicode canonicalized locale identifier,
@@ -612,7 +612,7 @@
       </emu-alg>
     </emu-clause>
     
-    <emu-clause id="sec-calendars-of-locale" type="abstract operation">
+    <emu-clause id="sec-calendarsoflocale" type="abstract operation">
       <h1>
         CalendarsOfLocale (
           _loc_: an Intl.Locale,
@@ -638,7 +638,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-collations-of-locale" type="abstract operation">
+    <emu-clause id="sec-collationsoflocale" type="abstract operation">
       <h1>
         CollationsOfLocale (
           _loc_: an Intl.Locale,
@@ -667,7 +667,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-hour-cycles-of-locale" type="abstract operation">
+    <emu-clause id="sec-hourcyclesoflocale" type="abstract operation">
       <h1>
         HourCyclesOfLocale (
           _loc_: an Intl.Locale,
@@ -693,7 +693,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-numbering-systems-of-locale" type="abstract operation">
+    <emu-clause id="sec-numberingsystemsoflocale" type="abstract operation">
       <h1>
         NumberingSystemsOfLocale (
           _loc_: an Intl.Locale,
@@ -716,7 +716,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-time-zones-of-locale" type="abstract operation">
+    <emu-clause id="sec-timezonesoflocale" type="abstract operation">
       <h1>
         TimeZonesOfLocale (
           _loc_: an Intl.Locale,
@@ -732,9 +732,9 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-locale-direction" type="abstract operation">
+    <emu-clause id="sec-textdirectionoflocale" type="abstract operation">
       <h1>
-        LocaleDirection (
+        TextDirectionOfLocale (
           _loc_: an Intl.Locale,
         ): a String or *undefined*
       </h1>
@@ -757,11 +757,11 @@
         When the direction of default general ordering of characters within a line in the _script_ cannot be determined, or the direction is neither right-to-left nor left-to-right, then *undefined* will be returned.
       </emu-note>
       <emu-note>
-        Text in a language may have more than one possible direction. Text in a language written in one script may also have more than one possible direction. Therefore, if there is direction information included in the metadata associated with a piece of text, that direction information should be considered as the primary source of truth. The information returned by LocaleDirection should only be used as a fallback mechanism while there is no metadata associated with the text to provide the direction information of the text. It should only be used while the direction information is not present but language information is known. Web developers should not rely too much on this API to decide the direction of the text.
+        Text in a language may have more than one possible direction. Text in a language written in one script may also have more than one possible direction. Therefore, if there is direction information included in the metadata associated with a piece of text, that direction information should be considered as the primary source of truth. The information returned by TextDirectionOfLocale should only be used as a fallback mechanism while there is no metadata associated with the text to provide the direction information of the text. It should only be used while the direction information is not present but language information is known. Web developers should not rely too much on this API to decide the direction of the text.
       </emu-note>
     </emu-clause>
 
-    <emu-clause id="sec-weekday-to-string" type="abstract operation">
+    <emu-clause id="sec-weekdaytostring" type="abstract operation">
       <h1>
         WeekdayToString (
           _fw_: a String,
@@ -831,7 +831,7 @@
       </emu-table>
     </emu-clause>
 
-    <emu-clause id="sec-string-to-weekday-value" type="abstract operation">
+    <emu-clause id="sec-stringtoweekdayvalue" type="abstract operation">
       <h1>
         StringToWeekdayValue (
           _fw_: a String,
@@ -848,7 +848,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-week-info-of-locale" type="abstract operation">
+    <emu-clause id="sec-weekinfooflocale" type="abstract operation">
       <h1>
         WeekInfoOfLocale (
           _loc_: an Intl.Locale,
