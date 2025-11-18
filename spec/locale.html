@@ -393,8 +393,6 @@
       <emu-alg>
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
-        1. Let _region_ be GetLocaleRegion(_loc_.[[Locale]]).
-        1. If _region_ is *undefined*, return *undefined*.
         1. Return TimeZonesOfLocale(_loc_).
       </emu-alg>
     </emu-clause>
