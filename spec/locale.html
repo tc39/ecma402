@@ -720,13 +720,13 @@
       <h1>
         TimeZonesOfLocale (
           _loc_: an Intl.Locale,
-        ): an Array
+        ): an Array or *undefined*
       </h1>
       <dl class="header">
       </dl>
       <emu-alg>
         1. Let _region_ be GetLocaleRegion(_loc_.[[Locale]]).
-        1. Assert: _region_ is not *undefined*.
+        1. If _region_ is *undefined*, return *undefined*.
         1. Let _list_ be a List of unique canonical time zone identifiers, which must be String values indicating a canonical Zone name of the IANA Time Zone Database, of those in common use in _region_. The list is empty if no time zones are commonly used in _region_. The list is sorted according to lexicographic code unit order.
         1. Return CreateArrayFromList( _list_ ).
       </emu-alg>
