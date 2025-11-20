@@ -648,7 +648,7 @@
       </dl>
       <emu-alg>
         1. If _loc_.[[Collation]] is not *undefined*, then
-          1. Returnet CreateArrayFromList(&laquo; _loc_.[[Collation]] &raquo;).
+          1. Return CreateArrayFromList(« _loc_.[[Collation]] »).
         1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
         1. If _language_ is not *"und"*, then
           1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], &laquo; _loc_.[[Locale]] &raquo;).
