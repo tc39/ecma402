@@ -346,28 +346,6 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getoptionsobject" type="abstract operation">
-      <h1>
-        GetOptionsObject (
-          _options_: an ECMAScript language value,
-        ): either a normal completion containing an Object or a throw completion
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>
-          It returns an Object suitable for use with GetOption, either _options_ itself or a default empty Object.
-          It throws a *TypeError* if _options_ is not *undefined* and not an Object.
-        </dd>
-      </dl>
-      <emu-alg>
-        1. If _options_ is *undefined*, then
-          1. Return OrdinaryObjectCreate(*null*).
-        1. If _options_ is an Object, then
-          1. Return _options_.
-        1. Throw a *TypeError* exception.
-      </emu-alg>
-    </emu-clause>
-
     <emu-clause id="sec-coerceoptionstoobject" type="abstract operation">
       <h1>
         CoerceOptionsToObject (
