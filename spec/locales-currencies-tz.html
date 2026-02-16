@@ -10,9 +10,6 @@
     <emu-note>
       For example, *"ß"* (U+00DF) must not match or be mapped to *"SS"* (U+0053, U+0053). *"ı"* (U+0131) must not match or be mapped to *"I"* (U+0049).
     </emu-note>
-    <p>The <dfn>ASCII-uppercase</dfn> of a String value _S_ is the String value derived from _S_ by replacing each occurrence of an ASCII lowercase letter code unit (0x0061 through 0x007A, inclusive) with the corresponding ASCII uppercase letter code unit (0x0041 through 0x005A, inclusive) while preserving all other code units.</p>
-    <p>The <dfn>ASCII-lowercase</dfn> of a String value _S_ is the String value derived from _S_ by replacing each occurrence of an ASCII uppercase letter code unit (0x0041 through 0x005A, inclusive) with the corresponding ASCII lowercase letter code unit (0x0061 through 0x007A, inclusive) while preserving all other code units.</p>
-    <p>A String value _A_ is an <dfn>ASCII-case-insensitive match</dfn> for String value _B_ if the ASCII-uppercase of _A_ is exactly the same sequence of code units as the ASCII-uppercase of _B_. A sequence of Unicode code points _A_ is an ASCII-case-insensitive match for _B_ if _B_ is an ASCII-case-insensitive match for CodePointsToString(_A_).</p>
   </emu-clause>
 
   <emu-clause id="sec-language-tags">
@@ -514,20 +511,6 @@
       <dl class="header">
         <dt>description</dt>
         <dd>The returned List is sorted according to lexicographic code unit order, and contains unique canonical collation types identifying the collations for which the implementation provides the functionality of Intl.Collator objects.</dd>
-      </dl>
-    </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-calendar-types">
-    <h1>Calendar Types</h1>
-
-    <p>This specification identifies calendars using a <dfn variants="calendar types">calendar type</dfn> as defined by <a href="https://unicode.org/reports/tr35/tr35-dates.html#Calendar_Elements">Unicode Technical Standard #35 Part 4 Dates, Section 2 Calendar Elements</a>. Their canonical form is a string containing only Unicode Basic Latin lowercase letters (U+0061 LATIN SMALL LETTER A through U+007A LATIN SMALL LETTER Z) with zero or more medial hyphens (U+002D HYPHEN-MINUS).</p>
-
-    <emu-clause id="sec-availablecalendars" oldids="sec-availablecanonicalcalendars" type="implementation-defined abstract operation">
-      <h1>AvailableCalendars ( ): a List of Strings</h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>The returned List is sorted according to lexicographic code unit order, and contains unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>) identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects, including their aliases (e.g., either both or neither of *"islamicc"* and *"islamic-civil"*). The List must include *"iso8601"*.</dd>
       </dl>
     </emu-clause>
   </emu-clause>

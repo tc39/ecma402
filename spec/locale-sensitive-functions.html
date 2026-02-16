@@ -247,4 +247,138 @@
       </emu-note>
     </emu-clause>
   </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-duration-prototype-object">
+    <h1>Properties of the Temporal.Duration Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.duration.prototype.tolocalestring">
+      <h1>Temporal.Duration.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.duration.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _duration_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_duration_, [[InitializedTemporalDuration]]).
+        1. Let _formatter_ be ? Construct(%Intl.DurationFormat%, « _locales_, _options_ »).
+        1. Let _parts_ be PartitionDurationFormatPattern(_formatter_, _duration_).
+        1. Let _result_ be the empty String.
+        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+          1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
+        1. Return _result_.
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-instant-prototype-object">
+    <h1>Properties of the Temporal.Instant Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.instant.prototype.tolocalestring">
+      <h1>Temporal.Instant.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.instant.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _instant_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_instant_, [[InitializedTemporalInstant]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~any~, ~all~).
+        1. Return ? FormatDateTime(_dateFormat_, _instant_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-plaindate-prototype-object">
+    <h1>Properties of the Temporal.PlainDate Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.plaindate.prototype.tolocalestring">
+      <h1>Temporal.PlainDate.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.plaindate.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _plainDate_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_plainDate_, [[InitializedTemporalDate]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~date~, ~date~).
+        1. Return ? FormatDateTime(_dateFormat_, _plainDate_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-plaindatetime-prototype-object">
+    <h1>Properties of the Temporal.PlainDateTime Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.plaindatetime.prototype.tolocalestring">
+      <h1>Temporal.PlainDateTime.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.plaindatetime.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _plainDateTime_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_plainDateTime_, [[InitializedTemporalDateTime]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~any~, ~all~).
+        1. Return ? FormatDateTime(_dateFormat_, _plainDateTime_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-plainmonthday-prototype-object">
+    <h1>Properties of the Temporal.PlainMonthDay Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.plainmonthday.prototype.tolocalestring">
+      <h1>Temporal.PlainMonthDay.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.plainmonthday.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _plainMonthDay_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_plainMonthDay_, [[InitializedTemporalMonthDay]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~date~, ~date~).
+        1. Return ? FormatDateTime(_dateFormat_, _plainMonthDay_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-plaintime-prototype-object">
+    <h1>Properties of the Temporal.PlainTime Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.plaintime.prototype.tolocalestring">
+      <h1>Temporal.PlainTime.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.plaintime.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _plainTime_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_plainTime_, [[InitializedTemporalTime]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~time~, ~time~).
+        1. Return ? FormatDateTime(_dateFormat_, _plainTime_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-plainyearmonth-prototype-object">
+    <h1>Properties of the Temporal.PlainYearMonth Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.plainyearmonth.prototype.tolocalestring">
+      <h1>Temporal.PlainYearMonth.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.plainyearmonth.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _plainYearMonth_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_plainYearMonth_, [[InitializedTemporalYearMonth]]).
+        1. Let _dateFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~date~, ~date~).
+        1. Return ? FormatDateTime(_dateFormat_, _plainYearMonth_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-temporal-zoneddatetime-prototype-object">
+    <h1>Properties of the Temporal.ZonedDateTime Prototype Object</h1>
+
+    <emu-clause id="sup-temporal.zoneddatetime.prototype.tolocalestring">
+      <h1>Temporal.ZonedDateTime.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-temporal.zoneddatetime.prototype.tolocalestring" title></emu-xref>.</p>
+      <p>This method performs the following steps when called:</p>
+      <emu-alg>
+        1. Let _zonedDateTime_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_zonedDateTime_, [[InitializedTemporalZonedDateTime]]).
+        1. Let _dateTimeFormat_ be ? CreateDateTimeFormat(%Intl.DateTimeFormat%, _locales_, _options_, ~any~, ~all~, _zonedDateTime_.[[TimeZone]]).
+        1. If _zonedDateTime_.[[Calendar]] is not *"iso8601"* and CalendarEquals(_zonedDateTime_.[[Calendar]], _dateTimeFormat_.[[Calendar]]) is *false*, throw a *RangeError* exception.
+        1. Let _instant_ be ! CreateTemporalInstant(_zonedDateTime_.[[EpochNanoseconds]]).
+        1. Return ? FormatDateTime(_dateTimeFormat_, _instant_).
+      </emu-alg>
+    </emu-clause>
+  </emu-clause>
 </emu-clause>

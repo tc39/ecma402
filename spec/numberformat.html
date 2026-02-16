@@ -535,111 +535,9 @@
         In scientific notation, this slot affects the sign display of the mantissa but not the exponent.
       </li>
       <li>[[RoundingIncrement]] is an integer that evenly divides 10, 100, 1000, or 10000 into tenths, fifths, quarters, or halves. It indicates the increment at which rounding should take place relative to the calculated rounding magnitude. For example, if [[MaximumFractionDigits]] is 2 and [[RoundingIncrement]] is 5, then formatted numbers are rounded to the nearest 0.05 ("nickel rounding").</li>
-      <li>[[RoundingMode]] is a <dfn id="rounding-mode">rounding mode</dfn>, one of the String values in the Identifier column of <emu-xref href="#table-intl-rounding-modes"></emu-xref>.</li>
+      <li>[[RoundingMode]] is a <dfn id="rounding-mode">rounding mode</dfn>, one of the Strings in the "String Identifier" column of <emu-xref href="#table-rounding-modes"></emu-xref>.</li>
       <li>[[TrailingZeroDisplay]] is one of the String values *"auto"* or *"stripIfInteger"*, indicating whether to strip trailing zeros if the formatted number is an integer (i.e., has no non-zero fraction digit).</li>
     </ul>
-
-    <emu-table id="table-intl-rounding-modes">
-      <emu-caption>Rounding modes in Intl.NumberFormat</emu-caption>
-      <table class="real-table">
-        <thead>
-          <tr>
-            <th rowspan="2">Identifier</th>
-            <th rowspan="2">Description</th>
-            <th colspan="5">Examples: Round to 0 fraction digits</th>
-          </tr>
-          <tr>
-            <th>-1.5</th>
-            <th>0.4</th>
-            <th>0.5</th>
-            <th>0.6</th>
-            <th>1.5</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>*"ceil"*</td>
-          <td>Toward positive infinity</td>
-          <td>⬆️ [-1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [2]</td>
-        </tr>
-        <tr>
-          <td>*"floor"*</td>
-          <td>Toward negative infinity</td>
-          <td>⬇️ [-2]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [1]</td>
-        </tr>
-        <tr>
-          <td>*"expand"*</td>
-          <td>Away from zero</td>
-          <td>⬇️ [-2]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [2]</td>
-        </tr>
-        <tr>
-          <td>*"trunc"*</td>
-          <td>Toward zero</td>
-          <td>⬆️ [-1]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [1]</td>
-        </tr>
-        <tr>
-          <td>*"halfCeil"*</td>
-          <td>Ties toward positive infinity</td>
-          <td>⬆️ [-1]</td>
-          <td>⬇️ [0]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [2]</td>
-        </tr>
-        <tr>
-          <td>*"halfFloor"*</td>
-          <td>Ties toward negative infinity</td>
-          <td>⬇️ [-2]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬆️ [1]</td>
-          <td>⬇️ [1]</td>
-        </tr>
-        <tr>
-          <td>*"halfExpand"*</td>
-          <td>Ties away from zero</td>
-          <td>⬇️ [-2]</td>
-          <td>⬇️ [0]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [2]</td>
-        </tr>
-        <tr>
-          <td>*"halfTrunc"*</td>
-          <td>Ties toward zero</td>
-          <td>⬆️ [-1]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬆️ [1]</td>
-          <td>⬇️ [1]</td>
-        </tr>
-        <tr>
-          <td>*"halfEven"*</td>
-          <td>Ties toward an even rounding increment multiple</td>
-          <td>⬇️ [-2]</td>
-          <td>⬇️ [0]</td>
-          <td>⬇️ [0]</td>
-          <td>⬆️ [1]</td>
-          <td>⬆️ [2]</td>
-        </tr>
-      </table>
-      <emu-note>The examples are illustrative of the unique behaviour of each option. ⬆️ means "resolves toward positive infinity"; ⬇️ means "resolves toward negative infinity".</emu-note>
-    </emu-table>
 
     <p>Finally, Intl.NumberFormat instances have a [[BoundFormat]] internal slot that caches the function returned by the format accessor (<emu-xref href="#sec-intl.numberformat.prototype.format"></emu-xref>).</p>
   </emu-clause>
@@ -1283,7 +1181,7 @@
           _x_: a non-negative mathematical value,
           _minPrecision_: an integer in the inclusive interval from 1 to 21,
           _maxPrecision_: an integer in the inclusive interval from 1 to 21,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-unsigned-rounding-modes"></emu-xref>, or *undefined*,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1341,7 +1239,7 @@
           _minFraction_: an integer in the inclusive interval from 0 to 100,
           _maxFraction_: an integer in the inclusive interval from 0 to 100,
           _roundingIncrement_: an integer,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-unsigned-rounding-modes"></emu-xref>, or *undefined*,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1669,148 +1567,6 @@
           1. If _rounded_ is *+0*<sub>𝔽</sub> and _intlMV_ &lt; 0, return ~negative-zero~.
           1. If _rounded_ is *+0*<sub>𝔽</sub>, return 0.
         1. Return _intlMV_.
-      </emu-alg>
-    </emu-clause>
-
-    <emu-clause id="sec-getunsignedroundingmode" type="abstract operation">
-      <h1>
-        GetUnsignedRoundingMode (
-          _roundingMode_: a rounding mode,
-          _sign_: ~negative~ or ~positive~,
-        ): a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It returns the <emu-not-ref>rounding mode</emu-not-ref> that should be applied to the absolute value of a number to produce the same result as if _roundingMode_ were applied to the signed value of the number (negative if _sign_ is ~negative~, or positive otherwise).</dd>
-      </dl>
-      <emu-alg>
-        1. Return the specification type in the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> for the row where the value in the Identifier column is _roundingMode_ and the value in the Sign column is _sign_.
-      </emu-alg>
-      <emu-table id="table-intl-unsigned-rounding-modes">
-        <emu-caption>Conversion from rounding mode to unsigned rounding mode</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Identifier</th>
-              <th>Sign</th>
-              <th>Unsigned Rounding Mode</th>
-            </tr>
-          </thead>
-          <tr>
-            <td rowspan="2">*"ceil"*</td>
-            <td>~positive~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"floor"*</td>
-            <td>~positive~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"expand"*</td>
-            <td>~positive~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"trunc"*</td>
-            <td>~positive~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfCeil"*</td>
-            <td>~positive~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfFloor"*</td>
-            <td>~positive~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfExpand"*</td>
-            <td>~positive~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfTrunc"*</td>
-            <td>~positive~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfEven"*</td>
-            <td>~positive~</td>
-            <td>~half-even~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-even~</td>
-          </tr>
-        </table>
-      </emu-table>
-    </emu-clause>
-
-    <emu-clause id="sec-applyunsignedroundingmode" type="abstract operation">
-      <h1>
-        ApplyUnsignedRoundingMode (
-          _x_: a mathematical value,
-          _r1_: a mathematical value,
-          _r2_: a mathematical value,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
-        ): a mathematical value
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It considers _x_, bracketed below by _r1_ and above by _r2_, and returns either _r1_ or _r2_ according to _unsignedRoundingMode_.</dd>
-      </dl>
-      <emu-alg>
-        1. If _x_ is _r1_, return _r1_.
-        1. Assert: _r1_ &lt; _x_ &lt; _r2_.
-        1. Assert: _unsignedRoundingMode_ is not *undefined*.
-        1. If _unsignedRoundingMode_ is ~zero~, return _r1_.
-        1. If _unsignedRoundingMode_ is ~infinity~, return _r2_.
-        1. Let _d1_ be <emu-eqn>_x_ – _r1_</emu-eqn>.
-        1. Let _d2_ be <emu-eqn>_r2_ – _x_</emu-eqn>.
-        1. If _d1_ &lt; _d2_, return _r1_.
-        1. If _d2_ &lt; _d1_, return _r2_.
-        1. Assert: _d1_ is _d2_.
-        1. If _unsignedRoundingMode_ is ~half-zero~, return _r1_.
-        1. If _unsignedRoundingMode_ is ~half-infinity~, return _r2_.
-        1. Assert: _unsignedRoundingMode_ is ~half-even~.
-        1. Let _cardinality_ be <emu-eqn>(_r1_ / (_r2_ – _r1_)) modulo 2</emu-eqn>.
-        1. If _cardinality_ is 0, return _r1_.
-        1. Return _r2_.
       </emu-alg>
     </emu-clause>
 
