@@ -235,7 +235,7 @@
       <emu-alg>
         1. If _type_ is *"language"*, then
           1. If _code_ cannot be matched by the <code>unicode_language_id</code> Unicode locale nonterminal, throw a *RangeError* exception.
-          1. If IsStructurallyValidLanguageTag(_code_) is *false*, throw a *RangeError* exception.
+          1. If IsWellFormedLanguageTag(_code_) is *false*, throw a *RangeError* exception.
           1. Return CanonicalizeUnicodeLocaleId(_code_).
         1. If _type_ is *"region"*, then
           1. If _code_ cannot be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, throw a *RangeError* exception.

@@ -29,17 +29,17 @@
       <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> Unicode locale nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>. It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators. For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
     </p>
 
-    <p>All <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid language tags</emu-xref> are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
+    <p>All well-formed language tags are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
 
-    <emu-clause id="sec-isstructurallyvalidlanguagetag" type="abstract operation">
+    <emu-clause id="sec-iswellformedlanguagetag" oldids="sec-isstructurallyvalidlanguagetag" type="abstract operation">
       <h1>
-        IsStructurallyValidLanguageTag (
+        IsWellFormedLanguageTag (
           _locale_: a String,
         ): a Boolean
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines whether _locale_ is a syntactically well-formed language tag. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
+        <dd>It determines whether _locale_ is a <dfn variants="well-formed language tags">well-formed language tag</dfn> conforming with the well-formedness constraints of a <a href="https://unicode.org/reports/tr35/#unicode_bcp47_locale_id"><code>unicode_bcp47_locale_id</code></a>. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
       </dl>
       <emu-alg>
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
@@ -76,7 +76,7 @@
         <dd>It returns the canonical and case-regularized form of _locale_.</dd>
       </dl>
       <emu-alg>
-        1. Let _localeId_ be the String value resulting from performing the algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a> (note that the algorithm begins with canonicalizing syntax only).
+        1. Let _localeId_ be the String value resulting from performing the <a href="https://unicode.org/reports/tr35/#processing-localeids">Processing LocaleIds</a> algorithm to transform _locale_ to canonical form per <a href="https://unicode.org/reports/tr35/#LocaleId_Canonicalization">Unicode Technical Standard #35 Part 1 Core, Annex C LocaleId Canonicalization</a>.
         1. [id="step-canonicalizeunicodelocaleid-u-extension"] If _localeId_ contains a <emu-not-ref>substring</emu-not-ref> that is a Unicode locale extension sequence, then
           1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _localeId_.
           1. Let _newExtension_ be *"-u"*.
@@ -105,7 +105,7 @@
       <h1>DefaultLocale ( ): a Unicode canonicalized locale identifier</h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String value represents the structurally valid (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale. It must not contain a Unicode locale extension sequence.</dd>
+        <dd>The returned String value represents the well-formed (<emu-xref href="#sec-iswellformedlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale. It must not contain a Unicode locale extension sequence.</dd>
       </dl>
       <emu-note>
         The returned value is is a potential fingerprinting vector. In browser environments, it should match <a href="https://html.spec.whatwg.org/#language-preferences"><code>navigator.language</code></a> to avoid providing any additional distinguishing information.

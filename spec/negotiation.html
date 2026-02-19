@@ -3,9 +3,9 @@
 
   <p><emu-xref href="#service-constructor">Service constructors</emu-xref> use common patterns to negotiate the requests represented by _locales_ and _options_ arguments against the actual capabilities of an implementation. That common behaviour is explained here in terms of internal slots describing the capabilities, abstract operations using these internal slots, and specialized data types defined below.</p>
 
-  <p>An <dfn id="available-locales-list">Available Locales List</dfn> is an arbitrarily-ordered duplicate-free List of language tags, each of which is <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref>, <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref>, and lacks a Unicode locale extension sequence. It represents all locales for which the implementation provides functionality within a particular context.</p>
+  <p>An <dfn id="available-locales-list">Available Locales List</dfn> is an arbitrarily-ordered duplicate-free List of language tags, each of which is <emu-xref href="#sec-iswellformedlanguagetag">well-formed</emu-xref>, <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref>, and lacks a Unicode locale extension sequence. It represents all locales for which the implementation provides functionality within a particular context.</p>
 
-  <p>A <dfn id="language-priority-list">Language Priority List</dfn> is a List of <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> and <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref> language tags representing a sequence of locale preferences by descending priority. It corresponds with the term of the same name defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-2.3">RFC 4647 section 2.3</a> but prohibits *"\*"* elements and contains only canonicalized contents.</p>
+  <p>A <dfn id="language-priority-list">Language Priority List</dfn> is a List of <emu-xref href="#sec-iswellformedlanguagetag">well-formed</emu-xref> and <emu-xref href="#sec-canonicalizeunicodelocaleid">canonicalized</emu-xref> language tags representing a sequence of locale preferences by descending priority. It corresponds with the term of the same name defined in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-2.3">RFC 4647 section 2.3</a> but prohibits *"\*"* elements and contains only canonicalized contents.</p>
 
   <p>A <dfn id="resolution-option-descriptor" variants="Resolution Option Descriptors">Resolution Option Descriptor</dfn> is a Record with fields [[Key]] (a string, usually an element of a [[RelevantExtensionKeys]] List) and [[Property]] (a string), and optionally also with either or both of [[Type]] (~boolean~ or ~string~) and [[Values]] (~empty~ or a List of ECMAScript language values). It describes how to read options relevant to locale resolution during object construction.</p>
 
@@ -64,7 +64,7 @@
               1. Let _tag_ be _kValue_.[[Locale]].
             1. Else,
               1. Let _tag_ be ? ToString(_kValue_).
-            1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+            1. If IsWellFormedLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
             1. Let _canonicalizedTag_ be CanonicalizeUnicodeLocaleId(_tag_).
             1. If _seen_ does not contain _canonicalizedTag_, append _canonicalizedTag_ to _seen_.
           1. Set _k_ to _k_ + 1.
@@ -72,7 +72,7 @@
       </emu-alg>
 
       <emu-note>
-        Non-normative summary: The abstract operation interprets the _locales_ argument as an array and copies its elements into a List, validating the elements as structurally valid language tags and canonicalizing them, and omitting duplicates.
+        Non-normative summary: The abstract operation interprets the _locales_ argument as an array and copies its elements into a List, validating the elements as well-formed language tags and canonicalizing them, and omitting duplicates.
       </emu-note>
 
       <emu-note>
@@ -210,7 +210,7 @@
           1. Let _preExtension_ be the substring of _locale_ from 0 to _privateIndex_.
           1. Let _postExtension_ be the substring of _locale_ from _privateIndex_.
           1. Let _newLocale_ be the string-concatenation of _preExtension_, _extension_, and _postExtension_.
-        1. Assert: IsStructurallyValidLanguageTag(_newLocale_) is *true*.
+        1. Assert: IsWellFormedLanguageTag(_newLocale_) is *true*.
         1. Return CanonicalizeUnicodeLocaleId(_newLocale_).
       </emu-alg>
     </emu-clause>

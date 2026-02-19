@@ -30,7 +30,8 @@
         1. Else,
           1. Let _tag_ be ? ToString(_tag_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+        1. If IsWellFormedLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+        1. NOTE: Because <a href="https://unicode.org/reports/tr35/#processing-languageids">LanguageId canonicalization</a> can alter _tag_ in arbitrary ways according to Alias Rules from <a href="https://github.com/unicode-org/cldr/blob/main/common/supplemental/supplementalMetadata.xml"><code>supplementalMetadata.xml</code></a>, it is necessary to perform such canonicalization before applying overrides from _options_.
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
         1. Set _tag_ to ? UpdateLanguageId(_tag_, _options_).
         1. Let _opt_ be a new Record.
@@ -73,13 +74,13 @@
     <emu-clause id="sec-updatelanguageid" type="abstract operation" oldids="sec-apply-options-to-tag">
       <h1>
         UpdateLanguageId (
-          _tag_: a Unicode canonicalized locale identifier,
+          _tag_: a well-formed language tag,
           _options_: an Object,
-        ): either a normal completion containing a language tag or a throw completion
+        ): either a normal completion containing a well-formed language tag or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It updates the <code>unicode_language_id</code> subtags in _tag_ from the corresponding properties of _options_ and returns the <emu-xref href="#sec-isstructurallyvalidlanguagetag">structurally valid</emu-xref> but non-canonicalized result.</dd>
+        <dd>It updates the <code>unicode_language_id</code> subtags in _tag_ from the corresponding properties of _options_, validates them, and returns the result.</dd>
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_tag_).
