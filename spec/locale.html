@@ -18,7 +18,7 @@
       <emu-alg>
         1. If NewTarget is *undefined*, throw a *TypeError* exception.
         1. Let _localeExtensionKeys_ be %Intl.Locale%.[[LocaleExtensionKeys]].
-        1. Let _internalSlotsList_ be « [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[HourCycle]], [[NumberingSystem]] ».
+        1. Let _internalSlotsList_ be « [[InitializedLocale]], [[Locale]], [[Calendar]], [[Collation]], [[FirstDayOfWeek]], [[HourCycle]], [[NumberingSystem]] ».
         1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Append [[CaseFirst]] to _internalSlotsList_.
         1. If _localeExtensionKeys_ contains *"kn"*, then
@@ -43,6 +43,11 @@
         1. If _collation_ is not *undefined*, then
           1. If _collation_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
         1. Set _opt_.[[co]] to _collation_.
+        1. Let _fw_ be ? GetOption(_options_, *"firstDayOfWeek"*, ~string~, ~empty~, *undefined*).
+        1. If _fw_ is not *undefined*, then
+          1. Set _fw_ to WeekdayToUValue(_fw_).
+          1. If _fw_ cannot be matched by the <code>type</code> Unicode locale nonterminal, throw a *RangeError* exception.
+        1. Set _opt_.[[fw]] to _fw_.
         1. Let _hc_ be ? GetOption(_options_, *"hourCycle"*, ~string~, « *"h11"*, *"h12"*, *"h23"*, *"h24"* », *undefined*).
         1. Set _opt_.[[hc]] to _hc_.
         1. Let _kf_ be ? GetOption(_options_, *"caseFirst"*, ~string~, « *"upper"*, *"lower"*, *"false"* », *undefined*).
@@ -58,6 +63,7 @@
         1. Set _locale_.[[Locale]] to _r_.[[locale]].
         1. Set _locale_.[[Calendar]] to _r_.[[ca]].
         1. Set _locale_.[[Collation]] to _r_.[[co]].
+        1. Set _locale_.[[FirstDayOfWeek]] to _r_.[[fw]].
         1. Set _locale_.[[HourCycle]] to _r_.[[hc]].
         1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _r_.[[kf]].
@@ -177,7 +183,7 @@
     <emu-clause id="sec-intl.locale-internal-slots">
       <h1>Internal slots</h1>
 
-      <p>The value of the [[LocaleExtensionKeys]] internal slot is a List that must include all elements of « *"ca"*, *"co"*, *"hc"*, *"nu"* », must additionally include any element of « *"kf"*, *"kn"* » that is also an element of %Intl.Collator%.[[RelevantExtensionKeys]], and must not include any other elements.</p>
+      <p>The value of the [[LocaleExtensionKeys]] internal slot is a List that must include all elements of « *"ca"*, *"co"*, *"fw"*, *"hc"*, *"nu"* », must additionally include any element of « *"kf"*, *"kn"* » that is also an element of %Intl.Collator%.[[RelevantExtensionKeys]], and must not include any other elements.</p>
     </emu-clause>
   </emu-clause>
 
@@ -236,6 +242,16 @@
         1. Let _loc_ be the *this* value.
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Return _loc_.[[Collation]].
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.firstDayOfWeek">
+      <h1>get Intl.Locale.prototype.firstDayOfWeek</h1>
+      <p>`Intl.Locale.prototype.firstDayOfWeek` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return _loc_.[[FirstDayOfWeek]].
       </emu-alg>
     </emu-clause>
 
@@ -332,6 +348,83 @@
       </emu-alg>
     </emu-clause>
 
+    <emu-clause id="sec-Intl.Locale.prototype.getCalendars">
+      <h1>Intl.Locale.prototype.getCalendars ( )</h1>
+      <p>When the `getCalendars` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return CalendarsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getCollations">
+      <h1>Intl.Locale.prototype.getCollations ( )</h1>
+      <p>When the `getCollations` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return CollationsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getHourCycles">
+      <h1>Intl.Locale.prototype.getHourCycles ( )</h1>
+      <p>When the `getHourCycles` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return HourCyclesOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getNumberingSystems">
+      <h1>Intl.Locale.prototype.getNumberingSystems ( )</h1>
+      <p>When the `getNumberingSystems` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return NumberingSystemsOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getTimeZones">
+      <h1>Intl.Locale.prototype.getTimeZones ( )</h1>
+      <p>When the `getTimeZones` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Return TimeZonesOfLocale(_loc_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getTextInfo">
+      <h1>Intl.Locale.prototype.getTextInfo ( )</h1>
+      <p>When the `getTextInfo` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _info_ be OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _dir_ be TextDirectionOfLocale(_loc_).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
+        1. Return _info_.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-Intl.Locale.prototype.getWeekInfo">
+      <h1>Intl.Locale.prototype.getWeekInfo ( )</h1>
+      <p>When the `getWeekInfo` method is called, the following steps are taken:</p>
+      <emu-alg>
+        1. Let _loc_ be the *this* value.
+        1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
+        1. Let _info_ be OrdinaryObjectCreate(%Object.prototype%).
+        1. Let _wi_ be WeekInfoOfLocale(_loc_).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"firstDay"*, _wi_.[[FirstDay]]).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"weekend"*, CreateArrayFromList(_wi_.[[Weekend]])).
+        1. Return _info_.
+      </emu-alg>
+    </emu-clause>
+
     <emu-clause id="sec-Intl.Locale.prototype.variants">
       <h1>get Intl.Locale.prototype.variants</h1>
       <p>`Intl.Locale.prototype.variants` is an accessor property whose set accessor function is *undefined*. Its get accessor function performs the following steps:</p>
@@ -364,6 +457,7 @@
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
       <li>[[Calendar]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> in canonical form.</li>
       <li>[[Collation]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Collation Identifier</a> in canonical form.</li>
+      <li>[[FirstDayOfWeek]] is either *undefined* or a String value that is a valid <a href="https://unicode.org/reports/tr35/#UnicodeFirstDayIdentifier">Unicode First Day Identifier</a> in canonical form.</li>
       <li>[[HourCycle]] is either *undefined* or a String value that is a valid <a href="https://unicode.org/reports/tr35/#UnicodeHourCycleIdentifier">Unicode Hour Cycle Identifier</a> in canonical form.</li>
       <li>[[NumberingSystem]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> in canonical form.</li>
       <li>[[CaseFirst]] is either *undefined* or one of the String values *"upper"*, *"lower"*, or *"false"*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
@@ -452,6 +546,356 @@
         1. Let _variants_ be the longest suffix of _baseName_ that starts with a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal. If there is no such suffix, return *undefined*.
         1. Return the substring of _variants_ from 1.
       </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-unicodeextensionvalue" type="abstract operation">
+      <h1>
+        UnicodeExtensionValue (
+          _locale_: a Unicode canonicalized locale identifier,
+          _key_: a String,
+        ): a String or ~empty~
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _locale_ contains a Unicode locale extension sequence, then
+          1. Let _extension_ be the Unicode locale extension sequence of _locale_.
+          1. Let _components_ be UnicodeExtensionComponents(_extension_).
+          1. Let _keywords_ be _components_.[[Keywords]].
+          1. If there exists an element _entry_ of _keywords_ such that _entry_.[[Key]] is _key_, return _entry_.[[Value]].
+        1. Return ~empty~.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-canonicalunicodesubdivision" type="abstract operation">
+      <h1>
+        CanonicalUnicodeSubdivision (
+          _locale_: a Unicode canonicalized locale identifier,
+          _key_: *"rg"* or *"sd"*,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Let _subdivision_ be UnicodeExtensionValue(_locale_, _key_).
+        1. If _subdivision_ is ~empty~, return *undefined*.
+        1. If _subdivision_ cannot be matched by the `unicode_subdivision_id` Unicode locale nonterminal, return *undefined*.
+        1. Let _region_ be the longest prefix of _subdivision_ matched by the `unicode_region_subtag` Unicode locale nonterminal.
+        1. Let _regionLocale_ be the string-concatenation of *"und-"* and _region_.
+        1. Set _regionLocale_ to CanonicalizeUnicodeLocaleId(_regionLocale_).
+        1. Return GetLocaleRegion(_regionLocale_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-regionpreference" type="abstract operation">
+      <h1>
+        RegionPreference (
+          _locale_: a Unicode canonicalized locale identifier,
+        ): a Record with fields [[Region]] (a String) and [[RegionOverride]] (a String or *undefined*)
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Let _region_ be GetLocaleRegion(_locale_).
+        1. If _region_ is *undefined*, then
+          1. Set _region_ to CanonicalUnicodeSubdivision(_locale_, *"sd"*).
+          1. If _region_ is *undefined*, then
+            1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, set _maximal_ to _locale_.
+            1. Set _maximal_ to CanonicalizeUnicodeLocaleId(_maximal_).
+            1. Set _region_ to GetLocaleRegion(_maximal_).
+            1. If _region_ is *undefined*, then
+              1. Set _region_ to *"001"*.
+        1. Let _regionOverride_ be CanonicalUnicodeSubdivision(_locale_, *"rg"*).
+        1. Return { [[Region]]: _region_, [[RegionOverride]]: _regionOverride_ }.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-calendarsoflocale" type="implementation-defined abstract operation">
+      <h1>
+        CalendarsOfLocale (
+          _loc_: an Intl.Locale,
+        ): an Array
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35-dates.html#Calendar_Preference_Data">Unicode Technical Standard #35 Part 4 Dates, Calendar Preference Data</a>.</dd>
+      </dl>
+      <emu-alg>
+        1. If _loc_.[[Calendar]] is not *undefined*, then
+          1. Return CreateArrayFromList(« _loc_.[[Calendar]] »).
+        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _region_ be _preference_.[[Region]].
+        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
+        1. If _regionOverride_ is not *undefined* and calendar preference data for _regionOverride_ are available, then
+          1. Let _lookupRegion_ be _regionOverride_.
+        1. Else,
+          1. Let _lookupRegion_ be _region_.
+        1. Let _list_ be a List of unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
+        1. If _list_ is empty, set _list_ to « *"gregory"* ».
+        1. Return CreateArrayFromList(_list_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-collationsoflocale" type="implementation-defined abstract operation">
+      <h1>
+        CollationsOfLocale (
+          _loc_: an Intl.Locale,
+        ): an Array
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _loc_.[[Collation]] is not *undefined*, then
+          1. Return CreateArrayFromList(« _loc_.[[Collation]] »).
+        1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
+        1. If _language_ is not *"und"*, then
+          1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], « _loc_.[[Locale]] »).
+          1. If _r_ is not *undefined*, then
+            1. Let _foundLocale_ be _r_.[[locale]].
+          1. Else,
+            1. Let _foundLocale_ be DefaultLocale().
+          1. Let _foundLocaleData_ be %Intl.Collator%.[[SortLocaleData]].[[&lt;_foundLocale_&gt;]].
+          1. Let _list_ be a copy of _foundLocaleData_.[[co]].
+          1. Assert: _list_[0] is *null*.
+          1. Remove the first element from _list_.
+        1. Else,
+          1. Let _list_ be « *"emoji"*, *"eor"* ».
+        1. Let _sorted_ be a copy of _list_, sorted according to lexicographic code unit order.
+        1. Return CreateArrayFromList(_sorted_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-hourcyclesoflocale" type="implementation-defined abstract operation">
+      <h1>
+        HourCyclesOfLocale (
+          _loc_: an Intl.Locale,
+        ): an Array
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35-dates.html#Time_Data">Unicode Technical Standard #35 Part 4 Dates, Time Data</a>.</dd>
+      </dl>
+      <emu-alg>
+        1. If _loc_.[[HourCycle]] is not *undefined*, then
+          1. Return CreateArrayFromList(« _loc_.[[HourCycle]] »).
+        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _region_ be _preference_.[[Region]].
+        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
+        1. If _regionOverride_ is not *undefined* and time data for _regionOverride_ are available, then
+          1. Let _lookupRegion_ be _regionOverride_.
+        1. Else,
+          1. Let _lookupRegion_ be _region_.
+        1. Let _list_ be a List of unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no time data for _lookupRegion_ is available.
+        1. If _list_ is empty, set _list_ to « *"h23"* ».
+        1. Return CreateArrayFromList(_list_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-numberingsystemsoflocale" type="implementation-defined abstract operation">
+      <h1>
+        NumberingSystemsOfLocale (
+          _loc_: an Intl.Locale,
+        ): an Array
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. If _loc_.[[NumberingSystem]] is not *undefined*, then
+          1. Return CreateArrayFromList(« _loc_.[[NumberingSystem]] »).
+        1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.NumberFormat%.[[AvailableLocales]], « _loc_.[[Locale]] »).
+        1. If _r_ is not *undefined*, then
+          1. Let _foundLocale_ be _r_.[[locale]].
+          1. Let _foundLocaleData_ be %Intl.NumberFormat%.[[LocaleData]].[[&lt;_foundLocale_&gt;]].
+          1. Let _numberingSystems_ be _foundLocaleData_.[[nu]].
+          1. Let _list_ be « _numberingSystems_[0] ».
+        1. Else,
+          1. Let _list_ be « *"latn"* ».
+        1. Return CreateArrayFromList(_list_).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-timezonesoflocale" type="implementation-defined abstract operation">
+      <h1>
+        TimeZonesOfLocale (
+          _loc_: an Intl.Locale,
+        ): an Array or *undefined*
+      </h1>
+      <dl class="header">
+      </dl>
+      <emu-alg>
+        1. Let _region_ be GetLocaleRegion(_loc_.[[Locale]]).
+        1. If _region_ is *undefined*, return *undefined*.
+        1. Let _list_ be a List of unique canonical time zone identifiers, which must be String values indicating a canonical Zone name of the IANA Time Zone Database, of those in common use in _region_. The list is empty if no time zones are commonly used in _region_. The list is sorted according to lexicographic code unit order.
+        1. Return CreateArrayFromList( _list_ ).
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-textdirectionoflocale" type="implementation-defined abstract operation">
+      <h1>
+        TextDirectionOfLocale (
+          _loc_: an Intl.Locale,
+        ): a String or *undefined*
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://unicode.org/reports/tr35/tr35.html#Script_Metadata">Unicode Technical Standard #35 Part 1 Core, Script Metadata</a>.</dd>
+      </dl>
+      <emu-alg>
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Let _script_ be GetLocaleScript(_locale_).
+        1. If _script_ is *undefined*, then
+          1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, return *undefined*.
+          1. Set _script_ to GetLocaleScript(_maximal_).
+          1. If _script_ is *undefined*, return *undefined*.
+        1. If the default general ordering of characters within a line in _script_ is right-to-left, return *"rtl"*.
+        1. If the default general ordering of characters within a line in _script_ is left-to-right, return *"ltr"*.
+        1. Return *undefined*.
+      </emu-alg>
+      <emu-note>
+        When the direction of default general ordering of characters within a line in the _script_ cannot be determined, or the direction is neither right-to-left nor left-to-right, then *undefined* will be returned.
+      </emu-note>
+      <emu-note>
+        Text in a language may have more than one possible direction. Text in a language written in one script may also have more than one possible direction. Therefore, if there is direction information included in the metadata associated with a piece of text, that direction information should be considered as the primary source of truth. The information returned by TextDirectionOfLocale should only be used as a fallback mechanism while there is no metadata associated with the text to provide the direction information of the text. It should only be used while the direction information is not present but language information is known. Web developers should not rely too much on this API to decide the direction of the text.
+      </emu-note>
+    </emu-clause>
+
+    <emu-clause id="sec-weekdaytouvalue" type="abstract operation">
+      <h1>
+        WeekdayToUValue (
+          _fw_: a String,
+        ): a String
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It converts a string that numerically represents a day of the week to a valid <a href="https://unicode.org/reports/tr35/#UnicodeFirstDayIdentifier">Unicode First Day Identifier</a> defined in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core Section 3.6.1 Key and Type Definitions</a>, and returns any other string unmodified.</dd>
+      </dl>
+      <emu-alg>
+        1. For each row of <emu-xref href="#table-locale-weekday-string-value"></emu-xref>, except the header row, in table order, do
+          1. Let _w_ be the Weekday value of the current row.
+          1. Let _s_ be the String value of the current row.
+          1. If _fw_ is equal to _w_, return _s_.
+        1. Return _fw_.
+      </emu-alg>
+
+      <emu-table id="table-locale-weekday-string-value">
+        <emu-caption>Weekday String and Value</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Weekday</th>
+              <th>String</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>*"0"*</td>
+            <td>*"sun"*</td>
+            <td>*7*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"1"*</td>
+            <td>*"mon"*</td>
+            <td>*1*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"2"*</td>
+            <td>*"tue"*</td>
+            <td>*2*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"3"*</td>
+            <td>*"wed"*</td>
+            <td>*3*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"4"*</td>
+            <td>*"thu"*</td>
+            <td>*4*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"5"*</td>
+            <td>*"fri"*</td>
+            <td>*5*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"6"*</td>
+            <td>*"sat"*</td>
+            <td>*6*<sub>𝔽</sub></td>
+          </tr>
+          <tr>
+            <td>*"7"*</td>
+            <td>*"sun"*</td>
+            <td>*7*<sub>𝔽</sub></td>
+          </tr>
+        </table>
+      </emu-table>
+    </emu-clause>
+
+    <emu-clause id="sec-weekdayuvaluetonumber" type="abstract operation">
+      <h1>
+        WeekdayUValueToNumber (
+          _fw_: a String,
+        ): an integral Number or *undefined*
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It converts a <a href="https://unicode.org/reports/tr35/#UnicodeFirstDayIdentifier">Unicode First Day Identifier</a> defined in <a href="https://unicode.org/reports/tr35/#Key_And_Type_Definitions_">Unicode Technical Standard #35 Part 1 Core Section 3.6.1 Key and Type Definitions</a> to a numeric ISO 8601 <em>calendar day of week</em>, and returns *undefined* for any other string.</dd>
+      </dl>
+      <emu-alg>
+        1. For each row of <emu-xref href="#table-locale-weekday-string-value"></emu-xref>, except the header row, in table order, do
+          1. Let _s_ be the String value of the current row.
+          1. Let _v_ be the Value value of the current row.
+          1. If _fw_ is equal to _s_, return _v_.
+        1. Return *undefined*.
+      </emu-alg>
+    </emu-clause>
+
+    <emu-clause id="sec-weekinfooflocale" type="implementation-defined abstract operation">
+      <h1>
+        WeekInfoOfLocale (
+          _loc_: an Intl.Locale,
+        ): a Record
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Locale data specified in <a href="https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Patterns_Week_Elements">Unicode Technical Standard #35 Part 4 Dates, Week Elements</a>.</dd>
+      </dl>
+      <emu-alg>
+        1. Let _locale_ be _loc_.[[Locale]].
+        1. Let _r_ be a Record whose fields are defined by <emu-xref href="#table-locale-weekinfo-record"></emu-xref>, with values based on _locale_.
+        1. Let _fws_ be _loc_.[[FirstDayOfWeek]].
+        1. Let _fw_ be WeekdayUValueToNumber(_fws_).
+        1. If _fw_ is not *undefined*, then
+          1. Set _r_.[[FirstDay]] to _fw_.
+        1. Return _r_.
+      </emu-alg>
+
+      <emu-note>
+        The record's return values are determined by _locale_, in accordance with the specifications outlined in <a href="https://www.unicode.org/reports/tr35/tr35-dates.html#Week_Data">Unicode Technical Standard #35 Part 4 Dates, Week Data</a> and <a href="https://www.unicode.org/reports/tr35/tr35-dates.html#first-day-overrides">First Day Overrides</a>.
+      </emu-note>
+
+      <emu-table id="table-locale-weekinfo-record">
+        <emu-caption>WeekInfo Record Fields</emu-caption>
+        <table class="real-table">
+          <thead>
+            <tr>
+              <th>Field Name</th>
+              <th>Value</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tr>
+            <td>[[FirstDay]]</td>
+            <td>The ISO 8601 <em>calendar day of week</em> of a calendar day, which is its 1-based ordinal position within the sequence of week calendar days that starts with Monday at *1*<sub>𝔽</sub> and ends with Sunday at *7*<sub>𝔽</sub>.</td>
+            <td>Which day of the week is considered “first” for calendar purposes.</td>
+          </tr>
+          <tr>
+            <td>[[Weekend]]</td>
+            <td>A List of one or more ISO 8601 <em>calendar day of week</em> integral Number values *1*<sub>𝔽</sub> (Monday) through *7*<sub>𝔽</sub> (Sunday), in ascending numeric order.</td>
+            <td>The list of weekday values indicating which days of the week are considered as part of the “weekend” for calendar purposes. Notice that the number of days in the weekend may differ across locales and may be non-contiguous.</td>
+          </tr>
+        </table>
+      </emu-table>
     </emu-clause>
   </emu-clause>
 </emu-clause>
