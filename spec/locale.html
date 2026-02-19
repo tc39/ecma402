@@ -405,8 +405,7 @@
         1. Perform ? RequireInternalSlot(_loc_, [[InitializedLocale]]).
         1. Let _info_ be OrdinaryObjectCreate(%Object.prototype%).
         1. Let _dir_ be TextDirectionOfLocale(_loc_).
-        1. If _dir_ is not *undefined*, then
-          1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
+        1. Perform ! CreateDataPropertyOrThrow(_info_, *"direction"*, _dir_).
         1. Return _info_.
       </emu-alg>
     </emu-clause>
