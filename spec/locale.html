@@ -30,7 +30,7 @@
         1. Else,
           1. Let _tag_ be ? ToString(_tag_).
         1. Set _options_ to ? CoerceOptionsToObject(_options_).
-        1. If IsStructurallyValidLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
+        1. If IsWellFormedLanguageTag(_tag_) is *false*, throw a *RangeError* exception.
         1. NOTE: Because <a href="https://unicode.org/reports/tr35/#processing-languageids">LanguageId canonicalization</a> can alter _tag_ in arbitrary ways according to Alias Rules from <a href="https://github.com/unicode-org/cldr/blob/main/common/supplemental/supplementalMetadata.xml"><code>supplementalMetadata.xml</code></a>, it is necessary to perform such canonicalization before applying overrides from _options_.
         1. Set _tag_ to CanonicalizeUnicodeLocaleId(_tag_).
         1. Set _tag_ to ? UpdateLanguageId(_tag_, _options_).

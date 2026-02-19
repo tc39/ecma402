@@ -31,9 +31,9 @@
 
     <p>All well-formed language tags are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
 
-    <emu-clause id="sec-isstructurallyvalidlanguagetag" type="abstract operation">
+    <emu-clause id="sec-iswellformedlanguagetag" oldids="sec-isstructurallyvalidlanguagetag" type="abstract operation">
       <h1>
-        IsStructurallyValidLanguageTag (
+        IsWellFormedLanguageTag (
           _locale_: a String,
         ): a Boolean
       </h1>
@@ -105,7 +105,7 @@
       <h1>DefaultLocale ( ): a Unicode canonicalized locale identifier</h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>The returned String value represents the well-formed (<emu-xref href="#sec-isstructurallyvalidlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale. It must not contain a Unicode locale extension sequence.</dd>
+        <dd>The returned String value represents the well-formed (<emu-xref href="#sec-iswellformedlanguagetag"></emu-xref>) and canonicalized (<emu-xref href="#sec-canonicalizeunicodelocaleid"></emu-xref>) language tag for the host environment's current locale. It must not contain a Unicode locale extension sequence.</dd>
       </dl>
       <emu-note>
         The returned value is is a potential fingerprinting vector. In browser environments, it should match <a href="https://html.spec.whatwg.org/#language-preferences"><code>navigator.language</code></a> to avoid providing any additional distinguishing information.
