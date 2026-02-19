@@ -562,9 +562,7 @@
           1. Let _extension_ be the Unicode locale extension sequence of _locale_.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
           1. Let _keywords_ be _components_.[[Keywords]].
-          1. If _keywords_ contains an element whose [[Key]] is _key_, then
-            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
-            1. Return _entry_.[[Value]].
+          1. If there exists an element _entry_ of _keywords_ such that _entry_.[[Key]] is _key_, return _entry_.[[Value]].
         1. Return ~empty~.
       </emu-alg>
     </emu-clause>
