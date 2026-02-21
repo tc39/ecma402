@@ -515,6 +515,117 @@
     </emu-clause>
   </emu-clause>
 
+  <emu-clause id="sec-calendar-types">
+    <h1>Calendar Types</h1>
+    <p>
+      ECMA-262 describes calendar types, of which *"iso8601"* is required to be supported.
+      This specification additionally requires ECMAScript implementations to support calendar types corresponding with those of the <a href="https://cldr.unicode.org/">Unicode Common Locale Data Repository (CLDR)</a>.
+    </p>
+
+    <p>
+      The following table lists the calendar types described in CLDR, along with implementation notes and sources where necessary.
+      All calendar types must use a <dfn>proleptic</dfn> reckoning, meaning that the current rules for calendrical calculations are extended indefinitely into the past, ignoring dates when historical calendar reforms happened.
+    </p>
+
+    <p>
+      For example, at various points from the 16th to the 20th century, various locales in Europe changed from the Julian to the Gregorian calendar, skipping some dates in the process.
+      Since the *"gregory"* calendar is proleptic, no dates are skipped; all dates are in the "new system," even if it wasn't used at the time.
+    </p>
+
+    <emu-table id="table-calendar-types">
+      <emu-caption>Calendar types described in CLDR</emu-caption>
+      <table class="real-table">
+        <thead>
+          <tr>
+            <th>Calendar Type</th>
+            <th>Description and implementation notes</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>*"buddhist"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Thai_solar_calendar">Thai Buddhist calendar</a>. Month numbers, month codes, and days are identical to ISO 8601, with one era and an epoch year differing from the epoch year in *"gregory"*. All years are treated as having 12 months. For compatibility with other systems, dates prior to ISO year 1941 (2484 BE) are defined but may not correspond to historically accurate values due to the calendar reforms of 1940 and earlier.</td>
+        </tr>
+        <tr>
+          <td>*"chinese"*</td>
+          <td>Traditional <a href="https://en.wikipedia.org/wiki/Chinese_calendar">Chinese calendar</a>. Lunisolar calendar, based on <a href="https://pmo.cas.cn/xwdt2019/kpdt2019/202203/t20220309_6386774.html">data published by the Purple Mountain Observatory</a> for dates between 1900 and 2100 (which complies with <a href="https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=E107EA4DE9725EDF819F33C60A44B296">GB/T 33661-2017, Calculation and Promulgation of the Chinese Calendar</a>), falling back to an implementation-defined approximation outside that range. The arithmetic year is as in *"gregory"*, and there are no eras.</td>
+        </tr>
+        <tr>
+          <td>*"coptic"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Coptic_calendar">Coptic calendar</a>. Similar solar algorithm to *"ethioaa"* and *"ethiopic"* but with a different epoch year. There is one era, starting in the epoch year.</td>
+        </tr>
+        <tr>
+          <td>*"dangi"*</td>
+          <td>Traditional <a href="https://en.wikipedia.org/wiki/Korean_calendar">Korean calendar</a>. Lunisolar calendar, based on <a href="https://astro.kasi.re.kr/life/post/calendardata"> data published by the Korea Astronomy and Space Science Institute (KASI)</a> for dates between 1900 and 2050, falling back to an implementation-defined approximation outside that range. The arithmetic year is as in *"gregory"*, and there are no eras.</td>
+        </tr>
+        <tr>
+          <td>*"ethioaa"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Ethiopian_calendar">Ethiopian calendar</a>, Amete Alem era. Similar solar algorithm to *"coptic"* and *"ethiopic"*, but with a different epoch year. There is one era, starting in the epoch year.</td>
+        </tr>
+        <tr>
+          <td>*"ethiopic"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Ethiopian_calendar">Ethiopian calendar</a>, Amete Mihret era. Similar solar algorithm to *"coptic"* and *"ethioaa"*, but with a different epoch year. There are two eras, one starting in the epoch year of *"ethioaa"* and one starting in this calendar's epoch year.</td>
+        </tr>
+        <tr>
+          <td>*"ethiopic-amete-alem"*</td>
+          <td>Alias for *"ethioaa"*.</td>
+        </tr>
+        <tr>
+          <td>*"gregory"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Gregorian_calendar">Gregorian calendar</a>. Solar calendar almost identical to the ISO 8601 calendar, except that it does not define week numbering and it contains two eras, one before the epoch year and one after.</td>
+        </tr>
+        <tr>
+          <td>*"hebrew"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Hebrew_calendar">Hebrew calendar</a>. Civil calendar with Tishrei as the first month of the year. Lunisolar calendar with one leap month inserted after month 5. There is one era.</td>
+        </tr>
+        <tr>
+          <td>*"indian"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Indian_national_calendar">Indian national</a> (or Śaka) calendar. Solar calendar with one era.</td>
+        </tr>
+        <tr>
+          <td>*"islamic-civil"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Tabular_Islamic_calendar">Tabular Hijri calendar</a> with leap years 2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29 in the 30-year cycle, and civil epoch (Friday July 16, 622 Julian / 0622-07-19 ISO)</td>
+        </tr>
+        <tr>
+          <td>*"islamic-tbla"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Tabular_Islamic_calendar">Tabular Hijri calendar</a> with leap years 2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29 in the 30-year cycle, and astronomical epoch (Thursday July 15, 622 Julian / 0622-07-18 ISO)</td>
+        </tr>
+        <tr>
+          <td>*"islamic-umalqura"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Islamic_calendar">Hijri calendar</a>, Umm al-Qura. Lunar calendar using months calculated by King Abdulaziz City for Science and Technology (KACST) for dates from the start of 1300 AH to the end of 1600 AH, falling back to *"islamic-civil"* outside that range.</td>
+        </tr>
+        <tr>
+          <td>*"islamicc"*</td>
+          <td>Alias for *"islamic-civil"*.</td>
+        </tr>
+        <tr>
+          <td>*"iso8601"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> calendar. Fully specified in ECMA-262.</td>
+        </tr>
+        <tr>
+          <td>*"japanese"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Japanese_calendar">Japanese Imperial calendar</a>, era system hybridised with the era system used in *"gregory"*. Month numbers, month codes, and days are the same as in the ISO 8601 calendar. For dates up to and including 1872-12-31, years and eras identical to *"gregory"* are used. For later dates, the eras and ranges defined by the Japanese government are used. Note that ISO year 1873 is the 6th year of the Meiji period, starting on ISO date 1868-10-23, during which calendar reforms took place. The arithmetic year is identical to *"gregory"*.</td>
+        </tr>
+        <tr>
+          <td>*"persian"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Solar_Hijri_calendar">Persian (or Solar Hijri) calendar</a>. There is one era. Solar calendar using leap years as <a href="https://calendar.ut.ac.ir/documents/2139738/7092644/Kabise+Shamsi+1206-1498.pdf">published by the Iranian calendar authority</a> for dates between 1206 AP and 1498 AP, falling back to an implementation-defined approximation outside that range.</td>
+        </tr>
+        <tr>
+          <td>*"roc"*</td>
+          <td><a href="https://en.wikipedia.org/wiki/Republic_of_China_calendar">Republic of China (or Minguo) calendar</a>. Month numbers, month codes, and days are the same as in the ISO 8601 calendar, with two eras, one before the epoch year and one after. The epoch year is different from *"gregory"*.</td>
+        </tr>
+      </table>
+    </emu-table>
+  </emu-clause>
+
+  <emu-clause id="sup-availablecalendars" oldids="sec-availablecalendars sec-availablecanonicalcalendars" type="abstract operation">
+    <h1>AvailableCalendars ( ): a List of calendar types</h1>
+    <dl class="header">
+      <dt>description</dt>
+      <dd>The returned List is sorted according to lexicographic code unit order, and contains unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>) identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects, including their aliases (e.g., both *"islamicc"* and *"islamic-civil"*). The List must consist of the "Calendar Type" value of every row of <emu-xref href="#table-calendar-types"></emu-xref>, except the header row.</dd>
+    </dl>
+    <p>This definition supersedes the definition provided in <emu-xref href="#sec-availablecalendars" title></emu-xref>.</p>
+  </emu-clause>
+
   <emu-clause id="sec-pattern-string-types">
     <h1>Pattern String Types</h1>
     <p><dfn>Pattern String</dfn> is a String value which contains zero or more substrings of the form *"{key}"*, where key can be any non-empty sequence consisting only of elements from the ASCII word characters. The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.</p>
