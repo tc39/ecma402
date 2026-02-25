@@ -626,6 +626,26 @@
     <p>This definition supersedes the definition provided in <emu-xref href="#sec-availablecalendars" title></emu-xref>.</p>
   </emu-clause>
 
+  <emu-clause id="sup-canonicalizecalendar" type="abstract operation">
+    <h1>
+      CanonicalizeCalendar (
+        _id_: a String,
+      ): either a normal completion containing a calendar type, or a throw completion
+    </h1>
+    <dl class="header">
+      <dt>description</dt>
+      <dd>It returns the canonical form of the calendar type denoted by _id_, or throws an exception if there is no such built-in calendar.</dd>
+    </dl>
+    <p>This definition supersedes the definition provided in <emu-xref href="#sec-canonicalizecalendar" title></emu-xref>.</p>
+    <p>It performs the following steps when called:</p>
+
+    <emu-alg>
+      1. Let _calendars_ be AvailableCalendars().
+      1. If _calendars_ does not contain the ASCII-lowercase of _id_, throw a *RangeError* exception.
+      1. Return CanonicalizeUValue(*"ca"*, _id_).
+    </emu-alg>
+  </emu-clause>
+
   <emu-clause id="sec-pattern-string-types">
     <h1>Pattern String Types</h1>
     <p><dfn>Pattern String</dfn> is a String value which contains zero or more substrings of the form *"{key}"*, where key can be any non-empty sequence consisting only of elements from the ASCII word characters. The syntax of the abstract pattern strings is an implementation detail and is not exposed to users of ECMA-402.</p>
