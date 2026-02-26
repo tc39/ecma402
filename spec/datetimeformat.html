@@ -1447,7 +1447,7 @@
           _dateTimeFormat_: an Intl.DateTimeFormat,
           _format_: a DateTime Format Record or a DateTime Range Pattern Format Record,
           _pattern_: a Pattern String,
-          _epochNanoseconds_: a BigInt,
+          _epochNanoseconds_: an epoch nanoseconds value,
           _isPlain_: a Boolean,
         ): a List of Records with fields [[Type]] (a String) and [[Value]] (a String)
       </h1>
@@ -1815,7 +1815,7 @@
           </tr>
           <tr>
             <td>[[EpochNanoseconds]]</td>
-            <td>a BigInt</td>
+            <td>an epoch nanoseconds value</td>
           </tr>
           <tr>
             <td>[[IsPlain]]</td>
@@ -1969,7 +1969,7 @@
       <emu-alg>
         1. Set _x_ to TimeClip(_x_).
         1. If _x_ is *NaN*, throw a *RangeError* exception.
-        1. Let _epochNanoseconds_ be ℤ(ℝ(_x_) × 10<sup>6</sup>).
+        1. Let _epochNanoseconds_ be ℝ(_x_) × 10<sup>6</sup>.
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
         1. Return Value Format Record {
           [[Format]]: _format_,
@@ -2004,7 +2004,7 @@
     <emu-clause id="sec-tolocaltime" type="implementation-defined abstract operation">
       <h1>
         ToLocalTime (
-          _epochNs_: a BigInt,
+          _epochNs_: an epoch nanoseconds value,
           _calendar_: a String,
           _timeZoneIdentifier_: a String,
         ): a ToLocalTime Record
@@ -2021,7 +2021,7 @@
         1. Else,
           1. Assert: GetAvailableNamedTimeZoneIdentifier(_timeZoneIdentifier_) is not ~empty~.
           1. Let _offsetNs_ be GetNamedTimeZoneOffsetNanoseconds(_timeZoneIdentifier_, _epochNs_).
-        1. Let _tz_ be ℝ(_epochNs_) + _offsetNs_.
+        1. Let _tz_ be _epochNs_ + _offsetNs_.
         1. If _calendar_ is *"gregory"*, then
           1. Return a ToLocalTime Record with fields calculated from _tz_ according to <emu-xref href="#table-datetimeformat-tolocaltime-record"></emu-xref>.
         1. Else,
