@@ -1774,7 +1774,7 @@
         1. Let _ignoredKeys_ be a copy of _keys_.
         1. For each element _key_ of _keys_, do
           1. If _key_ is ~month~, append ~month-code~ to _ignoredKeys_.
-          1. If _key_ is ~month-code~, append ~month~.
+          1. If _key_ is ~month-code~, append ~month~ to _ignoredKeys_.
           1. If _key_ is one of ~era~, ~era-year~, or ~year~ and CalendarSupportsEra(_calendar_) is *true*, then
             1. Append ~era~, ~era-year~, and ~year~ to _ignoredKeys_.
           1. If _key_ is one of ~day~, ~month~, or ~month-code~ and CalendarHasMidYearEras(_calendar_) is *true*, then
