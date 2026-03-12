@@ -59,7 +59,7 @@
 
       <dl class="header">
         <dt>description</dt>
-        <dd>If the additional _toLocaleStringTimeZone_ argument is provided, the time zone will be overridden and some adjustments will be made to the defaults in order to implement the behaviour of `Temporal.ZonedDateTime.prototype.toLocaleString`.</dd>
+        <dd>_toLocaleStringTimeZone_ supports the behaviour of %Temporal.ZonedDateTime.prototype.toLocaleString%.</dd>
       </dl>
 
       <emu-alg>
@@ -90,14 +90,11 @@
           1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
         1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
-        1. If _timeZone_ is *undefined*, then
-          1. If _toLocaleStringTimeZone_ is present, then
-            1. Set _timeZone_ to _toLocaleStringTimeZone_.
-          1. Else,
-            1. Set _timeZone_ to SystemTimeZoneIdentifier().
+        1. If _toLocaleStringTimeZone_ is present, then
+          1. If _timeZone_ is not *undefined*, throw a *TypeError* exception.
+          1. Set _timeZone_ to _toLocaleStringTimeZone_.
         1. Else,
-          1. If _toLocaleStringTimeZone_ is present, throw a *TypeError* exception.
-          1. Set _timeZone_ to ? ToString(_timeZone_).
+          1. If _timeZone_ is *undefined*, set _timeZone_ to SystemTimeZoneIdentifier(); else, set _timeZone_ to ? ToString(_timeZone_).
         1. If IsOffsetTimeZoneIdentifier(_timeZone_) is *true*, then
           1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset[~SubMinutePrecision]|).
           1. Assert: _parseResult_ is a Parse Node.
