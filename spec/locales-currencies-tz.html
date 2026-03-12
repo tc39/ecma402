@@ -621,9 +621,18 @@
     <h1>AvailableCalendars ( ): a List of calendar types</h1>
     <dl class="header">
       <dt>description</dt>
-      <dd>The returned List is sorted according to lexicographic code unit order, and contains unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>) identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects, including their aliases (e.g., both *"islamicc"* and *"islamic-civil"*). The List must consist of the “Calendar Type” value of every row of <emu-xref href="#table-calendar-types"></emu-xref>, except the header row.</dd>
+      <dd>The returned List is sorted according to lexicographic code unit order, and contains unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>) identifying the calendars for which the implementation provides the functionality of Intl.DateTimeFormat objects, including their aliases.</dd>
     </dl>
     <p>This definition supersedes the definition provided in <emu-xref href="#sec-availablecalendars" title></emu-xref>.</p>
+    <p>It performs the following steps when called:</p>
+    <emu-alg>
+      1. Let _identifiers_ be a new empty List.
+      1. For each row of <emu-xref href="#table-calendar-types"></emu-xref>, except the header row, in table order, do
+        1. Let _identifier_ be the “Calendar Type” value of the current row.
+        1. Append _identifier_ to _identifiers_.
+      1. Sort _identifiers_ according to lexicographic code unit order.
+      1. Return _identifiers_.
+    </emu-alg>
   </emu-clause>
 
   <emu-clause id="sup-canonicalizecalendar" type="abstract operation">
