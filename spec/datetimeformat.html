@@ -1837,7 +1837,7 @@
         1. Let _epochNs_ be GetUTCEpochNanoseconds(_isoDateTime_).
         1. Let _format_ be _dateTimeFormat_.[[TemporalPlainDateFormat]].
         1. If _format_ is *null*, throw a *TypeError* exception.
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNs_,
           [[IsPlain]]: *true*
@@ -1860,7 +1860,7 @@
         1. Let _epochNs_ be GetUTCEpochNanoseconds(_isoDateTime_).
         1. Let _format_ be _dateTimeFormat_.[[TemporalPlainYearMonthFormat]].
         1. If _format_ is *null*, throw a *TypeError* exception.
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNs_,
           [[IsPlain]]: *true*
@@ -1883,7 +1883,7 @@
         1. Let _epochNs_ be GetUTCEpochNanoseconds(_isoDateTime_).
         1. Let _format_ be _dateTimeFormat_.[[TemporalPlainMonthDayFormat]].
         1. If _format_ is *null*, throw a *TypeError* exception.
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNs_,
           [[IsPlain]]: *true*
@@ -1906,7 +1906,7 @@
         1. Let _epochNs_ be GetUTCEpochNanoseconds(_isoDateTime_).
         1. Let _format_ be _dateTimeFormat_.[[TemporalPlainTimeFormat]].
         1. If _format_ is *null*, throw a *TypeError* exception.
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNs_,
           [[IsPlain]]: *true*
@@ -1927,7 +1927,7 @@
         1. If _dateTime_.[[Calendar]] is not *"iso8601"* and not equal to _dateTimeFormat_.[[Calendar]], throw a *RangeError* exception.
         1. Let _epochNs_ be GetUTCEpochNanoseconds(_dateTime_.[[ISODateTime]]).
         1. Let _format_ be _dateTimeFormat_.[[TemporalPlainDateTimeFormat]].
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNs_,
           [[IsPlain]]: *true*
@@ -1946,7 +1946,7 @@
       </dl>
       <emu-alg>
         1. Let _format_ be _dateTimeFormat_.[[TemporalInstantFormat]].
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _instant_.[[EpochNanoseconds]],
           [[IsPlain]]: *false*
@@ -1968,7 +1968,7 @@
         1. If _x_ is *NaN*, throw a *RangeError* exception.
         1. Let _epochNanoseconds_ be ℝ(_x_) × 10<sup>6</sup>.
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
-        1. Return Value Format Record {
+        1. Return the Value Format Record {
           [[Format]]: _format_,
           [[EpochNanoseconds]]: _epochNanoseconds_,
           [[IsPlain]]: *false*
