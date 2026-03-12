@@ -1554,7 +1554,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It interprets _x_ as an epoch time, and creates the corresponding parts according to the type of _x_, effective locale, and the formatting options of _dateTimeFormat_.</dd>
+        <dd>It derives an epoch nanoseconds value from _x_ (interpreting _x_ as milliseconds since the epoch if it is a Number), and creates the corresponding parts according to the type of _x_, effective locale, and the formatting options of _dateTimeFormat_.</dd>
       </dl>
       <emu-alg>
         1. Let _formatRecord_ be ? ValueFormatRecord(_dateTimeFormat_, _x_).
@@ -1620,7 +1620,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It interprets _x_ and _y_ as epoch times, and creates the corresponding parts according to the types of _x_ and _y_, effective locale, and the formatting options of _dateTimeFormat_.</dd>
+        <dd>It derives an epoch nanoseconds value from each of _x_ and _y_ (interpreting each Number as milliseconds since the epoch), and creates the corresponding parts according to the types of _x_ and _y_, effective locale, and the formatting options of _dateTimeFormat_.</dd>
       </dl>
       <emu-alg>
         1. If IsTemporalObject(_x_) is *true* or IsTemporalObject(_y_) is *true*, then
@@ -1798,7 +1798,7 @@
       <p>Each <dfn id="datetimeformat-value-format-record">Value Format Record</dfn> has the fields defined in <emu-xref href="#table-datetimeformat-value-format-record"></emu-xref>.</p>
 
       <emu-table id="table-datetimeformat-value-format-record">
-        <emu-caption>Record returned by ValueFormatRecord</emu-caption>
+        <emu-caption>Value Format Record Fields</emu-caption>
         <table class="real-table">
           <thead>
             <tr>

@@ -519,11 +519,11 @@
     <h1>Calendar Types</h1>
     <p>
       ECMA-262 describes calendar types, of which *"iso8601"* is required to be supported.
-      This specification additionally requires ECMAScript implementations to support calendar types corresponding with those of the <a href="https://cldr.unicode.org/">Unicode Common Locale Data Repository (CLDR)</a>.
+      This specification additionally requires ECMAScript implementations to support an explicit subset of calendar types defined in the <a href="https://cldr.unicode.org/">Unicode Common Locale Data Repository (CLDR)</a> and prohibits them from supporting other calendar types, although future editions may expand the list.
     </p>
 
     <p>
-      The following table lists the calendar types described in CLDR, along with implementation notes and sources where necessary.
+      The following table lists the sanctioned calendar types, along with implementation notes and sources where necessary.
       All calendar types must use a <dfn>proleptic</dfn> reckoning, meaning that the current rules for calendrical calculations are extended indefinitely into the past, ignoring dates when historical calendar reforms happened.
     </p>
 

@@ -812,7 +812,7 @@
         1. If _shiftType_ is ~skip-backward~, then
           1. Return CreateMonthCode(! ParseMonthCode(_monthCode_).[[MonthNumber]], *false*).
         1. Else,
-          1. Assert: _monthCode_ is *"M05L"*.
+          1. Assert: _calendar_ is *"hebrew"* and _monthCode_ is *"M05L"*.
           1. Return *"M06"*.
       </emu-alg>
     </emu-clause>
@@ -877,7 +877,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-calendardateera" type="abstract operation">
+    <emu-clause id="sec-calendardateera" type="implementation-defined abstract operation">
       <h1>
         CalendarDateEra (
           _calendar_: a calendar type that is not *"iso8601"*,
@@ -895,7 +895,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-calendardateerayear" type="abstract operation">
+    <emu-clause id="sec-calendardateerayear" type="implementation-defined abstract operation">
       <h1>
         CalendarDateEraYear (
           _calendar_: a calendar type that is not *"iso8601"*,
@@ -913,7 +913,7 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-calendardatearithmeticyear" type="abstract operation">
+    <emu-clause id="sec-calendardatearithmeticyear" type="implementation-defined abstract operation">
       <h1>
         CalendarDateArithmeticYear (
           _calendar_: a calendar type that is not *"iso8601"*,
@@ -1764,7 +1764,7 @@
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It performs implementation-defined processing to determine which calendar date fields changing any of the fields named in _keys_ can potentially conflict with or invalidate, for the given _calendar_.
+          It determines which calendar date fields changing any of the fields named in _keys_ can potentially conflict with or invalidate, for the given _calendar_.
           A field always invalidates at least itself.
         </dd>
       </dl>
