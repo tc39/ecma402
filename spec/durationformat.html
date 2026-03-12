@@ -488,11 +488,11 @@
         1. Let _result_ be 0.
         1. Let _exponent_ be 3.
         1. For each row of <emu-xref href="#table-partition-duration-format-pattern"></emu-xref>, except the header row, in table order, do
-          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the "Formatter Internal Slot" value of the current row.
+          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the “Formatter Internal Slot” value of the current row.
           1. If _unitOptions_.[[Style]] is *"fractional"*, then
             1. Let _unit_ be the Unit value of the current row.
             1. Assert: IsFractionalSecondUnitName(_unit_) is *true*.
-            1. Let _value_ be the value of _duration_'s internal slot whose name is the "Duration Internal Slot" value of the current row.
+            1. Let _value_ be the value of _duration_'s internal slot whose name is the “Duration Internal Slot” value of the current row.
             1. Set _result_ to _result_ + (_value_ / 10<sup>_exponent_</sup>).
             1. Set _exponent_ to _exponent_ + 3.
         1. Return _result_.
@@ -768,8 +768,8 @@
         1. Let _signDisplayed_ be *true*.
         1. Let _numericUnitFound_ be *false*.
         1. While _numericUnitFound_ is *false*, repeat for each row in <emu-xref href="#table-partition-duration-format-pattern"></emu-xref> in table order, except the header row:
-          1. Let _value_ be the value of _duration_'s internal slot whose name is the "Duration Internal Slot" value of the current row.
-          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the "Formatter Internal Slot" value of the current row.
+          1. Let _value_ be the value of _duration_'s internal slot whose name is the “Duration Internal Slot” value of the current row.
+          1. Let _unitOptions_ be the value of _durationFormat_'s internal slot whose name is the “Formatter Internal Slot” value of the current row.
           1. Let _style_ be _unitOptions_.[[Style]].
           1. Let _display_ be _unitOptions_.[[Display]].
           1. Let _unit_ be the Unit value of the current row.

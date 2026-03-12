@@ -1313,7 +1313,7 @@
           _formats_: a List of DateTime Format Records,
           _baseFormat_: a DateTime Format Record,
           _matcher_: either *"basic"* or *"best fit"*,
-          _allowedOptions_: a List of property names from the "Property" column of <emu-xref href="#table-datetimeformat-components"></emu-xref>,
+          _allowedOptions_: a List of property names from the “Property” column of <emu-xref href="#table-datetimeformat-components"></emu-xref>,
         ): a DateTime Format Record
       </h1>
       <dl class="header">
@@ -1327,7 +1327,7 @@
       <emu-alg>
         1. Let _anyConflictingFields_ be *false*.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
-          1. Let _prop_ be the name given in the "Property" column of the current row.
+          1. Let _prop_ be the name given in the “Property” column of the current row.
           1. If _baseFormat_ has a [[&lt;_prop_>]] field and _allowedOptions_ does not contain _prop_, set _anyConflictingFields_ to true.
         1. If _anyConflictingFields_ is *false*, return _baseFormat_.
         1. NOTE: The above steps prevent the operation from returning an altered format when _baseFormat_ would be sufficient. This should be unnecessary, but exists because the ECMA-402 specification does not guarantee that a format returned from DateTimeStyleFormat can also be returned from BasicFormatMatcher or BestFitFormatMatcher.

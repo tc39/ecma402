@@ -398,8 +398,8 @@
         </dd>
       </dl>
       <emu-alg>
-        1. If _calendar_ is listed in the "Calendar" column of <emu-xref href="#table-eras"></emu-xref>, return *true*.
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. If _calendar_ is listed in the “Calendar” column of <emu-xref href="#table-eras"></emu-xref>, return *true*.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
         1. Return *false*.
       </emu-alg>
       <p>
@@ -671,13 +671,13 @@
       </dl>
       <emu-alg>
         1. For each row of <emu-xref href="#table-eras"></emu-xref>, except the header row, do
-          1. Let _cal_ be the Calendar value of the current row.
+          1. Let _cal_ be the “Calendar” value of the current row.
           1. If _cal_ is equal to _calendar_, then
-            1. Let _canonicalName_ be the Era value of the current row.
+            1. Let _canonicalName_ be the “Era” value of the current row.
             1. If _canonicalName_ is equal to _era_, return _canonicalName_.
-            1. Let _aliases_ be a List whose elements are the strings given in the "Aliases" column of the row.
+            1. Let _aliases_ be a List whose elements are the strings given in the “Aliases” column of the row.
             1. If _aliases_ contains _era_, return _canonicalName_.
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
         1. Return *undefined*.
       </emu-alg>
     </emu-clause>
@@ -694,7 +694,7 @@
       </dl>
       <emu-alg>
         1. If _calendar_ is *"japanese"*, return *true*.
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
         1. Return *false*.
       </emu-alg>
     </emu-clause>
@@ -711,12 +711,12 @@
       <emu-alg>
         1. Let _commonMonthCodes_ be « *"M01"*, *"M02"*, *"M03"*, *"M04"*, *"M05"*, *"M06"*, *"M07"*, *"M08"*, *"M09"*, *"M10"*, *"M11"*, *"M12"* ».
         1. If _commonMonthCodes_ contains _monthCode_, return *true*.
-        1. If _calendar_ is listed in the "Calendar" column of <emu-xref href="#table-additional-month-codes"></emu-xref>, then
-          1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> with a value in the Calendar column matching _calendar_.
-          1. Let _specialMonthCodes_ be a List whose elements are the strings given in the "Additional Month Codes" column of _r_.
+        1. If _calendar_ is listed in the “Calendar” column of <emu-xref href="#table-additional-month-codes"></emu-xref>, then
+          1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> with a value in the “Calendar” column matching _calendar_.
+          1. Let _specialMonthCodes_ be a List whose elements are the strings given in the “Additional Month Codes” column of _r_.
           1. If _specialMonthCodes_ contains _monthCode_, return *true*.
           1. Return *false*.
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
         1. Return *false*.
       </emu-alg>
 
@@ -806,9 +806,9 @@
         1. Assert: IsValidMonthCodeForCalendar(_calendar_, _monthCode_) is *true*.
         1. If YearContainsMonthCode(_calendar_, _arithmeticYear_, _monthCode_) is *true*, return _monthCode_.
         1. If _overflow_ is ~reject~, throw a *RangeError* exception.
-        1. Assert: _calendar_ is listed in the "Calendar" column of <emu-xref href="#table-additional-month-codes"></emu-xref>.
-        1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> with a value in the Calendar column matching _calendar_.
-        1. Let _shiftType_ be the value given in the "Leap to Common Month Transformation" column of _r_.
+        1. Assert: _calendar_ is listed in the “Calendar” column of <emu-xref href="#table-additional-month-codes"></emu-xref>.
+        1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> with a value in the “Calendar” column matching _calendar_.
+        1. Let _shiftType_ be the value given in the “Leap to Common Month Transformation” column of _r_.
         1. If _shiftType_ is ~skip-backward~, then
           1. Return CreateMonthCode(! ParseMonthCode(_monthCode_).[[MonthNumber]], *false*).
         1. Else,
@@ -837,10 +837,10 @@
         1. Let _monthsBefore_ be 0.
         1. Let _number_ be 1.
         1. Let _isLeap_ be *false*.
-        1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> which the _calendar_ is in the Calendar column.
-        1. If the "Leap to Common Month Transformation" column of _r_ is empty, then
+        1. Let _r_ be the row in <emu-xref href="#table-additional-month-codes"></emu-xref> which the _calendar_ is in the “Calendar” column.
+        1. If the “Leap to Common Month Transformation” column of _r_ is empty, then
           1. Return ! ParseMonthCode(_monthCode_).[[MonthNumber]].
-        1. Assert: The "Additional Month Codes" column of _r_ does not contain *"M00L"* or *"M13"*.
+        1. Assert: The “Additional Month Codes” column of _r_ does not contain *"M00L"* or *"M13"*.
         1. Assert: This algorithm will return before the following loop terminates by failing its condition.
         1. Repeat, while _number_ ≤ 12,
           1. Let _currentMonthCode_ be CreateMonthCode(_number_, _isLeap_).
@@ -925,9 +925,9 @@
         <dd>It performs implementation-defined processing to find the arithmetic year for the date corresponding to _date_ in the context of the calendar represented by _calendar_.</dd>
       </dl>
       <emu-alg>
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
-        1. Let _r_ be the row in <emu-xref href="#table-epoch-years"></emu-xref> with a value in the Calendar column matching _calendar_.
-        1. Let _epochYear_ be the value given in the "Epoch ISO Year" column of _r_.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. Let _r_ be the row in <emu-xref href="#table-epoch-years"></emu-xref> with a value in the “Calendar” column matching _calendar_.
+        1. Let _epochYear_ be the value given in the “Epoch ISO Year” column of _r_.
         1. Let _epochDate_ be the first day of the calendar year starting in ISO year _epochYear_ in the calendar represented by _calendar_, according to implementation-defined processing.
         1. Let _newYear_ be the first day of the calendar year of _date_ in the calendar represented by _calendar_, according to implementation-defined processing.
         1. Let _arithmeticYear_ be the implementation-defined signed number of whole years between _epochDate_ and _newYear_ in the calendar represented by _calendar_.
@@ -1022,10 +1022,10 @@
       <emu-alg>
         1. Let _era_ be CanonicalizeEraInCalendar(_calendar_, _era_).
         1. Assert: _era_ is not *undefined*.
-        1. Assert: _calendar_ is listed in the "Calendar Type" column of <emu-xref href="#table-calendar-types"></emu-xref>.
-        1. Let _r_ be the row in <emu-xref href="#table-eras"></emu-xref> with a value in the Calendar column matching _calendar_ and a value in the Era column matching _era_.
-        1. Let _eraKind_ be the value given in the "Era Kind" column of _r_.
-        1. Let _offset_ be the value given in the "Offset" column of _r_.
+        1. Assert: _calendar_ is listed in the “Calendar Type” column of <emu-xref href="#table-calendar-types"></emu-xref>.
+        1. Let _r_ be the row in <emu-xref href="#table-eras"></emu-xref> with a value in the “Calendar” column matching _calendar_ and a value in the “Era” column matching _era_.
+        1. Let _eraKind_ be the value given in the “Era Kind” column of _r_.
+        1. Let _offset_ be the value given in the “Offset” column of _r_.
         1. If _eraKind_ is ~epoch~, return _eraYear_.
         1. If _eraKind_ is ~negative~, return <emu-eqn>1 - _eraYear_</emu-eqn>.
         1. Assert: _eraKind_ is ~offset~.
@@ -1491,12 +1491,12 @@
           1. Let _day_ be _fields_.[[Day]].
         1. If _calendar_ is *"chinese"* or *"dangi"*, then
           1. NOTE: This special case handles combinations of month and day that theoretically could occur but are not known to have occurred historically and cannot be accurately calculated to occur in the future, even if it may be possible to construct a PlainDate with such combinations due to inaccurate approximations. This is explicitly mentioned here because as time goes on, these dates may become known to have occurred historically, or may be more accurately calculated to occur in the future.
-          1. Let _row_ be the row in <emu-xref href="#iso-reference-years"></emu-xref> with a value matching _calendar_ in the "Calendar Type" column and a value in the "Month Code" column matching _monthCode_.
-          1. If the "Reference Year (Days 1-29)" column of _row_ is "—", or _day_ = 30 and the "Reference Year (<emu-not-ref>Day</emu-not-ref> 30)" column of _row_ is "—", then
+          1. Let _row_ be the row in <emu-xref href="#iso-reference-years"></emu-xref> with a value matching _calendar_ in the “Calendar Type” column and a value in the “Month Code” column matching _monthCode_.
+          1. If the “Reference Year (Days 1-29)” column of _row_ is “—”, or _day_ = 30 and the “Reference Year (<emu-not-ref>Day</emu-not-ref> 30)” column of _row_ is “—”, then
             1. If _overflow_ is ~reject~, throw a *RangeError* exception.
             1. Set _monthCode_ to CreateMonthCode(! ParseMonthCode(_monthCode_).[[MonthNumber]], *false*).
-        1. Let _row_ be the row in <emu-xref href="#iso-reference-years"></emu-xref> with a value matching _calendar_ in the "Calendar Type" column and a value in the "Month Code" column matching _monthCode_ (or "any" or "others" if there is no row matching _monthCode_ exactly).
-        1. Assert: _monthCode_ and _day_ do not match an entry in _row_ that is "—".
+        1. Let _row_ be the row in <emu-xref href="#iso-reference-years"></emu-xref> with a value matching _calendar_ in the “Calendar Type” column and a value in the “Month Code” column matching _monthCode_ (or “any” or “others” if there is no row matching _monthCode_ exactly).
+        1. Assert: _monthCode_ and _day_ do not match an entry in _row_ that is “—”.
         1. Let _referenceYear_ be the ISO reference year for _monthCode_ and _day_ as described in _row_.
         1. Return the latest possible ISO Date Record _isoDate_ such that _isoDate_.[[Year]] = _referenceYear_ and NonISOCalendarISOToDate(_calendar_, _isoDate_) returns a Calendar Date Record whose [[MonthCode]] and [[Day]] field values respectively equal _monthCode_ and _day_.
       </emu-alg>
@@ -1738,8 +1738,8 @@
       <h1>
         CalendarExtraFields (
           _calendar_: a calendar type,
-          _fields_: a List of values from the "Enumeration Key" column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>,
-        ): a List of values from the "Enumeration Key" column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>
+          _fields_: a List of values from the “Enumeration Key” column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>,
+        ): a List of values from the “Enumeration Key” column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -1758,8 +1758,8 @@
       <h1>
         NonISOFieldKeysToIgnore (
           _calendar_: a calendar type that is not *"iso8601"*,
-          _keys_: a List of values from the "Enumeration Key" column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>,
-        ): a List of values from the "Enumeration Key" column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>
+          _keys_: a List of values from the “Enumeration Key” column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>,
+        ): a List of values from the “Enumeration Key” column of <emu-xref href="#table-calendar-fields-record-fields"></emu-xref>
       </h1>
       <dl class="header">
         <dt>description</dt>
