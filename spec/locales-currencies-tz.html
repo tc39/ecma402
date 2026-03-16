@@ -20,7 +20,7 @@
 
     <p>
       This specification identifies locales using <dfn variants="Unicode BCP 47 locale identifier">Unicode BCP 47 locale identifiers</dfn> as defined by <a href="https://unicode.org/reports/tr35/#BCP_47_Conformance">Unicode Technical Standard #35 Part 1 Core, Section 3.3 BCP 47 Conformance</a>, and its algorithms refer to <dfn variants="Unicode locale nonterminal">Unicode locale nonterminals</dfn> defined in the grammars of <a href="https://unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers">Section 3 Unicode Language and Locale Identifiers</a>.
-      Each such identifier can also be referred to as a <dfn variants="language tags">language tag</dfn>, and is in fact a valid language tag as that term is used in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a>.
+	  Each such identifier can also be referred to as a <dfn variants="language tags">language tag</dfn>, and is in fact a <emu-not-ref>well-formed language tag</emu-not-ref> as that term is used in <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> (although the converse does not hold; tags like *"en-GB-oed"*, *"i-navajo"*, and *"x-foo"* are valid according to BCP 47 but are not Unicode BCP 47 locale identifiers).
       A locale identifier in canonical form as specified in <a href="https://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">Unicode Technical Standard #35 Part 1 Core, Section 3.2.1 Canonical Unicode Locale Identifiers</a> is referred to as a "<dfn variants="Unicode canonicalized locale identifiers">Unicode canonicalized locale identifier</dfn>".
     </p>
 
@@ -39,7 +39,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It determines whether _locale_ is a <dfn variants="well-formed language tags">well-formed language tag</dfn> conforming with the well-formedness constraints of a <a href="https://unicode.org/reports/tr35/#unicode_bcp47_locale_id"><code>unicode_bcp47_locale_id</code></a>. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
+		<dd>It determines whether _locale_ is a <dfn variants="well-formed language tags">well-formed language tag</dfn> matched by the <code>langtag</code> ABNF nonterminal of <a href="https://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</a> and conforming with the well-formedness constraints of <a href="https://unicode.org/reports/tr35/#unicode_bcp47_locale_id"><code>unicode_bcp47_locale_id</code></a> except those relating to <code>ukey</code>/<code>tkey</code> duplicates. It does not consider whether _locale_ conveys any meaningful semantics, nor does it differentiate between aliased subtags and their preferred replacement subtags or require canonical casing or subtag ordering.</dd>
       </dl>
       <emu-alg>
         1. Let _lowerLocale_ be the ASCII-lowercase of _locale_.
@@ -63,6 +63,9 @@
           1. If _tlangVariants_ contains any duplicate subtags, return *false*.
         1. Return *true*.
       </emu-alg>
+      <emu-note>
+        There is a subtle distinction between this definition of "well-formed language tag" and the grammatical and well-formedness constraints of a Unicode BCP 47 locale identifier: duplicate <code>ukey</code> and <code>tkey</code> subtags are allowed in the former (and therefore do not affect this operation) but disallowed in the latter (as in any <code>unicode_locale_id</code>). The distinction is reconciled in CanonicalizeUnicodeLocaleId by discarding all but the first <code>ufield</code> for any given <code>ukey</code>.
+      </emu-note>
     </emu-clause>
 
     <emu-clause id="sec-canonicalizeunicodelocaleid" type="abstract operation">
