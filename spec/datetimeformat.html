@@ -74,7 +74,7 @@
         1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
         1. Let _resolvedCalendar_ be _r_.[[ca]].
-        1. If _resolvedCalendar_ is *"islamic"*, then
+        1. [id="step-calendar-fallback"] If _resolvedCalendar_ is *"islamic"*, then
           1. Set _resolvedCalendar_ to *"islamic-tbla"*.
           1. If the ECMAScript implementation has a mechanism for reporting diagnostic warning messages, a warning should be issued.
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
@@ -211,7 +211,7 @@
       <ul>
         <li>
           [[LocaleData]].[[&lt;_locale_>]].[[ca]] must be a List consisting of calendar types.
-          It may include calendar types not listed in <emu-xref href="#table-calendar-types"></emu-xref>.
+          It may include calendar types not listed in <emu-xref href="#table-calendar-types"></emu-xref>, for the purposes of implementing a diagnostic warning message in cases where the locale data references unsupported calendars, as in Step <emu-xref href="#step-calendar-fallback"></emu-xref> of CreateDateTimeFormat.
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_>]].[[nu]] must be a List that does not include the values *"native"*, *"traditio"*, or *"finance"*.
