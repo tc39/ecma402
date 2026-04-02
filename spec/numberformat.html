@@ -120,20 +120,22 @@
             1. Set _needFd_ to *false*.
         1. If _needSd_ is *true*, then
           1. If _hasSd_ is *true*, then
-            1. Set _intlObj_.[[MinimumSignificantDigits]] to ? DefaultNumberOption(_mnsd_, 1, 21, 1).
-            1. Set _intlObj_.[[MaximumSignificantDigits]] to ? DefaultNumberOption(_mxsd_, _intlObj_.[[MinimumSignificantDigits]], 21, 21).
+            1. Let _resolvedMinSd_ be ? DefaultNumberOption(_mnsd_, 1, 21, 1).
+            1. Let _resolvedMaxSd_ be ? DefaultNumberOption(_mxsd_, _resolvedMinSd_, 21, 21).
+            1. Set _intlObj_.[[MinimumSignificantDigits]] to _resolvedMinSd_.
+            1. Set _intlObj_.[[MaximumSignificantDigits]] to _resolvedMaxSd_.
           1. Else,
             1. Set _intlObj_.[[MinimumSignificantDigits]] to 1.
             1. Set _intlObj_.[[MaximumSignificantDigits]] to 21.
         1. If _needFd_ is *true*, then
           1. If _hasFd_ is *true*, then
-            1. Set _mnfd_ to ? DefaultNumberOption(_mnfd_, 0, 100, *undefined*).
-            1. Set _mxfd_ to ? DefaultNumberOption(_mxfd_, 0, 100, *undefined*).
-            1. If _mnfd_ is *undefined*, set _mnfd_ to min(_mnfdDefault_, _mxfd_).
-            1. Else if _mxfd_ is *undefined*, set _mxfd_ to max(_mxfdDefault_, _mnfd_).
-            1. Else if _mnfd_ is greater than _mxfd_, throw a *RangeError* exception.
-            1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfd_.
-            1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfd_.
+            1. Let _resolvedMinFd_ be ? DefaultNumberOption(_mnfd_, 0, 100, *undefined*).
+            1. Let _resolvedMaxFd_ be ? DefaultNumberOption(_mxfd_, 0, 100, *undefined*).
+            1. If _resolvedMinFd_ is *undefined*, set _resolvedMinFd_ to min(_mnfdDefault_, _resolvedMaxFd_).
+            1. Else if _resolvedMaxFd_ is *undefined*, set _resolvedMaxFd_ to max(_mxfdDefault_, _resolvedMinFd_).
+            1. Else if _resolvedMinFd_ > _resolvedMaxFd_, throw a *RangeError* exception.
+            1. Set _intlObj_.[[MinimumFractionDigits]] to _resolvedMinFd_.
+            1. Set _intlObj_.[[MaximumFractionDigits]] to _resolvedMaxFd_.
           1. Else,
             1. Set _intlObj_.[[MinimumFractionDigits]] to _mnfdDefault_.
             1. Set _intlObj_.[[MaximumFractionDigits]] to _mxfdDefault_.
