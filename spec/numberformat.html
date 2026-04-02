@@ -104,7 +104,7 @@
         1. Let _roundingMode_ be ? GetOption(_options_, *"roundingMode"*, ~string~, « *"ceil"*, *"floor"*, *"expand"*, *"trunc"*, *"halfCeil"*, *"halfFloor"*, *"halfExpand"*, *"halfTrunc"*, *"halfEven"* », *"halfExpand"*).
         1. Let _roundingPriority_ be ? GetOption(_options_, *"roundingPriority"*, ~string~, « *"auto"*, *"morePrecision"*, *"lessPrecision"* », *"auto"*).
         1. Let _trailingZeroDisplay_ be ? GetOption(_options_, *"trailingZeroDisplay"*, ~string~, « *"auto"*, *"stripIfInteger"* », *"auto"*).
-        1. NOTE: All fields required by SetNumberFormatDigitOptions have now been read from _options_. The remainder of this AO interprets the options and may throw exceptions.
+        1. NOTE: The remaining steps perform no further interaction with _options_.
         1. If _roundingIncrement_ is not 1, set _maxFDDefault_ to _minFDDefault_.
         1. Set _intlObj_.[[MinimumIntegerDigits]] to _minIntegerDigits_.
         1. Set _intlObj_.[[RoundingIncrement]] to _roundingIncrement_.
