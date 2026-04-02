@@ -94,7 +94,7 @@
         <dd>It populates the internal slots of _intlObj_ that affect locale-independent number rounding (see <emu-xref href="#sec-formatnumerictostring"></emu-xref>).</dd>
       </dl>
       <emu-alg>
-        1. Set _intlObj_.[[MinimumIntegerDigits]] to ? GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
+        1. Let _minIntegerDigits_ be ? GetNumberOption(_options_, *"minimumIntegerDigits"*, 1, 21, 1).
         1. Let _minFD_ be ? Get(_options_, *"minimumFractionDigits"*).
         1. Let _maxFD_ be ? Get(_options_, *"maximumFractionDigits"*).
         1. Let _minSD_ be ? Get(_options_, *"minimumSignificantDigits"*).
@@ -106,6 +106,7 @@
         1. Let _trailingZeroDisplay_ be ? GetOption(_options_, *"trailingZeroDisplay"*, ~string~, « *"auto"*, *"stripIfInteger"* », *"auto"*).
         1. NOTE: All fields required by SetNumberFormatDigitOptions have now been read from _options_. The remainder of this AO interprets the options and may throw exceptions.
         1. If _roundingIncrement_ is not 1, set _maxFDDefault_ to _minFDDefault_.
+        1. Set _intlObj_.[[MinimumIntegerDigits]] to _minIntegerDigits_.
         1. Set _intlObj_.[[RoundingIncrement]] to _roundingIncrement_.
         1. Set _intlObj_.[[RoundingMode]] to _roundingMode_.
         1. Set _intlObj_.[[TrailingZeroDisplay]] to _trailingZeroDisplay_.
