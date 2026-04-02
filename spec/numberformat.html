@@ -112,12 +112,14 @@
         1. Set _intlObj_.[[TrailingZeroDisplay]] to _trailingZeroDisplay_.
         1. If _minSD_ is *undefined* and _maxSD_ is *undefined*, let _hasSD_ be *false*. Otherwise, let _hasSD_ be *true*.
         1. If _minFD_ is *undefined* and _maxFD_ is *undefined*, let _hasFD_ be *false*. Otherwise, let _hasFD_ be *true*.
-        1. Let _needSD_ be *true*.
-        1. Let _needFD_ be *true*.
         1. If _roundingPriority_ is *"auto"*, then
-          1. Set _needSD_ to _hasSD_.
-          1. If _needSD_ is *true*, or _hasFD_ is *false* and _notation_ is *"compact"*, then
-            1. Set _needFD_ to *false*.
+          1. Let _needSD_ be _hasSD_.
+          1. If _needSD_ is *true*, let _needFD_ be *false*.
+          1. Else if _hasFD_ is *false* and _notation_ is *"compact"*, let _needFD_ be *false*.
+          1. Else, let _needFD_ be *true*.
+        1. Else,
+          1. Let _needSD_ be *true*.
+          1. Let _needFD_ be *true*.
         1. If _needSD_ is *true*, then
           1. If _hasSD_ is *true*, then
             1. Let _resolvedMinSD_ be ? DefaultNumberOption(_minSD_, 1, 21, 1).
