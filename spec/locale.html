@@ -861,8 +861,14 @@
         <dd>The following algorithm refers to Locale data specified in <a href="https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Patterns_Week_Elements">Unicode Technical Standard #35 Part 4 Dates, Week Elements</a>.</dd>
       </dl>
       <emu-alg>
-        1. Let _locale_ be _loc_.[[Locale]].
-        1. Let _r_ be a Record whose fields are defined by <emu-xref href="#table-locale-weekinfo-record"></emu-xref>, with values based on _locale_.
+        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _region_ be _preference_.[[Region]].
+        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
+        1. If _regionOverride_ is not *undefined* and week data for _regionOverride_ are available, then
+          1. Let _lookupRegion_ be _regionOverride_.
+        1. Else,
+          1. Let _lookupRegion_ be _region_.
+        1. Let _r_ be a Record whose fields are defined by <emu-xref href="#table-locale-weekinfo-record"></emu-xref>, with values based on _lookupRegion_. If no week data for _lookupRegion_ is available, the week data for *"001"* is used.
         1. Let _fws_ be _loc_.[[FirstDayOfWeek]].
         1. Let _fw_ be WeekdayUValueToNumber(_fws_).
         1. If _fw_ is not *undefined*, then
