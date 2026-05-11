@@ -397,15 +397,11 @@
       <emu-alg>
         1. If IsSanctionedSingleUnitIdentifier(_unitIdentifier_) is *true*, then
           1. Return *true*.
-        1. Let _i_ be StringIndexOf(_unitIdentifier_, *"-per-"*, 0).
-        1. If _i_ is ~not-found~ or StringIndexOf(_unitIdentifier_, *"-per-"*, _i_ + 1) is not ~not-found~, then
-          1. Return *false*.
-        1. Assert: The five-character substring *"-per-"* occurs exactly once in _unitIdentifier_, at index _i_.
-        1. Let _numerator_ be the substring of _unitIdentifier_ from 0 to _i_.
-        1. Let _denominator_ be the substring of _unitIdentifier_ from _i_ + 5.
-        1. If IsSanctionedSingleUnitIdentifier(_numerator_) and IsSanctionedSingleUnitIdentifier(_denominator_) are both *true*, then
-          1. Return *true*.
-        1. Return *false*.
+        1. Let _numeratorAndDenominator_ be StringSplitToList(_unitIdentifier_, *"-per-"*).
+        1. If _numeratorAndDenominator_ does not have exactly 2 elements, return *false*.
+        1. If IsSanctionedSingleUnitIdentifier(_numeratorAndDenominator_[0]) is *false*, return *false*.
+        1. If IsSanctionedSingleUnitIdentifier(_numeratorAndDenominator_[1]) is *false*, return *false*.
+        1. Return *true*.
       </emu-alg>
     </emu-clause>
 
