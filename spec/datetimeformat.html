@@ -45,7 +45,7 @@
       </emu-clause>
     </emu-clause>
 
-    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions">
+    <emu-clause id="sec-createdatetimeformat" type="abstract operation" oldids="sec-initializedatetimeformat,sec-todatetimeoptions,sec-datetime-format-functions">
       <h1>
         CreateDateTimeFormat (
           _newTarget_: a constructor,
@@ -1035,9 +1035,10 @@
           1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Set _F_.[[DateTimeFormat]] to _dtf_.
-          1. Set _dtf_.[[BoundFormat]] to _F_.
+          1. Let _closure_ be a new Abstract Closure with parameters (_date_) that captures _dtf_ and performs the following steps when called:
+            1. If _date_ is *undefined*, let _x_ be ! Call(%Date.now%, *undefined*); else let _x_ be ? ToNumber(_date_).
+            1. Return ? FormatDateTime(_dtf_, _x_).
+          1. Set _dtf_.[[BoundFormat]] to CreateBuiltinFunction(_closure_, 1, *""*, « »).
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
 
@@ -1317,25 +1318,6 @@
         <dt>description</dt>
         <dd>It returns a set of component representations that a typical user of the selected locale would perceive as at least as good as the one returned by BasicFormatMatcher.</dd>
       </dl>
-    </emu-clause>
-
-    <emu-clause id="sec-datetime-format-functions">
-      <h1>DateTime Format Functions</h1>
-
-      <p>A DateTime format function is an anonymous built-in function that has a [[DateTimeFormat]] internal slot.</p>
-      <p>When a DateTime format function _F_ is called with optional argument _date_, the following steps are taken:</p>
-
-      <emu-alg>
-        1. Let _dtf_ be _F_.[[DateTimeFormat]].
-        1. Assert: _dtf_ is an Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
-        1. If _date_ is not provided or is *undefined*, then
-          1. Let _x_ be ! Call(%Date.now%, *undefined*).
-        1. Else,
-          1. Let _x_ be ? ToNumber(_date_).
-        1. Return ? FormatDateTime(_dtf_, _x_).
-      </emu-alg>
-
-      <p>The *"length"* property of a DateTime format function is *1*<sub>𝔽</sub>.</p>
     </emu-clause>
 
     <emu-clause id="sec-formatdatetimepattern" type="abstract operation">
