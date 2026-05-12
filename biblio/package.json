@@ -15,5 +15,10 @@
   "files": [
     "biblio.json"
   ],
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+	  "type": "git",
+	  "url": "git+https://github.com/tc39/ecma402.git",
+	  "directory": "./biblio"
+  }
 }
