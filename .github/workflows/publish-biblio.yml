@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write # needed for trusted publishing
+  contents: read
+
 jobs:
   publish:
     name: 'publish ecma402-biblio'
@@ -13,12 +17,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
@@ -28,5 +32,3 @@ jobs:
 
       - name: Publish biblio
         run: scripts/publish-biblio.sh
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_FOR_TC39_USER }}
