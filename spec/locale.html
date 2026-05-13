@@ -575,15 +575,17 @@
         ): a String or *undefined*
       </h1>
       <dl class="header">
+        <dt>description</dt>
+        <dd>The following algorithm refers to Region validity data specified in <a href="https://unicode.org/reports/tr35/#unicode_region_subtag_validity">Unicode Technical Standard #35 Part 1 Core, Language Identifier Field Definitions</a>.</dd>
       </dl>
       <emu-alg>
         1. Let _subdivision_ be UnicodeExtensionValue(_locale_, _key_).
         1. If _subdivision_ is ~empty~, return *undefined*.
         1. If _subdivision_ cannot be matched by the `unicode_subdivision_id` Unicode locale nonterminal, return *undefined*.
         1. Let _region_ be the longest prefix of _subdivision_ matched by the `unicode_region_subtag` Unicode locale nonterminal.
-        1. Let _regionLocale_ be the string-concatenation of *"und-"* and _region_.
-        1. Set _regionLocale_ to CanonicalizeUnicodeLocaleId(_regionLocale_).
-        1. Return GetLocaleRegion(_regionLocale_).
+        1. Set _region_ to the ASCII-uppercase of _region_.
+        1. If _region_ is not a valid regular region code, return *undefined*.
+        1. Return _region_.
       </emu-alg>
     </emu-clause>
 
@@ -591,22 +593,22 @@
       <h1>
         RegionPreference (
           _locale_: a Unicode canonicalized locale identifier,
-        ): a Record with fields [[Region]] (a String) and [[RegionOverride]] (a String or *undefined*)
+        ): a String
       </h1>
       <dl class="header">
       </dl>
       <emu-alg>
-        1. Let _region_ be GetLocaleRegion(_locale_).
-        1. If _region_ is *undefined*, then
-          1. Set _region_ to CanonicalUnicodeSubdivision(_locale_, *"sd"*).
-          1. If _region_ is *undefined*, then
-            1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, set _maximal_ to _locale_.
-            1. Set _maximal_ to CanonicalizeUnicodeLocaleId(_maximal_).
-            1. Set _region_ to GetLocaleRegion(_maximal_).
-            1. If _region_ is *undefined*, then
-              1. Set _region_ to *"001"*.
-        1. Let _regionOverride_ be CanonicalUnicodeSubdivision(_locale_, *"rg"*).
-        1. Return { [[Region]]: _region_, [[RegionOverride]]: _regionOverride_ }.
+        1. Let _region_ be CanonicalUnicodeSubdivision(_locale_, *"rg"*).
+        1. If _region_ is not *undefined*, return _region_.
+        1. Set _region_ to GetLocaleRegion(_locale_).
+        1. If _region_ is not *undefined*, return _region_.
+        1. Set _region_ to CanonicalUnicodeSubdivision(_locale_, *"sd"*).
+        1. If _region_ is not *undefined*, return _region_.
+        1. Let _maximal_ be the result of the <a href="https://unicode.org/reports/tr35/#Likely_Subtags">Add Likely Subtags</a> algorithm applied to _locale_. If an error is signaled, set _maximal_ to _locale_.
+        1. Set _maximal_ to CanonicalizeUnicodeLocaleId(_maximal_).
+        1. Set _region_ to GetLocaleRegion(_maximal_).
+        1. If _region_ is not *undefined*, return _region_.
+        1. Return *"001"*.
       </emu-alg>
     </emu-clause>
 
@@ -623,14 +625,8 @@
       <emu-alg>
         1. If _loc_.[[Calendar]] is not *undefined*, then
           1. Return CreateArrayFromList(« _loc_.[[Calendar]] »).
-        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
-        1. Let _region_ be _preference_.[[Region]].
-        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
-        1. If _regionOverride_ is not *undefined* and calendar preference data for _regionOverride_ are available, then
-          1. Let _lookupRegion_ be _regionOverride_.
-        1. Else,
-          1. Let _lookupRegion_ be _region_.
-        1. Let _list_ be a List of unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
+        1. Let _region_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _list_ be a List of unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _region_. The list is empty if no calendar preference data for _region_ is available.
         1. If _list_ is empty, set _list_ to « *"gregory"* ».
         1. Return CreateArrayFromList(_list_).
       </emu-alg>
@@ -678,14 +674,8 @@
       <emu-alg>
         1. If _loc_.[[HourCycle]] is not *undefined*, then
           1. Return CreateArrayFromList(« _loc_.[[HourCycle]] »).
-        1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
-        1. Let _region_ be _preference_.[[Region]].
-        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
-        1. If _regionOverride_ is not *undefined* and time data for _regionOverride_ are available, then
-          1. Let _lookupRegion_ be _regionOverride_.
-        1. Else,
-          1. Let _lookupRegion_ be _region_.
-        1. Let _list_ be a List of unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no time data for _lookupRegion_ is available.
+        1. Let _region_ be RegionPreference(_loc_.[[Locale]]).
+        1. Let _list_ be a List of unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _region_. The list is empty if no time data for _region_ is available.
         1. If _list_ is empty, set _list_ to « *"h23"* ».
         1. Return CreateArrayFromList(_list_).
       </emu-alg>
