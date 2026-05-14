@@ -630,7 +630,13 @@
           1. Let _lookupRegion_ be _regionOverride_.
         1. Else,
           1. Let _lookupRegion_ be _region_.
-        1. Let _list_ be a List of unique calendar types in canonical form (<emu-xref href="#sec-calendar-types"></emu-xref>), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
+        1. Let _list_ be a new empty List.
+        1. Let _availableCalendars_ be AvailableCalendars().
+        1. Let _calendarsInUse_ be a List of unique calendar types in common use for date and time formatting in _lookupRegion_, sorted by descending preference of use in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
+        1. For each element _identifier_ of _calendarsInUse_, do
+          1. Let _canonical_ be CanonicalizeUValue(*"ca"*, _identifier_).
+          1. If _identifier_ is _canonical_ and _availableCalendars_ contains _identifier_, then
+            1. Append _identifier_ to _list_.
         1. If _list_ is empty, set _list_ to « *"gregory"* ».
         1. Return CreateArrayFromList(_list_).
       </emu-alg>
