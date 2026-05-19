@@ -542,10 +542,13 @@
     <emu-table id="table-intl-rounding-modes">
       <emu-caption>Rounding modes in Intl.NumberFormat</emu-caption>
       <table class="real-table">
+        <colgroup span="3"></colgroup>
+        <colgroup span="5" class="c-md-width" style="--c-md-width: 4em;"></colgroup>
         <thead>
           <tr>
             <th rowspan="2">Identifier</th>
             <th rowspan="2">Description</th>
+            <th rowspan="2">Negation</th>
             <th colspan="5">Examples: Round to 0 fraction digits</th>
           </tr>
           <tr>
@@ -559,6 +562,7 @@
         <tr>
           <td>*"ceil"*</td>
           <td>Toward positive infinity</td>
+          <td>*"floor"*</td>
           <td>⬆️ [-1]</td>
           <td>⬆️ [1]</td>
           <td>⬆️ [1]</td>
@@ -568,6 +572,7 @@
         <tr>
           <td>*"floor"*</td>
           <td>Toward negative infinity</td>
+          <td>*"ceil"*</td>
           <td>⬇️ [-2]</td>
           <td>⬇️ [0]</td>
           <td>⬇️ [0]</td>
@@ -577,6 +582,7 @@
         <tr>
           <td>*"expand"*</td>
           <td>Away from zero</td>
+          <td></td>
           <td>⬇️ [-2]</td>
           <td>⬆️ [1]</td>
           <td>⬆️ [1]</td>
@@ -586,6 +592,7 @@
         <tr>
           <td>*"trunc"*</td>
           <td>Toward zero</td>
+          <td></td>
           <td>⬆️ [-1]</td>
           <td>⬇️ [0]</td>
           <td>⬇️ [0]</td>
@@ -595,6 +602,7 @@
         <tr>
           <td>*"halfCeil"*</td>
           <td>Ties toward positive infinity</td>
+          <td>*"halfFloor"*</td>
           <td>⬆️ [-1]</td>
           <td>⬇️ [0]</td>
           <td>⬆️ [1]</td>
@@ -604,6 +612,7 @@
         <tr>
           <td>*"halfFloor"*</td>
           <td>Ties toward negative infinity</td>
+          <td>*"halfCeil"*</td>
           <td>⬇️ [-2]</td>
           <td>⬇️ [0]</td>
           <td>⬇️ [0]</td>
@@ -613,6 +622,7 @@
         <tr>
           <td>*"halfExpand"*</td>
           <td>Ties away from zero</td>
+          <td></td>
           <td>⬇️ [-2]</td>
           <td>⬇️ [0]</td>
           <td>⬆️ [1]</td>
@@ -622,6 +632,7 @@
         <tr>
           <td>*"halfTrunc"*</td>
           <td>Ties toward zero</td>
+          <td></td>
           <td>⬆️ [-1]</td>
           <td>⬇️ [0]</td>
           <td>⬇️ [0]</td>
@@ -631,6 +642,7 @@
         <tr>
           <td>*"halfEven"*</td>
           <td>Ties toward an even rounding increment multiple</td>
+          <td></td>
           <td>⬇️ [-2]</td>
           <td>⬇️ [0]</td>
           <td>⬇️ [0]</td>
@@ -638,6 +650,10 @@
           <td>⬆️ [2]</td>
         </tr>
       </table>
+      <emu-note>
+        When the rounding mode in the Identifier column produces outputs of the same magnitude for all inputs of the same magnitude, it is its own negation and the Negation column is blank (e.g., abs(truncate(-1.5)) = abs(truncate(1.5)) = 1).
+        Otherwise, the Negation column contains the rounding mode that should be applied to the absolute value of a negative number to produce a result of the same magnitude as application of the rounding mode in the Identifier column to its signed value (e.g., abs(ceiling(-1.5)) ≠ abs(floor(1.5)), but abs(ceiling(-1.5)) = abs(floor(1.5)) = 1).
+      </emu-note>
       <emu-note>The examples are illustrative of the unique behaviour of each option. ⬆️ means "resolves toward positive infinity"; ⬇️ means "resolves toward negative infinity".</emu-note>
     </emu-table>
 
@@ -700,16 +716,16 @@
         1. Else,
           1. Assert: _x_ is a mathematical value.
           1. If _x_ &lt; 0, let _sign_ be ~negative~; else let _sign_ be ~positive~.
-          1. If _sign_ is ~negative~, then
-            1. Set _x_ to -_x_.
-        1. Let _unsignedRoundingMode_ be GetUnsignedRoundingMode(_intlObject_.[[RoundingMode]], _sign_).
+          1. Set _x_ to abs(x).
+        1. Let _roundingMode_ be _intlObject_.[[RoundingMode]].
+        1. Let _roundingIncrement_ be _intlObject_.[[RoundingIncrement]].
         1. If _intlObject_.[[RoundingType]] is ~significant-digits~, then
-          1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
+          1. Let _result_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _roundingMode_, _sign_).
         1. Else if _intlObject_.[[RoundingType]] is ~fraction-digits~, then
-          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
+          1. Let _result_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _roundingIncrement_, _roundingMode_, _sign_).
         1. Else,
-          1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _unsignedRoundingMode_).
-          1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _intlObject_.[[RoundingIncrement]], _unsignedRoundingMode_).
+          1. Let _sResult_ be ToRawPrecision(_x_, _intlObject_.[[MinimumSignificantDigits]], _intlObject_.[[MaximumSignificantDigits]], _roundingMode_, _sign_).
+          1. Let _fResult_ be ToRawFixed(_x_, _intlObject_.[[MinimumFractionDigits]], _intlObject_.[[MaximumFractionDigits]], _roundingIncrement_, _roundingMode_, _sign_).
           1. If _fResult_.[[RoundingMagnitude]] &lt; _sResult_.[[RoundingMagnitude]], let _fixedIsMorePrecise_ be *true*; else let _fixedIsMorePrecise_ be *false*.
           1. If _intlObject_.[[RoundingType]] is ~more-precision~ and _fixedIsMorePrecise_ is *true*, then
             1. Let _result_ be _fResult_.
@@ -895,7 +911,7 @@
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
                 1. Append the Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
                 1. Let _exponent_ be -_exponent_.
-              1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*).
+              1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*, ~positive~).
               1. Append the Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } to _result_.
             1. Else,
               1. Let _unknown_ be an ILND String based on _x_ and _p_.
@@ -1283,7 +1299,8 @@
           _x_: a non-negative mathematical value,
           _minPrecision_: an integer in the inclusive interval from 1 to 21,
           _maxPrecision_: an integer in the inclusive interval from 1 to 21,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _roundingMode_: a rounding mode or *undefined*,
+          _originalSign_: ~negative~ or ~positive~,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1305,7 +1322,7 @@
         1. Else,
           1. [declared="n1,e1,r1"] Let _n1_ and _e1_ each be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawPrecisionFn(_n1_, _e1_, _p_)</emu-eqn>, such that <emu-eqn>_r1_ ≤ _x_</emu-eqn> and _r1_ is maximized.
           1. [declared="n2,e2,r2"] Let _n2_ and _e2_ each be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawPrecisionFn(_n2_, _e2_, _p_)</emu-eqn>, such that <emu-eqn>_r2_ ≥ _x_</emu-eqn> and _r2_ is minimized.
-          1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+          1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _roundingMode_, _originalSign_).
           1. If _xFinal_ is _r1_, then
             1. Let _n_ be _n1_.
             1. Let _e_ be _e1_.
@@ -1341,7 +1358,8 @@
           _minFraction_: an integer in the inclusive interval from 0 to 100,
           _maxFraction_: an integer in the inclusive interval from 0 to 100,
           _roundingIncrement_: an integer,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _roundingMode_: a rounding mode or *undefined*,
+          _originalSign_: ~negative~ or ~positive~,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1357,7 +1375,7 @@
         1. Let _f_ be _maxFraction_.
         1. [declared="n1,r1"] Let _n1_ be an integer and _r1_ a mathematical value, with <emu-eqn>_r1_ = ToRawFixedFn(_n1_, _f_)</emu-eqn>, such that <emu-eqn>_n1_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r1_ ≤ _x_</emu-eqn>, and _r1_ is maximized.
         1. [declared="n2,r2"] Let _n2_ be an integer and _r2_ a mathematical value, with <emu-eqn>_r2_ = ToRawFixedFn(_n2_, _f_)</emu-eqn>, such that <emu-eqn>_n2_ modulo _roundingIncrement_ = 0</emu-eqn>, <emu-eqn>_r2_ ≥ _x_</emu-eqn>, and _r2_ is minimized.
-        1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _unsignedRoundingMode_).
+        1. Let _xFinal_ be ApplyUnsignedRoundingMode(_x_, _r1_, _r2_, _roundingMode_, _originalSign_).
         1. If _xFinal_ is _r1_, let _n_ be _n1_. Otherwise, let _n_ be _n2_.
         1. If _n_ = 0, let _m_ be *"0"*. Otherwise, let _m_ be the String consisting of the digits of the decimal representation of _n_ (in order, with no leading zeroes).
         1. If _f_ ≠ 0, then
@@ -1672,142 +1690,36 @@
       </emu-alg>
     </emu-clause>
 
-    <emu-clause id="sec-getunsignedroundingmode" type="abstract operation">
-      <h1>
-        GetUnsignedRoundingMode (
-          _roundingMode_: a rounding mode,
-          _sign_: ~negative~ or ~positive~,
-        ): a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>
-      </h1>
-      <dl class="header">
-        <dt>description</dt>
-        <dd>It returns the <emu-not-ref>rounding mode</emu-not-ref> that should be applied to the absolute value of a number to produce the same result as if _roundingMode_ were applied to the signed value of the number (negative if _sign_ is ~negative~, or positive otherwise).</dd>
-      </dl>
-      <emu-alg>
-        1. Return the specification type in the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref> for the row where the value in the Identifier column is _roundingMode_ and the value in the Sign column is _sign_.
-      </emu-alg>
-      <emu-table id="table-intl-unsigned-rounding-modes">
-        <emu-caption>Conversion from rounding mode to unsigned rounding mode</emu-caption>
-        <table class="real-table">
-          <thead>
-            <tr>
-              <th>Identifier</th>
-              <th>Sign</th>
-              <th>Unsigned Rounding Mode</th>
-            </tr>
-          </thead>
-          <tr>
-            <td rowspan="2">*"ceil"*</td>
-            <td>~positive~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"floor"*</td>
-            <td>~positive~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"expand"*</td>
-            <td>~positive~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"trunc"*</td>
-            <td>~positive~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfCeil"*</td>
-            <td>~positive~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfFloor"*</td>
-            <td>~positive~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfExpand"*</td>
-            <td>~positive~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-infinity~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfTrunc"*</td>
-            <td>~positive~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-zero~</td>
-          </tr>
-          <tr>
-            <td rowspan="2">*"halfEven"*</td>
-            <td>~positive~</td>
-            <td>~half-even~</td>
-          </tr>
-          <tr>
-            <td>~negative~</td>
-            <td>~half-even~</td>
-          </tr>
-        </table>
-      </emu-table>
-    </emu-clause>
-
-    <emu-clause id="sec-applyunsignedroundingmode" type="abstract operation">
+    <emu-clause id="sec-applyunsignedroundingmode" oldids="sec-getunsignedroundingmode,table-intl-unsigned-rounding-modes" type="abstract operation">
       <h1>
         ApplyUnsignedRoundingMode (
           _x_: a mathematical value,
           _r1_: a mathematical value,
           _r2_: a mathematical value,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _roundingMode_: a rounding mode or *undefined*,
+          _sign_: ~negative~ or ~positive~,
         ): a mathematical value
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It considers _x_, bracketed below by _r1_ and above by _r2_, and returns either _r1_ or _r2_ according to _unsignedRoundingMode_.</dd>
+        <dd>It considers _x_, bracketed below by _r1_ and above by _r2_, and returns either _r1_ or _r2_ according to _roundingMode_ and _originalSign_ (the original sign of the number for which _x_ is the absolute value).</dd>
       </dl>
       <emu-alg>
         1. If _x_ is _r1_, return _r1_.
         1. Assert: _r1_ &lt; _x_ &lt; _r2_.
-        1. Assert: _unsignedRoundingMode_ is not *undefined*.
-        1. If _unsignedRoundingMode_ is ~zero~, return _r1_.
-        1. If _unsignedRoundingMode_ is ~infinity~, return _r2_.
+        1. Assert: _roundingMode_ is not *undefined*.
+        1. If _sign_ is ~negative~, then
+          1. If the row of <emu-xref href="#table-intl-rounding-modes"></emu-xref> where the value in the Identifier column is _roundingMode_ has a value in the Negation column, set _roundingMode_ to that value.
+        1. If _roundingMode_ is *"floor"* or *"trunc"*, return _r1_.
+        1. If _roundingMode_ is *"ceil"* or *"expand"*, return _r2_.
         1. Let _d1_ be <emu-eqn>_x_ – _r1_</emu-eqn>.
         1. Let _d2_ be <emu-eqn>_r2_ – _x_</emu-eqn>.
         1. If _d1_ &lt; _d2_, return _r1_.
         1. If _d2_ &lt; _d1_, return _r2_.
         1. Assert: _d1_ is _d2_.
-        1. If _unsignedRoundingMode_ is ~half-zero~, return _r1_.
-        1. If _unsignedRoundingMode_ is ~half-infinity~, return _r2_.
-        1. Assert: _unsignedRoundingMode_ is ~half-even~.
+        1. If _roundingMode_ is *"halfFloor"* or *"halfTrunc"*, return _r1_.
+        1. If _roundingMode_ is *"halfCeil"* or *"halfExpand"*, return _r2_.
+        1. Assert: _roundingMode_ is *"halfEven"*.
         1. Let _cardinality_ be <emu-eqn>(_r1_ / (_r2_ – _r1_)) modulo 2</emu-eqn>.
         1. If _cardinality_ is 0, return _r1_.
         1. Return _r2_.
