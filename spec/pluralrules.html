@@ -260,7 +260,7 @@
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used by the plural rules.</li>
       <li>[[Type]] is one of the String values *"cardinal"* or *"ordinal"*, identifying the plural rules used.</li>
       <li>[[Notation]] is one of the String values *"standard"*, *"scientific"*, *"engineering"*, or *"compact"*, identifying the notation used.</li>
-      <li>[[CompactDisplay]] is one of *"short"*, *"long"*, or *undefined*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand") if formatting with the *"compact"* notation, as this can in some cases influence plural form selection. It is only *undefined* when [[Notation]] has a value other than *"compact"*.</li>
+      <li>[[CompactDisplay]] is one of *"short"*, *"long"*, or *undefined*, specifying whether to display compact notation affixes in short form ("5K") or long form ("5 thousand"), as this can in some cases influence plural form selection. It is *undefined* if and only if [[Notation]] has a value other than *"compact"*.</li>
       <li>[[MinimumIntegerDigits]] is a non-negative integer indicating the minimum integer digits to be used.</li>
       <li>[[MinimumFractionDigits]] and [[MaximumFractionDigits]] are non-negative integers indicating the minimum and maximum fraction digits to be used. Numbers will be rounded or padded with trailing zeroes if necessary.</li>
       <li>[[MinimumSignificantDigits]] and [[MaximumSignificantDigits]] are positive integers indicating the minimum and maximum fraction digits to be used. Either none or both of these properties are present; if they are, they override minimum and maximum integer and fraction digits.</li>
