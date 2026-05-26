@@ -38,7 +38,7 @@
         </dl>
         <emu-alg>
           1. If _newTarget_ is *undefined* and ? OrdinaryHasInstance(%Intl.DateTimeFormat%, _this_) is *true*, then
-            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor{ [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
+            1. Perform ? DefinePropertyOrThrow(_this_, %Intl%.[[FallbackSymbol]], PropertyDescriptor { [[Value]]: _dateTimeFormat_, [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *false* }).
             1. Return _this_.
           1. Return _dateTimeFormat_.
         </emu-alg>
