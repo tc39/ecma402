@@ -364,7 +364,7 @@
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"index"*, 𝔽(_startIndex_)).
         1. Perform ! CreateDataPropertyOrThrow(_result_, *"input"*, _string_).
         1. Let _granularity_ be _segmenter_.[[SegmenterGranularity]].
-        1. If _granularity_ is `"word"`, then
+        1. If _granularity_ is *"word"*, then
           1. Let _isWordLike_ be a Boolean value indicating whether the _segment_ in _string_ is "word-like" according to locale _segmenter_.[[Locale]].
           1. Perform ! CreateDataPropertyOrThrow(_result_, *"isWordLike"*, _isWordLike_).
         1. Return _result_.
