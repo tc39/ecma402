@@ -653,13 +653,9 @@
       <emu-alg>
         1. If _loc_.[[Collation]] is not *undefined*, then
           1. Return CreateArrayFromList(« _loc_.[[Collation]] »).
-        1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
-        1. If _language_ is not *"und"*, then
-          1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], « _loc_.[[Locale]] »).
-          1. If _r_ is not *undefined*, then
-            1. Let _foundLocale_ be _r_.[[locale]].
-          1. Else,
-            1. Let _foundLocale_ be DefaultLocale().
+        1. Let _r_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], « _loc_.[[Locale]] »).
+        1. If _r_ is not *undefined*, then
+          1. Let _foundLocale_ be _r_.[[locale]].
           1. Let _foundLocaleData_ be %Intl.Collator%.[[SortLocaleData]].[[&lt;_foundLocale_&gt;]].
           1. Let _list_ be a copy of _foundLocaleData_.[[co]].
           1. Assert: _list_[0] is *null*.
