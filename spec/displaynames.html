@@ -22,15 +22,15 @@
         1. Let _displayNames_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DisplayNames.prototype%"*, « [[InitializedDisplayNames]], [[Locale]], [[Style]], [[Type]], [[Fallback]], [[LanguageDisplay]], [[Fields]] »).
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DisplayNames%, %Intl.DisplayNames%.[[LocaleData]], _locales_, _options_, « ~require-options~ »).
         1. Set _options_ to _optionsResolution_.[[Options]].
-        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
+        1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"narrow"*, *"short"*, *"long"* », *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
         1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* », ~required~).
         1. Set _displayNames_.[[Type]] to _type_.
         1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, ~string~, « *"code"*, *"none"* », *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
-        1. Set _displayNames_.[[Locale]] to _r_.[[Locale]].
-        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
+        1. Set _displayNames_.[[Locale]] to _resolvedLocale_.[[Locale]].
+        1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. Let _types_ be _resolvedLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, « *"dialect"*, *"standard"* », *"dialect"*).
@@ -133,10 +133,10 @@
         1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-displaynames-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _p_ be the Property value of the current row.
-          1. Let _v_ be the value of _displayNames_'s internal slot whose name is the Internal Slot value of the current row.
-          1. If _v_ is not *undefined*, then
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+          1. Let _propertyKey_ be the Property value of the current row.
+          1. Let _value_ be the value of _displayNames_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _value_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _propertyKey_, _value_).
         1. Return _options_.
       </emu-alg>
 

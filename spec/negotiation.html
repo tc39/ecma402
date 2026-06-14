@@ -49,16 +49,16 @@
           1. Return a new empty List.
         1. Let _seen_ be a new empty List.
         1. If _locales_ is a String or _locales_ is an Object and _locales_ has an [[InitializedLocale]] internal slot, then
-          1. Let _O_ be CreateArrayFromList(« _locales_ »).
+          1. Let _obj_ be CreateArrayFromList(« _locales_ »).
         1. Else,
-          1. Let _O_ be ? ToObject(_locales_).
-        1. Let _len_ be ? LengthOfArrayLike(_O_).
+          1. Let _obj_ be ? ToObject(_locales_).
+        1. Let _len_ be ? LengthOfArrayLike(_obj_).
         1. Let _k_ be 0.
         1. Repeat, while _k_ &lt; _len_,
-          1. Let _Pk_ be ! ToString(𝔽(_k_)).
-          1. Let _kPresent_ be ? HasProperty(_O_, _Pk_).
+          1. Let _propertyKey_ be ! ToString(𝔽(_k_)).
+          1. Let _kPresent_ be ? HasProperty(_obj_, _propertyKey_).
           1. If _kPresent_ is *true*, then
-            1. Let _kValue_ be ? Get(_O_, _Pk_).
+            1. Let _kValue_ be ? Get(_obj_, _propertyKey_).
             1. If _kValue_ is not a String and _kValue_ is not an Object, throw a *TypeError* exception.
             1. If _kValue_ is an Object and _kValue_ has an [[InitializedLocale]] internal slot, then
               1. Let _tag_ be _kValue_.[[Locale]].
@@ -232,17 +232,17 @@
       <emu-alg>
         1. Let _matcher_ be _options_.[[localeMatcher]].
         1. If _matcher_ is *"lookup"*, then
-          1. Let _r_ be LookupMatchingLocaleByPrefix(_availableLocales_, _requestedLocales_).
+          1. Let _match_ be LookupMatchingLocaleByPrefix(_availableLocales_, _requestedLocales_).
         1. Else,
-          1. Let _r_ be LookupMatchingLocaleByBestFit(_availableLocales_, _requestedLocales_).
-        1. If _r_ is *undefined*, set _r_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
-        1. Let _foundLocale_ be _r_.[[locale]].
+          1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, _requestedLocales_).
+        1. If _match_ is *undefined*, set _match_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
+        1. Let _foundLocale_ be _match_.[[locale]].
         1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_>]].
         1. Assert: _foundLocaleData_ is a Record.
         1. Let _result_ be a new Record.
         1. Set _result_.[[LocaleData]] to _foundLocaleData_.
-        1. If _r_.[[extension]] is not ~empty~, then
-          1. Let _components_ be UnicodeExtensionComponents(_r_.[[extension]]).
+        1. If _match_.[[extension]] is not ~empty~, then
+          1. Let _components_ be UnicodeExtensionComponents(_match_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
         1. Else,
           1. Let _keywords_ be a new empty List.
@@ -287,7 +287,7 @@
     <emu-clause id="sec-resolveoptions" type="abstract operation">
       <h1>
         ResolveOptions (
-          _constructor_: a service constructor,
+          _ctor_: a service constructor,
           _localeData_: a Record,
           _locales_: an ECMAScript language value,
           _options_: an ECMAScript language value,
@@ -297,7 +297,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It reads the inputs for _constructor_ and resolves them into a locale.</dd>
+        <dd>It reads the inputs for _ctor_ and resolves them into a locale.</dd>
       </dl>
       <emu-alg>
         1. Let _requestedLocales_ be ? CanonicalizeLocaleList(_locales_).
@@ -305,7 +305,7 @@
         1. If _specialBehaviours_ is present and contains ~coerce-options~, set _options_ to ? CoerceOptionsToObject(_options_). Otherwise, set _options_ to ? GetOptionsObject(_options_).
         1. Let _matcher_ be ? GetOption(_options_, *"localeMatcher"*, ~string~, « *"lookup"*, *"best fit"* », *"best fit"*).
         1. Let _opt_ be the Record { [[localeMatcher]]: _matcher_ }.
-        1. For each Resolution Option Descriptor _desc_ of _constructor_.[[ResolutionOptionDescriptors]], do
+        1. For each Resolution Option Descriptor _desc_ of _ctor_.[[ResolutionOptionDescriptors]], do
           1. If _desc_ has a [[Type]] field, let _type_ be _desc_.[[Type]]. Otherwise, let _type_ be ~string~.
           1. If _desc_ has a [[Values]] field, let _values_ be _desc_.[[Values]]. Otherwise, let _values_ be ~empty~.
           1. Let _value_ be ? GetOption(_options_, _desc_.[[Property]], _type_, _values_, *undefined*).
@@ -315,7 +315,7 @@
           1. Let _key_ be _desc_.[[Key]].
           1. Set _opt_.[[&lt;_key_>]] to _value_.
         1. If _modifyResolutionOptions_ is present, perform ! _modifyResolutionOptions_(_opt_).
-        1. Let _resolution_ be ResolveLocale(_constructor_.[[AvailableLocales]], _requestedLocales_, _opt_, _constructor_.[[RelevantExtensionKeys]], _localeData_).
+        1. Let _resolution_ be ResolveLocale(_ctor_.[[AvailableLocales]], _requestedLocales_, _opt_, _ctor_.[[RelevantExtensionKeys]], _localeData_).
         1. Return the Record { [[Options]]: _options_, [[ResolvedLocale]]: _resolution_, [[ResolutionOptions]]: _opt_ }.
       </emu-alg>
     </emu-clause>
@@ -370,7 +370,7 @@
       <h1>
         GetOption (
           _options_: an Object,
-          _property_: a property key,
+          _propertyKey_: a property key,
           _type_: ~boolean~ or ~string~,
           _values_: ~empty~ or a List of ECMAScript language values,
           _default_: ~required~ or an ECMAScript language value,
@@ -381,7 +381,7 @@
         <dd>It extracts the value of the specified property of _options_, converts it to the required _type_, checks whether it is allowed by _values_ if _values_ is not ~empty~, and substitutes _default_ if the value is *undefined*.</dd>
       </dl>
       <emu-alg>
-        1. Let _value_ be ? Get(_options_, _property_).
+        1. Let _value_ be ? Get(_options_, _propertyKey_).
         1. If _value_ is *undefined*, then
           1. If _default_ is ~required~, throw a *TypeError* exception.
           1. Return _default_.
@@ -399,17 +399,17 @@
       <h1>
         GetBooleanOrStringNumberFormatOption (
           _options_: an Object,
-          _property_: a property key,
+          _propertyKey_: a property key,
           _stringValues_: a List of Strings,
           _fallback_: an ECMAScript language value,
         ): either a normal completion containing either a Boolean, String, or _fallback_, or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It extracts the value of the property named _property_ from the provided _options_ object. It returns _fallback_ if that value is *undefined*, *true* if that value is *true*, *false* if that value coerces to *false*, and otherwise coerces it to a String and returns the result if it is allowed by _stringValues_.</dd>
+        <dd>It extracts the value of the property named _propertyKey_ from the provided _options_ object. It returns _fallback_ if that value is *undefined*, *true* if that value is *true*, *false* if that value coerces to *false*, and otherwise coerces it to a String and returns the result if it is allowed by _stringValues_.</dd>
       </dl>
       <emu-alg>
-        1. Let _value_ be ? Get(_options_, _property_).
+        1. Let _value_ be ? Get(_options_, _propertyKey_).
         1. If _value_ is *undefined*, return _fallback_.
         1. If _value_ is *true*, return *true*.
         1. If ToBoolean(_value_) is *false*, return *false*.
@@ -444,7 +444,7 @@
       <h1>
         GetNumberOption (
           _options_: an Object,
-          _property_: a String,
+          _propertyKey_: a String,
           _minimum_: an integer,
           _maximum_: an integer,
           _fallback_: an integer or *undefined*,
@@ -452,10 +452,10 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It extracts the value of the property named _property_ from the provided _options_ object, converts it to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+        <dd>It extracts the value of the property named _propertyKey_ from the provided _options_ object, converts it to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
       </dl>
       <emu-alg>
-        1. Let _value_ be ? Get(_options_, _property_).
+        1. Let _value_ be ? Get(_options_, _propertyKey_).
         1. Return ? DefaultNumberOption(_value_, _minimum_, _maximum_, _fallback_).
       </emu-alg>
     </emu-clause>

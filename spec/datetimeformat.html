@@ -68,19 +68,19 @@
           1. If _hour12_ is not *undefined*, set _options_.[[hc]] to *null*.
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DateTimeFormat%, %Intl.DateTimeFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ », _modifyResolutionOptions_).
         1. Set _options_ to _optionsResolution_.[[Options]].
-        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
-        1. Set _dateTimeFormat_.[[Locale]] to _r_.[[Locale]].
-        1. Let _resolvedCalendar_ be _r_.[[ca]].
+        1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
+        1. Set _dateTimeFormat_.[[Locale]] to _resolvedLocale_.[[Locale]].
+        1. Let _resolvedCalendar_ be _resolvedLocale_.[[ca]].
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
-        1. Set _dateTimeFormat_.[[NumberingSystem]] to _r_.[[nu]].
-        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
+        1. Set _dateTimeFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
+        1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. If _hour12_ is *true*, then
           1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then
           1. Let _hc_ be _resolvedLocaleData_.[[hourCycle24]].
         1. Else,
           1. Assert: _hour12_ is *undefined*.
-          1. Let _hc_ be _r_.[[hc]].
+          1. Let _hc_ be _resolvedLocale_.[[hc]].
           1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
         1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
         1. If _timeZone_ is *undefined*, then
@@ -104,13 +104,13 @@
         1. Set _formatOptions_.[[hourCycle]] to _hc_.
         1. Let _hasExplicitFormatComponents_ be *false*.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
-          1. Let _prop_ be the name given in the Property column of the current row.
-          1. If _prop_ is *"fractionalSecondDigits"*, then
+          1. Let _property_ be the name given in the Property column of the current row.
+          1. If _property_ is *"fractionalSecondDigits"*, then
             1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
-            1. Let _value_ be ? GetOption(_options_, _prop_, ~string~, _values_, *undefined*).
-          1. Set _formatOptions_.[[&lt;_prop_>]] to _value_.
+            1. Let _value_ be ? GetOption(_options_, _property_, ~string~, _values_, *undefined*).
+          1. Set _formatOptions_.[[&lt;_property_>]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
         1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
@@ -130,19 +130,19 @@
         1. Else,
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _prop_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_prop_>]].
+            1. For each property name _property_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_property_>]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _prop_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_prop_>]].
+            1. For each property name _property_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_property_>]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
-            1. For each property name _prop_ of « *"year"*, *"month"*, *"day"* », do
-              1. Set _formatOptions_.[[&lt;_prop_>]] to *"numeric"*.
+            1. For each property name _property_ of « *"year"*, *"month"*, *"day"* », do
+              1. Set _formatOptions_.[[&lt;_property_>]] to *"numeric"*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
-            1. For each property name _prop_ of « *"hour"*, *"minute"*, *"second"* », do
-              1. Set _formatOptions_.[[&lt;_prop_>]] to *"numeric"*.
+            1. For each property name _property_ of « *"hour"*, *"minute"*, *"second"* », do
+              1. Set _formatOptions_.[[&lt;_property_>]] to *"numeric"*.
           1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_>]].
           1. If _formatMatcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
@@ -884,24 +884,24 @@
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _p_ be the Property value of the current row.
+          1. Let _property_ be the Property value of the current row.
           1. If there is an Internal Slot value in the current row, then
-            1. Let _v_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
+            1. Let _value_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
           1. Else,
             1. Let _format_ be _dtf_.[[DateTimeFormat]].
-            1. If _format_ has a field [[&lt;_p_>]] and _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
-              1. Let _v_ be _format_.[[&lt;_p_>]].
+            1. If _format_ has a field [[&lt;_property_>]] and _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
+              1. Let _value_ be _format_.[[&lt;_property_>]].
             1. Else,
-              1. Let _v_ be *undefined*.
-          1. If _v_ is not *undefined*, then
+              1. Let _value_ be *undefined*.
+          1. If _value_ is not *undefined*, then
             1. If there is a Conversion value in the current row, then
               1. Let _conversion_ be the Conversion value of the current row.
               1. If _conversion_ is ~hour12~, then
-                1. If _v_ is *"h11"* or *"h12"*, set _v_ to *true*. Otherwise, set _v_ to *false*.
+                1. If _value_ is *"h11"* or *"h12"*, set _value_ to *true*. Otherwise, set _value_ to *false*.
               1. Else,
                 1. Assert: _conversion_ is ~number~.
-                1. Set _v_ to 𝔽(_v_).
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+                1. Set _value_ to 𝔽(_value_).
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _property_, _value_).
         1. Return _options_.
       </emu-alg>
 
@@ -1035,9 +1035,9 @@
           1. Set _dtf_ to ? UnwrapDateTimeFormat(_dtf_).
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. If _dtf_.[[BoundFormat]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
-          1. Set _F_.[[DateTimeFormat]] to _dtf_.
-          1. Set _dtf_.[[BoundFormat]] to _F_.
+          1. Let _func_ be a new built-in function object as defined in DateTime Format Functions (<emu-xref href="#sec-datetime-format-functions"></emu-xref>).
+          1. Set _func_.[[DateTimeFormat]] to _dtf_.
+          1. Set _dtf_.[[BoundFormat]] to _func_.
         1. Return _dtf_.[[BoundFormat]].
       </emu-alg>
 
@@ -1323,10 +1323,10 @@
       <h1>DateTime Format Functions</h1>
 
       <p>A DateTime format function is an anonymous built-in function that has a [[DateTimeFormat]] internal slot.</p>
-      <p>When a DateTime format function _F_ is called with optional argument _date_, the following steps are taken:</p>
+      <p>When a DateTime format function _func_ is called with optional argument _date_, the following steps are taken:</p>
 
       <emu-alg>
-        1. Let _dtf_ be _F_.[[DateTimeFormat]].
+        1. Let _dtf_ be _func_.[[DateTimeFormat]].
         1. Assert: _dtf_ is an Object and _dtf_ has an [[InitializedDateTimeFormat]] internal slot.
         1. If _date_ is not provided or is *undefined*, then
           1. Let _x_ be ! Call(%Date.now%, *undefined*).
@@ -1369,71 +1369,71 @@
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"numberingSystem"*, _dateTimeFormat_.[[NumberingSystem]]).
           1. Perform ! CreateDataPropertyOrThrow(_nf3Options_, *"useGrouping"*, *false*).
           1. Let _nf3_ be ! Construct(%Intl.NumberFormat%, « _locale_, _nf3Options_ »).
-        1. Let _tm_ be ToLocalTime(_epochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
+        1. Let _localTime_ be ToLocalTime(_epochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. Let _result_ be a new empty List.
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
-          1. Let _p_ be _patternPart_.[[Type]].
-          1. If _p_ is *"literal"*, then
+          1. Let _partType_ be _patternPart_.[[Type]].
+          1. If _partType_ is *"literal"*, then
             1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _patternPart_.[[Value]] } to _result_.
-          1. Else if _p_ is *"fractionalSecondDigits"*, then
+          1. Else if _partType_ is *"fractionalSecondDigits"*, then
             1. Assert: _format_ has a field [[fractionalSecondDigits]].
-            1. Let _v_ be _tm_.[[Millisecond]].
-            1. Set _v_ to floor(_v_ × 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
-            1. Let _fv_ be FormatNumeric(_nf3_, _v_).
-            1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is *"dayPeriod"*, then
+            1. Let _value_ be _localTime_.[[Millisecond]].
+            1. Set _value_ to floor(_value_ × 10<sup>( _fractionalSecondDigits_ - 3 )</sup>).
+            1. Let _formattedValue_ be FormatNumeric(_nf3_, _value_).
+            1. Append the Record { [[Type]]: *"fractionalSecond"*, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ is *"dayPeriod"*, then
             1. Assert: _format_ has a field [[dayPeriod]].
-            1. Let _f_ be _format_.[[dayPeriod]].
-            1. Let _fv_ be a String value representing the day period of _tm_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
-            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is *"timeZoneName"*, then
+            1. Let _fieldFormat_ be _format_.[[dayPeriod]].
+            1. Let _formattedValue_ be a String value representing the day period of _localTime_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+            1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ is *"timeZoneName"*, then
             1. Assert: _format_ has a field [[timeZoneName]].
-            1. Let _f_ be _format_.[[timeZoneName]].
-            1. Let _v_ be _dateTimeFormat_.[[TimeZone]].
-            1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _tm_ if _f_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _f_, then use the String value of _v_ itself.
-            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
-            1. Assert: _format_ has a field [[&lt;_p_>]].
-            1. Let _f_ be _format_.[[&lt;_p_>]].
-            1. Let _v_ be the value of _tm_'s field whose name is the Internal Slot column of the matching row.
-            1. If _p_ is *"year"* and _v_ ≤ 0, set _v_ to 1 - _v_.
-            1. If _p_ is *"month"*, set _v_ to _v_ + 1.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
-              1. Set _v_ to _v_ modulo 12.
-              1. If _v_ is 0 and _dateTimeFormat_.[[HourCycle]] is *"h12"*, set _v_ to 12.
-            1. If _p_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h24"*, then
-              1. If _v_ is 0, set _v_ to 24.
-            1. If _f_ is *"numeric"*, then
-              1. Let _fv_ be FormatNumeric(_nf_, _v_).
-            1. Else if _f_ is *"2-digit"*, then
-              1. Let _fv_ be FormatNumeric(_nf2_, _v_).
-              1. Let _codePoints_ be StringToCodePoints(_fv_).
+            1. Let _fieldFormat_ be _format_.[[timeZoneName]].
+            1. Let _value_ be _dateTimeFormat_.[[TimeZone]].
+            1. Let _formattedValue_ be a String value representing _value_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _localTime_ if _fieldFormat_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _fieldFormat_, then use the String value of _value_ itself.
+            1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
+            1. Assert: _format_ has a field [[&lt;_partType_>]].
+            1. Let _fieldFormat_ be _format_.[[&lt;_partType_>]].
+            1. Let _value_ be the value of _localTime_'s field whose name is the Internal Slot column of the matching row.
+            1. If _partType_ is *"year"* and _value_ ≤ 0, set _value_ to 1 - _value_.
+            1. If _partType_ is *"month"*, set _value_ to _value_ + 1.
+            1. If _partType_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
+              1. Set _value_ to _value_ modulo 12.
+              1. If _value_ is 0 and _dateTimeFormat_.[[HourCycle]] is *"h12"*, set _value_ to 12.
+            1. If _partType_ is *"hour"* and _dateTimeFormat_.[[HourCycle]] is *"h24"*, then
+              1. If _value_ is 0, set _value_ to 24.
+            1. If _fieldFormat_ is *"numeric"*, then
+              1. Let _formattedValue_ be FormatNumeric(_nf_, _value_).
+            1. Else if _fieldFormat_ is *"2-digit"*, then
+              1. Let _formattedValue_ be FormatNumeric(_nf2_, _value_).
+              1. Let _codePoints_ be StringToCodePoints(_formattedValue_).
               1. Let _count_ be the number of elements in _codePoints_.
               1. If _count_ > 2, then
                 1. Let _tens_ be _codePoints_[_count_ - 2].
                 1. Let _ones_ be _codePoints_[_count_ - 1].
-                1. Set _fv_ to CodePointsToString(« _tens_, _ones_ »).
-            1. Else if _f_ is *"narrow"*, *"short"*, or *"long"*, then
-              1. Let _fv_ be a String value representing _v_ in the form given by _f_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _p_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _f_, then use the String value of _v_ itself.
-            1. Append the Record { [[Type]]: _p_, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is *"ampm"*, then
-            1. Let _v_ be _tm_.[[Hour]].
-            1. If _v_ is greater than 11, then
-              1. Let _fv_ be an ILD String value representing *"post meridiem"*.
+                1. Set _formattedValue_ to CodePointsToString(« _tens_, _ones_ »).
+            1. Else if _fieldFormat_ is *"narrow"*, *"short"*, or *"long"*, then
+              1. Let _formattedValue_ be a String value representing _value_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _partType_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _fieldFormat_, then use the String value of _value_ itself.
+            1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ is *"ampm"*, then
+            1. Let _value_ be _localTime_.[[Hour]].
+            1. If _value_ is greater than 11, then
+              1. Let _formattedValue_ be an ILD String value representing *"post meridiem"*.
             1. Else,
-              1. Let _fv_ be an ILD String value representing *"ante meridiem"*.
-            1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is *"relatedYear"*, then
-            1. Let _v_ be _tm_.[[RelatedYear]].
-            1. Let _fv_ be FormatNumeric(_nf_, _v_).
-            1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _fv_ } to _result_.
-          1. Else if _p_ is *"yearName"*, then
-            1. Let _v_ be _tm_.[[YearName]].
-            1. Let _fv_ be an ILD String value representing _v_.
-            1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _fv_ } to _result_.
+              1. Let _formattedValue_ be an ILD String value representing *"ante meridiem"*.
+            1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ is *"relatedYear"*, then
+            1. Let _value_ be _localTime_.[[RelatedYear]].
+            1. Let _formattedValue_ be FormatNumeric(_nf_, _value_).
+            1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _formattedValue_ } to _result_.
+          1. Else if _partType_ is *"yearName"*, then
+            1. Let _value_ be _localTime_.[[YearName]].
+            1. Let _formattedValue_ be an ILD String value representing _value_.
+            1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else,
-            1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _epochNanoseconds_ and _p_.
+            1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _epochNanoseconds_ and _partType_.
             1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
         1. Return _result_.
       </emu-alg>
@@ -1500,10 +1500,10 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
-          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
+          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
@@ -1528,8 +1528,8 @@
         1. If _y_ is *NaN*, throw a *RangeError* exception.
         1. Let _xEpochNanoseconds_ be ℤ(ℝ(_x_) × 10<sup>6</sup>).
         1. Let _yEpochNanoseconds_ be ℤ(ℝ(_y_) × 10<sup>6</sup>).
-        1. Let _tm1_ be ToLocalTime(_xEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
-        1. Let _tm2_ be ToLocalTime(_yEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
+        1. Let _localTime1_ be ToLocalTime(_xEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
+        1. Let _localTime2_ be ToLocalTime(_yEpochNanoseconds_, _dateTimeFormat_.[[Calendar]], _dateTimeFormat_.[[TimeZone]]).
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
         1. If _dateTimeFormat_.[[HourCycle]] is *"h11"* or *"h12"*, then
           1. Let _pattern_ be _format_.[[pattern12]].
@@ -1549,29 +1549,29 @@
           1. If _fieldName_ is not equal to [[Default]] and _relevantFieldsEqual_ is *true* and _checkMoreFields_ is *true*, then
             1. Set _selectedRangePattern_ to _rangePattern_.
             1. If _fieldName_ is [[AmPm]], then
-              1. If _tm1_.[[Hour]] is less than 12, let _v1_ be *"am"*; else let _v1_ be *"pm"*.
-              1. If _tm2_.[[Hour]] is less than 12, let _v2_ be *"am"*; else let _v2_ be *"pm"*.
+              1. If _localTime1_.[[Hour]] is less than 12, let _v1_ be *"am"*; else let _v1_ be *"pm"*.
+              1. If _localTime2_.[[Hour]] is less than 12, let _v2_ be *"am"*; else let _v2_ be *"pm"*.
             1. Else if _fieldName_ is [[DayPeriod]], then
-              1. Let _v1_ be a String value representing the day period of _tm1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
-              1. Let _v2_ be a String value representing the day period of _tm2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+              1. Let _v1_ be a String value representing the day period of _localTime1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+              1. Let _v2_ be a String value representing the day period of _localTime2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
             1. Else if _fieldName_ is [[FractionalSecondDigits]], then
               1. If _format_ has a [[fractionalSecondDigits]] field, then
                 1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
               1. Else,
                 1. Let _fractionalSecondDigits_ be 3.
               1. Let _exp_ be _fractionalSecondDigits_ - 3.
-              1. Let _v1_ be floor(_tm1_.[[Millisecond]] × 10<sup>_exp_</sup>).
-              1. Let _v2_ be floor(_tm2_.[[Millisecond]] × 10<sup>_exp_</sup>).
+              1. Let _v1_ be floor(_localTime1_.[[Millisecond]] × 10<sup>_exp_</sup>).
+              1. Let _v2_ be floor(_localTime2_.[[Millisecond]] × 10<sup>_exp_</sup>).
             1. Else,
-              1. Let _v1_ be _tm1_'s field whose name is _fieldName_.
-              1. Let _v2_ be _tm2_'s field whose name is _fieldName_.
+              1. Let _v1_ be _localTime1_'s field whose name is _fieldName_.
+              1. Let _v2_ be _localTime2_'s field whose name is _fieldName_.
             1. If _v1_ is not equal to _v2_, then
               1. Set _relevantFieldsEqual_ to *false*.
         1. If _relevantFieldsEqual_ is *true*, then
           1. Let _collapsedResult_ be a new empty List.
           1. Let _resultParts_ be FormatDateTimePattern(_dateTimeFormat_, _format_, _pattern_, _xEpochNanoseconds_).
-          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
-            1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
+          1. For each Record { [[Type]], [[Value]] } _part_ of _resultParts_, do
+            1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Source]]: *"shared"* } to _collapsedResult_.
           1. Return _collapsedResult_.
         1. Let _rangeResult_ be a new empty List.
         1. If _selectedRangePattern_ is *undefined*, then
@@ -1584,8 +1584,8 @@
           1. Else,
             1. Let _z_ be _yEpochNanoseconds_.
           1. Let _resultParts_ be FormatDateTimePattern(_dateTimeFormat_, _selectedRangePattern_, _pattern_, _z_).
-          1. For each Record { [[Type]], [[Value]] } _r_ of _resultParts_, do
-            1. Append the Record { [[Type]]: _r_.[[Type]], [[Value]]: _r_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
+          1. For each Record { [[Type]], [[Value]] } _part_ of _resultParts_, do
+            1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Source]]: _source_ } to _rangeResult_.
         1. Return _rangeResult_.
       </emu-alg>
     </emu-clause>
@@ -1624,11 +1624,11 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ of _parts_, do
-          1. Let _O_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_O_, *"source"*, _part_.[[Source]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _O_).
+          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"source"*, _part_.[[Source]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
