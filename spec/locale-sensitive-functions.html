@@ -408,10 +408,8 @@
       </p>
       <p>
         The era kind is used by <emu-xref href="#sec-calendardatearithmeticyearforerayear">CalendarDateArithmeticYearForEraYear</emu-xref> to calculate the arithmetic year ([[Year]]):
-        An *Era Kind* ~epoch~ means that the era is the epoch era, so 1 Era has an arithmetic year of 1. An *Era Kind* ~negative~ means
-        that the era is a "negative" era growing
-        from the epoch, so 1 Era is an arithmetic year of 0, and larger [[EraYear]] values produce smaller, negative arithmetic years. An *Era Kind* of
-        ~offset~ means that the era is "offset" by a given number (in the *Offset* column), so 1 Era has an arithmetic year of *Offset*.
+        An *Era Kind* ~epoch~ means that the era is the epoch era, so 1 Era has an arithmetic year of 1. An *Era Kind* ~negative~ means that the era is a “negative” era growing from the epoch, so 1 Era is an arithmetic year of 0, and larger [[EraYear]] values produce smaller, negative arithmetic years.
+        An *Era Kind* of ~offset~ means that the era is “offset” by a given number (in the *Offset* column), so 1 Era has an arithmetic year of *Offset*.
       </p>
       <emu-table id="table-eras">
         <emu-caption>Eras</emu-caption>
@@ -1191,7 +1189,7 @@
             <td>
               *true* if the date falls within a leap year, and *false* otherwise.
               <emu-note>
-                A "leap year" is a year that contains more days than other years (for solar or lunar calendars) or more months than other years (for lunisolar calendars like Hebrew or Chinese).
+                A leap year is a year that contains more days than other years (for solar or lunar calendars) or more months than other years (for lunisolar calendars like Hebrew or Chinese).
                 Some calendars, especially lunisolar ones, have further variation in year length that is not represented in the output of this operation (e.g., the Hebrew calendar includes common years with 353, 354, or 355 days and leap years with 383, 384, or 385 days).
               </emu-note>
             </td>
@@ -1835,7 +1833,7 @@
             1. Let _month_ be MonthCodeToOrdinal(_calendar_, _fields_.[[Year]], _constrainedMonthCode_).
             1. If _fields_.[[Month]] is not ~unset~ and _fields_.[[Month]] ≠ _month_, throw a *RangeError* exception.
             1. Set _fields_.[[Month]] to _month_.
-            1. NOTE: _fields_.[[MonthCode]] is intentionally not overwritten with _constrainedMonthCode_. Pending the "overflow" parameter in CalendarDateToISO or CalendarMonthDayToISOReferenceDate, a month code not occurring in _fields_.[[Year]] may cause that operation to throw. However, if _fields_.[[Month]] is present, it must agree with the constrained month code.
+            1. NOTE: _fields_.[[MonthCode]] is intentionally not overwritten with _constrainedMonthCode_. Pending the _overflow_ parameter in CalendarDateToISO or CalendarMonthDayToISOReferenceDate, a month code not occurring in _fields_.[[Year]] may cause that operation to throw. However, if _fields_.[[Month]] is present, it must agree with the constrained month code.
         1. Assert: _fields_.[[Era]] and _fields_.[[EraYear]] are ~unset~.
         1. Assert: If _needsYear_ is *true*, _fields_.[[Year]] is not ~unset~.
         1. Assert: If _needsOrdinalMonth_ is *true*, _fields_.[[Month]] is not ~unset~.
