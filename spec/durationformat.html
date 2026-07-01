@@ -22,13 +22,13 @@
         1. Let _durationFormat_ be ? OrdinaryCreateFromConstructor(NewTarget, *"%Intl.DurationFormatPrototype%"*, « [[InitializedDurationFormat]], [[Locale]], [[NumberingSystem]], [[Style]], [[YearsOptions]], [[MonthsOptions]], [[WeeksOptions]], [[DaysOptions]], [[HoursOptions]], [[MinutesOptions]], [[SecondsOptions]], [[MillisecondsOptions]], [[MicrosecondsOptions]], [[NanosecondsOptions]], [[HourMinuteSeparator]], [[MinuteSecondSeparator]], [[FractionalDigits]] »).
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DurationFormat%, %Intl.DurationFormat%.[[LocaleData]], _locales_, _options_).
         1. Set _options_ to _optionsResolution_.[[Options]].
-        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
-        1. Set _durationFormat_.[[Locale]] to _r_.[[Locale]].
-        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
+        1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
+        1. Set _durationFormat_.[[Locale]] to _resolvedLocale_.[[Locale]].
+        1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. Let _digitalFormat_ be _resolvedLocaleData_.[[DigitalFormat]].
         1. Set _durationFormat_.[[HourMinuteSeparator]] to _digitalFormat_.[[HourMinuteSeparator]].
         1. Set _durationFormat_.[[MinuteSecondSeparator]] to _digitalFormat_.[[MinuteSecondSeparator]].
-        1. Set _durationFormat_.[[NumberingSystem]] to _r_.[[nu]].
+        1. Set _durationFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
         1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"long"*, *"short"*, *"narrow"*, *"digital"* », *"short"*).
         1. Set _durationFormat_.[[Style]] to _style_.
         1. Let _prevStyle_ be the empty String.
@@ -203,23 +203,23 @@
         1. Perform ? RequireInternalSlot(_df_, [[InitializedDurationFormat]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-durationformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _p_ be the Property value of the current row.
-          1. Let _v_ be the value of _df_'s internal slot whose name is the Internal Slot value of the current row.
-          1. If _v_ is not *undefined*, then
+          1. Let _propertyKey_ be the Property value of the current row.
+          1. Let _value_ be the value of _df_'s internal slot whose name is the Internal Slot value of the current row.
+          1. If _value_ is not *undefined*, then
             1. If there is a Conversion value in the current row, let _conversion_ be that value; else let _conversion_ be ~empty~.
             1. If _conversion_ is ~number~, then
-              1. Set _v_ to 𝔽(_v_).
+              1. Set _value_ to 𝔽(_value_).
             1. Else if _conversion_ is not ~empty~, then
-              1. Assert: _conversion_ is ~style+display~ and _v_ is a Duration Unit Options Record.
-              1. NOTE: _v_.[[Style]] will be represented with a property named _p_ (a plural Temporal unit), then _v_.[[Display]] will be represented with a property whose name suffixes _p_ with *"Display"*.
-              1. Let _style_ be _v_.[[Style]].
+              1. Assert: _conversion_ is ~style+display~ and _value_ is a Duration Unit Options Record.
+              1. NOTE: _value_.[[Style]] will be represented with a property named _propertyKey_ (a plural Temporal unit), then _value_.[[Display]] will be represented with a property whose name suffixes _propertyKey_ with *"Display"*.
+              1. Let _style_ be _value_.[[Style]].
               1. If _style_ is *"fractional"*, then
-                1. Assert: IsFractionalSecondUnitName(_p_) is *true*.
+                1. Assert: IsFractionalSecondUnitName(_propertyKey_) is *true*.
                 1. Set _style_ to *"numeric"*.
-              1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _style_).
-              1. Set _p_ to the string-concatenation of _p_ and *"Display"*.
-              1. Set _v_ to _v_.[[Display]].
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+              1. Perform ! CreateDataPropertyOrThrow(_options_, _propertyKey_, _style_).
+              1. Set _propertyKey_ to the string-concatenation of _propertyKey_ and *"Display"*.
+              1. Set _value_ to _value_.[[Display]].
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _propertyKey_, _value_).
         1. Return _options_.
       </emu-alg>
 
@@ -462,15 +462,15 @@
     <emu-clause id="sec-tointegerifintegral" oldids="sec-tointegerwithoutrounding" type="abstract operation">
       <h1>
         ToIntegerIfIntegral (
-          _argument_: an ECMAScript language value,
+          _arg_: an ECMAScript language value,
         ): either a normal completion containing an integer, or a throw completion
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It converts _argument_ to an integer representing its Number value, or throws a *RangeError* when that value is not <emu-xref href="#integral-number">integral</emu-xref>.</dd>
+        <dd>It converts _arg_ to an integer representing its Number value, or throws a *RangeError* when that value is not <emu-xref href="#integral-number">integral</emu-xref>.</dd>
       </dl>
       <emu-alg>
-        1. Let _number_ be ? ToNumber(_argument_).
+        1. Let _number_ be ? ToNumber(_arg_).
         1. If _number_ is not an integral Number, throw a *RangeError* exception.
         1. Return ℝ(_number_).
       </emu-alg>
@@ -727,15 +727,15 @@
         1. Let _result_ be a new empty List.
         1. Let _hoursStyle_ be _durationFormat_.[[HoursOptions]].[[Style]].
         1. Assert: _hoursStyle_ is *"numeric"* or _hoursStyle_ is *"2-digit"*.
-        1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
+        1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _numberingSystem_).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _numberingSystem_).
         1. If _hoursStyle_ is *"2-digit"*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. If _signDisplayed_ is *false*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"useGrouping"*, *false*).
-        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOpts_ »).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"signDisplay"*, *"never"*).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"useGrouping"*, *false*).
+        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOptions_ »).
         1. Let _hoursParts_ be PartitionNumberPattern(_nf_, _hoursValue_).
         1. For each Record { [[Type]], [[Value]] } _part_ of _hoursParts_, do
           1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: *"hour"* } to _result_.
@@ -764,15 +764,15 @@
           1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _separator_, [[Unit]]: ~empty~ } to _result_.
         1. Let _minutesStyle_ be _durationFormat_.[[MinutesOptions]].[[Style]].
         1. Assert: _minutesStyle_ is *"numeric"* or _minutesStyle_ is *"2-digit"*.
-        1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
+        1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _numberingSystem_).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _numberingSystem_).
         1. If _minutesStyle_ is *"2-digit"*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. If _signDisplayed_ is *false*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"useGrouping"*, *false*).
-        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOpts_ »).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"signDisplay"*, *"never"*).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"useGrouping"*, *false*).
+        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOptions_ »).
         1. Let _minutesParts_ be PartitionNumberPattern(_nf_, _minutesValue_).
         1. For each Record { [[Type]], [[Value]] } _part_ of _minutesParts_, do
           1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: *"minute"* } to _result_.
@@ -801,23 +801,23 @@
           1. Append the Record { [[Type]]: *"literal"*, [[Value]]: _separator_, [[Unit]]: ~empty~ } to _result_.
         1. Let _secondsStyle_ be _durationFormat_.[[SecondsOptions]].[[Style]].
         1. Assert: _secondsStyle_ is *"numeric"* or _secondsStyle_ is *"2-digit"*.
-        1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
+        1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
         1. Let _numberingSystem_ be _durationFormat_.[[NumberingSystem]].
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _numberingSystem_).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _numberingSystem_).
         1. If _secondsStyle_ is *"2-digit"*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumIntegerDigits"*, *2*<sub>𝔽</sub>).
         1. If _signDisplayed_ is *false*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"useGrouping"*, *false*).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"signDisplay"*, *"never"*).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"useGrouping"*, *false*).
         1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
         1. If _fractionDigits_ is *undefined*, then
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
         1. Else,
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
-          1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
-        1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
-        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOpts_ »).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, _fractionDigits_).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, _fractionDigits_).
+        1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"roundingMode"*, *"trunc"*).
+        1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOptions_ »).
         1. Let _secondsParts_ be PartitionNumberPattern(_nf_, _secondsValue_).
         1. For each Record { [[Type]], [[Value]] } _part_ of _secondsParts_, do
           1. Append the Record { [[Type]]: _part_.[[Type]], [[Value]]: _part_.[[Value]], [[Unit]]: *"second"* } to _result_.
@@ -911,13 +911,13 @@
         <dd>It creates a List corresponding to the parts within the Lists in _partitionedPartsList_ according to the effective locale and the formatting options of _durationFormat_.</dd>
       </dl>
       <emu-alg>
-        1. Let _lfOpts_ be OrdinaryObjectCreate(*null*).
-        1. Perform ! CreateDataPropertyOrThrow(_lfOpts_, *"type"*, *"unit"*).
+        1. Let _lfOptions_ be OrdinaryObjectCreate(*null*).
+        1. Perform ! CreateDataPropertyOrThrow(_lfOptions_, *"type"*, *"unit"*).
         1. Let _listStyle_ be _durationFormat_.[[Style]].
         1. If _listStyle_ is *"digital"*, then
           1. Set _listStyle_ to *"short"*.
-        1. Perform ! CreateDataPropertyOrThrow(_lfOpts_, *"style"*, _listStyle_).
-        1. Let _lf_ be ! Construct(%Intl.ListFormat%, « _durationFormat_.[[Locale]], _lfOpts_ »).
+        1. Perform ! CreateDataPropertyOrThrow(_lfOptions_, *"style"*, _listStyle_).
+        1. Let _lf_ be ! Construct(%Intl.ListFormat%, « _durationFormat_.[[Locale]], _lfOptions_ »).
         1. Let _strings_ be a new empty List.
         1. For each element _parts_ of _partitionedPartsList_, do
           1. Let _string_ be the empty String.
@@ -970,29 +970,29 @@
             1. If _numericPartsList_ is not empty, append _numericPartsList_ to _result_.
             1. Set _numericUnitFound_ to *true*.
           1. Else,
-            1. Let _nfOpts_ be OrdinaryObjectCreate(*null*).
+            1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
             1. If NextUnitFractional(_durationFormat_, _unit_) is *true*, then
               1. Set _value_ to _value_ + ComputeFractionalDigits(_durationFormat_, _duration_).
               1. Let _fractionDigits_ be _durationFormat_.[[FractionalDigits]].
               1. If _fractionDigits_ is *undefined*, then
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
               1. Else,
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"maximumFractionDigits"*, _fractionDigits_).
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"minimumFractionDigits"*, _fractionDigits_).
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"roundingMode"*, *"trunc"*).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, _fractionDigits_).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, _fractionDigits_).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"roundingMode"*, *"trunc"*).
               1. Set _numericUnitFound_ to *true*.
             1. If _display_ is *"always"* or _value_ is not 0, then
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"numberingSystem"*, _durationFormat_.[[NumberingSystem]]).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _durationFormat_.[[NumberingSystem]]).
               1. If _signDisplayed_ is *true*, then
                 1. Set _signDisplayed_ to *false*.
                 1. If _value_ is 0 and DurationSign(_duration_) is -1, set _value_ to ~negative-zero~.
               1. Else,
-                1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"signDisplay"*, *"never"*).
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"style"*, *"unit"*).
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"unit"*, _numberFormatUnit_).
-              1. Perform ! CreateDataPropertyOrThrow(_nfOpts_, *"unitDisplay"*, _style_).
-              1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOpts_ »).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"signDisplay"*, *"never"*).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"style"*, *"unit"*).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"unit"*, _numberFormatUnit_).
+              1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"unitDisplay"*, _style_).
+              1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOptions_ »).
               1. Let _parts_ be PartitionNumberPattern(_nf_, _value_).
               1. Let _list_ be a new empty List.
               1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do

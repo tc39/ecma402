@@ -30,13 +30,13 @@
         1. Else,
           1. Let _localeData_ be %Intl.Collator%.[[SearchLocaleData]].
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.Collator%, _localeData_, CreateArrayFromList(_requestedLocales_), _options_).
-        1. Let _r_ be _optionsResolution_.[[ResolvedLocale]].
-        1. Set _collator_.[[Locale]] to _r_.[[Locale]].
-        1. If _r_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _r_.[[co]].
+        1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
+        1. Set _collator_.[[Locale]] to _resolvedLocale_.[[Locale]].
+        1. If _resolvedLocale_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _resolvedLocale_.[[co]].
         1. Set _collator_.[[Collation]] to _collation_.
-        1. Set _collator_.[[Numeric]] to SameValue(_r_.[[kn]], *"true"*).
-        1. Set _collator_.[[CaseFirst]] to _r_.[[kf]].
-        1. Let _resolvedLocaleData_ be _r_.[[LocaleData]].
+        1. Set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
+        1. Set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
+        1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. If _usage_ is *"sort"*, let _defaultSensitivity_ be *"variant"*. Otherwise, let _defaultSensitivity_ be _resolvedLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », _defaultSensitivity_).
         1. Let _defaultIgnorePunctuation_ be _resolvedLocaleData_.[[ignorePunctuation]].
@@ -128,14 +128,14 @@
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _p_ be the Property value of the current row.
-          1. Let _v_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
+          1. Let _propertyKey_ be the Property value of the current row.
+          1. Let _value_ be the value of _collator_'s internal slot whose name is the Internal Slot value of the current row.
           1. If the current row has an Extension Key value, then
             1. Let _extensionKey_ be the Extension Key value of the current row.
             1. If %Intl.Collator%.[[RelevantExtensionKeys]] does not contain _extensionKey_, then
-              1. Set _v_ to *undefined*.
-          1. If _v_ is not *undefined*, then
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _p_, _v_).
+              1. Set _value_ to *undefined*.
+          1. If _value_ is not *undefined*, then
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _propertyKey_, _value_).
         1. Return _options_.
       </emu-alg>
 
@@ -198,9 +198,9 @@
         1. Let _collator_ be the *this* value.
         1. Perform ? RequireInternalSlot(_collator_, [[InitializedCollator]]).
         1. If _collator_.[[BoundCompare]] is *undefined*, then
-          1. Let _F_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
-          1. Set _F_.[[Collator]] to _collator_.
-          1. Set _collator_.[[BoundCompare]] to _F_.
+          1. Let _func_ be a new built-in function object as defined in <emu-xref href="#sec-collator-compare-functions"></emu-xref>.
+          1. Set _func_.[[Collator]] to _collator_.
+          1. Set _collator_.[[BoundCompare]] to _func_.
         1. Return _collator_.[[BoundCompare]].
       </emu-alg>
 
@@ -212,16 +212,16 @@
         <h1>Collator Compare Functions</h1>
 
         <p>A Collator compare function is an anonymous built-in function that has a [[Collator]] internal slot.</p>
-        <p>When a Collator compare function _F_ is called with arguments _x_ and _y_, the following steps are taken:</p>
+        <p>When a Collator compare function _func_ is called with arguments _x_ and _y_, the following steps are taken:</p>
 
         <emu-alg>
-          1. Let _collator_ be _F_.[[Collator]].
+          1. Let _collator_ be _func_.[[Collator]].
           1. Assert: _collator_ is an Object and _collator_ has an [[InitializedCollator]] internal slot.
           1. If _x_ is not provided, let _x_ be *undefined*.
           1. If _y_ is not provided, let _y_ be *undefined*.
-          1. Let _X_ be ? ToString(_x_).
-          1. Let _Y_ be ? ToString(_y_).
-          1. Return CompareStrings(_collator_, _X_, _Y_).
+          1. Let _xString_ be ? ToString(_x_).
+          1. Let _yString_ be ? ToString(_y_).
+          1. Return CompareStrings(_collator_, _xString_, _yString_).
         </emu-alg>
 
         <p>The *"length"* property of a Collator compare function is *2*<sub>𝔽</sub>.</p>
