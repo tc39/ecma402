@@ -68,7 +68,7 @@
         1. If _localeExtensionKeys_ contains *"kf"*, then
           1. Set _locale_.[[CaseFirst]] to _localeRecord_.[[kf]].
         1. If _localeExtensionKeys_ contains *"kn"*, then
-          1. If SameValue(_localeRecord_.[[kn]], *"true"*) is *true* or _localeRecord_.[[kn]] is the empty String, then
+          1. If _localeRecord_.[[kn]] is either *"true"* or the empty String, then
             1. Set _locale_.[[Numeric]] to *true*.
           1. Else,
             1. Set _locale_.[[Numeric]] to *false*.
@@ -656,10 +656,7 @@
         1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
         1. If _language_ is not *"und"*, then
           1. Let _match_ be LookupMatchingLocaleByPrefix(%Intl.Collator%.[[AvailableLocales]], « _loc_.[[Locale]] »).
-          1. If _match_ is not *undefined*, then
-            1. Let _foundLocale_ be _match_.[[locale]].
-          1. Else,
-            1. Let _foundLocale_ be DefaultLocale().
+          1. If _match_ is not *undefined*, let _foundLocale_ be _match_.[[locale]]; else let _foundLocale_ be DefaultLocale().
           1. Let _foundLocaleData_ be %Intl.Collator%.[[SortLocaleData]].[[&lt;_foundLocale_&gt;]].
           1. Let _list_ be a copy of _foundLocaleData_.[[co]].
           1. Assert: _list_[0] is *null*.
@@ -872,8 +869,7 @@
         1. Let _firstDayString_ be _loc_.[[FirstDayOfWeek]].
         1. If _firstDayString_ is not *undefined*, then
           1. Let _firstDay_ be WeekdayUValueToNumber(_firstDayString_).
-          1. If _firstDay_ is not *undefined*, then
-            1. Set _weekInfo_.[[FirstDay]] to _firstDay_.
+          1. If _firstDay_ is not *undefined*, set _weekInfo_.[[FirstDay]] to _firstDay_.
         1. Return _weekInfo_.
       </emu-alg>
 

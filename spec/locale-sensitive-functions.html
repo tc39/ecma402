@@ -227,7 +227,7 @@
           1. If _k_ > 0, then
             1. Set _result_ to the string-concatenation of _result_ and _separator_.
           1. Let _element_ be ? Get(_array_, ! ToString(𝔽(_k_))).
-          1. If _element_ is not *undefined* or *null*, then
+          1. If _element_ is neither *undefined* nor *null*, then
             1. Let _elementString_ be ? ToString(? Invoke(_element_, *"toLocaleString"*, « _locales_, _options_ »)).
             1. Set _result_ to the string-concatenation of _result_ and _elementString_.
           1. Set _k_ to _k_ + 1.

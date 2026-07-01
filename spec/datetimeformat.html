@@ -1419,10 +1419,7 @@
             1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"ampm"*, then
             1. Let _value_ be _localTime_.[[Hour]].
-            1. If _value_ is greater than 11, then
-              1. Let _formattedValue_ be an ILD String value representing *"post meridiem"*.
-            1. Else,
-              1. Let _formattedValue_ be an ILD String value representing *"ante meridiem"*.
+            1. If _value_ > 11, let _formattedValue_ be an ILD String value representing *"post meridiem"*; else let _formattedValue_ be an ILD String value representing *"ante meridiem"*.
             1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"relatedYear"*, then
             1. Let _value_ be _localTime_.[[RelatedYear]].
@@ -1433,7 +1430,7 @@
             1. Let _formattedValue_ be an ILD String value representing _value_.
             1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else,
-            1. Let _unknown_ be an implementation-, locale-, and numbering system-dependent String based on _epochNanoseconds_ and _partType_.
+            1. Let _unknown_ be an ILND String based on _epochNanoseconds_ and _partType_.
             1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
         1. Return _result_.
       </emu-alg>
