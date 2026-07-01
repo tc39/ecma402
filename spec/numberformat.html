@@ -845,9 +845,9 @@
                 1. Let _digits_ be a List whose elements are the code points specified in the Digits column of the matching row in <emu-xref href="#table-numbering-system-digits"></emu-xref>.
                 1. Assert: The length of _digits_ is 10.
                 1. Let _transliterated_ be the empty String.
-                1. Let _len_ be the length of _formattedString_.
+                1. Let _length_ be the length of _formattedString_.
                 1. Let _position_ be 0.
-                1. Repeat, while _position_ &lt; _len_,
+                1. Repeat, while _position_ &lt; _length_,
                   1. Let _c_ be the code unit at index _position_ within _formattedString_.
                   1. If 0x0030 ≤ _c_ ≤ 0x0039, then
                     1. NOTE: _c_ is an ASCII digit.
