@@ -60,7 +60,8 @@
           1. Let _tPrefix_ be the substring of _transformExtension_ from 3.
           1. Let _tlang_ be the longest prefix of _tPrefix_ matched by the <code>tlang</code> Unicode locale nonterminal. If there is no such prefix, return *true*.
           1. Let _tlangVariants_ be GetLocaleVariants(_tlang_).
-          1. If _tlangVariants_ contains any duplicate subtags, return *false*.
+          1. If _tlangVariants_ is not *undefined*, then
+            1. If _tlangVariants_ contains any duplicate subtags, return *false*.
         1. Return *true*.
       </emu-alg>
     </emu-clause>
