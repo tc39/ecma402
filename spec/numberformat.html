@@ -723,9 +723,9 @@
           1. Let _i_ be StringIndexOf(_string_, *"."*, 0).
           1. If _i_ is not ~not-found~, set _string_ to the substring of _string_ from 0 to _i_.
         1. Let _int_ be _result_.[[IntegerDigitsCount]].
-        1. Let _minInt_ be _intlObj_.[[MinimumIntegerDigits]].
-        1. If _int_ &lt; _minInt_, then
-          1. Let _forwardZeros_ be the String consisting of _minInt_ - _int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
+        1. Let _minIntDigits_ be _intlObj_.[[MinimumIntegerDigits]].
+        1. If _int_ &lt; _minIntDigits_, then
+          1. Let _forwardZeros_ be the String consisting of _minIntDigits_ - _int_ occurrences of the code unit 0x0030 (DIGIT ZERO).
           1. Set _string_ to the string-concatenation of _forwardZeros_ and _string_.
         1. If _sign_ is ~negative~, then
           1. If _x_ is 0, set _x_ to ~negative-zero~. Otherwise, set _x_ to -_x_.
@@ -793,8 +793,7 @@
             1. Append the Record { [[Type]]: *"unit"*, [[Value]]: _unitString_ } to _result_.
           1. Else if _partType_ is *"currencyCode"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
-            1. Let _currencyString_ be _currency_.
-            1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _currencyString_ } to _result_.
+            1. Append the Record { [[Type]]: *"currency"*, [[Value]]: _currency_ } to _result_.
           1. Else if _partType_ is *"currencyPrefix"* and _numberFormat_.[[Style]] is *"currency"*, then
             1. Let _currency_ be _numberFormat_.[[Currency]].
             1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
@@ -861,26 +860,26 @@
                 1. Use an implementation dependent algorithm to map _formattedString_ to the appropriate representation of _formattedString_ in the given numbering system.
               1. Let _decimalSepIndex_ be StringIndexOf(_formattedString_, *"."*, 0).
               1. If _decimalSepIndex_ is not ~not-found~ and _decimalSepIndex_ > 0, then
-                1. Let _int_ be the substring of _formattedString_ from 0 to _decimalSepIndex_.
-                1. Let _fraction_ be the substring of _formattedString_ from _decimalSepIndex_ + 1.
+                1. Let _intDigits_ be the substring of _formattedString_ from 0 to _decimalSepIndex_.
+                1. Let _fractionDigits_ be the substring of _formattedString_ from _decimalSepIndex_ + 1.
               1. Else,
-                1. Let _int_ be _formattedString_.
-                1. Let _fraction_ be *undefined*.
+                1. Let _intDigits_ be _formattedString_.
+                1. Let _fractionDigits_ be *undefined*.
               1. If the _numberFormat_.[[UseGrouping]] is *false*, then
-                1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _int_ } to _result_.
+                1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _intDigits_ } to _result_.
               1. Else,
                 1. Let _groupSepSymbol_ be the ILND String representing the grouping separator.
-                1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within the _int_, which may depend on the value of _numberFormat_.[[UseGrouping]].
+                1. Let _groups_ be a List whose elements are, in left to right order, the substrings defined by ILND set of locations within _intDigits_, which may depend on the value of _numberFormat_.[[UseGrouping]].
                 1. Assert: The number of elements in _groups_ List is greater than 0.
                 1. Repeat, while _groups_ List is not empty,
                   1. Remove the first element from _groups_ and let _intGroup_ be the value of that element.
                   1. Append the Record { [[Type]]: *"integer"*, [[Value]]: _intGroup_ } to _result_.
                   1. If _groups_ List is not empty, then
                     1. Append the Record { [[Type]]: *"group"*, [[Value]]: _groupSepSymbol_ } to _result_.
-              1. If _fraction_ is not *undefined*, then
+              1. If _fractionDigits_ is not *undefined*, then
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append the Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } to _result_.
-                1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fraction_ } to _result_.
+                1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fractionDigits_ } to _result_.
             1. Else if _partType_ is *"compactSymbol"*, then
               1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
               1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
@@ -1268,10 +1267,10 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
-          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
+          1. Let _partObj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
@@ -1918,11 +1917,11 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each element _part_ of _parts_, do
-          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"source"*, _part_.[[Source]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
+          1. Let _partObj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"source"*, _part_.[[Source]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>

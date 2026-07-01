@@ -269,7 +269,7 @@
             1. Set _primary_ to _renamedIdentifier_.
           1. Let _record_ be the Time Zone Identifier Record { [[Identifier]]: _identifier_, [[PrimaryIdentifier]]: _primary_ }.
           1. Append _record_ to _result_.
-        1. Assert: _result_ contains a Time Zone Identifier Record _record_ such that _record_.[[Identifier]] is *"UTC"* and _record_.[[PrimaryIdentifier]] is *"UTC"*.
+        1. Assert: _result_ contains a Time Zone Identifier Record _utcRecord_ such that _utcRecord_.[[Identifier]] is *"UTC"* and _utcRecord_.[[PrimaryIdentifier]] is *"UTC"*.
         1. Return _result_.
       </emu-alg>
 

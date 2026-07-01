@@ -104,13 +104,13 @@
         1. Set _formatOptions_.[[hourCycle]] to _hc_.
         1. Let _hasExplicitFormatComponents_ be *false*.
         1. For each row of <emu-xref href="#table-datetimeformat-components"></emu-xref>, except the header row, in table order, do
-          1. Let _property_ be the name given in the Property column of the current row.
-          1. If _property_ is *"fractionalSecondDigits"*, then
+          1. Let _propertyKey_ be the name given in the Property column of the current row.
+          1. If _propertyKey_ is *"fractionalSecondDigits"*, then
             1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
-            1. Let _value_ be ? GetOption(_options_, _property_, ~string~, _values_, *undefined*).
-          1. Set _formatOptions_.[[&lt;_property_>]] to _value_.
+            1. Let _value_ be ? GetOption(_options_, _propertyKey_, ~string~, _values_, *undefined*).
+          1. Set _formatOptions_.[[&lt;_propertyKey_>]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
         1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
@@ -130,19 +130,19 @@
         1. Else,
           1. Let _needDefaults_ be *true*.
           1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _property_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_property_>]].
+            1. For each property name _propertyKey_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_propertyKey_>]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _property_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_property_>]].
+            1. For each property name _propertyKey_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
+              1. Let _value_ be _formatOptions_.[[&lt;_propertyKey_>]].
               1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
-            1. For each property name _property_ of « *"year"*, *"month"*, *"day"* », do
-              1. Set _formatOptions_.[[&lt;_property_>]] to *"numeric"*.
+            1. For each property name _propertyKey_ of « *"year"*, *"month"*, *"day"* », do
+              1. Set _formatOptions_.[[&lt;_propertyKey_>]] to *"numeric"*.
           1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
-            1. For each property name _property_ of « *"hour"*, *"minute"*, *"second"* », do
-              1. Set _formatOptions_.[[&lt;_property_>]] to *"numeric"*.
+            1. For each property name _propertyKey_ of « *"hour"*, *"minute"*, *"second"* », do
+              1. Set _formatOptions_.[[&lt;_propertyKey_>]] to *"numeric"*.
           1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_>]].
           1. If _formatMatcher_ is *"basic"*, then
             1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
@@ -884,13 +884,13 @@
         1. Perform ? RequireInternalSlot(_dtf_, [[InitializedDateTimeFormat]]).
         1. Let _options_ be OrdinaryObjectCreate(%Object.prototype%).
         1. For each row of <emu-xref href="#table-datetimeformat-resolvedoptions-properties"></emu-xref>, except the header row, in table order, do
-          1. Let _property_ be the Property value of the current row.
+          1. Let _propertyKey_ be the Property value of the current row.
           1. If there is an Internal Slot value in the current row, then
             1. Let _value_ be the value of _dtf_'s internal slot whose name is the Internal Slot value of the current row.
           1. Else,
             1. Let _format_ be _dtf_.[[DateTimeFormat]].
-            1. If _format_ has a field [[&lt;_property_>]] and _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
-              1. Let _value_ be _format_.[[&lt;_property_>]].
+            1. If _format_ has a field [[&lt;_propertyKey_>]] and _dtf_.[[DateStyle]] is *undefined* and _dtf_.[[TimeStyle]] is *undefined*, then
+              1. Let _value_ be _format_.[[&lt;_propertyKey_>]].
             1. Else,
               1. Let _value_ be *undefined*.
           1. If _value_ is not *undefined*, then
@@ -901,7 +901,7 @@
               1. Else,
                 1. Assert: _conversion_ is ~number~.
                 1. Set _value_ to 𝔽(_value_).
-            1. Perform ! CreateDataPropertyOrThrow(_options_, _property_, _value_).
+            1. Perform ! CreateDataPropertyOrThrow(_options_, _propertyKey_, _value_).
         1. Return _options_.
       </emu-alg>
 
@@ -1500,10 +1500,10 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]] } _part_ of _parts_, do
-          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
+          1. Let _partObj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
@@ -1624,11 +1624,11 @@
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
         1. For each Record { [[Type]], [[Value]], [[Source]] } _part_ of _parts_, do
-          1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
-          1. Perform ! CreateDataPropertyOrThrow(_obj_, *"source"*, _part_.[[Source]]).
-          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
+          1. Let _partObj_ be OrdinaryObjectCreate(%Object.prototype%).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
+          1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"source"*, _part_.[[Source]]).
+          1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
           1. Increment _n_ by 1.
         1. Return _result_.
       </emu-alg>
