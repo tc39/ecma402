@@ -107,20 +107,16 @@
             1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
             1. Let _value_ be ? GetOption(_options_, _propertyKey_, ~string~, _values_, *undefined*).
           1. Set _formatOptions_.[[&lt;_propertyKey_>]] to _value_.
-          1. If _value_ is not *undefined*, then
-            1. Set _hasExplicitFormatComponents_ to *true*.
+          1. If _value_ is not *undefined*, set _hasExplicitFormatComponents_ to *true*.
         1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
         1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
         1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
-          1. If _hasExplicitFormatComponents_ is *true*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
+          1. If _hasExplicitFormatComponents_ is *true*, throw a *TypeError* exception.
+          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, throw a *TypeError* exception.
+          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, throw a *TypeError* exception.
           1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_>]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
@@ -140,13 +136,9 @@
             1. For each property name _propertyKey_ of « *"hour"*, *"minute"*, *"second"* », do
               1. Set _formatOptions_.[[&lt;_propertyKey_>]] to *"numeric"*.
           1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_>]].
-          1. If _formatMatcher_ is *"basic"*, then
-            1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
-          1. Else,
-            1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
+          1. If _formatMatcher_ is *"basic"*, let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_); else let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
         1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
-        1. If _bestFormat_ has a field [[hour]], then
-          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
+        1. If _bestFormat_ has a field [[hour]], set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
