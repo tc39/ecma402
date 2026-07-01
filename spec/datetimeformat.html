@@ -82,11 +82,7 @@
           1. Assert: _hour12_ is *undefined*.
           1. Let _hc_ be _resolvedLocale_.[[hc]].
           1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
-        1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
-        1. If _timeZone_ is *undefined*, then
-          1. Set _timeZone_ to SystemTimeZoneIdentifier().
-        1. Else,
-          1. Set _timeZone_ to ? ToString(_timeZone_).
+        1. Let _timeZone_ be ? GetOption(_options_, *"timeZone"*, ~string~, ~empty~, SystemTimeZoneIdentifier()).
         1. If IsTimeZoneOffsetString(_timeZone_) is *true*, then
           1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
           1. Assert: _parseResult_ is a Parse Node.
