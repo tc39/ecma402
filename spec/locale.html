@@ -543,8 +543,15 @@
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
         1. NOTE: Each subtag in _baseName_ that is preceded by *"-"* is either a <code>unicode_script_subtag</code>, <code>unicode_region_subtag</code>, or <code>unicode_variant_subtag</code>, but any <emu-not-ref>substring</emu-not-ref> matched by <code>unicode_variant_subtag</code> is strictly longer than any prefix thereof which could also be matched by one of the other productions.
-        1. Let _variants_ be the longest suffix of _baseName_ that starts with a *"-"* followed by a <emu-not-ref>substring</emu-not-ref> that is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal. If there is no such suffix, return *undefined*.
-        1. Return the substring of _variants_ from 1.
+        1. Let _subtags_ be StringSplitToList(_baseName_, *"-"*).
+        1. Let _dashIndex_ be the length of _subtags_[0].
+        1. Remove the first element from _subtags_.
+        1. For each String _subtag_ of _subtags_, do
+          1. If _subtag_ is matched by the <code>unicode_variant_subtag</code> Unicode locale nonterminal, then
+            1. Return the substring of _baseName_ from _dashIndex_ + 1.
+          1. Let _subtagLength_ be the length of _subtag_.
+          1. Set _dashIndex_ to _dashIndex_ + _subtagLength_ + 1.
+        1. Return *undefined*.
       </emu-alg>
     </emu-clause>
 
