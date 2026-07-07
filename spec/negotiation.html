@@ -171,7 +171,7 @@
           1. If _keyword_ is *undefined* and _length_ ≠ 2, then
             1. If _subtag_ is not an element of _attributes_, append _subtag_ to _attributes_.
           1. Else if _length_ = 2, then
-            1. Set _keyword_ to the Record { [[Key]]: _subtag_, [[Value]]: *""* }.
+            1. Set _keyword_ to the Record { [[Key]]: _subtag_, [[Value]]: the empty String }.
             1. If _keywords_ does not contain an element whose [[Key]] is _keyword_.[[Key]], append _keyword_ to _keywords_.
           1. Else if _keyword_.[[Value]] is the empty String, then
             1. Set _keyword_.[[Value]] to _subtag_.
@@ -262,7 +262,7 @@
                 1. Set _supportedKeyword_ to the Record { [[Key]]: _key_, [[Value]]: _value_ }.
             1. Else if _keyLocaleData_ contains *"true"*, then
               1. Set _value_ to *"true"*.
-              1. Set _supportedKeyword_ to the Record { [[Key]]: _key_, [[Value]]: *""* }.
+              1. Set _supportedKeyword_ to the Record { [[Key]]: _key_, [[Value]]: the empty String }.
           1. Assert: _options_ has a field [[&lt;_key_>]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_>]].
           1. Assert: _optionsValue_ is a String, or _optionsValue_ is either *undefined* or *null*.

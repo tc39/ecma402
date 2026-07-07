@@ -893,7 +893,7 @@
               1. If _exponent_ &lt; 0, then
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
                 1. Append the Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
-                1. Let _exponent_ be -_exponent_.
+                1. Set _exponent_ to -_exponent_.
               1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*).
               1. Append the Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } to _result_.
             1. Else,
@@ -1271,7 +1271,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
-          1. Increment _n_ by 1.
+          1. Set _n_ to _n_ + 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -1538,7 +1538,7 @@
           1. Let _x_ = -_x_.
         1. Let _magnitude_ be floor(log10(_x_)).
         1. Let _exponent_ be ComputeExponentForMagnitude(_numberFormat_, _magnitude_).
-        1. Let _x_ be _x_ × 10<sup>-_exponent_</sup>.
+        1. Set _x_ to _x_ × 10<sup>-_exponent_</sup>.
         1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
         1. If _formatNumberResult_.[[RoundedNumber]] = 0, then
           1. Return _exponent_.
@@ -1922,7 +1922,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"source"*, _part_.[[Source]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
-          1. Increment _n_ by 1.
+          1. Set _n_ to _n_ + 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>

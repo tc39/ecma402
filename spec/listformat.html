@@ -295,7 +295,7 @@ Output (List of parts Records):
             1. Let _pattern_ be _listFormat_.[[Templates]][_n_].[[End]].
           1. Let _placeables_ be the Record { [[0]]: _head_, [[1]]: _parts_ }.
           1. Set _parts_ to DeconstructPattern(_pattern_, _placeables_).
-          1. Decrement _i_ by 1.
+          1. Set _i_ to _i_ - 1.
         1. Return _parts_.
       </emu-alg>
 
@@ -340,7 +340,7 @@ Output (List of parts Records):
           1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _obj_).
-          1. Increment _n_ by 1.
+          1. Set _n_ to _n_ + 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>

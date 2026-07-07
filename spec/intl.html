@@ -100,7 +100,7 @@
       <p>When the `supportedValuesOf` method is called with argument _key_ , the following steps are taken:</p>
 
       <emu-alg>
-        1. Let _key_ be ? ToString(_key_).
+        1. Set _key_ to ? ToString(_key_).
         1. If _key_ is *"calendar"*, then
           1. Let _list_ be a new empty List.
           1. For each element _identifier_ of AvailableCalendars(), do
