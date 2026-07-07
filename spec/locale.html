@@ -689,15 +689,17 @@
         1. If _loc_.[[HourCycle]] is not *undefined*, then
           1. Return CreateArrayFromList(« _loc_.[[HourCycle]] »).
         1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
-        1. Let _region_ be _preference_.[[Region]].
-        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
-        1. If _regionOverride_ is not *undefined* and time data for _regionOverride_ are available, then
-          1. Let _lookupRegion_ be _regionOverride_.
-        1. Else,
-          1. Let _lookupRegion_ be _region_.
-        1. Let _list_ be a List of unique hour cycle identifiers, which must be lower case String values indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in _lookupRegion_. The list is empty if no time data for _lookupRegion_ is available.
-        1. If _list_ is empty, set _list_ to « *"h23"* ».
-        1. Return CreateArrayFromList(_list_).
+        1. If _preference_.[[RegionOverride]] is not *undefined*, let _preferredRegions_ be « _preference_.[[RegionOverride]], _preference_.[[Region]] »; else let _preferredRegions_ be « _preference_.[[Region]] ».
+        1. Let _hourCycles_ be a new empty List.
+        1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
+        1. For each String _region_ of _preferredRegions_, do
+          1. Let _locale_ be the string-concatenation of _language_, *"-"*, and _region_.
+          1. If _hourCycles_ is empty and time data for locale _locale_ are available, then
+            1. Set _hourCycles_ to a List of unique hour cycle identifiers, which must be lower case Strings indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in locale _locale_.
+          1. If _hourCycles_ is empty and time data for region _region_ are available, then
+            1. Set _hourCycles_ to a List of unique hour cycle identifiers, which must be lower case Strings indicating either the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*), sorted in descending preference of those in common use for date and time formatting in region _region_.
+        1. If _hourCycles_ is empty, set _hourCycles_ to « *"h23"* ».
+        1. Return CreateArrayFromList(_hourCycles_).
       </emu-alg>
     </emu-clause>
 
