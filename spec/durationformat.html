@@ -318,7 +318,7 @@
         1. Let _record_ be ? ToDurationRecord(_duration_).
         1. Let _parts_ be PartitionDurationFormatPattern(_df_, _record_).
         1. Let _result_ be the empty String.
-        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ of _parts_, do
           1. Set _result_ to the string-concatenation of _result_ and _part_.[[Value]].
         1. Return _result_.
       </emu-alg>
@@ -336,7 +336,7 @@
         1. Let _parts_ be PartitionDurationFormatPattern(_df_, _record_).
         1. Let _result_ be ! ArrayCreate(0).
         1. Let _n_ be 0.
-        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+        1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ of _parts_, do
           1. Let _obj_ be OrdinaryObjectCreate(%Object.prototype%).
           1. Perform ! CreateDataPropertyOrThrow(_obj_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_obj_, *"value"*, _part_.[[Value]]).
@@ -921,18 +921,18 @@
         1. Let _strings_ be a new empty List.
         1. For each element _parts_ of _partitionedPartsList_, do
           1. Let _string_ be the empty String.
-          1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+          1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ of _parts_, do
             1. Set _string_ to the string-concatenation of _string_ and _part_.[[Value]].
           1. Append _string_ to _strings_.
         1. Let _formattedPartsList_ be CreatePartsFromList(_lf_, _strings_).
         1. Let _partitionedPartsIndex_ be 0.
         1. Let _partitionedLength_ be the number of elements in _partitionedPartsList_.
         1. Let _flattenedPartsList_ be a new empty List.
-        1. For each Record { [[Type]], [[Value]] } _listPart_ in _formattedPartsList_, do
+        1. For each Record { [[Type]], [[Value]] } _listPart_ of _formattedPartsList_, do
           1. If _listPart_.[[Type]] is *"element"*, then
             1. Assert: _partitionedPartsIndex_ &lt; _partitionedLength_.
             1. Let _parts_ be _partitionedPartsList_[_partitionedPartsIndex_].
-            1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ in _parts_, do
+            1. For each Record { [[Type]], [[Value]], [[Unit]] } _part_ of _parts_, do
               1. Append _part_ to _flattenedPartsList_.
             1. Set _partitionedPartsIndex_ to _partitionedPartsIndex_ + 1.
           1. Else,

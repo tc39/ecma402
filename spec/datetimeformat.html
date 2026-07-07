@@ -61,12 +61,13 @@
 
       <emu-alg>
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
-        1. Let _hour12_ be *undefined*.
-        1. Let _modifyResolutionOptions_ be a new Abstract Closure with parameters (_options_) that captures _hour12_ and performs the following steps when called:
-          1. Set _hour12_ to _options_.[[hour12]].
+        1. Let _specialOptions_ be the Record { [[Hour12]]: *undefined* }.
+        1. Let _modifyResolutionOptions_ be a new Abstract Closure with parameters (_options_) that captures _specialOptions_ and performs the following steps when called:
+          1. Set _specialOptions_.[[Hour12]] to _options_.[[hour12]].
           1. Remove field [[hour12]] from _options_.
-          1. If _hour12_ is not *undefined*, set _options_.[[hc]] to *null*.
+          1. If _specialOptions_.[[Hour12]] is not *undefined*, set _options_.[[hc]] to *null*.
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DateTimeFormat%, %Intl.DateTimeFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ », _modifyResolutionOptions_).
+        1. Let _hour12_ be _specialOptions_.[[Hour12]].
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _dateTimeFormat_.[[Locale]] to _resolvedLocale_.[[Locale]].
@@ -228,13 +229,13 @@
           [[LocaleData]].[[&lt;_locale_>]].[[hc]] must be « *null*, *"h11"*, *"h12"*, *"h23"*, *"h24"* ».
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle]] must be one of the String values *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
+          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle]] must be one of the Strings *"h11"*, *"h12"*, *"h23"*, or *"h24"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle12]] must be one of the String values *"h11"* or *"h12"*.
+          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle12]] must be one of the Strings *"h11"* or *"h12"*.
         </li>
         <li>
-          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle24]] must be one of the String values *"h23"* or *"h24"*.
+          [[LocaleData]].[[&lt;_locale_>]].[[hourCycle24]] must be one of the Strings *"h23"* or *"h24"*.
         </li>
         <li>
           [[LocaleData]].[[&lt;_locale_>]] must have a [[formats]] field. The value of this [[formats]] field must be a Record with a [[&lt;_calendar_>]] field for each calendar value _calendar_. The value of each [[&lt;_calendar_>]] field must be a List of DateTime Format Records. Multiple Records in such a List may use the same subset of the fields as long as the corresponding values differ for at least one field. The following subsets must be available for each locale:
@@ -1096,7 +1097,7 @@
     <emu-clause id="sec-intl.datetimeformat.prototype-%symbol.tostringtag%" oldids="sec-intl.datetimeformat.prototype-@@tostringtag">
       <h1>Intl.DateTimeFormat.prototype [ %Symbol.toStringTag% ]</h1>
 
-      <p>The initial value of the %Symbol.toStringTag% property is the String value *"Intl.DateTimeFormat"*.</p>
+      <p>The initial value of the %Symbol.toStringTag% property is the String *"Intl.DateTimeFormat"*.</p>
 
       <p>This property has the attributes { [[Writable]]: *false*, [[Enumerable]]: *false*, [[Configurable]]: *true* }.</p>
     </emu-clause>
@@ -1112,12 +1113,12 @@
     <p>Intl.DateTimeFormat instances also have several internal slots that are computed by <emu-xref href="#sec-intl-datetimeformat-constructor" title></emu-xref>:</p>
 
     <ul>
-      <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[Calendar]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> used for formatting.</li>
-      <li>[[NumberingSystem]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
-      <li>[[TimeZone]] is a String value used for formatting that is either an available named time zone identifier or an offset time zone identifier.</li>
-      <li>[[HourCycle]] is a String value indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[DateTimeFormat]] has an [[hour]] field.</li>
-      <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, or a String value with values *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
+      <li>[[Locale]] is a String representing the language tag of the locale whose localization is used for formatting.</li>
+      <li>[[Calendar]] is a String representing the <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> used for formatting.</li>
+      <li>[[NumberingSystem]] is a String representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
+      <li>[[TimeZone]] is a String used for formatting that is either an available named time zone identifier or an offset time zone identifier.</li>
+      <li>[[HourCycle]] is a String indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is only used when [[DateTimeFormat]] has an [[hour]] field.</li>
+      <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[DateTimeFormat]] is a DateTime Format Record.</li>
     </ul>
 
@@ -1385,13 +1386,13 @@
           1. Else if _partType_ is *"dayPeriod"*, then
             1. Assert: _format_ has a field [[dayPeriod]].
             1. Let _fieldFormat_ be _format_.[[dayPeriod]].
-            1. Let _formattedValue_ be a String value representing the day period of _localTime_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+            1. Let _formattedValue_ be an ILD String representing the day period of _localTime_ in the form given by _fieldFormat_.
             1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"timeZoneName"*, then
             1. Assert: _format_ has a field [[timeZoneName]].
             1. Let _fieldFormat_ be _format_.[[timeZoneName]].
             1. Let _value_ be _dateTimeFormat_.[[TimeZone]].
-            1. Let _formattedValue_ be a String value representing _value_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_. The String value may also depend on the value of the [[InDST]] field of _localTime_ if _fieldFormat_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _fieldFormat_, then use the String value of _value_ itself.
+            1. Let _formattedValue_ be an ILD String representing _value_ in the form given by _fieldFormat_. Its value may depend on the value of the [[InDST]] field of _localTime_ if _fieldFormat_ is *"short"*, *"long"*, *"shortOffset"*, or *"longOffset"*. If the implementation does not have such a localized representation of _fieldFormat_, then use _value_ itself.
             1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ matches a Property column of the row in <emu-xref href="#table-datetimeformat-components"></emu-xref>, then
             1. Assert: _format_ has a field [[&lt;_partType_>]].
@@ -1415,11 +1416,11 @@
                 1. Let _ones_ be _codePoints_[_count_ - 1].
                 1. Set _formattedValue_ to CodePointsToString(« _tens_, _ones_ »).
             1. Else if _fieldFormat_ is *"narrow"*, *"short"*, or *"long"*, then
-              1. Let _formattedValue_ be a String value representing _value_ in the form given by _fieldFormat_; the String value depends upon the implementation and the effective locale and calendar of _dateTimeFormat_. If _partType_ is *"month"*, then the String value may also depend on whether _format_.[[day]] is present. If the implementation does not have a localized representation of _fieldFormat_, then use the String value of _value_ itself.
+              1. Let _formattedValue_ be an ILD String representing _value_ in the form given by _fieldFormat_. If _partType_ is *"month"*, then its value may depend on whether _format_ has a [[day]] field. If the implementation does not have a localized representation of _fieldFormat_, then use _value_ itself.
             1. Append the Record { [[Type]]: _partType_, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"ampm"*, then
             1. Let _value_ be _localTime_.[[Hour]].
-            1. If _value_ > 11, let _formattedValue_ be an ILD String value representing *"post meridiem"*; else let _formattedValue_ be an ILD String value representing *"ante meridiem"*.
+            1. If _value_ > 11, let _formattedValue_ be an ILD String representing *"post meridiem"*; else let _formattedValue_ be an ILD String representing *"ante meridiem"*.
             1. Append the Record { [[Type]]: *"dayPeriod"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"relatedYear"*, then
             1. Let _value_ be _localTime_.[[RelatedYear]].
@@ -1427,7 +1428,7 @@
             1. Append the Record { [[Type]]: *"relatedYear"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else if _partType_ is *"yearName"*, then
             1. Let _value_ be _localTime_.[[YearName]].
-            1. Let _formattedValue_ be an ILD String value representing _value_.
+            1. Let _formattedValue_ be an ILD String representing _value_.
             1. Append the Record { [[Type]]: *"yearName"*, [[Value]]: _formattedValue_ } to _result_.
           1. Else,
             1. Let _unknown_ be an ILND String based on _epochNanoseconds_ and _partType_.
@@ -1452,7 +1453,7 @@
         <dd>It interprets _x_ as a time value as specified in ECMA-262, <emu-xref href="#sec-time-values-and-time-range"></emu-xref>, and creates the corresponding parts according to the effective locale and the formatting options of _dateTimeFormat_.</dd>
       </dl>
       <emu-alg>
-        1. Let _x_ be TimeClip(_x_).
+        1. Set _x_ to TimeClip(_x_).
         1. If _x_ is *NaN*, throw a *RangeError* exception.
         1. Let _epochNanoseconds_ be ℤ(ℝ(_x_) × 10<sup>6</sup>).
         1. Let _format_ be _dateTimeFormat_.[[DateTimeFormat]].
@@ -1501,7 +1502,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"type"*, _part_.[[Type]]).
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
-          1. Increment _n_ by 1.
+          1. Set _n_ to _n_ + 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>
@@ -1549,8 +1550,8 @@
               1. If _localTime1_.[[Hour]] is less than 12, let _v1_ be *"am"*; else let _v1_ be *"pm"*.
               1. If _localTime2_.[[Hour]] is less than 12, let _v2_ be *"am"*; else let _v2_ be *"pm"*.
             1. Else if _fieldName_ is [[DayPeriod]], then
-              1. Let _v1_ be a String value representing the day period of _localTime1_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
-              1. Let _v2_ be a String value representing the day period of _localTime2_; the String value depends upon the implementation and the effective locale of _dateTimeFormat_.
+              1. Let _v1_ be an ILD String representing the day period of _localTime1_.
+              1. Let _v2_ be an ILD String representing the day period of _localTime2_.
             1. Else if _fieldName_ is [[FractionalSecondDigits]], then
               1. If _format_ has a [[fractionalSecondDigits]] field, then
                 1. Let _fractionalSecondDigits_ be _format_.[[fractionalSecondDigits]].
@@ -1626,7 +1627,7 @@
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"value"*, _part_.[[Value]]).
           1. Perform ! CreateDataPropertyOrThrow(_partObj_, *"source"*, _part_.[[Source]]).
           1. Perform ! CreateDataPropertyOrThrow(_result_, ! ToString(𝔽(_n_)), _partObj_).
-          1. Increment _n_ by 1.
+          1. Set _n_ to _n_ + 1.
         1. Return _result_.
       </emu-alg>
     </emu-clause>

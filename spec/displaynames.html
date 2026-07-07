@@ -181,7 +181,7 @@
       <emu-alg>
         1. Let _displayNames_ be *this* value.
         1. Perform ? RequireInternalSlot(_displayNames_, [[InitializedDisplayNames]]).
-        1. Let _code_ be ? ToString(_code_).
+        1. Set _code_ to ? ToString(_code_).
         1. Set _code_ to ? CanonicalCodeForDisplayNames(_displayNames_.[[Type]], _code_).
         1. Let _fields_ be _displayNames_.[[Fields]].
         1. If _fields_ has a field [[&lt;_code_>]], return _fields_.[[&lt;_code_>]].
