@@ -631,15 +631,17 @@
         1. If _loc_.[[Calendar]] is not *undefined*, then
           1. Return CreateArrayFromList(« _loc_.[[Calendar]] »).
         1. Let _preference_ be RegionPreference(_loc_.[[Locale]]).
-        1. Let _region_ be _preference_.[[Region]].
-        1. Let _regionOverride_ be _preference_.[[RegionOverride]].
-        1. If _regionOverride_ is not *undefined* and calendar preference data for _regionOverride_ are available, then
-          1. Let _lookupRegion_ be _regionOverride_.
-        1. Else,
-          1. Let _lookupRegion_ be _region_.
+        1. If _preference_.[[RegionOverride]] is not *undefined*, let _preferredRegions_ be « _preference_.[[RegionOverride]], _preference_.[[Region]] »; else let _preferredRegions_ be « _preference_.[[Region]] ».
+        1. Let _calendarsInUse_ be a new empty List.
+        1. Let _language_ be GetLocaleLanguage(_loc_.[[Locale]]).
+        1. For each String _region_ of _preferredRegions_, do
+          1. Let _locale_ be the string-concatenation of _language_, *"-"*, and _region_.
+          1. If _calendarsInUse_ is empty and calendar preference data for locale _locale_ are available, then
+            1. Set _calendarsInUse_ to a List of unique calendar types in common use for date and time formatting in locale _locale_, sorted by descending preference of use in _locale_.
+          1. If _calendarsInUse_ is empty and calendar preference data for region _region_ are available, then
+            1. Set _calendarsInUse_ to a List of unique calendar types in common use for date and time formatting in region _region_, sorted by descending preference of use in _region_.
         1. Let _list_ be a new empty List.
         1. Let _availableCalendars_ be AvailableCalendars().
-        1. Let _calendarsInUse_ be a List of unique calendar types in common use for date and time formatting in _lookupRegion_, sorted by descending preference of use in _lookupRegion_. The list is empty if no calendar preference data for _lookupRegion_ is available.
         1. For each element _identifier_ of _calendarsInUse_, do
           1. Let _canonical_ be CanonicalizeUValue(*"ca"*, _identifier_).
           1. If _availableCalendars_ contains _canonical_ and _list_ does not contain _canonical_, then
