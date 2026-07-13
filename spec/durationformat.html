@@ -559,7 +559,7 @@
       <emu-alg>
         1. Let _sign_ be 0.
         1. For each value _v_ of « _years_, _months_, _weeks_, _days_, _hours_, _minutes_, _seconds_, _milliseconds_, _microseconds_, _nanoseconds_ », do
-          1. If 𝔽(_v_) is not finite, return *false*.
+          1. If 𝔽(_v_) is not a finite Number, return *false*.
           1. If _v_ &lt; 0, then
             1. If _sign_ > 0, return *false*.
             1. Set _sign_ to -1.
