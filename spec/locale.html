@@ -720,7 +720,7 @@
           1. Let _foundLocale_ be _match_.[[locale]].
           1. Let _foundLocaleData_ be %Intl.NumberFormat%.[[LocaleData]].[[&lt;_foundLocale_&gt;]].
           1. Let _numberingSystems_ be _foundLocaleData_.[[nu]].
-          1. Let _list_ be « _numberingSystems_[0] ».
+          1. Let _list_ be a copy of _numberingSystems_, sorted in descending preference of those in common use for formatting numeric values in _foundLocale_.
         1. Else,
           1. Let _list_ be « *"latn"* ».
         1. Return CreateArrayFromList(_list_).
