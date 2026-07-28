@@ -894,8 +894,8 @@
                 1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
                 1. Append the Record { [[Type]]: *"exponentMinusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
                 1. Set _exponent_ to -_exponent_.
-              1. Let _exponentResult_ be ToRawFixed(_exponent_, 0, 0, 1, *undefined*).
-              1. Append the Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_.[[FormattedString]] } to _result_.
+              1. If _exponent_ = 0, let _exponentResult_ be *"0"*; else let _exponentResult_ be the String consisting of the digits of the decimal representation of _exponent_ (in order, with no leading zeroes).
+              1. Append the Record { [[Type]]: *"exponentInteger"*, [[Value]]: _exponentResult_ } to _result_.
             1. Else,
               1. Let _unknown_ be an ILND String based on _x_ and _partType_.
               1. Append the Record { [[Type]]: *"unknown"*, [[Value]]: _unknown_ } to _result_.
@@ -1282,7 +1282,7 @@
           _x_: a non-negative mathematical value,
           _minPrecision_: an integer in the inclusive interval from 1 to 21,
           _maxPrecision_: an integer in the inclusive interval from 1 to 21,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1340,7 +1340,7 @@
           _minFraction_: an integer in the inclusive interval from 0 to 100,
           _maxFraction_: an integer in the inclusive interval from 0 to 100,
           _roundingIncrement_: an integer,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>,
         ): a Record with fields [[FormattedString]] (a String), [[RoundedNumber]] (a mathematical value), [[IntegerDigitsCount]] (an integer), and [[RoundingMagnitude]] (an integer)
       </h1>
       <dl class="header">
@@ -1786,7 +1786,7 @@
           _x_: a mathematical value,
           _r1_: a mathematical value,
           _r2_: a mathematical value,
-          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>, or *undefined*,
+          _unsignedRoundingMode_: a specification type from the Unsigned Rounding Mode column of <emu-xref href="#table-intl-unsigned-rounding-modes"></emu-xref>,
         ): a mathematical value
       </h1>
       <dl class="header">
@@ -1796,7 +1796,6 @@
       <emu-alg>
         1. If _x_ is _r1_, return _r1_.
         1. Assert: _r1_ &lt; _x_ &lt; _r2_.
-        1. Assert: _unsignedRoundingMode_ is not *undefined*.
         1. If _unsignedRoundingMode_ is ~zero~, return _r1_.
         1. If _unsignedRoundingMode_ is ~infinity~, return _r2_.
         1. Let _d1_ be <emu-eqn>_x_ – _r1_</emu-eqn>.
