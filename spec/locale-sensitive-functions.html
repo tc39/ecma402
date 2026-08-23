@@ -220,30 +220,11 @@
       <emu-alg>
         1. Let _array_ be ? ToObject(*this* value).
         1. Let _length_ be ? LengthOfArrayLike(_array_).
-        1. Let _separator_ be the implementation-defined list-separator String value appropriate for the host environment's current locale (such as *", "*).
-        1. Let _result_ be the empty String.
-        1. Let _k_ be 0.
-        1. Repeat, while _k_ &lt; _length_,
-          1. If _k_ > 0, then
-            1. Set _result_ to the string-concatenation of _result_ and _separator_.
-          1. Let _element_ be ? Get(_array_, ! ToString(𝔽(_k_))).
-          1. If _element_ is neither *undefined* nor *null*, then
-            1. Let _elementString_ be ? ToString(? Invoke(_element_, *"toLocaleString"*, « _locales_, _options_ »)).
-            1. Set _result_ to the string-concatenation of _result_ and _elementString_.
-          1. Set _k_ to _k_ + 1.
-        1. Return _result_.
+        1. Return ? JoinIndexedProperties(_array_, _length_, LocalizedListSeparator(), *"toLocaleString"*, « _locales_, _options_ »).
       </emu-alg>
 
       <emu-note>
-        This algorithm's steps mirror the steps taken in <emu-xref href="#sec-array.prototype.tolocalestring" title></emu-xref>, with the exception that Invoke(_nextElement_, *"toLocaleString"*) now takes _locales_ and _options_ as arguments.
-      </emu-note>
-
-      <emu-note>
-        The elements of the array are converted to Strings using their `toLocaleString` methods, and these Strings are then concatenated, separated by occurrences of an implementation-defined locale-sensitive separator String. This function is analogous to `toString` except that it is intended to yield a locale-sensitive result corresponding with conventions of the host environment's current locale.
-      </emu-note>
-
-      <emu-note>
-        The `toLocaleString` function is intentionally generic; it does not require that its *this* value be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+        This algorithm's steps mirror the steps taken in <emu-xref href="#sec-array.prototype.tolocalestring" title></emu-xref>, with the exception that *"toLocaleString"* methods are now invoked with _locales_ and _options_ as arguments.
       </emu-note>
     </emu-clause>
   </emu-clause>
