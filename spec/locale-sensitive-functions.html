@@ -228,4 +228,27 @@
       </emu-note>
     </emu-clause>
   </emu-clause>
+
+  <emu-clause id="sup-properties-of-the-%typedarrayprototype%-object">
+    <h1>Properties of the %TypedArray% Prototype Object</h1>
+
+    <emu-clause id="sup-%typedarray%.prototype.tolocalestring">
+      <h1>%TypedArray%.prototype.toLocaleString ( [ _locales_ [ , _options_ ] ] )</h1>
+
+      <p>This definition supersedes the definition provided in <emu-xref href="#sec-%typedarray%.prototype.tolocalestring" title></emu-xref>.</p>
+
+      <p>When the `toLocaleString` method is called with optional arguments _locales_ and _options_, the following steps are taken:</p>
+
+      <emu-alg>
+        1. Let _obj_ be the *this* value.
+        1. Let _taRecord_ be ? ValidateTypedArray(_obj_, ~seq-cst~).
+        1. Let _length_ be TypedArrayLength(_taRecord_).
+        1. Return ? JoinIndexedProperties(_obj_, _length_, LocalizedListSeparator(), *"toLocaleString"*, « _locales_, _options_ »).
+      </emu-alg>
+
+      <emu-note>
+        This algorithm's steps mirror the steps taken in <emu-xref href="#sec-%typedarray%.prototype.tolocalestring" title></emu-xref>, with the exception that *"toLocaleString"* methods are now invoked with _locales_ and _options_ as arguments.
+      </emu-note>
+    </emu-clause>
+  </emu-clause>
 </emu-clause>
