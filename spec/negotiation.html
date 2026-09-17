@@ -222,7 +222,7 @@
           _requestedLocales_: a Language Priority List,
           _options_: a Record,
           _relevantExtensionKeys_: a List of Strings,
-          _localeData_: a Record,
+          optional _localeData_: a Record,
         ): a Record
       </h1>
       <dl class="header">
@@ -237,10 +237,14 @@
           1. Let _match_ be LookupMatchingLocaleByBestFit(_availableLocales_, _requestedLocales_).
         1. If _match_ is *undefined*, set _match_ to the Record { [[locale]]: DefaultLocale(), [[extension]]: ~empty~ }.
         1. Let _foundLocale_ be _match_.[[locale]].
-        1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_>]].
-        1. Assert: _foundLocaleData_ is a Record.
         1. Let _result_ be a new Record.
-        1. Set _result_.[[LocaleData]] to _foundLocaleData_.
+        1. If _localeData_ is not present, then
+          1. Assert: _relevantExtensionKeys_ is an empty List.
+          1. Set _result_.[[LocaleData]] to *undefined*.
+        1. Else,
+          1. Let _foundLocaleData_ be _localeData_.[[&lt;_foundLocale_>]].
+          1. Assert: _foundLocaleData_ is a Record.
+          1. Set _result_.[[LocaleData]] to _foundLocaleData_.
         1. If _match_.[[extension]] is not ~empty~, then
           1. Let _components_ be UnicodeExtensionComponents(_match_.[[extension]]).
           1. Let _keywords_ be _components_.[[Keywords]].
@@ -316,6 +320,7 @@
           1. Set _opt_.[[&lt;_key_>]] to _value_.
         1. If _modifyResolutionOptions_ is present, perform ! _modifyResolutionOptions_(_opt_).
         1. Let _resolution_ be ResolveLocale(_ctor_.[[AvailableLocales]], _requestedLocales_, _opt_, _ctor_.[[RelevantExtensionKeys]], _localeData_).
+        1. Assert: _resolution_.[[LocaleData]] is a Record.
         1. Return the Record { [[Options]]: _options_, [[ResolvedLocale]]: _resolution_, [[ResolutionOptions]]: _opt_ }.
       </emu-alg>
     </emu-clause>
