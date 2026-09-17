@@ -75,19 +75,14 @@
         1. Set _dateTimeFormat_.[[Calendar]] to _resolvedCalendar_.
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
+        1. Let _hc_ be _resolvedLocale_.[[hc]].
         1. If _hour12_ is *true*, then
-          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle12]].
+          1. Set _hc_ to _resolvedLocaleData_.[[hourCycle12]].
         1. Else if _hour12_ is *false*, then
-          1. Let _hc_ be _resolvedLocaleData_.[[hourCycle24]].
-        1. Else,
-          1. Assert: _hour12_ is *undefined*.
-          1. Let _hc_ be _resolvedLocale_.[[hc]].
-          1. If _hc_ is *null*, set _hc_ to _resolvedLocaleData_.[[hourCycle]].
-        1. Let _timeZone_ be ? Get(_options_, *"timeZone"*).
-        1. If _timeZone_ is *undefined*, then
-          1. Set _timeZone_ to SystemTimeZoneIdentifier().
-        1. Else,
-          1. Set _timeZone_ to ? ToString(_timeZone_).
+          1. Set _hc_ to _resolvedLocaleData_.[[hourCycle24]].
+        1. Else if _hc_ is *null*, then
+          1. Set _hc_ to _resolvedLocaleData_.[[hourCycle]].
+        1. Let _timeZone_ be ? GetOption(_options_, *"timeZone"*, ~string~, ~empty~, SystemTimeZoneIdentifier()).
         1. If IsTimeZoneOffsetString(_timeZone_) is *true*, then
           1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
           1. Assert: _parseResult_ is a Parse Node.
@@ -112,46 +107,36 @@
             1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
             1. Let _value_ be ? GetOption(_options_, _propertyKey_, ~string~, _values_, *undefined*).
           1. Set _formatOptions_.[[&lt;_propertyKey_>]] to _value_.
-          1. If _value_ is not *undefined*, then
-            1. Set _hasExplicitFormatComponents_ to *true*.
+          1. If _value_ is not *undefined*, set _hasExplicitFormatComponents_ to *true*.
         1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
         1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
         1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
-          1. If _hasExplicitFormatComponents_ is *true*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
-          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, then
-            1. Throw a *TypeError* exception.
+          1. If _hasExplicitFormatComponents_ is *true*, throw a *TypeError* exception.
+          1. If _required_ is ~date~ and _timeStyle_ is not *undefined*, throw a *TypeError* exception.
+          1. If _required_ is ~time~ and _dateStyle_ is not *undefined*, throw a *TypeError* exception.
           1. Let _styles_ be _resolvedLocaleData_.[[styles]].[[&lt;_resolvedCalendar_>]].
           1. Let _bestFormat_ be DateTimeStyleFormat(_dateStyle_, _timeStyle_, _styles_).
         1. Else,
           1. Let _needDefaults_ be *true*.
-          1. If _required_ is ~date~ or ~any~, then
-            1. For each property name _propertyKey_ of « *"weekday"*, *"year"*, *"month"*, *"day"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_propertyKey_>]].
-              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
-          1. If _required_ is ~time~ or ~any~, then
-            1. For each property name _propertyKey_ of « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* », do
-              1. Let _value_ be _formatOptions_.[[&lt;_propertyKey_>]].
-              1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
-          1. If _needDefaults_ is *true* and _defaults_ is either ~date~ or ~all~, then
-            1. For each property name _propertyKey_ of « *"year"*, *"month"*, *"day"* », do
-              1. Set _formatOptions_.[[&lt;_propertyKey_>]] to *"numeric"*.
-          1. If _needDefaults_ is *true* and _defaults_ is either ~time~ or ~all~, then
-            1. For each property name _propertyKey_ of « *"hour"*, *"minute"*, *"second"* », do
+          1. Let _propertyKeys_ be a new empty List.
+          1. If _required_ is ~date~ or ~any~, set _propertyKeys_ to the list-concatenation of _propertyKeys_ and « *"weekday"*, *"year"*, *"month"*, *"day"* ».
+          1. If _required_ is ~time~ or ~any~, set _propertyKeys_ to the list-concatenation of _propertyKeys_ and « *"dayPeriod"*, *"hour"*, *"minute"*, *"second"*, *"fractionalSecondDigits"* ».
+          1. For each property name _propertyKey_ of _propertyKeys_, do
+            1. Let _value_ be _formatOptions_.[[&lt;_propertyKey_>]].
+            1. If _value_ is not *undefined*, set _needDefaults_ to *false*.
+          1. If _needDefaults_ is *true*, then
+            1. Let _numericProperties_ be a new empty List.
+            1. If _defaults_ is either ~date~ or ~all~, set _numericProperties_ to the list-concatenation of _numericProperties_ and « *"year"*, *"month"*, *"day"* ».
+            1. If _defaults_ is either ~time~ or ~all~, set _numericProperties_ to the list-concatenation of _numericProperties_ and « *"hour"*, *"minute"*, *"second"* ».
+            1. For each property name _propertyKey_ of _numericProperties_, do
               1. Set _formatOptions_.[[&lt;_propertyKey_>]] to *"numeric"*.
           1. Let _formats_ be _resolvedLocaleData_.[[formats]].[[&lt;_resolvedCalendar_>]].
-          1. If _formatMatcher_ is *"basic"*, then
-            1. Let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_).
-          1. Else,
-            1. Let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
+          1. If _formatMatcher_ is *"basic"*, let _bestFormat_ be BasicFormatMatcher(_formatOptions_, _formats_); else let _bestFormat_ be BestFitFormatMatcher(_formatOptions_, _formats_).
         1. Set _dateTimeFormat_.[[DateTimeFormat]] to _bestFormat_.
-        1. If _bestFormat_ has a field [[hour]], then
-          1. Set _dateTimeFormat_.[[HourCycle]] to _hc_.
+        1. If _bestFormat_ has a field [[hour]], set _dateTimeFormat_.[[HourCycle]] to _hc_.
         1. Return _dateTimeFormat_.
       </emu-alg>
     </emu-clause>
