@@ -110,14 +110,14 @@
             1. Let _value_ be ? GetNumberOption(_options_, *"fractionalSecondDigits"*, 1, 3, *undefined*).
           1. Else,
             1. Let _values_ be a List whose elements are the strings given in the Values column of the current row.
-            1. Let _value_ be ? GetOption(_options_, _propertyKey_, ~string~, _values_, *undefined*).
+            1. Let _value_ be ? GetStringOption(_options_, _propertyKey_, ~coerce~, _values_).
           1. Set _formatOptions_.[[&lt;_propertyKey_>]] to _value_.
           1. If _value_ is not *undefined*, then
             1. Set _hasExplicitFormatComponents_ to *true*.
-        1. Let _formatMatcher_ be ? GetOption(_options_, *"formatMatcher"*, ~string~, « *"basic"*, *"best fit"* », *"best fit"*).
-        1. Let _dateStyle_ be ? GetOption(_options_, *"dateStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
+        1. Let _formatMatcher_ be ? GetStringOption(_options_, *"formatMatcher"*, ~coerce~, « *"basic"*, *"best fit"* », *"best fit"*).
+        1. Let _dateStyle_ be ? GetStringOption(_options_, *"dateStyle"*, ~coerce~, « *"full"*, *"long"*, *"medium"*, *"short"* »).
         1. Set _dateTimeFormat_.[[DateStyle]] to _dateStyle_.
-        1. Let _timeStyle_ be ? GetOption(_options_, *"timeStyle"*, ~string~, « *"full"*, *"long"*, *"medium"*, *"short"* », *undefined*).
+        1. Let _timeStyle_ be ? GetStringOption(_options_, *"timeStyle"*, ~coerce~, « *"full"*, *"long"*, *"medium"*, *"short"* »).
         1. Set _dateTimeFormat_.[[TimeStyle]] to _timeStyle_.
         1. If _dateStyle_ is not *undefined* or _timeStyle_ is not *undefined*, then
           1. If _hasExplicitFormatComponents_ is *true*, then
