@@ -24,11 +24,11 @@
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _pluralRules_.[[Locale]] to _resolvedLocale_.[[Locale]].
-        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
+        1. Let _type_ be ? GetStringOption(_options_, *"type"*, ~coerce~, « *"cardinal"*, *"ordinal"* », *"cardinal"*).
         1. Set _pluralRules_.[[Type]] to _type_.
-        1. Let _notation_ be ? GetOption(_options_, *"notation"*, ~string~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
+        1. Let _notation_ be ? GetStringOption(_options_, *"notation"*, ~coerce~, « *"standard"*, *"scientific"*, *"engineering"*, *"compact"* », *"standard"*).
         1. Set _pluralRules_.[[Notation]] to _notation_.
-        1. Let _compactDisplay_ be ? GetOption(_options_, *"compactDisplay"*, ~string~, « *"short"*, *"long"* », *"short"*).
+        1. Let _compactDisplay_ be ? GetStringOption(_options_, *"compactDisplay"*, ~coerce~, « *"short"*, *"long"* », *"short"*).
         1. If _notation_ is *"compact"*, then
           1. Set _pluralRules_.[[CompactDisplay]] to _compactDisplay_.
         1. Perform ? SetNumberFormatDigitOptions(_pluralRules_, _options_, 0, 3, _notation_).
