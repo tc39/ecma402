@@ -25,7 +25,7 @@
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _segmenter_.[[Locale]] to _resolvedLocale_.[[Locale]].
-        1. Let _granularity_ be ? GetOption(_options_, *"granularity"*, ~string~, « *"grapheme"*, *"word"*, *"sentence"* », *"grapheme"*).
+        1. Let _granularity_ be ? GetStringOption(_options_, *"granularity"*, ~coerce~, « *"grapheme"*, *"word"*, *"sentence"* », *"grapheme"*).
         1. Set _segmenter_.[[SegmenterGranularity]] to _granularity_.
         1. Return _segmenter_.
       </emu-alg>

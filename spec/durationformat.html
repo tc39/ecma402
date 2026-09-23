@@ -29,7 +29,7 @@
         1. Set _durationFormat_.[[HourMinuteSeparator]] to _digitalFormat_.[[HourMinuteSeparator]].
         1. Set _durationFormat_.[[MinuteSecondSeparator]] to _digitalFormat_.[[MinuteSecondSeparator]].
         1. Set _durationFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"long"*, *"short"*, *"narrow"*, *"digital"* », *"short"*).
+        1. Let _style_ be ? GetStringOption(_options_, *"style"*, ~coerce~, « *"long"*, *"short"*, *"narrow"*, *"digital"* », *"short"*).
         1. Set _durationFormat_.[[Style]] to _style_.
         1. Let _prevStyle_ be the empty String.
         1. For each row of <emu-xref href="#table-durationformat"></emu-xref>, except the header row, in table order, do
@@ -594,7 +594,7 @@
       </dl>
 
       <emu-alg>
-        1. Let _style_ be ? GetOption(_options_, _unit_, ~string~, _stylesList_, *undefined*).
+        1. Let _style_ be ? GetStringOption(_options_, _unit_, ~coerce~, _stylesList_).
         1. Let _displayDefault_ be *"always"*.
         1. If _style_ is *undefined*, then
           1. If _baseStyle_ is *"digital"*, then
@@ -610,7 +610,7 @@
           1. Set _style_ to *"fractional"*.
           1. Set _displayDefault_ to *"auto"*.
         1. Let _displayField_ be the string-concatenation of _unit_ and *"Display"*.
-        1. Let _display_ be ? GetOption(_options_, _displayField_, ~string~, « *"auto"*, *"always"* », _displayDefault_).
+        1. Let _display_ be ? GetStringOption(_options_, _displayField_, ~coerce~, « *"auto"*, *"always"* », _displayDefault_).
         1. Perform ? ValidateDurationUnitStyle(_unit_, _style_, _display_, _prevStyle_).
         1. If _unit_ is *"hours"* and _twoDigitHours_ is *true*, set _style_ to *"2-digit"*.
         1. If _unit_ is *"minutes"* or *"seconds"* and _prevStyle_ is *"numeric"* or *"2-digit"*, set _style_ to *"2-digit"*.
