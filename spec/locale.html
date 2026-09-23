@@ -719,8 +719,13 @@
         1. If _match_ is not *undefined*, then
           1. Let _foundLocale_ be _match_.[[locale]].
           1. Let _foundLocaleData_ be %Intl.NumberFormat%.[[LocaleData]].[[&lt;_foundLocale_&gt;]].
-          1. Let _numberingSystems_ be _foundLocaleData_.[[nu]].
-          1. Let _list_ be « _numberingSystems_[0] ».
+          1. Let _supportedNumberingSystems_ be _foundLocaleData_.[[nu]].
+          1. Let _numberingSystemsInUse_ be a List of unique numbering system identifiers in common use for formatting numeric values in locale _foundLocale_, sorted by descending preference of use in _foundLocale_.
+          1. Let _list_ be a new empty List.
+          1. For each element _identifier_ of _numberingSystemsInUse_, do
+            1. If _supportedNumberingSystems_ contains _identifier_, then
+              1. Append _identifier_ to _list_.
+          1. Assert: _list_ is not empty and _list_[0] is _supportedNumberingSystems_[0].
         1. Else,
           1. Let _list_ be « *"latn"* ».
         1. Return CreateArrayFromList(_list_).
