@@ -492,8 +492,9 @@
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
-        1. Assert: The first subtag of _baseName_ can be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
-        1. Return the first subtag of _baseName_.
+        1. Let _subtags_ be StringSplitToList(_baseName_, *"-"*).
+        1. Assert: _subtags_[0] is matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. Return _subtags_[0].
       </emu-alg>
     </emu-clause>
 
@@ -507,8 +508,10 @@
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
-        1. Assert: _baseName_ contains at most one subtag that can be matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal.
-        1. If _baseName_ contains a subtag matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, return that subtag.
+        1. NOTE: A <code>unicode_script_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag. In that position, it cannot be confused with any other valid subtag because all their productions are disjoint.
+        1. Let _subtags_ be StringSplitToList(_baseName_, *"-"*).
+        1. Assert: _subtags_[0] is matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. If _subtags_ has at least 2 elements and _subtags_[1] is matched by the <code>unicode_script_subtag</code> Unicode locale nonterminal, return _subtags_[1].
         1. Return *undefined*.
       </emu-alg>
     </emu-clause>
@@ -523,11 +526,11 @@
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
-        1. NOTE: A <code>unicode_region_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag, optionally with a single <code>unicode_script_subtag</code> subtag between them. In that position, <code>unicode_region_subtag</code> cannot be confused with any other valid subtag because all their productions are disjoint.
-        1. Assert: The first subtag of _baseName_ can be matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
-        1. Let _baseNameTail_ be the suffix of _baseName_ following the first subtag.
-        1. Assert: _baseNameTail_ contains at most one subtag that can be matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal.
-        1. If _baseNameTail_ contains a subtag matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return that subtag.
+        1. NOTE: A <code>unicode_region_subtag</code> subtag is only valid immediately after an initial <code>unicode_language_subtag</code> subtag, optionally with a single <code>unicode_script_subtag</code> subtag between them. In that position, it cannot be confused with any other valid subtag because all their productions are disjoint.
+        1. Let _subtags_ be StringSplitToList(_baseName_, *"-"*).
+        1. Assert: _subtags_[0] is matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
+        1. If _subtags_ has at least 2 elements and _subtags_[1] is matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[1].
+        1. If _subtags_ has at least 3 elementss and _subtags_[2] is matched by the <code>unicode_region_subtag</code> Unicode locale nonterminal, return _subtags_[2].
         1. Return *undefined*.
       </emu-alg>
     </emu-clause>
@@ -542,8 +545,9 @@
       </dl>
       <emu-alg>
         1. Let _baseName_ be GetLocaleBaseName(_locale_).
-        1. NOTE: Each subtag in _baseName_ that is preceded by *"-"* is either a <code>unicode_script_subtag</code>, <code>unicode_region_subtag</code>, or <code>unicode_variant_subtag</code>, but any <emu-not-ref>substring</emu-not-ref> matched by <code>unicode_variant_subtag</code> is strictly longer than any prefix thereof which could also be matched by one of the other productions.
+        1. NOTE: Each non-initial subtag in _baseName_ is either a <code>unicode_script_subtag</code>, <code>unicode_region_subtag</code>, or <code>unicode_variant_subtag</code>, whose productions are all mutually disjoint.
         1. Let _subtags_ be StringSplitToList(_baseName_, *"-"*).
+        1. Assert: _subtags_[0] is matched by the <code>unicode_language_subtag</code> Unicode locale nonterminal.
         1. Let _dashIndex_ be the length of _subtags_[0].
         1. Remove the first element from _subtags_.
         1. For each String _subtag_ of _subtags_, do
