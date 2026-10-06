@@ -23,17 +23,17 @@
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DisplayNames%, %Intl.DisplayNames%.[[LocaleData]], _locales_, _options_, « ~require-options~ »).
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"narrow"*, *"short"*, *"long"* », *"long"*).
+        1. Let _style_ be ? GetStringOption(_options_, *"style"*, ~coerce~, « *"narrow"*, *"short"*, *"long"* », *"long"*).
         1. Set _displayNames_.[[Style]] to _style_.
-        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* », ~required~).
+        1. Let _type_ be ? GetStringOption(_options_, *"type"*, ~coerce~, « *"language"*, *"region"*, *"script"*, *"currency"*, *"calendar"*, *"dateTimeField"* », ~required~).
         1. Set _displayNames_.[[Type]] to _type_.
-        1. Let _fallback_ be ? GetOption(_options_, *"fallback"*, ~string~, « *"code"*, *"none"* », *"code"*).
+        1. Let _fallback_ be ? GetStringOption(_options_, *"fallback"*, ~coerce~, « *"code"*, *"none"* », *"code"*).
         1. Set _displayNames_.[[Fallback]] to _fallback_.
         1. Set _displayNames_.[[Locale]] to _resolvedLocale_.[[Locale]].
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. Let _types_ be _resolvedLocaleData_.[[types]].
         1. Assert: _types_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
-        1. Let _languageDisplay_ be ? GetOption(_options_, *"languageDisplay"*, ~string~, « *"dialect"*, *"standard"* », *"dialect"*).
+        1. Let _languageDisplay_ be ? GetStringOption(_options_, *"languageDisplay"*, ~coerce~, « *"dialect"*, *"standard"* », *"dialect"*).
         1. Let _typeFields_ be _types_.[[&lt;_type_>]].
         1. Assert: _typeFields_ is a Record (see <emu-xref href="#sec-Intl.DisplayNames-internal-slots"></emu-xref>).
         1. If _type_ is *"language"*, then
