@@ -32,7 +32,7 @@
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.Collator%, _localeData_, CreateArrayFromList(_requestedLocales_), _options_).
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _collator_.[[Locale]] to _resolvedLocale_.[[Locale]].
-        1. If _resolvedLocale_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _resolvedLocale_.[[co]].
+        1. Let _collation_ be _resolvedLocale_.[[co]].
         1. Set _collator_.[[Collation]] to _collation_.
         1. Set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
         1. Set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
@@ -93,7 +93,7 @@
       <p>The values of the [[SortLocaleData]] and [[SearchLocaleData]] internal slots are implementation-defined within the constraints described in <emu-xref href="#sec-internal-slots"></emu-xref> and the following additional constraints, for all locale values _locale_:</p>
 
       <ul>
-        <li>The first element of [[SortLocaleData]].[[&lt;_locale_>]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_>]].[[co]] must be *null*.</li>
+        <li>The first element of [[SortLocaleData]].[[&lt;_locale_>]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_>]].[[co]] must be *"default"*.</li>
         <li>The values *"standard"* and *"search"* must not be used as elements in any [[SortLocaleData]].[[&lt;_locale_>]].[[co]] and [[SearchLocaleData]].[[&lt;_locale_>]].[[co]] List.</li>
         <li>[[SearchLocaleData]].[[&lt;_locale_>]] must have a [[sensitivity]] field with one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*.</li>
         <li>[[SearchLocaleData]].[[&lt;_locale_>]] and [[SortLocaleData]].[[&lt;_locale_>]] must have an [[ignorePunctuation]] field with a Boolean value.</li>
