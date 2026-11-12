@@ -435,7 +435,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It converts _value_ to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+        <dd>It returns _fallback_ if _value_ is *undefined*. Otherwise, it converts _value_ to a Number and throws a *RangeError* exception if the Number is non-finite or outside the allowed range. It then returns the floor of the Number’s mathematical value.</dd>
       </dl>
       <emu-alg>
         1. If _value_ is *undefined*, return _fallback_.
@@ -457,7 +457,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It extracts the value of the property named _propertyKey_ from the provided _options_ object, converts it to an integer, checks whether it is in the allowed range, and fills in a _fallback_ value if necessary.</dd>
+        <dd>It extracts the value of the property named _propertyKey_ from the provided _options_ object and passes that value to DefaultNumberOption.</dd>
       </dl>
       <emu-alg>
         1. Let _value_ be ? Get(_options_, _propertyKey_).
