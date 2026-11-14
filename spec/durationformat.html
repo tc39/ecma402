@@ -814,8 +814,8 @@
           1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
           1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
         1. Else,
-          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, _fractionDigits_).
-          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, _fractionDigits_).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, 𝔽(_fractionDigits_)).
+          1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, 𝔽(_fractionDigits_)).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"roundingMode"*, *"trunc"*).
         1. Let _nf_ be ! Construct(%Intl.NumberFormat%, « _durationFormat_.[[Locale]], _nfOptions_ »).
         1. Let _secondsParts_ be PartitionNumberPattern(_nf_, _secondsValue_).
@@ -978,8 +978,8 @@
                 1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, *9*<sub>𝔽</sub>).
                 1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, *+0*<sub>𝔽</sub>).
               1. Else,
-                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, _fractionDigits_).
-                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, _fractionDigits_).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"maximumFractionDigits"*, 𝔽(_fractionDigits_)).
+                1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"minimumFractionDigits"*, 𝔽(_fractionDigits_)).
               1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"roundingMode"*, *"trunc"*).
               1. Set _numericUnitFound_ to *true*.
             1. If _display_ is *"always"* or _value_ is not 0, then
