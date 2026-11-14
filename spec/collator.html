@@ -34,8 +34,8 @@
         1. Set _collator_.[[Locale]] to _resolvedLocale_.[[Locale]].
         1. If _resolvedLocale_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _resolvedLocale_.[[co]].
         1. Set _collator_.[[Collation]] to _collation_.
-        1. Set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
-        1. Set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
+        1. If _resolvedLocale_ has a [[kn]] field, set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
+        1. If _resolvedLocale_ has a [[kf]] field, set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. If _usage_ is *"sort"*, let _defaultSensitivity_ be *"variant"*. Otherwise, let _defaultSensitivity_ be _resolvedLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », _defaultSensitivity_).
