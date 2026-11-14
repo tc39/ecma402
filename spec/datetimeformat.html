@@ -63,9 +63,11 @@
         1. Let _dateTimeFormat_ be ? OrdinaryCreateFromConstructor(_newTarget_, *"%Intl.DateTimeFormat.prototype%"*, « [[InitializedDateTimeFormat]], [[Locale]], [[Calendar]], [[NumberingSystem]], [[TimeZone]], [[HourCycle]], [[DateStyle]], [[TimeStyle]], [[DateTimeFormat]], [[BoundFormat]] »).
         1. Let _specialOptions_ be the Record { [[Hour12]]: *undefined* }.
         1. Let _modifyResolutionOptions_ be a new Abstract Closure with parameters (_options_) that captures _specialOptions_ and performs the following steps when called:
-          1. Set _specialOptions_.[[Hour12]] to _options_.[[hour12]].
+          1. Let _hour12Option_ be _options_.[[hour12]].
           1. Remove field [[hour12]] from _options_.
-          1. If _specialOptions_.[[Hour12]] is not *undefined*, set _options_.[[hc]] to *null*.
+          1. If _hour12Option_ is not *undefined*, then
+            1. Set _specialOptions_.[[Hour12]] to SameValue(_hour12Option_, *"true"*).
+            1. Set _options_.[[hc]] to *null*.
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DateTimeFormat%, %Intl.DateTimeFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ », _modifyResolutionOptions_).
         1. Let _hour12_ be _specialOptions_.[[Hour12]].
         1. Set _options_ to _optionsResolution_.[[Options]].
