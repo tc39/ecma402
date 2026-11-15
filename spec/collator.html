@@ -34,8 +34,8 @@
         1. Set _collator_.[[Locale]] to _resolvedLocale_.[[Locale]].
         1. If _resolvedLocale_.[[co]] is *null*, let _collation_ be *"default"*. Otherwise, let _collation_ be _resolvedLocale_.[[co]].
         1. Set _collator_.[[Collation]] to _collation_.
-        1. Set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
-        1. Set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
+        1. If _resolvedLocale_ has a [[kn]] field, set _collator_.[[Numeric]] to SameValue(_resolvedLocale_.[[kn]], *"true"*).
+        1. If _resolvedLocale_ has a [[kf]] field, set _collator_.[[CaseFirst]] to _resolvedLocale_.[[kf]].
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. If _usage_ is *"sort"*, let _defaultSensitivity_ be *"variant"*. Otherwise, let _defaultSensitivity_ be _resolvedLocaleData_.[[sensitivity]].
         1. Set _collator_.[[Sensitivity]] to ? GetOption(_options_, *"sensitivity"*, ~string~, « *"base"*, *"accent"*, *"case"*, *"variant"* », _defaultSensitivity_).
@@ -312,13 +312,8 @@
       <li>[[Sensitivity]] is one of the String values *"base"*, *"accent"*, *"case"*, or *"variant"*, identifying the collator's sensitivity.</li>
       <li>[[IgnorePunctuation]] is a Boolean value, specifying whether punctuation should be ignored in comparisons.</li>
       <li>[[Collation]] is a String value representing the <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Collation Identifier</a> used for collation, except that the values *"standard"* and *"search"* are not allowed, while the value *"default"* is allowed.</li>
-    </ul>
-
-    <p>Intl.Collator instances also have the following internal slots if the key corresponding to the name of the internal slot in <emu-xref href="#table-collator-resolvedoptions-properties"></emu-xref> is included in the [[RelevantExtensionKeys]] internal slot of Intl.Collator:</p>
-
-    <ul>
-      <li>[[Numeric]] is a Boolean value, specifying whether numeric sorting is used.</li>
-      <li>[[CaseFirst]] is one of the String values *"upper"*, *"lower"*, or *"false"*.</li>
+      <li>[[CaseFirst]] is one of the String values *"upper"*, *"lower"*, or *"false"* if %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kf"*, and otherwise is *undefined*.</li>
+      <li>[[Numeric]] is a Boolean value specifying whether numeric sorting is used if %Intl.Collator%.[[RelevantExtensionKeys]] contains *"kn"*, and otherwise is *undefined*.</li>
     </ul>
 
     <p>Finally, Intl.Collator instances have a [[BoundCompare]] internal slot that caches the function returned by the compare accessor (<emu-xref href="#sec-intl.collator.prototype.compare"></emu-xref>).</p>
