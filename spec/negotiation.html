@@ -172,7 +172,7 @@
             1. If _subtag_ is not an element of _attributes_, append _subtag_ to _attributes_.
           1. Else if _length_ = 2, then
             1. Set _ufield_ to the Ufield Record { [[Key]]: _subtag_, [[Value]]: the empty String }.
-            1. If _ufields_ does not contain an element whose [[Key]] is _ufield_.[[Key]], append _ufield_ to _ufields_.
+            1. If _ufields_ does not contain an element whose [[Key]] is _subtag_, append _ufield_ to _ufields_.
           1. Else if _ufield_.[[Value]] is the empty String, then
             1. Set _ufield_.[[Value]] to _subtag_.
           1. Else,
