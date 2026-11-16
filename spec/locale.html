@@ -133,30 +133,30 @@
           1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _tag_.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
           1. Let _attributes_ be _components_.[[Attributes]].
-          1. Let _keywords_ be _components_.[[Keywords]].
+          1. Let _ufields_ be _components_.[[Keywords]].
         1. Else,
-          1. Let _attributes_ be a new empty List.
-          1. Let _keywords_ be a new empty List.
+          1. Let _attributes_ be an empty List of Strings.
+          1. Let _ufields_ be an empty List of Ufield Records.
         1. Let _result_ be a new Record.
         1. For each element _key_ of _localeExtensionKeys_, do
-          1. If _keywords_ contains an element whose [[Key]] is _key_, then
-            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
-            1. Let _value_ be _entry_.[[Value]].
+          1. If _ufields_ contains an element whose [[Key]] is _key_, then
+            1. Let _ufield_ be the element of _ufields_ whose [[Key]] is _key_.
+            1. Let _value_ be _ufield_.[[Value]].
           1. Else,
-            1. Let _entry_ be ~empty~.
+            1. Let _ufield_ be ~empty~.
             1. Let _value_ be *undefined*.
           1. Assert: _options_ has a field [[&lt;_key_>]].
           1. Let _overrideValue_ be _options_.[[&lt;_key_>]].
           1. If _overrideValue_ is not *undefined*, then
             1. Set _value_ to CanonicalizeUValue(_key_, _overrideValue_).
-            1. If _entry_ is not ~empty~, then
-              1. Set _entry_.[[Value]] to _value_.
+            1. If _ufield_ is not ~empty~, then
+              1. Set _ufield_.[[Value]] to _value_.
             1. Else,
-              1. Append the Record { [[Key]]: _key_, [[Value]]: _value_ } to _keywords_.
+              1. Append the Ufield Record { [[Key]]: _key_, [[Value]]: _value_ } to _ufields_.
           1. Set _result_.[[&lt;_key_>]] to _value_.
         1. Let _locale_ be the String value that is _tag_ with any Unicode locale extension sequences removed.
-        1. If _attributes_ is not empty or _keywords_ is not empty, then
-          1. Set _result_.[[locale]] to InsertUnicodeExtensionAndCanonicalize(_locale_, _attributes_, _keywords_).
+        1. If _attributes_ is not empty or _ufields_ is not empty, then
+          1. Set _result_.[[locale]] to InsertUnicodeExtensionAndCanonicalize(_locale_, _attributes_, _ufields_).
         1. Else,
           1. Set _result_.[[locale]] to CanonicalizeUnicodeLocaleId(_locale_).
         1. Return _result_.
@@ -572,8 +572,8 @@
         1. If _locale_ contains a Unicode locale extension sequence, then
           1. Let _extension_ be the Unicode locale extension sequence of _locale_.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
-          1. Let _keywords_ be _components_.[[Keywords]].
-          1. If there exists an element _entry_ of _keywords_ such that _entry_.[[Key]] is _key_, return _entry_.[[Value]].
+          1. Let _ufields_ be _components_.[[Keywords]].
+          1. If there exists an element _ufield_ of _ufields_ such that _ufield_.[[Key]] is _key_, return _ufield_.[[Value]].
         1. Return ~empty~.
       </emu-alg>
     </emu-clause>

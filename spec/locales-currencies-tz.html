@@ -26,7 +26,10 @@
 
     <p>
       Locale identifiers consist of case-insensitive Unicode Basic Latin alphanumeric <dfn id="bcp-47-subtag" variants="subtag">subtags</dfn> separated by *"-"* (U+002D HYPHEN-MINUS) characters, with single-character <emu-not-ref>subtags</emu-not-ref> referred to as "<dfn variants="singleton subtag">singleton subtags</dfn>".
-      <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> Unicode locale nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>. It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators. For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
+      <a href="https://unicode.org/reports/tr35/#u_Extension">Unicode Technical Standard #35 Part 1 Core, Section 3.6 Unicode BCP 47 U Extension</a> subtag sequences are used extensively, and the term "<dfn id="unicode-locale-extension-sequence" oldids="sec-unicode-locale-extension-sequences" variants="Unicode locale extension sequences">Unicode locale extension sequence</dfn>" describes the longest <emu-not-ref>substring</emu-not-ref> of a language tag that can be matched by the <code>unicode_locale_extensions</code> Unicode locale nonterminal and is not part of a *"-x-…"* private use <emu-not-ref>subtag sequence</emu-not-ref>.
+      It starts with *"-u-"* and includes all immediately following <emu-not-ref>subtags</emu-not-ref> that are not singleton subtags, along with their preceding *"-"* separators.
+      For example, the <emu-not-ref>Unicode locale extension sequence</emu-not-ref> of *"en-US-u-fw-mon-x-u-ex-foobar"* is *"-u-fw-mon"*.
+      Many operations of this specification represent such a sequence as a <dfn id="unicode-locale-extension-record" variants="Unicode Locale Extension Records">Unicode Locale Extension Record</dfn> with fields [[Attributes]] (a List of Strings matched by the <code>uattribute</code> Unicode locale nonterminal) and [[Keywords]] (a List of <dfn id="ufield-record" variants="Ufield Record">Ufield Records</dfn>, each of which is a { [[Key]], [[Value]] } Record in which [[Key]] is a String matched by the <code>ukey</code> Unicode locale nonterminal and [[Value]] is a String matched by the <code>uvalue</code> Unicode locale nonterminal).
     </p>
 
     <p>All well-formed language tags are appropriate for use with the APIs defined by this specification, but implementations are not required to use Unicode Common Locale Data Repository (<a href="https://cldr.unicode.org">CLDR</a>) data for validating them; the set of locales and thus language tags that an implementation supports with adequate localizations is implementation-defined. <emu-xref href="#sec-constructor-properties-of-the-intl-object">Intl constructors</emu-xref> map requested language tags to locales supported by their respective implementations.</p>
@@ -85,12 +88,12 @@
           1. Let _extension_ be the String value consisting of the <emu-not-ref>substring</emu-not-ref> of the Unicode locale extension sequence within _localeId_.
           1. Let _newExtension_ be *"-u"*.
           1. Let _components_ be UnicodeExtensionComponents(_extension_).
-          1. For each element _attr_ of _components_.[[Attributes]], do
+          1. For each String _attr_ of _components_.[[Attributes]], do
             1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _attr_.
-          1. For each Record { [[Key]], [[Value]] } _keyword_ of _components_.[[Keywords]], do
-            1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Key]].
-            1. If _keyword_.[[Value]] is not the empty String, then
-              1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _keyword_.[[Value]].
+          1. For each Ufield Record _ufield_ of _components_.[[Keywords]], do
+            1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _ufield_.[[Key]].
+            1. If _ufield_.[[Value]] is not the empty String, then
+              1. Set _newExtension_ to the string-concatenation of _newExtension_, *"-"*, and _ufield_.[[Value]].
           1. Assert: _newExtension_ is not *"-u"*.
           1. Set _localeId_ to a copy of _localeId_ in which the first appearance of <emu-not-ref>substring</emu-not-ref> _extension_ has been replaced with _newExtension_.
         1. Return _localeId_.
