@@ -68,6 +68,7 @@
           1. If _specialOptions_.[[Hour12]] is not *undefined*, set _options_.[[hc]] to *null*.
         1. Let _optionsResolution_ be ? ResolveOptions(%Intl.DateTimeFormat%, %Intl.DateTimeFormat%.[[LocaleData]], _locales_, _options_, « ~coerce-options~ », _modifyResolutionOptions_).
         1. Let _hour12_ be _specialOptions_.[[Hour12]].
+        1. Assert: _hour12_ is *"true"*, *"false"*, or *undefined*.
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _dateTimeFormat_.[[Locale]] to _resolvedLocale_.[[Locale]].
@@ -76,9 +77,9 @@
         1. Set _dateTimeFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. Let _hc_ be _resolvedLocale_.[[hc]].
-        1. If _hour12_ is *true*, then
+        1. If _hour12_ is *"true"*, then
           1. Set _hc_ to _resolvedLocaleData_.[[hourCycle12]].
-        1. Else if _hour12_ is *false*, then
+        1. Else if _hour12_ is *"false"*, then
           1. Set _hc_ to _resolvedLocaleData_.[[hourCycle24]].
         1. Else if _hc_ is *null*, then
           1. Set _hc_ to _resolvedLocaleData_.[[hourCycle]].
