@@ -1103,7 +1103,7 @@
       <li>[[Calendar]] is a String representing the <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> used for formatting.</li>
       <li>[[NumberingSystem]] is a String representing the <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> used for formatting.</li>
       <li>[[TimeZone]] is a String used for formatting that is either an available named time zone identifier or an offset time zone identifier.</li>
-      <li>[[HourCycle]] is either *undefined* or a String indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 respectively. *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24. [[HourCycle]] is *undefined* when [[DateTimeFormat]] does not have an [[hour]] field.</li>
+      <li>[[HourCycle]] is either *undefined* or a String indicating whether the 12-hour format (*"h11"*, *"h12"*) or the 24-hour format (*"h23"*, *"h24"*) should be used. *"h11"* and *"h23"* start with hour 0 and go up to 11 and 23 (respectively). *"h12"* and *"h24"* start with hour 1 and go up to 12 and 24 (respectively). It is *undefined* if and only if [[DateTimeFormat]] does not have an [[hour]] field.</li>
       <li>[[DateStyle]], [[TimeStyle]] are each either *undefined*, *"full"*, *"long"*, *"medium"*, or *"short"*.</li>
       <li>[[DateTimeFormat]] is a DateTime Format Record.</li>
     </ul>
