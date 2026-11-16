@@ -227,7 +227,7 @@
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/info/bcp47">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>keyword</code> Unicode locale nonterminal whose <code>key</code> value is not contained within _relevantExtensionKeys_ or <code>type</code> value is superseded by a different value from _options_.</dd>
+        <dd>It performs "lookup" as defined in <a href="https://www.rfc-editor.org/info/bcp47">BCP 47</a> at <a href="https://www.rfc-editor.org/rfc/rfc4647.html#section-3">RFC 4647 section 3</a>, determining the best element of _availableLocales_ for satisfying _requestedLocales_ using either the LookupMatchingLocaleByBestFit algorithm or LookupMatchingLocaleByPrefix algorithm as specified by _options_.[[localeMatcher]], ignoring Unicode locale extension sequences, and returns a representation of the match that also includes corresponding data from _localeData_ and a resolved value for each element of _relevantExtensionKeys_ (defaulting to data from the matched locale, superseded by data from the requested Unicode locale extension sequence if present and then by data from _options_ if present). If the matched element from _requestedLocales_ contains a Unicode locale extension sequence, it is copied onto the language tag in the [[Locale]] field of the returned Record, omitting any <code>ufield</code> Unicode locale nonterminal whose <code>ukey</code> value is not contained within _relevantExtensionKeys_ or <code>uvalue</code> value is superseded by a different value from _options_.</dd>
       </dl>
       <emu-alg>
         1. If _options_.[[localeMatcher]] is *"lookup"*, then
@@ -246,23 +246,23 @@
           1. Set _result_.[[LocaleData]] to *undefined*.
         1. If _match_.[[extension]] is not ~empty~, then
           1. Let _components_ be UnicodeExtensionComponents(_match_.[[extension]]).
-          1. Let _keywords_ be _components_.[[Keywords]].
+          1. Let _ufields_ be _components_.[[Keywords]].
         1. Else,
-          1. Let _keywords_ be a new empty List.
-        1. Let _supportedKeywords_ be a new empty List.
+          1. Let _ufields_ be a new empty List.
+        1. Let _retainedUfields_ be a new empty List.
         1. For each element _key_ of _relevantExtensionKeys_, do
-          1. Let _keyLocaleData_ be _foundLocaleData_.[[&lt;_key_>]].
-          1. Assert: _keyLocaleData_ is a non-empty List.
-          1. Let _value_ be _keyLocaleData_[0].
+          1. Let _supportedValues_ be _foundLocaleData_.[[&lt;_key_>]].
+          1. Assert: _supportedValues_ is a non-empty List.
+          1. Let _value_ be _supportedValues_[0].
           1. Assert: _value_ is a String or _value_ is *null*.
-          1. Let _supportedKeyword_ be ~empty~.
-          1. If _keywords_ contains an element whose [[Key]] is _key_, then
-            1. Let _entry_ be the element of _keywords_ whose [[Key]] is _key_.
-            1. Let _extensionValue_ be _entry_.[[Value]].
-            1. If _extensionValue_ is the empty String, set _extensionValue_ to *"true"*.
-            1. If _keyLocaleData_ contains _extensionValue_, then
-              1. Set _value_ to _extensionValue_.
-              1. Set _supportedKeyword_ to _entry_.
+          1. Let _retainedUfield_ be ~empty~.
+          1. If _ufields_ contains an element whose [[Key]] is _key_, then
+            1. Let _ufield_ be the element of _ufields_ whose [[Key]] is _key_.
+            1. Let _uvalue_ be _ufield_.[[Value]].
+            1. If _uvalue_ is the empty String, set _uvalue_ to *"true"*.
+            1. If _supportedValues_ contains _uvalue_, then
+              1. Set _value_ to _uvalue_.
+              1. Set _retainedUfield_ to _ufield_.
           1. Assert: _options_ has a field [[&lt;_key_>]].
           1. Let _optionsValue_ be _options_.[[&lt;_key_>]].
           1. Assert: _optionsValue_ is either a String, *undefined*, or *null*.
@@ -270,14 +270,14 @@
             1. Let _ukey_ be the ASCII-lowercase of _key_.
             1. Set _optionsValue_ to CanonicalizeUValue(_ukey_, _optionsValue_).
             1. If _optionsValue_ is the empty String, set _optionsValue_ to *"true"*.
-          1. If SameValue(_optionsValue_, _value_) is *false* and _keyLocaleData_ contains _optionsValue_, then
+          1. If SameValue(_optionsValue_, _value_) is *false* and _supportedValues_ contains _optionsValue_, then
             1. Set _value_ to _optionsValue_.
-            1. Set _supportedKeyword_ to ~empty~.
-          1. If _supportedKeyword_ is not ~empty~, append _supportedKeyword_ to _supportedKeywords_.
+            1. Set _retainedUfield_ to ~empty~.
+          1. If _retainedUfield_ is not ~empty~, append _retainedUfield_ to _retainedUfields_.
           1. Set _result_.[[&lt;_key_>]] to _value_.
-        1. If _supportedKeywords_ is not empty, then
+        1. If _retainedUfields_ is not empty, then
           1. Let _supportedAttributes_ be a new empty List.
-          1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedAttributes_, _supportedKeywords_).
+          1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedAttributes_, _retainedUfields_).
         1. Set _result_.[[Locale]] to _foundLocale_.
         1. Return _result_.
       </emu-alg>
