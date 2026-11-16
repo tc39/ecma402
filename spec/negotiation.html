@@ -148,7 +148,7 @@
       <h1>
         UnicodeExtensionComponents (
           _extension_: a Unicode locale extension sequence,
-        ): a Record with fields [[Attributes]] and [[Keywords]]
+        ): a Unicode Locale Extension Record
       </h1>
       <dl class="header">
         <dt>description</dt>
@@ -158,8 +158,8 @@
         1. Assert: The ASCII-lowercase of _extension_ is _extension_.
         1. Assert: The substring of _extension_ from 0 to 3 is *"-u-"*.
         1. Let _attributes_ be a new empty List.
-        1. Let _keywords_ be a new empty List.
-        1. Let _keyword_ be *undefined*.
+        1. Let _ufields_ be an empty List of Ufield Records.
+        1. Let _ufield_ be *undefined*.
         1. Let _size_ be the length of _extension_.
         1. Let _k_ be 3.
         1. Repeat, while _k_ &lt; _size_,
@@ -168,17 +168,17 @@
           1. Let _subtag_ be the substring of _extension_ from _k_ to _k_ + _length_.
           1. NOTE: A <emu-not-ref>keyword</emu-not-ref> is a sequence of subtags in which the first is a key of length 2 and any subsequent ones (if present) have length in the inclusive interval from 3 to 8, collectively constituting a value along with their medial *"-"* separators. An attribute is a single subtag with length in the inclusive interval from 3 to 8 that precedes all <emu-not-ref>keywords</emu-not-ref>.
           1. Assert: _length_ ≥ 2.
-          1. If _keyword_ is *undefined* and _length_ ≠ 2, then
+          1. If _ufield_ is *undefined* and _length_ ≠ 2, then
             1. If _subtag_ is not an element of _attributes_, append _subtag_ to _attributes_.
           1. Else if _length_ = 2, then
-            1. Set _keyword_ to the Record { [[Key]]: _subtag_, [[Value]]: the empty String }.
-            1. If _keywords_ does not contain an element whose [[Key]] is _keyword_.[[Key]], append _keyword_ to _keywords_.
-          1. Else if _keyword_.[[Value]] is the empty String, then
-            1. Set _keyword_.[[Value]] to _subtag_.
+            1. Set _ufield_ to the Ufield Record { [[Key]]: _subtag_, [[Value]]: the empty String }.
+            1. If _ufields_ does not contain an element whose [[Key]] is _ufield_.[[Key]], append _ufield_ to _ufields_.
+          1. Else if _ufield_.[[Value]] is the empty String, then
+            1. Set _ufield_.[[Value]] to _subtag_.
           1. Else,
-            1. Set _keyword_.[[Value]] to the string-concatenation of _keyword_.[[Value]], *"-"*, and _subtag_.
+            1. Set _ufield_.[[Value]] to the string-concatenation of _ufield_.[[Value]], *"-"*, and _subtag_.
           1. Set _k_ to _k_ + _length_ + 1.
-        1. Return the Record { [[Attributes]]: _attributes_, [[Keywords]]: _keywords_ }.
+        1. Return the Unicode Locale Extension Record { [[Attributes]]: _attributes_, [[Keywords]]: _ufields_ }.
       </emu-alg>
     </emu-clause>
 
@@ -187,21 +187,21 @@
         InsertUnicodeExtensionAndCanonicalize (
           _locale_: a language tag,
           _attributes_: a List of Strings,
-          _keywords_: a List of Records,
+          _ufields_: a List of Ufield Records,
         ): a Unicode canonicalized locale identifier
       </h1>
       <dl class="header">
         <dt>description</dt>
-        <dd>It incorporates _attributes_ and _keywords_ into _locale_ as a Unicode locale extension sequence and returns the canonicalized result.</dd>
+        <dd>It incorporates _attributes_ and _ufields_ into _locale_ as a Unicode locale extension sequence and returns the canonicalized result.</dd>
       </dl>
       <emu-alg>
         1. Assert: _locale_ does not contain a Unicode locale extension sequence.
         1. Let _extension_ be *"-u"*.
         1. For each element _attr_ of _attributes_, do
           1. Set _extension_ to the string-concatenation of _extension_, *"-"*, and _attr_.
-        1. For each Record { [[Key]], [[Value]] } _keyword_ of _keywords_, do
-          1. Set _extension_ to the string-concatenation of _extension_, *"-"*, and _keyword_.[[Key]].
-          1. If _keyword_.[[Value]] is not the empty String, set _extension_ to the string-concatenation of _extension_, *"-"*, and _keyword_.[[Value]].
+        1. For each Ufield Record _ufield_ of _ufields_, do
+          1. Set _extension_ to the string-concatenation of _extension_, *"-"*, and _ufield_.[[Key]].
+          1. If _ufield_.[[Value]] is not the empty String, set _extension_ to the string-concatenation of _extension_, *"-"*, and _ufield_.[[Value]].
         1. If _extension_ is *"-u"*, return CanonicalizeUnicodeLocaleId(_locale_).
         1. Let _privateIndex_ be StringIndexOf(_locale_, *"-x-"*, 0).
         1. If _privateIndex_ is ~not-found~, then
@@ -248,8 +248,8 @@
           1. Let _components_ be UnicodeExtensionComponents(_match_.[[extension]]).
           1. Let _ufields_ be _components_.[[Keywords]].
         1. Else,
-          1. Let _ufields_ be a new empty List.
-        1. Let _retainedUfields_ be a new empty List.
+          1. Let _ufields_ be an empty List of Ufield Records.
+        1. Let _retainedUfields_ be an empty List of Ufield Records.
         1. For each element _key_ of _relevantExtensionKeys_, do
           1. Let _supportedValues_ be _foundLocaleData_.[[&lt;_key_>]].
           1. Assert: _supportedValues_ is a non-empty List.
@@ -276,7 +276,7 @@
           1. If _retainedUfield_ is not ~empty~, append _retainedUfield_ to _retainedUfields_.
           1. Set _result_.[[&lt;_key_>]] to _value_.
         1. If _retainedUfields_ is not empty, then
-          1. Let _supportedAttributes_ be a new empty List.
+          1. Let _supportedAttributes_ be an empty List of Strings.
           1. Set _foundLocale_ to InsertUnicodeExtensionAndCanonicalize(_foundLocale_, _supportedAttributes_, _retainedUfields_).
         1. Set _result_.[[Locale]] to _foundLocale_.
         1. Return _result_.
