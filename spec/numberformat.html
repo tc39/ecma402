@@ -1510,7 +1510,8 @@
           1. Assert: _notation_ is *"compact"*.
           1. Let _compactDisplay_ be _numberFormat_.[[CompactDisplay]].
           1. Let _compactPatterns_ be _notationSubPatterns_.[[compact]].[[&lt;_compactDisplay_>]].
-          1. Return _compactPatterns_.[[&lt;_exponent_>]].
+          1. Let _exponentString_ be the String value consisting of the digits of the decimal representation of _exponent_ (in order, with no leading zeroes).
+          1. Return _compactPatterns_.[[&lt;_exponentString_>]].
         1. Else,
           1. Return *"{number}"*.
       </emu-alg>
