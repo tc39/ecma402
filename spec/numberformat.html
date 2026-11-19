@@ -1408,12 +1408,12 @@
         GetNumberFormatPattern (
           _numberFormat_: an Intl.NumberFormat,
           _x_: an Intl mathematical value,
-        ): a String
+        ): a Pattern String
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+          It considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns the corresponding Pattern String for formatting that number.
         </dd>
       </dl>
       <emu-alg>
@@ -1493,12 +1493,12 @@
         GetNotationSubPattern (
           _numberFormat_: an Intl.NumberFormat,
           _exponent_: an integer,
-        ): a String
+        ): a Pattern String
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+          It considers the resolved notation and _exponent_, and returns the corresponding Pattern String for formatting an unsigned number of that magnitude.
         </dd>
       </dl>
       <emu-alg>
