@@ -24,9 +24,9 @@
         1. Set _options_ to _optionsResolution_.[[Options]].
         1. Let _resolvedLocale_ be _optionsResolution_.[[ResolvedLocale]].
         1. Set _listFormat_.[[Locale]] to _resolvedLocale_.[[Locale]].
-        1. Let _type_ be ? GetOption(_options_, *"type"*, ~string~, « *"conjunction"*, *"disjunction"*, *"unit"* », *"conjunction"*).
+        1. Let _type_ be ? GetStringOption(_options_, *"type"*, ~coerce~, « *"conjunction"*, *"disjunction"*, *"unit"* », *"conjunction"*).
         1. Set _listFormat_.[[Type]] to _type_.
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"long"*, *"short"*, *"narrow"* », *"long"*).
+        1. Let _style_ be ? GetStringOption(_options_, *"style"*, ~coerce~, « *"long"*, *"short"*, *"narrow"* », *"long"*).
         1. Set _listFormat_.[[Style]] to _style_.
         1. Let _resolvedLocaleData_ be _resolvedLocale_.[[LocaleData]].
         1. Let _dataLocaleTypes_ be _resolvedLocaleData_.[[&lt;_type_>]].

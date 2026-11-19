@@ -27,9 +27,9 @@
         1. Set _relativeTimeFormat_.[[Locale]] to _locale_.
         1. Set _relativeTimeFormat_.[[LocaleData]] to _resolvedLocale_.[[LocaleData]].
         1. Set _relativeTimeFormat_.[[NumberingSystem]] to _resolvedLocale_.[[nu]].
-        1. Let _style_ be ? GetOption(_options_, *"style"*, ~string~, « *"long"*, *"short"*, *"narrow"* », *"long"*).
+        1. Let _style_ be ? GetStringOption(_options_, *"style"*, ~coerce~, « *"long"*, *"short"*, *"narrow"* », *"long"*).
         1. Set _relativeTimeFormat_.[[Style]] to _style_.
-        1. Let _numeric_ be ? GetOption(_options_, *"numeric"*, ~string~, « *"always"*, *"auto"* », *"always"*).
+        1. Let _numeric_ be ? GetStringOption(_options_, *"numeric"*, ~coerce~, « *"always"*, *"auto"* », *"always"*).
         1. Set _relativeTimeFormat_.[[Numeric]] to _numeric_.
         1. Let _nfOptions_ be OrdinaryObjectCreate(*null*).
         1. Perform ! CreateDataPropertyOrThrow(_nfOptions_, *"numberingSystem"*, _relativeTimeFormat_.[[NumberingSystem]]).
