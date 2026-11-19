@@ -1403,32 +1403,31 @@
       </dl>
       <emu-alg>
         1. Let _resolvedLocaleData_ be _numberFormat_.[[LocaleData]].
-        1. Let _patterns_ be _resolvedLocaleData_.[[patterns]].
-        1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
+        1. Let _patternsTree_ be _resolvedLocaleData_.[[patterns]].
+        1. Assert: _patternsTree_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
-          1. Set _patterns_ to _patterns_.[[percent]].
+          1. Let _patternsBySign_ be _patternsTree_.[[percent]].
         1. Else if _style_ is *"unit"*, then
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
-          1. Set _patterns_ to _patterns_.[[unit]].
-          1. If _patterns_ doesn't have a field [[&lt;_unit_>]], then
-            1. Set _unit_ to *"fallback"*.
-          1. Set _patterns_ to _patterns_.[[&lt;_unit_>]].
-          1. Set _patterns_ to _patterns_.[[&lt;_unitDisplay_>]].
+          1. Let _unitPatternsTreesByUnit_ be _patternsTree_.[[unit]].
+          1. Assert: _unitPatternsTreesByUnit_ is a Record.
+          1. If _unitPatternsTreesByUnit_ has a field [[&lt;_unit_>]], let _unitPatternsTree_ be _unitPatternsTreesByUnit_.[[&lt;_unit_>]], else let _unitPatternsTree_ be _unitPatternsTreesByUnit_.[[fallback]].
+          1. Let _patternsBySign_ be _unitPatternsTree_.[[&lt;_unitDisplay_>]].
         1. Else if _style_ is *"currency"*, then
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
-          1. Set _patterns_ to _patterns_.[[currency]].
-          1. If _patterns_ doesn't have a field [[&lt;_currency_>]], then
-            1. Set _currency_ to *"fallback"*.
-          1. Set _patterns_ to _patterns_.[[&lt;_currency_>]].
-          1. Set _patterns_ to _patterns_.[[&lt;_currencyDisplay_>]].
-          1. Set _patterns_ to _patterns_.[[&lt;_currencySign_>]].
+          1. Let _currencyPatternsTreesByCurrency_ be _patternsTree_.[[currency]].
+          1. Assert: _currencyPatternsTreesByCurrency_ is a Record.
+          1. If _currencyPatternsTreesByCurrency_ has a field [[&lt;_currency_>]], let _currencyPatternsTree_ be _currencyPatternsTreesByCurrency_.[[&lt;_currency_>]], else let _currencyPatternsTree_ be _currencyPatternsTreesByCurrency_.[[fallback]].
+          1. Assert: _currencyPatternsTree_ is a Record.
+          1. Let _patternsBySign_ be _currencyPatternsTree_.[[&lt;_currencyDisplay_>]].[[&lt;_currencySign_>]].
         1. Else,
           1. Assert: _style_ is *"decimal"*.
-          1. Set _patterns_ to _patterns_.[[decimal]].
+          1. Let _patternsBySign_ be _patternsTree_.[[decimal]].
+        1. Assert: _patternsBySign_ is a Record with string-valued fields [[positivePattern]], [[zeroPattern]], and [[negativePattern]].
         1. If _x_ is ~negative-infinity~, then
           1. Let _category_ be ~negative-non-zero~.
         1. Else if _x_ is ~negative-zero~, then
@@ -1447,30 +1446,30 @@
             1. Let _category_ be ~positive-zero~.
         1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
         1. If _signDisplay_ is *"never"*, then
-          1. Let _pattern_ be _patterns_.[[zeroPattern]].
+          1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
         1. Else if _signDisplay_ is *"auto"*, then
           1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
-            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
           1. Else,
-            1. Let _pattern_ be _patterns_.[[negativePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
         1. Else if _signDisplay_ is *"always"*, then
           1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
-            1. Let _pattern_ be _patterns_.[[positivePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[positivePattern]].
           1. Else,
-            1. Let _pattern_ be _patterns_.[[negativePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
         1. Else if _signDisplay_ is *"exceptZero"*, then
           1. If _category_ is ~positive-zero~ or ~negative-zero~, then
-            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
           1. Else if _category_ is ~positive-non-zero~, then
-            1. Let _pattern_ be _patterns_.[[positivePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[positivePattern]].
           1. Else,
-            1. Let _pattern_ be _patterns_.[[negativePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
         1. Else,
           1. Assert: _signDisplay_ is *"negative"*.
           1. If _category_ is ~negative-non-zero~, then
-            1. Let _pattern_ be _patterns_.[[negativePattern]].
+            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
           1. Else,
-            1. Let _pattern_ be _patterns_.[[zeroPattern]].
+            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
         1. Return _pattern_.
       </emu-alg>
     </emu-clause>
