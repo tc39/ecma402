@@ -1459,32 +1459,30 @@
           1. Else,
             1. Let _category_ be ~positive-zero~.
         1. Let _signDisplay_ be _numberFormat_.[[SignDisplay]].
-        1. If _signDisplay_ is *"never"*, then
-          1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
-        1. Else if _signDisplay_ is *"auto"*, then
+        1. If _signDisplay_ is *"auto"*, then
           1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
-            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
+            1. Return _patternsBySign_.[[zeroPattern]].
           1. Else,
-            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
+            1. Return _patternsBySign_.[[negativePattern]].
         1. Else if _signDisplay_ is *"always"*, then
           1. If _category_ is ~positive-non-zero~ or ~positive-zero~, then
-            1. Let _pattern_ be _patternsBySign_.[[positivePattern]].
+            1. Return _patternsBySign_.[[positivePattern]].
           1. Else,
-            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
+            1. Return _patternsBySign_.[[negativePattern]].
         1. Else if _signDisplay_ is *"exceptZero"*, then
           1. If _category_ is ~positive-zero~ or ~negative-zero~, then
-            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
+            1. Return _patternsBySign_.[[zeroPattern]].
           1. Else if _category_ is ~positive-non-zero~, then
-            1. Let _pattern_ be _patternsBySign_.[[positivePattern]].
+            1. Return _patternsBySign_.[[positivePattern]].
           1. Else,
-            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
-        1. Else,
-          1. Assert: _signDisplay_ is *"negative"*.
+            1. Return _patternsBySign_.[[negativePattern]].
+        1. Else if _signDisplay_ is *"negative"*, then
           1. If _category_ is ~negative-non-zero~, then
-            1. Let _pattern_ be _patternsBySign_.[[negativePattern]].
+            1. Return _patternsBySign_.[[negativePattern]].
           1. Else,
-            1. Let _pattern_ be _patternsBySign_.[[zeroPattern]].
-        1. Return _pattern_.
+            1. Return _patternsBySign_.[[zeroPattern]].
+        1. Assert: _signDisplay_ is *"never"*.
+        1. Return _patternsBySign_.[[zeroPattern]].
       </emu-alg>
     </emu-clause>
 
