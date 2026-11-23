@@ -266,7 +266,17 @@
           Additionally, the values within the *"percent"* field must also contain the substring *"{percentSign}"*; the values within the *"currency"* field must also contain one or more of the following substrings: *"{currencyCode}"*, *"{currencyPrefix}"*, or *"{currencySuffix}"*; and the values within the *"unit"* field must also contain one or more of the following substrings: *"{unitPrefix}"* or *"{unitSuffix}"*.
           The pattern strings, when interpreted as a sequence of UTF-16 encoded code points as described in ECMA-262, <emu-xref href="#sec-ecmascript-language-types-string-type"></emu-xref>, must not contain any code points in the General Category "Number, decimal digit" as specified by the Unicode Standard.
         </li>
-        <li>[[LocaleData]].[[&lt;_locale_>]] must also have a [[notationSubPatterns]] field for all locale values _locale_. The value of this field must be a Record, which must have two fields: [[scientific]] and [[compact]]. The [[scientific]] field must be a string value containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*. The [[compact]] field must be a Record with two fields: *"short"* and *"long"*. Each of these fields must be a Record with integer keys corresponding to all discrete magnitudes the implementation supports for compact notation. Each of these fields must be a string value which may contain the substring *"{number}"*. Strings descended from *"short"* must contain the substring *"{compactSymbol}"*, and strings descended from *"long"* must contain the substring *"{compactName}"*.</li>
+        <li>
+          [[LocaleData]].[[&lt;_locale_>]] must also have a [[compactPatterns]] field for all locale values _locale_. Its value must be a Record with fields *"short"* and *"long"*.
+          Each of these fields must be a Record with the same structure as [[patterns]], except that each sign-dependent pattern field must be a Record with integer keys corresponding to 0 and all non-zero exponents supported for that combination of style and display options.
+          Each exponent's value must be a String satisfying the constraints on the corresponding sign-dependent pattern in [[patterns]], with the following exceptions and additions:
+          <ul>
+            <li>The value for exponent 0 must contain *"{number}"* and must not contain *"{compactSymbol}"* or *"{compactName}"*.</li>
+            <li>A value for a non-zero exponent may omit *"{number}"*. Values descended from *"short"* must contain *"{compactSymbol}"* and must not contain *"{compactName}"*; values descended from *"long"* must contain *"{compactName}"* and must not contain *"{compactSymbol}"*.</li>
+          </ul>
+          The placement of sign, style, and compact placeholders may differ from their placement in [[patterns]].
+        </li>
+        <li>[[LocaleData]].[[&lt;_locale_>]] must also have a [[notationSubPatterns]] field for all locale values _locale_. Its value must be a Record with a [[scientific]] field whose value is a String containing the substrings *"{number}"*, *"{scientificSeparator}"*, and *"{scientificExponent}"*.</li>
       </ul>
 
       <emu-note>
@@ -750,7 +760,7 @@
           1. Let _formatNumberResult_ be FormatNumericToString(_numberFormat_, _x_).
           1. Let _formattedString_ be _formatNumberResult_.[[FormattedString]].
           1. Set _x_ to _formatNumberResult_.[[RoundedNumber]].
-        1. Let _pattern_ be GetNumberFormatPattern(_numberFormat_, _x_).
+        1. Let _pattern_ be GetNumberFormatPattern(_numberFormat_, _x_, _exponent_).
         1. Let _result_ be a new empty List.
         1. Let _patternParts_ be PartitionPattern(_pattern_).
         1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
@@ -760,6 +770,12 @@
           1. Else if _partType_ is *"number"*, then
             1. Let _notationSubParts_ be PartitionNotationSubPattern(_numberFormat_, _x_, _formattedString_, _exponent_).
             1. Set _result_ to the list-concatenation of _result_ and _notationSubParts_.
+          1. Else if _partType_ is *"compactSymbol"*, then
+            1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on the resolved style and display options and on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
+            1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
+          1. Else if _partType_ is *"compactName"*, then
+            1. Let _compactName_ be an ILD string representing _exponent_ in long form, which may depend on the resolved style and display options and on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactName}"* placeholder.
+            1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } to _result_.
           1. Else if _partType_ is *"plusSign"*, then
             1. Let _plusSignSymbol_ be the ILND String representing the plus sign.
             1. Append the Record { [[Type]]: *"plusSign"*, [[Value]]: _plusSignSymbol_ } to _result_.
@@ -767,7 +783,7 @@
             1. Let _minusSignSymbol_ be the ILND String representing the minus sign.
             1. Append the Record { [[Type]]: *"minusSign"*, [[Value]]: _minusSignSymbol_ } to _result_.
           1. Else if _partType_ is *"percentSign"* and _numberFormat_.[[Style]] is *"percent"*, then
-            1. Let _percentSignSymbol_ be the ILND String representing the percent sign.
+            1. Let _percentSignSymbol_ be an ILND String representing percent for _numberFormat_.[[Notation]].
             1. Append the Record { [[Type]]: *"percentSign"*, [[Value]]: _percentSignSymbol_ } to _result_.
           1. Else if _partType_ is *"unitPrefix"* and _numberFormat_.[[Style]] is *"unit"*, then
             1. Let _unit_ be _numberFormat_.[[Unit]].
@@ -822,7 +838,7 @@
         1. Else if _x_ is ~positive-infinity~ or ~negative-infinity~, then
           1. Append the Record { [[Type]]: *"infinity"*, [[Value]]: _formattedString_ } to _result_.
         1. Else,
-          1. Let _notationSubPattern_ be GetNotationSubPattern(_numberFormat_, _exponent_).
+          1. Let _notationSubPattern_ be GetNotationSubPattern(_numberFormat_).
           1. Let _patternParts_ be PartitionPattern(_notationSubPattern_).
           1. For each Record { [[Type]], [[Value]] } _patternPart_ of _patternParts_, do
             1. Let _partType_ be _patternPart_.[[Type]].
@@ -868,12 +884,6 @@
                 1. Let _decimalSepSymbol_ be the ILND String representing the decimal separator.
                 1. Append the Record { [[Type]]: *"decimal"*, [[Value]]: _decimalSepSymbol_ } to _result_.
                 1. Append the Record { [[Type]]: *"fraction"*, [[Value]]: _fractionDigits_ } to _result_.
-            1. Else if _partType_ is *"compactSymbol"*, then
-              1. Let _compactSymbol_ be an ILD string representing _exponent_ in short form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactSymbol}"* placeholder.
-              1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactSymbol_ } to _result_.
-            1. Else if _partType_ is *"compactName"*, then
-              1. Let _compactName_ be an ILD string representing _exponent_ in long form, which may depend on _x_ in languages having different plural forms. The implementation must be able to provide this string, or else the pattern would not have a *"{compactName}"* placeholder.
-              1. Append the Record { [[Type]]: *"compact"*, [[Value]]: _compactName_ } to _result_.
             1. Else if _partType_ is *"scientificSeparator"*, then
               1. Let _scientificSeparator_ be the ILND String representing the exponent separator.
               1. Append the Record { [[Type]]: *"exponentSeparator"*, [[Value]]: _scientificSeparator_ } to _result_.
@@ -1393,17 +1403,21 @@
         GetNumberFormatPattern (
           _numberFormat_: an Intl.NumberFormat,
           _x_: an Intl mathematical value,
+          _exponent_: an integer,
         ): a String
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It considers the resolved unit-related options in the number format object along with the final scaled and rounded number being formatted (an Intl mathematical value) and returns a pattern, a String value as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+          It considers the resolved style and notation options, the final scaled and rounded number, and its exponent, and returns a pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
         </dd>
       </dl>
       <emu-alg>
         1. Let _resolvedLocaleData_ be _numberFormat_.[[LocaleData]].
         1. Let _patterns_ be _resolvedLocaleData_.[[patterns]].
+        1. If _numberFormat_.[[Notation]] is *"compact"*, then
+          1. Let _compactDisplay_ be _numberFormat_.[[CompactDisplay]].
+          1. Set _patterns_ to _resolvedLocaleData_.[[compactPatterns]].[[&lt;_compactDisplay_>]].
         1. Assert: _patterns_ is a Record (see <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>).
         1. Let _style_ be _numberFormat_.[[Style]].
         1. If _style_ is *"percent"*, then
@@ -1471,6 +1485,8 @@
             1. Let _pattern_ be _patterns_.[[negativePattern]].
           1. Else,
             1. Let _pattern_ be _patterns_.[[zeroPattern]].
+        1. If _numberFormat_.[[Notation]] is *"compact"*, then
+          1. Set _pattern_ to _pattern_.[[&lt;_exponent_>]].
         1. Return _pattern_.
       </emu-alg>
     </emu-clause>
@@ -1479,13 +1495,12 @@
       <h1>
         GetNotationSubPattern (
           _numberFormat_: an Intl.NumberFormat,
-          _exponent_: an integer,
         ): a String
       </h1>
       <dl class="header">
         <dt>description</dt>
         <dd>
-          It considers the resolved notation and _exponent_, and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
+          It considers the resolved notation and returns a String value for the notation sub pattern as described in <emu-xref href="#sec-intl.numberformat-internal-slots"></emu-xref>.
         </dd>
       </dl>
       <emu-alg>
@@ -1495,11 +1510,6 @@
         1. Let _notation_ be _numberFormat_.[[Notation]].
         1. If _notation_ is *"scientific"* or _notation_ is *"engineering"*, then
           1. Return _notationSubPatterns_.[[scientific]].
-        1. Else if _exponent_ is not 0, then
-          1. Assert: _notation_ is *"compact"*.
-          1. Let _compactDisplay_ be _numberFormat_.[[CompactDisplay]].
-          1. Let _compactPatterns_ be _notationSubPatterns_.[[compact]].[[&lt;_compactDisplay_>]].
-          1. Return _compactPatterns_.[[&lt;_exponent_>]].
         1. Else,
           1. Return *"{number}"*.
       </emu-alg>
@@ -1561,7 +1571,7 @@
           1. Return _thousands_ × 3.
         1. Else,
           1. Assert: _notation_ is *"compact"*.
-          1. Let _exponent_ be an ILD integer by which to scale a number of the given magnitude in compact notation for the current locale.
+          1. Let _exponent_ be an ILD integer by which to scale a number of the given magnitude in compact notation for the resolved style and display options. The corresponding exponent entry must exist in the compact patterns selected by GetNumberFormatPattern for those options.
           1. Return _exponent_.
       </emu-alg>
     </emu-clause>
