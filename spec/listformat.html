@@ -81,7 +81,7 @@
 
       <ul>
         <li>[[LocaleData]].[[&lt;_locale_>]] is a Record which has three fields [[conjunction]], [[disjunction]], and [[unit]]. Each of these is a Record which must have fields with the names of three formatting styles: [[long]], [[short]], and [[narrow]].</li>
-        <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a non-empty List of Records with fields named: [[Pair]], [[Start]], [[Middle]], and [[End]]. Each of those fields must be a template string as specified in LDML List Format Rules. Each template string must contain the substrings *"{0}"* and *"{1}"* exactly once. The substring *"{0}"* should occur before the substring *"{1}"*.</li>
+        <li>Each of those fields is considered a <dfn>ListFormat template set</dfn>, which must be a non-empty List of Records with fields [[Pair]], [[Start]], [[Middle]], and [[End]] (each of which must have a Pattern String value conforming with the conditions specified for the corresponding <code>listPatternPart</code> pattern by <a href="https://www.unicode.org/reports/tr35/tr35-general.html#ListPatterns">Unicode Technical Standard #35 Part 2 General, List Patterns</a>, where [[Pair]] corresponds to <code>type</code> “2” and [[Start]], [[Middle]], and [[End]] each correspond with the respective lowercase <code>type</code>s “start”, “middle”, and “end”).</li>
       </ul>
 
       <emu-note>
