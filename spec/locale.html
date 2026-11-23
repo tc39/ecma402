@@ -455,12 +455,12 @@
 
     <ul>
       <li>[[Locale]] is a String value with the language tag of the locale whose localization is used for formatting.</li>
-      <li>[[Calendar]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a> in canonical form.</li>
-      <li>[[Collation]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Collation Identifier</a> in canonical form.</li>
-      <li>[[FirstDayOfWeek]] is either *undefined* or a String value that is a valid <a href="https://unicode.org/reports/tr35/#UnicodeFirstDayIdentifier">Unicode First Day Identifier</a> in canonical form.</li>
-      <li>[[HourCycle]] is either *undefined* or a String value that is a valid <a href="https://unicode.org/reports/tr35/#UnicodeHourCycleIdentifier">Unicode Hour Cycle Identifier</a> in canonical form.</li>
-      <li>[[NumberingSystem]] is either *undefined* or a String value that is a well-formed <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a> in canonical form.</li>
-      <li>[[CaseFirst]] is either *undefined* or one of the String values *"upper"*, *"lower"*, or *"false"*. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
+      <li>[[Calendar]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"ca"* (such as a <a href="https://unicode.org/reports/tr35/#UnicodeCalendarIdentifier">Unicode Calendar Identifier</a>).</li>
+      <li>[[Collation]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"co"* (such as a <a href="https://unicode.org/reports/tr35/#UnicodeCollationIdentifier">Unicode Collation Identifier</a>).</li>
+      <li>[[FirstDayOfWeek]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"fw"* (such as a <a href="https://unicode.org/reports/tr35/#UnicodeFirstDayIdentifier">Unicode First Day Identifier</a>).</li>
+      <li>[[HourCycle]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"hc"* (such as a <a href="https://unicode.org/reports/tr35/#UnicodeHourCycleIdentifier">Unicode Hour Cycle Identifier</a>).</li>
+      <li>[[NumberingSystem]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"nu"* (such as a <a href="https://unicode.org/reports/tr35/#UnicodeNumberSystemIdentifier">Unicode Number System Identifier</a>).</li>
+      <li>[[CaseFirst]] is either *undefined* or a String containing a canonicalized value of Unicode locale extension sequence key *"kf"* (such as *"upper"*, *"lower"*, or *"false"*). This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kf"*.</li>
       <li>[[Numeric]] is either *undefined* or a Boolean value specifying whether numeric sorting is used by the locale. This internal slot only exists if the [[LocaleExtensionKeys]] internal slot of %Intl.Locale% contains *"kn"*.</li>
     </ul>
   </emu-clause>
