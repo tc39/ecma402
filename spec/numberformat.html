@@ -1428,18 +1428,18 @@
         1. Else if _style_ is *"unit"*, then
           1. Let _unit_ be _numberFormat_.[[Unit]].
           1. Let _unitDisplay_ be _numberFormat_.[[UnitDisplay]].
-          1. Let _unitPatternsTreesByUnit_ be _patternsTree_.[[unit]].
-          1. Assert: _unitPatternsTreesByUnit_ is a Record.
-          1. If _unitPatternsTreesByUnit_ has a field [[&lt;_unit_>]], let _unitPatternsTree_ be _unitPatternsTreesByUnit_.[[&lt;_unit_>]], else let _unitPatternsTree_ be _unitPatternsTreesByUnit_.[[fallback]].
+          1. Let _treesByUnit_ be _patternsTree_.[[unit]].
+          1. Assert: _treesByUnit_ is a Record.
+          1. If _treesByUnit_ has a field [[&lt;_unit_>]], let _unitPatternsTree_ be _treesByUnit_.[[&lt;_unit_>]], else let _unitPatternsTree_ be _treesByUnit_.[[fallback]].
           1. Let _patternsBySign_ be _unitPatternsTree_.[[&lt;_unitDisplay_>]].
         1. Else,
           1. Assert: _style_ is *"currency"*.
           1. Let _currency_ be _numberFormat_.[[Currency]].
           1. Let _currencyDisplay_ be _numberFormat_.[[CurrencyDisplay]].
           1. Let _currencySign_ be _numberFormat_.[[CurrencySign]].
-          1. Let _currencyPatternsTreesByCurrency_ be _patternsTree_.[[currency]].
-          1. Assert: _currencyPatternsTreesByCurrency_ is a Record.
-          1. If _currencyPatternsTreesByCurrency_ has a field [[&lt;_currency_>]], let _currencyPatternsTree_ be _currencyPatternsTreesByCurrency_.[[&lt;_currency_>]], else let _currencyPatternsTree_ be _currencyPatternsTreesByCurrency_.[[fallback]].
+          1. Let _treesByCurrency_ be _patternsTree_.[[currency]].
+          1. Assert: _treesByCurrency_ is a Record.
+          1. If _treesByCurrency_ has a field [[&lt;_currency_>]], let _currencyPatternsTree_ be _treesByCurrency_.[[&lt;_currency_>]], else let _currencyPatternsTree_ be _treesByCurrency_.[[fallback]].
           1. Assert: _currencyPatternsTree_ is a Record.
           1. Let _patternsBySign_ be _currencyPatternsTree_.[[&lt;_currencyDisplay_>]].[[&lt;_currencySign_>]].
         1. Assert: _patternsBySign_ is a Record with string-valued fields [[positivePattern]], [[zeroPattern]], and [[negativePattern]].
