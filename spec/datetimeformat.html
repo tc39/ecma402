@@ -84,11 +84,10 @@
         1. Else if _hc_ is *null*, then
           1. Set _hc_ to _resolvedLocaleData_.[[hourCycle]].
         1. Let _timeZone_ be ? GetOption(_options_, *"timeZone"*, ~string~, ~empty~, SystemTimeZoneIdentifier()).
-        1. If IsTimeZoneOffsetString(_timeZone_) is *true*, then
-          1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
-          1. Assert: _parseResult_ is a Parse Node.
+        1. Let _parseResult_ be ParseText(StringToCodePoints(_timeZone_), |UTCOffset|).
+        1. If _parseResult_ is a Parse Node, then
           1. If _parseResult_ contains more than one |MinuteSecond| Parse Node, throw a *RangeError* exception.
-          1. Let _offsetNanoseconds_ be ParseTimeZoneOffsetString(_timeZone_).
+          1. Let _offsetNanoseconds_ be ParseTimeZoneOffsetString of _parseResult_.
           1. Let _offsetMinutes_ be _offsetNanoseconds_ / (6 × 10<sup>10</sup>).
           1. Assert: _offsetMinutes_ is an integer.
           1. Set _timeZone_ to FormatOffsetTimeZoneIdentifier(_offsetMinutes_).
@@ -1615,8 +1614,9 @@
       </dl>
 
       <emu-alg>
-        1. If IsTimeZoneOffsetString(_timeZoneIdentifier_) is *true*, then
-          1. Let _offsetNs_ be ParseTimeZoneOffsetString(_timeZoneIdentifier_).
+        1. Let _parseResult_ be ParseText(_timeZoneIdentifier_, |UTCOffset|).
+        1. If _parseResult_ is a Parse Node, then
+          1. Let _offsetNs_ be ParseTimeZoneOffsetString of _parseResult_.
         1. Else,
           1. Assert: GetAvailableNamedTimeZoneIdentifier(_timeZoneIdentifier_) is not ~empty~.
           1. Let _offsetNs_ be GetNamedTimeZoneOffsetNanoseconds(_timeZoneIdentifier_, _epochNs_).
